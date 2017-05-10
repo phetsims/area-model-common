@@ -21,6 +21,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
+  var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -31,9 +32,11 @@ define( function( require ) {
    *
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
+   * @param {Property.<Color>} widthColorProperty
+   * @param {Property.<Color>} heightColorProperty
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, widthColorProperty, heightColorProperty, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
@@ -168,6 +171,12 @@ define( function( require ) {
       widthDock.visible = totalWidth >= area.snapSize * 2 - 1e-7;
       heightDock.x = self.modelViewTransform.modelToViewX( totalWidth ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
     } );
+
+    var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, widthColorProperty, true );
+    this.addChild( horizontalPartitionLine );
+
+    var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, heightColorProperty, false );
+    this.addChild( verticalPartitionLine );
 
     this.mutate( nodeOptions );
   }

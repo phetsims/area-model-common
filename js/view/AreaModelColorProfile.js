@@ -45,6 +45,9 @@ define( function( require ) {
     dockBorder: { default: Color.BLACK },
     dockBackground: { default: Color.WHITE },
 
+    partitionLineBorder: { default: Color.BLACK },
+    partitionLineStroke: { default: Color.BLACK },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

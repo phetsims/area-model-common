@@ -41,7 +41,8 @@ define( function( require ) {
                                                            AreaModelColorProfile.proportionalHeightProperty );
 
     var areaNodes = model.areas.map( function( area ) {
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, {
+      // TODO: fix formatting or go to options
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, {
         // TODO: improve positioning
         left: self.layoutBounds.top + 70,
         top: self.layoutBounds.left + 70
