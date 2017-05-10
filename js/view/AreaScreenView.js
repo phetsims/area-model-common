@@ -100,6 +100,7 @@ define( function( require ) {
       titleNode: new Text( problemString, {
         font: AreaModelConstants.TITLE_FONT
       } ),
+      expandedProperty: model.problemBoxExpanded,
       contentXMargin: 15,
       fill: AreaModelColorProfile.panelBackgroundProperty,
       stroke: AreaModelColorProfile.panelBorderProperty,
@@ -111,7 +112,7 @@ define( function( require ) {
       titleNode: new Text( totalAreaOfModelString, {
         font: AreaModelConstants.TITLE_FONT
       } ),
-      expandedProperty: new Property( false ),
+      expandedProperty: model.totalModelBoxExpanded,
       contentXMargin: 15,
       fill: AreaModelColorProfile.panelBackgroundProperty,
       stroke: AreaModelColorProfile.panelBorderProperty,

@@ -28,6 +28,12 @@ define( function( require ) {
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( areas[ 0 ] );
 
+    // @public {Property.<boolean>}
+    this.problemBoxExpanded = new Property( true );
+
+    // @public {Property.<boolean>}
+    this.totalModelBoxExpanded = new Property( false );
+
     // @public {Property.<AreaCalculationChoice}
     this.areaCalculationChoiceProperty = new Property( AreaCalculationChoice.HIDDEN );
 
@@ -52,6 +58,8 @@ define( function( require ) {
      */
     reset: function() {
       this.currentAreaProperty.reset();
+      this.problemBoxExpanded.reset();
+      this.totalModelBoxExpanded.reset();
       this.areaCalculationChoiceProperty.reset();
       this.partialProductsChoiceProperty.reset();
     }
