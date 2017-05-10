@@ -13,6 +13,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/view/AreaCalculationSelectionNode' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -68,24 +69,36 @@ define( function( require ) {
       spacing: 10
     } );
 
+    // TODO: consolidate options
     var problemBox = new AccordionBox( problemNode, {
       titleNode: new Text( problemString, {
         font: AreaModelConstants.TITLE_FONT
       } ),
-      contentXMargin: 15
+      contentXMargin: 15,
+      fill: AreaModelColorProfile.panelBackgroundProperty,
+      stroke: AreaModelColorProfile.panelBorderProperty,
+      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
+      titleAlignX: 'left'
     } );
 
     var areaBox = new AccordionBox( areaNode, {
       titleNode: new Text( totalAreaOfModelString, {
         font: AreaModelConstants.TITLE_FONT
       } ),
-      contentXMargin: 15
+      contentXMargin: 15,
+      fill: AreaModelColorProfile.panelBackgroundProperty,
+      stroke: AreaModelColorProfile.panelBorderProperty,
+      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+      ,
+      titleAlignX: 'left'
     } );
 
     var calculationPanel = new Panel( calculationNode, {
       xMargin: 15,
-      yMargin: 10
-      // TODO: hook up colors properly
+      yMargin: 10,
+      fill: AreaModelColorProfile.panelBackgroundProperty,
+      stroke: AreaModelColorProfile.panelBorderProperty,
+      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
     } );
 
     this.addChild( new VBox( {

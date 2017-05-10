@@ -19,8 +19,8 @@ define( function( require ) {
     background: { default: new Color( 247, 247, 253 ) },
     radioBorder: { default: new Color( 118, 191, 209 ) },
     radioBackground: { default: Color.WHITE },
-    panelBorder: { default: Color.BLACK },
-    panelBackground: { default: new Color( 0xfa, 0xfa, 0xfa ) }
+    panelBorder: { default: new Color( 0x3, 0x3, 0x3 ) },
+    panelBackground: { default: Color.WHITE }
   }, [ 'default' ] );
 
   areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );

@@ -18,6 +18,7 @@ define( function( require ) {
     TOTAL_AREA_FONT: new PhetFont( 20 ),
 
     PANEL_MARGIN: 20,
-    PANEL_SPACING: 10
+    PANEL_SPACING: 10,
+    PANEL_CORNER_RADIUS: 5
   } );
 } );
