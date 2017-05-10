@@ -22,7 +22,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    var xText = new Text( 'x', {
+    var xText = new Text( AreaModelConstants.X_STRING, {
       font: AreaModelConstants.PROBLEM_X_FONT
     } );
 

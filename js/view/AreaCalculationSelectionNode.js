@@ -19,6 +19,8 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor
@@ -36,11 +38,12 @@ define( function( require ) {
       },
       {
         value: 'YUPTODO',
-        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: group } )
+        // TODO: color profile it?
+        node: new AlignBox( createCalculationIcon( '#000', '#aaa' ), { group: group } )
       },
       {
         value: 'VERYTODO',
-        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: group } )
+        node: new AlignBox( createCalculationIcon( '#000', '#000' ), { group: group } )
       }
     ];
 
@@ -56,6 +59,22 @@ define( function( require ) {
   }
 
   areaModelCommon.register( 'AreaCalculationSelectionNode', AreaCalculationSelectionNode );
+
+  function createCalculationIcon( topFill, bottomFill ) {
+    var height = 5;
+    var fullWidth = 30;
+    var partialWidth = 20;
+    return new VBox( {
+      children: [
+        new Rectangle( 0, 0, partialWidth, height, { fill: topFill } ),
+        new Rectangle( 0, 0, fullWidth, height, { fill: bottomFill } ),
+        new Rectangle( 0, 0, partialWidth, height, { fill: bottomFill } ),
+        new Rectangle( 0, 0, fullWidth, height, { fill: bottomFill } )
+      ],
+      align: 'left',
+      spacing: 2
+    } );
+  }
 
   return inherit( Node, AreaCalculationSelectionNode );
 } );
