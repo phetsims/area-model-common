@@ -19,7 +19,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
+  var PartialProductsChoice = require( 'AREA_MODEL_COMMON/model/PartialProductsChoice' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Text = require( 'SCENERY/nodes/Text' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -28,35 +28,34 @@ define( function( require ) {
    * @constructor
    * TODO: add extends to things?
    *
+   * @param {Property.<PartialProductsChoice} partialProductsChoiceProperty
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
    */
-  function PartialProductsSelectionNode( widthColorProperty, heightColorProperty ) {
+  function PartialProductsSelectionNode( partialProductsChoiceProperty, widthColorProperty, heightColorProperty ) {
 
     Node.call( this );
 
     var group = new AlignGroup();
 
-    var tmpProp = new Property( 'TODO' );
-
     var radioItems = [
       {
-        value: 'TODO',
+        value: PartialProductsChoice.HIDDEN,
         node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: group } )
       },
       {
-        value: 'YUPTODO',
+        value: PartialProductsChoice.PRODUCTS,
         node: new AlignBox( new Text( 'A', { font: AreaModelConstants.SYMBOL_FONT } ), { group: group } )
       },
       {
-        value: 'VERYTODO',
+        value: PartialProductsChoice.FACTORS,
         // TODO: when selected, highlight the a and b with colors!!!
         node: new AlignBox( new HBox( {
           children: [
             new Text( 'a', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ tmpProp, heightColorProperty ], function( value, heightColor ) {
-                return value === 'VERYTODO' ? heightColor : 'black';
+              fill: new DerivedProperty( [ partialProductsChoiceProperty, heightColorProperty ], function( value, heightColor ) {
+                return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
               } )
             } ),
             new Text( AreaModelConstants.X_STRING, {
@@ -64,8 +63,8 @@ define( function( require ) {
             } ),
             new Text( 'b', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ tmpProp, widthColorProperty ], function( value, widthColor ) {
-                return value === 'VERYTODO' ? widthColor : 'black';
+              fill: new DerivedProperty( [ partialProductsChoiceProperty, widthColorProperty ], function( value, widthColor ) {
+                return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
               } )
             } )
           ],
@@ -74,7 +73,7 @@ define( function( require ) {
       }
     ];
 
-    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ tmpProp, radioItems ], {
+    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ partialProductsChoiceProperty, radioItems ], {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
       buttonContentYMargin: 10,

@@ -70,7 +70,7 @@ define( function( require ) {
           group: panelAlignGroup,
           xAlign: 'left'
         } ),
-        new AlignBox( new AreaCalculationSelectionNode(), {
+        new AlignBox( new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty ), {
           group: panelAlignGroup,
           xAlign: 'center',
           xMargin: 15
@@ -86,7 +86,7 @@ define( function( require ) {
           group: panelAlignGroup,
           xAlign: 'left'
         } ),
-        new AlignBox( new PartialProductsSelectionNode( widthColorProperty, heightColorProperty ), {
+        new AlignBox( new PartialProductsSelectionNode( model.partialProductsChoiceProperty, widthColorProperty, heightColorProperty ), {
           group: panelAlignGroup,
           xAlign: 'center',
           xMargin: 15

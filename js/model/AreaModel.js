@@ -9,8 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PartialProductsChoice = require( 'AREA_MODEL_COMMON/model/PartialProductsChoice' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -25,6 +27,12 @@ define( function( require ) {
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( areas[ 0 ] );
+
+    // @public {Property.<AreaCalculationChoice}
+    this.areaCalculationChoiceProperty = new Property( AreaCalculationChoice.HIDDEN );
+
+    // @public {Property.<PartialProductsChoice}
+    this.partialProductsChoiceProperty = new Property( PartialProductsChoice.HIDDEN );
   }
 
   areaModelCommon.register( 'AreaModel', AreaModel );
@@ -44,6 +52,8 @@ define( function( require ) {
      */
     reset: function() {
       this.currentAreaProperty.reset();
+      this.areaCalculationChoiceProperty.reset();
+      this.partialProductsChoiceProperty.reset();
     }
   } );
 } );

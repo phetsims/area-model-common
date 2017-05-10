@@ -11,21 +11,23 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
+  var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/model/AreaCalculationChoice' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor
+   *
+   * @param {Property.<AreaCalculationChoice} areaCalculationChoiceProperty
    */
-  function AreaCalculationSelectionNode() {
+  function AreaCalculationSelectionNode( areaCalculationChoiceProperty ) {
 
     Node.call( this );
 
@@ -33,21 +35,21 @@ define( function( require ) {
 
     var radioItems = [
       {
-        value: 'TODO',
+        value: AreaCalculationChoice.HIDDEN,
         node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: group } )
       },
       {
-        value: 'YUPTODO',
+        value: AreaCalculationChoice.LINE_BY_LINE,
         // TODO: color profile it?
         node: new AlignBox( createCalculationIcon( '#000', '#aaa' ), { group: group } )
       },
       {
-        value: 'VERYTODO',
+        value: AreaCalculationChoice.SHOW_ALL_LINES,
         node: new AlignBox( createCalculationIcon( '#000', '#000' ), { group: group } )
       }
     ];
 
-    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ new Property( 'TODO' ), radioItems ], {
+    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ areaCalculationChoiceProperty, radioItems ], {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
       buttonContentYMargin: 10,
