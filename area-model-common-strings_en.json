@@ -19,5 +19,8 @@
   },
   "totalAreaOfModel": {
     "value": "Total area of model"
+  },
+  "areaModelCalculation": {
+    "value": "Area model calculation"
   }
 }

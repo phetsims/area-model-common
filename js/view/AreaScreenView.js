@@ -12,9 +12,11 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
+  var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/view/AreaCalculationSelectionNode' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Panel = require( 'SUN/Panel' );
   var ProblemNode = require( 'AREA_MODEL_COMMON/view/ProblemNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
@@ -24,6 +26,7 @@ define( function( require ) {
   // strings
   var problemString = require( 'string!AREA_MODEL_COMMON/problem' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
+  var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
 
   /**
    * @param {AreaModel} model
@@ -43,12 +46,6 @@ define( function( require ) {
       xAlign: 'center'
     } );
 
-    var problemBox = new AccordionBox( problemNode, {
-      titleNode: new Text( problemString, {
-        font: AreaModelConstants.TITLE_FONT
-      } )
-    } );
-
     var areaNode = new AlignBox( new Text( '500', {
       font: AreaModelConstants.TOTAL_AREA_FONT
     } ), {
@@ -56,17 +53,47 @@ define( function( require ) {
       xAlign: 'center'
     } );
 
+    var calculationNode = new VBox( {
+      children: [
+        new AlignBox( new Text( areaModelCalculationString, { font: AreaModelConstants.TITLE_FONT } ), {
+          group: panelAlignGroup,
+          xAlign: 'left'
+        } ),
+        new AlignBox( new AreaCalculationSelectionNode(), {
+          group: panelAlignGroup,
+          xAlign: 'center',
+          xMargin: 15
+        } )
+      ],
+      spacing: 10
+    } );
+
+    var problemBox = new AccordionBox( problemNode, {
+      titleNode: new Text( problemString, {
+        font: AreaModelConstants.TITLE_FONT
+      } ),
+      contentXMargin: 15
+    } );
+
     var areaBox = new AccordionBox( areaNode, {
       titleNode: new Text( totalAreaOfModelString, {
         font: AreaModelConstants.TITLE_FONT
-      } )
+      } ),
+      contentXMargin: 15
+    } );
+
+    var calculationPanel = new Panel( calculationNode, {
+      xMargin: 15,
+      yMargin: 10
+      // TODO: hook up colors properly
     } );
 
     this.addChild( new VBox( {
       // TODO: change children based on whether there is a defined area?
       children: [
         problemBox,
-        areaBox
+        areaBox,
+        calculationPanel
       ],
       spacing: AreaModelConstants.PANEL_SPACING,
       top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
