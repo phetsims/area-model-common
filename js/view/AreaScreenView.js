@@ -72,38 +72,7 @@ define( function( require ) {
       xAlign: 'center'
     } );
     model.totalAreaProperty.link( function( polynomial ) {
-      if ( polynomial === null ) {
-        areaText.text = '-';
-      }
-      else {
-        areaText.text = polynomial.terms.map( function( term, index ) {
-          var string = '';
-
-          if ( index === 0 ) {
-            if ( term.coefficient < 0 ) {
-              string += '-';
-            }
-          }
-          else {
-            if ( term.coefficient < 0 ) {
-              string += ' - ';
-            }
-            else {
-              string += ' + ';
-            }
-          }
-
-          string += Math.round( term.coefficient * 100 ) / 100;
-          if ( term.power > 0 ) {
-            string += 'x';
-          }
-          if ( term.power > 1 ) {
-            string += '<sup>' + term.power + '</sup>';
-          }
-
-          return string;
-        } ).join( '' );
-      }
+      areaText.text = polynomial === null ? '-' : polynomial.toRichString();
     } );
 
     var calculationNode = new VBox( {

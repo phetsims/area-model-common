@@ -64,6 +64,42 @@ define( function( require ) {
           return term.times( otherTerm );
         } );
       } ) ) );
+    },
+
+    /**
+     * Returns a string suitable for RichText
+     * @public
+     *
+     * @returns {string}
+     */
+    toRichString: function() {
+      return this.terms.map( function( term, index ) {
+        var string = '';
+
+        if ( index === 0 ) {
+          if ( term.coefficient < 0 ) {
+            string += '-';
+          }
+        }
+        else {
+          if ( term.coefficient < 0 ) {
+            string += ' - ';
+          }
+          else {
+            string += ' + ';
+          }
+        }
+
+        string += Math.round( term.coefficient * 100 ) / 100;
+        if ( term.power > 0 ) {
+          string += 'x';
+        }
+        if ( term.power > 1 ) {
+          string += '<sup>' + term.power + '</sup>';
+        }
+
+        return string;
+      } ).join( '' );
     }
   } );
 } );
