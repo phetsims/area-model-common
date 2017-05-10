@@ -22,6 +22,8 @@ define( function( require ) {
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @constructor
@@ -79,16 +81,37 @@ define( function( require ) {
 
     var dragOffset = 5;
     var dragRadius = 7;
+    var circleDragOffset = dragOffset + Math.sqrt( 2 ) / 2 * dragRadius;
     var dragHandle = new Node( {
       children: [
         new Line( 0, 0, dragOffset, dragOffset, {
           stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty
         } ),
         new Circle( dragRadius, {
-          x: dragOffset + Math.sqrt( 2 ) / 2 * dragRadius,
-          y: dragOffset + Math.sqrt( 2 ) / 2 * dragRadius,
+          x: circleDragOffset,
+          y: circleDragOffset,
           fill: AreaModelColorProfile.proportionalDragHandleBackgroundProperty,
-          stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty
+          stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty,
+          cursor: 'pointer',
+          inputListeners: [
+            // TODO: DragHandler?
+            new SimpleDragHandler( {
+              // TODO: key into starting drag point?
+              drag: function( event, trail ) {
+                var viewPoint = self.globalToLocalPoint( event.pointer.point ).minusScalar( circleDragOffset );
+                var modelPoint = self.modelViewTransform.viewToModelPosition( viewPoint );
+
+                var width = Math.round( modelPoint.x / area.snapSize ) * area.snapSize;
+                var height = Math.round( modelPoint.y / area.snapSize ) * area.snapSize;
+
+                width = Util.clamp( width, area.minimumSize, area.maximumSize );
+                height = Util.clamp( height, area.minimumSize, area.maximumSize );
+
+                area.totalWidthProperty.value = width;
+                area.totalHeightProperty.value = height;
+              }
+            } )
+          ]
         } )
       ]
     } );
