@@ -17,6 +17,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/model/ProportionalAreaModel' );
   var ProportionalAreaNode = require( 'AREA_MODEL_COMMON/view/ProportionalAreaNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SceneSelectionNode = require( 'AREA_MODEL_COMMON/view/SceneSelectionNode' );
@@ -30,11 +31,14 @@ define( function( require ) {
    *
    * @param {AreaModel} model
    */
-  function ProportionalAreaScreenView( model ) {
+  function ProportionalAreaScreenView( model, decimalPlaces ) {
+    assert && assert( model instanceof ProportionalAreaModel );
+    assert && assert( typeof decimalPlaces === 'number' );
+
     var self = this;
 
-    AreaScreenView.call( this, model, AreaModelColorProfile.proportionalWidthProperty,
-                                      AreaModelColorProfile.proportionalHeightProperty );
+    AreaScreenView.call( this, model, true, decimalPlaces, AreaModelColorProfile.proportionalWidthProperty,
+                                                           AreaModelColorProfile.proportionalHeightProperty );
 
     var areaNodes = model.areas.map( function( area ) {
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, {

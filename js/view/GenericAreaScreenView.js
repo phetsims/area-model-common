@@ -16,14 +16,17 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {AreaModel} model
    * @constructor
+   *
+   * @param {AreaModel} model
+   * @param {number} decimalPlaces
    */
-  function GenericAreaScreenView( model ) {
+  function GenericAreaScreenView( model, decimalPlaces ) {
     assert && assert( model instanceof GenericAreaModel );
+    assert && assert( typeof decimalPlaces === 'number' );
 
-    AreaScreenView.call( this, model, AreaModelColorProfile.genericWidthProperty,
-                                      AreaModelColorProfile.genericHeightProperty );
+    AreaScreenView.call( this, model, false, decimalPlaces, AreaModelColorProfile.genericWidthProperty,
+                                                            AreaModelColorProfile.genericHeightProperty );
   }
 
   areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );

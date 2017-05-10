@@ -16,9 +16,9 @@ define( function( require ) {
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)
   var AreaModelColorProfile = new ColorProfile( {
-    background: { default: new Color( 247, 247, 253 ) },
+    background: { default: new Color( 244, 252, 254 ) },
 
-    radioBorder: { default: new Color( 118, 191, 209 ) },
+    radioBorder: { default: new Color( 97, 200, 216 ) },
     radioBackground: { default: Color.WHITE },
 
     panelBorder: { default: new Color( 0x3, 0x3, 0x3 ) },
@@ -30,22 +30,22 @@ define( function( require ) {
     minorGridLine: { default: new Color( 0xdd, 0xdd, 0xdd ) },
     majorGridLine: { default: new Color( 0x99, 0x99, 0x99 ) },
 
-    proportionalWidth: { default: new Color( 164, 67, 41 ) }, // red
-    proportionalHeight: { default: new Color( 26, 99, 236 ) }, // blue
+    proportionalWidth: { default: new Color( 181, 45, 0 ) }, // red
+    proportionalHeight: { default: new Color( 0, 71, 253 ) }, // blue
 
-    genericWidth: { default: new Color( 130, 194, 150 ) }, // green
-    genericHeight: { default: new Color( 151, 135, 220 ) }, // purple
+    genericWidth: { default: new Color( 0, 165, 83 ) }, // green
+    genericHeight: { default: new Color( 0, 165, 83 ) }, // purple
 
     proportionalActiveAreaBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
     proportionalActiveAreaBackground: { default: new Color( 0, 0, 0, 0.1 ) },
 
     proportionalDragHandleBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
-    proportionalDragHandleBackground: { default: new Color( 178, 198, 186 ) },
+    proportionalDragHandleBackground: { default: new Color( 172, 201, 184 ) },
 
     // Tile colors
-    bigTile: { default: new Color( 249, 217, 136 ) },
-    mediumTile: { default: new Color( 250, 241, 151 ) },
-    smallTile: { default: new Color( 251, 247, 206 ) },
+    bigTile: { default: new Color( 255, 220, 120 ) },
+    mediumTile: { default: new Color( 249, 244, 136 ) },
+    smallTile: { default: new Color( 252, 250, 202 ) },
 
     gridIcon: { default: new Color( 0x55, 0x55, 0x55 ) },
     tileIconStroke: { default: Color.BLACK }

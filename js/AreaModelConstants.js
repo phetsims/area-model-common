@@ -13,7 +13,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   return areaModelCommon.register( 'AreaModelConstants', {
-    PROBLEM_X_FONT: new PhetFont( 16 ),
+    PROBLEM_X_FONT: new PhetFont( 36 ),
     TITLE_FONT: new PhetFont( 16 ),
     TOTAL_AREA_FONT: new PhetFont( 20 ),
     SYMBOL_FONT: new PhetFont( 20 ),
@@ -21,6 +21,8 @@ define( function( require ) {
     PANEL_MARGIN: 20,
     PANEL_SPACING: 10,
     PANEL_CORNER_RADIUS: 5,
+
+    PARTITION_HANDLE_RADIUS: 12,
 
     X_STRING: '\u00D7'
   } );

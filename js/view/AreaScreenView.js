@@ -37,11 +37,14 @@ define( function( require ) {
    * @constructor
    *
    * @param {AreaModel} model
+   * @param {boolean} isProportional
+   * @param {number} decimalPlaces
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
    */
-  function AreaScreenView( model, widthColorProperty, heightColorProperty ) {
+  function AreaScreenView( model, isProportional, decimalPlaces, widthColorProperty, heightColorProperty ) {
     assert && assert( model instanceof AreaModel );
+    assert && assert( typeof isProportional === 'boolean' );
     assert && assert( widthColorProperty instanceof Property );
     assert && assert( heightColorProperty instanceof Property );
 
@@ -52,7 +55,7 @@ define( function( require ) {
       matchVertical: false
     } );
 
-    var problemNode = new AlignBox( new ProblemNode(), {
+    var problemNode = new AlignBox( new ProblemNode( model.currentAreaProperty, isProportional, decimalPlaces, widthColorProperty, heightColorProperty ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
@@ -102,6 +105,7 @@ define( function( require ) {
       } ),
       expandedProperty: model.problemBoxExpanded,
       contentXMargin: 15,
+      contentYMargin: 12,
       fill: AreaModelColorProfile.panelBackgroundProperty,
       stroke: AreaModelColorProfile.panelBorderProperty,
       cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
