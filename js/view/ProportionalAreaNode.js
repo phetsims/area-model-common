@@ -13,7 +13,9 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -30,6 +32,7 @@ define( function( require ) {
    */
   function ProportionalAreaNode( area, gridLinesVisibleProperty, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
+    var self = this;
 
     AreaNode.call( this, area );
 
@@ -73,6 +76,41 @@ define( function( require ) {
     } );
     gridLinesVisibleProperty.linkAttribute( gridLineNode, 'visible' );
     this.addChild( gridLineNode );
+
+    var dragOffset = 5;
+    var dragRadius = 7;
+    var dragHandle = new Node( {
+      children: [
+        new Line( 0, 0, dragOffset, dragOffset, {
+          stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty
+        } ),
+        new Circle( dragRadius, {
+          x: dragOffset + Math.sqrt( 2 ) / 2 * dragRadius,
+          y: dragOffset + Math.sqrt( 2 ) / 2 * dragRadius,
+          fill: AreaModelColorProfile.proportionalDragHandleBackgroundProperty,
+          stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty
+        } )
+      ]
+    } );
+    area.totalWidthProperty.link( function( totalWidth ) {
+      dragHandle.x = self.modelViewTransform.modelToViewX( totalWidth );
+    } );
+    area.totalHeightProperty.link( function( totalHeight ) {
+      dragHandle.y = self.modelViewTransform.modelToViewY( totalHeight );
+    } );
+    this.addChild( dragHandle );
+
+    var activeAreaNode = new Rectangle( 0, 0, 0, 0, {
+      fill: AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
+      stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
+    } );
+    area.totalWidthProperty.link( function( totalWidth ) {
+      activeAreaNode.rectWidth = self.modelViewTransform.modelToViewX( totalWidth );
+    } );
+    area.totalHeightProperty.link( function( totalHeight ) {
+      activeAreaNode.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
+    } );
+    this.addChild( activeAreaNode );
 
     this.mutate( nodeOptions );
   }

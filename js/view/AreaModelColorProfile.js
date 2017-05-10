@@ -36,6 +36,12 @@ define( function( require ) {
     genericWidth: { default: new Color( 130, 194, 150 ) }, // green
     genericHeight: { default: new Color( 151, 135, 220 ) }, // purple
 
+    proportionalActiveAreaBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
+    proportionalActiveAreaBackground: { default: new Color( 0, 0, 0, 0.1 ) },
+
+    proportionalDragHandleBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
+    proportionalDragHandleBackground: { default: new Color( 178, 198, 186 ) },
+
     // Tile colors
     bigTile: { default: new Color( 249, 217, 136 ) },
     mediumTile: { default: new Color( 250, 241, 151 ) },
