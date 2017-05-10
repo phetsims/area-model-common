@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -134,6 +135,39 @@ define( function( require ) {
       activeAreaNode.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.addChild( activeAreaNode );
+
+    var widthDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
+      fill: AreaModelColorProfile.dockBackgroundProperty,
+      stroke: AreaModelColorProfile.dockBorderProperty,
+      lineDash: [ 3, 3 ],
+      children: [
+        new Line( 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS - AreaModelConstants.PARTITION_HANDLE_OFFSET, {
+          stroke: AreaModelColorProfile.dockBorderProperty
+        } )
+      ]
+    } );
+    this.addChild( widthDock );
+
+    var heightDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
+      fill: AreaModelColorProfile.dockBackgroundProperty,
+      stroke: AreaModelColorProfile.dockBorderProperty,
+      lineDash: [ 3, 3 ],
+      children: [
+        new Line( -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS - AreaModelConstants.PARTITION_HANDLE_OFFSET, 0, {
+          stroke: AreaModelColorProfile.dockBorderProperty
+        } )
+      ]
+    } );
+    this.addChild( heightDock );
+
+    area.totalHeightProperty.link( function( totalHeight ) {
+      heightDock.visible = totalHeight >= area.snapSize * 2 - 1e-7;
+      widthDock.y = self.modelViewTransform.modelToViewY( totalHeight ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+    } );
+    area.totalWidthProperty.link( function( totalWidth ) {
+      widthDock.visible = totalWidth >= area.snapSize * 2 - 1e-7;
+      heightDock.x = self.modelViewTransform.modelToViewX( totalWidth ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+    } );
 
     this.mutate( nodeOptions );
   }

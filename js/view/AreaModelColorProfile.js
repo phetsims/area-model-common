@@ -42,6 +42,9 @@ define( function( require ) {
     proportionalDragHandleBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
     proportionalDragHandleBackground: { default: new Color( 172, 201, 184 ) },
 
+    dockBorder: { default: Color.BLACK },
+    dockBackground: { default: Color.WHITE },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

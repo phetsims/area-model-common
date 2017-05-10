@@ -22,7 +22,8 @@ define( function( require ) {
     PANEL_SPACING: 10,
     PANEL_CORNER_RADIUS: 5,
 
-    PARTITION_HANDLE_RADIUS: 12,
+    PARTITION_HANDLE_OFFSET: 15,
+    PARTITION_HANDLE_RADIUS: 10,
 
     X_STRING: '\u00D7'
   } );
