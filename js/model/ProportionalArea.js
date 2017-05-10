@@ -19,6 +19,8 @@ define( function( require ) {
 
   /**
    * @constructor
+   *
+   * @param {Object} [options]
    */
   function ProportionalArea( options ) {
     var self = this;
