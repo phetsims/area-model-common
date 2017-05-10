@@ -54,6 +54,10 @@ define( function( require ) {
     this.snapSize = options.snapSize;
 
     // @public {number}
+    this.maximumSize = options.maximumSize;
+    this.minimumSize = options.minimumSize;
+
+    // @public {number}
     this.smallTileSize = options.smallTileSize;
     this.largeTileSize = options.largeTileSize;
 

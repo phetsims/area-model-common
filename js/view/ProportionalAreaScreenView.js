@@ -34,7 +34,7 @@ define( function( require ) {
     AreaScreenView.call( this, model );
 
     var areaNodes = model.areas.map( function( area ) {
-      return new ProportionalAreaNode( area, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, {
         // TODO: improve positioning
         left: self.layoutBounds.top + 70,
         top: self.layoutBounds.left + 70
