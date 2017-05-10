@@ -17,6 +17,8 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
+  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @constructor
@@ -39,7 +41,8 @@ define( function( require ) {
 
     var handle = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: colorProperty,
-      stroke: AreaModelColorProfile.partitionLineBorderProperty
+      stroke: AreaModelColorProfile.partitionLineBorderProperty,
+      cursor: 'pointer'
     } );
 
     var line = new Line( 0, 0, 0, 0, {
@@ -61,7 +64,7 @@ define( function( require ) {
     var secondaryTransform = ( isHorizontalPartition ? modelViewTransform.modelToViewY : modelViewTransform.modelToViewX ).bind( modelViewTransform );
 
     primaryProperty.link( function( primary ) {
-      self[ primaryCoordinate ] = primaryTransform( primary );
+      self[ primaryCoordinate ] = primaryTransform( primary === null ? 0 : primary );
     } );
     secondaryProperty.link( function( secondary ) {
       var offsetValue = secondaryTransform( secondary ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
@@ -71,6 +74,35 @@ define( function( require ) {
     ternaryProperty.link( function( ternary ) {
       // TODO: handle multitouch
       self.visible = ternary >= area.snapSize * 2 - 1e-7;
+    } );
+
+    // TODO: DragHandler?
+    var dragHandler = new SimpleDragHandler( {
+      // TODO: key into starting drag point?
+      drag: function( event, trail ) {
+        var viewPoint = self.globalToParentPoint( event.pointer.point );
+        var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
+
+        var value = modelPoint[ primaryCoordinate ];
+
+        value = Math.round( value / area.snapSize ) * area.snapSize;
+        value = Util.clamp( value, 0, ternaryProperty.value );
+
+        primaryProperty.value = value;
+      },
+
+      end: function( event, trail ) {
+        if ( primaryProperty.value === ternaryProperty.value ) {
+          primaryProperty.value = null;
+        }
+      }
+    } );
+    handle.addInputListener( dragHandler );
+
+    ternaryProperty.link( function( ternary ) {
+      if ( primaryProperty.value >= ternaryProperty.value ) {
+        primaryProperty.value = dragHandler.dragging ? ternaryProperty.value : null;
+      }
     } );
   }
 
