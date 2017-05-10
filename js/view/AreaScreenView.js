@@ -49,6 +49,8 @@ define( function( require ) {
     assert && assert( widthColorProperty instanceof Property );
     assert && assert( heightColorProperty instanceof Property );
 
+    var self = this;
+
     ScreenView.call( this );
 
     // TODO: i18n. titles (long) can screw up our alignment here!!
@@ -192,6 +194,14 @@ define( function( require ) {
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
     } );
     this.addChild( this.panelContainer );
+    model.totalAreaProperty.link( function( area ) {
+      self.panelContainer.children = ( area === null ) ? [ problemBox ] : [
+        problemBox,
+        areaBox,
+        calculationPanel,
+        productsPanel
+      ];
+    } );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
