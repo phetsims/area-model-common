@@ -18,7 +18,9 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
+  var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
   var ProblemNode = require( 'AREA_MODEL_COMMON/view/ProblemNode' );
+  var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -28,6 +30,7 @@ define( function( require ) {
   var problemString = require( 'string!AREA_MODEL_COMMON/problem' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
+  var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
 
   /**
    * @param {AreaModel} model
@@ -69,6 +72,22 @@ define( function( require ) {
       spacing: 10
     } );
 
+    // TODO: simplify
+    var productsNode = new VBox( {
+      children: [
+        new AlignBox( new Text( partialProductsString, { font: AreaModelConstants.TITLE_FONT } ), {
+          group: panelAlignGroup,
+          xAlign: 'left'
+        } ),
+        new AlignBox( new PartialProductsSelectionNode(), {
+          group: panelAlignGroup,
+          xAlign: 'center',
+          xMargin: 15
+        } )
+      ],
+      spacing: 10
+    } );
+
     // TODO: consolidate options
     var problemBox = new AccordionBox( problemNode, {
       titleNode: new Text( problemString, {
@@ -85,15 +104,24 @@ define( function( require ) {
       titleNode: new Text( totalAreaOfModelString, {
         font: AreaModelConstants.TITLE_FONT
       } ),
+      expandedProperty: new Property( false ),
       contentXMargin: 15,
       fill: AreaModelColorProfile.panelBackgroundProperty,
       stroke: AreaModelColorProfile.panelBorderProperty,
-      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
-      ,
+      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
       titleAlignX: 'left'
     } );
 
     var calculationPanel = new Panel( calculationNode, {
+      xMargin: 15,
+      yMargin: 10,
+      fill: AreaModelColorProfile.panelBackgroundProperty,
+      stroke: AreaModelColorProfile.panelBorderProperty,
+      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+    } );
+
+    // TODO: simplify
+    var productsPanel = new Panel( productsNode, {
       xMargin: 15,
       yMargin: 10,
       fill: AreaModelColorProfile.panelBackgroundProperty,
@@ -106,7 +134,8 @@ define( function( require ) {
       children: [
         problemBox,
         areaBox,
-        calculationPanel
+        calculationPanel,
+        productsPanel
       ],
       spacing: AreaModelConstants.PANEL_SPACING,
       top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
