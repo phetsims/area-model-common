@@ -22,18 +22,15 @@ define( function( require ) {
    */
   function ProportionalAreaModel( areaOptionObjects ) {
 
-    AreaModel.call( this );
+    AreaModel.call( this, areaOptionObjects.map( function( options ) {
+      return new ProportionalArea( options );
+    } ) );
 
     // @public {BooleanProperty}
     this.gridLinesVisibleProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty}
     this.tilesVisibleProperty = new BooleanProperty( false );
-
-    // @public {Array.<ProportionalArea>}
-    this.areas = areaOptionObjects.map( function( options ) {
-      return new ProportionalArea( options );
-    } );
   }
 
   areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );

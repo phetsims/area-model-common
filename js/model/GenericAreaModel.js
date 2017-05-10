@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaModel = require( 'AREA_MODEL_COMMON/model/AreaModel' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -20,12 +21,13 @@ define( function( require ) {
    */
   function GenericAreaModel( allowPowers ) {
 
-    AreaModel.call( this );
+    // @public {Area}
+    this.genericArea = new GenericArea();
+
+    AreaModel.call( this, this.genericArea );
 
     // @public {boolean}
     this.allowPowers = allowPowers;
-
-    // TODO: add Area?
   }
 
   areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );
