@@ -132,7 +132,8 @@ define( function( require ) {
       cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
     } );
 
-    this.addChild( new VBox( {
+    // @protected {VBox} - Available for suptype positioning
+    this.panelContainer = new VBox( {
       // TODO: change children based on whether there is a defined area?
       children: [
         problemBox,
@@ -143,7 +144,8 @@ define( function( require ) {
       spacing: AreaModelConstants.PANEL_SPACING,
       top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
-    } ) );
+    } );
+    this.addChild( this.panelContainer );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {

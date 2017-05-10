@@ -15,6 +15,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -44,19 +45,31 @@ define( function( require ) {
 
     var gridLineWidth = 0.5;
     var halfGridLineWidth = gridLineWidth / 2;
-    var gridLineShape = new Shape();
-    for ( var i = area.snapSize; i < area.maximumSize; i += area.snapSize ) {
+    var majorLineShape = new Shape();
+    var minorLineShape = new Shape();
+    for ( var i = area.minorGridSpacing; i < area.maximumSize; i += area.minorGridSpacing ) {
       var x = this.modelViewTransform.modelToViewX( i );
       var y = this.modelViewTransform.modelToViewY( i );
 
-      gridLineShape.moveTo( halfGridLineWidth, y );
-      gridLineShape.lineTo( this.viewSize - halfGridLineWidth, y );
+      // See how close it is to a major grid line (dealing with floating-point variations)
+      var isMajor = Math.abs( i / area.majorGridSpacing - Math.round( i / area.majorGridSpacing ) ) < 1e-6;
+      var shape = isMajor ? majorLineShape : minorLineShape;
 
-      gridLineShape.moveTo( x, halfGridLineWidth );
-      gridLineShape.lineTo( x, this.viewSize - halfGridLineWidth );
+      shape.moveTo( halfGridLineWidth, y );
+      shape.lineTo( this.viewSize - halfGridLineWidth, y );
+
+      shape.moveTo( x, halfGridLineWidth );
+      shape.lineTo( x, this.viewSize - halfGridLineWidth );
     }
-    var gridLineNode = new Path( gridLineShape, {
-      stroke: AreaModelColorProfile.gridLineProperty
+    var gridLineNode = new Node( {
+      children: [
+        new Path( majorLineShape, {
+          stroke: AreaModelColorProfile.majorGridLineProperty
+        } ),
+        new Path( minorLineShape, {
+          stroke: AreaModelColorProfile.minorGridLineProperty
+        } )
+      ]
     } );
     gridLinesVisibleProperty.linkAttribute( gridLineNode, 'visible' );
     this.addChild( gridLineNode );

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/view/AreaScreenView' );
   var CheckBox = require( 'SUN/CheckBox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -18,6 +19,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalAreaNode = require( 'AREA_MODEL_COMMON/view/ProportionalAreaNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var SceneSelectionNode = require( 'AREA_MODEL_COMMON/view/SceneSelectionNode' );
   var Shape = require( 'KITE/Shape' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -51,6 +53,12 @@ define( function( require ) {
         areaNode.visible = areaNode.area === currentArea;
       } );
     } );
+
+    var sceneSelectionNode = new SceneSelectionNode( model, {
+      top: this.panelContainer.bottom + AreaModelConstants.PANEL_SPACING,
+      centerX: this.panelContainer.centerX
+    } );
+    this.addChild( sceneSelectionNode );
 
     var gridIconShape = new Shape().moveTo( RADIO_ICON_SIZE / 4, 0 )
                                    .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )

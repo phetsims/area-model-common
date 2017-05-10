@@ -27,7 +27,8 @@ define( function( require ) {
     areaBackground: { default: Color.WHITE },
     areaBorder: { default: Color.BLACK },
 
-    gridLine: { default: new Color( 0xcc, 0xcc, 0xcc ) },
+    minorGridLine: { default: new Color( 0xdd, 0xdd, 0xdd ) },
+    majorGridLine: { default: new Color( 0x99, 0x99, 0x99 ) },
 
     // Tile colors
     bigTile: { default: new Color( 249, 217, 136 ) },
