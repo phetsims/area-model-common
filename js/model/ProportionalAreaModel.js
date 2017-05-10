@@ -13,13 +13,14 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
 
   /**
    * @constructor
    *
-   * TODO: add configuration options for each area
+   * @param {Array.<Object>} - An array of options objects to be passed to the ProportionalArea constructors.
    */
-  function ProportionalAreaModel() {
+  function ProportionalAreaModel( areaOptionObjects ) {
 
     AreaModel.call( this );
 
@@ -29,7 +30,10 @@ define( function( require ) {
     // @public {BooleanProperty}
     this.tilesVisibleProperty = new BooleanProperty( false );
 
-    // TODO: add scenes (multiple Areas?)
+    // @public {Array.<ProportionalArea>}
+    this.areas = areaOptionObjects.map( function( options ) {
+      return new ProportionalArea( options );
+    } );
   }
 
   areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );

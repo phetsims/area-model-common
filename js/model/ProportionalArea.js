@@ -34,7 +34,8 @@ define( function( require ) {
       initialHeight: 1, // {number} - Initial height
       snapSize: 1, // {number} - Smallest unit size (that is snapped to)
       smallTileSize: 1, // {number} - Size of the smallest tile available (or for the thin tiles, the shorter length)
-      largeTileSize: 10 // {number} - Size of the largest tile available (or for the thin tiles, the longer length)
+      largeTileSize: 10, // {number} - Size of the largest tile available (or for the thin tiles, the longer length)
+      tilesAvailable: true // {boolean} - Whether tiles can be shown on this area
     }, options );
 
     // @public {Property.<number>} - Width of the contained area

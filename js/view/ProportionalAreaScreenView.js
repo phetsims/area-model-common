@@ -14,8 +14,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
-   * @param {AreaModel} model
    * @constructor
+   *
+   * @param {AreaModel} model
    */
   function ProportionalAreaScreenView( model ) {
 
