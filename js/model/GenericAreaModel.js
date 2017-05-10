@@ -24,7 +24,7 @@ define( function( require ) {
     // @public {Area}
     this.genericArea = new GenericArea();
 
-    AreaModel.call( this, this.genericArea );
+    AreaModel.call( this, [ this.genericArea ] );
 
     // @public {boolean}
     this.allowPowers = allowPowers;

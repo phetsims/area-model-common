@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/model/PartialProductsChoice' );
   var Property = require( 'AXON/Property' );
@@ -21,6 +22,7 @@ define( function( require ) {
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
    */
   function AreaModel( areas ) {
+    var self = this;
 
     // @public {Array.<Area>}
     this.areas = areas;
@@ -39,6 +41,14 @@ define( function( require ) {
 
     // @public {Property.<PartialProductsChoice}
     this.partialProductsChoiceProperty = new Property( PartialProductsChoice.HIDDEN );
+
+    var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
+
+    // TODO: may notify more than needed. check if it's a concern?
+    // @public {Property.<Polynomial>}
+    this.totalAreaProperty = new DerivedProperty( totalAreaProperties, function() {
+      return self.currentAreaProperty.value.totalAreaProperty.value;
+    } );
   }
 
   areaModelCommon.register( 'AreaModel', AreaModel );

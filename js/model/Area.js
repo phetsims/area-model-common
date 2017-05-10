@@ -12,20 +12,25 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
 
   /**
    * @constructor
+   *
+   * @param {Array.<Partition>} horizontalPartitions
+   * @param {Array.<Partition>} verticalPartitions
    */
-  function Area() {
+  function Area( horizontalPartitions, verticalPartitions ) {
+    assert && assert( horizontalPartitions instanceof Array );
+    assert && assert( verticalPartitions instanceof Array );
+
     var self = this;
 
-    // @public {ObservableArray.<Partition>}
-    this.horizontalPartitions = new ObservableArray();
+    // @public {Array.<Partition>}
+    this.horizontalPartitions = horizontalPartitions;
 
-    // @public {ObservableArray.<Partition>}
-    this.verticalPartitions = new ObservableArray();
+    // @public {Array.<Partition>}
+    this.verticalPartitions = verticalPartitions;
 
     var horizontalProperties = _.flatten( this.horizontalPartitions.map( function( partition ) {
       return [ partition.sizeProperty, partition.visibleProperty ];
@@ -36,13 +41,13 @@ define( function( require ) {
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.horizontalTotalProperty = new DerivedProperty( horizontalProperties, function() {
-      var definedPartitions = new Polynomial( self.horizontalPartitions.filter( function( partition ) {
+      var definedPartitions = self.horizontalPartitions.filter( function( partition ) {
         return partition.visibleProperty.value && partition.sizeProperty.value !== null;
-      } ) );
+      } );
       if ( definedPartitions.length ) {
-        return definedPartitions.map( function( partition ) {
+        return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;
-        } );
+        } ) );
       }
       else {
         return null;
@@ -52,13 +57,13 @@ define( function( require ) {
     // TODO: dedup with horizontal/vertical
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.verticalTotalProperty = new DerivedProperty( verticalProperties, function() {
-      var definedPartitions = new Polynomial( self.verticalPartitions.filter( function( partition ) {
+      var definedPartitions = self.verticalPartitions.filter( function( partition ) {
         return partition.visibleProperty.value && partition.sizeProperty.value !== null;
-      } ) );
+      } );
       if ( definedPartitions.length ) {
-        return definedPartitions.map( function( partition ) {
+        return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;
-        } );
+        } ) );
       }
       else {
         return null;

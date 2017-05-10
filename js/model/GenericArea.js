@@ -18,29 +18,32 @@ define( function( require ) {
    * @constructor
    */
   function GenericArea() {
-    Area.call( this );
-
     // @public {Partition}
     // TODO: are props needed?
     this.leftPartition = new Partition( null );
     this.middleHorizontalPartition = new Partition( null ); // TODO: better naming
     this.rightPartition = new Partition( null );
-    this.horizontalPartitions.push( this.leftPartition );
-    this.horizontalPartitions.push( this.middleHorizontalPartition );
-    this.horizontalPartitions.push( this.rightPartition );
 
     // @public {Partition}
     this.topPartition = new Partition( null );
     this.middleVerticalPartition = new Partition( null ); // TODO: better naming
     this.bottomPartition = new Partition( null );
-    this.verticalPartitions.push( this.topPartition );
-    this.verticalPartitions.push( this.middleVerticalPartition );
-    this.verticalPartitions.push( this.bottomPartition );
 
+    // TODO: allow init with this, then inline all of this?
     this.middleHorizontalPartition.visibleProperty.value = false;
     this.rightPartition.visibleProperty.value = false;
     this.middleVerticalPartition.visibleProperty.value = false;
     this.bottomPartition.visibleProperty.value = false;
+
+    Area.call( this, [
+      this.leftPartition,
+      this.middleHorizontalPartition,
+      this.rightPartition
+    ], [
+      this.topPartition,
+      this.middleVerticalPartition,
+      this.bottomPartition
+    ] );
   }
 
   areaModelCommon.register( 'GenericArea', GenericArea );

@@ -25,8 +25,6 @@ define( function( require ) {
   function ProportionalArea( options ) {
     var self = this;
 
-    Area.call( this );
-
     options = _.extend( {
       maximumSize: 20, // {number} - Maximum size our area can take up
       minimumSize: 1, // {number} - Minimum size our area can take up
@@ -71,14 +69,10 @@ define( function( require ) {
     // TODO: are props needed?
     this.leftPartition = new Partition( null );
     this.rightPartition = new Partition( null );
-    this.horizontalPartitions.push( this.leftPartition );
-    this.horizontalPartitions.push( this.rightPartition );
 
     // @public {Partition}
     this.topPartition = new Partition( null );
     this.bottomPartition = new Partition( null );
-    this.verticalPartitions.push( this.topPartition );
-    this.verticalPartitions.push( this.bottomPartition );
 
     // Keep partition sizes up-to-date
     Property.multilink( [ this.totalWidthProperty,
@@ -112,6 +106,14 @@ define( function( require ) {
         self.bottomPartition.sizeProperty.value = null;
       }
     } );
+
+    Area.call( this, [
+      this.leftPartition,
+      this.rightPartition
+    ], [
+      this.topPartition,
+      this.bottomPartition
+    ] );
 
     // @public {PartitionedArea}
     this.topLeftArea = new PartitionedArea( this.leftPartition, this.topPartition );
