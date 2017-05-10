@@ -15,10 +15,15 @@ define( function( require ) {
 
   /**
    * @constructor
+   *
+   * @param {boolean} allowPowers - Whether the user is able to add powers of x.
    */
-  function GenericAreaModel() {
+  function GenericAreaModel( allowPowers ) {
 
     AreaModel.call( this );
+
+    // @public {boolean}
+    this.allowPowers = allowPowers;
 
     // TODO: add Area?
   }
