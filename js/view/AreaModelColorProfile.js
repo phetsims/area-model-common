@@ -30,6 +30,12 @@ define( function( require ) {
     minorGridLine: { default: new Color( 0xdd, 0xdd, 0xdd ) },
     majorGridLine: { default: new Color( 0x99, 0x99, 0x99 ) },
 
+    proportionalWidth: { default: new Color( 164, 67, 41 ) }, // red
+    proportionalHeight: { default: new Color( 26, 99, 236 ) }, // blue
+
+    genericWidth: { default: new Color( 130, 194, 150 ) }, // green
+    genericHeight: { default: new Color( 151, 135, 220 ) }, // purple
+
     // Tile colors
     bigTile: { default: new Color( 249, 217, 136 ) },
     mediumTile: { default: new Color( 250, 241, 151 ) },

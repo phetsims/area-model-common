@@ -33,7 +33,8 @@ define( function( require ) {
   function ProportionalAreaScreenView( model ) {
     var self = this;
 
-    AreaScreenView.call( this, model );
+    AreaScreenView.call( this, model, AreaModelColorProfile.proportionalWidthProperty,
+                                      AreaModelColorProfile.proportionalHeightProperty );
 
     var areaNodes = model.areas.map( function( area ) {
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, {

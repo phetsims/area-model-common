@@ -26,13 +26,14 @@ define( function( require ) {
 
   /**
    * @constructor
+   * TODO: add extends to things?
+   *
+   * @param {Property.<Color>} widthColorProperty
+   * @param {Property.<Color>} heightColorProperty
    */
-  function PartialProductsSelectionNode() {
+  function PartialProductsSelectionNode( widthColorProperty, heightColorProperty ) {
 
     Node.call( this );
-
-    var tmpRedColor = '#f00';
-    var tmpBlueColor = '#00f';
 
     var group = new AlignGroup();
 
@@ -54,8 +55,8 @@ define( function( require ) {
           children: [
             new Text( 'a', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ tmpProp ], function( value ) {
-                return value === 'VERYTODO' ? tmpRedColor : 'black';
+              fill: new DerivedProperty( [ tmpProp, heightColorProperty ], function( value, heightColor ) {
+                return value === 'VERYTODO' ? heightColor : 'black';
               } )
             } ),
             new Text( AreaModelConstants.X_STRING, {
@@ -63,8 +64,8 @@ define( function( require ) {
             } ),
             new Text( 'b', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ tmpProp ], function( value ) {
-                return value === 'VERYTODO' ? tmpBlueColor : 'black';
+              fill: new DerivedProperty( [ tmpProp, widthColorProperty ], function( value, widthColor ) {
+                return value === 'VERYTODO' ? widthColor : 'black';
               } )
             } )
           ],

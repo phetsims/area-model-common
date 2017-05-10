@@ -37,9 +37,13 @@ define( function( require ) {
    * @constructor
    *
    * @param {AreaModel} model
+   * @param {Property.<Color>} widthColorProperty
+   * @param {Property.<Color>} heightColorProperty
    */
-  function AreaScreenView( model ) {
+  function AreaScreenView( model, widthColorProperty, heightColorProperty ) {
     assert && assert( model instanceof AreaModel );
+    assert && assert( widthColorProperty instanceof Property );
+    assert && assert( heightColorProperty instanceof Property );
 
     ScreenView.call( this );
 
@@ -82,7 +86,7 @@ define( function( require ) {
           group: panelAlignGroup,
           xAlign: 'left'
         } ),
-        new AlignBox( new PartialProductsSelectionNode(), {
+        new AlignBox( new PartialProductsSelectionNode( widthColorProperty, heightColorProperty ), {
           group: panelAlignGroup,
           xAlign: 'center',
           xMargin: 15
