@@ -30,8 +30,20 @@ define( function( require ) {
   areaModelCommon.register( 'AreaModel', AreaModel );
 
   return inherit( Object, AreaModel, {
-    // TODO: erase?
-    // TODO: reset?
+    /**
+     * Returns parts of the model to the initial state.
+     * @public
+     */
+    erase: function() {
 
+    },
+
+    /**
+     * Returns the model to its initial state.
+     * @public
+     */
+    reset: function() {
+      this.currentAreaProperty.reset();
+    }
   } );
 } );
