@@ -37,5 +37,16 @@ define( function( require ) {
 
   areaModelCommon.register( 'Term', Term );
 
-  return inherit( Object, Term );
+  return inherit( Object, Term, {
+    /**
+     * Term multiplication.
+     * @public
+     *
+     * @param {Term} term
+     * @returns {Term}
+     */
+    times: function( term ) {
+      return new Term( this.coefficient * term.coefficient, this.power + term.power );
+    }
+  } );
 } );
