@@ -25,7 +25,15 @@ define( function( require ) {
     panelBackground: { default: Color.WHITE },
 
     areaBackground: { default: Color.WHITE },
-    areaBorder: { default: Color.BLACK }
+    areaBorder: { default: Color.BLACK },
+
+    // Tile colors
+    bigTile: { default: new Color( 249, 217, 136 ) },
+    mediumTile: { default: new Color( 250, 241, 151 ) },
+    smallTile: { default: new Color( 251, 247, 206 ) },
+
+    gridIcon: { default: new Color( 0x55, 0x55, 0x55 ) },
+    tileIconStroke: { default: Color.BLACK }
   }, [ 'default' ] );
 
   areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );
