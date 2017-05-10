@@ -10,23 +10,26 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @constructor
-   *
-   * @param {Area} area
    */
-  function AreaNode( area ) {
+  function ProblemNode() {
 
     Node.call( this );
 
-    // @public {Area}
-    this.area = area;
+    var xText = new Text( 'x', {
+      font: AreaModelConstants.PROBLEM_X_FONT
+    } );
+
+    this.addChild( xText );
   }
 
-  areaModelCommon.register( 'AreaNode', AreaNode );
+  areaModelCommon.register( 'ProblemNode', ProblemNode );
 
-  return inherit( Node, AreaNode );
+  return inherit( Node, ProblemNode );
 } );
