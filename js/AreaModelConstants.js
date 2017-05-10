@@ -15,8 +15,9 @@ define( function( require ) {
   return areaModelCommon.register( 'AreaModelConstants', {
     PROBLEM_X_FONT: new PhetFont( 16 ),
     TITLE_FONT: new PhetFont( 16 ),
+    TOTAL_AREA_FONT: new PhetFont( 20 ),
 
-    PANEL_MARGIN: 10,
+    PANEL_MARGIN: 20,
     PANEL_SPACING: 10
   } );
 } );

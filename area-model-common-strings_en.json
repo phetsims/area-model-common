@@ -16,5 +16,8 @@
   },
   "problem": {
     "value": "Problem"
+  },
+  "totalAreaOfModel": {
+    "value": "Total area of model"
   }
 }

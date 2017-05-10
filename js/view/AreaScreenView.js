@@ -23,6 +23,7 @@ define( function( require ) {
 
   // strings
   var problemString = require( 'string!AREA_MODEL_COMMON/problem' );
+  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   /**
    * @param {AreaModel} model
@@ -32,7 +33,10 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    var panelAlignGroup = new AlignGroup();
+    // TODO: i18n. titles (long) can screw up our alignment here!!
+    var panelAlignGroup = new AlignGroup( {
+      matchVertical: false
+    } );
 
     var problemNode = new AlignBox( new ProblemNode(), {
       group: panelAlignGroup,
@@ -45,9 +49,24 @@ define( function( require ) {
       } )
     } );
 
+    var areaNode = new AlignBox( new Text( '500', {
+      font: AreaModelConstants.TOTAL_AREA_FONT
+    } ), {
+      group: panelAlignGroup,
+      xAlign: 'center'
+    } );
+
+    var areaBox = new AccordionBox( areaNode, {
+      titleNode: new Text( totalAreaOfModelString, {
+        font: AreaModelConstants.TITLE_FONT
+      } )
+    } );
+
     this.addChild( new VBox( {
+      // TODO: change children based on whether there is a defined area?
       children: [
-        problemBox
+        problemBox,
+        areaBox
       ],
       spacing: AreaModelConstants.PANEL_SPACING,
       top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
