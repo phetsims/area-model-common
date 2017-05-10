@@ -13,6 +13,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/view/AreaCalculationSelectionNode' );
+  var AreaModel = require( 'AREA_MODEL_COMMON/model/AreaModel' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
@@ -33,10 +34,12 @@ define( function( require ) {
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
 
   /**
-   * @param {AreaModel} model
    * @constructor
+   *
+   * @param {AreaModel} model
    */
   function AreaScreenView( model ) {
+    assert && assert( model instanceof AreaModel );
 
     ScreenView.call( this );
 

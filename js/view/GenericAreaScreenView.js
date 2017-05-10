@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/view/AreaScreenView' );
+  var GenericAreaModel = require( 'AREA_MODEL_COMMON/model/GenericAreaModel' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -18,6 +19,7 @@ define( function( require ) {
    * @constructor
    */
   function GenericAreaScreenView( model ) {
+    assert && assert( model instanceof GenericAreaModel );
 
     AreaScreenView.call( this, model );
   }

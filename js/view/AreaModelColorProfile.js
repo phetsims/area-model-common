@@ -17,10 +17,15 @@ define( function( require ) {
   // tweaks with the top-level files)
   var AreaModelColorProfile = new ColorProfile( {
     background: { default: new Color( 247, 247, 253 ) },
+
     radioBorder: { default: new Color( 118, 191, 209 ) },
     radioBackground: { default: Color.WHITE },
+
     panelBorder: { default: new Color( 0x3, 0x3, 0x3 ) },
-    panelBackground: { default: Color.WHITE }
+    panelBackground: { default: Color.WHITE },
+
+    areaBackground: { default: Color.WHITE },
+    areaBorder: { default: Color.BLACK }
   }, [ 'default' ] );
 
   areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );
