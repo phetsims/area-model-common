@@ -42,7 +42,7 @@ define( function( require ) {
 
     var areaNodes = model.areas.map( function( area ) {
       // TODO: fix formatting or go to options
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, model.partialProductsChoiceProperty, {
         // TODO: improve positioning
         left: self.layoutBounds.top + 70,
         top: self.layoutBounds.left + 70
@@ -115,7 +115,7 @@ define( function( require ) {
       ],
       align: 'left',
       spacing: 20,
-      // TODO: better positioning
+      // TODO: better positioning   -
       top: 50,
       left: 600
     } ) );

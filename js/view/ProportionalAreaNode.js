@@ -19,7 +19,9 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Property = require( 'AXON/Property' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -30,13 +32,15 @@ define( function( require ) {
   /**
    * @constructor
    *
+   * TODO: reduce to options object
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
+   * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, widthColorProperty, heightColorProperty, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, widthColorProperty, heightColorProperty, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
@@ -177,6 +181,40 @@ define( function( require ) {
 
     var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, heightColorProperty, false );
     this.addChild( verticalPartitionLine );
+
+    var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, true );
+    var topRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topRightArea, true );
+    var bottomLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomLeftArea, true );
+    var bottomRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomRightArea, true );
+    this.addChild( topLeftProduct );
+    this.addChild( topRightProduct );
+    this.addChild( bottomLeftProduct );
+    this.addChild( bottomRightProduct );
+
+    // TODO: don't have ProportionalAreaNode get bounds-relatively positioned, just set translation?
+    Property.multilink( [ area.leftPartition.sizeProperty, area.rightPartition.sizeProperty, area.topPartition.sizeProperty, area.bottomPartition.sizeProperty ], function( left, right, top, bottom ) {
+      left = left.coefficient;
+      right = right ? right.coefficient : null;
+      top = top.coefficient;
+      bottom = bottom ? bottom.coefficient : null;
+
+      left = self.modelViewTransform.modelToViewX( left );
+      right = right ? self.modelViewTransform.modelToViewX( right ) : null;
+      top = self.modelViewTransform.modelToViewY( top );
+      bottom = bottom ? self.modelViewTransform.modelToViewY( bottom ) : null;
+
+      topLeftProduct.x = bottomLeftProduct.x = left / 2;
+      topLeftProduct.y = topRightProduct.y = top / 2;
+
+      if ( right ) {
+        topRightProduct.x = left + right / 2;
+        bottomRightProduct.x = left + right / 2;
+      }
+      if ( bottom ) {
+        bottomLeftProduct.y = top + bottom / 2;
+        bottomRightProduct.y = top + bottom / 2;
+      }
+    } );
 
     this.mutate( nodeOptions );
   }

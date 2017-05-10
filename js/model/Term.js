@@ -47,6 +47,17 @@ define( function( require ) {
      */
     times: function( term ) {
       return new Term( this.coefficient * term.coefficient, this.power + term.power );
+    },
+
+    /**
+     * Equality
+     * @public
+     *
+     * @param {Term} term
+     * @returns {boolean}
+     */
+    equals: function( term ) {
+      return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     }
   } );
 } );
