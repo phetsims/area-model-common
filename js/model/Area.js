@@ -24,7 +24,7 @@ define( function( require ) {
     // @public {ObservableArray.<Partition>}
     this.verticalPartitions = new ObservableArray();
 
-    // TODO: may want to add a totalWidth / totalHeight property
+    // TODO: add calculation/products selections?
   }
 
   areaModelCommon.register( 'Area', Area );

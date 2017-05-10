@@ -16,6 +16,8 @@ define( function( require ) {
 
   /**
    * @constructor
+   *
+   * TODO: add configuration options for each area
    */
   function ProportionalAreaModel() {
 

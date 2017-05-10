@@ -1,5 +1,17 @@
 {
-  "area-model-common.title": {
-    "value": "Area Model Common"
+  "screen.raccoon": {
+    "value": "Raccoon"
+  },
+  "screen.crimson": {
+    "value": "Crimson"
+  },
+  "screen.grape": {
+    "value": "Grape"
+  },
+  "screen.decimals": {
+    "value": "Decimals"
+  },
+  "screen.game": {
+    "value": "Game"
   }
 }
