@@ -10,22 +10,18 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
    *
-   * @param {Term} size
+   * @param {Term|null} size
    */
   function Partition( size ) {
 
-    // @public {Property.<Term>}
+    // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( size );
-
-    // @public {BooleanProperty}
-    this.visibleProperty = new BooleanProperty( true );
   }
 
   areaModelCommon.register( 'Partition', Partition );

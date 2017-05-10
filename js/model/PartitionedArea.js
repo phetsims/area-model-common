@@ -27,11 +27,11 @@ define( function( require ) {
     // @public {Partition}
     this.verticalPartition = verticalPartition;
 
-    // @public {Property.<boolean>}
-    this.visibleProperty = DerivedProperty.and( [ horizontalPartition.visibleProperty, verticalPartition.visibleProperty ] );
-
-    // @public {Property.<Term>}
+    // @public {Property.<Term|null>} - Area may not be defined if the size of a partition is not defined.
     this.areaProperty = new DerivedProperty( [ horizontalPartition.sizeProperty, verticalPartition.sizeProperty ], function( horizontalSize, verticalSize ) {
+      if ( horizontalSize === null || verticalSize === null ) {
+        return null;
+      }
       return horizontalSize.times( verticalSize );
     } );
   }
