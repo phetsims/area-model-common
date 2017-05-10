@@ -39,25 +39,55 @@ define( function( require ) {
     var children;
 
     if ( isProportional ) {
-      // TODO: hackish!
-      var widthProperty = new Property( currentAreaProperty.value.totalWidthProperty.value );
+      (function(){
+        // TODO: hackish! and refactor!
+        var widthProperty = new Property( currentAreaProperty.value.totalWidthProperty.value );
+        function currentWidthListener( value ) {
+          widthProperty.value = value;
+        }
+        currentAreaProperty.value.totalWidthProperty.link( currentWidthListener );
+        currentAreaProperty.lazyLink( function( newArea, oldArea ) {
+          oldArea.totalWidthProperty.unlink( currentWidthListener );
+          newArea.totalWidthProperty.link( currentWidthListener );
+        } );
+        widthProperty.link( function( value ) {
+          currentAreaProperty.value.totalWidthProperty.value = value;
+        } );
 
-      var rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
-        return new Range( area.minimumSize, area.maximumSize );
-      } );
+        var heightProperty = new Property( currentAreaProperty.value.totalHeightProperty.value );
+        function currentHeightListener( value ) {
+          heightProperty.value = value;
+        }
+        currentAreaProperty.value.totalHeightProperty.link( currentHeightListener );
+        currentAreaProperty.lazyLink( function( newArea, oldArea ) {
+          oldArea.totalHeightProperty.unlink( currentHeightListener );
+          newArea.totalHeightProperty.link( currentHeightListener );
+        } );
+        heightProperty.link( function( value ) {
+          currentAreaProperty.value.totalHeightProperty.value = value;
+        } );
 
-      var staticOptions = {
-        upFunction: function( value ) { return value + currentAreaProperty.value.snapSize; },
-        downFunction: function( value ) { return value - currentAreaProperty.value.snapSize; },
-        decimalPlaces: decimalPlaces,
-        scale: 1.5
-      };
+        var rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
+          return new Range( area.minimumSize, area.maximumSize );
+        } );
 
-      var widthPicker = new MutableOptionsNode( NumberPicker, [ widthProperty, rangeProperty ], staticOptions, {
-        color: widthColorProperty
-      } );
+        var staticOptions = {
+          upFunction: function( value ) { return value + currentAreaProperty.value.snapSize; },
+          downFunction: function( value ) { return value - currentAreaProperty.value.snapSize; },
+          decimalPlaces: decimalPlaces,
+          scale: 1.5
+        };
 
-      children = [ widthPicker, xText ];
+        var widthPicker = new MutableOptionsNode( NumberPicker, [ widthProperty, rangeProperty ], staticOptions, {
+          color: widthColorProperty
+        } );
+
+        var heightPicker = new MutableOptionsNode( NumberPicker, [ heightProperty, rangeProperty ], staticOptions, {
+          color: heightColorProperty
+        } );
+
+        children = [ heightPicker, xText, widthPicker ];
+      })();
     }
     else {
       children = [ xText ];
