@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A sum of Terms.
+ * A polynomial as a sum of Terms with different powers.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -18,7 +18,7 @@ define( function( require ) {
    *
    * @param {Array.<Term>} terms
    */
-  function Sum( terms ) {
+  function Polynomial( terms ) {
 
     // @public {Array.<Term>}
     this.terms = [];
@@ -37,7 +37,33 @@ define( function( require ) {
     }
   }
 
-  areaModelCommon.register( 'Sum', Sum );
+  areaModelCommon.register( 'Polynomial', Polynomial );
 
-  return inherit( Object, Sum );
+  return inherit( Object, Polynomial, {
+    /**
+     * Addition of polynomials.
+     * @public
+     *
+     * @param {Polynomial} polynomial
+     * @returns {Polynomial}
+     */
+    plus: function( polynomial ) {
+      return new Polynomial( this.terms.concat( polynomial.terms ) );
+    },
+
+    /**
+     * Multiplication of polynomials.
+     * @public
+     *
+     * @param {Polynomial} polynomial
+     * @returns {Polynomial}
+     */
+    times: function( polynomial ) {
+      return new Polynomial( _.flatten( this.terms.map( function( term ) {
+        return polynomial.terms.map( function( otherTerm ) {
+          return term.times( otherTerm );
+        } );
+      } ) ) );
+    }
+  } );
 } );

@@ -22,6 +22,9 @@ define( function( require ) {
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( size );
+
+    // @public {Property.<boolean>}
+    this.visibleProperty = new Property( true );
   }
 
   areaModelCommon.register( 'Partition', Partition );

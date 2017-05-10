@@ -36,6 +36,11 @@ define( function( require ) {
     this.verticalPartitions.push( this.topPartition );
     this.verticalPartitions.push( this.middleVerticalPartition );
     this.verticalPartitions.push( this.bottomPartition );
+
+    this.middleHorizontalPartition.visibleProperty.value = false;
+    this.rightPartition.visibleProperty.value = false;
+    this.middleVerticalPartition.visibleProperty.value = false;
+    this.bottomPartition.visibleProperty.value = false;
   }
 
   areaModelCommon.register( 'GenericArea', GenericArea );
