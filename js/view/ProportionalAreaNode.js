@@ -258,5 +258,9 @@ define( function( require ) {
 
   areaModelCommon.register( 'ProportionalAreaNode', ProportionalAreaNode );
 
-  return inherit( AreaNode, ProportionalAreaNode );
+  return inherit( AreaNode, ProportionalAreaNode, {
+    tempMap: function( value ) {
+      return value / this.area.maximumSize;
+    }
+  } );
 } );
