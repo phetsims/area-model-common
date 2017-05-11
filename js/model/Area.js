@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
 
   /**
@@ -31,6 +32,13 @@ define( function( require ) {
 
     // @public {Array.<Partition>}
     this.verticalPartitions = verticalPartitions;
+
+    // @public {Array.<PartitionedArea>}
+    this.partitionedAreas = _.flatten( horizontalPartitions.map( function( horizontalPartition ) {
+      return verticalPartitions.map( function( verticalPartition ) {
+        return new PartitionedArea( horizontalPartition, verticalPartition );
+      } );
+    } ) );
 
     var horizontalProperties = _.flatten( this.horizontalPartitions.map( function( partition ) {
       return [ partition.sizeProperty, partition.visibleProperty ];

@@ -15,6 +15,7 @@ define( function( require ) {
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var Term = require( 'AREA_MODEL_COMMON/model/Term' );
 
   /**
@@ -66,13 +67,12 @@ define( function( require ) {
     this.largeTileSize = options.largeTileSize;
 
     // @public {Partition}
-    // TODO: are props needed?
-    this.leftPartition = new Partition( null );
-    this.rightPartition = new Partition( null );
+    this.leftPartition = new Partition( true );
+    this.rightPartition = new Partition( true );
 
     // @public {Partition}
-    this.topPartition = new Partition( null );
-    this.bottomPartition = new Partition( null );
+    this.topPartition = new Partition( false );
+    this.bottomPartition = new Partition( false );
 
     // Keep partition sizes up-to-date
     Property.multilink( [ this.totalWidthProperty,
@@ -87,23 +87,31 @@ define( function( require ) {
         verticalSplit = null;
       }
 
-      // TODO: some opportunity to refactor here
+      // TODO: some opportunity to refactor here (vert/horiz very similar)
       if ( horizontalSplit ) {
         self.leftPartition.sizeProperty.value = new Term( horizontalSplit );
         self.rightPartition.sizeProperty.value = new Term( width - horizontalSplit );
+        self.leftPartition.coordinateRangeProperty.value = new Range( 0, horizontalSplit );
+        self.rightPartition.coordinateRangeProperty.value = new Range( horizontalSplit, width );
       }
       else {
         self.leftPartition.sizeProperty.value = new Term( width );
         self.rightPartition.sizeProperty.value = null;
+        self.leftPartition.coordinateRangeProperty.value = new Range( 0, width );
+        self.rightPartition.coordinateRangeProperty.value = null;
       }
 
       if ( verticalSplit ) {
         self.topPartition.sizeProperty.value = new Term( verticalSplit );
         self.bottomPartition.sizeProperty.value = new Term( height - verticalSplit );
+        self.topPartition.coordinateRangeProperty.value = new Range( 0, verticalSplit );
+        self.bottomPartition.coordinateRangeProperty.value = new Range( verticalSplit, height );
       }
       else {
         self.topPartition.sizeProperty.value = new Term( height );
         self.bottomPartition.sizeProperty.value = null;
+        self.topPartition.coordinateRangeProperty.value = new Range( 0, height );
+        self.bottomPartition.coordinateRangeProperty.value = null;
       }
     } );
 

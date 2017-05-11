@@ -21,7 +21,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Property = require( 'AXON/Property' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -143,6 +142,9 @@ define( function( require ) {
     } );
     this.addChild( activeAreaNode );
 
+
+
+
     var widthDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: AreaModelColorProfile.dockBackgroundProperty,
       stroke: AreaModelColorProfile.dockBorderProperty,
@@ -182,38 +184,20 @@ define( function( require ) {
     var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, heightColorProperty, false );
     this.addChild( verticalPartitionLine );
 
-    var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, false );
-    var topRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topRightArea, false );
-    var bottomLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomLeftArea, false );
-    var bottomRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomRightArea, false );
-    this.addChild( topLeftProduct );
-    this.addChild( topRightProduct );
-    this.addChild( bottomLeftProduct );
-    this.addChild( bottomRightProduct );
-
-    // TODO: don't have ProportionalAreaNode get bounds-relatively positioned, just set translation?
-    Property.multilink( [ area.leftPartition.sizeProperty, area.rightPartition.sizeProperty, area.topPartition.sizeProperty, area.bottomPartition.sizeProperty ], function( left, right, top, bottom ) {
-      left = left.coefficient;
-      right = right ? right.coefficient : null;
-      top = top.coefficient;
-      bottom = bottom ? bottom.coefficient : null;
-
-      left = self.modelViewTransform.modelToViewX( left );
-      right = right ? self.modelViewTransform.modelToViewX( right ) : null;
-      top = self.modelViewTransform.modelToViewY( top );
-      bottom = bottom ? self.modelViewTransform.modelToViewY( bottom ) : null;
-
-      topLeftProduct.x = bottomLeftProduct.x = left / 2;
-      topLeftProduct.y = topRightProduct.y = top / 2;
-
-      if ( right ) {
-        topRightProduct.x = left + right / 2;
-        bottomRightProduct.x = left + right / 2;
-      }
-      if ( bottom ) {
-        bottomLeftProduct.y = top + bottom / 2;
-        bottomRightProduct.y = top + bottom / 2;
-      }
+    // TODO: remove duplication with generic (only changed to false and MVT)
+    area.partitionedAreas.forEach( function( partitionedArea ) {
+      var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, false );
+      self.addChild( productLabel );
+      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
+        if ( horizontalRange !== null ) {
+          productLabel.x = self.modelViewTransform.modelToViewX( horizontalRange.getCenter() );
+        }
+      } );
+      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
+        if ( verticalRange !== null ) {
+          productLabel.y = self.modelViewTransform.modelToViewY( verticalRange.getCenter() );
+        }
+      } );
     } );
 
     this.mutate( nodeOptions );

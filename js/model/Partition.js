@@ -16,15 +16,23 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * @param {Term|null} size
+   * @param {boolean} isHorizontal
    */
-  function Partition( size ) {
+  function Partition( isHorizontal ) {
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
-    this.sizeProperty = new Property( size );
+    this.sizeProperty = new Property( null );
+
+    // @public {boolean}
+    this.isHorizontal = isHorizontal;
 
     // @public {Property.<boolean>}
     this.visibleProperty = new Property( true );
+
+    // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when
+    // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
+    // will be from 0 to its maximum size.
+    this.coordinateRangeProperty = new Property( null );
   }
 
   areaModelCommon.register( 'Partition', Partition );

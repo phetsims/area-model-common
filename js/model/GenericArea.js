@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
 
   /**
    * @constructor
@@ -23,14 +24,14 @@ define( function( require ) {
 
     // @public {Partition}
     // TODO: are props needed?
-    this.leftPartition = new Partition( null );
-    this.middleHorizontalPartition = new Partition( null ); // TODO: better naming
-    this.rightPartition = new Partition( null );
+    this.leftPartition = new Partition( true );
+    this.middleHorizontalPartition = new Partition( true ); // TODO: better naming
+    this.rightPartition = new Partition( true );
 
     // @public {Partition}
-    this.topPartition = new Partition( null );
-    this.middleVerticalPartition = new Partition( null ); // TODO: better naming
-    this.bottomPartition = new Partition( null );
+    this.topPartition = new Partition( false );
+    this.middleVerticalPartition = new Partition( false ); // TODO: better naming
+    this.bottomPartition = new Partition( false );
 
     Area.call( this, [
       this.leftPartition,
@@ -48,6 +49,10 @@ define( function( require ) {
     this.firstVerticalPartitionLineActiveProperty = new Property( false );
     this.secondVerticalPartitionLineActiveProperty = new Property( false );
 
+    // TODO constants somewhere
+    var firstOffset = 0.55;
+    var secondOffset = 0.83;
+
     var partitionLineProperties = [
       this.firstHorizontalPartitionLineActiveProperty,
       this.secondHorizontalPartitionLineActiveProperty,
@@ -60,6 +65,50 @@ define( function( require ) {
       self.middleVerticalPartition.visibleProperty.value = firstVertical;
       self.rightPartition.visibleProperty.value = secondHorizontal;
       self.bottomPartition.visibleProperty.value = secondVertical;
+
+      // TODO: don't require this many changes on every full change?
+
+      // TODO: refactor horizontal/vertical together
+      if ( firstHorizontal ) {
+        self.leftPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
+        if ( secondHorizontal ) {
+          self.middleHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
+        }
+        else {
+          self.middleHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
+        }
+      }
+      else {
+        self.middleHorizontalPartition.coordinateRangeProperty.value = null;
+        if ( secondHorizontal ) {
+          self.leftPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
+        }
+        else {
+          self.leftPartition.coordinateRangeProperty.value = new Range( 0, 1 );
+        }
+      }
+      self.rightPartition.coordinateRangeProperty.value = secondHorizontal ? new Range( secondOffset, 1 ) : null;
+
+      // TODO: refactor horizontal/vertical together
+      if ( firstVertical ) {
+        self.topPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
+        if ( secondVertical ) {
+          self.middleVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
+        }
+        else {
+          self.middleVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
+        }
+      }
+      else {
+        self.middleVerticalPartition.coordinateRangeProperty.value = null;
+        if ( secondVertical ) {
+          self.topPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
+        }
+        else {
+          self.topPartition.coordinateRangeProperty.value = new Range( 0, 1 );
+        }
+      }
+      self.bottomPartition.coordinateRangeProperty.value = secondVertical ? new Range( secondOffset, 1 ) : null;
     } );
 
     // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.

@@ -15,7 +15,6 @@ define( function( require ) {
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
   var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
@@ -29,9 +28,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
-  var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' ); // TODO: don't require this for toRichString!
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -60,6 +57,7 @@ define( function( require ) {
 
     AreaNode.call( this, area );
 
+    // TODO: should be deprecated in this location, grab locations from the model???
     var firstOffset = this.viewSize * 0.55;
     var secondOffset = this.viewSize * 0.83;
 
@@ -115,72 +113,8 @@ define( function( require ) {
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.firstVerticalPartitionLineActiveProperty, heightColorProperty );
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, heightColorProperty );
 
-    // @public {Property.<number|null>}
-    // TODO: refactor nicely
-    this.leftCenterProperty = new DerivedProperty( [ area.firstHorizontalPartitionLineActiveProperty, area.secondHorizontalPartitionLineActiveProperty ], function( first, second ) {
-      if ( first ) {
-        return firstOffset / 2;
-      }
-      else if ( second ) {
-        return secondOffset / 2;
-      }
-      else {
-        return self.viewSize / 2;
-      }
-    } );
-    this.horizontalMiddleCenterProperty = new DerivedProperty( [ area.firstHorizontalPartitionLineActiveProperty, area.secondHorizontalPartitionLineActiveProperty ], function( first, second ) {
-      if ( !first ) {
-        return null;
-      }
-      else if ( second ) {
-        return firstOffset + ( secondOffset - firstOffset ) / 2;
-      }
-      else {
-        return firstOffset + ( self.viewSize - firstOffset ) / 2;
-      }
-    } );
-    this.rightCenterProperty = new DerivedProperty( [ area.firstHorizontalPartitionLineActiveProperty, area.secondHorizontalPartitionLineActiveProperty ], function( first, second ) {
-      if ( !second ) {
-        return null;
-      }
-      else {
-        return secondOffset + ( self.viewSize - secondOffset ) / 2;
-      }
-    } );
-
-    this.topCenterProperty = new DerivedProperty( [ area.firstVerticalPartitionLineActiveProperty, area.secondVerticalPartitionLineActiveProperty ], function( first, second ) {
-      if ( first ) {
-        return firstOffset / 2;
-      }
-      else if ( second ) {
-        return secondOffset / 2;
-      }
-      else {
-        return self.viewSize / 2;
-      }
-    } );
-    this.verticalMiddleCenterProperty = new DerivedProperty( [ area.firstVerticalPartitionLineActiveProperty, area.secondVerticalPartitionLineActiveProperty ], function( first, second ) {
-      if ( !first ) {
-        return null;
-      }
-      else if ( second ) {
-        return firstOffset + ( secondOffset - firstOffset ) / 2;
-      }
-      else {
-        return firstOffset + ( self.viewSize - firstOffset ) / 2;
-      }
-    } );
-    this.bottomCenterProperty = new DerivedProperty( [ area.firstVerticalPartitionLineActiveProperty, area.secondVerticalPartitionLineActiveProperty ], function( first, second ) {
-      if ( !second ) {
-        return null;
-      }
-      else {
-        return secondOffset + ( self.viewSize - secondOffset ) / 2;
-      }
-    } );
-
     // TODO: refactor/cleanup
-    function createEditButton( BoxType, partition, xProperty, yProperty, digitCount, colorProperty ) {
+    function createEditButton( BoxType, partition, digitCount, colorProperty ) {
 
       // TODO: better way to test for size
       var sampleString;
@@ -236,28 +170,29 @@ define( function( require ) {
         ]
       } );
       self.addChild( box );
-      xProperty.link( function( value ) {
-        if ( value !== null ) {
-          box.centerX = value;
+
+      var primaryName = partition.isHorizontal ? 'centerX' : 'centerY';
+
+      partition.coordinateRangeProperty.link( function( range ) {
+        if ( range ) {
+          box[ primaryName ] = range.getCenter() * self.viewSize;
         }
       } );
-      yProperty.link( function( value ) {
-        if ( value !== null ) {
-          box.centerY = value;
-        }
-      } );
+      if ( partition.isHorizontal ) {
+        box.centerY = -20;
+      }
+      else {
+        box.centerX = -30;
+      }
       partition.visibleProperty.linkAttribute( box, 'visible' );
     }
 
-    // TODO: proper positioning based on distance from 0
-    var horizontalEditOffset = -20;
-    var verticalEditOffset = -30;
-    createEditButton( HBox, area.leftPartition, this.leftCenterProperty, new Property( horizontalEditOffset ), 3, widthColorProperty );
-    createEditButton( HBox, area.middleHorizontalPartition, this.horizontalMiddleCenterProperty, new Property( horizontalEditOffset ), 2, widthColorProperty );
-    createEditButton( HBox, area.rightPartition, this.rightCenterProperty, new Property( horizontalEditOffset ), 1, widthColorProperty );
-    createEditButton( VBox, area.topPartition, new Property( verticalEditOffset ), this.topCenterProperty, 3, heightColorProperty );
-    createEditButton( VBox, area.middleVerticalPartition, new Property( verticalEditOffset ), this.verticalMiddleCenterProperty, 2, heightColorProperty );
-    createEditButton( VBox, area.bottomPartition, new Property( verticalEditOffset ), this.bottomCenterProperty, 1, heightColorProperty );
+    createEditButton( HBox, area.leftPartition, 3, widthColorProperty );
+    createEditButton( HBox, area.middleHorizontalPartition, 2, widthColorProperty );
+    createEditButton( HBox, area.rightPartition, 1, widthColorProperty );
+    createEditButton( VBox, area.topPartition, 3, heightColorProperty );
+    createEditButton( VBox, area.middleVerticalPartition, 2, heightColorProperty );
+    createEditButton( VBox, area.bottomPartition, 1, heightColorProperty );
 
     // TODO: reuse these from keypad?
     var PLUS_CHAR = '\u002b';
@@ -324,61 +259,21 @@ define( function( require ) {
       keypad.clear();
     } );
 
-    // TODO: refactor proportional like this, then move up a level (make the centers part of the model!!!)
-    var horizontalCenters = [ this.leftCenterProperty, this.horizontalMiddleCenterProperty, this.rightCenterProperty ];
-    var verticalCenters = [ this.topCenterProperty, this.verticalMiddleCenterProperty, this.bottomCenterProperty ];
-    area.horizontalPartitions.forEach( function( horizontalPartition, horizontalIndex ) {
-      area.verticalPartitions.forEach( function( verticalPartition, verticalIndex ) {
-        var partitionedArea = new PartitionedArea( horizontalPartition, verticalPartition );
-        var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, true );
-        self.addChild( productLabel );
-        horizontalCenters[ horizontalIndex ].link( function( value ) {
-          if ( value !== null ) {
-            productLabel.x = value;
-          }
-        } );
-        verticalCenters[ verticalIndex ].link( function( value ) {
-          if ( value !== null ) {
-            productLabel.y = value;
-          }
-        } );
+    // TODO: remove duplication with proportional (only changed to true and MVT)
+    area.partitionedAreas.forEach( function( partitionedArea ) {
+      var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, true );
+      self.addChild( productLabel );
+      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
+        if ( horizontalRange !== null ) {
+          productLabel.x = self.viewSize * horizontalRange.getCenter();
+        }
+      } );
+      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
+        if ( verticalRange !== null ) {
+          productLabel.y = self.viewSize * verticalRange.getCenter();
+        }
       } );
     } );
-
-    // // TODO: with new products
-    // var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, true );
-    // var topRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topRightArea, true );
-    // var bottomLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomLeftArea, true );
-    // var bottomRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomRightArea, true );
-    // this.addChild( topLeftProduct );
-    // this.addChild( topRightProduct );
-    // this.addChild( bottomLeftProduct );
-    // this.addChild( bottomRightProduct );
-
-    // // TODO: don't have GenericAreaNode get bounds-relatively positioned, just set translation?
-    // Property.multilink( [ area.leftPartition.sizeProperty, area.rightPartition.sizeProperty, area.topPartition.sizeProperty, area.bottomPartition.sizeProperty ], function( left, right, top, bottom ) {
-    //   left = left.coefficient;
-    //   right = right ? right.coefficient : null;
-    //   top = top.coefficient;
-    //   bottom = bottom ? bottom.coefficient : null;
-
-    //   left = self.modelViewTransform.modelToViewX( left );
-    //   right = right ? self.modelViewTransform.modelToViewX( right ) : null;
-    //   top = self.modelViewTransform.modelToViewY( top );
-    //   bottom = bottom ? self.modelViewTransform.modelToViewY( bottom ) : null;
-
-    //   topLeftProduct.x = bottomLeftProduct.x = left / 2;
-    //   topLeftProduct.y = topRightProduct.y = top / 2;
-
-    //   if ( right ) {
-    //     topRightProduct.x = left + right / 2;
-    //     bottomRightProduct.x = left + right / 2;
-    //   }
-    //   if ( bottom ) {
-    //     bottomLeftProduct.y = top + bottom / 2;
-    //     bottomRightProduct.y = top + bottom / 2;
-    //   }
-    // } );
 
     this.mutate( nodeOptions );
   }
