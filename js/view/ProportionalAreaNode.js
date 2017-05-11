@@ -21,13 +21,16 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var TiledPartitionAreaNode = require( 'AREA_MODEL_COMMON/view/TiledPartitionAreaNode' );
   var Util = require( 'DOT/Util' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -204,6 +207,51 @@ define( function( require ) {
         }
       } );
     } );
+
+
+    // TODO: refactor/cleanup
+    function createPartitionLabel( partition, colorProperty ) {
+      var text = new Text( '', {
+        font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
+        fill: colorProperty
+      } );
+
+      partition.sizeProperty.link( function( size ) {
+        if ( size === null ) {
+          text.text = '';
+        }
+        else {
+          text.text = new Polynomial( [ size ] ).toRichString();
+          text.center = Vector2.ZERO;
+        }
+      } );
+      var wrapper = new Node( {
+        children: [ text ]
+      } );
+      self.addChild( wrapper );
+
+      // TODO: refactor to borrow from general case
+      var primaryName = partition.isHorizontal ? 'x' : 'y';
+      var mvtName = partition.isHorizontal ? 'modelToViewX' : 'modelToViewY';
+
+      partition.coordinateRangeProperty.link( function( range ) {
+        if ( range ) {
+          wrapper[ primaryName ] = self.modelViewTransform[ mvtName ]( range.getCenter() );
+        }
+      } );
+      if ( partition.isHorizontal ) {
+        wrapper.y = -15;
+      }
+      else {
+        wrapper.x = -20;
+      }
+      partition.visibleProperty.linkAttribute( wrapper, 'visible' );
+    }
+
+    createPartitionLabel( area.leftPartition, widthColorProperty );
+    createPartitionLabel( area.rightPartition, widthColorProperty );
+    createPartitionLabel( area.topPartition, heightColorProperty );
+    createPartitionLabel( area.bottomPartition, heightColorProperty );
 
     this.mutate( nodeOptions );
   }

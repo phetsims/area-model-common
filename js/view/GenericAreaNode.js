@@ -142,7 +142,7 @@ define( function( require ) {
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, heightColorProperty );
 
     // TODO: refactor/cleanup
-    function createEditButton( BoxType, partition, digitCount, colorProperty ) {
+    function createEditButton( partition, digitCount, colorProperty ) {
 
       // TODO: better way to test for size
       var sampleString;
@@ -181,6 +181,8 @@ define( function( require ) {
                                                         : AreaModelColorProfile.editInactiveBackgroundProperty;
       } );
 
+      var BoxType = partition.isHorizontal ? HBox : VBox;
+
       var box = new BoxType( {
         spacing: 7,
         children: [
@@ -215,12 +217,12 @@ define( function( require ) {
       partition.visibleProperty.linkAttribute( box, 'visible' );
     }
 
-    createEditButton( HBox, area.leftPartition, 3, widthColorProperty );
-    createEditButton( HBox, area.middleHorizontalPartition, 2, widthColorProperty );
-    createEditButton( HBox, area.rightPartition, 1, widthColorProperty );
-    createEditButton( VBox, area.topPartition, 3, heightColorProperty );
-    createEditButton( VBox, area.middleVerticalPartition, 2, heightColorProperty );
-    createEditButton( VBox, area.bottomPartition, 1, heightColorProperty );
+    createEditButton( area.leftPartition, 3, widthColorProperty );
+    createEditButton( area.middleHorizontalPartition, 2, widthColorProperty );
+    createEditButton( area.rightPartition, 1, widthColorProperty );
+    createEditButton( area.topPartition, 3, heightColorProperty );
+    createEditButton( area.middleVerticalPartition, 2, heightColorProperty );
+    createEditButton( area.bottomPartition, 1, heightColorProperty );
 
     // TODO: reuse these from keypad?
     var PLUS_CHAR = '\u002b';

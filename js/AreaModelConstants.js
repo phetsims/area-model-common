@@ -20,6 +20,7 @@ define( function( require ) {
     SYMBOL_FONT: new PhetFont( 20 ),
     PARTIAL_PRODUCT_FONT: new PhetFont( 20 ),
     EDIT_READOUT_FONT: new PhetFont( 18 ),
+    PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 24 ),
 
