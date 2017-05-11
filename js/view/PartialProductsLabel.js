@@ -25,11 +25,11 @@ define( function( require ) {
    *
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {PartitionedArea} partitionedArea
-   * @param {boolean} combineSquares - Whether squares should be combined (if left and right partitions are the same size)
+   * @param {boolean} allowPowers
    */
-  function PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, combineSquares ) {
+  function PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, allowPowers ) {
     assert && assert( partitionedArea instanceof PartitionedArea );
-    assert && assert( typeof combineSquares === 'boolean' );
+    assert && assert( typeof allowPowers === 'boolean' );
 
     var self = this;
 
@@ -40,8 +40,8 @@ define( function( require ) {
     } );
     this.addChild( text );
 
-    Property.multilink( [ partitionedArea.areaProperty, partialProductsChoiceProperty ], function( area, choice ) {
-      self.visible = area !== null && choice !== PartialProductsChoice.HIDDEN;
+    Property.multilink( [ partitionedArea.areaProperty, partialProductsChoiceProperty, partitionedArea.visibleProperty ], function( area, choice, areaVisible ) {
+      self.visible = areaVisible && ( area !== null && choice !== PartialProductsChoice.HIDDEN );
     } );
 
     Property.multilink( [ partitionedArea.horizontalPartition.sizeProperty, partitionedArea.verticalPartition.sizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
@@ -55,14 +55,20 @@ define( function( require ) {
         }
         // Factors
         else {
-          if ( combineSquares && horizontalSize.equals( verticalSize ) ) {
-            assert && assert( horizontalSize.power === 0 );
-            text.text = ( Math.round( 100 * horizontalSize.coefficient ) / 100 ) + '<sup>2</sup>';
+          if ( allowPowers ) {
+            text.text = '(' + new Polynomial( [ verticalSize ] ).toRichString() + ')' +
+                        '(' + new Polynomial( [ horizontalSize ] ).toRichString() + ')';
           }
           else {
-            text.text = new Polynomial( [ verticalSize ] ).toRichString() +
-                        ' ' + AreaModelConstants.X_STRING + ' ' +
-                        new Polynomial( [ horizontalSize ] ).toRichString();
+            if ( horizontalSize.equals( verticalSize ) ) {
+              assert && assert( horizontalSize.power === 0 );
+              text.text = ( Math.round( 100 * horizontalSize.coefficient ) / 100 ) + '<sup>2</sup>';
+            }
+            else {
+              text.text = new Polynomial( [ verticalSize ] ).toRichString() +
+                          ' ' + AreaModelConstants.X_STRING + ' ' +
+                          new Polynomial( [ horizontalSize ] ).toRichString();
+            }
           }
         }
       }

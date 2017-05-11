@@ -34,6 +34,9 @@ define( function( require ) {
       }
       return horizontalSize.times( verticalSize );
     } );
+
+    // @public {Property.<boolean>}
+    this.visibleProperty = DerivedProperty.and( [ horizontalPartition.visibleProperty, verticalPartition.visibleProperty ] );
   }
 
   areaModelCommon.register( 'PartitionedArea', PartitionedArea );

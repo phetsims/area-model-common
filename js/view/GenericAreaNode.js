@@ -28,6 +28,8 @@ define( function( require ) {
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
+  var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
+  var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' ); // TODO: don't require this for toRichString!
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -320,6 +322,27 @@ define( function( require ) {
     area.activePartitionProperty.link( function( newArea ) {
       keypadPanel.visible = newArea !== null;
       keypad.clear();
+    } );
+
+    // TODO: refactor proportional like this, then move up a level (make the centers part of the model!!!)
+    var horizontalCenters = [ this.leftCenterProperty, this.horizontalMiddleCenterProperty, this.rightCenterProperty ];
+    var verticalCenters = [ this.topCenterProperty, this.verticalMiddleCenterProperty, this.bottomCenterProperty ];
+    area.horizontalPartitions.forEach( function( horizontalPartition, horizontalIndex ) {
+      area.verticalPartitions.forEach( function( verticalPartition, verticalIndex ) {
+        var partitionedArea = new PartitionedArea( horizontalPartition, verticalPartition );
+        var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, true );
+        self.addChild( productLabel );
+        horizontalCenters[ horizontalIndex ].link( function( value ) {
+          if ( value !== null ) {
+            productLabel.x = value;
+          }
+        } );
+        verticalCenters[ verticalIndex ].link( function( value ) {
+          if ( value !== null ) {
+            productLabel.y = value;
+          }
+        } );
+      } );
     } );
 
     // // TODO: with new products

@@ -182,10 +182,10 @@ define( function( require ) {
     var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, heightColorProperty, false );
     this.addChild( verticalPartitionLine );
 
-    var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, true );
-    var topRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topRightArea, true );
-    var bottomLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomLeftArea, true );
-    var bottomRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomRightArea, true );
+    var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, false );
+    var topRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topRightArea, false );
+    var bottomLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomLeftArea, false );
+    var bottomRightProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.bottomRightArea, false );
     this.addChild( topLeftProduct );
     this.addChild( topRightProduct );
     this.addChild( bottomLeftProduct );
