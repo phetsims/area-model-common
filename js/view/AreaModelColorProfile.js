@@ -56,6 +56,10 @@ define( function( require ) {
     keypadPanelBorder: { default: new Color( 0x99, 0x99, 0x99 ) },
     keypadPanelBackground: { default: new Color( 230, 230, 230 ) },
 
+    // TODO: organize file, with comments
+    genericPositiveBackground: { default: new Color( 0xd4f3fe ) },
+    genericNegativeBackground: { default: new Color( 0xe5a5ab ) },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

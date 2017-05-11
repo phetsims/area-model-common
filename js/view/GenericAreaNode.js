@@ -67,6 +67,35 @@ define( function( require ) {
     } );
     this.addChild( background );
 
+    area.partitionedAreas.forEach( function( partitionedArea ) {
+      var coloredBackground = new Rectangle( {} );
+
+      partitionedArea.areaProperty.link( function( area ) {
+        if ( area === null || area.coefficient === 0 ) {
+          coloredBackground.visible = false;
+        }
+        else {
+          coloredBackground.visible = true;
+          coloredBackground.fill = area.coefficient > 0 ? AreaModelColorProfile.genericPositiveBackgroundProperty
+                                                        : AreaModelColorProfile.genericNegativeBackgroundProperty;
+        }
+      } );
+
+      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
+        if ( horizontalRange !== null ) {
+          coloredBackground.rectX = horizontalRange.min * self.viewSize;
+          coloredBackground.rectWidth = horizontalRange.getLength() * self.viewSize;
+        }
+      } );
+      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
+        if ( verticalRange !== null ) {
+          coloredBackground.rectY = verticalRange.min * self.viewSize;
+          coloredBackground.rectHeight = verticalRange.getLength() * self.viewSize;
+        }
+      } );
+      self.addChild( coloredBackground );
+    } );
+
     function addDock( x, y, property ) {
       self.addChild( new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
         fill: AreaModelColorProfile.dockBackgroundProperty,

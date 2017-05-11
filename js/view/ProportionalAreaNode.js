@@ -142,8 +142,12 @@ define( function( require ) {
     } );
     this.addChild( activeAreaNode );
 
+    area.partitionedAreas.forEach( function( partitionedArea ) {
+      // partitionedArea.horizontalPartition.coordinateRangeProperty
+      // partitionedArea.verticalPartition.coordinateRangeProperty
 
-
+      // TODO: tiles
+    } );
 
     var widthDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: AreaModelColorProfile.dockBackgroundProperty,
