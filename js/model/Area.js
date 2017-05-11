@@ -82,6 +82,12 @@ define( function( require ) {
   areaModelCommon.register( 'Area', Area );
 
   return inherit( Object, Area, {
-    // TODO
+    /**
+     * Resets the area to its initial values.
+     * @public
+     */
+    reset: function() {
+      // TODO: nothing here actually, so we don't reset partitions for proportional?
+    }
   } );
 } );

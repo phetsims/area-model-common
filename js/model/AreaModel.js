@@ -72,6 +72,10 @@ define( function( require ) {
       this.totalModelBoxExpanded.reset();
       this.areaCalculationChoiceProperty.reset();
       this.partialProductsChoiceProperty.reset();
+
+      this.areas.forEach( function( area ) {
+        area.reset();
+      } );
     }
   } );
 } );

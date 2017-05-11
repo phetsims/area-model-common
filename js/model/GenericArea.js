@@ -13,11 +13,14 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
    */
   function GenericArea() {
+    var self = this;
+
     // @public {Partition}
     // TODO: are props needed?
     this.leftPartition = new Partition( null );
@@ -29,12 +32,6 @@ define( function( require ) {
     this.middleVerticalPartition = new Partition( null ); // TODO: better naming
     this.bottomPartition = new Partition( null );
 
-    // TODO: allow init with this, then inline all of this?
-    this.middleHorizontalPartition.visibleProperty.value = false;
-    this.rightPartition.visibleProperty.value = false;
-    this.middleVerticalPartition.visibleProperty.value = false;
-    this.bottomPartition.visibleProperty.value = false;
-
     Area.call( this, [
       this.leftPartition,
       this.middleHorizontalPartition,
@@ -44,11 +41,50 @@ define( function( require ) {
       this.middleVerticalPartition,
       this.bottomPartition
     ] );
+
+    // @public {Property.<boolean>}
+    this.firstHorizontalPartitionLineActiveProperty = new Property( false );
+    this.secondHorizontalPartitionLineActiveProperty = new Property( false );
+    this.firstVerticalPartitionLineActiveProperty = new Property( false );
+    this.secondVerticalPartitionLineActiveProperty = new Property( false );
+
+    var partitionLineProperties = [
+      this.firstHorizontalPartitionLineActiveProperty,
+      this.secondHorizontalPartitionLineActiveProperty,
+      this.firstVerticalPartitionLineActiveProperty,
+      this.secondVerticalPartitionLineActiveProperty
+    ];
+    Property.multilink( partitionLineProperties, function( firstHorizontal, secondHorizontal, firstVertical, secondVertical ) {
+      // e.g. 0 splits => left, first => left+middle, second => left+right, all => left+middle+right
+      self.middleHorizontalPartition.visibleProperty.value = firstHorizontal;
+      self.middleVerticalPartition.visibleProperty.value = firstVertical;
+      self.rightPartition.visibleProperty.value = secondHorizontal;
+      self.bottomPartition.visibleProperty.value = secondVertical;
+    } );
   }
 
   areaModelCommon.register( 'GenericArea', GenericArea );
 
   return inherit( Area, GenericArea, {
+    /**
+     * Resets the area to its initial values.
+     * @public
+     * @override
+     */
+    reset: function() {
+      Area.prototype.reset.call( this );
 
+      this.firstHorizontalPartitionLineActiveProperty.reset();
+      this.secondHorizontalPartitionLineActiveProperty.reset();
+      this.firstVerticalPartitionLineActiveProperty.reset();
+      this.secondVerticalPartitionLineActiveProperty.reset();
+
+      this.horizontalPartitions.forEach( function( partition ) {
+        partition.sizeProperty.reset();
+      } );
+      this.verticalPartitions.forEach( function( partition ) {
+        partition.sizeProperty.reset();
+      } );
+    }
   } );
 } );

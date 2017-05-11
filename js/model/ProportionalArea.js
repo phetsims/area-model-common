@@ -125,6 +125,18 @@ define( function( require ) {
   areaModelCommon.register( 'ProportionalArea', ProportionalArea );
 
   return inherit( Area, ProportionalArea, {
+    /**
+     * Resets the area to its initial values.
+     * @public
+     * @override
+     */
+    reset: function() {
+      Area.prototype.reset.call( this );
 
+      this.horizontalPartitionSplitProperty.reset();
+      this.verticalPartitionSplitProperty.reset();
+      this.totalWidthProperty.reset();
+      this.totalHeightProperty.reset();
+    }
   } );
 } );
