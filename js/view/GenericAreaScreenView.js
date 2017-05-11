@@ -31,10 +31,10 @@ define( function( require ) {
     AreaScreenView.call( this, model, false, decimalPlaces, AreaModelColorProfile.genericWidthProperty,
                                                             AreaModelColorProfile.genericHeightProperty );
 
-    this.addChild( new GenericAreaNode( model.areas[ 0 ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, model.partialProductsChoiceProperty, {
+    this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowPowers, AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, model.partialProductsChoiceProperty, {
       // TODO: improve positioning, remove duplicated code with proportional
-      left: self.layoutBounds.top + 70,
-      top: self.layoutBounds.left + 70
+      x: self.layoutBounds.top + 70,
+      y: self.layoutBounds.left + 70
     } ) );
   }
 

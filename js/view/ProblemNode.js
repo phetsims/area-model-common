@@ -90,6 +90,7 @@ define( function( require ) {
       })();
     }
     else {
+      // TODO: with variables, surround in parenthesis, no 'x'
       children = [ xText ];
     }
 

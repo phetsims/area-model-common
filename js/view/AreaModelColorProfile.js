@@ -48,6 +48,8 @@ define( function( require ) {
     partitionLineBorder: { default: Color.BLACK },
     partitionLineStroke: { default: Color.BLACK },
 
+    editButtonBackground: { default: new Color( 241, 232, 0 ) },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

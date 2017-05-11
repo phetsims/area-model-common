@@ -44,8 +44,8 @@ define( function( require ) {
       // TODO: fix formatting or go to options
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, model.partialProductsChoiceProperty, {
         // TODO: improve positioning, remove duplicated code with generic
-        left: self.layoutBounds.top + 70,
-        top: self.layoutBounds.left + 70
+        x: self.layoutBounds.top + 70,
+        y: self.layoutBounds.left + 70
       } );
     } );
 
