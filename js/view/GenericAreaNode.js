@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
+  var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
@@ -20,14 +21,22 @@ define( function( require ) {
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Key = require( 'SCENERY_PHET/keypad/Key' );
+  var Keys = require( 'SCENERY_PHET/keypad/Keys' );
+  var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
   var Line = require( 'SCENERY/nodes/Line' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
+  var Term = require( 'AREA_MODEL_COMMON/model/Term' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+
+  var enterString = require( 'string!AREA_MODEL_COMMON/enter' );
 
   /**
    * @constructor
@@ -188,7 +197,7 @@ define( function( require ) {
       } );
 
       var box = new BoxType( {
-        spacing: 10,
+        spacing: 7,
         children: [
           background,
           new MutableOptionsNode( RectangularPushButton, [], {
@@ -226,6 +235,69 @@ define( function( require ) {
     createEditButton( VBox, area.topPartition, new Property( verticalEditOffset ), this.topCenterProperty, 3, heightColorProperty );
     createEditButton( VBox, area.middleVerticalPartition, new Property( verticalEditOffset ), this.verticalMiddleCenterProperty, 2, heightColorProperty );
     createEditButton( VBox, area.bottomPartition, new Property( verticalEditOffset ), this.bottomCenterProperty, 1, heightColorProperty );
+
+    // TODO: reuse these from keypad?
+    var PLUS_CHAR = '\u002b';
+    var MINUS_CHAR = '\u2212';
+
+    var noPowerLayout = [
+      [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
+      [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
+      [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
+      [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
+    ];
+    // TODO: make note about Key's type docs for the first parameter
+    var powerLayout = [
+      [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
+      [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
+      [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
+      [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ],
+      [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.TODOTWO ), new Key( 'x', Keys.TODO ) ],
+    ];
+
+    var keypad = new Keypad( allowPowers ? powerLayout : noPowerLayout, {
+      // TODO: options?
+    } );
+
+    var readout = new Text( '', {
+      font: AreaModelConstants.KEYPAD_READOUT_FONT
+    } );
+    keypad.stringProperty.link( function( str ) {
+      readout.text = str;
+    } );
+
+    var keypadPanel = new Panel( new VBox( {
+      children: [
+        readout, // TODO: wrap in a border
+        keypad,
+        new RectangularPushButton( {
+          content: new Text( enterString, { font: AreaModelConstants.KEYPAD_FONT } ),
+          baseColor: 'white',
+          xMargin: 15,
+          yMargin: 5,
+          listener: function() {
+            console.log( 'TODO: support x, x^2 with keys, write accumulator (custom digit numbers for each)' );
+            area.activePartitionProperty.value.sizeProperty.value = new Term( keypad.valueProperty.value );
+            area.activePartitionProperty.value = null;
+          }
+        } )
+      ],
+      spacing: 10
+    } ), {
+      x: this.viewSize + 35,
+      cornerRadius: 5,
+      xMargin: 15,
+      yMargin: 15,
+      centerY: this.viewSize / 2,
+      fill: AreaModelColorProfile.keypadPanelBackgroundProperty,
+      stroke: AreaModelColorProfile.keypadPanelBorderProperty
+    } );
+    this.addChild( keypadPanel );
+
+    area.activePartitionProperty.link( function( newArea ) {
+      keypadPanel.visible = newArea !== null;
+      keypad.clear();
+    } );
 
     // // TODO: with new products
     // var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, true );

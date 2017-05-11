@@ -25,5 +25,8 @@
   },
   "partialProducts": {
     "value": "Partial products"
+  },
+  "enter": {
+    "value": "Enter"
   }
 }
