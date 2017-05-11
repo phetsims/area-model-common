@@ -48,7 +48,7 @@ define( function( require ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
-    AreaNode.call( this, area );
+    AreaNode.call( this, area, widthColorProperty, heightColorProperty );
 
     var modelBounds = new Bounds2( 0, 0, area.maximumSize, area.maximumSize );
     var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );

@@ -55,7 +55,7 @@ define( function( require ) {
 
     var self = this;
 
-    AreaNode.call( this, area );
+    AreaNode.call( this, area, widthColorProperty, heightColorProperty );
 
     // TODO: should be deprecated in this location, grab locations from the model???
     var firstOffset = this.viewSize * 0.55;
