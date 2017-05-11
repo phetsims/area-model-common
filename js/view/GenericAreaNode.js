@@ -71,15 +71,14 @@ define( function( require ) {
       var coloredBackground = new Rectangle( {} );
 
       partitionedArea.areaProperty.link( function( area ) {
-        if ( area === null || area.coefficient === 0 ) {
-          coloredBackground.visible = false;
-        }
-        else {
-          coloredBackground.visible = true;
-          coloredBackground.fill = area.coefficient > 0 ? AreaModelColorProfile.genericPositiveBackgroundProperty
-                                                        : AreaModelColorProfile.genericNegativeBackgroundProperty;
+        if ( area !== null ) {
+          coloredBackground.fill = area.coefficient === 0 ? null
+                                                          : ( area.coefficient > 0 ? AreaModelColorProfile.genericPositiveBackgroundProperty
+                                                                                   : AreaModelColorProfile.genericNegativeBackgroundProperty );
         }
       } );
+
+      partitionedArea.visibleProperty.linkAttribute( coloredBackground, 'visible' );
 
       partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
         if ( horizontalRange !== null ) {
