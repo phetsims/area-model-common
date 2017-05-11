@@ -15,9 +15,12 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var RichText = require( 'SCENERY_PHET/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
@@ -25,15 +28,25 @@ define( function( require ) {
    *
    * @param {Property.<Area>} currentAreaProperty
    * @param {boolean} isProportional
+   * @param {boolean} allowPowers
    * @param {number} decimalPlaces
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
    */
-  function ProblemNode( currentAreaProperty, isProportional, decimalPlaces, widthColorProperty, heightColorProperty ) {
+  function ProblemNode( currentAreaProperty, isProportional, allowPowers, decimalPlaces, widthColorProperty, heightColorProperty ) {
     assert && assert( typeof isProportional === 'boolean' );
 
     var xText = new Text( AreaModelConstants.X_STRING, {
       font: AreaModelConstants.PROBLEM_X_FONT
+    } );
+    var leftParen = new Text( '(', {
+      font: AreaModelConstants.PROBLEM_PAREN_FONT
+    } );
+    var rightParen = new Text( ')', {
+      font: AreaModelConstants.PROBLEM_PAREN_FONT
+    } );
+    var bothParen = new Text( ')(', {
+      font: AreaModelConstants.PROBLEM_PAREN_FONT
     } );
 
     var children;
@@ -86,17 +99,55 @@ define( function( require ) {
           color: heightColorProperty
         } );
 
-        children = [ heightPicker, xText, widthPicker ];
+        children = [ heightPicker, new Node( { children: [ xText ] } ), widthPicker ];
       })();
     }
     else {
-      // TODO: with variables, surround in parenthesis, no 'x'
-      children = [ xText ];
+      var widthText = new RichText( ' ', {
+        font: AreaModelConstants.PROBLEM_X_FONT,
+        fill: widthColorProperty
+      } );
+      var heightText = new RichText( ' ', {
+        font: AreaModelConstants.PROBLEM_X_FONT,
+        fill: heightColorProperty
+      } );
+      var widthBox = new Rectangle( 0, 0, 30, 30, { stroke: widthColorProperty } );
+      var heightBox = new Rectangle( 0, 0, 30, 30, { stroke: heightColorProperty } );
+
+      var widthNode = new Node();
+      var heightNode = new Node();
+
+      currentAreaProperty.value.horizontalTotalProperty.link( function( total ) {
+        if ( total === null ) {
+          widthNode.children = [ widthBox ];
+        }
+        else {
+          widthText.text = total.toRichString();
+          widthNode.children = [ widthText ];
+        }
+      } );
+      currentAreaProperty.value.verticalTotalProperty.link( function( total ) {
+        if ( total === null ) {
+          heightNode.children = [ heightBox ];
+        }
+        else {
+          heightText.text = total.toRichString();
+          heightNode.children = [ heightText ];
+        }
+      } );
+
+      if ( allowPowers ) {
+        children = [ leftParen, heightNode, bothParen, widthNode, rightParen ];
+      }
+      else {
+        children = [ heightNode, xText, widthNode ];
+      }
     }
 
     HBox.call( this, {
       children: children,
-      spacing: 10
+      spacing: 10,
+      maxWidth: 230
     } );
   }
 

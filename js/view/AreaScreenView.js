@@ -58,7 +58,8 @@ define( function( require ) {
       matchVertical: false
     } );
 
-    var problemNode = new AlignBox( new ProblemNode( model.currentAreaProperty, isProportional, decimalPlaces, widthColorProperty, heightColorProperty ), {
+    // TODO: cleanup conditional
+    var problemNode = new AlignBox( new ProblemNode( model.currentAreaProperty, isProportional, model.allowPowers || false, decimalPlaces, widthColorProperty, heightColorProperty ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
