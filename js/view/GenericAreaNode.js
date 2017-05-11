@@ -28,6 +28,7 @@ define( function( require ) {
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
+  var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' ); // TODO: don't require this for toRichString!
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -188,7 +189,20 @@ define( function( require ) {
 
       var background = new Rectangle( 0, 0, richText.width + 10, richText.height + 5, {
         stroke: colorProperty,
-        cornerRadius: 4
+        cornerRadius: 4,
+        children: [
+          richText
+        ]
+      } );
+
+      partition.sizeProperty.link( function( size ) {
+        if ( size === null ) {
+          richText.text = '';
+        }
+        else {
+          richText.text = new Polynomial( [ size ] ).toRichString();
+          richText.center = background.selfBounds.center;
+        }
       } );
 
       area.activePartitionProperty.link( function( activePartition ) {
