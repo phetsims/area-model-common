@@ -33,7 +33,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
-  var Term = require( 'AREA_MODEL_COMMON/model/Term' );
+  var TermAccumulator = require( 'AREA_MODEL_COMMON/view/TermAccumulator' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -181,7 +181,14 @@ define( function( require ) {
     function createEditButton( BoxType, partition, xProperty, yProperty, digitCount, colorProperty ) {
 
       // TODO: better way to test for size
-      var sampleString = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+      var sampleString;
+      if ( allowPowers ) {
+        sampleString = '-9x<sup>2</sup>';
+      }
+      else {
+        // TODO: consider using \u2212
+        sampleString = '-' + _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+      }
       var richText = new RichText( sampleString, {
         fill: colorProperty,
         font: AreaModelConstants.EDIT_READOUT_FONT
@@ -216,7 +223,7 @@ define( function( require ) {
           background,
           new MutableOptionsNode( RectangularPushButton, [], {
             content: new FontAwesomeNode( 'pencil_square_o', {
-              scale: 0.5
+              scale: 0.4
             } ),
             listener: function() {
               area.activePartitionProperty.value = partition;
@@ -242,7 +249,7 @@ define( function( require ) {
 
     // TODO: proper positioning based on distance from 0
     var horizontalEditOffset = -20;
-    var verticalEditOffset = -28;
+    var verticalEditOffset = -30;
     createEditButton( HBox, area.leftPartition, this.leftCenterProperty, new Property( horizontalEditOffset ), 3, widthColorProperty );
     createEditButton( HBox, area.middleHorizontalPartition, this.horizontalMiddleCenterProperty, new Property( horizontalEditOffset ), 2, widthColorProperty );
     createEditButton( HBox, area.rightPartition, this.rightCenterProperty, new Property( horizontalEditOffset ), 1, widthColorProperty );
@@ -266,18 +273,21 @@ define( function( require ) {
       [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
       [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
       [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ],
-      [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.TODOTWO ), new Key( 'x', Keys.TODO ) ],
+      [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.XSQUARED ), new Key( 'x', Keys.X ) ],
     ];
 
+    // TODO: pass number of digits allowed
+    var termAccumulator = new TermAccumulator();
+
     var keypad = new Keypad( allowPowers ? powerLayout : noPowerLayout, {
-      // TODO: options?
+      accumulator: termAccumulator
     } );
 
-    var readout = new Text( '', {
+    var readout = new RichText( '', {
       font: AreaModelConstants.KEYPAD_READOUT_FONT
     } );
-    keypad.stringProperty.link( function( str ) {
-      readout.text = str;
+    termAccumulator.termProperty.link( function( term ) {
+      readout.text = term === null ? ' ' : new Polynomial( [ term ] ).toRichString();
     } );
 
     var keypadPanel = new Panel( new VBox( {
@@ -290,8 +300,7 @@ define( function( require ) {
           xMargin: 15,
           yMargin: 5,
           listener: function() {
-            console.log( 'TODO: support x, x^2 with keys, write accumulator (custom digit numbers for each)' );
-            area.activePartitionProperty.value.sizeProperty.value = new Term( keypad.valueProperty.value );
+            area.activePartitionProperty.value.sizeProperty.value = termAccumulator.termProperty.value;
             area.activePartitionProperty.value = null;
           }
         } )

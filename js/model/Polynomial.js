@@ -78,7 +78,8 @@ define( function( require ) {
 
         if ( index === 0 ) {
           if ( term.coefficient < 0 ) {
-            string += '-';
+            // string += '\u2212'; // negative sign
+            string += '-'; // negative sign
           }
         }
         else {
@@ -90,7 +91,9 @@ define( function( require ) {
           }
         }
 
-        string += Math.round( term.coefficient * 100 ) / 100;
+        if ( term.coefficient !== 1 || term.power === 0 ) {
+          string += Math.round( Math.abs( term.coefficient ) * 100 ) / 100;
+        }
         if ( term.power > 0 ) {
           string += 'x';
         }

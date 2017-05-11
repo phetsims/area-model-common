@@ -65,7 +65,8 @@ define( function( require ) {
 
     // TODO: how to alignbox this? It can change, can we get the maximum?
     var areaText = new RichText( '500', {
-      font: AreaModelConstants.TOTAL_AREA_FONT
+      font: AreaModelConstants.TOTAL_AREA_FONT,
+      maxWidth: 230
     } );
     var areaNode = new AlignBox( areaText, {
       group: panelAlignGroup,
