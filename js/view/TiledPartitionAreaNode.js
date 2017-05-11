@@ -124,8 +124,6 @@ define( function( require ) {
           } ) );
         }
       }
-
-      console.log( horizontalLargeCount, verticalLargeCount, horizontalSmallCount, verticalSmallCount );
     } );
   }
 
