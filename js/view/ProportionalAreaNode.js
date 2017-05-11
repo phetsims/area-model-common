@@ -146,7 +146,7 @@ define( function( require ) {
 
     if ( area.tilesAvailable ) {
       area.partitionedAreas.forEach( function( partitionedArea ) {
-        self.addChild( new TiledPartitionAreaNode( partitionedArea, self.modelViewTransform, tilesVisibleProperty ) );
+        self.addChild( new TiledPartitionAreaNode( partitionedArea, self.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize ) );
       } );
     }
 

@@ -25,34 +25,107 @@ define( function( require ) {
    * @param {PartitionedArea} area
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Property.<boolean>} tilesVisibleProperty
+   * @param {number} smallTileSize
+   * @param {number} largeTileSize
    */
-  function TiledPartitionAreaNode( partitionedArea, modelViewTransform, tilesVisibleProperty ) {
+  function TiledPartitionAreaNode( partitionedArea, modelViewTransform, tilesVisibleProperty, smallTileSize, largeTileSize ) {
     assert && assert( partitionedArea instanceof PartitionedArea );
 
     var self = this;
 
     Node.call( this );
 
-    Property.multilink( [ partitionedArea.visibleProperty, tilesVisibleProperty ], function( visible, tilesVisible ) {
+    // TODO: performance improvements!
+
+    var bigTile = new Rectangle( 0, 0, modelViewTransform.modelToViewX( largeTileSize ), modelViewTransform.modelToViewY( largeTileSize ), {
+      fill: AreaModelColorProfile.bigTileProperty,
+      stroke: AreaModelColorProfile.tileBorderProperty
+    } );
+    var smallTile = new Rectangle( 0, 0, modelViewTransform.modelToViewX( smallTileSize ), modelViewTransform.modelToViewY( smallTileSize ), {
+      fill: AreaModelColorProfile.smallTileProperty,
+      stroke: AreaModelColorProfile.tileBorderProperty
+    } );
+    var horizontalTile = new Rectangle( 0, 0, modelViewTransform.modelToViewX( largeTileSize ), modelViewTransform.modelToViewY( smallTileSize ), {
+      fill: AreaModelColorProfile.mediumTileProperty,
+      stroke: AreaModelColorProfile.tileBorderProperty
+    } );
+    var verticalTile = new Rectangle( 0, 0, modelViewTransform.modelToViewX( smallTileSize ), modelViewTransform.modelToViewY( largeTileSize ), {
+      fill: AreaModelColorProfile.mediumTileProperty,
+      stroke: AreaModelColorProfile.tileBorderProperty
+    } );
+
+    Property.multilink( [ partitionedArea.horizontalPartition.coordinateRangeProperty, partitionedArea.verticalPartition.coordinateRangeProperty, partitionedArea.visibleProperty, tilesVisibleProperty ], function( horizontalRange, verticalRange, visible, tilesVisible ) {
+      self.removeAllChildren();
       self.visible = visible && tilesVisible;
-    } );
 
-    var tmpRectangle = new Rectangle( {
-      fill: AreaModelColorProfile.bigTileProperty // TODO: change
-    } );
-    this.addChild( tmpRectangle );
+      if ( horizontalRange === null || verticalRange === null || !self.visible ) {
+        return;
+      }
 
-    partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
-      if ( horizontalRange !== null ) {
-        tmpRectangle.rectX = modelViewTransform.modelToViewX( horizontalRange.min );
-        tmpRectangle.rectWidth = modelViewTransform.modelToViewX( horizontalRange.getLength() );
+      function fakeRound( value ) {
+        return Math.round( 1000 * value ) / 1000;
       }
-    } );
-    partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
-      if ( verticalRange !== null ) {
-        tmpRectangle.rectY = modelViewTransform.modelToViewY( verticalRange.min );
-        tmpRectangle.rectHeight = modelViewTransform.modelToViewY( verticalRange.getLength() );
+
+      var width = horizontalRange.getLength();
+      var height = verticalRange.getLength();
+
+      var horizontalLargeCount = Math.floor( fakeRound( width / largeTileSize ) );
+      var verticalLargeCount = Math.floor( fakeRound( height / largeTileSize ) );
+
+      width -= largeTileSize * horizontalLargeCount;
+      height -= largeTileSize * verticalLargeCount;
+
+      var horizontalSmallCount = Math.round( width / smallTileSize );
+      var verticalSmallCount = Math.round( height / smallTileSize );
+
+      var x;
+      var y;
+
+      // big tiles
+      for ( x = 0; x < horizontalLargeCount; x++ ) {
+        for ( y = 0; y < verticalLargeCount; y++ ) {
+          self.addChild( new Node( {
+            children: [ bigTile ],
+            x: modelViewTransform.modelToViewX( horizontalRange.min + x * largeTileSize ),
+            y: modelViewTransform.modelToViewY( verticalRange.min + y * largeTileSize )
+          } ) );
+        }
       }
+
+      // horizontal tiles
+      for ( x = 0; x < horizontalLargeCount; x++ ) {
+        for ( y = 0; y < verticalSmallCount; y++ ) {
+          self.addChild( new Node( {
+            children: [ horizontalTile ],
+            x: modelViewTransform.modelToViewX( horizontalRange.min + x * largeTileSize ),
+            y: modelViewTransform.modelToViewY( verticalRange.min + verticalLargeCount * largeTileSize + y * smallTileSize )
+          } ) );
+        }
+      }
+
+      // vertical tiles
+      for ( x = 0; x < horizontalSmallCount; x++ ) {
+        for ( y = 0; y < verticalLargeCount; y++ ) {
+          self.addChild( new Node( {
+            children: [ verticalTile ],
+            x: modelViewTransform.modelToViewX( horizontalRange.min + horizontalLargeCount * largeTileSize + x * smallTileSize ),
+            y: modelViewTransform.modelToViewY( verticalRange.min + y * largeTileSize )
+          } ) );
+        }
+      }
+
+      // small tiles
+      for ( x = 0; x < horizontalSmallCount; x++ ) {
+        for ( y = 0; y < verticalSmallCount; y++ ) {
+          self.addChild( new Node( {
+            children: [ smallTile ],
+            x: modelViewTransform.modelToViewX( horizontalRange.min + horizontalLargeCount * largeTileSize + x * smallTileSize ),
+            y: modelViewTransform.modelToViewY( verticalRange.min + verticalLargeCount * largeTileSize + y * smallTileSize )
+          } ) );
+        }
+      }
+
+      console.log( horizontalLargeCount, verticalLargeCount, horizontalSmallCount, verticalSmallCount );
     } );
   }
 
