@@ -26,6 +26,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var TiledPartitionAreaNode = require( 'AREA_MODEL_COMMON/view/TiledPartitionAreaNode' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -34,12 +35,13 @@ define( function( require ) {
    * TODO: reduce to options object
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
+   * @param {Property.<boolean>} tilesVisibleProperty
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, widthColorProperty, heightColorProperty, partialProductsChoiceProperty, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, widthColorProperty, heightColorProperty, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
@@ -142,12 +144,11 @@ define( function( require ) {
     } );
     this.addChild( activeAreaNode );
 
-    area.partitionedAreas.forEach( function( partitionedArea ) {
-      // partitionedArea.horizontalPartition.coordinateRangeProperty
-      // partitionedArea.verticalPartition.coordinateRangeProperty
-
-      // TODO: tiles
-    } );
+    if ( area.tilesAvailable ) {
+      area.partitionedAreas.forEach( function( partitionedArea ) {
+        self.addChild( new TiledPartitionAreaNode( partitionedArea, self.modelViewTransform, tilesVisibleProperty ) );
+      } );
+    }
 
     var widthDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: AreaModelColorProfile.dockBackgroundProperty,

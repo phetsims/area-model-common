@@ -42,7 +42,7 @@ define( function( require ) {
 
     var areaNodes = model.areas.map( function( area ) {
       // TODO: fix formatting or go to options
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, model.partialProductsChoiceProperty, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, model.partialProductsChoiceProperty, {
         // TODO: improve positioning, remove duplicated code with generic
         x: self.layoutBounds.left + 90,
         y: self.layoutBounds.top + 70

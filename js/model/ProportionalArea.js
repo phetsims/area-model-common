@@ -58,6 +58,9 @@ define( function( require ) {
     this.maximumSize = options.maximumSize;
     this.minimumSize = options.minimumSize;
 
+    // @public {boolean}
+    this.tilesAvailable = options.tilesAvailable;
+
     // @public {number}
     this.majorGridSpacing = options.majorGridSpacing;
     this.minorGridSpacing = options.minorGridSpacing;
