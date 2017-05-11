@@ -61,6 +61,11 @@ define( function( require ) {
       self.rightPartition.visibleProperty.value = secondHorizontal;
       self.bottomPartition.visibleProperty.value = secondVertical;
     } );
+
+    // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
+    this.activePartitionProperty = new Property( null );
+
+    // TODO: drop activePartition when it is made invisible
   }
 
   areaModelCommon.register( 'GenericArea', GenericArea );
@@ -85,6 +90,8 @@ define( function( require ) {
       this.verticalPartitions.forEach( function( partition ) {
         partition.sizeProperty.reset();
       } );
+
+      this.activePartitionProperty.reset();
     }
   } );
 } );

@@ -26,6 +26,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  var RichText = require( 'SCENERY_PHET/RichText' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
@@ -167,17 +168,35 @@ define( function( require ) {
     } );
 
     // TODO: refactor/cleanup
-    function createEditButton( BoxType, partition, xProperty, yProperty, digitCount ) {
+    function createEditButton( BoxType, partition, xProperty, yProperty, digitCount, colorProperty ) {
+
+      // TODO: better way to test for size
+      var sampleString = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+      var richText = new RichText( sampleString, {
+        fill: colorProperty,
+        font: AreaModelConstants.EDIT_READOUT_FONT
+      } );
+
+      var background = new Rectangle( 0, 0, richText.width + 10, richText.height + 5, {
+        stroke: colorProperty,
+        cornerRadius: 4
+      } );
+
+      area.activePartitionProperty.link( function( activePartition ) {
+        background.fill = activePartition === partition ? AreaModelColorProfile.editActiveBackgroundProperty
+                                                        : AreaModelColorProfile.editInactiveBackgroundProperty;
+      } );
+
       var box = new BoxType( {
         spacing: 10,
         children: [
-          // TODO: richtext?
+          background,
           new MutableOptionsNode( RectangularPushButton, [], {
             content: new FontAwesomeNode( 'pencil_square_o', {
               scale: 0.5
             } ),
-            fire: function() {
-              console.log( 'TODO' );
+            listener: function() {
+              area.activePartitionProperty.value = partition;
             }
           }, {
             baseColor: AreaModelColorProfile.editButtonBackgroundProperty
@@ -198,14 +217,15 @@ define( function( require ) {
       partition.visibleProperty.linkAttribute( box, 'visible' );
     }
 
+    // TODO: proper positioning based on distance from 0
     var horizontalEditOffset = -20;
-    var verticalEditOffset = -40;
-    createEditButton( HBox, area.leftPartition, this.leftCenterProperty, new Property( horizontalEditOffset ), 3 );
-    createEditButton( HBox, area.middleHorizontalPartition, this.horizontalMiddleCenterProperty, new Property( horizontalEditOffset ), 2 );
-    createEditButton( HBox, area.rightPartition, this.rightCenterProperty, new Property( horizontalEditOffset ), 1 );
-    createEditButton( VBox, area.topPartition, new Property( verticalEditOffset ), this.topCenterProperty, 3 );
-    createEditButton( VBox, area.middleVerticalPartition, new Property( verticalEditOffset ), this.verticalMiddleCenterProperty, 2 );
-    createEditButton( VBox, area.bottomPartition, new Property( verticalEditOffset ), this.bottomCenterProperty, 1 );
+    var verticalEditOffset = -28;
+    createEditButton( HBox, area.leftPartition, this.leftCenterProperty, new Property( horizontalEditOffset ), 3, widthColorProperty );
+    createEditButton( HBox, area.middleHorizontalPartition, this.horizontalMiddleCenterProperty, new Property( horizontalEditOffset ), 2, widthColorProperty );
+    createEditButton( HBox, area.rightPartition, this.rightCenterProperty, new Property( horizontalEditOffset ), 1, widthColorProperty );
+    createEditButton( VBox, area.topPartition, new Property( verticalEditOffset ), this.topCenterProperty, 3, heightColorProperty );
+    createEditButton( VBox, area.middleVerticalPartition, new Property( verticalEditOffset ), this.verticalMiddleCenterProperty, 2, heightColorProperty );
+    createEditButton( VBox, area.bottomPartition, new Property( verticalEditOffset ), this.bottomCenterProperty, 1, heightColorProperty );
 
     // // TODO: with new products
     // var topLeftProduct = new PartialProductsLabel( partialProductsChoiceProperty, area.topLeftArea, true );

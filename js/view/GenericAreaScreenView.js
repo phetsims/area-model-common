@@ -33,8 +33,8 @@ define( function( require ) {
 
     this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowPowers, AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, model.partialProductsChoiceProperty, {
       // TODO: improve positioning, remove duplicated code with proportional
-      x: self.layoutBounds.top + 70,
-      y: self.layoutBounds.left + 70
+      x: self.layoutBounds.left + 90,
+      y: self.layoutBounds.top + 70
     } ) );
   }
 

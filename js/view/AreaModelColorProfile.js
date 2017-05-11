@@ -50,6 +50,9 @@ define( function( require ) {
 
     editButtonBackground: { default: new Color( 241, 232, 0 ) },
 
+    editActiveBackground: { default: new Color( 255, 240, 0 ) },
+    editInactiveBackground: { default: Color.WHITE },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

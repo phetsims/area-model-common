@@ -18,6 +18,7 @@ define( function( require ) {
     TOTAL_AREA_FONT: new PhetFont( 26 ),
     SYMBOL_FONT: new PhetFont( 20 ),
     PARTIAL_PRODUCT_FONT: new PhetFont( 20 ),
+    EDIT_READOUT_FONT: new PhetFont( 18 ),
 
     PANEL_MARGIN: 20,
     PANEL_SPACING: 10,

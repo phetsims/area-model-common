@@ -28,7 +28,7 @@ define( function( require ) {
     this.area = area;
 
     // @public {number}
-    this.viewSize = 450;
+    this.viewSize = 430;
   }
 
   areaModelCommon.register( 'AreaNode', AreaNode );
