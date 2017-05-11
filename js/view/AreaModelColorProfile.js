@@ -34,7 +34,7 @@ define( function( require ) {
     proportionalHeight: { default: new Color( 0, 71, 253 ) }, // blue
 
     genericWidth: { default: new Color( 0, 165, 83 ) }, // green
-    genericHeight: { default: new Color( 0, 165, 83 ) }, // purple
+    genericHeight: { default: new Color( 91, 42, 194 ) }, // purple
 
     proportionalActiveAreaBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
     proportionalActiveAreaBackground: { default: new Color( 0, 0, 0, 0.1 ) },

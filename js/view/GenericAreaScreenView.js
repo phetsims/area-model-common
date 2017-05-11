@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/view/AreaScreenView' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/model/GenericAreaModel' );
+  var GenericAreaNode = require( 'AREA_MODEL_COMMON/view/GenericAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -25,8 +26,16 @@ define( function( require ) {
     assert && assert( model instanceof GenericAreaModel );
     assert && assert( typeof decimalPlaces === 'number' );
 
+    var self = this;
+
     AreaScreenView.call( this, model, false, decimalPlaces, AreaModelColorProfile.genericWidthProperty,
                                                             AreaModelColorProfile.genericHeightProperty );
+
+    this.addChild( new GenericAreaNode( model.areas[ 0 ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, model.partialProductsChoiceProperty, {
+      // TODO: improve positioning, remove duplicated code with proportional
+      left: self.layoutBounds.top + 70,
+      top: self.layoutBounds.left + 70
+    } ) );
   }
 
   areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );
