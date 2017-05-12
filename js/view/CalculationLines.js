@@ -103,7 +103,8 @@ define( function( require ) {
       return [
         this.createWidthHeighTotalsLine( allLinesActive || activeIndex === 0 ),
         this.createExpandedWidthHeighLine( allLinesActive || activeIndex === 1 ),
-        this.createSumLine( allLinesActive || activeIndex === 2 ) // TODO: how to handle changes that change number of lines?
+        this.createDistributionLine( allLinesActive || activeIndex === 2 ),
+        this.createSumLine( allLinesActive || activeIndex === 3 ) // TODO: how to handle changes that change number of lines?
       ].filter( function( line ) {
         return line !== null;
       } );
@@ -158,25 +159,43 @@ define( function( require ) {
       } );
     },
 
-    sumOfTerms: function( terms, orientation, isActive ) {
-      var self = this;
-
+    sumOfNodes: function( nodes, isActive ) {
       return new HBox( {
-        children: _.flatten( terms.map( function( term, index ) {
-          var nodes = [];
+        children: _.flatten( nodes.map( function( node, index ) {
+          var result = [];
 
           if ( index > 0 ) {
-            nodes.push( new Node( {
+            result.push( new Node( {
               children: [ isActive ? activePlus : inactivePlus ]
             } ) );
           }
 
-          nodes.push( self.createColoredRichText( term, orientation, isActive, false ) );
+          result.push( node );
 
-          return nodes;
+          return result;
         } ) ),
         align: 'bottom',
         spacing: OP_PADDING
+      } );
+    },
+
+    sumOfTerms: function( terms, orientation, isActive ) {
+      var self = this;
+
+      return this.sumOfNodes( terms.map( function( term ) {
+        return self.createColoredRichText( term, orientation, isActive, false );
+      } ), isActive );
+    },
+
+    getHorizontalTerms: function() {
+      return this.area.getDefinedHorizontalPartitions().map( function( partition ) {
+        return partition.sizeProperty.value;
+      } );
+    },
+
+    getVerticalTerms: function() {
+      return this.area.getDefinedVerticalPartitions().map( function( partition ) {
+        return partition.sizeProperty.value;
       } );
     },
 
@@ -206,12 +225,8 @@ define( function( require ) {
         return null;
       }
 
-      var horizontalTerms = this.area.getDefinedHorizontalPartitions().map( function( partition ) {
-        return partition.sizeProperty.value;
-      } );
-      var verticalTerms = this.area.getDefinedVerticalPartitions().map( function( partition ) {
-        return partition.sizeProperty.value;
-      } );
+      var horizontalTerms = this.getHorizontalTerms();
+      var verticalTerms = this.getVerticalTerms();
 
       var horizontalSingle = horizontalTerms.length === 1;
       var verticalSingle = verticalTerms.length === 1;
@@ -240,6 +255,34 @@ define( function( require ) {
         align: 'bottom',
         spacing: ( horizontalSingle || verticalSingle ) ? TERM_PAREN_PADDING : PAREN_PAREN_PADDING
       } );
+    },
+
+    createDistributionLine: function( isActive ) {
+      var self = this;
+
+      var horizontalTerms = this.getHorizontalTerms();
+      var verticalTerms = this.getVerticalTerms();
+
+      // Line not needed if there is only one term
+      if ( horizontalTerms.length === 1 && verticalTerms.length === 1 ) {
+        return null;
+      }
+
+      return this.sumOfNodes( _.flatten( verticalTerms.map( function( verticalTerm ) {
+        return horizontalTerms.map( function( horizontalTerm ) {
+          var hasFirstInParentheses = self.allowPowers || verticalTerm.coefficient < 0;
+          var horizontalText = self.createColoredRichText( horizontalTerm, Orientation.HORIZONTAL, isActive, false );
+          var verticalText = self.createColoredRichText( verticalTerm, Orientation.VERTICAL, isActive, false );
+          return new HBox( {
+            children: [
+              hasFirstInParentheses ? self.parenWrap( verticalText, isActive ) : verticalText,
+              self.parenWrap( horizontalText, isActive )
+            ],
+            align: 'bottom',
+            spacing: hasFirstInParentheses ? PAREN_PAREN_PADDING : TERM_PAREN_PADDING
+          } );
+        } );
+      } ) ), isActive );
     },
 
     // TODO: doc
