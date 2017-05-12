@@ -19,6 +19,11 @@ define( function( require ) {
    * @param {number} [power]
    */
   function Term( coefficient, power ) {
+    // Properly handle 0x, see https://github.com/phetsims/area-model-common/issues/6
+    if ( coefficient === 0 ) {
+      power = 0;
+    }
+
     // Allow only specifying one argument to the function (the coefficient).
     power = ( power === undefined ? 0 : power );
 

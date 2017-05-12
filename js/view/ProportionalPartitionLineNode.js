@@ -85,7 +85,7 @@ define( function( require ) {
 
         var value = modelPoint[ primaryCoordinate ];
 
-        value = Math.round( value / area.snapSize ) * area.snapSize;
+        value = Math.round( value / area.partitionSnapSize ) * area.partitionSnapSize;
         value = Util.clamp( value, 0, ternaryProperty.value );
 
         primaryProperty.value = value;

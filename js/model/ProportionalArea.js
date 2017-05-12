@@ -32,6 +32,7 @@ define( function( require ) {
       initialWidth: 1, // {number} - Initial width
       initialHeight: 1, // {number} - Initial height
       snapSize: 1, // {number} - Smallest unit size (that is snapped to)
+      partitionSnapSize: 10, // {number} - Smallest left/top partition size
       majorGridSpacing: 10, // {number} - Space between major grid lines
       minorGridSpacing: 1, // {number} - Space between minor grid lines
       smallTileSize: 1, // {number} - Size of the smallest tile available (or for the thin tiles, the shorter length)
@@ -53,6 +54,7 @@ define( function( require ) {
 
     // @public {number}
     this.snapSize = options.snapSize;
+    this.partitionSnapSize = options.partitionSnapSize;
 
     // @public {number}
     this.maximumSize = options.maximumSize;
