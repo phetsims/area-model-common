@@ -29,11 +29,11 @@ define( function( require ) {
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 24 ),
 
-    PANEL_MARGIN: 20,
+    PANEL_MARGIN: 10,
     PANEL_SPACING: 10,
     PANEL_CORNER_RADIUS: 5,
 
-    MAIN_AREA_OFFSET: new Vector2( 120, 80 ),
+    MAIN_AREA_OFFSET: new Vector2( 180, 80 ),
 
     PARTITION_HANDLE_OFFSET: 15,
     PARTITION_HANDLE_RADIUS: 10,

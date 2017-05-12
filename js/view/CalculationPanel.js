@@ -37,7 +37,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    var background = new Rectangle( 0, 0, 600, 90, {
+    var background = new Rectangle( 0, 0, 800, 150, {
       cornerRadius: 5,
       fill: AreaModelColorProfile.calculationBackgroundProperty,
       stroke: AreaModelColorProfile.calculationBorderProperty
