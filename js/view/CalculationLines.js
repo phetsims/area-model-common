@@ -102,9 +102,11 @@ define( function( require ) {
 
       return [
         this.createWidthHeighTotalsLine( allLinesActive || activeIndex === 0 ),
+        // TODO: implement a reorganized line here see https://github.com/phetsims/area-model-common/issues/8
         this.createExpandedWidthHeighLine( allLinesActive || activeIndex === 1 ),
         this.createDistributionLine( allLinesActive || activeIndex === 2 ),
-        this.createSumLine( allLinesActive || activeIndex === 3 ) // TODO: how to handle changes that change number of lines?
+        this.createMultipliedLine( allLinesActive || activeIndex === 3 ),
+        this.createSumLine( allLinesActive || activeIndex === 4 ) // TODO: how to handle changes that change number of lines?
       ].filter( function( line ) {
         return line !== null;
       } );
@@ -281,6 +283,29 @@ define( function( require ) {
             align: 'bottom',
             spacing: hasFirstInParentheses ? PAREN_PAREN_PADDING : TERM_PAREN_PADDING
           } );
+        } );
+      } ) ), isActive );
+    },
+
+    createMultipliedLine: function( isActive ) {
+      var self = this;
+
+      var horizontalTerms = this.getHorizontalTerms();
+      var verticalTerms = this.getVerticalTerms();
+
+      // Line not needed if there is only one term
+      if ( horizontalTerms.length === 1 && verticalTerms.length === 1 ) {
+        return null;
+      }
+
+      return this.sumOfNodes( _.flatten( verticalTerms.map( function( verticalTerm ) {
+        return horizontalTerms.map( function( horizontalTerm ) {
+          var term = horizontalTerm.times( verticalTerm );
+          var text = self.createRichText( term, isActive, false );
+          if ( term.coefficient < 0 ) {
+            text = self.parenWrap( text, isActive );
+          }
+          return text;
         } );
       } ) ), isActive );
     },
