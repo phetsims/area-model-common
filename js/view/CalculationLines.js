@@ -137,8 +137,6 @@ define( function( require ) {
 
       var lines = [];
 
-      console.log( needsExpansion, needsDistribution, needsMultiplied, needsOrdered, needsMinuses );
-
       lines.push( this.createTotalsLine( allLinesActive || activeIndex === 0 ) );
       if ( needsExpansion ) {
         lines.push( this.createExpandedLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 1 ) );
