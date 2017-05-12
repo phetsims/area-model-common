@@ -12,6 +12,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var Term = require( 'AREA_MODEL_COMMON/model/Term' );
+  var TermList = require( 'AREA_MODEL_COMMON/model/TermList' );
 
   /**
    * @constructor
@@ -20,26 +21,27 @@ define( function( require ) {
    */
   function Polynomial( terms ) {
 
-    // @public {Array.<Term>}
-    this.terms = [];
+    var combinedTerms = [];
 
     // Sum common powers, in decreasing order (for display ease)
     for ( var power = 4; power >= 0; power-- ) {
       var sum = _.sum( _.map( _.filter( terms, [ 'power', power ] ), 'coefficient' ) );
       if ( sum !== 0 ) {
-        this.terms.push( new Term( sum, power ) );
+        combinedTerms.push( new Term( sum, power ) );
       }
     }
 
     // TODO: determine if we SHOULD put in a zero term when this happens?
-    if ( this.terms.length === 0 ) {
-      this.terms.push( new Term( 0 ) );
+    if ( combinedTerms.length === 0 ) {
+      combinedTerms.push( new Term( 0 ) );
     }
+
+    TermList.call( this, combinedTerms );
   }
 
   areaModelCommon.register( 'Polynomial', Polynomial );
 
-  return inherit( Object, Polynomial, {
+  return inherit( TermList, Polynomial, {
     /**
      * Addition of polynomials.
      * @public
@@ -64,18 +66,6 @@ define( function( require ) {
           return term.times( otherTerm );
         } );
       } ) ) );
-    },
-
-    /**
-     * Returns a string suitable for RichText
-     * @public
-     *
-     * @returns {string}
-     */
-    toRichString: function() {
-      return this.terms.map( function( term, index ) {
-        return term.toRichString( index > 0 );
-      } ).join( '' );
     }
   } );
 } );

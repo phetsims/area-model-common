@@ -66,7 +66,15 @@ define( function( require ) {
         accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
       }
       if ( accumulatedKeys[ 0 ] === Keys.PLUSMINUS ) {
-        accumulatedKeys = [ '-' ].concat( accumulatedKeys.slice( 1 ) );
+        accumulatedKeys = accumulatedKeys.slice( 1 );
+
+        // handle -x
+        if ( accumulatedKeys.length === 0 ) {
+          coefficient = -1;
+        }
+        else {
+          accumulatedKeys = [ '-' ].concat( accumulatedKeys );
+        }
       }
 
       var digitString = accumulatedKeys.join( '' );

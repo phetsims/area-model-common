@@ -18,6 +18,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var RichText = require( 'SCENERY_PHET/RichText' );
+  var TermList = require( 'AREA_MODEL_COMMON/model/TermList' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // TODO: reduce duplication with ProblemNode -- different font though
@@ -37,6 +38,10 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
+  var activeMinus = new Text( '-', {
+    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    fill: AreaModelColorProfile.calculationActiveProperty
+  } );
 
   var inactiveXText = new Text( AreaModelConstants.X_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
@@ -51,6 +56,10 @@ define( function( require ) {
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
   var inactivePlus = new Text( '+', {
+    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    fill: AreaModelColorProfile.calculationInactiveProperty
+  } );
+  var inactiveMinus = new Text( '-', {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
@@ -100,31 +109,72 @@ define( function( require ) {
         return [];
       }
 
-      return [
-        this.createWidthHeighTotalsLine( allLinesActive || activeIndex === 0 ),
-        // TODO: implement a reorganized line here see https://github.com/phetsims/area-model-common/issues/8
-        this.createExpandedWidthHeighLine( allLinesActive || activeIndex === 1 ),
-        this.createDistributionLine( allLinesActive || activeIndex === 2 ),
-        this.createMultipliedLine( allLinesActive || activeIndex === 3 ),
-        this.createSumLine( allLinesActive || activeIndex === 4 ) // TODO: how to handle changes that change number of lines?
-      ].filter( function( line ) {
-        return line !== null;
-      } );
+      var horizontalTermList = this.area.getHorizontalTermList();
+      var verticalTermList = this.area.getVerticalTermList();
+
+      var horizontalTerms = horizontalTermList.terms;
+      var verticalTerms = verticalTermList.terms;
+
+      var horizontalPolynomial = this.area.horizontalTotalProperty.value;
+      var verticalPolynomial = this.area.verticalTotalProperty.value;
+
+      var multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
+        return horizontalTerms.map( function( horizontalTerm ) {
+          return horizontalTerm.times( verticalTerm );
+        } );
+      } ) ) );
+
+      var orderedTermList = multipliedTermList.orderedByExponent();
+
+      var totalPolynomial = this.area.totalAreaProperty.value;
+
+      var needsExpansion = !horizontalTermList.equals( horizontalPolynomial ) || !verticalTermList.equals( verticalPolynomial );
+      var needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
+      var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
+      var needsMinuses = needsMultiplied && this.allowPowers && multipliedTermList.hasNegativeTerm();
+      var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
+                                            ( needsMinuses || !orderedTermList.equals( totalPolynomial ) );
+
+      var lines = [];
+
+      console.log( needsExpansion, needsDistribution, needsMultiplied, needsOrdered, needsMinuses );
+
+      lines.push( this.createTotalsLine( allLinesActive || activeIndex === 0 ) );
+      if ( needsExpansion ) {
+        lines.push( this.createExpandedLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 1 ) );
+      }
+      if ( needsDistribution ) {
+        lines.push( this.createDistributionLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 2 ) );
+      }
+      if ( needsMultiplied ) {
+        lines.push( this.sumWithNegativeParens( multipliedTermList.terms, allLinesActive || activeIndex === 3 ) );
+      }
+      if ( needsOrdered ) {
+        lines.push( this.sumWithNegativeParens( orderedTermList.terms, allLinesActive || activeIndex === 4 ) );
+      }
+      if ( needsMinuses ) {
+        lines.push( this.sumOrDifferenceOfTerms( orderedTermList.terms, allLinesActive || activeIndex === 5 ) );
+      }
+      lines.push( this.createSumLine( allLinesActive || activeIndex === 6 ) );
+
+      return lines;
     },
 
-    // NOTE: Term or Polynomial
-    createColoredRichText: function( term, orientation, isActive, includeBinaryOperation ) {
+    // NOTE: Term or Polynomial, includeBinaryOperation ignored for polynomial
+    createColoredRichText: function( term, orientation, isActive, includeBinaryOperation, excludeSign ) {
       // TODO: color selector!
       var colorProperty = orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
-      return new RichText( term.toRichString( includeBinaryOperation ), {
+      var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
+      return new RichText( string, {
         font: AreaModelConstants.CALCULATION_TERM_FONT,
         fill: isActive ? colorProperty : AreaModelColorProfile.calculationInactiveProperty
       } );
     },
 
     // NOTE: Term or Polynomial
-    createRichText: function( term, isActive, includeBinaryOperation ) {
-      return new RichText( term.toRichString( includeBinaryOperation ), {
+    createRichText: function( term, isActive, includeBinaryOperation, excludeSign ) {
+      var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
+      return new RichText( string, {
         font: AreaModelConstants.CALCULATION_TERM_FONT,
         fill: isActive ? AreaModelColorProfile.calculationActiveProperty : AreaModelColorProfile.calculationInactiveProperty
       } );
@@ -189,6 +239,40 @@ define( function( require ) {
       } ), isActive );
     },
 
+    sumOrDifferenceOfTerms: function( terms, isActive ) {
+      var self = this;
+
+      return new HBox( {
+        children: _.flatten( terms.map( function( term, index ) {
+          var result = [];
+
+          if ( index > 0 ) {
+            result.push( new Node( {
+              children: [ term.coefficient >= 0 ? ( isActive ? activePlus : inactivePlus ) : ( isActive ? activeMinus : inactiveMinus ) ]
+            } ) );
+          }
+
+          result.push( self.createRichText( term, isActive, false, index > 0 ) );
+
+          return result;
+        } ) ),
+        align: 'bottom',
+        spacing: OP_PADDING
+      } );
+    },
+
+    sumWithNegativeParens: function( terms, isActive ) {
+      var self = this;
+
+      return this.sumOfNodes( terms.map( function( term ) {
+        var text = self.createRichText( term, isActive, false, false );
+        if ( term.coefficient < 0 ) {
+          text = self.parenWrap( text, isActive );
+        }
+        return text;
+      } ), isActive );
+    },
+
     getHorizontalTerms: function() {
       return this.area.getDefinedHorizontalPartitions().map( function( partition ) {
         return partition.sizeProperty.value;
@@ -202,7 +286,7 @@ define( function( require ) {
     },
 
     // TODO: doc
-    createWidthHeighTotalsLine: function( isActive ) {
+    createTotalsLine: function( isActive ) {
       var widthText = this.createColoredRichText( this.area.horizontalTotalProperty.value, Orientation.HORIZONTAL, isActive );
       var heightText = this.createColoredRichText( this.area.verticalTotalProperty.value, Orientation.VERTICAL, isActive );
 
@@ -221,31 +305,18 @@ define( function( require ) {
       }
     },
 
-    createExpandedWidthHeighLine: function( isActive ) {
-      // Not yet implemented, uncertain about spec
-      if ( this.allowPowers ) {
-        return null;
-      }
-
-      var horizontalTerms = this.getHorizontalTerms();
-      var verticalTerms = this.getVerticalTerms();
-
+    createExpandedLine: function( horizontalTerms, verticalTerms, isActive ) {
       var horizontalSingle = horizontalTerms.length === 1;
       var verticalSingle = verticalTerms.length === 1;
-
-      // If only one each, won't need to display this line
-      if ( horizontalSingle && verticalSingle ) {
-        return null;
-      }
 
       var horizontalNode = this.sumOfTerms( horizontalTerms, Orientation.HORIZONTAL, isActive );
       var verticalNode = this.sumOfTerms( verticalTerms, Orientation.VERTICAL, isActive );
 
-      if ( !horizontalSingle ) {
+      if ( !horizontalSingle || this.allowPowers ) {
         // TODO: add assertion checks for all types in this file
         horizontalNode = this.parenWrap( horizontalNode, isActive );
       }
-      if ( !verticalSingle ) {
+      if ( !verticalSingle || this.allowPowers ) {
         verticalNode = this.parenWrap( verticalNode, isActive );
       }
 
@@ -259,16 +330,8 @@ define( function( require ) {
       } );
     },
 
-    createDistributionLine: function( isActive ) {
+    createDistributionLine: function( horizontalTerms, verticalTerms, isActive ) {
       var self = this;
-
-      var horizontalTerms = this.getHorizontalTerms();
-      var verticalTerms = this.getVerticalTerms();
-
-      // Line not needed if there is only one term
-      if ( horizontalTerms.length === 1 && verticalTerms.length === 1 ) {
-        return null;
-      }
 
       return this.sumOfNodes( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
@@ -283,29 +346,6 @@ define( function( require ) {
             align: 'bottom',
             spacing: hasFirstInParentheses ? PAREN_PAREN_PADDING : TERM_PAREN_PADDING
           } );
-        } );
-      } ) ), isActive );
-    },
-
-    createMultipliedLine: function( isActive ) {
-      var self = this;
-
-      var horizontalTerms = this.getHorizontalTerms();
-      var verticalTerms = this.getVerticalTerms();
-
-      // Line not needed if there is only one term
-      if ( horizontalTerms.length === 1 && verticalTerms.length === 1 ) {
-        return null;
-      }
-
-      return this.sumOfNodes( _.flatten( verticalTerms.map( function( verticalTerm ) {
-        return horizontalTerms.map( function( horizontalTerm ) {
-          var term = horizontalTerm.times( verticalTerm );
-          var text = self.createRichText( term, isActive, false );
-          if ( term.coefficient < 0 ) {
-            text = self.parenWrap( text, isActive );
-          }
-          return text;
         } );
       } ) ), isActive );
     },

@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var inherit = require( 'PHET_CORE/inherit' );
 
   /**
    * @constructor
@@ -66,6 +66,28 @@ define( function( require ) {
     },
 
     /**
+     * Returns a string representation of the term suitable for RichText, but without any signs.
+     * @public
+     *
+     * @returns {string}
+     */
+    toNoSignRichString: function() {
+      var string = '';
+
+      if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
+        string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
+      }
+      if ( this.power > 0 ) {
+        string += 'x';
+      }
+      if ( this.power > 1 ) {
+        string += '<sup>' + this.power + '</sup>';
+      }
+
+      return string;
+    },
+
+    /**
      * Returns a string representation of the term suitable for RichText.
      * @public
      *
@@ -92,15 +114,7 @@ define( function( require ) {
         }
       }
 
-      if ( this.coefficient !== 1 || this.power === 0 ) {
-        string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
-      }
-      if ( this.power > 0 ) {
-        string += 'x';
-      }
-      if ( this.power > 1 ) {
-        string += '<sup>' + this.power + '</sup>';
-      }
+      string += this.toNoSignRichString();
 
       return string;
     }

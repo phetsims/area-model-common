@@ -15,6 +15,7 @@ define( function( require ) {
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var Property = require( 'AXON/Property' );
+  var TermList = require( 'AREA_MODEL_COMMON/model/TermList' );
 
   /**
    * @constructor
@@ -113,6 +114,18 @@ define( function( require ) {
     },
 
     /**
+     * Returns a TermList of defined horizontal terms in order.
+     * @public
+     *
+     * @returns {TermList}
+     */
+    getHorizontalTermList: function() {
+      return new TermList( this.getDefinedHorizontalPartitions().map( function( partition ) {
+        return partition.sizeProperty.value;
+      } ) );
+    },
+
+    /**
      * Returns all defined vertical partitions.
      * @public
      *
@@ -122,6 +135,18 @@ define( function( require ) {
       return this.verticalPartitions.filter( function( partition ) {
         return partition.isDefined();
       } );
+    },
+
+    /**
+     * Returns a TermList of defined vertical terms in order.
+     * @public
+     *
+     * @returns {TermList}
+     */
+    getVerticalTermList: function() {
+      return new TermList( this.getDefinedVerticalPartitions().map( function( partition ) {
+        return partition.sizeProperty.value;
+      } ) );
     }
   } );
 } );
