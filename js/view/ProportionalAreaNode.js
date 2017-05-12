@@ -22,6 +22,7 @@ define( function( require ) {
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
+  var Property = require( 'AXON/Property' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -208,9 +209,8 @@ define( function( require ) {
       } );
     } );
 
-
     // TODO: refactor/cleanup
-    function createPartitionLabel( partition, colorProperty ) {
+    function createPartitionLabel( partition, colorProperty, secondaryPartition ) {
       var text = new Text( '', {
         font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
         fill: colorProperty
@@ -245,13 +245,16 @@ define( function( require ) {
       else {
         wrapper.x = -20;
       }
-      partition.visibleProperty.linkAttribute( wrapper, 'visible' );
+
+      Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
+        wrapper.visible = visible && secondarySize !== null;
+      } );
     }
 
-    createPartitionLabel( area.leftPartition, widthColorProperty );
-    createPartitionLabel( area.rightPartition, widthColorProperty );
-    createPartitionLabel( area.topPartition, heightColorProperty );
-    createPartitionLabel( area.bottomPartition, heightColorProperty );
+    createPartitionLabel( area.leftPartition, widthColorProperty, area.rightPartition );
+    createPartitionLabel( area.rightPartition, widthColorProperty, area.rightPartition );
+    createPartitionLabel( area.topPartition, heightColorProperty, area.bottomPartition );
+    createPartitionLabel( area.bottomPartition, heightColorProperty, area.bottomPartition );
 
     this.mutate( nodeOptions );
   }

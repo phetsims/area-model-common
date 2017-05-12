@@ -11,11 +11,14 @@ define( function( require ) {
   // modules
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Range = require( 'DOT/Range' );
+  var RichText = require( 'SCENERY_PHET/RichText' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -35,7 +38,7 @@ define( function( require ) {
     this.area = area;
 
     // @public {number}
-    this.viewSize = 430;
+    this.viewSize = 400;
 
     // TODO: reduce duplication
     var horizontalCoordinateProperties = _.flatten( area.horizontalPartitions.map( function( partition ) {
@@ -83,8 +86,9 @@ define( function( require ) {
     } );
 
     var markSize = 4;
-    var horizontalLineOffset = -50;
-    var verticalLineOffset = -50;
+    var horizontalLineOffset = -40;
+    var verticalLineOffset = -60;
+    var labelOffset = -7;
 
     var horizontalLeftMark = new Line( 0, -markSize + horizontalLineOffset, 0, markSize + horizontalLineOffset, {
       stroke: widthColorProperty
@@ -98,6 +102,15 @@ define( function( require ) {
       stroke: widthColorProperty
     } );
     this.addChild( horizontalLine );
+    var horizontalRichText = new RichText( '', {
+      font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
+      fill: widthColorProperty
+    } );
+    var horizontalLabel = new Node( {
+      children: [ horizontalRichText ],
+      y: horizontalLineOffset + labelOffset
+    } );
+    this.addChild( horizontalLabel );
 
     var verticalLeftMark = new Line( -markSize + verticalLineOffset, 0, markSize + verticalLineOffset, 0, {
       stroke: heightColorProperty
@@ -111,6 +124,31 @@ define( function( require ) {
       stroke: heightColorProperty
     } );
     this.addChild( verticalLine );
+    var verticalRichText = new RichText( '', {
+      font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
+      fill: heightColorProperty
+    } );
+    var verticalLabel = new Node( {
+      children: [ verticalRichText ],
+      x: verticalLineOffset + labelOffset
+    } );
+    this.addChild( verticalLabel );
+
+    area.horizontalTotalProperty.link( function( sum ) {
+      horizontalRichText.visible = sum !== null;
+      if ( sum !== null ) {
+        horizontalRichText.text = sum.toRichString();
+        horizontalRichText.centerBottom = Vector2.ZERO;
+      }
+    } );
+
+    area.verticalTotalProperty.link( function( sum ) {
+      verticalRichText.visible = sum !== null;
+      if ( sum !== null ) {
+        verticalRichText.text = sum.toRichString();
+        verticalRichText.rightCenter = Vector2.ZERO;
+      }
+    } );
 
     this.horizontalCoordinateRangeProperty.link( function( horizontalRange ) {
       horizontalLeftMark.visible = horizontalRange !== null;
@@ -126,6 +164,7 @@ define( function( require ) {
       }
 
       var min = map( horizontalRange.min );
+      var center = map( horizontalRange.getCenter() );
       var max = map( horizontalRange.max );
 
       horizontalLeftMark.x1 = min;
@@ -134,6 +173,7 @@ define( function( require ) {
       horizontalRightMark.x2 = max;
       horizontalLine.x1 = min;
       horizontalLine.x2 = max;
+      horizontalLabel.x = center;
     } );
 
     this.verticalCoordinateRangeProperty.link( function( verticalRange ) {
@@ -150,6 +190,7 @@ define( function( require ) {
       }
 
       var min = map( verticalRange.min );
+      var center = map( verticalRange.getCenter() );
       var max = map( verticalRange.max );
 
       verticalLeftMark.y1 = min;
@@ -158,6 +199,7 @@ define( function( require ) {
       verticalRightMark.y2 = max;
       verticalLine.y1 = min;
       verticalLine.y2 = max;
+      verticalLabel.y = center;
     } );
   }
 
