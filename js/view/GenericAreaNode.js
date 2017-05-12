@@ -252,9 +252,9 @@ define( function( require ) {
     var readout = new RichText( '', {
       font: AreaModelConstants.KEYPAD_READOUT_FONT
     } );
-    termAccumulator.termProperty.link( function( term ) {
-      // TODO: add string-based display for temporary terms!
-      readout.text = term === null ? ' ' : term.toRichString( false );
+    termAccumulator.richStringProperty.link( function( string ) {
+      // Trick to be able to position an empty string
+      readout.text = string.length === 0 ? ' ' : string;
     } );
 
     var keypadPanel = new Panel( new VBox( {

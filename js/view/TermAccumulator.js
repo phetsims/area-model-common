@@ -33,6 +33,24 @@ define( function( require ) {
 
     AbstractKeyAccumulator.call( this );
 
+    // @public {Property.<string>}
+    this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
+      return accumulatedKeys.map( function( key ) {
+        if ( key === Keys.PLUSMINUS ) {
+          return '-';
+        }
+        else if ( key === Keys.X ) {
+          return 'x';
+        }
+        else if ( key === Keys.XSQUARED ) {
+          return 'x<sup>2</sup>';
+        }
+        else {
+          return key;
+        }
+      } ).join( '' );
+    } );
+
     // @public {Property.<Term|null>}
     this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
       var lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
