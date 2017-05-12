@@ -56,9 +56,8 @@ define( function( require ) {
 
     AreaNode.call( this, area, widthColorProperty, heightColorProperty );
 
-    // TODO: should be deprecated in this location, grab locations from the model???
-    var firstOffset = this.viewSize * 0.55;
-    var secondOffset = this.viewSize * 0.83;
+    var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
+    var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;
 
     var background = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
@@ -157,7 +156,7 @@ define( function( require ) {
         font: AreaModelConstants.EDIT_READOUT_FONT
       } );
 
-      var background = new Rectangle( 0, 0, richText.width + 10, richText.height + 5, {
+      var background = new Rectangle( 0, 0, richText.width + 5, richText.height + 5, {
         stroke: colorProperty,
         cornerRadius: 4,
         children: [
@@ -183,12 +182,14 @@ define( function( require ) {
       var BoxType = partition.isHorizontal ? HBox : VBox;
 
       var box = new BoxType( {
-        spacing: 7,
+        spacing: 4,
         children: [
           background,
           new MutableOptionsNode( RectangularPushButton, [], {
             content: new FontAwesomeNode( 'pencil_square_o', {
-              scale: 0.4
+              scale: 0.4,
+              xMargin: 6,
+              yMargin: 4
             } ),
             listener: function() {
               area.activePartitionProperty.value = partition;

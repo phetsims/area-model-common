@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
   var Property = require( 'AXON/Property' );
@@ -49,9 +50,8 @@ define( function( require ) {
     this.firstVerticalPartitionLineActiveProperty = new Property( false );
     this.secondVerticalPartitionLineActiveProperty = new Property( false );
 
-    // TODO constants somewhere
-    var firstOffset = 0.55;
-    var secondOffset = 0.83;
+    var firstOffset = AreaModelConstants.GENERIC_FIRST_OFFSET;
+    var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
 
     var partitionLineProperties = [
       this.firstHorizontalPartitionLineActiveProperty,

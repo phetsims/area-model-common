@@ -38,6 +38,9 @@ define( function( require ) {
     PARTITION_HANDLE_OFFSET: 15,
     PARTITION_HANDLE_RADIUS: 10,
 
+    GENERIC_FIRST_OFFSET: 0.5,
+    GENERIC_SECOND_OFFSET: 0.8,
+
     X_STRING: '\u00D7'
   } );
 } );
