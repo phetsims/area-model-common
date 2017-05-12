@@ -35,6 +35,10 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
+  var activePlus = new Text( '+', {
+    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    fill: AreaModelColorProfile.calculationActiveProperty
+  } );
 
   var inactiveXText = new Text( AreaModelConstants.X_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
@@ -52,9 +56,15 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
+  var inactivePlus = new Text( '+', {
+    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    fill: AreaModelColorProfile.calculationInactiveProperty
+  } );
 
   var PAREN_PADDING = 0;
   var X_PADDING = 5;
+  var OP_PADDING = 5;
+  var TERM_PAREN_PADDING = 1;
 
   /**
    * @constructor
@@ -96,13 +106,16 @@ define( function( require ) {
       }
 
       return [
-        this.createFirstLine( allLinesActive || activeIndex === 0 ),
-        this.createLastLine( allLinesActive || activeIndex === 1 ) // TODO: how to handle changes that change number of lines?
-      ];
+        this.createWidthHeighTotalsLine( allLinesActive || activeIndex === 0 ),
+        this.createExpandedWidthHeighLine( allLinesActive || activeIndex === 1 ),
+        this.createSumLine( allLinesActive || activeIndex === 2 ) // TODO: how to handle changes that change number of lines?
+      ].filter( function( line ) {
+        return line !== null;
+      } );
     },
 
     // TODO: doc
-    createFirstLine: function( isActive ) {
+    createWidthHeighTotalsLine: function( isActive ) {
       var widthText = new RichText( this.area.horizontalTotalProperty.value.toRichString( false ), {
         font: AreaModelConstants.CALCULATION_TERM_FONT,
         fill: isActive ? this.widthColorProperty : AreaModelColorProfile.calculationInactiveProperty
@@ -144,8 +157,92 @@ define( function( require ) {
       return node;
     },
 
+    createExpandedWidthHeighLine: function( isActive ) {
+      // Not yet implemented, uncertain about spec
+      if ( this.allowPowers ) {
+        return null;
+      }
+
+      var horizontalPartitions = this.area.getDefinedHorizontalPartitions();
+      var verticalPartitions = this.area.getDefinedVerticalPartitions();
+
+      // If only one each, won't need to display this line
+      if ( horizontalPartitions.length <= 1 && verticalPartitions.length <= 1 ) {
+        return null;
+      }
+
+      var node = new Node();
+      var i;
+      var text;
+
+      if ( verticalPartitions.length > 1 ) {
+        node.addChild( new Node( {
+          children: [ isActive ? activeLeftParen : inactiveLeftParen ]
+        } ) );
+      }
+      for ( i = 0; i < verticalPartitions.length; i++ ) {
+        if ( i > 0 ) {
+          node.addChild( new Node( {
+            children: [ isActive ? activePlus : inactivePlus ],
+            left: node.right + OP_PADDING
+          } ) );
+        }
+
+        text = new RichText( verticalPartitions[ i ].sizeProperty.value.toRichString( false ), {
+          fill: isActive ? this.heightColorProperty : AreaModelColorProfile.calculationInactiveProperty
+        } );
+        if ( isFinite( node.right ) ) {
+          text.left = node.right + ( i === 0 ? PAREN_PADDING : OP_PADDING );
+        }
+        node.addChild( text );
+      }
+      if ( verticalPartitions.length > 1 ) {
+        if ( horizontalPartitions.length > 1 ) {
+          node.addChild( new Node( {
+            children: [ isActive ? activeBothParen : inactiveBothParen ],
+            left: node.right + PAREN_PADDING
+          } ) );
+        }
+        else {
+          node.addChild( new Node( {
+            children: [ isActive ? activeRightParen : inactiveRightParen ],
+            left: node.right + PAREN_PADDING
+          } ) );
+        }
+      }
+      else {
+        node.addChild( new Node( {
+          children: [ isActive ? activeLeftParen : inactiveLeftParen ],
+          left: node.right + TERM_PAREN_PADDING
+        } ) );
+      }
+      for ( i = 0; i < horizontalPartitions.length; i++ ) {
+        if ( i > 0 ) {
+          node.addChild( new Node( {
+            children: [ isActive ? activePlus : inactivePlus ],
+            left: node.right + OP_PADDING
+          } ) );
+        }
+
+        // TODO: better way of handling padding!!!
+        text = new RichText( horizontalPartitions[ i ].sizeProperty.value.toRichString( false ), {
+          fill: isActive ? this.widthColorProperty : AreaModelColorProfile.calculationInactiveProperty
+        } );
+        text.left = node.right + ( ( horizontalPartitions.length === 1 ) ? TERM_PAREN_PADDING : ( i === 0 ? PAREN_PADDING : OP_PADDING ) );
+        node.addChild( text );
+      }
+      if ( horizontalPartitions.length > 1 ) {
+        node.addChild( new Node( {
+          children: [ isActive ? activeRightParen : inactiveRightParen ],
+          left: node.right + PAREN_PADDING
+        } ) );
+      }
+
+      return node;
+    },
+
     // TODO: doc
-    createLastLine: function( isActive ) {
+    createSumLine: function( isActive ) {
       return new RichText( this.area.totalAreaProperty.value.toRichString(), {
         font: AreaModelConstants.CALCULATION_TERM_FONT,
         fill: isActive ? AreaModelColorProfile.calculationActiveProperty : AreaModelColorProfile.calculationInactiveProperty

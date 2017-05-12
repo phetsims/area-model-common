@@ -58,7 +58,7 @@ define( function( require ) {
       if ( calculationLines.length ) {
         lineLayer.addChild( new VBox( {
           children: calculationLines,
-          spacing: 5,
+          spacing: 2,
           center: background.center
         } ) );
       }
