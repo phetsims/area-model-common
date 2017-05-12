@@ -63,7 +63,7 @@ define( function( require ) {
     // TODO: dedup with horizontal/vertical
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.verticalTotalProperty = new DerivedProperty( verticalProperties, function() {
-      var definedPartitions = self.getDefinedVerticalPartitions;
+      var definedPartitions = self.getDefinedVerticalPartitions();
       if ( definedPartitions.length ) {
         return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;

@@ -63,6 +63,9 @@ define( function( require ) {
     calculationActive: { default: Color.BLACK },
     calculationInactive: { default: new Color( 0xaaaaaa ) },
 
+    calculationBorder: { default: Color.BLACK },
+    calculationBackground: { default: Color.WHITE },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

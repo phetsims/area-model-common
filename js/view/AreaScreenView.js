@@ -17,6 +17,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var CalculationPanel = require( 'AREA_MODEL_COMMON/view/CalculationPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
@@ -174,13 +175,21 @@ define( function( require ) {
       ];
     } );
 
+    // @protected {Node}
+    // TODO: remove the conditional bit
+    this.calculationDisplayPanel = new CalculationPanel( model.areaCalculationChoiceProperty, model.currentAreaProperty, model.allowPowers || false, {
+      left: this.layoutBounds.left + AreaModelConstants.PANEL_MARGIN,
+      bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
+    } );
+    this.addChild( this.calculationDisplayPanel );
+
     // Reset All button
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
       },
-      right:  this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
+      right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN,
+      bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
     this.addChild( resetAllButton );
   }
