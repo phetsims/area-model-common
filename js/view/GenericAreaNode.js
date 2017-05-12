@@ -28,7 +28,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
-  var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' ); // TODO: don't require this for toRichString!
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -171,7 +170,7 @@ define( function( require ) {
           richText.text = '';
         }
         else {
-          richText.text = new Polynomial( [ size ] ).toRichString();
+          richText.text = size.toRichString( false );
           richText.center = background.selfBounds.center;
         }
       } );
@@ -254,7 +253,8 @@ define( function( require ) {
       font: AreaModelConstants.KEYPAD_READOUT_FONT
     } );
     termAccumulator.termProperty.link( function( term ) {
-      readout.text = term === null ? ' ' : new Polynomial( [ term ] ).toRichString();
+      // TODO: add string-based display for temporary terms!
+      readout.text = term === null ? ' ' : term.toRichString( false );
     } );
 
     var keypadPanel = new Panel( new VBox( {

@@ -37,5 +37,17 @@ define( function( require ) {
 
   areaModelCommon.register( 'Partition', Partition );
 
-  return inherit( Object, Partition );
+  return inherit( Object, Partition, {
+    /**
+     * Returns whether this partition is defined, i.e. "is shown in the area, and has a size"
+     * @public
+     *
+     * TODO: find where I can use this function
+     *
+     * @returns {boolean}
+     */
+    isDefined: function() {
+      return this.visibleProperty.value && this.sizeProperty.value !== null;
+    }
+  } );
 } );

@@ -63,6 +63,46 @@ define( function( require ) {
      */
     equals: function( term ) {
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
+    },
+
+    /**
+     * Returns a string representation of the term suitable for RichText.
+     * @public
+     *
+     * @param {boolean} includeBinaryOperation - If true, assumes we are in a sum and not the first term so includes
+     *                                           an intial plus or minus. If false, only a unary minus would be included.
+     * @returns {string}
+     */
+    toRichString: function( includeBinaryOperation ) {
+      assert && assert( typeof includeBinaryOperation === 'boolean' );
+
+      var string = '';
+
+      if ( includeBinaryOperation ) {
+        if ( this.coefficient < 0 ) {
+          string += ' - ';
+        }
+        else {
+          string += ' + ';
+        }
+      }
+      else {
+        if ( this.coefficient < 0 ) {
+          string += '-'; // negative sign (instead of /u2212 for the appearance)
+        }
+      }
+
+      if ( this.coefficient !== 1 || this.power === 0 ) {
+        string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
+      }
+      if ( this.power > 0 ) {
+        string += 'x';
+      }
+      if ( this.power > 1 ) {
+        string += '<sup>' + this.power + '</sup>';
+      }
+
+      return string;
     }
   } );
 } );

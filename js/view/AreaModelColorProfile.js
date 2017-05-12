@@ -60,6 +60,9 @@ define( function( require ) {
     genericPositiveBackground: { default: new Color( 0xd4f3fe ) },
     genericNegativeBackground: { default: new Color( 0xe5a5ab ) },
 
+    calculationActive: { default: Color.BLACK },
+    calculationInactive: { default: new Color( 0xaaaaaa ) },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

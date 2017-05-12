@@ -21,7 +21,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
@@ -221,7 +220,7 @@ define( function( require ) {
           text.text = '';
         }
         else {
-          text.text = new Polynomial( [ size ] ).toRichString();
+          text.text = size.toRichString( false );
           text.center = Vector2.ZERO;
         }
       } );

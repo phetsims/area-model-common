@@ -49,9 +49,7 @@ define( function( require ) {
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.horizontalTotalProperty = new DerivedProperty( horizontalProperties, function() {
-      var definedPartitions = self.horizontalPartitions.filter( function( partition ) {
-        return partition.visibleProperty.value && partition.sizeProperty.value !== null;
-      } );
+      var definedPartitions = self.getDefinedHorizontalPartitions();
       if ( definedPartitions.length ) {
         return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;
@@ -65,9 +63,7 @@ define( function( require ) {
     // TODO: dedup with horizontal/vertical
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.verticalTotalProperty = new DerivedProperty( verticalProperties, function() {
-      var definedPartitions = self.verticalPartitions.filter( function( partition ) {
-        return partition.visibleProperty.value && partition.sizeProperty.value !== null;
-      } );
+      var definedPartitions = self.getDefinedVerticalPartitions;
       if ( definedPartitions.length ) {
         return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;
@@ -96,6 +92,30 @@ define( function( require ) {
      */
     reset: function() {
       // TODO: nothing here actually, so we don't reset partitions for proportional?
+    },
+
+    /**
+     * Returns all defined horizontal partitions.
+     * @public
+     *
+     * @returns {Array.<Partition>}
+     */
+    getDefinedHorizontalPartitions: function() {
+      return this.horizontalPartitions.filter( function( partition ) {
+        return partition.isDefined();
+      } );
+    },
+
+    /**
+     * Returns all defined vertical partitions.
+     * @public
+     *
+     * @returns {Array.<Partition>}
+     */
+    getDefinedVerticalPartitions: function() {
+      return this.verticalPartitions.filter( function( partition ) {
+        return partition.isDefined();
+      } );
     }
   } );
 } );

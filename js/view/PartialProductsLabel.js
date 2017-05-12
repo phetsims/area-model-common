@@ -15,7 +15,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/model/PartialProductsChoice' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
-  var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -51,13 +50,13 @@ define( function( require ) {
       else {
         // Products
         if ( choice === PartialProductsChoice.PRODUCTS ) {
-          text.text = new Polynomial( [ horizontalSize.times( verticalSize ) ] ).toRichString();
+          text.text = horizontalSize.times( verticalSize ).toRichString( false );
         }
         // Factors
         else {
           if ( allowPowers ) {
-            text.text = '(' + new Polynomial( [ verticalSize ] ).toRichString() + ')' +
-                        '(' + new Polynomial( [ horizontalSize ] ).toRichString() + ')';
+            text.text = '(' + verticalSize.toRichString( false ) + ')' +
+                        '(' + horizontalSize.toRichString( false ) + ')';
           }
           else {
             if ( horizontalSize.equals( verticalSize ) ) {
@@ -65,9 +64,9 @@ define( function( require ) {
               text.text = ( Math.round( 100 * horizontalSize.coefficient ) / 100 ) + '<sup>2</sup>';
             }
             else {
-              text.text = new Polynomial( [ verticalSize ] ).toRichString() +
+              text.text = verticalSize.toRichString( false ) +
                           ' ' + AreaModelConstants.X_STRING + ' ' +
-                          new Polynomial( [ horizontalSize ] ).toRichString();
+                          horizontalSize.toRichString( false );
             }
           }
         }

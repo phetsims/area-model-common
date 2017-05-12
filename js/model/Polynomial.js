@@ -74,34 +74,7 @@ define( function( require ) {
      */
     toRichString: function() {
       return this.terms.map( function( term, index ) {
-        var string = '';
-
-        if ( index === 0 ) {
-          if ( term.coefficient < 0 ) {
-            // string += '\u2212'; // negative sign
-            string += '-'; // negative sign
-          }
-        }
-        else {
-          if ( term.coefficient < 0 ) {
-            string += ' - ';
-          }
-          else {
-            string += ' + ';
-          }
-        }
-
-        if ( term.coefficient !== 1 || term.power === 0 ) {
-          string += Math.round( Math.abs( term.coefficient ) * 100 ) / 100;
-        }
-        if ( term.power > 0 ) {
-          string += 'x';
-        }
-        if ( term.power > 1 ) {
-          string += '<sup>' + term.power + '</sup>';
-        }
-
-        return string;
+        return term.toRichString( index > 0 );
       } ).join( '' );
     }
   } );
