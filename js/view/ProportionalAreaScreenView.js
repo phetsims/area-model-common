@@ -44,8 +44,8 @@ define( function( require ) {
       // TODO: fix formatting or go to options
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, model.partialProductsChoiceProperty, {
         // TODO: improve positioning, remove duplicated code with generic
-        x: self.layoutBounds.left + 100,
-        y: self.layoutBounds.top + 80
+        x: self.layoutBounds.left + AreaModelConstants.MAIN_AREA_OFFSET.x,
+        y: self.layoutBounds.top + AreaModelConstants.MAIN_AREA_OFFSET.y
       } );
     } );
 
@@ -107,6 +107,10 @@ define( function( require ) {
 
     var gridCheckbox = new CheckBox( gridIconNode, model.gridLinesVisibleProperty );
     var tileCheckbox = new CheckBox( tileIconNode, model.tilesVisibleProperty );
+
+    model.currentAreaProperty.link( function( area ) {
+      tileCheckbox.visible = area.tilesAvailable;
+    } );
 
     this.addChild( new VBox( {
       children: [
