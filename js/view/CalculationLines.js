@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/AreaModelColorProfile' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -82,10 +82,11 @@ define( function( require ) {
      * Creates calculation lines.
      * @public
      *
-     * @param {number} activeIndex
+     * @param {number} [activeIndex]
      * @returns {Array.<Node>}
      */
     createLines: function( activeIndex ) {
+      var allLinesActive = activeIndex === undefined;
       var horizontalPartitions = this.area.getDefinedHorizontalPartitions();
       var verticalPartitions = this.area.getDefinedVerticalPartitions();
 
@@ -95,8 +96,8 @@ define( function( require ) {
       }
 
       return [
-        this.createFirstLine( activeIndex === 0 ),
-        this.createLastLine( activeIndex === 1 ) // TODO: how to handle changes that change number of lines?
+        this.createFirstLine( allLinesActive || activeIndex === 0 ),
+        this.createLastLine( allLinesActive || activeIndex === 1 ) // TODO: how to handle changes that change number of lines?
       ];
     },
 

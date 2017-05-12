@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -32,6 +33,9 @@ define( function( require ) {
 
     // @public {Array.<Partition>}
     this.verticalPartitions = verticalPartitions;
+
+    // @public {Property.<number>}
+    this.calculationIndexProperty = new Property( 0 );
 
     // @public {Array.<PartitionedArea>}
     this.partitionedAreas = _.flatten( horizontalPartitions.map( function( horizontalPartition ) {
@@ -91,7 +95,9 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      // TODO: nothing here actually, so we don't reset partitions for proportional?
+      this.calculationIndexProperty.reset();
+
+      // TODO: not resetting partitions here due to proportional areas?
     },
 
     /**

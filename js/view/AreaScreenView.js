@@ -177,7 +177,8 @@ define( function( require ) {
 
     // @protected {Node}
     // TODO: remove the conditional bit
-    this.calculationDisplayPanel = new CalculationPanel( model.areaCalculationChoiceProperty, model.currentAreaProperty, model.allowPowers || false, {
+    // TODO: remove name conflict with this and the other "panel"
+    this.calculationDisplayPanel = new CalculationPanel( model.areaCalculationChoiceProperty, model.currentAreaProperty, widthColorProperty, heightColorProperty, model.allowPowers || false, {
       left: this.layoutBounds.left + AreaModelConstants.PANEL_MARGIN,
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
