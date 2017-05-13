@@ -135,45 +135,75 @@ define( function( require ) {
       var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
                                             ( needsMinuses || !orderedTermList.equals( totalPolynomial ) );
 
+      // TODO: cleanup how this is handled
+      var availableLineIndices = [ 0 ];
+      if ( needsExpansion ) { availableLineIndices.push( 1 ); }
+      if ( needsDistribution ) { availableLineIndices.push( 2 ); }
+      if ( needsMultiplied ) { availableLineIndices.push( 3 ); }
+      if ( needsOrdered ) { availableLineIndices.push( 4 ); }
+      if ( needsMinuses ) { availableLineIndices.push( 5 ); }
+      availableLineIndices.push( 6 );
+
+      // Find the closest available index
+      var availableIndex;
+      for ( var i = 0; i < 7; i++ ) {
+        if ( _.includes( availableLineIndices, activeIndex - i ) ) {
+          availableIndex = activeIndex - i;
+          break;
+        }
+        if ( _.includes( availableLineIndices, activeIndex + i ) ) {
+          availableIndex = activeIndex + i;
+          break;
+        }
+      }
+
       var lines = [];
 
+      // TODO: cleanup how this is handled
       lines.push( {
-        node: this.createTotalsLine( allLinesActive || activeIndex === 0 ),
-        index: 0
+        node: this.createTotalsLine( allLinesActive || availableIndex === 0 ),
+        index: 0,
+        isActive: availableIndex === 0
       } );
       if ( needsExpansion ) {
         lines.push( {
-          node: this.createExpandedLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 1 ),
-          index: 1
+          node: this.createExpandedLine( horizontalTerms, verticalTerms, allLinesActive || availableIndex === 1 ),
+          index: 1,
+          isActive: availableIndex === 1
         } );
       }
       if ( needsDistribution ) {
         lines.push( {
-          node: this.createDistributionLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 2 ),
-          index: 2
+          node: this.createDistributionLine( horizontalTerms, verticalTerms, allLinesActive || availableIndex === 2 ),
+          index: 2,
+          isActive: availableIndex === 2
         } );
       }
       if ( needsMultiplied ) {
         lines.push( {
-          node: this.sumWithNegativeParens( multipliedTermList.terms, allLinesActive || activeIndex === 3 ),
-          index: 3
+          node: this.sumWithNegativeParens( multipliedTermList.terms, allLinesActive || availableIndex === 3 ),
+          index: 3,
+          isActive: availableIndex === 3
         } );
       }
       if ( needsOrdered ) {
         lines.push( {
-          node: this.sumWithNegativeParens( orderedTermList.terms, allLinesActive || activeIndex === 4 ),
-          index: 4
+          node: this.sumWithNegativeParens( orderedTermList.terms, allLinesActive || availableIndex === 4 ),
+          index: 4,
+          isActive: availableIndex === 4
         } );
       }
       if ( needsMinuses ) {
         lines.push( {
-          node: this.sumOrDifferenceOfTerms( orderedTermList.terms, allLinesActive || activeIndex === 5 ),
-          index: 5
+          node: this.sumOrDifferenceOfTerms( orderedTermList.terms, allLinesActive || availableIndex === 5 ),
+          index: 5,
+          isActive: availableIndex === 5
         } );
       }
       lines.push( {
-        node: this.createSumLine( allLinesActive || activeIndex === 6 ),
-        index: 6
+        node: this.createSumLine( allLinesActive || availableIndex === 6 ),
+        index: 6,
+        isActive: availableIndex === 6
       } );
 
       return lines;

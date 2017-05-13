@@ -13,9 +13,11 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/view/CalculationLines' );
+  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -39,7 +41,9 @@ define( function( require ) {
 
     Node.call( this );
 
-    var calculationLines = [];
+    // {number|null} - If non-null, contains the line index directly above/below the active index.
+    var previousIndexProperty = new Property( null );
+    var nextIndexProperty = new Property( null );
 
     var background = new Rectangle( 0, 0, 880, 150, {
       cornerRadius: 5,
@@ -49,21 +53,57 @@ define( function( require ) {
     this.addChild( background );
 
     var arrowSize = 18;
-    var upArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
-      fill: AreaModelColorProfile.calculationArrowUpProperty
+    var previousArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
+      fill: AreaModelColorProfile.calculationArrowUpProperty,
+      cursor: 'pointer'
     } );
-    this.addChild( upArrow );
-    var downArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, arrowSize * 0.8 ).close(), {
-      fill: AreaModelColorProfile.calculationArrowUpProperty
+    // TODO: add a disabled state to the listener
+    var previousListener = new FireListener( {
+      fire: function() {
+        if ( previousIndexProperty.value !== null ) {
+          currentAreaProperty.value.calculationIndexProperty.value = previousIndexProperty.value;
+        }
+      }
     } );
-    this.addChild( downArrow );
+    previousArrow.addInputListener( previousListener );
+    previousIndexProperty.link( function( index ) {
+      var enabled = index !== null;
+
+      previousListener.interrupt();
+      previousArrow.pickable = enabled;
+      // TODO: improved coloring or naming
+      previousArrow.fill = enabled ? AreaModelColorProfile.calculationArrowUpProperty : AreaModelColorProfile.calculationArrowDisabledProperty;
+    } );
+
+    this.addChild( previousArrow );
+    var nextArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, arrowSize * 0.8 ).close(), {
+      fill: AreaModelColorProfile.calculationArrowUpProperty,
+      cursor: 'pointer'
+    } );
+    this.addChild( nextArrow );
+    var nextListener = new FireListener( {
+      fire: function() {
+        if ( nextIndexProperty.value !== null ) {
+          currentAreaProperty.value.calculationIndexProperty.value = nextIndexProperty.value;
+        }
+      }
+    } );
+    nextArrow.addInputListener( nextListener );
+    nextIndexProperty.link( function( index ) {
+      var enabled = index !== null;
+
+      nextListener.interrupt();
+      nextArrow.pickable = enabled;
+      // TODO: improved coloring or naming
+      nextArrow.fill = enabled ? AreaModelColorProfile.calculationArrowUpProperty : AreaModelColorProfile.calculationArrowDisabledProperty;
+    } );
 
     areaCalculationChoiceProperty.link( function( choice ) {
-      upArrow.visible = downArrow.visible = choice === AreaCalculationChoice.LINE_BY_LINE;
+      previousArrow.visible = nextArrow.visible = choice === AreaCalculationChoice.LINE_BY_LINE;
     } );
 
-    upArrow.rightTop = background.bounds.eroded( 15 ).rightTop;
-    downArrow.rightBottom = background.bounds.eroded( 15 ).rightBottom;
+    previousArrow.rightTop = background.bounds.eroded( 15 ).rightTop;
+    nextArrow.rightBottom = background.bounds.eroded( 15 ).rightBottom;
 
 
     this.mutate( nodeOptions );
@@ -73,16 +113,49 @@ define( function( require ) {
     this.addChild( lineLayer );
 
     function update() {
+      var isLineByLine = areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
+
       lineLayer.removeAllChildren();
 
-      calculationLines = new CalculationLines( currentAreaProperty.value, allowPowers, widthColorProperty, heightColorProperty ).createLines( undefined );
+      var activeIndex = isLineByLine ? currentAreaProperty.value.calculationIndexProperty.value : undefined;
+
+      var calculationLines = new CalculationLines( currentAreaProperty.value, allowPowers, widthColorProperty, heightColorProperty ).createLines( activeIndex );
       if ( calculationLines.length ) {
+
+        if ( isLineByLine ) {
+          // TODO: cleanup
+          var relativeIndex = _.findIndex( calculationLines, function( line ) { return line.isActive; } );
+          var adjacentCalculationLines = [];
+          if ( calculationLines[ relativeIndex - 1 ] ) {
+            adjacentCalculationLines.push( calculationLines[ relativeIndex - 1 ] );
+            previousIndexProperty.value = calculationLines[ relativeIndex - 1 ].index;
+          }
+          else {
+            previousIndexProperty.value = null;
+          }
+          adjacentCalculationLines.push( calculationLines[ relativeIndex ] );
+          if ( calculationLines[ relativeIndex + 1 ] ) {
+            adjacentCalculationLines.push( calculationLines[ relativeIndex + 1 ] );
+            nextIndexProperty.value = calculationLines[ relativeIndex + 1 ].index;
+          }
+          else {
+            nextIndexProperty.value = null;
+          }
+          calculationLines = adjacentCalculationLines;
+        }
+
         lineLayer.addChild( new VBox( {
           children: _.map( calculationLines, 'node' ),
           spacing: 1,
           center: background.center
         } ) );
+
+        if ( isLineByLine ) {
+          // TODO: this can cause a full refresh, and should be fixed. Also duplication with above
+          currentAreaProperty.value.calculationIndexProperty.value = _.find( calculationLines, function( line ) { return line.isActive; } ).index;
+        }
       }
+
     }
 
     areaCalculationChoiceProperty.link( function( choice ) {
