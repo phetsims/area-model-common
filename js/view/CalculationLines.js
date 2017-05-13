@@ -135,8 +135,6 @@ define( function( require ) {
                          !( orderedTermList.equals( totalPolynomial ) && ( !this.allowPowers || !orderedTermList.hasNegativeTerm() ) );
       var needsMinuses = needsMultiplied && this.allowPowers && orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
 
-      console.log( needsOrdered, needsMinuses );
-
       // TODO: cleanup how this is handled
       var availableLineIndices = [ 0 ];
       if ( needsExpansion ) { availableLineIndices.push( 1 ); }
