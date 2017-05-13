@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -201,6 +202,15 @@ define( function( require ) {
       verticalLine.y2 = max;
       verticalLabel.y = center;
     } );
+
+    var eraseButton = new EraserButton( {
+      listener: function() {
+        area.reset();
+      },
+      centerX: verticalLineOffset,
+      centerY: horizontalLineOffset
+    } );
+    this.addChild( eraseButton );
   }
 
   areaModelCommon.register( 'AreaNode', AreaNode );

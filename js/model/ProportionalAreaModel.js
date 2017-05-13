@@ -37,15 +37,6 @@ define( function( require ) {
 
   return inherit( AreaModel, ProportionalAreaModel, {
     /**
-     * Returns parts of the model to the initial state.
-     * @public
-     * @override
-     */
-    erase: function() {
-      AreaModel.prototype.erase.call( this );
-    },
-
-    /**
      * Returns the model to its initial state.
      * @public
      * @override
