@@ -137,23 +137,44 @@ define( function( require ) {
 
       var lines = [];
 
-      lines.push( this.createTotalsLine( allLinesActive || activeIndex === 0 ) );
+      lines.push( {
+        node: this.createTotalsLine( allLinesActive || activeIndex === 0 ),
+        index: 0
+      } );
       if ( needsExpansion ) {
-        lines.push( this.createExpandedLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 1 ) );
+        lines.push( {
+          node: this.createExpandedLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 1 ),
+          index: 1
+        } );
       }
       if ( needsDistribution ) {
-        lines.push( this.createDistributionLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 2 ) );
+        lines.push( {
+          node: this.createDistributionLine( horizontalTerms, verticalTerms, allLinesActive || activeIndex === 2 ),
+          index: 2
+        } );
       }
       if ( needsMultiplied ) {
-        lines.push( this.sumWithNegativeParens( multipliedTermList.terms, allLinesActive || activeIndex === 3 ) );
+        lines.push( {
+          node: this.sumWithNegativeParens( multipliedTermList.terms, allLinesActive || activeIndex === 3 ),
+          index: 3
+        } );
       }
       if ( needsOrdered ) {
-        lines.push( this.sumWithNegativeParens( orderedTermList.terms, allLinesActive || activeIndex === 4 ) );
+        lines.push( {
+          node: this.sumWithNegativeParens( orderedTermList.terms, allLinesActive || activeIndex === 4 ),
+          index: 4
+        } );
       }
       if ( needsMinuses ) {
-        lines.push( this.sumOrDifferenceOfTerms( orderedTermList.terms, allLinesActive || activeIndex === 5 ) );
+        lines.push( {
+          node: this.sumOrDifferenceOfTerms( orderedTermList.terms, allLinesActive || activeIndex === 5 ),
+          index: 5
+        } );
       }
-      lines.push( this.createSumLine( allLinesActive || activeIndex === 6 ) );
+      lines.push( {
+        node: this.createSumLine( allLinesActive || activeIndex === 6 ),
+        index: 6
+      } );
 
       return lines;
     },

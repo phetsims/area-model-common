@@ -39,6 +39,8 @@ define( function( require ) {
 
     Node.call( this );
 
+    var calculationLines = [];
+
     var background = new Rectangle( 0, 0, 880, 150, {
       cornerRadius: 5,
       fill: AreaModelColorProfile.calculationBackgroundProperty,
@@ -73,10 +75,10 @@ define( function( require ) {
     function update() {
       lineLayer.removeAllChildren();
 
-      var calculationLines = new CalculationLines( currentAreaProperty.value, allowPowers, widthColorProperty, heightColorProperty ).createLines( undefined );
+      calculationLines = new CalculationLines( currentAreaProperty.value, allowPowers, widthColorProperty, heightColorProperty ).createLines( undefined );
       if ( calculationLines.length ) {
         lineLayer.addChild( new VBox( {
-          children: calculationLines,
+          children: _.map( calculationLines, 'node' ),
           spacing: 1,
           center: background.center
         } ) );
@@ -94,12 +96,14 @@ define( function( require ) {
           partition.sizeProperty.unlink( update );
           partition.visibleProperty.unlink( update );
         } );
+        oldArea.calculationIndexProperty.unlink( update );
       }
 
       newArea.horizontalPartitions.concat( newArea.verticalPartitions ).forEach( function( partition ) {
         partition.sizeProperty.lazyLink( update );
         partition.visibleProperty.lazyLink( update );
       } );
+      newArea.calculationIndexProperty.link( update );
 
       update();
     } );
