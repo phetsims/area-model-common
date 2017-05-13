@@ -37,6 +37,10 @@ define( function( require ) {
     var text = new RichText( '', {
       font: AreaModelConstants.PARTIAL_PRODUCT_FONT
     } );
+    partialProductsChoiceProperty.link( function( choice ) {
+      text.font = ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelConstants.PARTIAL_PRODUCT_FONT
+                                                                : AreaModelConstants.PARTIAL_FACTOR_FONT;
+    } );
     this.addChild( text );
 
     Property.multilink( [ partitionedArea.areaProperty, partialProductsChoiceProperty, partitionedArea.visibleProperty ], function( area, choice, areaVisible ) {
