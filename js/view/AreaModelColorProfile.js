@@ -66,6 +66,11 @@ define( function( require ) {
     calculationBorder: { default: Color.BLACK },
     calculationBackground: { default: Color.WHITE },
 
+    calculationArrowUp: { default: Color.BLACK },
+    calculationArrowOver: { default: new Color( 0x333333 ) },
+    calculationArrowDown: { default: new Color( 0x666666 ) },
+    calculationArrowDisabled: { default: new Color( 0xaaaaaa ) },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },

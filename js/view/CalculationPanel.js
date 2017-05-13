@@ -15,7 +15,9 @@ define( function( require ) {
   var CalculationLines = require( 'AREA_MODEL_COMMON/view/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var Shape = require( 'KITE/Shape' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
@@ -44,8 +46,25 @@ define( function( require ) {
     } );
     this.addChild( background );
 
-    this.mutate( nodeOptions );
+    var arrowSize = 18;
+    var upArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
+      fill: AreaModelColorProfile.calculationArrowUpProperty
+    } );
+    this.addChild( upArrow );
+    var downArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, arrowSize * 0.8 ).close(), {
+      fill: AreaModelColorProfile.calculationArrowUpProperty
+    } );
+    this.addChild( downArrow );
 
+    areaCalculationChoiceProperty.link( function( choice ) {
+      upArrow.visible = downArrow.visible = choice === AreaCalculationChoice.LINE_BY_LINE;
+    } );
+
+    upArrow.rightTop = background.bounds.eroded( 15 ).rightTop;
+    downArrow.rightBottom = background.bounds.eroded( 15 ).rightBottom;
+
+
+    this.mutate( nodeOptions );
 
 
     var lineLayer = new Node();
