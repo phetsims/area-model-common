@@ -32,9 +32,11 @@ define( function( require ) {
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
    * @param {boolean} allowPowers
+   * @param {number} width
+   * @param {number} height
    * @param {Object} [nodeOptions]
    */
-  function CalculationPanel( areaCalculationChoiceProperty, currentAreaProperty, widthColorProperty, heightColorProperty, allowPowers, nodeOptions ) {
+  function CalculationPanel( areaCalculationChoiceProperty, currentAreaProperty, widthColorProperty, heightColorProperty, allowPowers, width, height, nodeOptions ) {
     assert && assert( typeof allowPowers === 'boolean' );
 
     var self = this;
@@ -45,7 +47,7 @@ define( function( require ) {
     var previousIndexProperty = new Property( null );
     var nextIndexProperty = new Property( null );
 
-    var background = new Rectangle( 0, 0, 880, 150, {
+    var background = new Rectangle( 0, 0, width, height, {
       cornerRadius: 5,
       fill: AreaModelColorProfile.calculationBackgroundProperty,
       stroke: AreaModelColorProfile.calculationBorderProperty

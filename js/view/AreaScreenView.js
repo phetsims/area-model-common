@@ -178,8 +178,10 @@ define( function( require ) {
     // @protected {Node}
     // TODO: remove the conditional bit
     // TODO: remove name conflict with this and the other "panel"
-    this.calculationDisplayPanel = new CalculationPanel( model.areaCalculationChoiceProperty, model.currentAreaProperty, widthColorProperty, heightColorProperty, model.allowPowers || false, {
-      left: this.layoutBounds.left + AreaModelConstants.PANEL_MARGIN,
+    var calculationWidth = isProportional ? AreaModelConstants.AREA_SIZE : 880;
+    var calculationHeight = isProportional ? 120 : 150;
+    this.calculationDisplayPanel = new CalculationPanel( model.areaCalculationChoiceProperty, model.currentAreaProperty, widthColorProperty, heightColorProperty, model.allowPowers || false, calculationWidth, calculationHeight, {
+      left: isProportional ? AreaModelConstants.MAIN_AREA_OFFSET.x : this.layoutBounds.left + AreaModelConstants.PANEL_MARGIN,
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
     this.addChild( this.calculationDisplayPanel );

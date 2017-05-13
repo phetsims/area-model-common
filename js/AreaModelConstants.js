@@ -29,6 +29,8 @@ define( function( require ) {
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 24 ),
 
+    AREA_SIZE: 350,
+
     PANEL_MARGIN: 10,
     PANEL_SPACING: 10,
     PANEL_CORNER_RADIUS: 5,

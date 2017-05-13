@@ -39,7 +39,7 @@ define( function( require ) {
     this.area = area;
 
     // @public {number}
-    this.viewSize = 350;
+    this.viewSize = AreaModelConstants.AREA_SIZE;
 
     // TODO: reduce duplication
     var horizontalCoordinateProperties = _.flatten( area.horizontalPartitions.map( function( partition ) {
