@@ -74,6 +74,9 @@ define( function( require ) {
                                                           : ( area.coefficient > 0 ? AreaModelColorProfile.genericPositiveBackgroundProperty
                                                                                    : AreaModelColorProfile.genericNegativeBackgroundProperty );
         }
+        else {
+          coloredBackground.fill = null;
+        }
       } );
 
       partitionedArea.visibleProperty.linkAttribute( coloredBackground, 'visible' );
