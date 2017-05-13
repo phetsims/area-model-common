@@ -22,7 +22,7 @@ define( function( require ) {
   function GenericAreaModel( allowPowers ) {
 
     // @public {Area}
-    this.genericArea = new GenericArea();
+    this.genericArea = new GenericArea( allowPowers );
 
     AreaModel.call( this, [ this.genericArea ] );
 

@@ -12,27 +12,36 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var GenericPartition = require( 'AREA_MODEL_COMMON/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
 
   /**
    * @constructor
+   * TODO: add @extends to tth
+   *
+   * @param {boolean} allowPowers - Whether the user is able to add powers of x.
    */
-  function GenericArea() {
+  function GenericArea( allowPowers ) {
+    assert && assert( typeof allowPowers === 'boolean' );
+
     var self = this;
 
-    // @public {Partition}
-    // TODO: are props needed?
-    this.leftPartition = new Partition( true );
-    this.middleHorizontalPartition = new Partition( true ); // TODO: better naming
-    this.rightPartition = new Partition( true );
+    var firstDigitCount = allowPowers ? 1 : 3;
+    var secondDigitCount = allowPowers ? 1 : 2;
+    var thirdDigitCount = 1;
 
-    // @public {Partition}
-    this.topPartition = new Partition( false );
-    this.middleVerticalPartition = new Partition( false ); // TODO: better naming
-    this.bottomPartition = new Partition( false );
+    // @public {GenericPartition}
+    // TODO: are props needed?
+    this.leftPartition = new GenericPartition( true, firstDigitCount );
+    this.middleHorizontalPartition = new GenericPartition( true, secondDigitCount ); // TODO: better naming
+    this.rightPartition = new GenericPartition( true, thirdDigitCount );
+
+    // @public {GenericPartition}
+    this.topPartition = new GenericPartition( false, firstDigitCount );
+    this.middleVerticalPartition = new GenericPartition( false, secondDigitCount ); // TODO: better naming
+    this.bottomPartition = new GenericPartition( false, thirdDigitCount );
 
     Area.call( this, [
       this.leftPartition,

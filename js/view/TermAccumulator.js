@@ -23,13 +23,11 @@ define( function( require ) {
   /**
    * @constructor
    *
-   * @param {Object} [options]
+   * @param {Property.<GenericPartition>} activePartitionProperty
    */
-  function TermAccumulator( options ) {
-
-    options = _.extend( {
-      // TODO: options
-    }, options );
+  function TermAccumulator( activePartitionProperty ) {
+    // @private
+    this.activePartitionProperty = activePartitionProperty;
 
     AbstractKeyAccumulator.call( this );
 
@@ -168,13 +166,19 @@ define( function( require ) {
      */
     defaultValidator: function( proposedKeys ) {
       var xCount = 0;
+      var digitCount = 0;
+
       proposedKeys.forEach( function( key ) {
         if ( key === Keys.X || key === Keys.XSQUARED ) {
           xCount++;
         }
+
+        if ( _.includes( DIGIT_STRINGS, key ) ) {
+          digitCount++;
+        }
       } );
 
-      return xCount <= 1;
+      return xCount <= 1 && digitCount <= this.activePartitionProperty.value.digitCount;
     }
   } );
 } );

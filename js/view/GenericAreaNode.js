@@ -143,7 +143,7 @@ define( function( require ) {
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, heightColorProperty );
 
     // TODO: refactor/cleanup
-    function createEditButton( partition, digitCount, colorProperty ) {
+    function createEditButton( partition, colorProperty ) {
 
       // TODO: better way to test for size
       var sampleString;
@@ -152,7 +152,7 @@ define( function( require ) {
       }
       else {
         // TODO: consider using \u2212
-        sampleString = '-' + _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+        sampleString = '-' + _.range( 0, partition.digitCount ).map( function() { return '9'; } ).join( '' );
       }
       var richText = new RichText( sampleString, {
         fill: colorProperty,
@@ -220,12 +220,12 @@ define( function( require ) {
       partition.visibleProperty.linkAttribute( box, 'visible' );
     }
 
-    createEditButton( area.leftPartition, 3, widthColorProperty );
-    createEditButton( area.middleHorizontalPartition, 2, widthColorProperty );
-    createEditButton( area.rightPartition, 1, widthColorProperty );
-    createEditButton( area.topPartition, 3, heightColorProperty );
-    createEditButton( area.middleVerticalPartition, 2, heightColorProperty );
-    createEditButton( area.bottomPartition, 1, heightColorProperty );
+    createEditButton( area.leftPartition, widthColorProperty );
+    createEditButton( area.middleHorizontalPartition, widthColorProperty );
+    createEditButton( area.rightPartition, widthColorProperty );
+    createEditButton( area.topPartition, heightColorProperty );
+    createEditButton( area.middleVerticalPartition, heightColorProperty );
+    createEditButton( area.bottomPartition, heightColorProperty );
 
     // TODO: reuse these from keypad?
     var PLUS_CHAR = '\u002b';
@@ -247,7 +247,7 @@ define( function( require ) {
     ];
 
     // TODO: pass number of digits allowed
-    var termAccumulator = new TermAccumulator();
+    var termAccumulator = new TermAccumulator( area.activePartitionProperty );
 
     var keypad = new Keypad( allowPowers ? powerLayout : noPowerLayout, {
       accumulator: termAccumulator
