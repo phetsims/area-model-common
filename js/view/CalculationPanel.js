@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/model/AreaCalculationChoice' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/view/CalculationLines' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -32,11 +33,9 @@ define( function( require ) {
    * @param {Property.<Color>} widthColorProperty
    * @param {Property.<Color>} heightColorProperty
    * @param {boolean} allowPowers
-   * @param {number} width
-   * @param {number} height
    * @param {Object} [nodeOptions]
    */
-  function CalculationPanel( areaCalculationChoiceProperty, currentAreaProperty, widthColorProperty, heightColorProperty, allowPowers, width, height, nodeOptions ) {
+  function CalculationPanel( areaCalculationChoiceProperty, currentAreaProperty, widthColorProperty, heightColorProperty, allowPowers, nodeOptions ) {
     assert && assert( typeof allowPowers === 'boolean' );
 
     var self = this;
@@ -47,7 +46,7 @@ define( function( require ) {
     var previousIndexProperty = new Property( null );
     var nextIndexProperty = new Property( null );
 
-    var background = new Rectangle( 0, 0, width, height, {
+    var background = new Rectangle( 0, 0, 0, 0, {
       cornerRadius: 5,
       fill: AreaModelColorProfile.calculationBackgroundProperty,
       stroke: AreaModelColorProfile.calculationBorderProperty
@@ -104,10 +103,6 @@ define( function( require ) {
       previousArrow.visible = nextArrow.visible = choice === AreaCalculationChoice.LINE_BY_LINE;
     } );
 
-    previousArrow.rightTop = background.bounds.eroded( 15 ).rightTop;
-    nextArrow.rightBottom = background.bounds.eroded( 15 ).rightBottom;
-
-
     this.mutate( nodeOptions );
 
 
@@ -123,6 +118,9 @@ define( function( require ) {
 
       var calculationLines = new CalculationLines( currentAreaProperty.value, allowPowers, widthColorProperty, heightColorProperty ).createLines( activeIndex );
       if ( calculationLines.length ) {
+        var maxLineWidth = _.reduce( calculationLines, function( max, line ) {
+          return Math.max( max, line.node.width );
+        }, 0 );
 
         if ( isLineByLine ) {
           // TODO: cleanup
@@ -148,13 +146,48 @@ define( function( require ) {
 
         lineLayer.addChild( new VBox( {
           children: _.map( calculationLines, 'node' ),
-          spacing: 1,
-          center: background.center
+          spacing: 1
         } ) );
 
         if ( isLineByLine ) {
           // TODO: this can cause a full refresh, and should be fixed. Also duplication with above
           currentAreaProperty.value.calculationIndexProperty.value = _.find( calculationLines, function( line ) { return line.isActive; } ).index;
+        }
+
+        var backgroundBounds = lineLayer.bounds;
+
+        // If we removed lines for the "line-by-line", make sure we take up enough room to not change size.
+        if ( backgroundBounds.width < maxLineWidth ) {
+          backgroundBounds = backgroundBounds.dilatedX( ( maxLineWidth - backgroundBounds.width ) / 2 );
+        }
+
+        // Add some space around the lines
+        backgroundBounds = backgroundBounds.dilated( 5 );
+
+        // Add some space for the next/previous buttonss
+        if ( isLineByLine ) {
+          backgroundBounds.maxX += 25;
+        }
+
+        // Minimum width of the area size
+        if ( backgroundBounds.width < AreaModelConstants.AREA_SIZE ) {
+          backgroundBounds = backgroundBounds.dilatedX( ( AreaModelConstants.AREA_SIZE - backgroundBounds.width ) / 2 );
+        }
+
+        // Minimum height
+        if ( backgroundBounds.height < 120 ) {
+          backgroundBounds = backgroundBounds.dilatedY( ( 120 - backgroundBounds.height ) / 2 );
+        }
+
+        background.rectBounds = backgroundBounds;
+        previousArrow.rightTop = backgroundBounds.eroded( 5 ).rightTop;
+        nextArrow.rightBottom = backgroundBounds.eroded( 5 ).rightBottom;
+
+        // TODO: don't hardcode layoutBounds!
+        self.centerY = 618 - AreaModelConstants.PANEL_MARGIN - 75;
+        self.centerX = AreaModelConstants.MAIN_AREA_OFFSET.x + AreaModelConstants.AREA_SIZE / 2;
+        if ( self.left < AreaModelConstants.PANEL_MARGIN ) {
+          self.left = AreaModelConstants.PANEL_MARGIN;
         }
       }
 
