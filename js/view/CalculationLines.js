@@ -131,9 +131,11 @@ define( function( require ) {
       var needsExpansion = !horizontalTermList.equals( horizontalPolynomial ) || !verticalTermList.equals( verticalPolynomial );
       var needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
       var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
-      var needsMinuses = needsMultiplied && this.allowPowers && multipliedTermList.hasNegativeTerm();
       var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
-                                            ( needsMinuses || !orderedTermList.equals( totalPolynomial ) );
+                         !( orderedTermList.equals( totalPolynomial ) && ( !this.allowPowers || !orderedTermList.hasNegativeTerm() ) );
+      var needsMinuses = needsMultiplied && this.allowPowers && orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
+
+      console.log( needsOrdered, needsMinuses );
 
       // TODO: cleanup how this is handled
       var availableLineIndices = [ 0 ];
