@@ -28,7 +28,7 @@ define( function( require ) {
     PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),
-    KEYPAD_READOUT_FONT: new PhetFont( 24 ),
+    KEYPAD_READOUT_FONT: new PhetFont( 20 ),
 
     AREA_SIZE: 350,
 
