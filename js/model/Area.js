@@ -28,8 +28,6 @@ define( function( require ) {
     assert && assert( horizontalPartitions instanceof Array );
     assert && assert( verticalPartitions instanceof Array );
 
-    var self = this;
-
     // @public {Array.<Partition>}
     this.horizontalPartitions = horizontalPartitions;
 
@@ -46,39 +44,12 @@ define( function( require ) {
       } );
     } ) );
 
-    var horizontalProperties = _.flatten( this.horizontalPartitions.map( function( partition ) {
-      return [ partition.sizeProperty, partition.visibleProperty ];
-    } ) );
-    var verticalProperties = _.flatten( this.verticalPartitions.map( function( partition ) {
-      return [ partition.sizeProperty, partition.visibleProperty ];
-    } ) );
+    // TODO: abstract over Orientation here
+    // @public {Property.<Polynomial|null>} - Null if there is no defined total
+    this.horizontalTotalProperty = this.createTotalProperty( Orientation.HORIZONTAL );
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
-    this.horizontalTotalProperty = new DerivedProperty( horizontalProperties, function() {
-      var definedPartitions = self.getDefinedPartitions( Orientation.HORIZONTAL );
-      if ( definedPartitions.length ) {
-        return new Polynomial( definedPartitions.map( function( partition ) {
-          return partition.sizeProperty.value;
-        } ) );
-      }
-      else {
-        return null;
-      }
-    } );
-
-    // TODO: dedup with horizontal/vertical
-    // @public {Property.<Polynomial|null>} - Null if there is no defined total
-    this.verticalTotalProperty = new DerivedProperty( verticalProperties, function() {
-      var definedPartitions = self.getDefinedPartitions( Orientation.VERTICAL );
-      if ( definedPartitions.length ) {
-        return new Polynomial( definedPartitions.map( function( partition ) {
-          return partition.sizeProperty.value;
-        } ) );
-      }
-      else {
-        return null;
-      }
-    } );
+    this.verticalTotalProperty = this.createTotalProperty( Orientation.VERTICAL );
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.totalAreaProperty = new DerivedProperty( [ this.horizontalTotalProperty, this.verticalTotalProperty ], function( horizontalTotal, verticalTotal ) {
@@ -152,6 +123,31 @@ define( function( require ) {
      */
     getTermList: function( orientation ) {
       return new TermList( this.getTerms( orientation ) );
+    },
+
+    /**
+     * Creates a derived property with the total size for a particular dimension.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Polynomial|null>}
+     */
+    createTotalProperty: function( orientation ) {
+      var self = this;
+
+      var properties = _.flatten( this.getPartitions( orientation ).map( function( partition ) {
+        return [ partition.sizeProperty, partition.visibleProperty ];
+      } ) );
+
+      return new DerivedProperty( properties, function() {
+        var terms = self.getTerms( orientation );
+        if ( terms.length ) {
+          return new Polynomial( terms );
+        }
+        else {
+          return null;
+        }
+      } );
     }
   } );
 } );
