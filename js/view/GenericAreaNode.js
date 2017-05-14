@@ -13,29 +13,21 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
-  var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Key = require( 'SCENERY_PHET/keypad/Key' );
-  var Keys = require( 'SCENERY_PHET/keypad/Keys' );
-  var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
   var Line = require( 'SCENERY/nodes/Line' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
-  var TermAccumulator = require( 'AREA_MODEL_COMMON/view/TermAccumulator' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  var TermKeypadPanel = require( 'AREA_MODEL_COMMON/view/TermKeypadPanel' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-
-  var enterString = require( 'string!AREA_MODEL_COMMON/enter' );
 
   /**
    * @constructor
@@ -142,18 +134,21 @@ define( function( require ) {
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.firstVerticalPartitionLineActiveProperty, heightColorProperty );
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, heightColorProperty );
 
+    function getSampleString( digitCount ) {
+      if ( allowPowers ) {
+        return '-9x<sup>2</sup>';
+      }
+      else {
+        // TODO: consider using \u2212
+        return '-' + _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+      }
+    }
+
     // TODO: refactor/cleanup
     function createEditButton( partition, colorProperty ) {
 
       // TODO: better way to test for size
-      var sampleString;
-      if ( allowPowers ) {
-        sampleString = '-9x<sup>2</sup>';
-      }
-      else {
-        // TODO: consider using \u2212
-        sampleString = '-' + _.range( 0, partition.digitCount ).map( function() { return '9'; } ).join( '' );
-      }
+      var sampleString = getSampleString( partition.digitCount );
       var richText = new RichText( sampleString, {
         fill: colorProperty,
         font: AreaModelConstants.EDIT_READOUT_FONT
@@ -227,71 +222,11 @@ define( function( require ) {
     createEditButton( area.middleVerticalPartition, heightColorProperty );
     createEditButton( area.bottomPartition, heightColorProperty );
 
-    // TODO: reuse these from keypad?
-    var PLUS_CHAR = '\u002b';
-    var MINUS_CHAR = '\u2212';
-
-    var noPowerLayout = [
-      [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
-      [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
-      [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
-      [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
-    ];
-    // TODO: make note about Key's type docs for the first parameter
-    var powerLayout = [
-      [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
-      [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
-      [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
-      [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ],
-      [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.XSQUARED ), new Key( 'x', Keys.X ) ],
-    ];
-
-    // TODO: pass number of digits allowed
-    var termAccumulator = new TermAccumulator( area.activePartitionProperty );
-
-    var keypad = new Keypad( allowPowers ? powerLayout : noPowerLayout, {
-      accumulator: termAccumulator
-    } );
-
-    var readout = new RichText( '', {
-      font: AreaModelConstants.KEYPAD_READOUT_FONT
-    } );
-    termAccumulator.richStringProperty.link( function( string ) {
-      // Trick to be able to position an empty string
-      readout.text = string.length === 0 ? ' ' : string;
-    } );
-
-    var keypadPanel = new Panel( new VBox( {
-      children: [
-        readout, // TODO: wrap in a border
-        keypad,
-        new RectangularPushButton( {
-          content: new Text( enterString, { font: AreaModelConstants.KEYPAD_FONT } ),
-          baseColor: 'white',
-          xMargin: 15,
-          yMargin: 5,
-          listener: function() {
-            area.activePartitionProperty.value.sizeProperty.value = termAccumulator.termProperty.value;
-            area.activePartitionProperty.value = null;
-          }
-        } )
-      ],
-      spacing: 10
-    } ), {
+    // Keypad
+    this.addChild( new TermKeypadPanel( area.activePartitionProperty, allowPowers, {
       x: this.viewSize + 35,
-      cornerRadius: 5,
-      xMargin: 15,
-      yMargin: 15,
-      centerY: this.viewSize / 2,
-      fill: AreaModelColorProfile.keypadPanelBackgroundProperty,
-      stroke: AreaModelColorProfile.keypadPanelBorderProperty
-    } );
-    this.addChild( keypadPanel );
-
-    area.activePartitionProperty.link( function( newArea ) {
-      keypadPanel.visible = newArea !== null;
-      keypad.clear();
-    } );
+      centerY: this.viewSize / 2
+    } ) );
 
     // TODO: remove duplication with proportional (only changed to true and MVT)
     area.partitionedAreas.forEach( function( partitionedArea ) {
