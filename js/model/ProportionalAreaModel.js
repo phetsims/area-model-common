@@ -17,6 +17,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {AreaModel}
    *
    * @param {Array.<Object>} - An array of options objects to be passed to the ProportionalArea constructors.
    */

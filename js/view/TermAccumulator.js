@@ -22,6 +22,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {AbstractKeyAccumulator}
    *
    * @param {Property.<GenericPartition>} activePartitionProperty
    */

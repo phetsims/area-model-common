@@ -20,6 +20,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Object}
    *
    * @param {Array.<Partition>} horizontalPartitions
    * @param {Array.<Partition>} verticalPartitions

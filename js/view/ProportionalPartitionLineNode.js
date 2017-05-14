@@ -22,6 +22,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * @param {ProportionalArea} area
    * @param {ModelViewTransform2} modelViewTransform

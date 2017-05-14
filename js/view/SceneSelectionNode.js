@@ -22,6 +22,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * @param {ProportionalAreaModel} model
    * @param {Object} [nodeOptions]

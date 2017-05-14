@@ -24,6 +24,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * TODO: options object
    *

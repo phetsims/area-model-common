@@ -20,6 +20,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Area}
    *
    * @param {Object} [options]
    */

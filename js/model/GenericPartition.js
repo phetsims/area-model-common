@@ -15,6 +15,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Partition}
    *
    * @param {boolean} isHorizontal
    * @param {number} digitCount

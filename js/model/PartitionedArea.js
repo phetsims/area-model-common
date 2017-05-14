@@ -15,6 +15,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Object}
    *
    * @param {Partition} horizontalPartition
    * @param {Partition} verticalPartition

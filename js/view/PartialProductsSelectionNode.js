@@ -26,7 +26,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * TODO: add extends to things?
+   * @extends {Node}
    *
    * @param {Property.<PartialProductsChoice} partialProductsChoiceProperty
    * @param {Property.<Color>} widthColorProperty

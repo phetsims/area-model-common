@@ -14,6 +14,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Object}
    *
    * @param {number} coefficient
    * @param {number} [power]

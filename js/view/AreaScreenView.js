@@ -37,6 +37,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {ScrenView}
    *
    * @param {AreaModel} model
    * @param {boolean} isProportional

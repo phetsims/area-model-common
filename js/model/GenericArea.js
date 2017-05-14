@@ -19,7 +19,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * TODO: add @extends to tth
+   * @extends {Area}
    *
    * @param {boolean} allowPowers - Whether the user is able to add powers of x.
    */

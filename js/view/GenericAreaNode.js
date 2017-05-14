@@ -31,6 +31,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {AreaNode}
    *
    * TODO: reduce to options object
    * @param {GenericArea} area

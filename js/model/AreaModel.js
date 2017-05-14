@@ -18,6 +18,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Object}
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
    */

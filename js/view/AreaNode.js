@@ -23,6 +23,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * @param {Area} area
    * @param {Property.<Color>} widthColorProperty

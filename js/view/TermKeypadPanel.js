@@ -50,6 +50,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Panel}
    *
    * @param {Property.<GenericPartition>} activePartitionProperty
    * @param {boolean} allowPowers

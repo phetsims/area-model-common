@@ -25,6 +25,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {HBox}
    *
    * @param {Property.<Area>} currentAreaProperty
    * @param {boolean} isProportional

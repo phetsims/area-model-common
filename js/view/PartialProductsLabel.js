@@ -21,6 +21,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {PartitionedArea} partitionedArea

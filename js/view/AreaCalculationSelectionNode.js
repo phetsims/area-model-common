@@ -24,6 +24,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * @param {Property.<AreaCalculationChoice} areaCalculationChoiceProperty
    */

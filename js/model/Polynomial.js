@@ -16,6 +16,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {TermList}
    *
    * @param {Array.<Term>} terms
    */

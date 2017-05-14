@@ -16,6 +16,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {AreaModel}
    *
    * @param {boolean} allowPowers - Whether the user is able to add powers of x.
    */

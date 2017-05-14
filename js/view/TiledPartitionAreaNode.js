@@ -19,6 +19,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {Node}
    *
    * TODO: switch to options constructor?
    *

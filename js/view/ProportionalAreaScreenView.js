@@ -28,6 +28,7 @@ define( function( require ) {
 
   /**
    * @constructor
+   * @extends {AreaScreenView}
    *
    * @param {AreaModel} model
    */
