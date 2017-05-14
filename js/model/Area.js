@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var Property = require( 'AXON/Property' );
@@ -102,15 +103,55 @@ define( function( require ) {
     },
 
     /**
+     * Returns all of the partitions for a given orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Array.<Partition>}
+     */
+    getPartitions: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitions : this.verticalPartitions;
+    },
+
+    /**
+     * Returns all defined partitions for a given orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Array.<Partition>}
+     */
+    getDefinedPartitions: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return this.getPartitions( orientation ).filter( function( partition ) {
+        return partition.isDefined();
+      } );
+    },
+
+    /**
+     * Returns a TermList containing all of the defined partition sizes for the given orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {TermList}
+     */
+    getTermList: function( orientation ) {
+      return new TermList( this.getDefinedPartitions( orientation ).map( function( partition ) {
+        return partition.sizeProperty.value;
+      } ) );
+    },
+
+    /**
      * Returns all defined horizontal partitions.
      * @public
      *
      * @returns {Array.<Partition>}
      */
     getDefinedHorizontalPartitions: function() {
-      return this.horizontalPartitions.filter( function( partition ) {
-        return partition.isDefined();
-      } );
+      // TODO: remove usages of this function
+      return this.getDefinedPartitions( Orientation.HORIZONTAL );
     },
 
     /**
@@ -120,9 +161,8 @@ define( function( require ) {
      * @returns {TermList}
      */
     getHorizontalTermList: function() {
-      return new TermList( this.getDefinedHorizontalPartitions().map( function( partition ) {
-        return partition.sizeProperty.value;
-      } ) );
+      // TODO: remove usages of this function
+      return this.getTermList( Orientation.HORIZONTAL );
     },
 
     /**
@@ -132,9 +172,8 @@ define( function( require ) {
      * @returns {Array.<Partition>}
      */
     getDefinedVerticalPartitions: function() {
-      return this.verticalPartitions.filter( function( partition ) {
-        return partition.isDefined();
-      } );
+      // TODO: remove usages of this function
+      return this.getDefinedPartitions( Orientation.VERTICAL );
     },
 
     /**
@@ -144,9 +183,8 @@ define( function( require ) {
      * @returns {TermList}
      */
     getVerticalTermList: function() {
-      return new TermList( this.getDefinedVerticalPartitions().map( function( partition ) {
-        return partition.sizeProperty.value;
-      } ) );
+      // TODO: remove usages of this function
+      return this.getTermList( Orientation.VERTICAL );
     }
   } );
 } );

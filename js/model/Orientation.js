@@ -23,5 +23,9 @@ define( function( require ) {
     Orientation.VERTICAL
   ];
 
+  Orientation.isOrientation = function( orientation ) {
+    return orientation === Orientation.HORIZONTAL || orientation === Orientation.VERTICAL;
+  };
+
   return Orientation;
 } );
