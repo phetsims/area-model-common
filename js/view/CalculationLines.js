@@ -101,16 +101,16 @@ define( function( require ) {
      */
     createLines: function( activeIndex ) {
       var allLinesActive = activeIndex === undefined;
-      var horizontalPartitions = this.area.getDefinedHorizontalPartitions();
-      var verticalPartitions = this.area.getDefinedVerticalPartitions();
+      var horizontalPartitions = this.area.getDefinedPartitions( Orientation.HORIZONTAL );
+      var verticalPartitions = this.area.getDefinedPartitions( Orientation.VERTICAL );
 
       // If either is empty, we will have no calculation lines.
       if ( horizontalPartitions.length === 0 || verticalPartitions.length === 0 ) {
         return [];
       }
 
-      var horizontalTermList = this.area.getHorizontalTermList();
-      var verticalTermList = this.area.getVerticalTermList();
+      var horizontalTermList = this.area.getTermList( Orientation.HORIZONTAL );
+      var verticalTermList = this.area.getTermList( Orientation.VERTICAL );
 
       var horizontalTerms = horizontalTermList.terms;
       var verticalTerms = verticalTermList.terms;
@@ -323,15 +323,13 @@ define( function( require ) {
     },
 
     getHorizontalTerms: function() {
-      return this.area.getDefinedHorizontalPartitions().map( function( partition ) {
-        return partition.sizeProperty.value;
-      } );
+      // TODO: inline?
+      return this.area.getTerms( Orientation.HORIZONTAL );
     },
 
     getVerticalTerms: function() {
-      return this.area.getDefinedVerticalPartitions().map( function( partition ) {
-        return partition.sizeProperty.value;
-      } );
+      // TODO: inline?
+      return this.area.getTerms( Orientation.VERTICAL );
     },
 
     // TODO: doc

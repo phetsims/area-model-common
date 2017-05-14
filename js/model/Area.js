@@ -55,7 +55,7 @@ define( function( require ) {
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.horizontalTotalProperty = new DerivedProperty( horizontalProperties, function() {
-      var definedPartitions = self.getDefinedHorizontalPartitions();
+      var definedPartitions = self.getDefinedPartitions( Orientation.HORIZONTAL );
       if ( definedPartitions.length ) {
         return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;
@@ -69,7 +69,7 @@ define( function( require ) {
     // TODO: dedup with horizontal/vertical
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.verticalTotalProperty = new DerivedProperty( verticalProperties, function() {
-      var definedPartitions = self.getDefinedVerticalPartitions();
+      var definedPartitions = self.getDefinedPartitions( Orientation.VERTICAL );
       if ( definedPartitions.length ) {
         return new Polynomial( definedPartitions.map( function( partition ) {
           return partition.sizeProperty.value;
@@ -131,6 +131,19 @@ define( function( require ) {
     },
 
     /**
+     * Returns an array of Terms containing all of the defined partition sizes for the given orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Array.<Term>}
+     */
+    getTerms: function( orientation ) {
+      return this.getDefinedPartitions( orientation ).map( function( partition ) {
+        return partition.sizeProperty.value;
+      } );
+    },
+
+    /**
      * Returns a TermList containing all of the defined partition sizes for the given orientation.
      * @public
      *
@@ -138,53 +151,7 @@ define( function( require ) {
      * @returns {TermList}
      */
     getTermList: function( orientation ) {
-      return new TermList( this.getDefinedPartitions( orientation ).map( function( partition ) {
-        return partition.sizeProperty.value;
-      } ) );
-    },
-
-    /**
-     * Returns all defined horizontal partitions.
-     * @public
-     *
-     * @returns {Array.<Partition>}
-     */
-    getDefinedHorizontalPartitions: function() {
-      // TODO: remove usages of this function
-      return this.getDefinedPartitions( Orientation.HORIZONTAL );
-    },
-
-    /**
-     * Returns a TermList of defined horizontal terms in order.
-     * @public
-     *
-     * @returns {TermList}
-     */
-    getHorizontalTermList: function() {
-      // TODO: remove usages of this function
-      return this.getTermList( Orientation.HORIZONTAL );
-    },
-
-    /**
-     * Returns all defined vertical partitions.
-     * @public
-     *
-     * @returns {Array.<Partition>}
-     */
-    getDefinedVerticalPartitions: function() {
-      // TODO: remove usages of this function
-      return this.getDefinedPartitions( Orientation.VERTICAL );
-    },
-
-    /**
-     * Returns a TermList of defined vertical terms in order.
-     * @public
-     *
-     * @returns {TermList}
-     */
-    getVerticalTermList: function() {
-      // TODO: remove usages of this function
-      return this.getTermList( Orientation.VERTICAL );
+      return new TermList( this.getTerms( orientation ) );
     }
   } );
 } );
