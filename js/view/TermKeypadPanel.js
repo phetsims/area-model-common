@@ -17,9 +17,12 @@ define( function( require ) {
   var Key = require( 'SCENERY_PHET/keypad/Key' );
   var Keys = require( 'SCENERY_PHET/keypad/Keys' );
   var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
+  var Term = require( 'AREA_MODEL_COMMON/model/Term' );
   var TermAccumulator = require( 'AREA_MODEL_COMMON/view/TermAccumulator' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -61,17 +64,44 @@ define( function( require ) {
       accumulator: termAccumulator
     } );
 
-    var readoutText = new RichText( '', {
-      font: AreaModelConstants.KEYPAD_READOUT_FONT
+    var readoutBackground = new Rectangle( {
+      // TODO: extract colors
+      fill: 'white',
+      stroke: 'black',
+      cornerRadius: 5
     } );
+
+    var readoutTextOptions = {
+      font: AreaModelConstants.KEYPAD_READOUT_FONT
+    };
+
+    var readoutText = new RichText( '', readoutTextOptions );
     termAccumulator.richStringProperty.link( function( string ) {
       // Trick to be able to position an empty string
       readoutText.text = string.length === 0 ? ' ' : string;
+      readoutText.centerX = readoutBackground.centerX;
+    } );
+
+    var scratchText = new RichText( '', readoutTextOptions );
+
+    activePartitionProperty.link( function( partition ) {
+      if ( partition !== null ) {
+        var longestString = Term.getLongestGenericString( allowPowers, partition.digitCount );
+        scratchText.text = longestString;
+        readoutBackground.setRectBounds( scratchText.bounds.dilatedXY( 10, 5 ) );
+        scratchText.center = readoutBackground.center;
+        readoutText.y = scratchText.y;
+      }
     } );
 
     Panel.call( this, new VBox( {
       children: [
-        readoutText, // TODO: wrap in a border
+        new Node( {
+          children: [
+            readoutBackground,
+            readoutText
+          ]
+        } ),
         keypad,
         new RectangularPushButton( {
           content: new Text( enterString, { font: AreaModelConstants.KEYPAD_FONT } ),

@@ -118,5 +118,22 @@ define( function( require ) {
 
       return string;
     }
+  }, {
+    /**
+     * Returns the longest generic term's toRichString (for proper sizing).
+     * @public
+     *
+     * @param {boolean} allowPowers - Whether powers of x can be included
+     * @param {number} digitCount - If no powers of x allowed, how many numeric digits can be allowed.
+     * @returns {string}
+     */
+    getLongestGenericString: function( allowPowers, digitCount ) {
+      if ( allowPowers ) {
+        return '-9x<sup>2</sup>';
+      }
+      else {
+        return '-' + _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+      }
+    }
   } );
 } );
