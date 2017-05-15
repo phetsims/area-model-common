@@ -188,5 +188,15 @@ define( function( require ) {
 
   areaModelCommon.register( 'AreaScreenView', AreaScreenView );
 
-  return inherit( ScreenView, AreaScreenView );
+  return inherit( ScreenView, AreaScreenView, {
+    /**
+     * Returns the ideal translation for instances of AreaNode on the main view.
+     * @protected
+     *
+     * @returns {Vector2}
+     */
+    getAreaTranslation: function() {
+      return this.layoutBounds.leftTop.plus( AreaModelConstants.MAIN_AREA_OFFSET );
+    }
+  } );
 } );
