@@ -16,6 +16,7 @@ define( function( require ) {
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
   var TermList = require( 'AREA_MODEL_COMMON/model/TermList' );
 
   /**
@@ -30,6 +31,8 @@ define( function( require ) {
   function Area( horizontalPartitions, verticalPartitions, widthColorProperty, heightColorProperty ) {
     assert && assert( horizontalPartitions instanceof Array );
     assert && assert( verticalPartitions instanceof Array );
+    assert && assert( widthColorProperty instanceof Property );
+    assert && assert( heightColorProperty instanceof Property );
 
     // @public {Array.<Partition>}
     this.horizontalPartitions = horizontalPartitions;
@@ -55,8 +58,6 @@ define( function( require ) {
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.horizontalTotalProperty = this.createTotalProperty( Orientation.HORIZONTAL );
-
-    // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.verticalTotalProperty = this.createTotalProperty( Orientation.VERTICAL );
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
@@ -66,6 +67,10 @@ define( function( require ) {
       }
       return horizontalTotal.times( verticalTotal );
     } );
+
+    // @public {Property.<Range|null>}
+    this.horizontalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.HORIZONTAL );
+    this.verticalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.VERTICAL );
   }
 
   areaModelCommon.register( 'Area', Area );
@@ -158,6 +163,33 @@ define( function( require ) {
     },
 
     /**
+     * Returns the color property associated with the particular orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Color>}
+     */
+    getColorProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
+    },
+
+    /**
+     * Returns the coordiante range property associated with the particular orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Range|null>}
+     */
+    getCoordinateRangeProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalCoordinateRangeProperty
+                                                    : this.verticalCoordinateRangeProperty;
+    },
+
+    /**
      * Creates a derived property with the total size for a particular dimension.
      * @private
      *
@@ -183,16 +215,38 @@ define( function( require ) {
     },
 
     /**
-     * Returns the color property associated with the particular orientation.
-     * @public
+     * Creates a property that holds the union of all coordinate ranges (for defined partitions) for the given orientation.
+     * @private
      *
      * @param {Orientation} orientation
-     * @returns {Property.<Color>}
+     * @returns {Property.<Range|null>}
      */
-    getColorProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+    createCoordinateRangeProperty: function( orientation ) {
+      var partitions = this.getPartitions( orientation );
 
-      return orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
+      // We need to listen to every partition's properties for the given orientation
+      var coordinateProperties = _.flatten( partitions.map( function( partition ) {
+        return [ partition.coordinateRangeProperty, partition.sizeProperty ];
+      } ) );
+
+      return new DerivedProperty( coordinateProperties, function() {
+        return _.reduce( partitions, function( totalRange, partition ) {
+          var range = partition.coordinateRangeProperty.value;
+
+          // Ignore null range or size
+          if ( range === null || partition.sizeProperty.value === null ) {
+            return totalRange;
+          }
+
+          if ( totalRange === null ) {
+            return range;
+          }
+          else {
+            // Includes both ranges
+            return new Range( Math.min( totalRange.min, range.min ), Math.max( totalRange.max, range.max ) );
+          }
+        }, null );
+      } );
     }
   } );
 } );

@@ -12,12 +12,11 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Range = require( 'DOT/Range' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -39,51 +38,6 @@ define( function( require ) {
 
     // @public {number}
     this.viewSize = AreaModelConstants.AREA_SIZE;
-
-    // TODO: reduce duplication
-    var horizontalCoordinateProperties = _.flatten( area.horizontalPartitions.map( function( partition ) {
-      return [ partition.coordinateRangeProperty, partition.sizeProperty ];
-    } ) );
-    // @public {Property.<Range|null>}
-    this.horizontalCoordinateRangeProperty = new DerivedProperty( horizontalCoordinateProperties, function() {
-      // TODO: change this to a reduce()?
-      var currentRange = null;
-      area.horizontalPartitions.forEach( function( partition ) {
-        var range = partition.coordinateRangeProperty.value;
-        if ( range !== null && partition.sizeProperty.value !== null ) {
-          if ( currentRange === null ) {
-            currentRange = range;
-          }
-          else {
-            // TODO: add this as a common function
-            currentRange = new Range( Math.min( currentRange.min, range.min ), Math.max( currentRange.max, range.max ) );
-          }
-        }
-      } );
-      return currentRange;
-    } );
-
-    var verticalCoordinateProperties = _.flatten( area.verticalPartitions.map( function( partition ) {
-      return [ partition.coordinateRangeProperty, partition.sizeProperty ];
-    } ) );
-    // @public {Property.<Range|null>}
-    this.verticalCoordinateRangeProperty = new DerivedProperty( verticalCoordinateProperties, function() {
-      // TODO: change this to a reduce()?
-      var currentRange = null;
-      area.verticalPartitions.forEach( function( partition ) {
-        var range = partition.coordinateRangeProperty.value;
-        if ( range !== null && partition.sizeProperty.value !== null ) {
-          if ( currentRange === null ) {
-            currentRange = range;
-          }
-          else {
-            // TODO: add this as a common function
-            currentRange = new Range( Math.min( currentRange.min, range.min ), Math.max( currentRange.max, range.max ) );
-          }
-        }
-      } );
-      return currentRange;
-    } );
 
     var markSize = 4;
     var horizontalLineOffset = -40;
@@ -150,7 +104,7 @@ define( function( require ) {
       }
     } );
 
-    this.horizontalCoordinateRangeProperty.link( function( horizontalRange ) {
+    area.getCoordinateRangeProperty( Orientation.HORIZONTAL ).link( function( horizontalRange ) {
       horizontalLeftMark.visible = horizontalRange !== null;
       horizontalRightMark.visible = horizontalRange !== null;
       horizontalLine.visible = horizontalRange !== null;
@@ -176,7 +130,7 @@ define( function( require ) {
       horizontalLabel.x = center;
     } );
 
-    this.verticalCoordinateRangeProperty.link( function( verticalRange ) {
+    area.getCoordinateRangeProperty( Orientation.VERTICAL ).link( function( verticalRange ) {
       verticalLeftMark.visible = verticalRange !== null;
       verticalRightMark.visible = verticalRange !== null;
       verticalLine.visible = verticalRange !== null;
