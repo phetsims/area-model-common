@@ -46,5 +46,8 @@ define( function( require ) {
     return orientation === Orientation.HORIZONTAL ? 'x' : 'y';
   };
 
+  // verify that enum is immutable, without the runtime penalty in production code
+  if ( assert ) { Object.freeze( Orientation ); }
+
   return Orientation;
 } );

@@ -26,5 +26,8 @@ define( function( require ) {
     AreaCalculationChoice.SHOW_ALL_LINES,
   ];
 
+  // verify that enumeration is immutable, without the runtime penalty in production code
+  if ( assert ) { Object.freeze( AreaCalculationChoice ); }
+
   return AreaCalculationChoice;
 } );

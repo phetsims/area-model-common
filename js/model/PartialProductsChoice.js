@@ -26,5 +26,8 @@ define( function( require ) {
     PartialProductsChoice.FACTORS,
   ];
 
+  // verify that enum is immutable, without the runtime penalty in production code
+  if ( assert ) { Object.freeze( PartialProductsChoice ); }
+
   return PartialProductsChoice;
 } );
