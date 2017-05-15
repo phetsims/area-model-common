@@ -24,10 +24,9 @@ define( function( require ) {
    * @constructor
    * @extends {Area}
    *
-   * @param {Property.<Color>} colorProperty
    * @param {Object} [options]
    */
-  function ProportionalArea( colorProperty, options ) {
+  function ProportionalArea( options ) {
     var self = this;
 
     options = _.extend( {

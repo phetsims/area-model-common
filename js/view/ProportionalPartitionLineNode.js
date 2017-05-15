@@ -16,6 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Util = require( 'DOT/Util' );
@@ -26,12 +27,11 @@ define( function( require ) {
    *
    * @param {ProportionalArea} area
    * @param {ModelViewTransform2} modelViewTransform
-   * @param {Property.<Color>} colorProperty
-   * @param {boolean} isHorizontalPartition
+   * @param {Orientation} orientation
    */
-  function ProportionalPartitionLineNode( area, modelViewTransform, colorProperty, isHorizontalPartition ) {
+  function ProportionalPartitionLineNode( area, modelViewTransform, orientation ) {
     assert && assert( area instanceof ProportionalArea );
-    assert && assert( typeof isHorizontalPartition === 'boolean' );
+    assert && assert( Orientation.isOrientation( orientation ) );
 
     var self = this;
 
@@ -41,7 +41,7 @@ define( function( require ) {
     this.area = area;
 
     var handle = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-      fill: colorProperty,
+      fill: area.getColorProperty( orientation ),
       stroke: AreaModelColorProfile.partitionLineBorderProperty,
       cursor: 'pointer'
     } );
@@ -52,6 +52,9 @@ define( function( require ) {
     } );
 
     this.children = [ line, handle ];
+
+    // TODO: simplify
+    var isHorizontalPartition = orientation === Orientation.HORIZONTAL;
 
     // TODO: improve naming
     var primaryProperty = isHorizontalPartition ? area.horizontalPartitionSplitProperty : area.verticalPartitionSplitProperty;

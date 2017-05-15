@@ -19,6 +19,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
@@ -187,10 +188,10 @@ define( function( require ) {
       heightDock.x = self.modelViewTransform.modelToViewX( totalWidth ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
     } );
 
-    var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, widthColorProperty, true );
+    var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL );
     this.addChild( horizontalPartitionLine );
 
-    var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, heightColorProperty, false );
+    var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.VERTICAL );
     this.addChild( verticalPartitionLine );
 
     // TODO: remove duplication with generic (only changed to false and MVT)
