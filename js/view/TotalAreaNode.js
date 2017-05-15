@@ -27,13 +27,19 @@ define( function( require ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( allowPowers ? '-9x<sup>2</sup>' : '-999', {
-      font: AreaModelConstants.TOTAL_AREA_FONT,
-      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+      font: AreaModelConstants.TOTAL_AREA_FONT
     } );
 
-    // A vertical strut with the maximum height of the text, so AccordionBox will take up the proper amount of height.
-    var areaStrut = new VStrut( areaText.height, {
-      top: areaText.top
+    // Wrap with a centered container, so that when maxWidth kicks in, the AccordionBox centers this vertically.
+    var centeredContainer = new Node( {
+      children: [
+        areaText,
+        // A vertical strut with the maximum height of the text, so it will always take up the proper vertical amount
+        new VStrut( areaText.height, {
+          top: areaText.top
+        } )
+      ],
+      centerY: 0
     } );
 
     // Update the text.
@@ -43,9 +49,9 @@ define( function( require ) {
 
     Node.call( this, {
       children: [
-        areaText,
-        areaStrut
-      ]
+        centeredContainer
+      ],
+      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
     } );
   }
 
