@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A section of either the width or height.
+ * A 1-dimensional section of either the width or height.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A subset of a single dimension of the area. TODO: better doc
+ * A 2-dimensional section of area defined by a horizontal and vertical pair of partitions.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -50,7 +50,6 @@ define( function( require ) {
      * @public
      */
     dispose: function() {
-      // TODO: ensure this is called.
       this.visibleProperty.dispose();
       this.areaProperty.dispose();
     }
