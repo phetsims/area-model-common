@@ -52,7 +52,6 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    // TODO: i18n. titles (long) can screw up our alignment here!!
     var panelAlignGroup = new AlignGroup( {
       matchVertical: false
     } );
