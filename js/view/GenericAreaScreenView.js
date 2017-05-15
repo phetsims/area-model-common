@@ -30,8 +30,7 @@ define( function( require ) {
 
     var self = this;
 
-    AreaScreenView.call( this, model, false, decimalPlaces, AreaModelColorProfile.genericWidthProperty,
-                                                            AreaModelColorProfile.genericHeightProperty );
+    AreaScreenView.call( this, model, false, decimalPlaces );
 
     this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowPowers, AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, model.partialProductsChoiceProperty, {
       // TODO: improve positioning, remove duplicated code with proportional

@@ -38,8 +38,7 @@ define( function( require ) {
 
     var self = this;
 
-    AreaScreenView.call( this, model, true, decimalPlaces, AreaModelColorProfile.proportionalWidthProperty,
-                                                           AreaModelColorProfile.proportionalHeightProperty );
+    AreaScreenView.call( this, model, true, decimalPlaces );
 
     var areaNodes = model.areas.map( function( area ) {
       // TODO: fix formatting or go to options

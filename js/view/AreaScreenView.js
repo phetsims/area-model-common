@@ -22,7 +22,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
-  var Property = require( 'AXON/Property' );
   var ProportionalProblemNode = require( 'AREA_MODEL_COMMON/view/ProportionalProblemNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
@@ -43,14 +42,10 @@ define( function( require ) {
    * @param {AreaModel} model
    * @param {boolean} isProportional
    * @param {number} decimalPlaces
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
    */
-  function AreaScreenView( model, isProportional, decimalPlaces, widthColorProperty, heightColorProperty ) {
+  function AreaScreenView( model, isProportional, decimalPlaces ) {
     assert && assert( model instanceof AreaModel );
     assert && assert( typeof isProportional === 'boolean' );
-    assert && assert( widthColorProperty instanceof Property );
-    assert && assert( heightColorProperty instanceof Property );
 
     var self = this;
 
