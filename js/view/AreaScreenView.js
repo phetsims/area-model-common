@@ -99,12 +99,7 @@ define( function( require ) {
     this.addChild( this.panelContainer );
 
     // @protected {Node}
-    var calculationWidth = isProportional ? AreaModelConstants.AREA_SIZE : 880;
-    var calculationHeight = isProportional ? 120 : 150;
-    this.calculationDisplayPanel = new CalculationPanel( model, calculationWidth, calculationHeight, {
-      left: isProportional ? AreaModelConstants.MAIN_AREA_OFFSET.x : this.layoutBounds.left + AreaModelConstants.PANEL_MARGIN,
-      bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
-    } );
+    this.calculationDisplayPanel = new CalculationPanel( model );
     this.addChild( this.calculationDisplayPanel );
 
     // Reset All button
