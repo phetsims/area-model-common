@@ -42,16 +42,16 @@ define( function( require ) {
       tilesAvailable: true // {boolean} - Whether tiles can be shown on this area
     }, options );
 
-    // @public {Property.<number>} - Width of the contained area
+    // @private {Property.<number>} - Width of the contained area - Prefer getActiveTotalProperty
     this.activeWidthProperty = new Property( options.initialWidth );
 
-    // @public {Property.<number>} - Height of the contained area
+    // @private {Property.<number>} - Height of the contained area - Prefer getActiveTotalProperty
     this.activeHeightProperty = new Property( options.initialHeight );
 
-    // @public {Property.<number|null>} - If there is an active partition line, its location.
+    // @private {Property.<number|null>} - If there is an active partition line, its location.
     this.horizontalPartitionSplitProperty = new Property( null );
 
-    // @public {Property.<number|null>} - If there is an active partition line, its location.
+    // @private {Property.<number|null>} - If there is an active partition line, its location.
     this.verticalPartitionSplitProperty = new Property( null );
 
     // @public {number}
@@ -123,8 +123,6 @@ define( function( require ) {
      * Returns the property for the sum of all defined partitions for a particular orientation.
      * @public
      *
-     * TODO: refactor usages to this
-     *
      * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
      */
     getActiveTotalProperty: function( orientation ) {
@@ -136,8 +134,6 @@ define( function( require ) {
     /**
      * Returns the split property for a given orientation
      * @public
-     *
-     * TODO: refactor usages to this
      *
      * @param {Property.<number|null>}
      */
