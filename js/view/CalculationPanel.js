@@ -26,19 +26,12 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: options object
-   *
-   * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
-   * @param {Property.<Area>} currentAreaProperty
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
-   * @param {boolean} allowPowers
+   * @param {AreaModel} model
    * @param {number} width
    * @param {number} height
    * @param {Object} [nodeOptions]
    */
-  function CalculationPanel( areaCalculationChoiceProperty, currentAreaProperty, widthColorProperty, heightColorProperty, allowPowers, width, height, nodeOptions ) {
-    assert && assert( typeof allowPowers === 'boolean' );
+  function CalculationPanel( model, width, height, nodeOptions ) {
 
     var self = this;
 
@@ -64,7 +57,7 @@ define( function( require ) {
     var previousListener = new FireListener( {
       fire: function() {
         if ( previousIndexProperty.value !== null ) {
-          currentAreaProperty.value.calculationIndexProperty.value = previousIndexProperty.value;
+          model.currentAreaProperty.value.calculationIndexProperty.value = previousIndexProperty.value;
         }
       }
     } );
@@ -87,7 +80,7 @@ define( function( require ) {
     var nextListener = new FireListener( {
       fire: function() {
         if ( nextIndexProperty.value !== null ) {
-          currentAreaProperty.value.calculationIndexProperty.value = nextIndexProperty.value;
+          model.currentAreaProperty.value.calculationIndexProperty.value = nextIndexProperty.value;
         }
       }
     } );
@@ -101,7 +94,7 @@ define( function( require ) {
       nextArrow.fill = enabled ? AreaModelColorProfile.calculationArrowUpProperty : AreaModelColorProfile.calculationArrowDisabledProperty;
     } );
 
-    areaCalculationChoiceProperty.link( function( choice ) {
+    model.areaCalculationChoiceProperty.link( function( choice ) {
       previousArrow.visible = nextArrow.visible = choice === AreaCalculationChoice.LINE_BY_LINE;
     } );
 
@@ -116,13 +109,13 @@ define( function( require ) {
     this.addChild( lineLayer );
 
     function update() {
-      var isLineByLine = areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
+      var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
 
       lineLayer.removeAllChildren();
 
-      var activeIndex = isLineByLine ? currentAreaProperty.value.calculationIndexProperty.value : undefined;
+      var activeIndex = isLineByLine ? model.currentAreaProperty.value.calculationIndexProperty.value : undefined;
 
-      var calculationLines = new CalculationLines( currentAreaProperty.value, allowPowers, widthColorProperty, heightColorProperty ).createLines( activeIndex );
+      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowPowers, model.widthColorProperty, model.heightColorProperty ).createLines( activeIndex );
       if ( calculationLines.length ) {
 
         if ( isLineByLine ) {
@@ -155,18 +148,18 @@ define( function( require ) {
 
         if ( isLineByLine ) {
           // TODO: this can cause a full refresh, and should be fixed. Also duplication with above
-          currentAreaProperty.value.calculationIndexProperty.value = _.find( calculationLines, function( line ) { return line.isActive; } ).index;
+          model.currentAreaProperty.value.calculationIndexProperty.value = _.find( calculationLines, function( line ) { return line.isActive; } ).index;
         }
       }
 
     }
 
-    areaCalculationChoiceProperty.link( function( choice ) {
+    model.areaCalculationChoiceProperty.link( function( choice ) {
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
       update(); // TODO: extra update on init()?
     } );
 
-    currentAreaProperty.link( function( newArea, oldArea ) {
+    model.currentAreaProperty.link( function( newArea, oldArea ) {
       if ( oldArea ) {
         oldArea.horizontalPartitions.concat( oldArea.verticalPartitions ).forEach( function( partition ) {
           partition.sizeProperty.unlink( update );
