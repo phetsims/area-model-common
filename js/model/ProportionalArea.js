@@ -55,23 +55,17 @@ define( function( require ) {
     this.verticalPartitionSplitProperty = new Property( null );
 
     // @public {number}
-    this.snapSize = options.snapSize;
-    this.partitionSnapSize = options.partitionSnapSize;
-
-    // @public {number}
     this.maximumSize = options.maximumSize;
     this.minimumSize = options.minimumSize;
+    this.snapSize = options.snapSize;
+    this.partitionSnapSize = options.partitionSnapSize;
+    this.majorGridSpacing = options.majorGridSpacing;
+    this.minorGridSpacing = options.minorGridSpacing;
+    this.smallTileSize = options.smallTileSize;
+    this.largeTileSize = options.largeTileSize;
 
     // @public {boolean}
     this.tilesAvailable = options.tilesAvailable;
-
-    // @public {number}
-    this.majorGridSpacing = options.majorGridSpacing;
-    this.minorGridSpacing = options.minorGridSpacing;
-
-    // @public {number}
-    this.smallTileSize = options.smallTileSize;
-    this.largeTileSize = options.largeTileSize;
 
     Area.call( this, [
       new Partition( true, AreaModelColorProfile.proportionalWidthProperty ),
@@ -82,49 +76,29 @@ define( function( require ) {
     ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
 
     // Keep partition sizes up-to-date
-    Property.multilink( [ this.activeWidthProperty,
-                          this.activeHeightProperty,
-                          this.horizontalPartitionSplitProperty,
-                          this.verticalPartitionSplitProperty ], function( width, height, horizontalSplit, verticalSplit ) {
-      // Ignore splits at our outside our area.
-      if ( horizontalSplit <= 0 || horizontalSplit >= width ) {
-        horizontalSplit = null;
-      }
-      if ( verticalSplit <= 0 || verticalSplit >= height ) {
-        verticalSplit = null;
-      }
+    Orientation.CHOICES.forEach( function( orientation ) {
+      Property.multilink( [ self.getActiveTotalProperty( orientation ), self.getPartitionSplitProperty( orientation ) ], function( size, split ) {
+        // Ignore splits at the boundary or outside our active area.
+        if ( split <= 0 || split >= size ) {
+          split = null;
+        }
 
-      var primaryHorizontalPartition = self.getPrimaryPartition( Orientation.HORIZONTAL );
-      var secondaryHorizontalPartition = self.getSecondaryPartition( Orientation.HORIZONTAL );
-      var primaryVerticalPartition = self.getPrimaryPartition( Orientation.VERTICAL );
-      var secondaryVerticalPartition = self.getSecondaryPartition( Orientation.VERTICAL );
+        var primaryPartition = self.getPrimaryPartition( orientation );
+        var secondaryPartition = self.getSecondaryPartition( orientation );
 
-      // TODO: some opportunity to refactor here (vert/horiz very similar)
-      if ( horizontalSplit ) {
-        primaryHorizontalPartition.sizeProperty.value = new Term( horizontalSplit );
-        secondaryHorizontalPartition.sizeProperty.value = new Term( width - horizontalSplit );
-        primaryHorizontalPartition.coordinateRangeProperty.value = new Range( 0, horizontalSplit );
-        secondaryHorizontalPartition.coordinateRangeProperty.value = new Range( horizontalSplit, width );
-      }
-      else {
-        primaryHorizontalPartition.sizeProperty.value = new Term( width );
-        secondaryHorizontalPartition.sizeProperty.value = null;
-        primaryHorizontalPartition.coordinateRangeProperty.value = new Range( 0, width );
-        secondaryHorizontalPartition.coordinateRangeProperty.value = null;
-      }
-
-      if ( verticalSplit ) {
-        primaryVerticalPartition.sizeProperty.value = new Term( verticalSplit );
-        secondaryVerticalPartition.sizeProperty.value = new Term( height - verticalSplit );
-        primaryVerticalPartition.coordinateRangeProperty.value = new Range( 0, verticalSplit );
-        secondaryVerticalPartition.coordinateRangeProperty.value = new Range( verticalSplit, height );
-      }
-      else {
-        primaryVerticalPartition.sizeProperty.value = new Term( height );
-        secondaryVerticalPartition.sizeProperty.value = null;
-        primaryVerticalPartition.coordinateRangeProperty.value = new Range( 0, height );
-        secondaryVerticalPartition.coordinateRangeProperty.value = null;
-      }
+        if ( split ) {
+          primaryPartition.sizeProperty.value = new Term( split );
+          secondaryPartition.sizeProperty.value = new Term( size - split );
+          primaryPartition.coordinateRangeProperty.value = new Range( 0, split );
+          secondaryPartition.coordinateRangeProperty.value = new Range( split, size );
+        }
+        else {
+          primaryPartition.sizeProperty.value = new Term( size );
+          secondaryPartition.sizeProperty.value = null;
+          primaryPartition.coordinateRangeProperty.value = new Range( 0, size );
+          secondaryPartition.coordinateRangeProperty.value = null;
+        }
+      } );
     } );
   }
 
@@ -157,6 +131,20 @@ define( function( require ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       return orientation === Orientation.HORIZONTAL ? this.activeWidthProperty : this.activeHeightProperty;
+    },
+
+    /**
+     * Returns the split property for a given orientation
+     * @public
+     *
+     * TODO: refactor usages to this
+     *
+     * @param {Property.<number|null>}
+     */
+    getPartitionSplitProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitionSplitProperty : this.verticalPartitionSplitProperty;
     },
 
     /**
