@@ -28,11 +28,9 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Property.<PartialProductsChoice} partialProductsChoiceProperty
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
+   * @param {AreaModel} model
    */
-  function PartialProductsSelectionNode( partialProductsChoiceProperty, widthColorProperty, heightColorProperty ) {
+  function PartialProductsSelectionNode( model ) {
 
     Node.call( this );
 
@@ -49,12 +47,11 @@ define( function( require ) {
       },
       {
         value: PartialProductsChoice.FACTORS,
-        // TODO: when selected, highlight the a and b with colors!!!
         node: new AlignBox( new HBox( {
           children: [
             new Text( 'a', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ partialProductsChoiceProperty, heightColorProperty ], function( value, heightColor ) {
+              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.heightColorProperty ], function( value, heightColor ) {
                 return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
               } )
             } ),
@@ -63,7 +60,7 @@ define( function( require ) {
             } ),
             new Text( 'b', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ partialProductsChoiceProperty, widthColorProperty ], function( value, widthColor ) {
+              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.widthColorProperty ], function( value, widthColor ) {
                 return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
               } )
             } )
@@ -73,7 +70,7 @@ define( function( require ) {
       }
     ];
 
-    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ partialProductsChoiceProperty, radioItems ], {
+    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ model.partialProductsChoiceProperty, radioItems ], {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
       buttonContentYMargin: 10,

@@ -95,7 +95,7 @@ define( function( require ) {
           group: panelAlignGroup,
           xAlign: 'left'
         } ),
-        new AlignBox( new PartialProductsSelectionNode( model.partialProductsChoiceProperty, widthColorProperty, heightColorProperty ), {
+        new AlignBox( new PartialProductsSelectionNode( model ), {
           group: panelAlignGroup,
           xAlign: 'center',
           xMargin: 15
