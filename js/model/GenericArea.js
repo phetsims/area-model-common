@@ -36,24 +36,14 @@ define( function( require ) {
     var secondDigitCount = allowExponents ? 1 : 2;
     var thirdDigitCount = 1;
 
-    // @public {GenericPartition}
-    this.leftPartition = new GenericPartition( true, firstDigitCount );
-    this.middleHorizontalPartition = new GenericPartition( true, secondDigitCount ); // TODO: better naming
-    this.rightPartition = new GenericPartition( true, thirdDigitCount );
-
-    // @public {GenericPartition}
-    this.topPartition = new GenericPartition( false, firstDigitCount );
-    this.middleVerticalPartition = new GenericPartition( false, secondDigitCount ); // TODO: better naming
-    this.bottomPartition = new GenericPartition( false, thirdDigitCount );
-
     Area.call( this, [
-      this.leftPartition,
-      this.middleHorizontalPartition,
-      this.rightPartition
+      new GenericPartition( true, firstDigitCount ),
+      new GenericPartition( true, secondDigitCount ),
+      new GenericPartition( true, thirdDigitCount )
     ], [
-      this.topPartition,
-      this.middleVerticalPartition,
-      this.bottomPartition
+      new GenericPartition( false, firstDigitCount ),
+      new GenericPartition( false, secondDigitCount ),
+      new GenericPartition( false, thirdDigitCount )
     ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1 );
 
     // @public {Property.<boolean>}

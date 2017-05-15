@@ -73,20 +73,12 @@ define( function( require ) {
     this.smallTileSize = options.smallTileSize;
     this.largeTileSize = options.largeTileSize;
 
-    // @public {Partition}
-    this.leftPartition = new Partition( true, AreaModelColorProfile.proportionalWidthProperty );
-    this.rightPartition = new Partition( true, AreaModelColorProfile.proportionalWidthProperty );
-
-    // @public {Partition}
-    this.topPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
-    this.bottomPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
-
     Area.call( this, [
-      this.leftPartition,
-      this.rightPartition
+      new Partition( true, AreaModelColorProfile.proportionalWidthProperty ),
+      new Partition( true, AreaModelColorProfile.proportionalWidthProperty )
     ], [
-      this.topPartition,
-      this.bottomPartition
+      new Partition( false, AreaModelColorProfile.proportionalHeightProperty ),
+      new Partition( false, AreaModelColorProfile.proportionalHeightProperty )
     ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
 
     // Keep partition sizes up-to-date
