@@ -43,7 +43,22 @@ define( function( require ) {
    * @returns {string}
    */
   Orientation.getCoordinateName = function( orientation ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+
     return orientation === Orientation.HORIZONTAL ? 'x' : 'y';
+  };
+
+  /**
+   * Returns the opposite of the passed-in orientation.
+   * @public
+   *
+   * @param {Orientation} orientation
+   * @returns {Orientation}
+   */
+  Orientation.opposite = function( orientation ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+
+    return orientation === Orientation.HORIZONTAL ? Orientation.VERTICAL : Orientation.HORIZONTAL;
   };
 
   // verify that enum is immutable, without the runtime penalty in production code

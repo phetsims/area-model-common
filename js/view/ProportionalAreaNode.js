@@ -112,18 +112,18 @@ define( function( require ) {
                 width = Util.clamp( width, area.minimumSize, area.maximumSize );
                 height = Util.clamp( height, area.minimumSize, area.maximumSize );
 
-                area.activeWidthProperty.value = width;
-                area.activeHeightProperty.value = height;
+                area.getActiveTotalProperty( Orientation.HORIZONTAL ).value = width;
+                area.getActiveTotalProperty( Orientation.VERTICAL ).value = height;
               }
             } )
           ]
         } )
       ]
     } );
-    area.activeWidthProperty.link( function( totalWidth ) {
+    area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {
       dragHandle.x = self.modelViewTransform.modelToViewX( totalWidth );
     } );
-    area.activeHeightProperty.link( function( totalHeight ) {
+    area.getActiveTotalProperty( Orientation.VERTICAL ).link( function( totalHeight ) {
       dragHandle.y = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.areaLayer.addChild( dragHandle );
@@ -132,10 +132,10 @@ define( function( require ) {
       fill: AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
     } );
-    area.activeWidthProperty.link( function( totalWidth ) {
+    area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {
       activeAreaNode.rectWidth = self.modelViewTransform.modelToViewX( totalWidth );
     } );
-    area.activeHeightProperty.link( function( totalHeight ) {
+    area.getActiveTotalProperty( Orientation.VERTICAL ).link( function( totalHeight ) {
       activeAreaNode.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.areaLayer.addChild( activeAreaNode );
@@ -171,13 +171,13 @@ define( function( require ) {
     } );
     this.areaLayer.addChild( heightDock );
 
-    area.activeHeightProperty.link( function( totalHeight ) {
-      heightDock.visible = totalHeight >= area.snapSize * 2 - 1e-7;
-      widthDock.y = self.modelViewTransform.modelToViewY( totalHeight ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
-    } );
-    area.activeWidthProperty.link( function( totalWidth ) {
+    area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {
       widthDock.visible = totalWidth >= area.snapSize * 2 - 1e-7;
       heightDock.x = self.modelViewTransform.modelToViewX( totalWidth ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+    } );
+    area.getActiveTotalProperty( Orientation.VERTICAL ).link( function( totalHeight ) {
+      heightDock.visible = totalHeight >= area.snapSize * 2 - 1e-7;
+      widthDock.y = self.modelViewTransform.modelToViewY( totalHeight ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
     } );
 
     var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL );

@@ -57,12 +57,12 @@ define( function( require ) {
     var isHorizontalPartition = orientation === Orientation.HORIZONTAL;
 
     // TODO: improve naming
-    var primaryProperty = isHorizontalPartition ? area.horizontalPartitionSplitProperty : area.verticalPartitionSplitProperty;
-    var secondaryProperty = isHorizontalPartition ? area.activeHeightProperty : area.activeWidthProperty;
-    var ternaryProperty = isHorizontalPartition ? area.activeWidthProperty : area.activeHeightProperty;
+    var primaryProperty = area.getPartitionSplitProperty( orientation );
+    var secondaryProperty = area.getActiveTotalProperty( Orientation.opposite( orientation ) );
+    var ternaryProperty = area.getActiveTotalProperty( orientation );
 
-    var primaryCoordinate = isHorizontalPartition ? 'x' : 'y';
-    var secondaryCoordinate = isHorizontalPartition ? 'y' : 'x';
+    var primaryCoordinate = Orientation.getCoordinateName( orientation );
+    var secondaryCoordinate = Orientation.getCoordinateName( Orientation.opposite( orientation ) );
 
     var primaryTransform = ( isHorizontalPartition ? modelViewTransform.modelToViewX : modelViewTransform.modelToViewY ).bind( modelViewTransform );
     var secondaryTransform = ( isHorizontalPartition ? modelViewTransform.modelToViewY : modelViewTransform.modelToViewX ).bind( modelViewTransform );
