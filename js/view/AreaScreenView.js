@@ -61,7 +61,7 @@ define( function( require ) {
       matchVertical: false
     } );
 
-    var problemNode = isProportional ? new ProportionalProblemNode( model.currentAreaProperty, decimalPlaces, widthColorProperty, heightColorProperty )
+    var problemNode = isProportional ? new ProportionalProblemNode( model, decimalPlaces )
                                      : new GenericProblemNode( model );
     var problemContainer = new AlignBox( problemNode, {
       group: panelAlignGroup,

@@ -24,12 +24,10 @@ define( function( require ) {
    * @constructor
    * @extends {HBox}
    *
-   * @param {Property.<Area>} currentAreaProperty
+   * @param {ProportionalAreaModel} model
    * @param {number} decimalPlaces
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
    */
-  function ProportionalProblemNode( currentAreaProperty, decimalPlaces, widthColorProperty, heightColorProperty ) {
+  function ProportionalProblemNode( model, decimalPlaces ) {
 
     var xText = new Text( AreaModelConstants.X_STRING, {
       font: AreaModelConstants.PROBLEM_X_FONT
@@ -38,49 +36,49 @@ define( function( require ) {
     var children;
 
     // TODO: hackish! and refactor!
-    var widthProperty = new Property( currentAreaProperty.value.totalWidthProperty.value );
+    var widthProperty = new Property( model.currentAreaProperty.value.totalWidthProperty.value );
     function currentWidthListener( value ) {
       widthProperty.value = value;
     }
-    currentAreaProperty.value.totalWidthProperty.link( currentWidthListener );
-    currentAreaProperty.lazyLink( function( newArea, oldArea ) {
+    model.currentAreaProperty.value.totalWidthProperty.link( currentWidthListener );
+    model.currentAreaProperty.lazyLink( function( newArea, oldArea ) {
       oldArea.totalWidthProperty.unlink( currentWidthListener );
       newArea.totalWidthProperty.link( currentWidthListener );
     } );
     widthProperty.link( function( value ) {
-      currentAreaProperty.value.totalWidthProperty.value = value;
+      model.currentAreaProperty.value.totalWidthProperty.value = value;
     } );
 
-    var heightProperty = new Property( currentAreaProperty.value.totalHeightProperty.value );
+    var heightProperty = new Property( model.currentAreaProperty.value.totalHeightProperty.value );
     function currentHeightListener( value ) {
       heightProperty.value = value;
     }
-    currentAreaProperty.value.totalHeightProperty.link( currentHeightListener );
-    currentAreaProperty.lazyLink( function( newArea, oldArea ) {
+    model.currentAreaProperty.value.totalHeightProperty.link( currentHeightListener );
+    model.currentAreaProperty.lazyLink( function( newArea, oldArea ) {
       oldArea.totalHeightProperty.unlink( currentHeightListener );
       newArea.totalHeightProperty.link( currentHeightListener );
     } );
     heightProperty.link( function( value ) {
-      currentAreaProperty.value.totalHeightProperty.value = value;
+      model.currentAreaProperty.value.totalHeightProperty.value = value;
     } );
 
-    var rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
+    var rangeProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
       return new Range( area.minimumSize, area.maximumSize );
     } );
 
     var staticOptions = {
-      upFunction: function( value ) { return value + currentAreaProperty.value.snapSize; },
-      downFunction: function( value ) { return value - currentAreaProperty.value.snapSize; },
+      upFunction: function( value ) { return value + model.currentAreaProperty.value.snapSize; },
+      downFunction: function( value ) { return value - model.currentAreaProperty.value.snapSize; },
       decimalPlaces: decimalPlaces,
       scale: 1.5
     };
 
     var widthPicker = new MutableOptionsNode( NumberPicker, [ widthProperty, rangeProperty ], staticOptions, {
-      color: widthColorProperty
+      color: model.widthColorProperty
     } );
 
     var heightPicker = new MutableOptionsNode( NumberPicker, [ heightProperty, rangeProperty ], staticOptions, {
-      color: heightColorProperty
+      color: model.heightColorProperty
     } );
 
     children = [
