@@ -28,6 +28,7 @@ define( function( require ) {
    * @param {boolean} allowExponents
    */
   function PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
+    assert && assert( partialProductsChoiceProperty instanceof Property );
     assert && assert( partitionedArea instanceof PartitionedArea );
     assert && assert( typeof allowExponents === 'boolean' );
 

@@ -36,7 +36,6 @@ define( function( require ) {
     var thirdDigitCount = 1;
 
     // @public {GenericPartition}
-    // TODO: are props needed?
     this.leftPartition = new GenericPartition( true, firstDigitCount );
     this.middleHorizontalPartition = new GenericPartition( true, secondDigitCount ); // TODO: better naming
     this.rightPartition = new GenericPartition( true, thirdDigitCount );
