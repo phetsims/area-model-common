@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var AreaModel = require( 'AREA_MODEL_COMMON/model/AreaModel' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -25,7 +26,7 @@ define( function( require ) {
 
     AreaModel.call( this, areaOptionObjects.map( function( options ) {
       return new ProportionalArea( options );
-    } ), false );
+    } ), false, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
 
     // @public {BooleanProperty}
     this.gridLinesVisibleProperty = new BooleanProperty( true );

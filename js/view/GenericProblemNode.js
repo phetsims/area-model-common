@@ -22,27 +22,24 @@ define( function( require ) {
    * @constructor
    * @extends {HBox}
    *
-   * @param {Property.<Area>} currentAreaProperty
-   * @param {boolean} allowPowers
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
+   * @param {GenericAreaModel} model
    */
-  function GenericProblemNode( currentAreaProperty, allowPowers, widthColorProperty, heightColorProperty ) {
+  function GenericProblemNode( model ) {
 
     var widthText = new RichText( ' ', {
       font: AreaModelConstants.PROBLEM_X_FONT,
-      fill: widthColorProperty
+      fill: model.widthColorProperty
     } );
     var heightText = new RichText( ' ', {
       font: AreaModelConstants.PROBLEM_X_FONT,
-      fill: heightColorProperty
+      fill: model.heightColorProperty
     } );
 
-    var widthBox = new Rectangle( 0, 0, 30, 30, { stroke: widthColorProperty } );
-    var heightBox = new Rectangle( 0, 0, 30, 30, { stroke: heightColorProperty } );
+    var widthBox = new Rectangle( 0, 0, 30, 30, { stroke: model.widthColorProperty } );
+    var heightBox = new Rectangle( 0, 0, 30, 30, { stroke: model.heightColorProperty } );
 
     var widthNode = new Node();
-    currentAreaProperty.value.horizontalTotalProperty.link( function( total ) {
+    model.currentAreaProperty.value.horizontalTotalProperty.link( function( total ) {
       if ( total === null ) {
         widthNode.children = [ widthBox ];
       }
@@ -53,7 +50,7 @@ define( function( require ) {
     } );
 
     var heightNode = new Node();
-    currentAreaProperty.value.verticalTotalProperty.link( function( total ) {
+    model.currentAreaProperty.value.verticalTotalProperty.link( function( total ) {
       if ( total === null ) {
         heightNode.children = [ heightBox ];
       }
@@ -64,7 +61,7 @@ define( function( require ) {
     } );
 
     var children;
-    if ( allowPowers ) {
+    if ( model.allowPowers ) {
       children = [
         new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
         heightNode,

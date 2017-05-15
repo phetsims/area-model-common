@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var AreaModel = require( 'AREA_MODEL_COMMON/model/AreaModel' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -26,7 +27,8 @@ define( function( require ) {
     // @public {Area}
     this.genericArea = new GenericArea( allowPowers );
 
-    AreaModel.call( this, [ this.genericArea ], allowPowers );
+    AreaModel.call( this, [ this.genericArea ], allowPowers, AreaModelColorProfile.genericWidthProperty,
+                                                             AreaModelColorProfile.genericHeightProperty );
   }
 
   areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );

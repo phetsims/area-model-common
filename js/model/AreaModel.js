@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/model/PartialProductsChoice' );
   var Property = require( 'AXON/Property' );
 
@@ -22,8 +23,10 @@ define( function( require ) {
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
    * @param {boolean} allowPowers - TODO: use this one instead of passing through where available?
+   * @param {Property.<Color>} widthColorProperty
+   * @param {Property.<Color>} heightColorProperty
    */
-  function AreaModel( areas, allowPowers ) {
+  function AreaModel( areas, allowPowers, widthColorProperty, heightColorProperty ) {
     var self = this;
 
     // @public {Array.<Area>}
@@ -31,6 +34,12 @@ define( function( require ) {
 
     // @public {boolean}
     this.allowPowers = allowPowers;
+
+    // @public {Property.<Color>}
+    this.widthColorProperty = widthColorProperty;
+
+    // @public {Property.<Color>}
+    this.heightColorProperty = heightColorProperty;
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( areas[ 0 ] );
@@ -73,6 +82,19 @@ define( function( require ) {
       this.areas.forEach( function( area ) {
         area.reset();
       } );
+    },
+
+    /**
+     * Returns the color property associated with the particular orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Color>}
+     */
+    getColorProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
     }
   } );
 } );

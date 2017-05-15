@@ -62,7 +62,7 @@ define( function( require ) {
     } );
 
     var problemNode = isProportional ? new ProportionalProblemNode( model.currentAreaProperty, decimalPlaces, widthColorProperty, heightColorProperty )
-                                     : new GenericProblemNode( model.currentAreaProperty, model.allowPowers, widthColorProperty, heightColorProperty );
+                                     : new GenericProblemNode( model );
     var problemContainer = new AlignBox( problemNode, {
       group: panelAlignGroup,
       xAlign: 'center'
