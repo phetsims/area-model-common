@@ -19,17 +19,15 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/view/CalculationPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
   var ProblemNode = require( 'AREA_MODEL_COMMON/view/ProblemNode' );
   var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var TotalAreaNode = require( 'AREA_MODEL_COMMON/view/TotalAreaNode' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var VStrut = require( 'SCENERY/nodes/VStrut' );
 
   // strings
   var problemString = require( 'string!AREA_MODEL_COMMON/problem' );
@@ -68,26 +66,9 @@ define( function( require ) {
       xAlign: 'center'
     } );
 
-    var areaText = new RichText( model.allowPowers ? '-9x<sup>2</sup>' : '-999', {
-      font: AreaModelConstants.TOTAL_AREA_FONT,
-      maxWidth: 230
-    } );
-    var areaStrut = new VStrut( areaText.height, {
-      top: areaText.top
-    } );
-    var totalAreaContainer = new Node( {
-      children: [
-        areaText,
-        areaStrut
-      ]
-    } );
-    var areaNode = new AlignBox( totalAreaContainer, {
+    var areaNode = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.allowPowers ), {
       group: panelAlignGroup,
       xAlign: 'center'
-    } );
-    model.totalAreaProperty.link( function( polynomial ) {
-      areaText.text = polynomial === null ? '-' : polynomial.toRichString();
-      areaText.bottom = areaStrut.bottom;
     } );
 
     var calculationNode = new VBox( {
