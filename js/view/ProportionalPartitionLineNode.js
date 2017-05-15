@@ -58,8 +58,8 @@ define( function( require ) {
 
     // TODO: improve naming
     var primaryProperty = isHorizontalPartition ? area.horizontalPartitionSplitProperty : area.verticalPartitionSplitProperty;
-    var secondaryProperty = isHorizontalPartition ? area.totalHeightProperty : area.totalWidthProperty;
-    var ternaryProperty = isHorizontalPartition ? area.totalWidthProperty : area.totalHeightProperty;
+    var secondaryProperty = isHorizontalPartition ? area.activeHeightProperty : area.activeWidthProperty;
+    var ternaryProperty = isHorizontalPartition ? area.activeWidthProperty : area.activeHeightProperty;
 
     var primaryCoordinate = isHorizontalPartition ? 'x' : 'y';
     var secondaryCoordinate = isHorizontalPartition ? 'y' : 'x';

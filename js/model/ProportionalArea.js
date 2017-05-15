@@ -44,11 +44,10 @@ define( function( require ) {
     }, options );
 
     // @public {Property.<number>} - Width of the contained area
-    // TODO: rename, too much like horizontalTotalProperty
-    this.totalWidthProperty = new Property( options.initialWidth );
+    this.activeWidthProperty = new Property( options.initialWidth );
 
     // @public {Property.<number>} - Height of the contained area
-    this.totalHeightProperty = new Property( options.initialHeight );
+    this.activeHeightProperty = new Property( options.initialHeight );
 
     // @public {Property.<number|null>} - If there is an active partition line, its location.
     this.horizontalPartitionSplitProperty = new Property( null );
@@ -84,8 +83,8 @@ define( function( require ) {
     this.bottomPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
 
     // Keep partition sizes up-to-date
-    Property.multilink( [ this.totalWidthProperty,
-                          this.totalHeightProperty,
+    Property.multilink( [ this.activeWidthProperty,
+                          this.activeHeightProperty,
                           this.horizontalPartitionSplitProperty,
                           this.verticalPartitionSplitProperty ], function( width, height, horizontalSplit, verticalSplit ) {
       // Ignore splits at our outside our area.
@@ -152,11 +151,10 @@ define( function( require ) {
 
       this.horizontalPartitionSplitProperty.reset();
       this.verticalPartitionSplitProperty.reset();
-      this.totalWidthProperty.reset();
-      this.totalHeightProperty.reset();
+      this.activeWidthProperty.reset();
+      this.activeHeightProperty.reset();
     },
 
-    // TODO: rename, too much like getTotalProperty
     /**
      * Returns the property for the sum of all defined partitions for a particular orientation.
      * @public
@@ -165,10 +163,10 @@ define( function( require ) {
      *
      * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
      */
-    getProportionalTotalProperty: function( orientation ) {
+    getActiveTotalProperty: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      return orientation === Orientation.HORIZONTAL ? this.totalWidthProperty : this.totalHeightProperty;
+      return orientation === Orientation.HORIZONTAL ? this.activeWidthProperty : this.activeHeightProperty;
     }
   } );
 } );

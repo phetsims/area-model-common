@@ -56,7 +56,7 @@ define( function( require ) {
 
       // {Property.<Property<Polynomial|null>>}
       var currentTotalProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-        return area.getProportionalTotalProperty( orientation );
+        return area.getActiveTotalProperty( orientation );
       } );
 
       // {Property.<Polynomial|null>}

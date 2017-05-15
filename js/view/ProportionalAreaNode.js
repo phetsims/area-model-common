@@ -119,18 +119,18 @@ define( function( require ) {
                 width = Util.clamp( width, area.minimumSize, area.maximumSize );
                 height = Util.clamp( height, area.minimumSize, area.maximumSize );
 
-                area.totalWidthProperty.value = width;
-                area.totalHeightProperty.value = height;
+                area.activeWidthProperty.value = width;
+                area.activeHeightProperty.value = height;
               }
             } )
           ]
         } )
       ]
     } );
-    area.totalWidthProperty.link( function( totalWidth ) {
+    area.activeWidthProperty.link( function( totalWidth ) {
       dragHandle.x = self.modelViewTransform.modelToViewX( totalWidth );
     } );
-    area.totalHeightProperty.link( function( totalHeight ) {
+    area.activeHeightProperty.link( function( totalHeight ) {
       dragHandle.y = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.addChild( dragHandle );
@@ -139,10 +139,10 @@ define( function( require ) {
       fill: AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
     } );
-    area.totalWidthProperty.link( function( totalWidth ) {
+    area.activeWidthProperty.link( function( totalWidth ) {
       activeAreaNode.rectWidth = self.modelViewTransform.modelToViewX( totalWidth );
     } );
-    area.totalHeightProperty.link( function( totalHeight ) {
+    area.activeHeightProperty.link( function( totalHeight ) {
       activeAreaNode.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.addChild( activeAreaNode );
@@ -177,11 +177,11 @@ define( function( require ) {
     } );
     this.addChild( heightDock );
 
-    area.totalHeightProperty.link( function( totalHeight ) {
+    area.activeHeightProperty.link( function( totalHeight ) {
       heightDock.visible = totalHeight >= area.snapSize * 2 - 1e-7;
       widthDock.y = self.modelViewTransform.modelToViewY( totalHeight ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
     } );
-    area.totalWidthProperty.link( function( totalWidth ) {
+    area.activeWidthProperty.link( function( totalWidth ) {
       widthDock.visible = totalWidth >= area.snapSize * 2 - 1e-7;
       heightDock.x = self.modelViewTransform.modelToViewX( totalWidth ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
     } );
