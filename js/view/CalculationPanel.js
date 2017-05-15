@@ -161,14 +161,14 @@ define( function( require ) {
 
     model.currentAreaProperty.link( function( newArea, oldArea ) {
       if ( oldArea ) {
-        oldArea.horizontalPartitions.concat( oldArea.verticalPartitions ).forEach( function( partition ) {
+        oldArea.partitions.forEach( function( partition ) {
           partition.sizeProperty.unlink( update );
           partition.visibleProperty.unlink( update );
         } );
         oldArea.calculationIndexProperty.unlink( update );
       }
 
-      newArea.horizontalPartitions.concat( newArea.verticalPartitions ).forEach( function( partition ) {
+      newArea.partitions.forEach( function( partition ) {
         partition.sizeProperty.lazyLink( update );
         partition.visibleProperty.lazyLink( update );
       } );

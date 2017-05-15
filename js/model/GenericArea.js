@@ -144,10 +144,7 @@ define( function( require ) {
       this.firstVerticalPartitionLineActiveProperty.reset();
       this.secondVerticalPartitionLineActiveProperty.reset();
 
-      this.horizontalPartitions.forEach( function( partition ) {
-        partition.sizeProperty.reset();
-      } );
-      this.verticalPartitions.forEach( function( partition ) {
+      this.partitions.forEach( function( partition ) {
         partition.sizeProperty.reset();
       } );
 
