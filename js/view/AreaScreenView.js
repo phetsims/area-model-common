@@ -46,6 +46,7 @@ define( function( require ) {
   function AreaScreenView( model, isProportional, decimalPlaces ) {
     assert && assert( model instanceof AreaModel );
     assert && assert( typeof isProportional === 'boolean' );
+    assert && assert( typeof decimalPlaces === 'number' );
 
     var self = this;
 
@@ -70,7 +71,10 @@ define( function( require ) {
 
     var calculationNode = new VBox( {
       children: [
-        new AlignBox( new Text( areaModelCalculationString, { font: AreaModelConstants.TITLE_FONT } ), {
+        new AlignBox( new Text( areaModelCalculationString, {
+          font: AreaModelConstants.TITLE_FONT,
+          maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+        } ), {
           group: panelAlignGroup,
           xAlign: 'left'
         } ),
@@ -86,7 +90,10 @@ define( function( require ) {
     // TODO: simplify
     var productsNode = new VBox( {
       children: [
-        new AlignBox( new Text( partialProductsString, { font: AreaModelConstants.TITLE_FONT } ), {
+        new AlignBox( new Text( partialProductsString, {
+          font: AreaModelConstants.TITLE_FONT,
+          maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+        } ), {
           group: panelAlignGroup,
           xAlign: 'left'
         } ),
@@ -102,7 +109,8 @@ define( function( require ) {
     // TODO: consolidate options
     var problemBox = new AccordionBox( problemContainer, {
       titleNode: new Text( problemString, {
-        font: AreaModelConstants.TITLE_FONT
+        font: AreaModelConstants.TITLE_FONT,
+        maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
       } ),
       expandedProperty: model.problemBoxExpanded,
       contentXMargin: 15,
@@ -115,7 +123,8 @@ define( function( require ) {
 
     var areaBox = new AccordionBox( areaNode, {
       titleNode: new Text( totalAreaOfModelString, {
-        font: AreaModelConstants.TITLE_FONT
+        font: AreaModelConstants.TITLE_FONT,
+        maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
       } ),
       expandedProperty: model.totalModelBoxExpanded,
       contentXMargin: 15,

@@ -33,6 +33,7 @@ define( function( require ) {
     AREA_SIZE: 350,
 
     PANEL_INTERIOR_MAX: 230,
+    ACCORDION_BOX_TITLE_MAX: 200,
 
     PANEL_MARGIN: 10,
     PANEL_SPACING: 10,

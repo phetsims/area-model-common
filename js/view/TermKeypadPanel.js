@@ -105,7 +105,10 @@ define( function( require ) {
         } ),
         keypad,
         new RectangularPushButton( {
-          content: new Text( enterString, { font: AreaModelConstants.KEYPAD_FONT } ),
+          content: new Text( enterString, {
+            font: AreaModelConstants.KEYPAD_FONT,
+            maxWidth: 100
+          } ),
           baseColor: 'white',
           xMargin: 15,
           yMargin: 5,
