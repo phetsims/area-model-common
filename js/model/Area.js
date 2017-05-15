@@ -89,9 +89,8 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      // NOTE: Not resetting partitions here. The subtype takes care of that action (which may be indirect)
       this.calculationIndexProperty.reset();
-
-      // TODO: not resetting partitions here due to proportional areas?
     },
 
     /**
