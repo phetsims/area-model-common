@@ -15,6 +15,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
 
@@ -65,61 +66,71 @@ define( function( require ) {
     var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
 
     var partitionLineProperties = [
+      // TODO: parameterize by orientation
       this.firstHorizontalPartitionLineActiveProperty,
       this.secondHorizontalPartitionLineActiveProperty,
       this.firstVerticalPartitionLineActiveProperty,
       this.secondVerticalPartitionLineActiveProperty
     ];
     Property.multilink( partitionLineProperties, function( firstHorizontal, secondHorizontal, firstVertical, secondVertical ) {
+      var firstHorizontalPartition = self.getFirstPartition( Orientation.HORIZONTAL );
+      var secondHorizontalPartition = self.getSecondPartition( Orientation.HORIZONTAL );
+      var thirdHorizontalPartition = self.getThirdPartition( Orientation.HORIZONTAL );
+
+      var firstVerticalPartition = self.getFirstPartition( Orientation.VERTICAL );
+      var secondVerticalPartition = self.getSecondPartition( Orientation.VERTICAL );
+      var thirdVerticalPartition = self.getThirdPartition( Orientation.VERTICAL );
+
       // e.g. 0 splits => left, first => left+middle, second => left+right, all => left+middle+right
-      self.middleHorizontalPartition.visibleProperty.value = firstHorizontal;
-      self.middleVerticalPartition.visibleProperty.value = firstVertical;
-      self.rightPartition.visibleProperty.value = secondHorizontal;
-      self.bottomPartition.visibleProperty.value = secondVertical;
+      secondHorizontalPartition.visibleProperty.value = firstHorizontal;
+      secondVerticalPartition.visibleProperty.value = firstVertical;
+      thirdHorizontalPartition.visibleProperty.value = secondHorizontal;
+      thirdVerticalPartition.visibleProperty.value = secondVertical;
 
       // TODO: don't require this many changes on every full change?
+      // YUP THIS
 
       // TODO: refactor horizontal/vertical together
       if ( firstHorizontal ) {
-        self.leftPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
+        firstHorizontalPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
         if ( secondHorizontal ) {
-          self.middleHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
+          secondHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
         }
         else {
-          self.middleHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
+          secondHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
         }
       }
       else {
-        self.middleHorizontalPartition.coordinateRangeProperty.value = null;
+        secondHorizontalPartition.coordinateRangeProperty.value = null;
         if ( secondHorizontal ) {
-          self.leftPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
+          firstHorizontalPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
         }
         else {
-          self.leftPartition.coordinateRangeProperty.value = new Range( 0, 1 );
+          firstHorizontalPartition.coordinateRangeProperty.value = new Range( 0, 1 );
         }
       }
-      self.rightPartition.coordinateRangeProperty.value = secondHorizontal ? new Range( secondOffset, 1 ) : null;
+      thirdHorizontalPartition.coordinateRangeProperty.value = secondHorizontal ? new Range( secondOffset, 1 ) : null;
 
       // TODO: refactor horizontal/vertical together
       if ( firstVertical ) {
-        self.topPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
+        firstVerticalPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
         if ( secondVertical ) {
-          self.middleVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
+          secondVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
         }
         else {
-          self.middleVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
+          secondVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
         }
       }
       else {
-        self.middleVerticalPartition.coordinateRangeProperty.value = null;
+        secondVerticalPartition.coordinateRangeProperty.value = null;
         if ( secondVertical ) {
-          self.topPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
+          firstVerticalPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
         }
         else {
-          self.topPartition.coordinateRangeProperty.value = new Range( 0, 1 );
+          firstVerticalPartition.coordinateRangeProperty.value = new Range( 0, 1 );
         }
       }
-      self.bottomPartition.coordinateRangeProperty.value = secondVertical ? new Range( secondOffset, 1 ) : null;
+      thirdVerticalPartition.coordinateRangeProperty.value = secondVertical ? new Range( secondOffset, 1 ) : null;
     } );
 
     // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
@@ -149,6 +160,36 @@ define( function( require ) {
       } );
 
       this.activePartitionProperty.reset();
+    },
+
+    /**
+     * Returns the first partition for a given orientation.
+     * @public
+     *
+     * @returns {GenericPartition}
+     */
+    getFirstPartition: function( orientation ) {
+      return this.getPartitions( orientation )[ 0 ];
+    },
+
+    /**
+     * Returns the second partition for a given orientation.
+     * @public
+     *
+     * @returns {GenericPartition}
+     */
+    getSecondPartition: function( orientation ) {
+      return this.getPartitions( orientation )[ 1 ];
+    },
+
+    /**
+     * Returns the third partition for a given orientation.
+     * @public
+     *
+     * @returns {GenericPartition}
+     */
+    getThirdPartition: function( orientation ) {
+      return this.getPartitions( orientation )[ 2 ];
     }
   } );
 } );
