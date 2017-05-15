@@ -25,7 +25,7 @@ define( function( require ) {
 
     AreaModel.call( this, areaOptionObjects.map( function( options ) {
       return new ProportionalArea( options );
-    } ) );
+    } ), false );
 
     // @public {BooleanProperty}
     this.gridLinesVisibleProperty = new BooleanProperty( true );

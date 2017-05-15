@@ -21,12 +21,16 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
+   * @param {boolean} allowPowers - TODO: use this one instead of passing through where available?
    */
-  function AreaModel( areas ) {
+  function AreaModel( areas, allowPowers ) {
     var self = this;
 
     // @public {Array.<Area>}
     this.areas = areas;
+
+    // @public {boolean}
+    this.allowPowers = allowPowers;
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( areas[ 0 ] );
