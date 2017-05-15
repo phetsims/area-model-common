@@ -25,14 +25,14 @@ define( function( require ) {
    *
    * @param {Array.<Partition>} horizontalPartitions
    * @param {Array.<Partition>} verticalPartitions
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
+   * @param {Property.<Color>} horizontalColorProperty
+   * @param {Property.<Color>} verticalColorProperty
    */
-  function Area( horizontalPartitions, verticalPartitions, widthColorProperty, heightColorProperty ) {
+  function Area( horizontalPartitions, verticalPartitions, horizontalColorProperty, verticalColorProperty ) {
     assert && assert( horizontalPartitions instanceof Array );
     assert && assert( verticalPartitions instanceof Array );
-    assert && assert( widthColorProperty instanceof Property );
-    assert && assert( heightColorProperty instanceof Property );
+    assert && assert( horizontalColorProperty instanceof Property );
+    assert && assert( verticalColorProperty instanceof Property );
 
     // @public {Array.<Partition>}
     this.horizontalPartitions = horizontalPartitions;
@@ -40,11 +40,11 @@ define( function( require ) {
     // @public {Array.<Partition>}
     this.verticalPartitions = verticalPartitions;
 
-    // @public {Property.<Color>}
-    this.widthColorProperty = widthColorProperty;
+    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
+    this.horizontalColorProperty = horizontalColorProperty;
 
-    // @public {Property.<Color>}
-    this.heightColorProperty = heightColorProperty;
+    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
+    this.verticalColorProperty = verticalColorProperty;
 
     // @public {Property.<number>}
     this.calculationIndexProperty = new Property( 0 );
@@ -172,7 +172,7 @@ define( function( require ) {
     getColorProperty: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      return orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
+      return orientation === Orientation.HORIZONTAL ? this.horizontalColorProperty : this.verticalColorProperty;
     },
 
     /**

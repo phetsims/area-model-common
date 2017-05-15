@@ -23,10 +23,10 @@ define( function( require ) {
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
    * @param {boolean} allowPowers - TODO: use this one instead of passing through where available?
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
+   * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
+   * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
    */
-  function AreaModel( areas, allowPowers, widthColorProperty, heightColorProperty ) {
+  function AreaModel( areas, allowPowers, horizontalColorProperty, verticalColorProperty ) {
     var self = this;
 
     // @public {Array.<Area>}
@@ -35,11 +35,11 @@ define( function( require ) {
     // @public {boolean}
     this.allowPowers = allowPowers;
 
-    // @public {Property.<Color>}
-    this.widthColorProperty = widthColorProperty;
+    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
+    this.horizontalColorProperty = horizontalColorProperty;
 
-    // @public {Property.<Color>}
-    this.heightColorProperty = heightColorProperty;
+    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
+    this.verticalColorProperty = verticalColorProperty;
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( areas[ 0 ] );
@@ -94,7 +94,7 @@ define( function( require ) {
     getColorProperty: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      return orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
+      return orientation === Orientation.HORIZONTAL ? this.horizontalColorProperty : this.verticalColorProperty;
     }
   } );
 } );

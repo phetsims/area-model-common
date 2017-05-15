@@ -19,6 +19,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/model/PartialProductsChoice' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -51,7 +52,7 @@ define( function( require ) {
           children: [
             new Text( 'a', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.heightColorProperty ], function( value, heightColor ) {
+              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.VERTICAL ) ], function( value, heightColor ) {
                 return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
               } )
             } ),
@@ -60,7 +61,7 @@ define( function( require ) {
             } ),
             new Text( 'b', {
               font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.widthColorProperty ], function( value, widthColor ) {
+              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
                 return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
               } )
             } )
