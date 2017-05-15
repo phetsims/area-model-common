@@ -14,6 +14,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -26,62 +27,26 @@ define( function( require ) {
    */
   function GenericProblemNode( model ) {
 
-    var widthText = new RichText( ' ', {
-      font: AreaModelConstants.PROBLEM_X_FONT,
-      fill: model.widthColorProperty
-    } );
-    var heightText = new RichText( ' ', {
-      font: AreaModelConstants.PROBLEM_X_FONT,
-      fill: model.heightColorProperty
-    } );
+    // @private {GenericAreaModel}
+    this.model = model;
 
-    var widthBox = new Rectangle( 0, 0, 30, 30, { stroke: model.widthColorProperty } );
-    var heightBox = new Rectangle( 0, 0, 30, 30, { stroke: model.heightColorProperty } );
+    var widthNode = this.createOrientationReadout( Orientation.HORIZONTAL );
+    var heightNode = this.createOrientationReadout( Orientation.VERTICAL );
 
-    var widthNode = new Node();
-    model.currentAreaProperty.value.horizontalTotalProperty.link( function( total ) {
-      if ( total === null ) {
-        widthNode.children = [ widthBox ];
-      }
-      else {
-        widthText.text = total.toRichString();
-        widthNode.children = [ widthText ];
-      }
-    } );
-
-    var heightNode = new Node();
-    model.currentAreaProperty.value.verticalTotalProperty.link( function( total ) {
-      if ( total === null ) {
-        heightNode.children = [ heightBox ];
-      }
-      else {
-        heightText.text = total.toRichString();
-        heightNode.children = [ heightText ];
-      }
-    } );
-
-    var children;
-    if ( model.allowPowers ) {
-      children = [
+    // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
+    // AccordionBox.
+    var box = new HBox( {
+      children: model.allowPowers ? [
         new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
         heightNode,
         new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
         widthNode,
         new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } )
-      ];
-    }
-    else {
-      children = [
+      ] : [
         heightNode,
         new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
         widthNode
-      ];
-    }
-
-    // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
-    // AccordionBox.
-    var box = new HBox( {
-      children: children,
+      ],
       spacing: 10,
       centerY: 0
     } );
@@ -95,5 +60,38 @@ define( function( require ) {
 
   areaModelCommon.register( 'GenericProblemNode', GenericProblemNode );
 
-  return inherit( HBox, GenericProblemNode );
+  return inherit( HBox, GenericProblemNode, {
+    /**
+     * Creates a readout for the total sum for a particular orientation.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @returns {Node}
+     */
+    createOrientationReadout: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      var colorProperty = this.model.getColorProperty( orientation );
+
+      var richText = new RichText( ' ', {
+        font: AreaModelConstants.PROBLEM_X_FONT,
+        fill: colorProperty
+      } );
+
+      var box = new Rectangle( 0, 0, 30, 30, { stroke: colorProperty } );
+
+      var node = new Node();
+      this.model.currentAreaProperty.value.getTotalProperty( orientation ).link( function( total ) {
+        if ( total === null ) {
+          node.children = [ box ];
+        }
+        else {
+          richText.text = total.toRichString();
+          node.children = [ richText ];
+        }
+      } );
+
+      return node;
+    }
+  } );
 } );

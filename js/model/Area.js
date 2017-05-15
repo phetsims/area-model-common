@@ -45,7 +45,6 @@ define( function( require ) {
       } );
     } ) );
 
-    // TODO: abstract over Orientation here
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.horizontalTotalProperty = this.createTotalProperty( Orientation.HORIZONTAL );
 
@@ -78,6 +77,8 @@ define( function( require ) {
      * Returns all of the partitions for a given orientation.
      * @public
      *
+     * TODO: refactor usages to this
+     *
      * @param {Orientation} orientation
      * @returns {Array.<Partition>}
      */
@@ -90,6 +91,8 @@ define( function( require ) {
     /**
      * Returns all defined partitions for a given orientation.
      * @public
+     *
+     * TODO: refactor usages to this
      *
      * @param {Orientation} orientation
      * @returns {Array.<Partition>}
@@ -106,10 +109,14 @@ define( function( require ) {
      * Returns an array of Terms containing all of the defined partition sizes for the given orientation.
      * @public
      *
+     * TODO: refactor usages to this
+     *
      * @param {Orientation} orientation
      * @returns {Array.<Term>}
      */
     getTerms: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
       return this.getDefinedPartitions( orientation ).map( function( partition ) {
         return partition.sizeProperty.value;
       } );
@@ -123,7 +130,23 @@ define( function( require ) {
      * @returns {TermList}
      */
     getTermList: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
       return new TermList( this.getTerms( orientation ) );
+    },
+
+    /**
+     * Returns the property for the sum of all defined partitions for a particular orientation.
+     * @public
+     *
+     * TODO: refactor usages to this
+     *
+     * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
+     */
+    getTotalProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalTotalProperty : this.verticalTotalProperty;
     },
 
     /**
