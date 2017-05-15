@@ -208,15 +208,15 @@ define( function( require ) {
       self.labelLayer.addChild( wrapper );
 
       // TODO: refactor to borrow from general case
-      var primaryName = partition.isHorizontal ? 'x' : 'y';
-      var mvtName = partition.isHorizontal ? 'modelToViewX' : 'modelToViewY';
+      var primaryName = Orientation.getCoordinateName( partition.orientation );
+      var mvtName = partition.orientation === Orientation.HORIZONTAL ? 'modelToViewX' : 'modelToViewY';
 
       partition.coordinateRangeProperty.link( function( range ) {
         if ( range ) {
           wrapper[ primaryName ] = self.modelViewTransform[ mvtName ]( range.getCenter() );
         }
       } );
-      if ( partition.isHorizontal ) {
+      if ( partition.orientation === Orientation.HORIZONTAL ) {
         wrapper.y = -15;
       }
       else {

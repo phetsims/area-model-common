@@ -53,9 +53,6 @@ define( function( require ) {
 
     this.children = [ line, handle ];
 
-    // TODO: simplify
-    var isHorizontalPartition = orientation === Orientation.HORIZONTAL;
-
     // TODO: improve naming
     var primaryProperty = area.getPartitionSplitProperty( orientation );
     var secondaryProperty = area.getActiveTotalProperty( Orientation.opposite( orientation ) );
@@ -64,8 +61,8 @@ define( function( require ) {
     var primaryCoordinate = Orientation.getCoordinateName( orientation );
     var secondaryCoordinate = Orientation.getCoordinateName( Orientation.opposite( orientation ) );
 
-    var primaryTransform = ( isHorizontalPartition ? modelViewTransform.modelToViewX : modelViewTransform.modelToViewY ).bind( modelViewTransform );
-    var secondaryTransform = ( isHorizontalPartition ? modelViewTransform.modelToViewY : modelViewTransform.modelToViewX ).bind( modelViewTransform );
+    var primaryTransform = ( orientation === Orientation.HORIZONTAL ? modelViewTransform.modelToViewX : modelViewTransform.modelToViewY ).bind( modelViewTransform );
+    var secondaryTransform = ( orientation === Orientation.HORIZONTAL ? modelViewTransform.modelToViewY : modelViewTransform.modelToViewX ).bind( modelViewTransform );
 
     primaryProperty.link( function( primary ) {
       self[ primaryCoordinate ] = primaryTransform( primary === null ? 0 : primary );

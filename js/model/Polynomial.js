@@ -32,7 +32,7 @@ define( function( require ) {
       }
     }
 
-    // TODO: determine if we SHOULD put in a zero term when this happens?
+    // If empty, add a zero term
     if ( combinedTerms.length === 0 ) {
       combinedTerms.push( new Term( 0 ) );
     }

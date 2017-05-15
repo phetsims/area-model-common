@@ -12,18 +12,22 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
 
   /**
    * @constructor
    * @extends {Partition}
    *
-   * @param {boolean} isHorizontal
+   * @param {Orientation} orientation
    * @param {number} digitCount
    */
-  function GenericPartition( isHorizontal, digitCount ) {
+  function GenericPartition( orientation, digitCount ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+    assert && assert( typeof digitCount === 'number' );
 
-    Partition.call( this, isHorizontal, isHorizontal ? AreaModelColorProfile.genericWidthProperty : AreaModelColorProfile.genericHeightProperty );
+    Partition.call( this, orientation, orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.genericWidthProperty
+                                                                              : AreaModelColorProfile.genericHeightProperty );
 
     // @public {number} - How many digits to allow in the editor
     this.digitCount = digitCount;

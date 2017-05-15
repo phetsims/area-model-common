@@ -176,7 +176,7 @@ define( function( require ) {
                                                         : AreaModelColorProfile.editInactiveBackgroundProperty;
       } );
 
-      var BoxType = partition.isHorizontal ? HBox : VBox;
+      var BoxType = partition.orientation === Orientation.HORIZONTAL ? HBox : VBox;
 
       var box = new BoxType( {
         spacing: 4,
@@ -198,14 +198,14 @@ define( function( require ) {
       } );
       self.labelLayer.addChild( box );
 
-      var primaryName = partition.isHorizontal ? 'centerX' : 'centerY';
+      var primaryName = Orientation.getCenterCoordinateName( partition.orientation );
 
       partition.coordinateRangeProperty.link( function( range ) {
         if ( range ) {
           box[ primaryName ] = range.getCenter() * self.viewSize;
         }
       } );
-      if ( partition.isHorizontal ) {
+      if ( partition.orientation === Orientation.HORIZONTAL ) {
         box.centerY = -20;
       }
       else {

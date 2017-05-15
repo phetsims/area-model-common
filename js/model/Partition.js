@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A subset of a single dimension of the area. TODO: better doc
+ * A section of either the width or height.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -11,17 +11,18 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
    * @extends {Object}
    *
-   * @param {boolean} isHorizontal
+   * @param {Orientation} orientation
    * @param {Property.<Color>} colorProperty
    */
-  function Partition( isHorizontal, colorProperty ) {
-    assert && assert( typeof isHorizontal === 'boolean' );
+  function Partition( orientation, colorProperty ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( colorProperty instanceof Property );
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
@@ -30,7 +31,7 @@ define( function( require ) {
     } );
 
     // @public {boolean}
-    this.isHorizontal = isHorizontal;
+    this.orientation = orientation;
 
     // @public {Property.<Color>}
     this.colorProperty = colorProperty;

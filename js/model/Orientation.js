@@ -49,6 +49,19 @@ define( function( require ) {
   };
 
   /**
+   * Returns the associated centered coordinate name (centerX or centerY) for the orientation.
+   * @public
+   *
+   * @param {Orientation} orientation
+   * @returns {string}
+   */
+  Orientation.getCenterCoordinateName = function( orientation ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+
+    return orientation === Orientation.HORIZONTAL ? 'centerX' : 'centerY';
+  };
+
+  /**
    * Returns the opposite of the passed-in orientation.
    * @public
    *

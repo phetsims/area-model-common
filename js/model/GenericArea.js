@@ -37,13 +37,13 @@ define( function( require ) {
     var thirdDigitCount = 1;
 
     Area.call( this, [
-      new GenericPartition( true, firstDigitCount ),
-      new GenericPartition( true, secondDigitCount ),
-      new GenericPartition( true, thirdDigitCount )
+      new GenericPartition( Orientation.HORIZONTAL, firstDigitCount ),
+      new GenericPartition( Orientation.HORIZONTAL, secondDigitCount ),
+      new GenericPartition( Orientation.HORIZONTAL, thirdDigitCount )
     ], [
-      new GenericPartition( false, firstDigitCount ),
-      new GenericPartition( false, secondDigitCount ),
-      new GenericPartition( false, thirdDigitCount )
+      new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
+      new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
+      new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
     ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1 );
 
     // @private {Array.<Property.<boolean>>} - Whether partition lines are toggled on (2 in each orientation)

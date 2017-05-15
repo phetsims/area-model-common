@@ -68,11 +68,11 @@ define( function( require ) {
     this.tilesAvailable = options.tilesAvailable;
 
     Area.call( this, [
-      new Partition( true, AreaModelColorProfile.proportionalWidthProperty ),
-      new Partition( true, AreaModelColorProfile.proportionalWidthProperty )
+      new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty ),
+      new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty )
     ], [
-      new Partition( false, AreaModelColorProfile.proportionalHeightProperty ),
-      new Partition( false, AreaModelColorProfile.proportionalHeightProperty )
+      new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty ),
+      new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty )
     ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
 
     // Keep partition sizes up-to-date
