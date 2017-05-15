@@ -12,11 +12,12 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var Property = require( 'AXON/Property' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -29,71 +30,51 @@ define( function( require ) {
    */
   function ProportionalProblemNode( model, decimalPlaces ) {
 
-    var xText = new Text( AreaModelConstants.X_STRING, {
-      font: AreaModelConstants.PROBLEM_X_FONT
-    } );
-
-    var children;
-
-    // TODO: hackish! and refactor!
-    var widthProperty = new Property( model.currentAreaProperty.value.totalWidthProperty.value );
-    function currentWidthListener( value ) {
-      widthProperty.value = value;
-    }
-    model.currentAreaProperty.value.totalWidthProperty.link( currentWidthListener );
-    model.currentAreaProperty.lazyLink( function( newArea, oldArea ) {
-      oldArea.totalWidthProperty.unlink( currentWidthListener );
-      newArea.totalWidthProperty.link( currentWidthListener );
-    } );
-    widthProperty.link( function( value ) {
-      model.currentAreaProperty.value.totalWidthProperty.value = value;
-    } );
-
-    var heightProperty = new Property( model.currentAreaProperty.value.totalHeightProperty.value );
-    function currentHeightListener( value ) {
-      heightProperty.value = value;
-    }
-    model.currentAreaProperty.value.totalHeightProperty.link( currentHeightListener );
-    model.currentAreaProperty.lazyLink( function( newArea, oldArea ) {
-      oldArea.totalHeightProperty.unlink( currentHeightListener );
-      newArea.totalHeightProperty.link( currentHeightListener );
-    } );
-    heightProperty.link( function( value ) {
-      model.currentAreaProperty.value.totalHeightProperty.value = value;
-    } );
-
-    var rangeProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-      return new Range( area.minimumSize, area.maximumSize );
-    } );
-
-    var staticOptions = {
-      upFunction: function( value ) { return value + model.currentAreaProperty.value.snapSize; },
-      downFunction: function( value ) { return value - model.currentAreaProperty.value.snapSize; },
-      decimalPlaces: decimalPlaces,
-      scale: 1.5
-    };
-
-    var widthPicker = new MutableOptionsNode( NumberPicker, [ widthProperty, rangeProperty ], staticOptions, {
-      color: model.widthColorProperty
-    } );
-
-    var heightPicker = new MutableOptionsNode( NumberPicker, [ heightProperty, rangeProperty ], staticOptions, {
-      color: model.heightColorProperty
-    } );
-
-    children = [
-      heightPicker,
-      xText,
-      widthPicker
-    ];
-
     HBox.call( this, {
-      children: children,
+      children: [
+        this.createPicker( Orientation.VERTICAL, model, decimalPlaces ),
+        new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
+        this.createPicker( Orientation.HORIZONTAL, model, decimalPlaces )
+      ],
       spacing: 10
     } );
   }
 
   areaModelCommon.register( 'ProportionalProblemNode', ProportionalProblemNode );
 
-  return inherit( HBox, ProportionalProblemNode );
+  return inherit( HBox, ProportionalProblemNode, {
+    /**
+     * Creates a picker that adjusts the specified orientation's total size.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @param {ProportionalAreaModel} model
+     * @param {number} decimalPlaces
+     */
+    createPicker: function( orientation, model, decimalPlaces ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      // {Property.<Property<Polynomial|null>>}
+      var currentTotalProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
+        return area.getProportionalTotalProperty( orientation );
+      } );
+
+      // {Property.<Polynomial|null>}
+      var bidirectionalProperty = new DynamicBidirectionalProperty( currentTotalProperty );
+
+      // {Property.<Range>}
+      var rangeProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
+        return new Range( area.minimumSize, area.maximumSize );
+      } );
+
+      return new MutableOptionsNode( NumberPicker, [ bidirectionalProperty, rangeProperty ], {
+        upFunction: function( value ) { return value + model.currentAreaProperty.value.snapSize; },
+        downFunction: function( value ) { return value - model.currentAreaProperty.value.snapSize; },
+        decimalPlaces: decimalPlaces,
+        scale: 1.5
+      }, {
+        color: model.getColorProperty( orientation )
+      } );
+    }
+  } );
 } );

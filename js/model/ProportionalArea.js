@@ -12,6 +12,7 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Property = require( 'AXON/Property' );
@@ -42,6 +43,7 @@ define( function( require ) {
     }, options );
 
     // @public {Property.<number>} - Width of the contained area
+    // TODO: rename, too much like horizontalTotalProperty
     this.totalWidthProperty = new Property( options.initialWidth );
 
     // @public {Property.<number>} - Height of the contained area
@@ -151,6 +153,21 @@ define( function( require ) {
       this.verticalPartitionSplitProperty.reset();
       this.totalWidthProperty.reset();
       this.totalHeightProperty.reset();
+    },
+
+    // TODO: rename, too much like getTotalProperty
+    /**
+     * Returns the property for the sum of all defined partitions for a particular orientation.
+     * @public
+     *
+     * TODO: refactor usages to this
+     *
+     * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
+     */
+    getProportionalTotalProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.totalWidthProperty : this.totalHeightProperty;
     }
   } );
 } );
