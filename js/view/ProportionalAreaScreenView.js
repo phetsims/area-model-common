@@ -42,7 +42,7 @@ define( function( require ) {
 
     var areaNodes = model.areas.map( function( area ) {
       // TODO: fix formatting or go to options
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, model.partialProductsChoiceProperty, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.partialProductsChoiceProperty, {
         translation: self.getAreaTranslation()
       } );
     } );

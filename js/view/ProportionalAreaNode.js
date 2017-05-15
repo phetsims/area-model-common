@@ -41,12 +41,10 @@ define( function( require ) {
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
    * @param {Property.<boolean>} tilesVisibleProperty
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, widthColorProperty, heightColorProperty, partialProductsChoiceProperty, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
@@ -211,10 +209,10 @@ define( function( require ) {
     } );
 
     // TODO: refactor/cleanup
-    function createPartitionLabel( partition, colorProperty, secondaryPartition ) {
+    function createPartitionLabel( partition, secondaryPartition ) {
       var text = new Text( '', {
         font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
-        fill: colorProperty
+        fill: partition.colorProperty
       } );
 
       partition.sizeProperty.link( function( size ) {
@@ -252,10 +250,10 @@ define( function( require ) {
       } );
     }
 
-    createPartitionLabel( area.leftPartition, widthColorProperty, area.rightPartition );
-    createPartitionLabel( area.rightPartition, widthColorProperty, area.rightPartition );
-    createPartitionLabel( area.topPartition, heightColorProperty, area.bottomPartition );
-    createPartitionLabel( area.bottomPartition, heightColorProperty, area.bottomPartition );
+    createPartitionLabel( area.leftPartition, area.rightPartition );
+    createPartitionLabel( area.rightPartition, area.rightPartition );
+    createPartitionLabel( area.topPartition, area.bottomPartition );
+    createPartitionLabel( area.bottomPartition, area.bottomPartition );
 
     this.mutate( nodeOptions );
   }
