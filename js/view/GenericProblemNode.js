@@ -29,21 +29,6 @@ define( function( require ) {
    */
   function GenericProblemNode( currentAreaProperty, allowPowers, widthColorProperty, heightColorProperty ) {
 
-    var xText = new Text( AreaModelConstants.X_STRING, {
-      font: AreaModelConstants.PROBLEM_X_FONT
-    } );
-    var leftParen = new Text( '(', {
-      font: AreaModelConstants.PROBLEM_PAREN_FONT
-    } );
-    var rightParen = new Text( ')', {
-      font: AreaModelConstants.PROBLEM_PAREN_FONT
-    } );
-    var bothParen = new Text( ')(', {
-      font: AreaModelConstants.PROBLEM_PAREN_FONT
-    } );
-
-    var children;
-
     var widthText = new RichText( ' ', {
       font: AreaModelConstants.PROBLEM_X_FONT,
       fill: widthColorProperty
@@ -52,12 +37,11 @@ define( function( require ) {
       font: AreaModelConstants.PROBLEM_X_FONT,
       fill: heightColorProperty
     } );
+
     var widthBox = new Rectangle( 0, 0, 30, 30, { stroke: widthColorProperty } );
     var heightBox = new Rectangle( 0, 0, 30, 30, { stroke: heightColorProperty } );
 
     var widthNode = new Node();
-    var heightNode = new Node();
-
     currentAreaProperty.value.horizontalTotalProperty.link( function( total ) {
       if ( total === null ) {
         widthNode.children = [ widthBox ];
@@ -67,6 +51,8 @@ define( function( require ) {
         widthNode.children = [ widthText ];
       }
     } );
+
+    var heightNode = new Node();
     currentAreaProperty.value.verticalTotalProperty.link( function( total ) {
       if ( total === null ) {
         heightNode.children = [ heightBox ];
@@ -77,16 +63,35 @@ define( function( require ) {
       }
     } );
 
+    var children;
     if ( allowPowers ) {
-      children = [ leftParen, heightNode, bothParen, widthNode, rightParen ];
+      children = [
+        new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
+        heightNode,
+        new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
+        widthNode,
+        new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } )
+      ];
     }
     else {
-      children = [ heightNode, xText, widthNode ];
+      children = [
+        heightNode,
+        new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
+        widthNode
+      ];
     }
 
-    HBox.call( this, {
+    // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
+    // AccordionBox.
+    var box = new HBox( {
       children: children,
       spacing: 10,
+      centerY: 0
+    } );
+
+    // TODO: why isn't maxWidth centering properly (vertically?)
+    Node.call( this, {
+      children: [ box ],
       maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
     } );
   }
