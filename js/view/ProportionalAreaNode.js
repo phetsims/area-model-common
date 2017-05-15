@@ -223,16 +223,17 @@ define( function( require ) {
         wrapper.x = -20;
       }
 
-      // TODO: doc what secondaryPartition is. unclear.
       Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
         wrapper.visible = visible && secondarySize !== null;
       } );
     }
 
-    createPartitionLabel( area.leftPartition, area.rightPartition );
-    createPartitionLabel( area.rightPartition, area.rightPartition );
-    createPartitionLabel( area.topPartition, area.bottomPartition );
-    createPartitionLabel( area.bottomPartition, area.bottomPartition );
+    Orientation.CHOICES.forEach( function( orientation ) {
+      var partitions = area.getPartitions( orientation );
+      partitions.forEach( function( partition ) {
+        createPartitionLabel( partition, area.getSecondaryPartition( orientation ) );
+      } );
+    } );
 
     this.mutate( nodeOptions );
   }

@@ -167,6 +167,26 @@ define( function( require ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       return orientation === Orientation.HORIZONTAL ? this.activeWidthProperty : this.activeHeightProperty;
+    },
+
+    /**
+     * Returns the partition that contains the entire active size when there is no partition line (in that orientation).
+     * @public
+     *
+     * @returns {Partition}
+     */
+    getPrimaryPartition: function( orientation ) {
+      return this.getPartitions( orientation )[ 0 ];
+    },
+
+    /**
+     * Returns the partition that has zero size when there is no partition line (in that orientation).
+     * @public
+     *
+     * @returns {Partition}
+     */
+    getSecondaryPartition: function( orientation ) {
+      return this.getPartitions( orientation )[ 1 ];
     }
   } );
 } );
