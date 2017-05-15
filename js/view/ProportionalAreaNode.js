@@ -152,7 +152,7 @@ define( function( require ) {
       stroke: AreaModelColorProfile.dockBorderProperty,
       lineDash: [ 3, 3 ],
       children: [
-        new Line( 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS - AreaModelConstants.PARTITION_HANDLE_OFFSET, {
+        new Line( 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_OFFSET, {
           stroke: AreaModelColorProfile.dockBorderProperty
         } )
       ]
@@ -164,8 +164,8 @@ define( function( require ) {
       stroke: AreaModelColorProfile.dockBorderProperty,
       lineDash: [ 3, 3 ],
       children: [
-        new Line( -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS - AreaModelConstants.PARTITION_HANDLE_OFFSET, 0, {
-          stroke: AreaModelColorProfile.dockBorderProperty
+        new Line( -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_OFFSET, 0, {
+          stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
         } )
       ]
     } );
