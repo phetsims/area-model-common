@@ -53,7 +53,7 @@ define( function( require ) {
       this.topPartition,
       this.middleVerticalPartition,
       this.bottomPartition
-    ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty );
+    ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1 );
 
     // @public {Property.<boolean>}
     this.firstHorizontalPartitionLineActiveProperty = new Property( false );

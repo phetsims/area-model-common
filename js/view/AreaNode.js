@@ -60,6 +60,18 @@ define( function( require ) {
 
   return inherit( Node, AreaNode, {
     /**
+     * Maps a coordinate range (from 0 to area.coordinateRangeMax) to view coordinates relative to the AreaNode's
+     * origin.
+     * @private
+     *
+     * @param {number} value
+     * @returns {number}
+     */
+    mapCoordinate: function( value ) {
+      return this.viewSize * value / this.area.coordinateRangeMax;
+    },
+
+    /**
      * Creates a range label with text and a line with start/end tick marks that covers the range.
      * @private
      *
@@ -139,14 +151,9 @@ define( function( require ) {
           return;
         }
 
-        function map( value ) {
-          // TODO: handle tempMap
-          return self.viewSize * ( self.tempMap ? self.tempMap( value ) : value );
-        }
-
-        var min = map( range.min );
-        var center = map( range.getCenter() );
-        var max = map( range.max );
+        var min = self.mapCoordinate( range.min );
+        var center = self.mapCoordinate( range.getCenter() );
+        var max = self.mapCoordinate( range.max );
 
         // Points on each end of our line
         var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( min, HORIZONTAL_RANGE_OFFSET )

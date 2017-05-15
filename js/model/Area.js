@@ -23,16 +23,19 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
+   * TODO: consider options object?
    * @param {Array.<Partition>} horizontalPartitions
    * @param {Array.<Partition>} verticalPartitions
-   * @param {Property.<Color>} horizontalColorProperty
-   * @param {Property.<Color>} verticalColorProperty
+   * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
+   * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
+   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take.
    */
-  function Area( horizontalPartitions, verticalPartitions, horizontalColorProperty, verticalColorProperty ) {
+  function Area( horizontalPartitions, verticalPartitions, horizontalColorProperty, verticalColorProperty, coordinateRangeMax ) {
     assert && assert( horizontalPartitions instanceof Array );
     assert && assert( verticalPartitions instanceof Array );
     assert && assert( horizontalColorProperty instanceof Property );
     assert && assert( verticalColorProperty instanceof Property );
+    assert && assert( typeof coordinateRangeMax === 'number' );
 
     // @public {Array.<Partition>}
     this.horizontalPartitions = horizontalPartitions;
@@ -45,6 +48,9 @@ define( function( require ) {
 
     // @private {Property.<Color>} - Prefer getColorProperty( orientation )
     this.verticalColorProperty = verticalColorProperty;
+
+    // @public {number}
+    this.coordinateRangeMax = coordinateRangeMax;
 
     // @public {Property.<number>}
     this.calculationIndexProperty = new Property( 0 );

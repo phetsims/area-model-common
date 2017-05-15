@@ -130,7 +130,7 @@ define( function( require ) {
     ], [
       this.topPartition,
       this.bottomPartition
-    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
+    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
 
     // @public {PartitionedArea}
     this.topLeftArea = new PartitionedArea( this.leftPartition, this.topPartition );
