@@ -18,17 +18,30 @@ define( function( require ) {
 
   areaModelCommon.register( 'Orientation', Orientation );
 
+  // All values the enumeration can take.
   Orientation.CHOICES = [
     Orientation.HORIZONTAL,
     Orientation.VERTICAL
   ];
 
-  // TODO: doc
+  /**
+   * Returns whether the input is an orientation (for ease of assertions)
+   * @public
+   *
+   * @param {*} orientation
+   * @returns {boolean}
+   */
   Orientation.isOrientation = function( orientation ) {
     return orientation === Orientation.HORIZONTAL || orientation === Orientation.VERTICAL;
   };
 
-  // TODO: doc
+  /**
+   * Returns the associated coordinate name (x or y) for the orientation.
+   * @public
+   *
+   * @param {Orientation} orientation
+   * @returns {string}
+   */
   Orientation.getCoordinateName = function( orientation ) {
     return orientation === Orientation.HORIZONTAL ? 'x' : 'y';
   };

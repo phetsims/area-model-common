@@ -19,6 +19,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'PartialProductsChoice', PartialProductsChoice );
 
+  // All values the enumeration can take.
   PartialProductsChoice.CHOICES = [
     PartialProductsChoice.HIDDEN,
     PartialProductsChoice.PRODUCTS,
