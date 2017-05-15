@@ -16,70 +16,83 @@ define( function( require ) {
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)
   var AreaModelColorProfile = new ColorProfile( {
+    // Main background color for the sim
     background: { default: new Color( 244, 252, 254 ) },
 
+    // Radio buttons for scene selection / area-model calculation / partial products
     radioBorder: { default: new Color( 97, 200, 216 ) },
     radioBackground: { default: Color.WHITE },
 
+    // Things that look like panels (except for the keypad panel)
     panelBorder: { default: new Color( 0x3, 0x3, 0x3 ) },
     panelBackground: { default: Color.WHITE },
 
+    // Main "AreaNode" appearance
     areaBackground: { default: Color.WHITE },
     areaBorder: { default: Color.BLACK },
 
+    // Grid lines for within the area
     minorGridLine: { default: new Color( 0xdd, 0xdd, 0xdd ) },
     majorGridLine: { default: new Color( 0x99, 0x99, 0x99 ) },
 
+    // Main "color" identity for proportional width/height
     proportionalWidth: { default: new Color( 181, 45, 0 ) }, // red
     proportionalHeight: { default: new Color( 0, 71, 253 ) }, // blue
 
+    // Main "color" identity for generic width/height
     genericWidth: { default: new Color( 0, 165, 83 ) }, // green
     genericHeight: { default: new Color( 91, 42, 194 ) }, // purple
 
+    // The "active" part of the area (within the width/height selected)
     proportionalActiveAreaBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
     proportionalActiveAreaBackground: { default: new Color( 0, 0, 0, 0.1 ) },
 
+    // Drag handle to the lower-right of the proportional areas
     proportionalDragHandleBorder: { default: new Color( 0x66, 0x66, 0x66 ) },
     proportionalDragHandleBackground: { default: new Color( 172, 201, 184 ) },
 
+    // Empty partition line "handle/button"
     dockBorder: { default: Color.BLACK },
     dockBackground: { default: Color.WHITE },
 
+    // Partition line (stroke includes handle)
     partitionLineBorder: { default: Color.BLACK },
     partitionLineStroke: { default: Color.BLACK },
 
+    // Edit button
     editButtonBackground: { default: new Color( 241, 232, 0 ) },
 
+    // Edit readout
     editActiveBackground: { default: new Color( 255, 240, 0 ) },
     editInactiveBackground: { default: Color.WHITE },
 
+    // Keypad panel
     keypadPanelBorder: { default: new Color( 0x99, 0x99, 0x99 ) },
     keypadPanelBackground: { default: new Color( 230, 230, 230 ) },
 
-    // TODO: organize file, with comments
+    // Area sign highlights
     genericPositiveBackground: { default: new Color( 0xd4f3fe ) },
     genericNegativeBackground: { default: new Color( 0xe5a5ab ) },
 
+    // Calculation "base" colors
     calculationActive: { default: Color.BLACK },
     calculationInactive: { default: new Color( 0xaaaaaa ) },
 
-    calculationBorder: { default: Color.BLACK },
-    calculationBackground: { default: Color.WHITE },
-
+    // Calculation next/previous arrows
     calculationArrowUp: { default: Color.BLACK },
-    calculationArrowOver: { default: new Color( 0x333333 ) },
-    calculationArrowDown: { default: new Color( 0x666666 ) },
     calculationArrowDisabled: { default: new Color( 0xaaaaaa ) },
 
+    // Calculation icon (in area-model-calculation panel)
     calculationIconDark: { default: Color.BLACK },
     calculationIconLight: { default: new Color( 0xaaaaaa ) },
 
-    // Tile colors
+    // Tiles (proportional screens)
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },
     smallTile: { default: new Color( 252, 250, 202 ) },
     tileBorder: { default: new Color( 0xaaaaaa ) },
 
+    // Proportional icon colors
     gridIcon: { default: new Color( 0x55, 0x55, 0x55 ) },
     tileIconStroke: { default: Color.BLACK }
   }, [ 'default' ] );

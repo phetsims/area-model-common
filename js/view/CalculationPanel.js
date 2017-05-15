@@ -43,8 +43,8 @@ define( function( require ) {
 
     var background = new Rectangle( 0, 0, width, height, {
       cornerRadius: 5,
-      fill: AreaModelColorProfile.calculationBackgroundProperty,
-      stroke: AreaModelColorProfile.calculationBorderProperty
+      fill: AreaModelColorProfile.panelBackgroundProperty,
+      stroke: AreaModelColorProfile.panelBorderProperty
     } );
     this.addChild( background );
 
