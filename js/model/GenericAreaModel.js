@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Term = require( 'AREA_MODEL_COMMON/model/Term' );
 
   /**
    * @constructor
@@ -38,6 +39,20 @@ define( function( require ) {
      */
     reset: function() {
       AreaModel.prototype.reset.call( this );
+    },
+
+    // TODO: remove before production
+    toMax: function() {
+      this.genericArea.leftPartition.sizeProperty.value = new Term( -9, 2 );
+      this.genericArea.middleHorizontalPartition.sizeProperty.value = new Term( -9, 1 );
+      this.genericArea.rightPartition.sizeProperty.value = new Term( -9, 0 );
+      this.genericArea.topPartition.sizeProperty.value = new Term( -9, 2 );
+      this.genericArea.middleVerticalPartition.sizeProperty.value = new Term( -9, 1 );
+      this.genericArea.bottomPartition.sizeProperty.value = new Term( -9, 0 );
+      this.genericArea.firstHorizontalPartitionLineActiveProperty.value = true;
+      this.genericArea.secondHorizontalPartitionLineActiveProperty.value = true;
+      this.genericArea.firstVerticalPartitionLineActiveProperty.value = true;
+      this.genericArea.secondVerticalPartitionLineActiveProperty.value = true;
     }
   } );
 } );

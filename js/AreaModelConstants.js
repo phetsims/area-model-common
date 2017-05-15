@@ -32,6 +32,8 @@ define( function( require ) {
 
     AREA_SIZE: 350,
 
+    PANEL_INTERIOR_MAX: 230,
+
     PANEL_MARGIN: 10,
     PANEL_SPACING: 10,
     PANEL_CORNER_RADIUS: 5,

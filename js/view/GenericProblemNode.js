@@ -87,7 +87,7 @@ define( function( require ) {
     HBox.call( this, {
       children: children,
       spacing: 10,
-      maxWidth: 230
+      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
     } );
   }
 
