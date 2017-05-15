@@ -15,7 +15,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Partition = require( 'AREA_MODEL_COMMON/model/Partition' );
-  var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Term = require( 'AREA_MODEL_COMMON/model/Term' );
@@ -82,6 +81,14 @@ define( function( require ) {
     this.topPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
     this.bottomPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
 
+    Area.call( this, [
+      this.leftPartition,
+      this.rightPartition
+    ], [
+      this.topPartition,
+      this.bottomPartition
+    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
+
     // Keep partition sizes up-to-date
     Property.multilink( [ this.activeWidthProperty,
                           this.activeHeightProperty,
@@ -95,47 +102,38 @@ define( function( require ) {
         verticalSplit = null;
       }
 
+      var primaryHorizontalPartition = self.getPrimaryPartition( Orientation.HORIZONTAL );
+      var secondaryHorizontalPartition = self.getSecondaryPartition( Orientation.HORIZONTAL );
+      var primaryVerticalPartition = self.getPrimaryPartition( Orientation.VERTICAL );
+      var secondaryVerticalPartition = self.getSecondaryPartition( Orientation.VERTICAL );
+
       // TODO: some opportunity to refactor here (vert/horiz very similar)
       if ( horizontalSplit ) {
-        self.leftPartition.sizeProperty.value = new Term( horizontalSplit );
-        self.rightPartition.sizeProperty.value = new Term( width - horizontalSplit );
-        self.leftPartition.coordinateRangeProperty.value = new Range( 0, horizontalSplit );
-        self.rightPartition.coordinateRangeProperty.value = new Range( horizontalSplit, width );
+        primaryHorizontalPartition.sizeProperty.value = new Term( horizontalSplit );
+        secondaryHorizontalPartition.sizeProperty.value = new Term( width - horizontalSplit );
+        primaryHorizontalPartition.coordinateRangeProperty.value = new Range( 0, horizontalSplit );
+        secondaryHorizontalPartition.coordinateRangeProperty.value = new Range( horizontalSplit, width );
       }
       else {
-        self.leftPartition.sizeProperty.value = new Term( width );
-        self.rightPartition.sizeProperty.value = null;
-        self.leftPartition.coordinateRangeProperty.value = new Range( 0, width );
-        self.rightPartition.coordinateRangeProperty.value = null;
+        primaryHorizontalPartition.sizeProperty.value = new Term( width );
+        secondaryHorizontalPartition.sizeProperty.value = null;
+        primaryHorizontalPartition.coordinateRangeProperty.value = new Range( 0, width );
+        secondaryHorizontalPartition.coordinateRangeProperty.value = null;
       }
 
       if ( verticalSplit ) {
-        self.topPartition.sizeProperty.value = new Term( verticalSplit );
-        self.bottomPartition.sizeProperty.value = new Term( height - verticalSplit );
-        self.topPartition.coordinateRangeProperty.value = new Range( 0, verticalSplit );
-        self.bottomPartition.coordinateRangeProperty.value = new Range( verticalSplit, height );
+        primaryVerticalPartition.sizeProperty.value = new Term( verticalSplit );
+        secondaryVerticalPartition.sizeProperty.value = new Term( height - verticalSplit );
+        primaryVerticalPartition.coordinateRangeProperty.value = new Range( 0, verticalSplit );
+        secondaryVerticalPartition.coordinateRangeProperty.value = new Range( verticalSplit, height );
       }
       else {
-        self.topPartition.sizeProperty.value = new Term( height );
-        self.bottomPartition.sizeProperty.value = null;
-        self.topPartition.coordinateRangeProperty.value = new Range( 0, height );
-        self.bottomPartition.coordinateRangeProperty.value = null;
+        primaryVerticalPartition.sizeProperty.value = new Term( height );
+        secondaryVerticalPartition.sizeProperty.value = null;
+        primaryVerticalPartition.coordinateRangeProperty.value = new Range( 0, height );
+        secondaryVerticalPartition.coordinateRangeProperty.value = null;
       }
     } );
-
-    Area.call( this, [
-      this.leftPartition,
-      this.rightPartition
-    ], [
-      this.topPartition,
-      this.bottomPartition
-    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
-
-    // @public {PartitionedArea}
-    this.topLeftArea = new PartitionedArea( this.leftPartition, this.topPartition );
-    this.topRightArea = new PartitionedArea( this.rightPartition, this.topPartition );
-    this.bottomLeftArea = new PartitionedArea( this.leftPartition, this.bottomPartition );
-    this.bottomRightArea = new PartitionedArea( this.rightPartition, this.bottomPartition );
   }
 
   areaModelCommon.register( 'ProportionalArea', ProportionalArea );
