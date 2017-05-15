@@ -20,14 +20,14 @@ define( function( require ) {
    * @constructor
    * @extends {AreaModel}
    *
-   * @param {boolean} allowPowers - Whether the user is able to add powers of x.
+   * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    */
-  function GenericAreaModel( allowPowers ) {
+  function GenericAreaModel( allowExponents ) {
 
     // @public {Area}
-    this.genericArea = new GenericArea( allowPowers );
+    this.genericArea = new GenericArea( allowExponents );
 
-    AreaModel.call( this, [ this.genericArea ], allowPowers, AreaModelColorProfile.genericWidthProperty,
+    AreaModel.call( this, [ this.genericArea ], allowExponents, AreaModelColorProfile.genericWidthProperty,
                                                              AreaModelColorProfile.genericHeightProperty );
   }
 

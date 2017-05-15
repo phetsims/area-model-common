@@ -25,11 +25,11 @@ define( function( require ) {
    *
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {PartitionedArea} partitionedArea
-   * @param {boolean} allowPowers
+   * @param {boolean} allowExponents
    */
-  function PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, allowPowers ) {
+  function PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
     assert && assert( partitionedArea instanceof PartitionedArea );
-    assert && assert( typeof allowPowers === 'boolean' );
+    assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
 
@@ -59,7 +59,7 @@ define( function( require ) {
         }
         // Factors
         else {
-          if ( allowPowers ) {
+          if ( allowExponents ) {
             text.text = '(' + verticalSize.toRichString( false ) + ')' +
                         '(' + horizontalSize.toRichString( false ) + ')';
           }

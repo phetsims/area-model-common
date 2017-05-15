@@ -21,12 +21,12 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Polynomial|null} totalAreaProperty
-   * @param {boolean} allowPowers
+   * @param {boolean} allowExponents
    */
-  function TotalAreaNode( totalAreaProperty, allowPowers ) {
+  function TotalAreaNode( totalAreaProperty, allowExponents ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
-    var areaText = new RichText( allowPowers ? '-9x<sup>2</sup>' : '-999', {
+    var areaText = new RichText( allowExponents ? '-9x<sup>2</sup>' : '-999', {
       font: AreaModelConstants.TOTAL_AREA_FONT
     } );
 

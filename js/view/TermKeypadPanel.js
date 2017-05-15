@@ -53,15 +53,15 @@ define( function( require ) {
    * @extends {Panel}
    *
    * @param {Property.<GenericPartition>} activePartitionProperty
-   * @param {boolean} allowPowers
+   * @param {boolean} allowExponents
    * @param {Object} [options]
    */
-  function TermKeypadPanel( activePartitionProperty, allowPowers, nodeOptions ) {
+  function TermKeypadPanel( activePartitionProperty, allowExponents, nodeOptions ) {
     var self = this;
 
     var termAccumulator = new TermAccumulator( activePartitionProperty );
 
-    var keypad = new Keypad( allowPowers ? powerLayout : noPowerLayout, {
+    var keypad = new Keypad( allowExponents ? powerLayout : noPowerLayout, {
       accumulator: termAccumulator
     } );
 
@@ -87,7 +87,7 @@ define( function( require ) {
 
     activePartitionProperty.link( function( partition ) {
       if ( partition !== null ) {
-        var longestString = Term.getLongestGenericString( allowPowers, partition.digitCount );
+        var longestString = Term.getLongestGenericString( allowExponents, partition.digitCount );
         scratchText.text = longestString;
         readoutBackground.setRectBounds( scratchText.bounds.dilatedXY( 10, 5 ) );
         scratchText.center = readoutBackground.center;

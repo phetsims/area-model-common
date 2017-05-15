@@ -13,14 +13,11 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
-  var Bounds2 = require( 'DOT/Bounds2' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
-  var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
@@ -48,17 +45,13 @@ define( function( require ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
-    AreaNode.call( this, area );
-
-    var modelBounds = new Bounds2( 0, 0, area.maximumSize, area.maximumSize );
-    var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
-    this.modelViewTransform = ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
+    AreaNode.call( this, area, partialProductsChoiceProperty, true );
 
     var background = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
       stroke: AreaModelColorProfile.areaBorderProperty
     } );
-    this.addChild( background );
+    this.areaLayer.addChild( background );
 
     var gridLineWidth = 0.5;
     var halfGridLineWidth = gridLineWidth / 2;
@@ -89,7 +82,7 @@ define( function( require ) {
       ]
     } );
     gridLinesVisibleProperty.linkAttribute( gridLineNode, 'visible' );
-    this.addChild( gridLineNode );
+    this.areaLayer.addChild( gridLineNode );
 
     var dragOffset = 5;
     var dragRadius = 7;
@@ -133,7 +126,7 @@ define( function( require ) {
     area.activeHeightProperty.link( function( totalHeight ) {
       dragHandle.y = self.modelViewTransform.modelToViewY( totalHeight );
     } );
-    this.addChild( dragHandle );
+    this.areaLayer.addChild( dragHandle );
 
     var activeAreaNode = new Rectangle( 0, 0, 0, 0, {
       fill: AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
@@ -145,14 +138,15 @@ define( function( require ) {
     area.activeHeightProperty.link( function( totalHeight ) {
       activeAreaNode.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
     } );
-    this.addChild( activeAreaNode );
+    this.areaLayer.addChild( activeAreaNode );
 
     if ( area.tilesAvailable ) {
       area.partitionedAreas.forEach( function( partitionedArea ) {
-        self.addChild( new TiledPartitionAreaNode( partitionedArea, self.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize ) );
+        self.areaLayer.addChild( new TiledPartitionAreaNode( partitionedArea, self.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize ) );
       } );
     }
 
+    // TODO: remove duplication
     var widthDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: AreaModelColorProfile.dockBackgroundProperty,
       stroke: AreaModelColorProfile.dockBorderProperty,
@@ -163,7 +157,7 @@ define( function( require ) {
         } )
       ]
     } );
-    this.addChild( widthDock );
+    this.areaLayer.addChild( widthDock );
 
     var heightDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: AreaModelColorProfile.dockBackgroundProperty,
@@ -175,7 +169,7 @@ define( function( require ) {
         } )
       ]
     } );
-    this.addChild( heightDock );
+    this.areaLayer.addChild( heightDock );
 
     area.activeHeightProperty.link( function( totalHeight ) {
       heightDock.visible = totalHeight >= area.snapSize * 2 - 1e-7;
@@ -187,26 +181,10 @@ define( function( require ) {
     } );
 
     var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL );
-    this.addChild( horizontalPartitionLine );
+    this.areaLayer.addChild( horizontalPartitionLine );
 
     var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.VERTICAL );
-    this.addChild( verticalPartitionLine );
-
-    // TODO: remove duplication with generic (only changed to false and MVT)
-    area.partitionedAreas.forEach( function( partitionedArea ) {
-      var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, false );
-      self.addChild( productLabel );
-      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
-        if ( horizontalRange !== null ) {
-          productLabel.x = self.modelViewTransform.modelToViewX( horizontalRange.getCenter() );
-        }
-      } );
-      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
-        if ( verticalRange !== null ) {
-          productLabel.y = self.modelViewTransform.modelToViewY( verticalRange.getCenter() );
-        }
-      } );
-    } );
+    this.areaLayer.addChild( verticalPartitionLine );
 
     // TODO: refactor/cleanup
     function createPartitionLabel( partition, secondaryPartition ) {
@@ -227,7 +205,7 @@ define( function( require ) {
       var wrapper = new Node( {
         children: [ text ]
       } );
-      self.addChild( wrapper );
+      self.labelLayer.addChild( wrapper );
 
       // TODO: refactor to borrow from general case
       var primaryName = partition.isHorizontal ? 'x' : 'y';

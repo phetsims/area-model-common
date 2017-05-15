@@ -75,15 +75,15 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Area} area
-   * @param {boolean} allowPowers
+   * @param {boolean} allowExponents
    */
-  function CalculationLines( area, allowPowers ) {
+  function CalculationLines( area, allowExponents ) {
     assert && assert( area instanceof Area );
-    assert && assert( typeof allowPowers === 'boolean' );
+    assert && assert( typeof allowExponents === 'boolean' );
 
     // @private
     this.area = area;
-    this.allowPowers = allowPowers;
+    this.allowExponents = allowExponents;
   }
 
   areaModelCommon.register( 'CalculationLines', CalculationLines );
@@ -129,8 +129,8 @@ define( function( require ) {
       var needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
       var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
       var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
-                         !( orderedTermList.equals( totalPolynomial ) && ( !this.allowPowers || !orderedTermList.hasNegativeTerm() ) );
-      var needsMinuses = needsMultiplied && this.allowPowers && orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
+                         !( orderedTermList.equals( totalPolynomial ) && ( !this.allowExponents || !orderedTermList.hasNegativeTerm() ) );
+      var needsMinuses = needsMultiplied && this.allowExponents && orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
 
       // TODO: cleanup how this is handled
       var availableLineIndices = [ 0 ];
@@ -333,7 +333,7 @@ define( function( require ) {
       var widthText = this.createColoredRichText( this.area.getTotalProperty( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive );
       var heightText = this.createColoredRichText( this.area.getTotalProperty( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive );
 
-      if ( this.allowPowers ) {
+      if ( this.allowExponents ) {
         return new HBox( {
           children: [
             this.parenWrap( heightText, isActive ),
@@ -355,11 +355,11 @@ define( function( require ) {
       var horizontalNode = this.sumOfTerms( horizontalTerms, Orientation.HORIZONTAL, isActive );
       var verticalNode = this.sumOfTerms( verticalTerms, Orientation.VERTICAL, isActive );
 
-      if ( !horizontalSingle || this.allowPowers ) {
+      if ( !horizontalSingle || this.allowExponents ) {
         // TODO: add assertion checks for all types in this file
         horizontalNode = this.parenWrap( horizontalNode, isActive );
       }
-      if ( !verticalSingle || this.allowPowers ) {
+      if ( !verticalSingle || this.allowExponents ) {
         verticalNode = this.parenWrap( verticalNode, isActive );
       }
 
@@ -378,7 +378,7 @@ define( function( require ) {
 
       return this.sumOfNodes( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
-          var hasFirstInParentheses = self.allowPowers || verticalTerm.coefficient < 0;
+          var hasFirstInParentheses = self.allowExponents || verticalTerm.coefficient < 0;
           var horizontalText = self.createColoredRichText( horizontalTerm, Orientation.HORIZONTAL, isActive, false );
           var verticalText = self.createColoredRichText( verticalTerm, Orientation.VERTICAL, isActive, false );
           return new HBox( {

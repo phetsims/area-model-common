@@ -22,16 +22,17 @@ define( function( require ) {
    * @constructor
    * @extends {Area}
    *
-   * @param {boolean} allowPowers - Whether the user is able to add powers of x.
+   * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    * @param {Property.<Color>} colorProperty
    */
-  function GenericArea( allowPowers, colorProperty ) {
-    assert && assert( typeof allowPowers === 'boolean' );
+  function GenericArea( allowExponents, colorProperty ) {
+    assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
 
-    var firstDigitCount = allowPowers ? 1 : 3;
-    var secondDigitCount = allowPowers ? 1 : 2;
+    // If we allow powers of X, we'll only allow 1 digit in front.
+    var firstDigitCount = allowExponents ? 1 : 3;
+    var secondDigitCount = allowExponents ? 1 : 2;
     var thirdDigitCount = 1;
 
     // @public {GenericPartition}

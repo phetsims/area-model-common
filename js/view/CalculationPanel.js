@@ -115,7 +115,7 @@ define( function( require ) {
 
       var activeIndex = isLineByLine ? model.currentAreaProperty.value.calculationIndexProperty.value : undefined;
 
-      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowPowers ).createLines( activeIndex );
+      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowExponents ).createLines( activeIndex );
       if ( calculationLines.length ) {
 
         if ( isLineByLine ) {

@@ -32,7 +32,7 @@ define( function( require ) {
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
     // AccordionBox.
     var box = new HBox( {
-      children: model.allowPowers ? [
+      children: model.allowExponents ? [
         new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
         verticalNode,
         new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),

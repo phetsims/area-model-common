@@ -61,7 +61,7 @@ define( function( require ) {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.allowPowers ), {
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.allowExponents ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );

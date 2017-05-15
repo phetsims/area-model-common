@@ -23,7 +23,6 @@ define( function( require ) {
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
-  var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -36,17 +35,17 @@ define( function( require ) {
    *
    * TODO: reduce to options object
    * @param {GenericArea} area
-   * @param {boolean} allowPowers - Whether the user is able to add powers of x.
+   * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Object} [nodeOptions]
    */
-  function GenericAreaNode( area, allowPowers, partialProductsChoiceProperty, nodeOptions ) {
+  function GenericAreaNode( area, allowExponents, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof GenericArea );
-    assert && assert( typeof allowPowers === 'boolean' );
+    assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
 
-    AreaNode.call( this, area );
+    AreaNode.call( this, area, partialProductsChoiceProperty, false );
 
     var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;
@@ -55,7 +54,7 @@ define( function( require ) {
       fill: AreaModelColorProfile.areaBackgroundProperty,
       stroke: AreaModelColorProfile.areaBorderProperty
     } );
-    this.addChild( background );
+    this.areaLayer.addChild( background );
 
     area.partitionedAreas.forEach( function( partitionedArea ) {
       var coloredBackground = new Rectangle( {} );
@@ -85,11 +84,11 @@ define( function( require ) {
           coloredBackground.rectHeight = verticalRange.getLength() * self.viewSize;
         }
       } );
-      self.addChild( coloredBackground );
+      self.areaLayer.addChild( coloredBackground );
     } );
 
     function addDock( x, y, property ) {
-      self.addChild( new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
+      self.areaLayer.addChild( new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
         fill: AreaModelColorProfile.dockBackgroundProperty,
         stroke: AreaModelColorProfile.dockBorderProperty,
         lineDash: [ 3, 3 ],
@@ -125,7 +124,7 @@ define( function( require ) {
         ]
       } );
       property.linkAttribute( node, 'visible' );
-      self.addChild( node );
+      self.areaLayer.addChild( node );
     }
 
     // TODO: consolidate with adding docks
@@ -135,7 +134,7 @@ define( function( require ) {
     addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, area.getColorProperty( Orientation.VERTICAL ) );
 
     function getSampleString( digitCount ) {
-      if ( allowPowers ) {
+      if ( allowExponents ) {
         return '-9x<sup>2</sup>';
       }
       else {
@@ -197,7 +196,7 @@ define( function( require ) {
           } )
         ]
       } );
-      self.addChild( box );
+      self.labelLayer.addChild( box );
 
       var primaryName = partition.isHorizontal ? 'centerX' : 'centerY';
 
@@ -217,26 +216,10 @@ define( function( require ) {
     area.partitions.forEach( createEditButton );
 
     // Keypad
-    this.addChild( new TermKeypadPanel( area.activePartitionProperty, allowPowers, {
-      x: this.viewSize + 35,
+    this.labelLayer.addChild( new TermKeypadPanel( area.activePartitionProperty, allowExponents, {
+      x: this.viewSize + 35, // padding constant allows it to fit between the area and the other panels
       centerY: this.viewSize / 2
     } ) );
-
-    // TODO: remove duplication with proportional (only changed to true and MVT)
-    area.partitionedAreas.forEach( function( partitionedArea ) {
-      var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, true );
-      self.addChild( productLabel );
-      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
-        if ( horizontalRange !== null ) {
-          productLabel.x = self.viewSize * horizontalRange.getCenter();
-        }
-      } );
-      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
-        if ( verticalRange !== null ) {
-          productLabel.y = self.viewSize * verticalRange.getCenter();
-        }
-      } );
-    } );
 
     this.mutate( nodeOptions );
   }

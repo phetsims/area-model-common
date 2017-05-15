@@ -12,11 +12,14 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -31,20 +34,53 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Area} area
+   * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
+   * @param {boolean} isProportional
    */
-  function AreaNode( area ) {
+  function AreaNode( area, partialProductsChoiceProperty, isProportional ) {
     assert && assert( area instanceof Area );
+    assert && assert( typeof isProportional === 'boolean' );
+
+    var self = this;
 
     Node.call( this );
 
     // @public {Area}
     this.area = area;
 
+    // @protected {Node} - Layers
+    this.areaLayer = new Node();
+    this.labelLayer = new Node();
+
+    this.addChild( this.areaLayer );
+    this.addChild( this.labelLayer );
+
     // @public {number}
     this.viewSize = AreaModelConstants.AREA_SIZE;
 
     this.initializeRangeLabel( Orientation.HORIZONTAL );
     this.initializeRangeLabel( Orientation.VERTICAL );
+
+    var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
+    var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
+
+    // @protected {ModelViewTransform2} - Maps from coordinate range values to view values.
+    this.modelViewTransform = ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
+
+    area.partitionedAreas.forEach( function( partitionedArea ) {
+      var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, !isProportional );
+      self.labelLayer.addChild( productLabel );
+      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
+        if ( horizontalRange !== null ) {
+          productLabel.x = self.modelViewTransform.modelToViewX( horizontalRange.getCenter() );
+        }
+      } );
+      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
+        if ( verticalRange !== null ) {
+          productLabel.y = self.modelViewTransform.modelToViewY( verticalRange.getCenter() );
+        }
+      } );
+    } );
 
     var eraseButton = new EraserButton( {
       listener: function() {
@@ -53,7 +89,7 @@ define( function( require ) {
       centerX: VERTICAL_RANGE_OFFSET,
       centerY: HORIZONTAL_RANGE_OFFSET
     } );
-    this.addChild( eraseButton );
+    this.labelLayer.addChild( eraseButton );
   }
 
   areaModelCommon.register( 'AreaNode', AreaNode );
@@ -118,10 +154,10 @@ define( function( require ) {
         label.x = VERTICAL_RANGE_OFFSET + LABEL_OFFSET;
       }
 
-      this.addChild( minTick );
-      this.addChild( maxTick );
-      this.addChild( line );
-      this.addChild( label );
+      this.labelLayer.addChild( minTick );
+      this.labelLayer.addChild( maxTick );
+      this.labelLayer.addChild( line );
+      this.labelLayer.addChild( label );
 
       // Update the label text
       this.area.getTotalProperty( orientation ).link( function( sum ) {

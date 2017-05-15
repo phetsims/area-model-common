@@ -28,7 +28,7 @@ define( function( require ) {
 
     AreaScreenView.call( this, model, false, decimalPlaces );
 
-    this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowPowers, model.partialProductsChoiceProperty, {
+    this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowExponents, model.partialProductsChoiceProperty, {
       translation: this.getAreaTranslation()
     } ) );
   }

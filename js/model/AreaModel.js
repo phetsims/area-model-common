@@ -22,18 +22,18 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
-   * @param {boolean} allowPowers
+   * @param {boolean} allowExponents
    * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
    * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
    */
-  function AreaModel( areas, allowPowers, horizontalColorProperty, verticalColorProperty ) {
+  function AreaModel( areas, allowExponents, horizontalColorProperty, verticalColorProperty ) {
     var self = this;
 
     // @public {Array.<Area>}
     this.areas = areas;
 
     // @public {boolean}
-    this.allowPowers = allowPowers;
+    this.allowExponents = allowExponents;
 
     // @private {Property.<Color>} - Prefer getColorProperty( orientation )
     this.horizontalColorProperty = horizontalColorProperty;
