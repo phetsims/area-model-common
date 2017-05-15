@@ -74,7 +74,6 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * TODO: Just tag the width/height colors on the Area itself? Or have an AreaConfig?
    * @param {Area} area
    * @param {boolean} allowPowers
    */
