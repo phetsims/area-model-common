@@ -23,7 +23,6 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * TODO: consider options object?
    * @param {Array.<Partition>} horizontalPartitions
    * @param {Array.<Partition>} verticalPartitions
    * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
@@ -65,7 +64,7 @@ define( function( require ) {
       } );
     } ) );
 
-    // @public {Property.<Polynomial|null>} - Null if there is no defined total
+    // @private {Property.<Polynomial|null>} - Null if there is no defined total - Prefer getTotalProperty()
     this.horizontalTotalProperty = this.createTotalProperty( Orientation.HORIZONTAL );
     this.verticalTotalProperty = this.createTotalProperty( Orientation.VERTICAL );
 
@@ -77,7 +76,7 @@ define( function( require ) {
       return horizontalTotal.times( verticalTotal );
     } );
 
-    // @public {Property.<Range|null>}
+    // @private {Property.<Range|null>} - Prefer getCoordinateRangeProperty()
     this.horizontalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.HORIZONTAL );
     this.verticalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.VERTICAL );
   }
@@ -154,8 +153,6 @@ define( function( require ) {
     /**
      * Returns the property for the sum of all defined partitions for a particular orientation.
      * @public
-     *
-     * TODO: refactor usages to this
      *
      * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
      */

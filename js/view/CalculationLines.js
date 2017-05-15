@@ -330,8 +330,8 @@ define( function( require ) {
 
     // TODO: doc
     createTotalsLine: function( isActive ) {
-      var widthText = this.createColoredRichText( this.area.horizontalTotalProperty.value, Orientation.HORIZONTAL, isActive );
-      var heightText = this.createColoredRichText( this.area.verticalTotalProperty.value, Orientation.VERTICAL, isActive );
+      var widthText = this.createColoredRichText( this.area.getTotalProperty( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive );
+      var heightText = this.createColoredRichText( this.area.getTotalProperty( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive );
 
       if ( this.allowPowers ) {
         return new HBox( {
