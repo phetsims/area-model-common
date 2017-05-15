@@ -214,13 +214,7 @@ define( function( require ) {
       }
       partition.visibleProperty.linkAttribute( box, 'visible' );
     }
-
-    createEditButton( area.leftPartition );
-    createEditButton( area.middleHorizontalPartition );
-    createEditButton( area.rightPartition );
-    createEditButton( area.topPartition );
-    createEditButton( area.middleVerticalPartition );
-    createEditButton( area.bottomPartition );
+    area.partitions.forEach( createEditButton );
 
     // Keypad
     this.addChild( new TermKeypadPanel( area.activePartitionProperty, allowPowers, {
