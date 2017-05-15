@@ -34,6 +34,9 @@ define( function( require ) {
 
     var group = new AlignGroup();
 
+    var darkColorProperty = AreaModelColorProfile.calculationIconDarkProperty;
+    var lightColorProperty = AreaModelColorProfile.calculationIconLightProperty;
+
     var radioItems = [
       {
         value: AreaCalculationChoice.HIDDEN,
@@ -41,12 +44,11 @@ define( function( require ) {
       },
       {
         value: AreaCalculationChoice.LINE_BY_LINE,
-        // TODO: color profile it?
-        node: new AlignBox( createCalculationIcon( '#000', '#aaa' ), { group: group } )
+        node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: group } )
       },
       {
         value: AreaCalculationChoice.SHOW_ALL_LINES,
-        node: new AlignBox( createCalculationIcon( '#000', '#000' ), { group: group } )
+        node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: group } )
       }
     ];
 
@@ -63,16 +65,23 @@ define( function( require ) {
 
   areaModelCommon.register( 'AreaCalculationSelectionNode', AreaCalculationSelectionNode );
 
-  function createCalculationIcon( topFill, bottomFill ) {
+  /**
+   * Creates a calculation icon with two fills (one for the top line only).
+   * @private
+   *
+   * @param {Property.<Color>} topColorProperty
+   * @param {Property.<Color>} bottomColorProperty
+   */
+  function createCalculationIcon( topColorProperty, bottomColorProperty ) {
     var height = 5;
     var fullWidth = 30;
     var partialWidth = 20;
     return new VBox( {
       children: [
-        new Rectangle( 0, 0, partialWidth, height, { fill: topFill } ),
-        new Rectangle( 0, 0, fullWidth, height, { fill: bottomFill } ),
-        new Rectangle( 0, 0, partialWidth, height, { fill: bottomFill } ),
-        new Rectangle( 0, 0, fullWidth, height, { fill: bottomFill } )
+        new Rectangle( 0, 0, partialWidth, height, { fill: topColorProperty } ),
+        new Rectangle( 0, 0, fullWidth, height, { fill: bottomColorProperty } ),
+        new Rectangle( 0, 0, partialWidth, height, { fill: bottomColorProperty } ),
+        new Rectangle( 0, 0, fullWidth, height, { fill: bottomColorProperty } )
       ],
       align: 'left',
       spacing: 2

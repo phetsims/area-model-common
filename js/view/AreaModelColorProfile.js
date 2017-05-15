@@ -71,6 +71,9 @@ define( function( require ) {
     calculationArrowDown: { default: new Color( 0x666666 ) },
     calculationArrowDisabled: { default: new Color( 0xaaaaaa ) },
 
+    calculationIconDark: { default: Color.BLACK },
+    calculationIconLight: { default: new Color( 0xaaaaaa ) },
+
     // Tile colors
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },
