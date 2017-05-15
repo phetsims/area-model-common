@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/view/AreaScreenView' );
@@ -32,7 +31,7 @@ define( function( require ) {
 
     AreaScreenView.call( this, model, false, decimalPlaces );
 
-    this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowPowers, AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, model.partialProductsChoiceProperty, {
+    this.addChild( new GenericAreaNode( model.areas[ 0 ], model.allowPowers, model.partialProductsChoiceProperty, {
       // TODO: improve positioning, remove duplicated code with proportional
       x: self.layoutBounds.left + AreaModelConstants.MAIN_AREA_OFFSET.x,
       y: self.layoutBounds.top + AreaModelConstants.MAIN_AREA_OFFSET.y

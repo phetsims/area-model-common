@@ -22,6 +22,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -36,12 +37,10 @@ define( function( require ) {
    * TODO: reduce to options object
    * @param {GenericArea} area
    * @param {boolean} allowPowers - Whether the user is able to add powers of x.
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Object} [nodeOptions]
    */
-  function GenericAreaNode( area, allowPowers, widthColorProperty, heightColorProperty, partialProductsChoiceProperty, nodeOptions ) {
+  function GenericAreaNode( area, allowPowers, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof GenericArea );
     assert && assert( typeof allowPowers === 'boolean' );
 
@@ -130,10 +129,10 @@ define( function( require ) {
     }
 
     // TODO: consolidate with adding docks
-    addPartitionLine( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, area.firstHorizontalPartitionLineActiveProperty, widthColorProperty );
-    addPartitionLine( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, area.secondHorizontalPartitionLineActiveProperty, widthColorProperty );
-    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.firstVerticalPartitionLineActiveProperty, heightColorProperty );
-    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, heightColorProperty );
+    addPartitionLine( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, area.firstHorizontalPartitionLineActiveProperty, area.getColorProperty( Orientation.HORIZONTAL ) );
+    addPartitionLine( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, area.secondHorizontalPartitionLineActiveProperty, area.getColorProperty( Orientation.HORIZONTAL ) );
+    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.firstVerticalPartitionLineActiveProperty, area.getColorProperty( Orientation.VERTICAL ) );
+    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, area.getColorProperty( Orientation.VERTICAL ) );
 
     function getSampleString( digitCount ) {
       if ( allowPowers ) {
@@ -146,17 +145,17 @@ define( function( require ) {
     }
 
     // TODO: refactor/cleanup
-    function createEditButton( partition, colorProperty ) {
+    function createEditButton( partition ) {
 
       // TODO: better way to test for size
       var sampleString = getSampleString( partition.digitCount );
       var richText = new RichText( sampleString, {
-        fill: colorProperty,
+        fill: partition.colorProperty,
         font: AreaModelConstants.EDIT_READOUT_FONT
       } );
 
       var background = new Rectangle( 0, 0, richText.width + 5, richText.height + 5, {
-        stroke: colorProperty,
+        stroke: partition.colorProperty,
         cornerRadius: 4,
         children: [
           richText
@@ -216,12 +215,12 @@ define( function( require ) {
       partition.visibleProperty.linkAttribute( box, 'visible' );
     }
 
-    createEditButton( area.leftPartition, widthColorProperty );
-    createEditButton( area.middleHorizontalPartition, widthColorProperty );
-    createEditButton( area.rightPartition, widthColorProperty );
-    createEditButton( area.topPartition, heightColorProperty );
-    createEditButton( area.middleVerticalPartition, heightColorProperty );
-    createEditButton( area.bottomPartition, heightColorProperty );
+    createEditButton( area.leftPartition );
+    createEditButton( area.middleHorizontalPartition );
+    createEditButton( area.rightPartition );
+    createEditButton( area.topPartition );
+    createEditButton( area.middleVerticalPartition );
+    createEditButton( area.bottomPartition );
 
     // Keypad
     this.addChild( new TermKeypadPanel( area.activePartitionProperty, allowPowers, {
