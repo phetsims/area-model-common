@@ -23,8 +23,14 @@ define( function( require ) {
     Orientation.VERTICAL
   ];
 
+  // TODO: doc
   Orientation.isOrientation = function( orientation ) {
     return orientation === Orientation.HORIZONTAL || orientation === Orientation.VERTICAL;
+  };
+
+  // TODO: doc
+  Orientation.getCoordinateName = function( orientation ) {
+    return orientation === Orientation.HORIZONTAL ? 'x' : 'y';
   };
 
   return Orientation;

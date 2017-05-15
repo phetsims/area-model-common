@@ -20,6 +20,12 @@ define( function( require ) {
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // constants
+  var TICK_LENGTH = 8; // How long the tick marks are for the range labels
+  var HORIZONTAL_RANGE_OFFSET = -40; // Vertical offset from the main area for horizontal range labels
+  var VERTICAL_RANGE_OFFSET = -60; // Horizontal offset from the main area for vertical range labels
+  var LABEL_OFFSET = -7; // How far the label text should be from the line/ticks
+
   /**
    * @constructor
    * @extends {Node}
@@ -29,8 +35,6 @@ define( function( require ) {
   function AreaNode( area ) {
     assert && assert( area instanceof Area );
 
-    var self = this;
-
     Node.call( this );
 
     // @public {Area}
@@ -39,134 +43,123 @@ define( function( require ) {
     // @public {number}
     this.viewSize = AreaModelConstants.AREA_SIZE;
 
-    var markSize = 4;
-    var horizontalLineOffset = -40;
-    var verticalLineOffset = -60;
-    var labelOffset = -7;
-
-    var horizontalLeftMark = new Line( 0, -markSize + horizontalLineOffset, 0, markSize + horizontalLineOffset, {
-      stroke: area.widthColorProperty
-    } );
-    this.addChild( horizontalLeftMark );
-    var horizontalRightMark = new Line( 0, -markSize + horizontalLineOffset, 0, markSize + horizontalLineOffset, {
-      stroke: area.widthColorProperty
-    } );
-    this.addChild( horizontalRightMark );
-    var horizontalLine = new Line( 0, horizontalLineOffset, 0, horizontalLineOffset, {
-      stroke: area.widthColorProperty
-    } );
-    this.addChild( horizontalLine );
-    var horizontalRichText = new RichText( '', {
-      font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
-      fill: area.widthColorProperty
-    } );
-    var horizontalLabel = new Node( {
-      children: [ horizontalRichText ],
-      y: horizontalLineOffset + labelOffset
-    } );
-    this.addChild( horizontalLabel );
-
-    var verticalLeftMark = new Line( -markSize + verticalLineOffset, 0, markSize + verticalLineOffset, 0, {
-      stroke: area.heightColorProperty
-    } );
-    this.addChild( verticalLeftMark );
-    var verticalRightMark = new Line( -markSize + verticalLineOffset, 0, markSize + verticalLineOffset, 0, {
-      stroke: area.heightColorProperty
-    } );
-    this.addChild( verticalRightMark );
-    var verticalLine = new Line( verticalLineOffset, 0, verticalLineOffset, 0, {
-      stroke: area.heightColorProperty
-    } );
-    this.addChild( verticalLine );
-    var verticalRichText = new RichText( '', {
-      font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
-      fill: area.heightColorProperty
-    } );
-    var verticalLabel = new Node( {
-      children: [ verticalRichText ],
-      x: verticalLineOffset + labelOffset
-    } );
-    this.addChild( verticalLabel );
-
-    area.horizontalTotalProperty.link( function( sum ) {
-      horizontalRichText.visible = sum !== null;
-      if ( sum !== null ) {
-        horizontalRichText.text = sum.toRichString();
-        horizontalRichText.centerBottom = Vector2.ZERO;
-      }
-    } );
-
-    area.verticalTotalProperty.link( function( sum ) {
-      verticalRichText.visible = sum !== null;
-      if ( sum !== null ) {
-        verticalRichText.text = sum.toRichString();
-        verticalRichText.rightCenter = Vector2.ZERO;
-      }
-    } );
-
-    area.getCoordinateRangeProperty( Orientation.HORIZONTAL ).link( function( horizontalRange ) {
-      horizontalLeftMark.visible = horizontalRange !== null;
-      horizontalRightMark.visible = horizontalRange !== null;
-      horizontalLine.visible = horizontalRange !== null;
-
-      if ( horizontalRange === null ) {
-        return;
-      }
-
-      function map( value ) {
-        return self.viewSize * ( self.tempMap ? self.tempMap( value ) : value );
-      }
-
-      var min = map( horizontalRange.min );
-      var center = map( horizontalRange.getCenter() );
-      var max = map( horizontalRange.max );
-
-      horizontalLeftMark.x1 = min;
-      horizontalLeftMark.x2 = min;
-      horizontalRightMark.x1 = max;
-      horizontalRightMark.x2 = max;
-      horizontalLine.x1 = min;
-      horizontalLine.x2 = max;
-      horizontalLabel.x = center;
-    } );
-
-    area.getCoordinateRangeProperty( Orientation.VERTICAL ).link( function( verticalRange ) {
-      verticalLeftMark.visible = verticalRange !== null;
-      verticalRightMark.visible = verticalRange !== null;
-      verticalLine.visible = verticalRange !== null;
-
-      if ( verticalRange === null ) {
-        return;
-      }
-
-      function map( value ) {
-        return self.viewSize * ( self.tempMap ? self.tempMap( value ) : value );
-      }
-
-      var min = map( verticalRange.min );
-      var center = map( verticalRange.getCenter() );
-      var max = map( verticalRange.max );
-
-      verticalLeftMark.y1 = min;
-      verticalLeftMark.y2 = min;
-      verticalRightMark.y1 = max;
-      verticalRightMark.y2 = max;
-      verticalLine.y1 = min;
-      verticalLine.y2 = max;
-      verticalLabel.y = center;
-    } );
+    this.initializeRangeLabel( Orientation.HORIZONTAL );
+    this.initializeRangeLabel( Orientation.VERTICAL );
 
     var eraseButton = new EraserButton( {
       listener: function() {
         area.reset();
       },
-      centerX: verticalLineOffset,
-      centerY: horizontalLineOffset
+      centerX: VERTICAL_RANGE_OFFSET,
+      centerY: HORIZONTAL_RANGE_OFFSET
     } );
     this.addChild( eraseButton );
   }
 
   areaModelCommon.register( 'AreaNode', AreaNode );
 
-  return inherit( Node, AreaNode );
+  return inherit( Node, AreaNode, {
+    /**
+     * Creates a range label with text and a line with start/end tick marks that covers the range.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @returns {Node}
+     */
+    initializeRangeLabel: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      var self = this;
+
+      // Color of everything
+      var colorProperty = this.area.getColorProperty( orientation );
+
+      var tickOptions = {
+        x1: 0,
+        y1: -TICK_LENGTH / 2,
+        x2: 0,
+        y2: TICK_LENGTH / 2,
+        stroke: colorProperty,
+        rotation: orientation === Orientation.HORIZONTAL ? 0 : Math.PI / 2
+      };
+      var minTick = new Line( tickOptions );
+      var maxTick = new Line( tickOptions );
+
+      var line = new Line( {
+        stroke: colorProperty
+      } );
+
+      var text = new RichText( '', {
+        font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
+        fill: colorProperty
+      } );
+
+      // Wrap our text in a label, so that we can handle positioning independent of bounds checks
+      var label = new Node( {
+        children: [ text ]
+      } );
+      // Coordinates that don't change.
+      if ( orientation === Orientation.HORIZONTAL ) {
+        label.y = HORIZONTAL_RANGE_OFFSET + LABEL_OFFSET;
+      }
+      else {
+        label.x = VERTICAL_RANGE_OFFSET + LABEL_OFFSET;
+      }
+
+      this.addChild( minTick );
+      this.addChild( maxTick );
+      this.addChild( line );
+      this.addChild( label );
+
+      // Update the label text
+      this.area.getTotalProperty( orientation ).link( function( sum ) {
+        var hasSum = sum !== null;
+
+        text.visible = hasSum;
+        if ( hasSum ) {
+          text.text = sum.toRichString();
+          if ( orientation === Orientation.HORIZONTAL ) {
+            text.centerBottom = Vector2.ZERO;
+          }
+          else {
+            text.rightCenter = Vector2.ZERO;
+          }
+        }
+      } );
+
+      // Update the layout
+      this.area.getCoordinateRangeProperty( orientation ).link( function( range ) {
+        var hasRange = range !== null;
+
+        minTick.visible = hasRange;
+        maxTick.visible = hasRange;
+        line.visible = hasRange;
+
+        if ( !hasRange ) {
+          return;
+        }
+
+        function map( value ) {
+          // TODO: handle tempMap
+          return self.viewSize * ( self.tempMap ? self.tempMap( value ) : value );
+        }
+
+        var min = map( range.min );
+        var center = map( range.getCenter() );
+        var max = map( range.max );
+
+        // Points on each end of our line
+        var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( min, HORIZONTAL_RANGE_OFFSET )
+                                                              : new Vector2( VERTICAL_RANGE_OFFSET, min );
+        var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( max, HORIZONTAL_RANGE_OFFSET )
+                                                              : new Vector2( VERTICAL_RANGE_OFFSET, max );
+
+        minTick.translation = minPoint;
+        maxTick.translation = maxPoint;
+        line.p1 = minPoint;
+        line.p2 = maxPoint;
+        label[ Orientation.getCoordinateName( orientation ) ] = center;
+      } );
+    }
+  } );
 } );
