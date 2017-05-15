@@ -26,22 +26,22 @@ define( function( require ) {
    * @param {GenericAreaModel} model
    */
   function GenericProblemNode( model ) {
-    var widthNode = this.createOrientationReadout( Orientation.HORIZONTAL, model );
-    var heightNode = this.createOrientationReadout( Orientation.VERTICAL, model );
+    var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, model );
+    var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, model );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
     // AccordionBox.
     var box = new HBox( {
       children: model.allowPowers ? [
         new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
-        heightNode,
+        verticalNode,
         new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
-        widthNode,
+        horizontalNode,
         new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } )
       ] : [
-        heightNode,
+        verticalNode,
         new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
-        widthNode
+        horizontalNode
       ],
       spacing: 10,
       centerY: 0
