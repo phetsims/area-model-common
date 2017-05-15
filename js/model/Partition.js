@@ -49,8 +49,6 @@ define( function( require ) {
      * Returns whether this partition is defined, i.e. "is shown in the area, and has a size"
      * @public
      *
-     * TODO: find where I can use this function
-     *
      * @returns {boolean}
      */
     isDefined: function() {

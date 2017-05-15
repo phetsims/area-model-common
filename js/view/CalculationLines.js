@@ -112,8 +112,8 @@ define( function( require ) {
       var horizontalTerms = horizontalTermList.terms;
       var verticalTerms = verticalTermList.terms;
 
-      var horizontalPolynomial = this.area.horizontalTotalProperty.value;
-      var verticalPolynomial = this.area.verticalTotalProperty.value;
+      var horizontalPolynomial = this.area.getTotalProperty( Orientation.HORIZONTAL ).value;
+      var verticalPolynomial = this.area.getTotalProperty( Orientation.VERTICAL ).value;
 
       var multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {

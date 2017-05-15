@@ -99,8 +99,6 @@ define( function( require ) {
      * Returns all of the partitions for a given orientation.
      * @public
      *
-     * TODO: refactor usages to this
-     *
      * @param {Orientation} orientation
      * @returns {Array.<Partition>}
      */
@@ -113,8 +111,6 @@ define( function( require ) {
     /**
      * Returns all defined partitions for a given orientation.
      * @public
-     *
-     * TODO: refactor usages to this
      *
      * @param {Orientation} orientation
      * @returns {Array.<Partition>}
@@ -130,8 +126,6 @@ define( function( require ) {
     /**
      * Returns an array of Terms containing all of the defined partition sizes for the given orientation.
      * @public
-     *
-     * TODO: refactor usages to this
      *
      * @param {Orientation} orientation
      * @returns {Array.<Term>}

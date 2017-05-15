@@ -245,6 +245,7 @@ define( function( require ) {
         wrapper.x = -20;
       }
 
+      // TODO: doc what secondaryPartition is. unclear.
       Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
         wrapper.visible = visible && secondarySize !== null;
       } );
