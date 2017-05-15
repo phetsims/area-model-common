@@ -26,12 +26,8 @@ define( function( require ) {
    * @param {GenericAreaModel} model
    */
   function GenericProblemNode( model ) {
-
-    // @private {GenericAreaModel}
-    this.model = model;
-
-    var widthNode = this.createOrientationReadout( Orientation.HORIZONTAL );
-    var heightNode = this.createOrientationReadout( Orientation.VERTICAL );
+    var widthNode = this.createOrientationReadout( Orientation.HORIZONTAL, model );
+    var heightNode = this.createOrientationReadout( Orientation.VERTICAL, model );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
     // AccordionBox.
@@ -66,12 +62,13 @@ define( function( require ) {
      * @private
      *
      * @param {Orientation} orientation
+     * @param {GenericAreaModel} model
      * @returns {Node}
      */
-    createOrientationReadout: function( orientation ) {
+    createOrientationReadout: function( orientation, model ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      var colorProperty = this.model.getColorProperty( orientation );
+      var colorProperty = model.getColorProperty( orientation );
 
       var richText = new RichText( ' ', {
         font: AreaModelConstants.PROBLEM_X_FONT,
@@ -81,7 +78,7 @@ define( function( require ) {
       var box = new Rectangle( 0, 0, 30, 30, { stroke: colorProperty } );
 
       var node = new Node();
-      this.model.currentAreaProperty.value.getTotalProperty( orientation ).link( function( total ) {
+      model.currentAreaProperty.value.getTotalProperty( orientation ).link( function( total ) {
         if ( total === null ) {
           node.children = [ box ];
         }
