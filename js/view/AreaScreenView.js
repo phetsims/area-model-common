@@ -18,11 +18,12 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/view/CalculationPanel' );
+  var GenericProblemNode = require( 'AREA_MODEL_COMMON/view/GenericProblemNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
-  var ProblemNode = require( 'AREA_MODEL_COMMON/view/ProblemNode' );
   var Property = require( 'AXON/Property' );
+  var ProportionalProblemNode = require( 'AREA_MODEL_COMMON/view/ProportionalProblemNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -60,7 +61,9 @@ define( function( require ) {
       matchVertical: false
     } );
 
-    var problemNode = new AlignBox( new ProblemNode( model.currentAreaProperty, isProportional, model.allowPowers, decimalPlaces, widthColorProperty, heightColorProperty ), {
+    var problemNode = isProportional ? new ProportionalProblemNode( model.currentAreaProperty, decimalPlaces, widthColorProperty, heightColorProperty )
+                                     : new GenericProblemNode( model.currentAreaProperty, model.allowPowers, widthColorProperty, heightColorProperty );
+    var problemContainer = new AlignBox( problemNode, {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
@@ -102,7 +105,7 @@ define( function( require ) {
     } );
 
     // TODO: consolidate options
-    var problemBox = new AccordionBox( problemNode, {
+    var problemBox = new AccordionBox( problemContainer, {
       titleNode: new Text( problemString, {
         font: AreaModelConstants.TITLE_FONT
       } ),
