@@ -104,10 +104,10 @@ define( function( require ) {
         ]
       } ) );
     }
-    addDock( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, area.firstHorizontalPartitionLineActiveProperty );
-    addDock( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, area.secondHorizontalPartitionLineActiveProperty );
-    addDock( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, area.firstVerticalPartitionLineActiveProperty );
-    addDock( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, area.secondVerticalPartitionLineActiveProperty );
+    addDock( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 0 ] );
+    addDock( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 1 ] );
+    addDock( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 0 ] );
+    addDock( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 1 ] );
 
     function addPartitionLine( x1, y1, x2, y2, property, colorProperty ) {
       var node = new Node( {
@@ -128,10 +128,10 @@ define( function( require ) {
     }
 
     // TODO: consolidate with adding docks
-    addPartitionLine( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, area.firstHorizontalPartitionLineActiveProperty, area.getColorProperty( Orientation.HORIZONTAL ) );
-    addPartitionLine( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, area.secondHorizontalPartitionLineActiveProperty, area.getColorProperty( Orientation.HORIZONTAL ) );
-    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.firstVerticalPartitionLineActiveProperty, area.getColorProperty( Orientation.VERTICAL ) );
-    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.secondVerticalPartitionLineActiveProperty, area.getColorProperty( Orientation.VERTICAL ) );
+    addPartitionLine( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 0 ], area.getColorProperty( Orientation.HORIZONTAL ) );
+    addPartitionLine( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 1 ], area.getColorProperty( Orientation.HORIZONTAL ) );
+    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 0 ], area.getColorProperty( Orientation.VERTICAL ) );
+    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 1 ], area.getColorProperty( Orientation.VERTICAL ) );
 
     function getSampleString( digitCount ) {
       if ( allowExponents ) {

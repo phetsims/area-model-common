@@ -46,23 +46,16 @@ define( function( require ) {
       new GenericPartition( false, thirdDigitCount )
     ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1 );
 
-    // @public {Property.<boolean>}
-    this.firstHorizontalPartitionLineActiveProperty = new Property( false );
-    this.secondHorizontalPartitionLineActiveProperty = new Property( false );
-    this.firstVerticalPartitionLineActiveProperty = new Property( false );
-    this.secondVerticalPartitionLineActiveProperty = new Property( false );
+    // @private {Array.<Property.<boolean>>} - Whether partition lines are toggled on (2 in each orientation)
+    this.horizontalPartitionLineActiveProperties = [ new Property( false ), new Property( false ) ];
+    this.verticalPartitionLineActiveProperties = [ new Property( false ), new Property( false ) ];
+
+    // @public {Array.<Property.<boolean>>}
+    this.partitionLineActiveProperties = this.horizontalPartitionLineActiveProperties.concat( this.verticalPartitionLineActiveProperties );
 
     var firstOffset = AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
-
-    var partitionLineProperties = [
-      // TODO: parameterize by orientation
-      this.firstHorizontalPartitionLineActiveProperty,
-      this.secondHorizontalPartitionLineActiveProperty,
-      this.firstVerticalPartitionLineActiveProperty,
-      this.secondVerticalPartitionLineActiveProperty
-    ];
-    Property.multilink( partitionLineProperties, function( firstHorizontal, secondHorizontal, firstVertical, secondVertical ) {
+    Property.multilink( this.partitionLineActiveProperties, function( firstHorizontal, secondHorizontal, firstVertical, secondVertical ) {
       var firstHorizontalPartition = self.getFirstPartition( Orientation.HORIZONTAL );
       var secondHorizontalPartition = self.getSecondPartition( Orientation.HORIZONTAL );
       var thirdHorizontalPartition = self.getThirdPartition( Orientation.HORIZONTAL );
@@ -140,10 +133,9 @@ define( function( require ) {
     reset: function() {
       Area.prototype.reset.call( this );
 
-      this.firstHorizontalPartitionLineActiveProperty.reset();
-      this.secondHorizontalPartitionLineActiveProperty.reset();
-      this.firstVerticalPartitionLineActiveProperty.reset();
-      this.secondVerticalPartitionLineActiveProperty.reset();
+      this.partitionLineActiveProperties.forEach( function( partitionLineActiveProperty ) {
+        partitionLineActiveProperty.reset();
+      } );
 
       this.partitions.forEach( function( partition ) {
         partition.sizeProperty.reset();
@@ -180,6 +172,17 @@ define( function( require ) {
      */
     getThirdPartition: function( orientation ) {
       return this.getPartitions( orientation )[ 2 ];
+    },
+
+    /**
+     * Returns the partitionLineActive properties for a given orientation.
+     * @public
+     *
+     * @returns {Array.<Property.<boolean>>}
+     */
+    getPartitionLineActiveProperties: function( orientation ) {
+      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitionLineActiveProperties
+                                                    : this.verticalPartitionLineActiveProperties;
     }
   } );
 } );
