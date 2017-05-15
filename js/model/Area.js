@@ -24,8 +24,10 @@ define( function( require ) {
    *
    * @param {Array.<Partition>} horizontalPartitions
    * @param {Array.<Partition>} verticalPartitions
+   * @param {Property.<Color>} widthColorProperty
+   * @param {Property.<Color>} heightColorProperty
    */
-  function Area( horizontalPartitions, verticalPartitions ) {
+  function Area( horizontalPartitions, verticalPartitions, widthColorProperty, heightColorProperty ) {
     assert && assert( horizontalPartitions instanceof Array );
     assert && assert( verticalPartitions instanceof Array );
 
@@ -34,6 +36,12 @@ define( function( require ) {
 
     // @public {Array.<Partition>}
     this.verticalPartitions = verticalPartitions;
+
+    // @public {Property.<Color>}
+    this.widthColorProperty = widthColorProperty;
+
+    // @public {Property.<Color>}
+    this.heightColorProperty = heightColorProperty;
 
     // @public {Property.<number>}
     this.calculationIndexProperty = new Property( 0 );
@@ -172,6 +180,19 @@ define( function( require ) {
           return null;
         }
       } );
+    },
+
+    /**
+     * Returns the color property associated with the particular orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Color>}
+     */
+    getColorProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
     }
   } );
 } );

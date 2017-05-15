@@ -18,14 +18,20 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {boolean} isHorizontal
+   * @param {Property.<Color>} colorProperty
    */
-  function Partition( isHorizontal ) {
+  function Partition( isHorizontal, colorProperty ) {
+    assert && assert( typeof isHorizontal === 'boolean' );
+    assert && assert( colorProperty instanceof Property );
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( null );
 
     // @public {boolean}
     this.isHorizontal = isHorizontal;
+
+    // @public {Property.<Color>}
+    this.colorProperty = colorProperty;
 
     // @public {Property.<boolean>}
     this.visibleProperty = new Property( true );

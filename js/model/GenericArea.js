@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/model/GenericPartition' );
@@ -22,8 +23,9 @@ define( function( require ) {
    * @extends {Area}
    *
    * @param {boolean} allowPowers - Whether the user is able to add powers of x.
+   * @param {Property.<Color>} colorProperty
    */
-  function GenericArea( allowPowers ) {
+  function GenericArea( allowPowers, colorProperty ) {
     assert && assert( typeof allowPowers === 'boolean' );
 
     var self = this;
@@ -51,7 +53,7 @@ define( function( require ) {
       this.topPartition,
       this.middleVerticalPartition,
       this.bottomPartition
-    ] );
+    ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty );
 
     // @public {Property.<boolean>}
     this.firstHorizontalPartitionLineActiveProperty = new Property( false );

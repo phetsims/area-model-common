@@ -47,7 +47,7 @@ define( function( require ) {
 
     var self = this;
 
-    AreaNode.call( this, area, widthColorProperty, heightColorProperty );
+    AreaNode.call( this, area );
 
     var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;

@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/model/Area' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
@@ -23,9 +24,10 @@ define( function( require ) {
    * @constructor
    * @extends {Area}
    *
+   * @param {Property.<Color>} colorProperty
    * @param {Object} [options]
    */
-  function ProportionalArea( options ) {
+  function ProportionalArea( colorProperty, options ) {
     var self = this;
 
     options = _.extend( {
@@ -75,12 +77,12 @@ define( function( require ) {
     this.largeTileSize = options.largeTileSize;
 
     // @public {Partition}
-    this.leftPartition = new Partition( true );
-    this.rightPartition = new Partition( true );
+    this.leftPartition = new Partition( true, AreaModelColorProfile.proportionalWidthProperty );
+    this.rightPartition = new Partition( true, AreaModelColorProfile.proportionalWidthProperty );
 
     // @public {Partition}
-    this.topPartition = new Partition( false );
-    this.bottomPartition = new Partition( false );
+    this.topPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
+    this.bottomPartition = new Partition( false, AreaModelColorProfile.proportionalHeightProperty );
 
     // Keep partition sizes up-to-date
     Property.multilink( [ this.totalWidthProperty,
@@ -129,7 +131,7 @@ define( function( require ) {
     ], [
       this.topPartition,
       this.bottomPartition
-    ] );
+    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
 
     // @public {PartitionedArea}
     this.topLeftArea = new PartitionedArea( this.leftPartition, this.topPartition );

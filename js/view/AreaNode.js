@@ -26,10 +26,8 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Area} area
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
    */
-  function AreaNode( area, widthColorProperty, heightColorProperty ) {
+  function AreaNode( area ) {
     assert && assert( area instanceof Area );
 
     var self = this;
@@ -93,20 +91,20 @@ define( function( require ) {
     var labelOffset = -7;
 
     var horizontalLeftMark = new Line( 0, -markSize + horizontalLineOffset, 0, markSize + horizontalLineOffset, {
-      stroke: widthColorProperty
+      stroke: area.widthColorProperty
     } );
     this.addChild( horizontalLeftMark );
     var horizontalRightMark = new Line( 0, -markSize + horizontalLineOffset, 0, markSize + horizontalLineOffset, {
-      stroke: widthColorProperty
+      stroke: area.widthColorProperty
     } );
     this.addChild( horizontalRightMark );
     var horizontalLine = new Line( 0, horizontalLineOffset, 0, horizontalLineOffset, {
-      stroke: widthColorProperty
+      stroke: area.widthColorProperty
     } );
     this.addChild( horizontalLine );
     var horizontalRichText = new RichText( '', {
       font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
-      fill: widthColorProperty
+      fill: area.widthColorProperty
     } );
     var horizontalLabel = new Node( {
       children: [ horizontalRichText ],
@@ -115,20 +113,20 @@ define( function( require ) {
     this.addChild( horizontalLabel );
 
     var verticalLeftMark = new Line( -markSize + verticalLineOffset, 0, markSize + verticalLineOffset, 0, {
-      stroke: heightColorProperty
+      stroke: area.heightColorProperty
     } );
     this.addChild( verticalLeftMark );
     var verticalRightMark = new Line( -markSize + verticalLineOffset, 0, markSize + verticalLineOffset, 0, {
-      stroke: heightColorProperty
+      stroke: area.heightColorProperty
     } );
     this.addChild( verticalRightMark );
     var verticalLine = new Line( verticalLineOffset, 0, verticalLineOffset, 0, {
-      stroke: heightColorProperty
+      stroke: area.heightColorProperty
     } );
     this.addChild( verticalLine );
     var verticalRichText = new RichText( '', {
       font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
-      fill: heightColorProperty
+      fill: area.heightColorProperty
     } );
     var verticalLabel = new Node( {
       children: [ verticalRichText ],
