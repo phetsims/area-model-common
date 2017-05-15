@@ -68,70 +68,14 @@ define( function( require ) {
       xAlign: 'center'
     } );
 
-    var calculationNode = new VBox( {
-      children: [
-        new AlignBox( new Text( areaModelCalculationString, {
-          font: AreaModelConstants.TITLE_FONT,
-          maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
-        } ), {
-          group: panelAlignGroup,
-          xAlign: 'left'
-        } ),
-        new AlignBox( new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty ), {
-          group: panelAlignGroup,
-          xAlign: 'center',
-          xMargin: 15
-        } )
-      ],
-      spacing: 10
-    } );
+    var calculationNode = this.createPanelInterior( areaModelCalculationString, panelAlignGroup,
+                                                    new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty ) );
 
-    // TODO: simplify
-    var productsNode = new VBox( {
-      children: [
-        new AlignBox( new Text( partialProductsString, {
-          font: AreaModelConstants.TITLE_FONT,
-          maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
-        } ), {
-          group: panelAlignGroup,
-          xAlign: 'left'
-        } ),
-        new AlignBox( new PartialProductsSelectionNode( model ), {
-          group: panelAlignGroup,
-          xAlign: 'center',
-          xMargin: 15
-        } )
-      ],
-      spacing: 10
-    } );
+    var productsNode = this.createPanelInterior( partialProductsString, panelAlignGroup,
+                                                 new PartialProductsSelectionNode( model ) );
 
-    // TODO: consolidate options
-    var problemBox = new AccordionBox( problemContainer, {
-      titleNode: new Text( problemString, {
-        font: AreaModelConstants.TITLE_FONT,
-        maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
-      } ),
-      expandedProperty: model.problemBoxExpanded,
-      contentXMargin: 15,
-      contentYMargin: 12,
-      fill: AreaModelColorProfile.panelBackgroundProperty,
-      stroke: AreaModelColorProfile.panelBorderProperty,
-      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
-      titleAlignX: 'left'
-    } );
-
-    var areaBox = new AccordionBox( areaNode, {
-      titleNode: new Text( totalAreaOfModelString, {
-        font: AreaModelConstants.TITLE_FONT,
-        maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
-      } ),
-      expandedProperty: model.totalModelBoxExpanded,
-      contentXMargin: 15,
-      fill: AreaModelColorProfile.panelBackgroundProperty,
-      stroke: AreaModelColorProfile.panelBorderProperty,
-      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
-      titleAlignX: 'left'
-    } );
+    var problemBox = this.createAccordionBox( problemString, model.problemBoxExpanded, problemContainer );
+    var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaNode );
 
     var calculationPanel = new Panel( calculationNode, {
       xMargin: 15,
@@ -197,6 +141,59 @@ define( function( require ) {
   areaModelCommon.register( 'AreaScreenView', AreaScreenView );
 
   return inherit( ScreenView, AreaScreenView, {
+    /**
+     * Creates a panel interior with the title left-aligned, and the content somewhat offset from the left with a
+     * guaranteed margin.
+     * @private
+     *
+     * @param {string} titleString
+     * @param {AlignGroup} panelAlignGroup
+     * @param {Node} content
+     */
+    createPanelInterior: function( titleString, panelAlignGroup, content ) {
+      return new VBox( {
+        children: [
+          new AlignBox( new Text( titleString, {
+            font: AreaModelConstants.TITLE_FONT,
+            maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+          } ), {
+            group: panelAlignGroup,
+            xAlign: 'left'
+          } ),
+          new AlignBox( content, {
+            group: panelAlignGroup,
+            xAlign: 'center',
+            xMargin: 15
+          } )
+        ],
+        spacing: 10
+      } );
+    },
+
+    /**
+     * Creates an accordion box with common settings.
+     * @private
+     *
+     * @param {string} titleString
+     * @param {Property.<boolean>} expandedProperty
+     * @param {Node} content
+     */
+    createAccordionBox: function( titleString, expandedProperty, content ) {
+      return new AccordionBox( content, {
+        titleNode: new Text( titleString, {
+          font: AreaModelConstants.TITLE_FONT,
+          maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
+        } ),
+        expandedProperty: expandedProperty,
+        contentXMargin: 15,
+        contentYMargin: 12,
+        fill: AreaModelColorProfile.panelBackgroundProperty,
+        stroke: AreaModelColorProfile.panelBorderProperty,
+        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
+        titleAlignX: 'left'
+      } );
+    },
+
     /**
      * Returns the ideal translation for instances of AreaNode on the main view.
      * @protected
