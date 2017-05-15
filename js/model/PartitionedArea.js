@@ -34,6 +34,8 @@ define( function( require ) {
         return null;
       }
       return horizontalSize.times( verticalSize );
+    }, {
+      useDeepEquality: true
     } );
 
     // @public {Property.<boolean>}

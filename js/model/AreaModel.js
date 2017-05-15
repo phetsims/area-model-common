@@ -22,7 +22,7 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
-   * @param {boolean} allowPowers - TODO: use this one instead of passing through where available?
+   * @param {boolean} allowPowers
    * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
    * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
    */
@@ -58,10 +58,11 @@ define( function( require ) {
 
     var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
 
-    // TODO: may notify more than needed. check if it's a concern?
     // @public {Property.<Polynomial>}
     this.totalAreaProperty = new DerivedProperty( totalAreaProperties, function() {
       return self.currentAreaProperty.value.totalAreaProperty.value;
+    }, {
+      useDeepEquality: true
     } );
   }
 

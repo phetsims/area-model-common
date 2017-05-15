@@ -74,6 +74,8 @@ define( function( require ) {
         return null;
       }
       return horizontalTotal.times( verticalTotal );
+    }, {
+      useDeepEquality: true
     } );
 
     // @private {Property.<Range|null>} - Prefer getCoordinateRangeProperty()
@@ -210,6 +212,8 @@ define( function( require ) {
         else {
           return null;
         }
+      }, {
+        useDeepEquality: true
       } );
     },
 
@@ -245,6 +249,8 @@ define( function( require ) {
             return new Range( Math.min( totalRange.min, range.min ), Math.max( totalRange.max, range.max ) );
           }
         }, null );
+      }, {
+        useDeepEquality: true
       } );
     }
   } );

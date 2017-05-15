@@ -25,7 +25,9 @@ define( function( require ) {
     assert && assert( colorProperty instanceof Property );
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
-    this.sizeProperty = new Property( null );
+    this.sizeProperty = new Property( null, {
+      useDeepEquality: true
+    } );
 
     // @public {boolean}
     this.isHorizontal = isHorizontal;
@@ -39,7 +41,9 @@ define( function( require ) {
     // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when
     // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
     // will be from 0 to its maximum size.
-    this.coordinateRangeProperty = new Property( null );
+    this.coordinateRangeProperty = new Property( null, {
+      useDeepEquality: true
+    } );
   }
 
   areaModelCommon.register( 'Partition', Partition );
