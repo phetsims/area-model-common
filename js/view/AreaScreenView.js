@@ -48,77 +48,57 @@ define( function( require ) {
     assert && assert( typeof isProportional === 'boolean' );
     assert && assert( typeof decimalPlaces === 'number' );
 
-    var self = this;
-
     ScreenView.call( this );
 
     var panelAlignGroup = new AlignGroup( {
       matchVertical: false
     } );
 
+    // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
     var problemNode = isProportional ? new ProportionalProblemNode( model, decimalPlaces )
                                      : new GenericProblemNode( model );
-    var problemContainer = new AlignBox( problemNode, {
+    var problemBoxContent = new AlignBox( problemNode, {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
-
-    var areaNode = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.allowPowers ), {
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.allowPowers ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
+    var calculationSelectionPanel = this.createPanel( areaModelCalculationString, panelAlignGroup,
+                                                      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty ) );
 
-    var calculationNode = this.createPanelInterior( areaModelCalculationString, panelAlignGroup,
-                                                    new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty ) );
+    var productsSelectionPanel = this.createPanel( partialProductsString, panelAlignGroup,
+                                                   new PartialProductsSelectionNode( model ) );
 
-    var productsNode = this.createPanelInterior( partialProductsString, panelAlignGroup,
-                                                 new PartialProductsSelectionNode( model ) );
+    // Create accordion boxes after all group-aligned content is created.
+    var problemBox = this.createAccordionBox( problemString, model.problemBoxExpanded, problemBoxContent );
+    var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
-    var problemBox = this.createAccordionBox( problemString, model.problemBoxExpanded, problemContainer );
-    var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaNode );
+    // Update panel/box visibility based on whether a total area exists
+    model.totalAreaProperty.link( function( area ) {
+      var hasArea = area !== null;
 
-    var calculationPanel = new Panel( calculationNode, {
-      xMargin: 15,
-      yMargin: 10,
-      fill: AreaModelColorProfile.panelBackgroundProperty,
-      stroke: AreaModelColorProfile.panelBorderProperty,
-      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+      areaBox.visible = hasArea;
+      calculationSelectionPanel.visible = hasArea;
+      productsSelectionPanel.visible = hasArea;
     } );
 
-    // TODO: simplify
-    var productsPanel = new Panel( productsNode, {
-      xMargin: 15,
-      yMargin: 10,
-      fill: AreaModelColorProfile.panelBackgroundProperty,
-      stroke: AreaModelColorProfile.panelBorderProperty,
-      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
-    } );
-
-    // @protected {VBox} - Available for suptype positioning
+    // @protected {VBox} - Available for suptype positioning relative to this.
     this.panelContainer = new VBox( {
-      // TODO: change children based on whether there is a defined area?
       children: [
         problemBox,
         areaBox,
-        calculationPanel,
-        productsPanel
+        calculationSelectionPanel,
+        productsSelectionPanel
       ],
       spacing: AreaModelConstants.PANEL_SPACING,
       top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
     } );
     this.addChild( this.panelContainer );
-    model.totalAreaProperty.link( function( area ) {
-      self.panelContainer.children = ( area === null ) ? [ problemBox ] : [
-        problemBox,
-        areaBox,
-        calculationPanel,
-        productsPanel
-      ];
-    } );
 
     // @protected {Node}
-    // TODO: remove name conflict with this and the other "panel"
     var calculationWidth = isProportional ? AreaModelConstants.AREA_SIZE : 880;
     var calculationHeight = isProportional ? 120 : 150;
     this.calculationDisplayPanel = new CalculationPanel( model, calculationWidth, calculationHeight, {
@@ -150,8 +130,8 @@ define( function( require ) {
      * @param {AlignGroup} panelAlignGroup
      * @param {Node} content
      */
-    createPanelInterior: function( titleString, panelAlignGroup, content ) {
-      return new VBox( {
+    createPanel: function( titleString, panelAlignGroup, content ) {
+      var panelContent = new VBox( {
         children: [
           new AlignBox( new Text( titleString, {
             font: AreaModelConstants.TITLE_FONT,
@@ -167,6 +147,13 @@ define( function( require ) {
           } )
         ],
         spacing: 10
+      } );
+      return new Panel( panelContent, {
+        xMargin: 15,
+        yMargin: 10,
+        fill: AreaModelColorProfile.panelBackgroundProperty,
+        stroke: AreaModelColorProfile.panelBorderProperty,
+        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
       } );
     },
 
