@@ -53,67 +53,40 @@ define( function( require ) {
     // @public {Array.<Property.<boolean>>}
     this.partitionLineActiveProperties = this.horizontalPartitionLineActiveProperties.concat( this.verticalPartitionLineActiveProperties );
 
-    var firstOffset = AreaModelConstants.GENERIC_FIRST_OFFSET;
-    var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
-    Property.multilink( this.partitionLineActiveProperties, function( firstHorizontal, secondHorizontal, firstVertical, secondVertical ) {
-      var firstHorizontalPartition = self.getFirstPartition( Orientation.HORIZONTAL );
-      var secondHorizontalPartition = self.getSecondPartition( Orientation.HORIZONTAL );
-      var thirdHorizontalPartition = self.getThirdPartition( Orientation.HORIZONTAL );
 
-      var firstVerticalPartition = self.getFirstPartition( Orientation.VERTICAL );
-      var secondVerticalPartition = self.getSecondPartition( Orientation.VERTICAL );
-      var thirdVerticalPartition = self.getThirdPartition( Orientation.VERTICAL );
+    Orientation.CHOICES.forEach( function( orientation ) {
+      Property.multilink( self.getPartitionLineActiveProperties( orientation ), function( first, second ) {
+        var firstPartition = self.getFirstPartition( orientation );
+        var secondPartition = self.getSecondPartition( orientation );
+        var thirdPartition = self.getThirdPartition( orientation );
 
-      // e.g. 0 splits => left, first => left+middle, second => left+right, all => left+middle+right
-      secondHorizontalPartition.visibleProperty.value = firstHorizontal;
-      secondVerticalPartition.visibleProperty.value = firstVertical;
-      thirdHorizontalPartition.visibleProperty.value = secondHorizontal;
-      thirdVerticalPartition.visibleProperty.value = secondVertical;
+        var firstOffset = AreaModelConstants.GENERIC_FIRST_OFFSET;
+        var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
 
-      // TODO: don't require this many changes on every full change?
-      // YUP THIS
+        // e.g. 0 splits => left, first => left+middle, second => left+right, all => left+middle+right
+        secondPartition.visibleProperty.value = first;
+        thirdPartition.visibleProperty.value = second;
 
-      // TODO: refactor horizontal/vertical together
-      if ( firstHorizontal ) {
-        firstHorizontalPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
-        if ( secondHorizontal ) {
-          secondHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
+        if ( first ) {
+          firstPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
+          if ( second ) {
+            secondPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
+          }
+          else {
+            secondPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
+          }
         }
         else {
-          secondHorizontalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
+          secondPartition.coordinateRangeProperty.value = null;
+          if ( second ) {
+            firstPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
+          }
+          else {
+            firstPartition.coordinateRangeProperty.value = new Range( 0, 1 );
+          }
         }
-      }
-      else {
-        secondHorizontalPartition.coordinateRangeProperty.value = null;
-        if ( secondHorizontal ) {
-          firstHorizontalPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
-        }
-        else {
-          firstHorizontalPartition.coordinateRangeProperty.value = new Range( 0, 1 );
-        }
-      }
-      thirdHorizontalPartition.coordinateRangeProperty.value = secondHorizontal ? new Range( secondOffset, 1 ) : null;
-
-      // TODO: refactor horizontal/vertical together
-      if ( firstVertical ) {
-        firstVerticalPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
-        if ( secondVertical ) {
-          secondVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
-        }
-        else {
-          secondVerticalPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
-        }
-      }
-      else {
-        secondVerticalPartition.coordinateRangeProperty.value = null;
-        if ( secondVertical ) {
-          firstVerticalPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
-        }
-        else {
-          firstVerticalPartition.coordinateRangeProperty.value = new Range( 0, 1 );
-        }
-      }
-      thirdVerticalPartition.coordinateRangeProperty.value = secondVertical ? new Range( secondOffset, 1 ) : null;
+        thirdPartition.coordinateRangeProperty.value = second ? new Range( secondOffset, 1 ) : null;
+      } );
     } );
 
     // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
