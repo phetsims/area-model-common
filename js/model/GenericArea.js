@@ -53,7 +53,7 @@ define( function( require ) {
     // @public {Array.<Property.<boolean>>}
     this.partitionLineActiveProperties = this.horizontalPartitionLineActiveProperties.concat( this.verticalPartitionLineActiveProperties );
 
-
+    // Set up partition coordinate/size updates
     Orientation.CHOICES.forEach( function( orientation ) {
       Property.multilink( self.getPartitionLineActiveProperties( orientation ), function( first, second ) {
         var firstPartition = self.getFirstPartition( orientation );
@@ -92,7 +92,14 @@ define( function( require ) {
     // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
     this.activePartitionProperty = new Property( null );
 
-    // TODO: drop activePartition when it is made invisible
+    // If a partition was active and is made invisible, make it not active
+    this.partitions.forEach( function( partition ) {
+      partition.visibleProperty.lazyLink( function( visible ) {
+        if ( self.activePartitionProperty.value === partition && !visible ) {
+          self.activePartitionProperty.reset();
+        }
+      } );
+    } );
   }
 
   areaModelCommon.register( 'GenericArea', GenericArea );
