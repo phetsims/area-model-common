@@ -77,17 +77,14 @@ define( function( require ) {
    * TODO: Just tag the width/height colors on the Area itself? Or have an AreaConfig?
    * @param {Area} area
    * @param {boolean} allowPowers
-   * @param {Property.<Color>} widthColorProperty
-   * @param {Property.<Color>} heightColorProperty
    */
-  function CalculationLines( area, allowPowers, widthColorProperty, heightColorProperty ) {
+  function CalculationLines( area, allowPowers ) {
     assert && assert( area instanceof Area );
+    assert && assert( typeof allowPowers === 'boolean' );
 
     // @private
     this.area = area;
     this.allowPowers = allowPowers;
-    this.widthColorProperty = widthColorProperty;
-    this.heightColorProperty = heightColorProperty;
   }
 
   areaModelCommon.register( 'CalculationLines', CalculationLines );
@@ -212,8 +209,7 @@ define( function( require ) {
 
     // NOTE: Term or Polynomial, includeBinaryOperation ignored for polynomial
     createColoredRichText: function( term, orientation, isActive, includeBinaryOperation, excludeSign ) {
-      // TODO: color selector!
-      var colorProperty = orientation === Orientation.HORIZONTAL ? this.widthColorProperty : this.heightColorProperty;
+      var colorProperty = this.area.getColorProperty( orientation );
       var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
       return new RichText( string, {
         font: AreaModelConstants.CALCULATION_TERM_FONT,
