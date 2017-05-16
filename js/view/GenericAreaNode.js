@@ -17,12 +17,14 @@ define( function( require ) {
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
+  var GenericPartitionedAreaNode = require( 'AREA_MODEL_COMMON/view/GenericPartitionedAreaNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -33,7 +35,6 @@ define( function( require ) {
    * @constructor
    * @extends {AreaNode}
    *
-   * TODO: reduce to options object
    * @param {GenericArea} area
    * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
@@ -42,6 +43,7 @@ define( function( require ) {
   function GenericAreaNode( area, allowExponents, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof GenericArea );
     assert && assert( typeof allowExponents === 'boolean' );
+    assert && assert( partialProductsChoiceProperty instanceof Property );
 
     var self = this;
 
@@ -50,41 +52,15 @@ define( function( require ) {
     var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;
 
-    var background = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
+    // Background
+    this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
       stroke: AreaModelColorProfile.areaBorderProperty
-    } );
-    this.areaLayer.addChild( background );
+    } ) );
 
+    // Sign-colored partition area backgrounds
     area.partitionedAreas.forEach( function( partitionedArea ) {
-      var coloredBackground = new Rectangle( {} );
-
-      partitionedArea.areaProperty.link( function( area ) {
-        if ( area !== null ) {
-          coloredBackground.fill = area.coefficient === 0 ? null
-                                                          : ( area.coefficient > 0 ? AreaModelColorProfile.genericPositiveBackgroundProperty
-                                                                                   : AreaModelColorProfile.genericNegativeBackgroundProperty );
-        }
-        else {
-          coloredBackground.fill = null;
-        }
-      } );
-
-      partitionedArea.visibleProperty.linkAttribute( coloredBackground, 'visible' );
-
-      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
-        if ( horizontalRange !== null ) {
-          coloredBackground.rectX = horizontalRange.min * self.viewSize;
-          coloredBackground.rectWidth = horizontalRange.getLength() * self.viewSize;
-        }
-      } );
-      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
-        if ( verticalRange !== null ) {
-          coloredBackground.rectY = verticalRange.min * self.viewSize;
-          coloredBackground.rectHeight = verticalRange.getLength() * self.viewSize;
-        }
-      } );
-      self.areaLayer.addChild( coloredBackground );
+      self.areaLayer.addChild( new GenericPartitionedAreaNode( partitionedArea, self.modelViewTransform ) );
     } );
 
     function addDock( x, y, property ) {
