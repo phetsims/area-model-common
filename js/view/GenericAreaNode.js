@@ -15,21 +15,16 @@ define( function( require ) {
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
-  var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
+  var GenericEditNode = require( 'AREA_MODEL_COMMON/view/GenericEditNode' );
   var GenericPartitionedAreaNode = require( 'AREA_MODEL_COMMON/view/GenericPartitionedAreaNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/view/TermKeypadPanel' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -81,87 +76,10 @@ define( function( require ) {
       self.areaLayer.addChild( self.createPartitionLine( properties[ 1 ], orientation, secondOffset ) );
     } );
 
-    function getSampleString( digitCount ) {
-      if ( allowExponents ) {
-        return '-9x<sup>2</sup>';
-      }
-      else {
-        // TODO: consider using \u2212
-        return '-' + _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
-      }
-    }
-
-    // TODO: refactor/cleanup
-    function createEditButton( partition ) {
-
-      // TODO: better way to test for size
-      var sampleString = getSampleString( partition.digitCount );
-      var richText = new RichText( sampleString, {
-        fill: partition.colorProperty,
-        font: AreaModelConstants.EDIT_READOUT_FONT
-      } );
-
-      var background = new Rectangle( 0, 0, richText.width + 5, richText.height + 5, {
-        stroke: partition.colorProperty,
-        cornerRadius: 4,
-        children: [
-          richText
-        ]
-      } );
-
-      partition.sizeProperty.link( function( size ) {
-        if ( size === null ) {
-          richText.text = '';
-        }
-        else {
-          richText.text = size.toRichString( false );
-          richText.center = background.selfBounds.center;
-        }
-      } );
-
-      area.activePartitionProperty.link( function( activePartition ) {
-        background.fill = activePartition === partition ? AreaModelColorProfile.editActiveBackgroundProperty
-                                                        : AreaModelColorProfile.editInactiveBackgroundProperty;
-      } );
-
-      var BoxType = partition.orientation === Orientation.HORIZONTAL ? HBox : VBox;
-
-      var box = new BoxType( {
-        spacing: 4,
-        children: [
-          background,
-          new MutableOptionsNode( RectangularPushButton, [], {
-            content: new FontAwesomeNode( 'pencil_square_o', {
-              scale: 0.4,
-              xMargin: 6,
-              yMargin: 4
-            } ),
-            listener: function() {
-              area.activePartitionProperty.value = partition;
-            }
-          }, {
-            baseColor: AreaModelColorProfile.editButtonBackgroundProperty
-          } )
-        ]
-      } );
-      self.labelLayer.addChild( box );
-
-      var primaryName = Orientation.getCenterCoordinateName( partition.orientation );
-
-      partition.coordinateRangeProperty.link( function( range ) {
-        if ( range ) {
-          box[ primaryName ] = range.getCenter() * self.viewSize;
-        }
-      } );
-      if ( partition.orientation === Orientation.HORIZONTAL ) {
-        box.centerY = -20;
-      }
-      else {
-        box.centerX = -30;
-      }
-      partition.visibleProperty.linkAttribute( box, 'visible' );
-    }
-    area.partitions.forEach( createEditButton );
+    // Edit readouts/buttons
+    area.partitions.forEach( function( partition ) {
+      self.labelLayer.addChild( new GenericEditNode( area, partition, self.modelViewTransform, allowExponents ) );
+    } );
 
     // Keypad
     this.labelLayer.addChild( new TermKeypadPanel( area.activePartitionProperty, allowExponents, {
