@@ -19,10 +19,13 @@ define( function( require ) {
   areaModelCommon.register( 'Orientation', Orientation );
 
   // All values the enumeration can take.
+  // REVIEW: bad name. Improve it.
   Orientation.CHOICES = [
     Orientation.HORIZONTAL,
     Orientation.VERTICAL
   ];
+
+  // TODO: move to more of an object with these as methods.
 
   /**
    * Returns whether the input is an orientation (for ease of assertions)
@@ -72,6 +75,21 @@ define( function( require ) {
     assert && assert( Orientation.isOrientation( orientation ) );
 
     return orientation === Orientation.HORIZONTAL ? Orientation.VERTICAL : Orientation.HORIZONTAL;
+  };
+
+  /**
+   * Returns the single coordinate transformed by the appropriate dimension.
+   * @public
+   *
+   * @param {Orientation} orientation
+   * @param {ModelViewTransform2} modelViewTransform
+   * @param {number} value
+   */
+  Orientation.modelToView = function( orientation, modelViewTransform, value ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+
+    return orientation === Orientation.HORIZONTAL ? modelViewTransform.modelToViewX( value )
+                                                  : modelViewTransform.modelToViewY( value );
   };
 
   // verify that enum is immutable, without the runtime penalty in production code

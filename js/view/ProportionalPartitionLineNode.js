@@ -61,14 +61,11 @@ define( function( require ) {
     var primaryCoordinate = Orientation.getCoordinateName( orientation );
     var secondaryCoordinate = Orientation.getCoordinateName( Orientation.opposite( orientation ) );
 
-    var primaryTransform = ( orientation === Orientation.HORIZONTAL ? modelViewTransform.modelToViewX : modelViewTransform.modelToViewY ).bind( modelViewTransform );
-    var secondaryTransform = ( orientation === Orientation.HORIZONTAL ? modelViewTransform.modelToViewY : modelViewTransform.modelToViewX ).bind( modelViewTransform );
-
     primaryProperty.link( function( primary ) {
-      self[ primaryCoordinate ] = primaryTransform( primary === null ? 0 : primary );
+      self[ primaryCoordinate ] = Orientation.modelToView( orientation, modelViewTransform, primary === null ? 0 : primary );
     } );
     secondaryProperty.link( function( secondary ) {
-      var offsetValue = secondaryTransform( secondary ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+      var offsetValue = Orientation.modelToView( Orientation.opposite( orientation ), modelViewTransform, secondary ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
       handle[ secondaryCoordinate ] = offsetValue;
       line[ secondaryCoordinate + '2' ] = offsetValue;
     } );

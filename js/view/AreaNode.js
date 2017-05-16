@@ -70,15 +70,13 @@ define( function( require ) {
     area.partitionedAreas.forEach( function( partitionedArea ) {
       var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, !isProportional );
       self.labelLayer.addChild( productLabel );
-      partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
-        if ( horizontalRange !== null ) {
-          productLabel.x = self.modelViewTransform.modelToViewX( horizontalRange.getCenter() );
-        }
-      } );
-      partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
-        if ( verticalRange !== null ) {
-          productLabel.y = self.modelViewTransform.modelToViewY( verticalRange.getCenter() );
-        }
+
+      Orientation.CHOICES.forEach( function( orientation ) {
+        partitionedArea.getPartition( orientation ).coordinateRangeProperty.link( function( range ) {
+          if ( range !== null ) {
+            productLabel[ Orientation.getCoordinateName( orientation ) ] = Orientation.modelToView( orientation, self.modelViewTransform, range.getCenter() );
+          }
+        } );
       } );
     } );
 

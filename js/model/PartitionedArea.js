@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
 
   /**
    * @constructor
@@ -45,6 +46,19 @@ define( function( require ) {
   areaModelCommon.register( 'PartitionedArea', PartitionedArea );
 
   return inherit( Object, PartitionedArea, {
+    /**
+     * Returns the partition for the given orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Partition}
+     */
+    getPartition: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalPartition : this.verticalPartition;
+    },
+
     /**
      * Cleans up references.
      * @public
