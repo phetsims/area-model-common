@@ -40,19 +40,20 @@ define( function( require ) {
 
     AreaScreenView.call( this, model, true, decimalPlaces );
 
-    var areaNodes = model.areas.map( function( area ) {
+    // @private {Array.<ProportionalAreaNode>}
+    this.areaNodes = model.areas.map( function( area ) {
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.partialProductsChoiceProperty, {
         translation: self.getAreaTranslation()
       } );
     } );
 
-    areaNodes.forEach( function( areaNode ) {
+    this.areaNodes.forEach( function( areaNode ) {
       self.addChild( areaNode );
     } );
 
     // Only show the current area
     model.currentAreaProperty.link( function( currentArea ) {
-      areaNodes.forEach( function( areaNode ) {
+      self.areaNodes.forEach( function( areaNode ) {
         areaNode.visible = areaNode.area === currentArea;
       } );
     } );
@@ -87,6 +88,20 @@ define( function( require ) {
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
 
   return inherit( AreaScreenView, ProportionalAreaScreenView, {
+    /**
+     * Steps forward in time.
+     * @public
+     *
+     * @param {number} dt
+     */
+    step: function( dt ) {
+      this.areaNodes.forEach( function( areaNode ) {
+        if ( areaNode.visible ) {
+          areaNode.update();
+        }
+      } );
+    },
+
     /**
      * Creates a grid icon.
      * @private

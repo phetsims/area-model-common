@@ -25,7 +25,7 @@ define( function( require ) {
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var TiledPartitionAreaNode = require( 'AREA_MODEL_COMMON/view/TiledPartitionAreaNode' );
+  var TiledAreaNode = require( 'AREA_MODEL_COMMON/view/TiledAreaNode' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -44,10 +44,9 @@ define( function( require ) {
 
     AreaNode.call( this, area, partialProductsChoiceProperty, true );
 
-    // Background
+    // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
-      stroke: AreaModelColorProfile.areaBorderProperty
     } ) );
 
     // Grid lines
@@ -73,10 +72,14 @@ define( function( require ) {
 
     // Tiles
     if ( area.tilesAvailable ) {
-      area.partitionedAreas.forEach( function( partitionedArea ) {
-        self.areaLayer.addChild( new TiledPartitionAreaNode( partitionedArea, self.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize ) );
-      } );
+      this.tiledAreaNode = new TiledAreaNode( area, self.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
+      self.areaLayer.addChild( this.tiledAreaNode );
     }
+
+    // Background stroke
+    this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
+      stroke: AreaModelColorProfile.areaBorderProperty
+    } ) );
 
     // Docks
     this.areaLayer.addChild( this.createDock( Orientation.HORIZONTAL ) );
@@ -100,6 +103,14 @@ define( function( require ) {
   areaModelCommon.register( 'ProportionalAreaNode', ProportionalAreaNode );
 
   return inherit( AreaNode, ProportionalAreaNode, {
+    /**
+     * Updates expensive-to-update things.
+     * @public
+     */
+    update: function() {
+      this.tiledAreaNode && this.tiledAreaNode.update();
+    },
+
     /**
      * Creates a dock node for the given orientation.
      * @private
