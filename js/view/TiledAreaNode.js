@@ -184,14 +184,19 @@ define( function( require ) {
 
       this.forPartitions( Orientation.HORIZONTAL, function( horizontalLargeCount, horizontalSmallCount, xMin, xBorder, xMax ) {
         self.forPartitions( Orientation.VERTICAL, function( verticalLargeCount, verticalSmallCount, yMin, yBorder, yMax ) {
-          var i; // TODO: don't hack indices
-          for ( i = 1; i < horizontalLargeCount + 1; i++ ) {
-            extraLinesShape.moveTo( xMin + mapX( i * largeTileSize ), 0 ).lineTo( xMin + mapX( i * largeTileSize ), mapY( area.maximumSize ) );
+
+          // Add in extra lines on the far sides of large sections.
+          var i;
+          for ( i = 0; i < horizontalLargeCount; i++ ) {
+            var x = xMin + mapX( ( i + 1 ) * largeTileSize );
+            extraLinesShape.moveTo( x, 0 ).lineTo( x, mapY( area.maximumSize ) );
           }
-          for ( i = 1; i < verticalLargeCount + 1; i++ ) {
-            extraLinesShape.moveTo( 0, yMin + mapY( i * largeTileSize ) ).lineTo( mapX( area.maximumSize ), yMin + mapY( i * largeTileSize ) );
+          for ( i = 0; i < verticalLargeCount; i++ ) {
+            var y = yMin + mapY( ( i + 1 ) * largeTileSize );
+            extraLinesShape.moveTo( 0, y ).lineTo( mapX( area.maximumSize ), y );
           }
 
+          // Add sections to the relevant shapes.
           if ( horizontalLargeCount && verticalLargeCount ) {
             bigShape.rect( xMin, yMin, xBorder - xMin, yBorder - yMin );
           }
