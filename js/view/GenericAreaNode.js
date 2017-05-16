@@ -30,6 +30,7 @@ define( function( require ) {
   var RichText = require( 'SCENERY_PHET/RichText' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/view/TermKeypadPanel' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -63,42 +64,22 @@ define( function( require ) {
       self.areaLayer.addChild( new GenericPartitionedAreaNode( partitionedArea, self.modelViewTransform ) );
     } );
 
-    // Partition line docks
     Orientation.CHOICES.forEach( function( orientation ) {
+      // Partition line docks
       var properties = area.getPartitionLineActiveProperties( orientation );
-      var nodeOptions = {};
-      nodeOptions[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = self.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
+      var dockOptions = {};
+      dockOptions[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = self.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
 
-      nodeOptions[ Orientation.getCoordinateName( orientation ) ] = firstOffset;
-      self.areaLayer.addChild( self.createDock( properties[ 0 ], nodeOptions ) );
+      dockOptions[ Orientation.getCoordinateName( orientation ) ] = firstOffset;
+      self.areaLayer.addChild( self.createDock( properties[ 0 ], dockOptions ) );
 
-      nodeOptions[ Orientation.getCoordinateName( orientation ) ] = secondOffset;
-      self.areaLayer.addChild( self.createDock( properties[ 1 ], nodeOptions ) );
+      dockOptions[ Orientation.getCoordinateName( orientation ) ] = secondOffset;
+      self.areaLayer.addChild( self.createDock( properties[ 1 ], dockOptions ) );
+
+      // Partition lines
+      self.areaLayer.addChild( self.createPartitionLine( properties[ 0 ], orientation, firstOffset ) );
+      self.areaLayer.addChild( self.createPartitionLine( properties[ 1 ], orientation, secondOffset ) );
     } );
-
-    function addPartitionLine( x1, y1, x2, y2, property, colorProperty ) {
-      var node = new Node( {
-        children: [
-          new Line( x1, y1, x2, y2, {
-            stroke: AreaModelColorProfile.partitionLineStrokeProperty
-          } ),
-          new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-            x: x1,
-            y: y1,
-            fill: colorProperty,
-            stroke: AreaModelColorProfile.partitionLineBorderProperty
-          } )
-        ]
-      } );
-      property.linkAttribute( node, 'visible' );
-      self.areaLayer.addChild( node );
-    }
-
-    // TODO: consolidate with adding docks
-    addPartitionLine( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 0 ], area.getColorProperty( Orientation.HORIZONTAL ) );
-    addPartitionLine( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 1 ], area.getColorProperty( Orientation.HORIZONTAL ) );
-    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, 0, firstOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 0 ], area.getColorProperty( Orientation.VERTICAL ) );
-    addPartitionLine( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, 0, secondOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 1 ], area.getColorProperty( Orientation.VERTICAL ) );
 
     function getSampleString( digitCount ) {
       if ( allowExponents ) {
@@ -215,6 +196,41 @@ define( function( require ) {
           } )
         ]
       }, nodeOptions ) );
+    },
+
+    /**
+     * Creates a partition line (view only)
+     * @private
+     *
+     * @param {Property.<boolean>} visibleProperty
+     * @param {Orientation} orientation
+     * @param {number} offset
+     */
+    createPartitionLine: function( visibleProperty, orientation, offset ) {
+      var firstPoint = new Vector2();
+      var secondPoint = new Vector2();
+
+      firstPoint[ Orientation.getCoordinateName( orientation ) ] = offset;
+      secondPoint[ Orientation.getCoordinateName( orientation ) ] = offset;
+      firstPoint[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
+      secondPoint[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = 0;
+
+      var node = new Node( {
+        children: [
+          new Line( {
+            p1: firstPoint,
+            p2: secondPoint,
+            stroke: AreaModelColorProfile.partitionLineStrokeProperty
+          } ),
+          new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
+            translation: firstPoint,
+            fill: this.area.getColorProperty( orientation ),
+            stroke: AreaModelColorProfile.partitionLineBorderProperty
+          } )
+        ]
+      } );
+      visibleProperty.linkAttribute( node, 'visible' );
+      return node;
     }
   } );
 } );
