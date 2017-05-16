@@ -78,39 +78,8 @@ define( function( require ) {
       } );
     }
 
-    // TODO: remove duplication
-    var widthDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-      fill: AreaModelColorProfile.dockBackgroundProperty,
-      stroke: AreaModelColorProfile.dockBorderProperty,
-      lineDash: [ 3, 3 ],
-      children: [
-        new Line( 0, -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_OFFSET, {
-          stroke: AreaModelColorProfile.dockBorderProperty
-        } )
-      ]
-    } );
-    this.areaLayer.addChild( widthDock );
-
-    var heightDock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-      fill: AreaModelColorProfile.dockBackgroundProperty,
-      stroke: AreaModelColorProfile.dockBorderProperty,
-      lineDash: [ 3, 3 ],
-      children: [
-        new Line( -AreaModelConstants.PARTITION_HANDLE_RADIUS, 0, -AreaModelConstants.PARTITION_HANDLE_OFFSET, 0, {
-          stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
-        } )
-      ]
-    } );
-    this.areaLayer.addChild( heightDock );
-
-    area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {
-      widthDock.visible = totalWidth >= area.snapSize * 2 - 1e-7;
-      heightDock.x = self.modelViewTransform.modelToViewX( totalWidth ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
-    } );
-    area.getActiveTotalProperty( Orientation.VERTICAL ).link( function( totalHeight ) {
-      heightDock.visible = totalHeight >= area.snapSize * 2 - 1e-7;
-      widthDock.y = self.modelViewTransform.modelToViewY( totalHeight ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
-    } );
+    this.areaLayer.addChild( this.createDock( Orientation.HORIZONTAL ) );
+    this.areaLayer.addChild( this.createDock( Orientation.VERTICAL ) );
 
     var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL );
     this.areaLayer.addChild( horizontalPartitionLine );
@@ -168,5 +137,44 @@ define( function( require ) {
 
   areaModelCommon.register( 'ProportionalAreaNode', ProportionalAreaNode );
 
-  return inherit( AreaNode, ProportionalAreaNode );
+  return inherit( AreaNode, ProportionalAreaNode, {
+    /**
+     * Creates a dock node for the given orientation.
+     * @private
+     *
+     * @param {Orientation} orientation
+     */
+    createDock: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      var self = this;
+
+      var lineOptions = {
+        stroke: AreaModelColorProfile.dockBorderProperty
+      };
+      lineOptions[ orientation.coordinate + '1' ] = 0;
+      lineOptions[ orientation.opposite.coordinate + '1' ] = -AreaModelConstants.PARTITION_HANDLE_RADIUS;
+      lineOptions[ orientation.coordinate + '2' ] = 0;
+      lineOptions[ orientation.opposite.coordinate + '2' ] = -AreaModelConstants.PARTITION_HANDLE_OFFSET;
+
+      var dock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
+        fill: AreaModelColorProfile.dockBackgroundProperty,
+        stroke: AreaModelColorProfile.dockBorderProperty,
+        lineDash: [ 3, 3 ],
+        children: [
+          new Line( lineOptions )
+        ]
+      } );
+
+      this.area.getActiveTotalProperty( orientation ).link( function( totalSize ) {
+        dock.visible = totalSize >= self.area.snapSize * 2 - 1e-7;
+      } );
+
+      this.area.getActiveTotalProperty( orientation.opposite ).link( function( totalSize ) {
+        dock[ orientation.opposite.coordinate ] = orientation.opposite.modelToView( self.modelViewTransform, totalSize ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+      } );
+
+      return dock;
+    }
+  } );
 } );
