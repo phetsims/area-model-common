@@ -39,16 +39,20 @@ define( function( require ) {
     var text = new RichText( '', {
       font: AreaModelConstants.PARTIAL_PRODUCT_FONT
     } );
+    this.addChild( text );
+
+    // Font
     partialProductsChoiceProperty.link( function( choice ) {
       text.font = ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelConstants.PARTIAL_PRODUCT_FONT
                                                                 : AreaModelConstants.PARTIAL_FACTOR_FONT;
     } );
-    this.addChild( text );
 
+    // Visibility
     Property.multilink( [ partitionedArea.areaProperty, partialProductsChoiceProperty, partitionedArea.visibleProperty ], function( area, choice, areaVisible ) {
       self.visible = areaVisible && ( area !== null && choice !== PartialProductsChoice.HIDDEN );
     } );
 
+    // Text/alignment
     Property.multilink( [ partitionedArea.horizontalPartition.sizeProperty, partitionedArea.verticalPartition.sizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
       if ( horizontalSize === null || verticalSize === null || choice === PartialProductsChoice.HIDDEN ) {
         text.text = '';
