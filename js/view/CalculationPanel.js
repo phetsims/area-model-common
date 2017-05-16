@@ -104,6 +104,9 @@ define( function( require ) {
     this.addChild( lineLayer );
 
     function update() {
+      self.visible = model.areaCalculationChoiceProperty.value !== AreaCalculationChoice.HIDDEN &&
+                     model.currentAreaProperty.value.totalAreaProperty.value !== null;
+
       var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
 
       lineLayer.removeAllChildren();
@@ -187,10 +190,7 @@ define( function( require ) {
 
     }
 
-    model.areaCalculationChoiceProperty.link( function( choice ) {
-      self.visible = choice !== AreaCalculationChoice.HIDDEN;
-      update(); // TODO: extra update on init()?
-    } );
+    model.areaCalculationChoiceProperty.lazyLink( update );
 
     model.currentAreaProperty.link( function( newArea, oldArea ) {
       if ( oldArea ) {
