@@ -32,7 +32,7 @@ define( function( require ) {
 
     AbstractKeyAccumulator.call( this );
 
-    // @public {Property.<string>}
+    // @public {Property.<string>} - For display
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
       return accumulatedKeys.map( function( key ) {
         if ( key === Keys.PLUSMINUS ) {
@@ -50,7 +50,7 @@ define( function( require ) {
       } ).join( '' );
     } );
 
-    // @public {Property.<Term|null>}
+    // @public {Property.<Term|null>} - The term used if 'enter' is pressed
     this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
       var lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
 
@@ -93,7 +93,6 @@ define( function( require ) {
   areaModelCommon.register( 'TermAccumulator', TermAccumulator );
 
   return inherit( AbstractKeyAccumulator, TermAccumulator, {
-
     /**
      * Handles what happens when a key is pressed and create proposed set of keys to be passed to Validator
      * @public

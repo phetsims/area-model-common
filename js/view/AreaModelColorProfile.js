@@ -104,6 +104,9 @@ define( function( require ) {
     keypadPanelBorder: { default: new Color( 0x99, 0x99, 0x99 ) },
     keypadPanelBackground: { default: new Color( 230, 230, 230 ) },
 
+    keypadReadoutBorder: { default: Color.BLACK },
+    keypadReadoutBackground: { default: Color.WHITE },
+
     // Area sign highlights
     genericPositiveBackground: { default: new Color( 0xd4f3fe ) },
     genericNegativeBackground: { default: new Color( 0xe5a5ab ) }

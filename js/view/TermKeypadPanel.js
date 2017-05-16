@@ -27,26 +27,19 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
+  // strings
   var enterString = require( 'string!AREA_MODEL_COMMON/enter' );
 
-  // TODO: reuse these from keypad?
-  var PLUS_CHAR = '\u002b';
-  var MINUS_CHAR = '\u2212';
-
-  var noPowerLayout = [
+  // layout constants
+  var noExponentLayout = [
     [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
     [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
     [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
-    [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
+    [ new Key( '\u002b/\u2212', Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
   ];
-  // TODO: make note about Key's type docs for the first parameter
-  var powerLayout = [
-    [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
-    [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
-    [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
-    [ new Key( PLUS_CHAR + '/' + MINUS_CHAR, Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ],
+  var exponentLayout = noExponentLayout.concat( [
     [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.XSQUARED ), new Key( 'x', Keys.X ) ],
-  ];
+  ] );
 
   /**
    * @constructor
@@ -59,16 +52,16 @@ define( function( require ) {
   function TermKeypadPanel( activePartitionProperty, allowExponents, nodeOptions ) {
     var self = this;
 
+    // Handles logic for keypresses and conversion to strings/Terms.
     var termAccumulator = new TermAccumulator( activePartitionProperty );
 
-    var keypad = new Keypad( allowExponents ? powerLayout : noPowerLayout, {
+    var keypad = new Keypad( allowExponents ? exponentLayout : noExponentLayout, {
       accumulator: termAccumulator
     } );
 
     var readoutBackground = new Rectangle( {
-      // TODO: extract colors
-      fill: 'white',
-      stroke: 'black',
+      fill: AreaModelColorProfile.keypadReadoutBackgroundProperty,
+      stroke: AreaModelColorProfile.keypadReadoutBorderProperty,
       cornerRadius: 5
     } );
 
@@ -77,27 +70,38 @@ define( function( require ) {
     };
 
     var readoutText = new RichText( '', readoutTextOptions );
-    termAccumulator.richStringProperty.link( function( string ) {
+
+    function updateText( string ) {
       // Trick to be able to position an empty string
       readoutText.text = string.length === 0 ? ' ' : string;
       readoutText.centerX = readoutBackground.centerX;
-    } );
+    }
 
-    var scratchText = new RichText( '', readoutTextOptions );
+    // Update the text whem the accumulator's string output changes
+    termAccumulator.richStringProperty.link( updateText );
 
+    // When the active partition changes, resize the background to fit to the largest size.
     activePartitionProperty.link( function( partition ) {
       if ( partition !== null ) {
+        // Temporarily use a different string
         var longestString = Term.getLongestGenericString( allowExponents, partition.digitCount );
-        scratchText.text = longestString;
-        readoutBackground.setRectBounds( scratchText.bounds.dilatedXY( 10, 5 ) );
-        scratchText.center = readoutBackground.center;
-        readoutText.y = scratchText.y;
+        readoutText.text = longestString;
+
+        // Update the background
+        readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 5 ) );
+
+        // Reposition our text
+        readoutText.center = readoutBackground.center;
+
+        // Reset the text value back to what it should be.
+        updateText( termAccumulator.richStringProperty.value );
       }
     } );
 
     Panel.call( this, new VBox( {
       children: [
         new Node( {
+          // We position the text over the background manually
           children: [
             readoutBackground,
             readoutText
@@ -109,11 +113,14 @@ define( function( require ) {
             font: AreaModelConstants.KEYPAD_FONT,
             maxWidth: 100
           } ),
-          baseColor: 'white',
+          baseColor: 'white', // Not separated out, matches keypad.
           xMargin: 15,
           yMargin: 5,
           listener: function() {
+            // Update the size of the partition.
             activePartitionProperty.value.sizeProperty.value = termAccumulator.termProperty.value;
+
+            // Hide the keypad.
             activePartitionProperty.value = null;
           }
         } )
@@ -127,6 +134,7 @@ define( function( require ) {
       stroke: AreaModelColorProfile.keypadPanelBorderProperty
     } );
 
+    // If this changes, we clear and switch to it
     activePartitionProperty.link( function( newArea ) {
       self.visible = newArea !== null;
       keypad.clear();
