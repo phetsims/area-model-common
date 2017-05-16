@@ -18,12 +18,11 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
-  var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
+  var ProportionalAreaGridLinesNode = require( 'AREA_MODEL_COMMON/view/ProportionalAreaGridLinesNode' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledPartitionAreaNode = require( 'AREA_MODEL_COMMON/view/TiledPartitionAreaNode' );
@@ -34,7 +33,6 @@ define( function( require ) {
    * @constructor
    * @extends {AreaNode}
    *
-   * TODO: reduce to options object
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
    * @param {Property.<boolean>} tilesVisibleProperty
@@ -47,42 +45,15 @@ define( function( require ) {
 
     AreaNode.call( this, area, partialProductsChoiceProperty, true );
 
-    var background = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
+    // Background
+    this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
       stroke: AreaModelColorProfile.areaBorderProperty
-    } );
-    this.areaLayer.addChild( background );
+    } ) );
 
-    var gridLineWidth = 0.5;
-    var halfGridLineWidth = gridLineWidth / 2;
-    var majorLineShape = new Shape();
-    var minorLineShape = new Shape();
-    for ( var i = area.minorGridSpacing; i < area.maximumSize; i += area.minorGridSpacing ) {
-      var x = this.modelViewTransform.modelToViewX( i );
-      var y = this.modelViewTransform.modelToViewY( i );
-
-      // See how close it is to a major grid line (dealing with floating-point variations)
-      var isMajor = Math.abs( i / area.majorGridSpacing - Math.round( i / area.majorGridSpacing ) ) < 1e-6;
-      var shape = isMajor ? majorLineShape : minorLineShape;
-
-      shape.moveTo( halfGridLineWidth, y );
-      shape.lineTo( this.viewSize - halfGridLineWidth, y );
-
-      shape.moveTo( x, halfGridLineWidth );
-      shape.lineTo( x, this.viewSize - halfGridLineWidth );
-    }
-    var gridLineNode = new Node( {
-      children: [
-        new Path( majorLineShape, {
-          stroke: AreaModelColorProfile.majorGridLineProperty
-        } ),
-        new Path( minorLineShape, {
-          stroke: AreaModelColorProfile.minorGridLineProperty
-        } )
-      ]
-    } );
-    gridLinesVisibleProperty.linkAttribute( gridLineNode, 'visible' );
-    this.areaLayer.addChild( gridLineNode );
+    var gridLinesNode = new ProportionalAreaGridLinesNode( area, this.modelViewTransform );
+    this.areaLayer.addChild( gridLinesNode );
+    gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
     var dragOffset = 5;
     var dragRadius = 7;
@@ -240,9 +211,5 @@ define( function( require ) {
 
   areaModelCommon.register( 'ProportionalAreaNode', ProportionalAreaNode );
 
-  return inherit( AreaNode, ProportionalAreaNode, {
-    tempMap: function( value ) {
-      return value / this.area.maximumSize;
-    }
-  } );
+  return inherit( AreaNode, ProportionalAreaNode );
 } );
