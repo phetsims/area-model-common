@@ -20,6 +20,7 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @constructor
@@ -71,7 +72,15 @@ define( function( require ) {
         upFunction: function( value ) { return value + model.currentAreaProperty.value.snapSize; },
         downFunction: function( value ) { return value - model.currentAreaProperty.value.snapSize; },
         decimalPlaces: decimalPlaces,
-        scale: 1.5
+        scale: 1.5,
+        formatValue: function( value ) {
+          if ( Math.abs( value - Math.round( value ) ) < 1e-6 ) {
+            return Util.toFixed( value, 0 );
+          }
+          else {
+            return Util.toFixed( value, 1 );
+          }
+        }
       }, {
         color: model.getColorProperty( orientation )
       } );
