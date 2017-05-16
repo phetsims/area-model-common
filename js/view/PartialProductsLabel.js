@@ -36,6 +36,9 @@ define( function( require ) {
 
     Node.call( this );
 
+    // @public {PartitionedArea}
+    this.partitionedArea = partitionedArea;
+
     var text = new RichText( '', {
       font: AreaModelConstants.PARTIAL_PRODUCT_FONT
     } );

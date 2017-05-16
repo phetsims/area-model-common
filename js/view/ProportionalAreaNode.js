@@ -24,6 +24,7 @@ define( function( require ) {
   var ProportionalAreaGridLinesNode = require( 'AREA_MODEL_COMMON/view/ProportionalAreaGridLinesNode' );
   var ProportionalDragHandle = require( 'AREA_MODEL_COMMON/view/ProportionalDragHandle' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/view/ProportionalPartitionLineNode' );
+  var Range = require( 'DOT/Range' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/view/TiledAreaNode' );
@@ -110,6 +111,43 @@ define( function( require ) {
      */
     update: function() {
       this.tiledAreaNode && this.tiledAreaNode.update();
+    },
+
+    /**
+     * Positions all of the partial products labels.
+     * @protected
+     */
+    positionProductLabels: function() {
+      var self = this;
+
+      this.productLabels.forEach( function( productLabel ) {
+        var horizontalPartition = productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL );
+        var verticalPartition = productLabel.partitionedArea.getPartition( Orientation.VERTICAL );
+
+        var horizontalRange = horizontalPartition.coordinateRangeProperty.value;
+        var verticalRange = verticalPartition.coordinateRangeProperty.value;
+
+        // Ignore it if any parts are null
+        if ( horizontalRange === null || verticalRange === null ) {
+          return true;
+        }
+
+        // Convert to view coordinates
+        horizontalRange = new Range( self.modelViewTransform.modelToViewX( horizontalRange.min ),
+                                     self.modelViewTransform.modelToViewX( horizontalRange.max ) );
+        verticalRange = new Range( self.modelViewTransform.modelToViewY( verticalRange.min ),
+                                   self.modelViewTransform.modelToViewY( verticalRange.max ) );
+
+        var fits = productLabel.width < horizontalRange.getLength() && productLabel.height < verticalRange.getLength();
+        if ( fits ) {
+          productLabel.x = horizontalRange.getCenter();
+          productLabel.y = verticalRange.getCenter();
+          return true;
+        }
+        else {
+          return false;
+        }
+      } );
     },
 
     /**

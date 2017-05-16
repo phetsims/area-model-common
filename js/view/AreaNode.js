@@ -67,18 +67,17 @@ define( function( require ) {
     // @protected {ModelViewTransform2} - Maps from coordinate range values to view values.
     this.modelViewTransform = ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
 
-    area.partitionedAreas.forEach( function( partitionedArea ) {
+    // @protected {Array.<PartialProductsLabel>}
+    this.productLabels = area.partitionedAreas.map( function( partitionedArea ) {
       var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, !isProportional );
       self.labelLayer.addChild( productLabel );
-
-      Orientation.VALUES.forEach( function( orientation ) {
-        partitionedArea.getPartition( orientation ).coordinateRangeProperty.link( function( range ) {
-          if ( range !== null ) {
-            productLabel[ orientation.coordinate ] = orientation.modelToView( self.modelViewTransform, range.getCenter() );
-          }
-        } );
-      } );
+      return productLabel;
     } );
+    var productLabelListener = this.positionProductLabels.bind( this );
+    area.partitions.forEach( function( partition ) {
+      partition.coordinateRangeProperty.lazyLink( productLabelListener );
+    } );
+    productLabelListener();
 
     var eraseButton = new EraserButton( {
       listener: function() {

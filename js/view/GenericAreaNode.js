@@ -94,6 +94,23 @@ define( function( require ) {
 
   return inherit( AreaNode, GenericAreaNode, {
     /**
+     * Positions all of the partial products labels.
+     * @protected
+     */
+    positionProductLabels: function() {
+      var self = this;
+
+      this.productLabels.forEach( function( productLabel ) {
+        Orientation.VALUES.forEach( function( orientation ) {
+          var range = productLabel.partitionedArea.getPartition( orientation ).coordinateRangeProperty.value;
+          if ( range !== null ) {
+            productLabel[ orientation.coordinate ] = orientation.modelToView( self.modelViewTransform, range.getCenter() );
+          }
+        } );
+      } );
+    },
+
+    /**
      * Creates a partition line dock that when clicked toggles whether a particular partition line exists.
      * @private
      *
