@@ -71,10 +71,10 @@ define( function( require ) {
       var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, !isProportional );
       self.labelLayer.addChild( productLabel );
 
-      Orientation.CHOICES.forEach( function( orientation ) {
+      Orientation.VALUES.forEach( function( orientation ) {
         partitionedArea.getPartition( orientation ).coordinateRangeProperty.link( function( range ) {
           if ( range !== null ) {
-            productLabel[ Orientation.getCoordinateName( orientation ) ] = Orientation.modelToView( orientation, self.modelViewTransform, range.getCenter() );
+            productLabel[ orientation.coordinate ] = orientation.modelToView( self.modelViewTransform, range.getCenter() );
           }
         } );
       } );
@@ -199,7 +199,7 @@ define( function( require ) {
         maxTick.translation = maxPoint;
         line.p1 = minPoint;
         line.p2 = maxPoint;
-        label[ Orientation.getCoordinateName( orientation ) ] = center;
+        label[ orientation.coordinate ] = center;
       } );
     }
   } );

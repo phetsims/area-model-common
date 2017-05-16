@@ -87,7 +87,7 @@ define( function( require ) {
     // Primary orientation (location of range center)
     partition.coordinateRangeProperty.link( function( range ) {
       if ( range ) {
-        self[ Orientation.getCenterCoordinateName( partition.orientation ) ] = Orientation.modelToView( partition.orientation, modelViewTransform, range.getCenter() );
+        self[ partition.orientation.centerCoordinate ] = partition.orientation.modelToView( modelViewTransform, range.getCenter() );
       }
     } );
 

@@ -76,7 +76,7 @@ define( function( require ) {
     ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
 
     // Keep partition sizes up-to-date
-    Orientation.CHOICES.forEach( function( orientation ) {
+    Orientation.VALUES.forEach( function( orientation ) {
       Property.multilink( [ self.getActiveTotalProperty( orientation ), self.getPartitionSplitProperty( orientation ) ], function( size, split ) {
         // Ignore splits at the boundary or outside our active area.
         if ( split <= 0 || split >= size ) {

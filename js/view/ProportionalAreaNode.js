@@ -141,7 +141,7 @@ define( function( require ) {
 
       partition.coordinateRangeProperty.link( function( range ) {
         if ( range ) {
-          wrapper[ Orientation.getCoordinateName( partition.orientation ) ] = Orientation.modelToView( partition.orientation, self.modelViewTransform, range.getCenter() );
+          wrapper[ partition.orientation.coordinate ] = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
         }
       } );
       if ( partition.orientation === Orientation.HORIZONTAL ) {
@@ -156,7 +156,7 @@ define( function( require ) {
       } );
     }
 
-    Orientation.CHOICES.forEach( function( orientation ) {
+    Orientation.VALUES.forEach( function( orientation ) {
       var partitions = area.getPartitions( orientation );
       partitions.forEach( function( partition ) {
         createPartitionLabel( partition, area.getSecondaryPartition( orientation ) );

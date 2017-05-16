@@ -54,7 +54,7 @@ define( function( require ) {
     this.partitionLineActiveProperties = this.horizontalPartitionLineActiveProperties.concat( this.verticalPartitionLineActiveProperties );
 
     // Set up partition coordinate/size updates
-    Orientation.CHOICES.forEach( function( orientation ) {
+    Orientation.VALUES.forEach( function( orientation ) {
       Property.multilink( self.getPartitionLineActiveProperties( orientation ), function( first, second ) {
         var firstPartition = self.getFirstPartition( orientation );
         var secondPartition = self.getSecondPartition( orientation );

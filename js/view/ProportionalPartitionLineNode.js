@@ -55,19 +55,16 @@ define( function( require ) {
 
     // TODO: improve naming
     var primaryProperty = area.getPartitionSplitProperty( orientation );
-    var secondaryProperty = area.getActiveTotalProperty( Orientation.opposite( orientation ) );
+    var secondaryProperty = area.getActiveTotalProperty( orientation.opposite );
     var ternaryProperty = area.getActiveTotalProperty( orientation );
 
-    var primaryCoordinate = Orientation.getCoordinateName( orientation );
-    var secondaryCoordinate = Orientation.getCoordinateName( Orientation.opposite( orientation ) );
-
     primaryProperty.link( function( primary ) {
-      self[ primaryCoordinate ] = Orientation.modelToView( orientation, modelViewTransform, primary === null ? 0 : primary );
+      self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, primary === null ? 0 : primary );
     } );
     secondaryProperty.link( function( secondary ) {
-      var offsetValue = Orientation.modelToView( Orientation.opposite( orientation ), modelViewTransform, secondary ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
-      handle[ secondaryCoordinate ] = offsetValue;
-      line[ secondaryCoordinate + '2' ] = offsetValue;
+      var offsetValue = orientation.opposite.modelToView( modelViewTransform, secondary ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+      handle[ orientation.opposite.coordinate ] = offsetValue;
+      line[ orientation.opposite.coordinate + '2' ] = offsetValue;
     } );
     ternaryProperty.link( function( ternary ) {
       // TODO: handle multitouch
@@ -81,7 +78,7 @@ define( function( require ) {
         var viewPoint = self.globalToParentPoint( event.pointer.point );
         var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
 
-        var value = modelPoint[ primaryCoordinate ];
+        var value = modelPoint[ orientation.coordinate ];
 
         value = Math.round( value / area.partitionSnapSize ) * area.partitionSnapSize;
         value = Util.clamp( value, 0, ternaryProperty.value );

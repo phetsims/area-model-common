@@ -59,16 +59,16 @@ define( function( require ) {
       self.areaLayer.addChild( new GenericPartitionedAreaNode( partitionedArea, self.modelViewTransform ) );
     } );
 
-    Orientation.CHOICES.forEach( function( orientation ) {
+    Orientation.VALUES.forEach( function( orientation ) {
       // Partition line docks
       var properties = area.getPartitionLineActiveProperties( orientation );
       var dockOptions = {};
-      dockOptions[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = self.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
+      dockOptions[ orientation.opposite.coordinate ] = self.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
 
-      dockOptions[ Orientation.getCoordinateName( orientation ) ] = firstOffset;
+      dockOptions[ orientation.coordinate ] = firstOffset;
       self.areaLayer.addChild( self.createDock( properties[ 0 ], dockOptions ) );
 
-      dockOptions[ Orientation.getCoordinateName( orientation ) ] = secondOffset;
+      dockOptions[ orientation.coordinate ] = secondOffset;
       self.areaLayer.addChild( self.createDock( properties[ 1 ], dockOptions ) );
 
       // Partition lines
@@ -128,10 +128,10 @@ define( function( require ) {
       var firstPoint = new Vector2();
       var secondPoint = new Vector2();
 
-      firstPoint[ Orientation.getCoordinateName( orientation ) ] = offset;
-      secondPoint[ Orientation.getCoordinateName( orientation ) ] = offset;
-      firstPoint[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
-      secondPoint[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = 0;
+      firstPoint[ orientation.coordinate ] = offset;
+      secondPoint[ orientation.coordinate ] = offset;
+      firstPoint[ orientation.opposite.coordinate ] = this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
+      secondPoint[ orientation.opposite.coordinate ] = 0;
 
       var node = new Node( {
         children: [

@@ -69,9 +69,9 @@ define( function( require ) {
       ]
     } );
 
-    Orientation.CHOICES.forEach( function( orientation ) {
+    Orientation.VALUES.forEach( function( orientation ) {
       area.getActiveTotalProperty( orientation ).link( function( value ) {
-        self[ Orientation.getCoordinateName( orientation ) ] = Orientation.modelToView( orientation, modelViewTransform, value );
+        self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
       } );
     } );
   }
