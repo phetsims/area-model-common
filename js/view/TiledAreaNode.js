@@ -61,7 +61,7 @@ define( function( require ) {
       partition.coordinateRangeProperty.link( invalidate );
     } );
 
-    // @private {Path} - Background color paths
+    // @private {Path} - Background color paths for each section
     this.bigPath = new Path( null, {
       fill: AreaModelColorProfile.bigTileProperty
     } );
@@ -75,6 +75,7 @@ define( function( require ) {
       fill: AreaModelColorProfile.smallTileProperty
     } );
 
+    // Grid line shapes
     var smallGridShape = new Shape();
     var horizontalGridShape = new Shape();
     var verticalGridShape = new Shape();
@@ -90,6 +91,8 @@ define( function( require ) {
       verticalGridShape.moveTo( x, 0 ).lineTo( x, maxY );
       horizontalGridShape.moveTo( 0, y ).lineTo( maxX, y );
     }
+
+    // @private {Path} - Grid line paths. We'll use clipping to control where they are visible
     this.smallGridPath = new Path( smallGridShape, {
       stroke: AreaModelColorProfile.tileBorderProperty
     } );
@@ -99,6 +102,8 @@ define( function( require ) {
     this.verticalGridPath = new Path( verticalGridShape, {
       stroke: AreaModelColorProfile.tileBorderProperty
     } );
+
+    // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
     this.extraLinesPath = new Path( null, {
       stroke: AreaModelColorProfile.tileBorderProperty
     } );
@@ -120,27 +125,54 @@ define( function( require ) {
   areaModelCommon.register( 'TiledAreaNode', TiledAreaNode );
 
   return inherit( Node, TiledAreaNode, {
-    // TODO: doc
-    mapX: function( x ) {
-      return this.modelViewTransform.modelToViewX( x );
+    /**
+     * For each partition of a particular orientation, fires the callback with range information already in view coordinates.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @param {Function} callback - callback( largeCount, smallCount, min, border, max )
+     */
+    forPartitions: function( orientation, callback ) {
+      var self = this;
+
+      this.area.getPartitions( orientation ).forEach( function( partition ) {
+        var range = partition.coordinateRangeProperty.value;
+
+        // Ignore partitions without a visible well-defined range.
+        if ( !partition.visibleProperty.value || range === null ) {
+          return;
+        }
+
+        var size = range.getLength();
+        var largeCount = Math.floor( thousandRound( size / self.largeTileSize ) );
+        var smallCount = Math.round( ( size - self.largeTileSize * largeCount ) / self.smallTileSize );
+        var min = orientation.modelToView( self.modelViewTransform, range.min );
+        var border = orientation.modelToView( self.modelViewTransform, range.min + largeCount * self.largeTileSize );
+        var max = orientation.modelToView( self.modelViewTransform, range.max );
+
+        callback( largeCount, smallCount, min, border, max );
+      } );
     },
 
-    // TODO: doc
-    mapY: function( y ) {
-      return this.modelViewTransform.modelToViewY( y );
-    },
-
-    // TODO: doc
+    /**
+     * Updates the view for tiled areas (since it is somewhat expensive to re-draw, and we don't want it being done
+     * multiple times per frame.
+     * @private
+     */
     update: function() {
       var self = this;
 
-      // TODO: performance improvements! See https://github.com/phetsims/area-model-common/issues/19
-      var area = this.area;
-      var smallTileSize = this.smallTileSize;
-      var largeTileSize = this.largeTileSize;
-
+      // Ignore updates if we are not dirty
       if ( !this.dirty ) { return; }
       this.dirty = false;
+
+      // Coordinate mapping into the view
+      var mapX = this.modelViewTransform.modelToViewX.bind( this.modelViewTransform );
+      var mapY = this.modelViewTransform.modelToViewY.bind( this.modelViewTransform );
+
+      // Constructor parameters
+      var area = this.area;
+      var largeTileSize = this.largeTileSize;
 
       this.visible = this.tilesVisibleProperty.value;
 
@@ -150,38 +182,14 @@ define( function( require ) {
       var smallShape = new Shape();
       var extraLinesShape = new Shape();
 
-      area.getPartitions( Orientation.HORIZONTAL ).forEach( function( horizontalPartition ) {
-        var horizontalRange = horizontalPartition.coordinateRangeProperty.value;
-        if ( !horizontalPartition.visibleProperty.value || horizontalRange === null ) {
-          return;
-        }
-        var width = horizontalRange.getLength();
-        var horizontalLargeCount = Math.floor( thousandRound( width / largeTileSize ) );
-        width -= largeTileSize * horizontalLargeCount;
-        var horizontalSmallCount = Math.round( width / smallTileSize );
-        var xMin = self.mapX( horizontalRange.min );
-        var xBorder = self.mapX( horizontalRange.min + horizontalLargeCount * largeTileSize );
-        var xMax = self.mapX( horizontalRange.max );
-
-        area.getPartitions( Orientation.VERTICAL ).forEach( function( verticalPartition ) {
-          var verticalRange = verticalPartition.coordinateRangeProperty.value;
-          if ( !verticalPartition.visibleProperty.value || verticalRange === null ) {
-            return;
-          }
-          var height = verticalRange.getLength();
-          var verticalLargeCount = Math.floor( thousandRound( height / largeTileSize ) );
-          height -= largeTileSize * verticalLargeCount;
-          var verticalSmallCount = Math.round( height / smallTileSize );
-          var yMin = self.mapY( verticalRange.min );
-          var yBorder = self.mapY( verticalRange.min + verticalLargeCount * largeTileSize );
-          var yMax = self.mapY( verticalRange.max );
-
+      this.forPartitions( Orientation.HORIZONTAL, function( horizontalLargeCount, horizontalSmallCount, xMin, xBorder, xMax ) {
+        self.forPartitions( Orientation.VERTICAL, function( verticalLargeCount, verticalSmallCount, yMin, yBorder, yMax ) {
           var i; // TODO: don't hack indices
           for ( i = 1; i < horizontalLargeCount + 1; i++ ) {
-            extraLinesShape.moveTo( xMin + self.mapX( i * largeTileSize ), 0 ).lineTo( xMin + self.mapX( i * largeTileSize ), self.mapY( area.maximumSize ) );
+            extraLinesShape.moveTo( xMin + mapX( i * largeTileSize ), 0 ).lineTo( xMin + mapX( i * largeTileSize ), mapY( area.maximumSize ) );
           }
           for ( i = 1; i < verticalLargeCount + 1; i++ ) {
-            extraLinesShape.moveTo( 0, yMin + self.mapY( i * largeTileSize ) ).lineTo( self.mapX( area.maximumSize ), yMin + self.mapY( i * largeTileSize ) );
+            extraLinesShape.moveTo( 0, yMin + mapY( i * largeTileSize ) ).lineTo( mapX( area.maximumSize ), yMin + mapY( i * largeTileSize ) );
           }
 
           if ( horizontalLargeCount && verticalLargeCount ) {
@@ -199,17 +207,27 @@ define( function( require ) {
         } );
       } );
 
+      // Make the shapes immutable so that listeners don't have to be added
+      bigShape.makeImmutable();
+      horizontalShape.makeImmutable();
+      verticalShape.makeImmutable();
+      smallShape.makeImmutable();
+      extraLinesShape.makeImmutable();
+
+      // Adjust the backgrounds to fit their respective areas
       this.bigPath.shape = bigShape;
       this.horizontalPath.shape = horizontalShape;
       this.verticalPath.shape = verticalShape;
       this.smallPath.shape = smallShape;
 
+      // Selectively display grid lines as a "stroke" over the background
       this.smallGridPath.clipArea = smallShape;
       this.horizontalGridPath.clipArea = horizontalShape;
       this.verticalGridPath.clipArea = verticalShape;
 
+      // Display extra lines, and clip it to fit the active area.
       this.extraLinesPath.shape = extraLinesShape;
-      this.extraLinesPath.clipArea = Shape.rect( 0, 0, this.mapX( this.area.activeWidthProperty.value ), this.mapY( this.area.activeHeightProperty.value ) );
+      this.extraLinesPath.clipArea = Shape.rect( 0, 0, mapX( area.activeWidthProperty.value ), mapY( area.activeHeightProperty.value ) );
     }
   } );
 } );
