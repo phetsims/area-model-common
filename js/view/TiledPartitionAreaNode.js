@@ -21,8 +21,6 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: switch to options constructor?
-   *
    * @param {PartitionedArea} area
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Property.<boolean>} tilesVisibleProperty
