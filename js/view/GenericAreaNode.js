@@ -63,27 +63,18 @@ define( function( require ) {
       self.areaLayer.addChild( new GenericPartitionedAreaNode( partitionedArea, self.modelViewTransform ) );
     } );
 
-    function addDock( x, y, property ) {
-      self.areaLayer.addChild( new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-        fill: AreaModelColorProfile.dockBackgroundProperty,
-        stroke: AreaModelColorProfile.dockBorderProperty,
-        lineDash: [ 3, 3 ],
-        x: x,
-        y: y,
-        cursor: 'pointer',
-        inputListeners: [
-          new FireListener( {
-            fire: function() {
-              property.toggle();
-            }
-          } )
-        ]
-      } ) );
-    }
-    addDock( firstOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 0 ] );
-    addDock( secondOffset, this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, area.getPartitionLineActiveProperties( Orientation.HORIZONTAL )[ 1 ] );
-    addDock( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, firstOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 0 ] );
-    addDock( this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS, secondOffset, area.getPartitionLineActiveProperties( Orientation.VERTICAL )[ 1 ] );
+    // Partition line docks
+    Orientation.CHOICES.forEach( function( orientation ) {
+      var properties = area.getPartitionLineActiveProperties( orientation );
+      var nodeOptions = {};
+      nodeOptions[ Orientation.getCoordinateName( Orientation.opposite( orientation ) ) ] = self.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
+
+      nodeOptions[ Orientation.getCoordinateName( orientation ) ] = firstOffset;
+      self.areaLayer.addChild( self.createDock( properties[ 0 ], nodeOptions ) );
+
+      nodeOptions[ Orientation.getCoordinateName( orientation ) ] = secondOffset;
+      self.areaLayer.addChild( self.createDock( properties[ 1 ], nodeOptions ) );
+    } );
 
     function addPartitionLine( x1, y1, x2, y2, property, colorProperty ) {
       var node = new Node( {
@@ -202,5 +193,28 @@ define( function( require ) {
 
   areaModelCommon.register( 'GenericAreaNode', GenericAreaNode );
 
-  return inherit( AreaNode, GenericAreaNode );
+  return inherit( AreaNode, GenericAreaNode, {
+    /**
+     * Creates a partition line dock that when clicked toggles whether a particular partition line exists.
+     * @private
+     *
+     * @param {Property.<boolean>} toggleProperty
+     * @param {Object} [nodeOptions]
+     */
+    createDock: function( toggleProperty, nodeOptions ) {
+      return new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, _.extend( {
+        fill: AreaModelColorProfile.dockBackgroundProperty,
+        stroke: AreaModelColorProfile.dockBorderProperty,
+        lineDash: [ 3, 3 ],
+        cursor: 'pointer',
+        inputListeners: [
+          new FireListener( {
+            fire: function() {
+              toggleProperty.toggle();
+            }
+          } )
+        ]
+      }, nodeOptions ) );
+    }
+  } );
 } );
