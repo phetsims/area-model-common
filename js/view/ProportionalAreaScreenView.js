@@ -41,7 +41,6 @@ define( function( require ) {
     AreaScreenView.call( this, model, true, decimalPlaces );
 
     var areaNodes = model.areas.map( function( area ) {
-      // TODO: fix formatting or go to options
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.partialProductsChoiceProperty, {
         translation: self.getAreaTranslation()
       } );
@@ -58,53 +57,15 @@ define( function( require ) {
       } );
     } );
 
-    var sceneSelectionNode = new SceneSelectionNode( model, {
+    // Scene selection
+    this.addChild( new SceneSelectionNode( model, {
       top: this.panelContainer.bottom + AreaModelConstants.PANEL_SPACING,
       centerX: this.panelContainer.centerX
-    } );
-    this.addChild( sceneSelectionNode );
+    } ) );
 
-    var gridIconShape = new Shape().moveTo( RADIO_ICON_SIZE / 4, 0 )
-                                   .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
-                                   .moveTo( RADIO_ICON_SIZE / 2, 0 )
-                                   .lineTo( RADIO_ICON_SIZE / 2, RADIO_ICON_SIZE )
-                                   .moveTo( RADIO_ICON_SIZE * 3 / 4, 0 )
-                                   .lineTo( RADIO_ICON_SIZE * 3 / 4, RADIO_ICON_SIZE )
-                                   .moveTo( 0, RADIO_ICON_SIZE / 4 )
-                                   .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 4 )
-                                   .moveTo( 0, RADIO_ICON_SIZE / 2 )
-                                   .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 2 )
-                                   .moveTo( 0, RADIO_ICON_SIZE * 3 / 4 )
-                                   .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE * 3 / 4 );
-    var gridIconNode = new Path( gridIconShape, {
-      stroke: AreaModelColorProfile.gridIconProperty
-    } );
-
-    var tileIconOptions = {
-      fill: AreaModelColorProfile.smallTileProperty,
-      stroke: AreaModelColorProfile.tileIconStrokeProperty,
-      lineWidth: 0.5
-    };
-    var SMALL_TILE_ICON_SIZE = RADIO_ICON_SIZE / 10;
-    var tileIconNode = new HBox( {
-      children: [
-        new Rectangle( 0, 0, RADIO_ICON_SIZE, RADIO_ICON_SIZE, tileIconOptions ),
-        new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, RADIO_ICON_SIZE, tileIconOptions ),
-        new VBox( {
-          children: [
-            new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, SMALL_TILE_ICON_SIZE, tileIconOptions ),
-            new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, SMALL_TILE_ICON_SIZE, tileIconOptions ),
-            new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, SMALL_TILE_ICON_SIZE, tileIconOptions )
-          ],
-          spacing: 0
-        } )
-      ],
-      align: 'top',
-      spacing: RADIO_ICON_SIZE / 8
-    } );
-
-    var gridCheckbox = new CheckBox( gridIconNode, model.gridLinesVisibleProperty );
-    var tileCheckbox = new CheckBox( tileIconNode, model.tilesVisibleProperty );
+    // Checkboxes
+    var gridCheckbox = new CheckBox( this.createGridIconNode(), model.gridLinesVisibleProperty );
+    var tileCheckbox = new CheckBox( this.createTileIconNode(), model.tilesVisibleProperty );
 
     model.currentAreaProperty.link( function( area ) {
       tileCheckbox.visible = area.tilesAvailable;
@@ -117,7 +78,7 @@ define( function( require ) {
       ],
       align: 'left',
       spacing: 20,
-      // TODO: better positioning   -
+      // Manual positioning works best here
       top: 50,
       left: 600
     } ) );
@@ -125,5 +86,60 @@ define( function( require ) {
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
 
-  return inherit( AreaScreenView, ProportionalAreaScreenView );
+  return inherit( AreaScreenView, ProportionalAreaScreenView, {
+    /**
+     * Creates a grid icon.
+     * @private
+     *
+     * @returns {Node}
+     */
+    createGridIconNode: function() {
+      var gridIconShape = new Shape().moveTo( RADIO_ICON_SIZE / 4, 0 )
+                                     .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
+                                     .moveTo( RADIO_ICON_SIZE / 2, 0 )
+                                     .lineTo( RADIO_ICON_SIZE / 2, RADIO_ICON_SIZE )
+                                     .moveTo( RADIO_ICON_SIZE * 3 / 4, 0 )
+                                     .lineTo( RADIO_ICON_SIZE * 3 / 4, RADIO_ICON_SIZE )
+                                     .moveTo( 0, RADIO_ICON_SIZE / 4 )
+                                     .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 4 )
+                                     .moveTo( 0, RADIO_ICON_SIZE / 2 )
+                                     .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 2 )
+                                     .moveTo( 0, RADIO_ICON_SIZE * 3 / 4 )
+                                     .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE * 3 / 4 );
+      return new Path( gridIconShape, {
+        stroke: AreaModelColorProfile.gridIconProperty
+      } );
+    },
+
+    /**
+     * Creates a tile icon.
+     * @private
+     *
+     * @returns {Node}
+     */
+    createTileIconNode: function() {
+      var tileIconOptions = {
+        fill: AreaModelColorProfile.smallTileProperty,
+        stroke: AreaModelColorProfile.tileIconStrokeProperty,
+        lineWidth: 0.5
+      };
+      var SMALL_TILE_ICON_SIZE = RADIO_ICON_SIZE / 10;
+      return new HBox( {
+        children: [
+          new Rectangle( 0, 0, RADIO_ICON_SIZE, RADIO_ICON_SIZE, tileIconOptions ),
+          new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, RADIO_ICON_SIZE, tileIconOptions ),
+          new VBox( {
+            children: [
+              new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, SMALL_TILE_ICON_SIZE, tileIconOptions ),
+              new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, SMALL_TILE_ICON_SIZE, tileIconOptions ),
+              new Rectangle( 0, 0, SMALL_TILE_ICON_SIZE, SMALL_TILE_ICON_SIZE, tileIconOptions )
+            ],
+            spacing: 0
+          } )
+        ],
+        align: 'top',
+        spacing: RADIO_ICON_SIZE / 8
+      } );
+    }
+  } );
 } );
