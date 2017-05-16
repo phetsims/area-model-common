@@ -155,7 +155,8 @@ define( function( require ) {
       } );
 
       this.area.getActiveTotalProperty( orientation.opposite ).link( function( totalSize ) {
-        dock[ orientation.opposite.coordinate ] = orientation.opposite.modelToView( self.modelViewTransform, totalSize ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+        // A little extra padding so things don't overlap
+        dock[ orientation.opposite.coordinate ] = orientation.opposite.modelToView( self.modelViewTransform, totalSize ) + AreaModelConstants.PARTITION_HANDLE_OFFSET + 0.5;
       } );
 
       return dock;
