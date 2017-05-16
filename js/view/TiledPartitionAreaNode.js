@@ -34,7 +34,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    // TODO: performance improvements!
+    // TODO: performance improvements! See https://github.com/phetsims/area-model-common/issues/19
 
     var bigTile = new Rectangle( 0, 0, modelViewTransform.modelToViewX( largeTileSize ), modelViewTransform.modelToViewY( largeTileSize ), {
       fill: AreaModelColorProfile.bigTileProperty,
