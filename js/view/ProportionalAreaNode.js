@@ -78,57 +78,19 @@ define( function( require ) {
       } );
     }
 
+    // Docks
     this.areaLayer.addChild( this.createDock( Orientation.HORIZONTAL ) );
     this.areaLayer.addChild( this.createDock( Orientation.VERTICAL ) );
 
-    var horizontalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL );
-    this.areaLayer.addChild( horizontalPartitionLine );
+    // Partition lines
+    this.areaLayer.addChild( new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL ) );
+    this.areaLayer.addChild( new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.VERTICAL ) );
 
-    var verticalPartitionLine = new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.VERTICAL );
-    this.areaLayer.addChild( verticalPartitionLine );
-
-    // TODO: refactor/cleanup
-    function createPartitionLabel( partition, secondaryPartition ) {
-      var text = new Text( '', {
-        font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
-        fill: partition.colorProperty
-      } );
-
-      partition.sizeProperty.link( function( size ) {
-        if ( size === null ) {
-          text.text = '';
-        }
-        else {
-          text.text = size.toRichString( false );
-          text.center = Vector2.ZERO;
-        }
-      } );
-      var wrapper = new Node( {
-        children: [ text ]
-      } );
-      self.labelLayer.addChild( wrapper );
-
-      partition.coordinateRangeProperty.link( function( range ) {
-        if ( range ) {
-          wrapper[ partition.orientation.coordinate ] = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
-        }
-      } );
-      if ( partition.orientation === Orientation.HORIZONTAL ) {
-        wrapper.y = -15;
-      }
-      else {
-        wrapper.x = -20;
-      }
-
-      Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
-        wrapper.visible = visible && secondarySize !== null;
-      } );
-    }
-
+    // Partition labels
     Orientation.VALUES.forEach( function( orientation ) {
       var partitions = area.getPartitions( orientation );
       partitions.forEach( function( partition ) {
-        createPartitionLabel( partition, area.getSecondaryPartition( orientation ) );
+        self.labelLayer.addChild( self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ) ) );
       } );
     } );
 
@@ -143,6 +105,7 @@ define( function( require ) {
      * @private
      *
      * @param {Orientation} orientation
+     * @returns {Node}
      */
     createDock: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
@@ -175,6 +138,59 @@ define( function( require ) {
       } );
 
       return dock;
+    },
+
+    /**
+     * Creates a partition label for the given orientation.
+     * @private
+     *
+     * @param {Partition} partition
+     * @param {Partition} secondaryPartition - The partition that is empty if there is only one
+     * @returns {Node}
+     */
+    createPartitionLabel: function( partition, secondaryPartition ) {
+      var self = this;
+
+      var text = new Text( '', {
+        font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
+        fill: partition.colorProperty
+      } );
+
+      // Text label
+      partition.sizeProperty.link( function( size ) {
+        if ( size === null ) {
+          text.text = '';
+        }
+        else {
+          text.text = size.toRichString( false );
+          text.center = Vector2.ZERO;
+        }
+      } );
+
+      var labelContainer = new Node( {
+        children: [ text ]
+      } );
+
+      // Primary coordinate
+      partition.coordinateRangeProperty.link( function( range ) {
+        if ( range ) {
+          labelContainer[ partition.orientation.coordinate ] = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
+        }
+      } );
+
+      // Secondary coordinate
+      if ( partition.orientation === Orientation.HORIZONTAL ) {
+        labelContainer.y = -15;
+      }
+      else {
+        labelContainer.x = -20;
+      }
+
+      Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
+        labelContainer.visible = visible && secondarySize !== null;
+      } );
+
+      return labelContainer;
     }
   } );
 } );
