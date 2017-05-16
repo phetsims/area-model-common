@@ -47,7 +47,7 @@ define( function( require ) {
       centerY: 0
     } );
 
-    // TODO: why isn't maxWidth centering properly (vertically?)
+    // TODO: why isn't maxWidth centering properly (vertically?) See https://github.com/phetsims/area-model-common/issues/18
     Node.call( this, {
       children: [ box ],
       maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
