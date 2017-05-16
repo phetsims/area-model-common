@@ -15,6 +15,7 @@ define( function( require ) {
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
@@ -137,6 +138,15 @@ define( function( require ) {
         lineDash: [ 3, 3 ],
         children: [
           new Line( lineOptions )
+        ],
+        cursor: 'pointer',
+        inputListeners: [
+          new FireListener( {
+            fire: function() {
+              // TODO: Input sync https://github.com/phetsims/area-model-common/issues/17
+              self.area.getPartitionSplitProperty( orientation ).reset();
+            }
+          } )
         ]
       } );
 
