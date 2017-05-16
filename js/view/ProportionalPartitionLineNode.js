@@ -51,29 +51,38 @@ define( function( require ) {
       lineWidth: 2
     } );
 
-    this.children = [ line, handle ];
-
-    // TODO: improve naming
-    var primaryProperty = area.getPartitionSplitProperty( orientation );
-    var secondaryProperty = area.getActiveTotalProperty( orientation.opposite );
-    var ternaryProperty = area.getActiveTotalProperty( orientation );
-
-    primaryProperty.link( function( primary ) {
-      self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, primary === null ? 0 : primary );
+    Node.call( this, {
+      children: [
+        line,
+        handle
+      ]
     } );
-    secondaryProperty.link( function( secondary ) {
-      var offsetValue = orientation.opposite.modelToView( modelViewTransform, secondary ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+
+    // Relevant properties
+    var partitionSplitProperty = area.getPartitionSplitProperty( orientation );
+    var oppositeActiveTotalProperty = area.getActiveTotalProperty( orientation.opposite );
+    var activeTotalProperty = area.getActiveTotalProperty( orientation );
+
+    // Main coordinate (when dragging)
+    partitionSplitProperty.link( function( split ) {
+      self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, split === null ? 0 : split );
+    } );
+
+    // Opposite coordinate (how wide the area is in the other direction)
+    oppositeActiveTotalProperty.link( function( oppositeTotal ) {
+      var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
       handle[ orientation.opposite.coordinate ] = offsetValue;
       line[ orientation.opposite.coordinate + '2' ] = offsetValue;
     } );
-    ternaryProperty.link( function( ternary ) {
-      // TODO: handle multitouch
-      self.visible = ternary >= area.snapSize * 2 - 1e-7;
+
+    // Visibility
+    activeTotalProperty.link( function( total ) {
+      self.visible = total >= area.snapSize * 2 - 1e-7;
     } );
 
-    // TODO: DragHandler?
+    // TODO: DragHandler? See https://github.com/phetsims/area-model-common/issues/17
     var dragHandler = new SimpleDragHandler( {
-      // TODO: key into starting drag point?
+      // TODO: key into starting drag point? See https://github.com/phetsims/area-model-common/issues/17
       drag: function( event, trail ) {
         var viewPoint = self.globalToParentPoint( event.pointer.point );
         var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
@@ -81,22 +90,23 @@ define( function( require ) {
         var value = modelPoint[ orientation.coordinate ];
 
         value = Math.round( value / area.partitionSnapSize ) * area.partitionSnapSize;
-        value = Util.clamp( value, 0, ternaryProperty.value );
+        value = Util.clamp( value, 0, activeTotalProperty.value );
 
-        primaryProperty.value = value;
+        partitionSplitProperty.value = value;
       },
 
       end: function( event, trail ) {
-        if ( primaryProperty.value === ternaryProperty.value ) {
-          primaryProperty.value = null;
+        if ( partitionSplitProperty.value === activeTotalProperty.value ) {
+          partitionSplitProperty.value = null;
         }
       }
     } );
     handle.addInputListener( dragHandler );
 
-    ternaryProperty.link( function( ternary ) {
-      if ( primaryProperty.value >= ternaryProperty.value ) {
-        primaryProperty.value = dragHandler.dragging ? ternaryProperty.value : null;
+    // Remove splits that are at or past the current boundary.
+    activeTotalProperty.link( function( total ) {
+      if ( partitionSplitProperty.value >= activeTotalProperty.value ) {
+        partitionSplitProperty.value = dragHandler.dragging ? activeTotalProperty.value : null;
       }
     } );
   }
