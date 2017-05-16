@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var RichText = require( 'SCENERY_PHET/RichText' );
+  var Term = require( 'AREA_MODEL_COMMON/model/Term' );
   var VStrut = require( 'SCENERY/nodes/VStrut' );
 
   /**
@@ -26,7 +27,7 @@ define( function( require ) {
   function TotalAreaNode( totalAreaProperty, allowExponents ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
-    var areaText = new RichText( allowExponents ? '-9x<sup>2</sup>' : '-999', {
+    var areaText = new RichText( Term.getLongestGenericString( allowExponents, 3 ), {
       font: AreaModelConstants.TOTAL_AREA_FONT
     } );
 
