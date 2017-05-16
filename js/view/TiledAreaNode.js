@@ -35,10 +35,16 @@ define( function( require ) {
 
     var self = this;
 
-    // @private
+    // @private {ProportionalArea}
     this.area = area;
+
+    // @private {ModelViewTransform}
     this.modelViewTransform = modelViewTransform;
+
+    // @private {Property.<boolean>}
     this.tilesVisibleProperty = tilesVisibleProperty;
+
+    // @private {number}
     this.smallTileSize = smallTileSize;
     this.largeTileSize = largeTileSize;
 
@@ -55,6 +61,7 @@ define( function( require ) {
       partition.coordinateRangeProperty.link( invalidate );
     } );
 
+    // @private {Path} - Background color paths
     this.bigPath = new Path( null, {
       fill: AreaModelColorProfile.bigTileProperty
     } );
