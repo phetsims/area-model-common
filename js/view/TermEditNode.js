@@ -17,6 +17,7 @@ define( function( require ) {
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -26,45 +27,54 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {GenericArea} area
-   * @param {GenericPartition} partition
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Orientation} orientation
+   * @param {Property.<Term|null>} termProperty
+   * @param {Property.<Color>} textColorProperty
+   * @param {Property.<Color>} borderColorProperty
+   * @param {Property.<boolean>} isActiveProperty
+   * @param {number} digitCount
    * @param {boolean} allowExponents
+   * @param {Function} editCallback - Called when editing is triggered
    */
-  function GenericEditNode( area, partition, modelViewTransform, allowExponents ) {
+  function TermEditNode( orientation, termProperty, textColorProperty, borderColorProperty, isActiveProperty, digitCount, allowExponents, editCallback ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+    assert && assert( termProperty instanceof Property );
+    assert && assert( textColorProperty instanceof Property );
+    assert && assert( borderColorProperty instanceof Property );
+    assert && assert( isActiveProperty instanceof Property );
+    assert && assert( typeof digitCount === 'number' );
+    assert && assert( typeof allowExponents === 'boolean' );
 
-    var self = this;
-
-    var readoutText = new RichText( Term.getLongestGenericString( allowExponents, partition.digitCount ), {
-      fill: partition.colorProperty,
+    var readoutText = new RichText( Term.getLongestGenericString( allowExponents, digitCount ), {
+      fill: textColorProperty,
       font: AreaModelConstants.EDIT_READOUT_FONT
     } );
 
     var readoutBackground = new Rectangle( 0, 0, readoutText.width + 5, readoutText.height + 5, {
-      stroke: partition.colorProperty,
+      stroke: borderColorProperty,
       cornerRadius: 4,
       children: [
         readoutText
       ]
     } );
 
-    partition.sizeProperty.link( function( size ) {
-      if ( size === null ) {
+    termProperty.link( function( term ) {
+      if ( term === null ) {
         readoutText.text = '';
       }
       else {
-        readoutText.text = size.toRichString( false );
+        readoutText.text = term.toRichString( false );
         readoutText.center = readoutBackground.selfBounds.center;
       }
     } );
 
-    area.activePartitionProperty.link( function( activePartition ) {
-      readoutBackground.fill = activePartition === partition ? AreaModelColorProfile.editActiveBackgroundProperty
-                                                             : AreaModelColorProfile.editInactiveBackgroundProperty;
+    isActiveProperty.link( function( isActive ) {
+      readoutBackground.fill = isActive ? AreaModelColorProfile.editActiveBackgroundProperty
+                                        : AreaModelColorProfile.editInactiveBackgroundProperty;
     } );
 
     LayoutBox.call( this, {
-      orientation: partition.orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical',
+      orientation: orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical',
       spacing: 4,
       children: [
         readoutBackground,
@@ -75,34 +85,16 @@ define( function( require ) {
             yMargin: 4
           } ),
           listener: function() {
-            // Make it the active partition
-            area.activePartitionProperty.value = partition;
+            editCallback();
           }
         }, {
           baseColor: AreaModelColorProfile.editButtonBackgroundProperty
         } )
       ]
     } );
-
-    // Primary orientation (location of range center)
-    partition.coordinateRangeProperty.link( function( range ) {
-      if ( range ) {
-        self[ partition.orientation.centerCoordinate ] = partition.orientation.modelToView( modelViewTransform, range.getCenter() );
-      }
-    } );
-
-    // Secondary (offsets)
-    if ( partition.orientation === Orientation.HORIZONTAL ) {
-      this.centerY = -20;
-    }
-    else {
-      this.centerX = -30;
-    }
-
-    partition.visibleProperty.linkAttribute( this, 'visible' );
   }
 
-  areaModelCommon.register( 'GenericEditNode', GenericEditNode );
+  areaModelCommon.register( 'TermEditNode', TermEditNode );
 
-  return inherit( LayoutBox, GenericEditNode );
+  return inherit( LayoutBox, TermEditNode );
 } );

@@ -17,12 +17,12 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
-  var GenericEditNode = require( 'AREA_MODEL_COMMON/view/GenericEditNode' );
   var GenericPartitionedAreaNode = require( 'AREA_MODEL_COMMON/view/GenericPartitionedAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var PartitionSizeEditNode = require( 'AREA_MODEL_COMMON/view/PartitionSizeEditNode' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/view/TermKeypadPanel' );
@@ -79,7 +79,7 @@ define( function( require ) {
 
     // Edit readouts/buttons
     area.partitions.forEach( function( partition ) {
-      self.labelLayer.addChild( new GenericEditNode( area, partition, self.modelViewTransform, allowExponents ) );
+      self.labelLayer.addChild( new PartitionSizeEditNode( area, partition, self.modelViewTransform, allowExponents ) );
     } );
 
     // Keypad
