@@ -22,7 +22,7 @@ define( function( require ) {
     TITLE_FONT: new PhetFont( 16 ),
     TOTAL_AREA_FONT: new PhetFont( 26 ),
     SYMBOL_FONT: new PhetFont( 20 ),
-    PARTIAL_PRODUCT_FONT: new PhetFont( 20 ),
+    PARTIAL_PRODUCT_FONT: new PhetFont( 19 ),
     PARTIAL_FACTOR_FONT: new PhetFont( 14 ),
     EDIT_READOUT_FONT: new PhetFont( 18 ),
     PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
