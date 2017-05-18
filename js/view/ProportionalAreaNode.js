@@ -189,7 +189,7 @@ define( function( require ) {
       } );
 
       this.area.getActiveTotalProperty( orientation ).link( function( totalSize ) {
-        dock.visible = totalSize >= self.area.snapSize * 2 - 1e-7;
+        dock.visible = totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
       } );
 
       this.area.getActiveTotalProperty( orientation.opposite ).link( function( totalSize ) {

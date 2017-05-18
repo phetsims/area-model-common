@@ -77,7 +77,7 @@ define( function( require ) {
 
     // Visibility
     activeTotalProperty.link( function( total ) {
-      self.visible = total >= area.snapSize * 2 - 1e-7;
+      self.visible = total >= ( area.partitionSnapSize + area.snapSize ) - 1e-7;
     } );
 
     // TODO: DragHandler? See https://github.com/phetsims/area-model-common/issues/17
