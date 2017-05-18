@@ -64,8 +64,7 @@ define( function( require ) {
     proportionalHeight: { default: new Color( 0, 71, 253 ) }, // blue
 
     // Grid lines for within the area
-    minorGridLine: { default: new Color( 0xdd, 0xdd, 0xdd ) },
-    majorGridLine: { default: new Color( 0x99, 0x99, 0x99 ) },
+    gridLine: { default: new Color( 0xdd, 0xdd, 0xdd ) },
 
     // The "active" part of the area (within the width/height selected)
     proportionalActiveAreaBorder: { default: new Color( 0x66, 0x66, 0x66 ) },

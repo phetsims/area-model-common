@@ -138,7 +138,7 @@ define( function( require ) {
         verticalRange = new Range( self.modelViewTransform.modelToViewY( verticalRange.min ),
                                    self.modelViewTransform.modelToViewY( verticalRange.max ) );
 
-        var fits = productLabel.width < horizontalRange.getLength() && productLabel.height < verticalRange.getLength();
+        // var fits = productLabel.width < horizontalRange.getLength() && productLabel.height < verticalRange.getLength();
         // if ( fits ) {
           productLabel.x = horizontalRange.getCenter();
           productLabel.y = verticalRange.getCenter();

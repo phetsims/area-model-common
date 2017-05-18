@@ -12,7 +12,6 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/model/ProportionalArea' );
   var Shape = require( 'KITE/Shape' );
@@ -34,15 +33,10 @@ define( function( require ) {
     var maxX = modelViewTransform.modelToViewX( area.maximumSize );
     var maxY = modelViewTransform.modelToViewY( area.maximumSize );
 
-    var majorLineShape = new Shape();
-    var minorLineShape = new Shape();
+    var shape = new Shape();
     for ( var i = area.minorGridSpacing; i < area.maximumSize; i += area.minorGridSpacing ) {
       var x = modelViewTransform.modelToViewX( i );
       var y = modelViewTransform.modelToViewY( i );
-
-      // See how close it is to a major grid line (dealing with floating-point variations)
-      var isMajor = Math.abs( i / area.majorGridSpacing - Math.round( i / area.majorGridSpacing ) ) < 1e-6;
-      var shape = isMajor ? majorLineShape : minorLineShape;
 
       shape.moveTo( HALF_GRID_LINE_WIDTH, y );
       shape.lineTo( maxX - HALF_GRID_LINE_WIDTH, y );
@@ -51,19 +45,12 @@ define( function( require ) {
       shape.lineTo( x, maxY - HALF_GRID_LINE_WIDTH );
     }
 
-    Node.call( this, {
-      children: [
-        new Path( majorLineShape, {
-          stroke: AreaModelColorProfile.majorGridLineProperty
-        } ),
-        new Path( minorLineShape, {
-          stroke: AreaModelColorProfile.minorGridLineProperty
-        } )
-      ]
+    Path.call( this, shape, {
+      stroke: AreaModelColorProfile.gridLineProperty
     } );
   }
 
   areaModelCommon.register( 'ProportionalAreaGridLinesNode', ProportionalAreaGridLinesNode );
 
-  return inherit( Node, ProportionalAreaGridLinesNode );
+  return inherit( Path, ProportionalAreaGridLinesNode );
 } );
