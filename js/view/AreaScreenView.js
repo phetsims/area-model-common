@@ -18,11 +18,11 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/view/CalculationPanel' );
-  var GenericProblemNode = require( 'AREA_MODEL_COMMON/view/GenericProblemNode' );
+  var GenericProductNode = require( 'AREA_MODEL_COMMON/view/GenericProductNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
-  var ProportionalProblemNode = require( 'AREA_MODEL_COMMON/view/ProportionalProblemNode' );
+  var ProportionalProductNode = require( 'AREA_MODEL_COMMON/view/ProportionalProductNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -30,7 +30,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var problemString = require( 'string!AREA_MODEL_COMMON/problem' );
+  var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
@@ -55,9 +55,9 @@ define( function( require ) {
     } );
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
-    var problemNode = isProportional ? new ProportionalProblemNode( model, decimalPlaces )
-                                     : new GenericProblemNode( model );
-    var problemBoxContent = new AlignBox( problemNode, {
+    var productNode = isProportional ? new ProportionalProductNode( model, decimalPlaces )
+                                     : new GenericProductNode( model );
+    var productBoxContent = new AlignBox( productNode, {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
@@ -72,7 +72,7 @@ define( function( require ) {
                                                    new PartialProductsSelectionNode( model ) );
 
     // Create accordion boxes after all group-aligned content is created.
-    var problemBox = this.createAccordionBox( problemString, model.problemBoxExpanded, problemBoxContent );
+    var productBox = this.createAccordionBox( productString, model.productBoxExpanded, productBoxContent );
     var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
     // Update panel/box visibility based on whether a total area exists
@@ -87,7 +87,7 @@ define( function( require ) {
     // @protected {VBox} - Available for suptype positioning relative to this.
     this.panelContainer = new VBox( {
       children: [
-        problemBox,
+        productBox,
         areaBox,
         calculationSelectionPanel,
         productsSelectionPanel

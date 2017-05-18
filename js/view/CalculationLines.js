@@ -21,7 +21,7 @@ define( function( require ) {
   var TermList = require( 'AREA_MODEL_COMMON/model/TermList' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // TODO: reduce duplication with ProblemNode -- different font though
+  // TODO: reduce duplication with ProductNode -- different font though
   var activeXText = new Text( AreaModelConstants.X_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty

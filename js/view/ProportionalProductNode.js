@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {ProportionalAreaModel} model
    * @param {number} decimalPlaces
    */
-  function ProportionalProblemNode( model, decimalPlaces ) {
+  function ProportionalProductNode( model, decimalPlaces ) {
 
     HBox.call( this, {
       children: [
@@ -41,9 +41,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'ProportionalProblemNode', ProportionalProblemNode );
+  areaModelCommon.register( 'ProportionalProductNode', ProportionalProductNode );
 
-  return inherit( HBox, ProportionalProblemNode, {
+  return inherit( HBox, ProportionalProductNode, {
     /**
      * Creates a picker that adjusts the specified orientation's total size.
      * @private

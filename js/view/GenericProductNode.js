@@ -25,7 +25,7 @@ define( function( require ) {
    *
    * @param {GenericAreaModel} model
    */
-  function GenericProblemNode( model ) {
+  function GenericProductNode( model ) {
     var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, model );
     var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, model );
 
@@ -54,9 +54,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'GenericProblemNode', GenericProblemNode );
+  areaModelCommon.register( 'GenericProductNode', GenericProductNode );
 
-  return inherit( HBox, GenericProblemNode, {
+  return inherit( HBox, GenericProductNode, {
     /**
      * Creates a readout for the total sum for a particular orientation.
      * @private
