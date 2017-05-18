@@ -139,14 +139,14 @@ define( function( require ) {
                                    self.modelViewTransform.modelToViewY( verticalRange.max ) );
 
         var fits = productLabel.width < horizontalRange.getLength() && productLabel.height < verticalRange.getLength();
-        if ( fits ) {
+        // if ( fits ) {
           productLabel.x = horizontalRange.getCenter();
           productLabel.y = verticalRange.getCenter();
-          return true;
-        }
-        else {
-          return false;
-        }
+        //   return true;
+        // }
+        // else {
+        //   return false;
+        // }
       } );
     },
 
