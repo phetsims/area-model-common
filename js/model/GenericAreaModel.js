@@ -27,7 +27,7 @@ define( function( require ) {
     this.genericArea = new GenericArea( allowExponents );
 
     AreaModel.call( this, [ this.genericArea ], allowExponents, AreaModelColorProfile.genericWidthProperty,
-                                                             AreaModelColorProfile.genericHeightProperty );
+                                                                AreaModelColorProfile.genericHeightProperty );
   }
 
   areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );

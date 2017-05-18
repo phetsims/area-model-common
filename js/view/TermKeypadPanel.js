@@ -45,17 +45,17 @@ define( function( require ) {
    * @constructor
    * @extends {Panel}
    *
-   * @param {Property.<GenericPartition>} activePartitionProperty
+   * @param {Property.<number>} digitCountProperty
    * @param {boolean} allowExponents
+   * @param {Function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
    * @param {Object} [options]
    */
-  function TermKeypadPanel( activePartitionProperty, allowExponents, nodeOptions ) {
-    var self = this;
-
+  function TermKeypadPanel( digitCountProperty, allowExponents, enterCallback, nodeOptions ) {
     // Handles logic for keypresses and conversion to strings/Terms.
-    var termAccumulator = new TermAccumulator( activePartitionProperty );
+    var termAccumulator = new TermAccumulator( digitCountProperty );
 
-    var keypad = new Keypad( allowExponents ? exponentLayout : noExponentLayout, {
+    // @private {Keypad}
+    this.keypad = new Keypad( allowExponents ? exponentLayout : noExponentLayout, {
       accumulator: termAccumulator
     } );
 
@@ -81,21 +81,19 @@ define( function( require ) {
     termAccumulator.richStringProperty.link( updateText );
 
     // When the active partition changes, resize the background to fit to the largest size.
-    activePartitionProperty.link( function( partition ) {
-      if ( partition !== null ) {
-        // Temporarily use a different string
-        var longestString = Term.getLongestGenericString( allowExponents, partition.digitCount );
-        readoutText.text = longestString;
+    digitCountProperty.link( function( digitCount ) {
+      // Temporarily use a different string
+      var longestString = Term.getLongestGenericString( allowExponents, digitCount );
+      readoutText.text = longestString;
 
-        // Update the background
-        readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 5 ) );
+      // Update the background
+      readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 5 ) );
 
-        // Reposition our text
-        readoutText.center = readoutBackground.center;
+      // Reposition our text
+      readoutText.center = readoutBackground.center;
 
-        // Reset the text value back to what it should be.
-        updateText( termAccumulator.richStringProperty.value );
-      }
+      // Reset the text value back to what it should be.
+      updateText( termAccumulator.richStringProperty.value );
     } );
 
     Panel.call( this, new VBox( {
@@ -107,7 +105,7 @@ define( function( require ) {
             readoutText
           ]
         } ),
-        keypad,
+        this.keypad,
         new RectangularPushButton( {
           content: new Text( enterString, {
             font: AreaModelConstants.KEYPAD_FONT,
@@ -117,11 +115,7 @@ define( function( require ) {
           xMargin: 15,
           yMargin: 5,
           listener: function() {
-            // Update the size of the partition.
-            activePartitionProperty.value.sizeProperty.value = termAccumulator.termProperty.value;
-
-            // Hide the keypad.
-            activePartitionProperty.value = null;
+            enterCallback( termAccumulator.termProperty.value );
           }
         } )
       ],
@@ -134,16 +128,18 @@ define( function( require ) {
       stroke: AreaModelColorProfile.keypadPanelBorderProperty
     } );
 
-    // If this changes, we clear and switch to it
-    activePartitionProperty.link( function( newArea ) {
-      self.visible = newArea !== null;
-      keypad.clear();
-    } );
-
     this.mutate( nodeOptions );
   }
 
   areaModelCommon.register( 'TermKeypadPanel', TermKeypadPanel );
 
-  return inherit( Panel, TermKeypadPanel );
+  return inherit( Panel, TermKeypadPanel, {
+    /**
+     * Clears the keypad's content.
+     * @public
+     */
+    clear: function() {
+      this.keypad.clear();
+    }
+  } );
 } );

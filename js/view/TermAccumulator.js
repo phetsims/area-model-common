@@ -24,11 +24,11 @@ define( function( require ) {
    * @constructor
    * @extends {AbstractKeyAccumulator}
    *
-   * @param {Property.<GenericPartition>} activePartitionProperty
+   * @param {Property.<number>} digitCountProperty
    */
-  function TermAccumulator( activePartitionProperty ) {
+  function TermAccumulator( digitCountProperty ) {
     // @private
-    this.activePartitionProperty = activePartitionProperty;
+    this.digitCountProperty = digitCountProperty;
 
     AbstractKeyAccumulator.call( this );
 
@@ -178,7 +178,7 @@ define( function( require ) {
         }
       } );
 
-      return xCount <= 1 && digitCount <= this.activePartitionProperty.value.digitCount;
+      return xCount <= 1 && digitCount <= this.digitCountProperty.value;
     }
   } );
 } );

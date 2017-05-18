@@ -14,6 +14,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var GenericEditNode = require( 'AREA_MODEL_COMMON/view/GenericEditNode' );
@@ -82,10 +83,26 @@ define( function( require ) {
     } );
 
     // Keypad
-    this.labelLayer.addChild( new TermKeypadPanel( area.activePartitionProperty, allowExponents, {
+    var digitCountProperty = new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
+      return activePartition === null ? 1 : activePartition.digitCount;
+    } );
+    var termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, function( term ) {
+      // Update the size of the partition.
+      area.activePartitionProperty.value.sizeProperty.value = term;
+
+      // Hide the keypad.
+      area.activePartitionProperty.value = null;
+    }, {
       x: this.viewSize + 35, // padding constant allows it to fit between the area and the other panels
       centerY: this.viewSize / 2
-    } ) );
+    } );
+    this.labelLayer.addChild( termKeypadPanel );
+
+    // If this changes, we clear and switch to it
+    area.activePartitionProperty.link( function( newArea ) {
+      termKeypadPanel.visible = newArea !== null;
+      termKeypadPanel.clear();
+    } );
 
     this.mutate( nodeOptions );
   }
