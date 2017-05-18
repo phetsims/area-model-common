@@ -34,7 +34,7 @@ define( function( require ) {
     var maxY = modelViewTransform.modelToViewY( area.maximumSize );
 
     var shape = new Shape();
-    for ( var i = area.minorGridSpacing; i < area.maximumSize; i += area.minorGridSpacing ) {
+    for ( var i = area.gridSpacing; i < area.maximumSize; i += area.gridSpacing ) {
       var x = modelViewTransform.modelToViewX( i );
       var y = modelViewTransform.modelToViewY( i );
 
