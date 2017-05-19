@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Supertype for view of Area objects.
+ * A range label that displays a specific TermList.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

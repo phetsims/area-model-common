@@ -78,7 +78,10 @@ define( function( require ) {
       var box = new Rectangle( 0, 0, 30, 30, { stroke: colorProperty } );
 
       var node = new Node();
-      model.currentAreaProperty.value.getTotalProperty( orientation ).link( function( total ) {
+      var area = model.currentAreaProperty.value;
+      var termListProperty = model.allowExponents ? area.getTermListProperty( orientation )
+                                                  : area.getTotalProperty( orientation );
+      termListProperty.link( function( total ) {
         if ( total === null ) {
           node.children = [ box ];
         }

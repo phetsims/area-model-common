@@ -30,10 +30,12 @@ define( function( require ) {
    * @param {Area} area
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {boolean} isProportional
+   * @param {boolean} allowExponents
    */
-  function AreaNode( area, partialProductsChoiceProperty, isProportional ) {
+  function AreaNode( area, partialProductsChoiceProperty, isProportional, allowExponents ) {
     assert && assert( area instanceof Area );
     assert && assert( typeof isProportional === 'boolean' );
+    assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
 
@@ -62,8 +64,14 @@ define( function( require ) {
       return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
     } );
 
-    this.initializeRangeLabel( Orientation.HORIZONTAL );
-    this.initializeRangeLabel( Orientation.VERTICAL );
+    // Range views
+    Orientation.VALUES.forEach( function( orientation ) {
+      var colorProperty = self.area.getColorProperty( orientation );
+      var termListProperty = allowExponents ? self.area.getTermListProperty( orientation )
+                                            : self.area.getTotalProperty( orientation );
+      var viewRangeProperty = self.getViewRangeProperty( orientation );
+      self.labelLayer.addChild( new TermListRangeNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
+    } );
 
     var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
     var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
@@ -107,23 +115,6 @@ define( function( require ) {
     mapCoordinate: function( value ) {
       return this.viewSize * value / this.area.coordinateRangeMax;
     },
-
-    /**
-     * Creates a range label with text and a line with start/end tick marks that covers the range.
-     * @private
-     *
-     * @param {Orientation} orientation
-     * @returns {Node}
-     */
-    initializeRangeLabel: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      var colorProperty = this.area.getColorProperty( orientation );
-      var termListProperty = this.area.getTotalProperty( orientation );
-      var viewRangeProperty = this.getViewRangeProperty( orientation );
-      this.labelLayer.addChild( new TermListRangeNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
-    },
-
 
     /**
      * Returns the coordinate range for a particular orientation in view coordinates.
