@@ -125,7 +125,7 @@ define( function( require ) {
 
       var totalPolynomial = this.area.totalAreaProperty.value;
 
-      var needsExpansion = !horizontalTermList.equals( horizontalPolynomial ) || !verticalTermList.equals( verticalPolynomial );
+      var needsExpansion = !this.allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) || !verticalTermList.equals( verticalPolynomial ) );
       var needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
       var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
       var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
@@ -330,8 +330,9 @@ define( function( require ) {
 
     // TODO: doc
     createTotalsLine: function( isActive ) {
-      var widthText = this.createColoredRichText( this.area.getTotalProperty( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive );
-      var heightText = this.createColoredRichText( this.area.getTotalProperty( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive );
+      var totalFunction = ( this.allowExponents ? this.area.getTermListProperty : this.area.getTotalProperty ).bind( this.area );
+      var widthText = this.createColoredRichText( totalFunction( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive );
+      var heightText = this.createColoredRichText( totalFunction( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive );
 
       if ( this.allowExponents ) {
         return new HBox( {
