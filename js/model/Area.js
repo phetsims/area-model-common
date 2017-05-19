@@ -68,6 +68,10 @@ define( function( require ) {
     this.horizontalTotalProperty = this.createTotalProperty( Orientation.HORIZONTAL );
     this.verticalTotalProperty = this.createTotalProperty( Orientation.VERTICAL );
 
+    // @private {Property.<TermList|null>} - Null if there is no defined total - Prefer getTermListProperty()
+    this.horizontalTermListProperty = this.createTermListProperty( Orientation.HORIZONTAL );
+    this.verticalTermListProperty = this.createTermListProperty( Orientation.VERTICAL );
+
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
     this.totalAreaProperty = new DerivedProperty( [ this.horizontalTotalProperty, this.verticalTotalProperty ], function( horizontalTotal, verticalTotal ) {
       if ( horizontalTotal === null || verticalTotal === null ) {
@@ -164,6 +168,18 @@ define( function( require ) {
     },
 
     /**
+     * Returns the property for the combined term list of all defined partitions for a particular orientation.
+     * @public
+     *
+     * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
+     */
+    getTermListProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalTermListProperty : this.verticalTermListProperty;
+    },
+
+    /**
      * Returns the color property associated with the particular orientation.
      * @public
      *
@@ -208,6 +224,33 @@ define( function( require ) {
         var terms = self.getTerms( orientation );
         if ( terms.length ) {
           return new Polynomial( terms );
+        }
+        else {
+          return null;
+        }
+      }, {
+        useDeepEquality: true
+      } );
+    },
+
+    /**
+     * Creates a derived property with the total (defined) term list for a particular dimension.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<TermList|null>}
+     */
+    createTermListProperty: function( orientation ) {
+      var self = this;
+
+      var properties = _.flatten( this.getPartitions( orientation ).map( function( partition ) {
+        return [ partition.sizeProperty, partition.visibleProperty ];
+      } ) );
+
+      return new DerivedProperty( properties, function() {
+        var terms = self.getTerms( orientation );
+        if ( terms.length ) {
+          return new TermList( terms );
         }
         else {
           return null;

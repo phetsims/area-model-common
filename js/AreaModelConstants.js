@@ -13,6 +13,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // TODO: doc
   return areaModelCommon.register( 'AreaModelConstants', {
     PROBLEM_X_FONT: new PhetFont( 36 ),
     PROBLEM_PAREN_FONT: new PhetFont( 40 ),
@@ -46,6 +47,9 @@ define( function( require ) {
 
     GENERIC_FIRST_OFFSET: 0.45,
     GENERIC_SECOND_OFFSET: 0.78,
+
+    HORIZONTAL_RANGE_OFFSET: -40, // Vertical offset from the main area for horizontal range labels
+    VERTICAL_RANGE_OFFSET: -60, // Horizontal offset from the main area for vertical range labels
 
     X_STRING: '\u00D7'
   } );

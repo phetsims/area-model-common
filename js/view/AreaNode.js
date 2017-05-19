@@ -13,21 +13,15 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
-  var Vector2 = require( 'DOT/Vector2' );
-
-  // constants
-  var TICK_LENGTH = 8; // How long the tick marks are for the range labels
-  var HORIZONTAL_RANGE_OFFSET = -40; // Vertical offset from the main area for horizontal range labels
-  var VERTICAL_RANGE_OFFSET = -60; // Horizontal offset from the main area for vertical range labels
-  var LABEL_OFFSET = -7; // How far the label text should be from the line/ticks
+  var Range = require( 'DOT/Range' );
+  var TermListRangeNode = require( 'AREA_MODEL_COMMON/view/TermListRangeNode' );
 
   /**
    * @constructor
@@ -58,6 +52,16 @@ define( function( require ) {
     // @public {number}
     this.viewSize = AreaModelConstants.AREA_SIZE;
 
+    // @protected {Property.<Range|null>} - Coordinate ranges for orientations (like in Area), but in view coordinates.
+    this.horizontalViewRangeProperty = new DerivedProperty( [ area.getCoordinateRangeProperty( Orientation.HORIZONTAL ) ], function( range ) {
+      if ( range === null ) { return null; }
+      return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
+    } );
+    this.verticalViewRangeProperty = new DerivedProperty( [ area.getCoordinateRangeProperty( Orientation.VERTICAL ) ], function( range ) {
+      if ( range === null ) { return null; }
+      return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
+    } );
+
     this.initializeRangeLabel( Orientation.HORIZONTAL );
     this.initializeRangeLabel( Orientation.VERTICAL );
 
@@ -83,8 +87,8 @@ define( function( require ) {
       listener: function() {
         area.reset();
       },
-      centerX: VERTICAL_RANGE_OFFSET,
-      centerY: HORIZONTAL_RANGE_OFFSET
+      centerX: AreaModelConstants.VERTICAL_RANGE_OFFSET,
+      centerY: AreaModelConstants.HORIZONTAL_RANGE_OFFSET
     } );
     this.labelLayer.addChild( eraseButton );
   }
@@ -114,92 +118,23 @@ define( function( require ) {
     initializeRangeLabel: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      var self = this;
-
-      // Color of everything
       var colorProperty = this.area.getColorProperty( orientation );
+      var termListProperty = this.area.getTotalProperty( orientation );
+      var viewRangeProperty = this.getViewRangeProperty( orientation );
+      this.labelLayer.addChild( new TermListRangeNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
+    },
 
-      var tickOptions = {
-        x1: 0,
-        y1: -TICK_LENGTH / 2,
-        x2: 0,
-        y2: TICK_LENGTH / 2,
-        stroke: colorProperty,
-        rotation: orientation === Orientation.HORIZONTAL ? 0 : Math.PI / 2
-      };
-      var minTick = new Line( tickOptions );
-      var maxTick = new Line( tickOptions );
 
-      var line = new Line( {
-        stroke: colorProperty
-      } );
+    /**
+     * Returns the coordinate range for a particular orientation in view coordinates.
+     * @public
+     *
+     * @param {Property.<Range|null>} - Null if there is no defined coordinate range.
+     */
+    getViewRangeProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
 
-      var text = new RichText( '', {
-        font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
-        fill: colorProperty
-      } );
-
-      // Wrap our text in a label, so that we can handle positioning independent of bounds checks
-      var label = new Node( {
-        children: [ text ]
-      } );
-      // Coordinates that don't change.
-      if ( orientation === Orientation.HORIZONTAL ) {
-        label.y = HORIZONTAL_RANGE_OFFSET + LABEL_OFFSET;
-      }
-      else {
-        label.x = VERTICAL_RANGE_OFFSET + LABEL_OFFSET;
-      }
-
-      this.labelLayer.addChild( minTick );
-      this.labelLayer.addChild( maxTick );
-      this.labelLayer.addChild( line );
-      this.labelLayer.addChild( label );
-
-      // Update the label text
-      this.area.getTotalProperty( orientation ).link( function( sum ) {
-        var hasSum = sum !== null;
-
-        text.visible = hasSum;
-        if ( hasSum ) {
-          text.text = sum.toRichString();
-          if ( orientation === Orientation.HORIZONTAL ) {
-            text.centerBottom = Vector2.ZERO;
-          }
-          else {
-            text.rightCenter = Vector2.ZERO;
-          }
-        }
-      } );
-
-      // Update the layout
-      this.area.getCoordinateRangeProperty( orientation ).link( function( range ) {
-        var hasRange = range !== null;
-
-        minTick.visible = hasRange;
-        maxTick.visible = hasRange;
-        line.visible = hasRange;
-
-        if ( !hasRange ) {
-          return;
-        }
-
-        var min = self.mapCoordinate( range.min );
-        var center = self.mapCoordinate( range.getCenter() );
-        var max = self.mapCoordinate( range.max );
-
-        // Points on each end of our line
-        var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( min, HORIZONTAL_RANGE_OFFSET )
-                                                              : new Vector2( VERTICAL_RANGE_OFFSET, min );
-        var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( max, HORIZONTAL_RANGE_OFFSET )
-                                                              : new Vector2( VERTICAL_RANGE_OFFSET, max );
-
-        minTick.translation = minPoint;
-        maxTick.translation = maxPoint;
-        line.p1 = minPoint;
-        line.p2 = maxPoint;
-        label[ orientation.coordinate ] = center;
-      } );
+      return orientation === Orientation.HORIZONTAL ? this.horizontalViewRangeProperty : this.verticalViewRangeProperty;
     }
   } );
 } );
