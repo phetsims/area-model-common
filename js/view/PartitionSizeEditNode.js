@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * An edit button and readout for the associated term.
+ * Positions an edit button with a readout at the top/side of the partition.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

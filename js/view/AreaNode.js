@@ -21,7 +21,7 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
   var Range = require( 'DOT/Range' );
-  var TermListRangeNode = require( 'AREA_MODEL_COMMON/view/TermListRangeNode' );
+  var RangeTermListNode = require( 'AREA_MODEL_COMMON/view/RangeTermListNode' );
 
   /**
    * @constructor
@@ -70,7 +70,7 @@ define( function( require ) {
       var termListProperty = allowExponents ? self.area.getTermListProperty( orientation )
                                             : self.area.getTotalProperty( orientation );
       var viewRangeProperty = self.getViewRangeProperty( orientation );
-      self.labelLayer.addChild( new TermListRangeNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
+      self.labelLayer.addChild( new RangeTermListNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
     } );
 
     var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );

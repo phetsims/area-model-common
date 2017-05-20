@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {Property.<Range>} viewRangeProperty - Expected to be in view coordinates
    * @param {Property.<Color>} colorProperty
    */
-  function TermListRangeNode( termListProperty, orientation, viewRangeProperty, colorProperty ) {
+  function RangeTermListNode( termListProperty, orientation, viewRangeProperty, colorProperty ) {
 
     var text = new RichText( '', {
       font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
@@ -58,7 +58,7 @@ define( function( require ) {
     RangeNode.call( this, label, orientation, viewRangeProperty, colorProperty );
   }
 
-  areaModelCommon.register( 'TermListRangeNode', TermListRangeNode );
+  areaModelCommon.register( 'RangeTermListNode', RangeTermListNode );
 
-  return inherit( RangeNode, TermListRangeNode );
+  return inherit( RangeNode, RangeTermListNode );
 } );

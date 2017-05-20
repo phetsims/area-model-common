@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * View for ProportionalArea.
+ * Positions a partition size label at the top/side of the partition.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

@@ -31,7 +31,7 @@ define( function( require ) {
    * @param {boolean} allowExponents
    * @param {Function} editCallback - Called when editing is triggered
    */
-  function EditRangeNode( termProperty, orientation, viewRangeProperty, colorProperty, borderColorProperty, isActiveProperty, digitCount, allowExponents, editCallback ) {
+  function RangeEditNode( termProperty, orientation, viewRangeProperty, colorProperty, borderColorProperty, isActiveProperty, digitCount, allowExponents, editCallback ) {
 
     var termEditNode = new TermEditNode(
       orientation, // orientation
@@ -54,7 +54,7 @@ define( function( require ) {
     RangeNode.call( this, termEditNode, orientation, viewRangeProperty, colorProperty );
   }
 
-  areaModelCommon.register( 'EditRangeNode', EditRangeNode );
+  areaModelCommon.register( 'RangeEditNode', RangeEditNode );
 
-  return inherit( RangeNode, EditRangeNode );
+  return inherit( RangeNode, RangeEditNode );
 } );
