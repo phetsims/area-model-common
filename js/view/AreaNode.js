@@ -19,7 +19,7 @@ define( function( require ) {
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
-  var PartialProductsLabel = require( 'AREA_MODEL_COMMON/view/PartialProductsLabel' );
+  var PartialProductsLabelNode = require( 'AREA_MODEL_COMMON/view/PartialProductsLabelNode' );
   var Range = require( 'DOT/Range' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/view/RangeLabelNode' );
 
@@ -79,9 +79,9 @@ define( function( require ) {
     // @protected {ModelViewTransform2} - Maps from coordinate range values to view values.
     this.modelViewTransform = ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
 
-    // @protected {Array.<PartialProductsLabel>}
+    // @protected {Array.<PartialProductsLabelNode>}
     this.productLabels = area.partitionedAreas.map( function( partitionedArea ) {
-      var productLabel = new PartialProductsLabel( partialProductsChoiceProperty, partitionedArea, !isProportional );
+      var productLabel = new PartialProductsLabelNode( partialProductsChoiceProperty, partitionedArea, !isProportional );
       self.labelLayer.addChild( productLabel );
       return productLabel;
     } );
