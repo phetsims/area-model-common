@@ -23,6 +23,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
+   * TODO: generalize? don't rely on the partitionedArea?
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {PartitionedArea} partitionedArea
    * @param {boolean} allowExponents
@@ -36,6 +37,7 @@ define( function( require ) {
 
     Node.call( this );
 
+    // TODO: pull this reference, check where it is used
     // @public {PartitionedArea}
     this.partitionedArea = partitionedArea;
 

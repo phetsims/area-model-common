@@ -19,6 +19,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
+   * TODO: Generalize parameters (like others) and add an options object. Don't rely in actual Partition reference
    * @param {GenericArea} area TODO type doc needs updating?
    * @param {GenericPartition} partition
    * @param {ModelViewTransform2} modelViewTransform
@@ -33,7 +34,7 @@ define( function( require ) {
       partition.orientation, // orientation
       partition.sizeProperty, // termProperty
       partition.colorProperty, // textColorProperty
-      partition.colorProperty, // borderColorProperty
+      partition.colorProperty, // borderColorProperty TODO pass in
       // isActiveProperty
       new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
         return activePartition === partition;
