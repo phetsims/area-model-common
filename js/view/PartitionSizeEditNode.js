@@ -19,7 +19,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {GenericArea} area
+   * @param {GenericArea} area TODO type doc needs updating?
    * @param {GenericPartition} partition
    * @param {ModelViewTransform2} modelViewTransform
    * @param {boolean} allowExponents
@@ -28,6 +28,7 @@ define( function( require ) {
     var self = this;
 
     // TODO: isErrorState handling for the color?
+    // TODO: options object
     TermEditNode.call( this,
       partition.orientation, // orientation
       partition.sizeProperty, // termProperty

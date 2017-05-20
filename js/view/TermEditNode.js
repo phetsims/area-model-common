@@ -27,6 +27,8 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
+   * TODO: options object?
+   *
    * @param {Orientation} orientation
    * @param {Property.<Term|null>} termProperty
    * @param {Property.<Color>} textColorProperty
