@@ -71,7 +71,7 @@ define( function( require ) {
     ], [
       new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty ),
       new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty )
-    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize );
+    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize, false );
 
     // Keep partition sizes up-to-date
     Orientation.VALUES.forEach( function( orientation ) {

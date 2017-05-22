@@ -44,7 +44,7 @@ define( function( require ) {
       new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
       new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
-    ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1 );
+    ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1, allowExponents );
 
     // @private {Array.<Property.<boolean>>} - Whether partition lines are toggled on (2 in each orientation)
     this.horizontalPartitionLineActiveProperties = [ new Property( false ), new Property( false ) ];

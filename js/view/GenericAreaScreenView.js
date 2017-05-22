@@ -13,7 +13,9 @@ define( function( require ) {
   var AreaScreenView = require( 'AREA_MODEL_COMMON/view/AreaScreenView' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/model/GenericAreaModel' );
   var GenericAreaNode = require( 'AREA_MODEL_COMMON/view/GenericAreaNode' );
+  var GenericProductNode = require( 'AREA_MODEL_COMMON/view/GenericProductNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
 
   /**
    * @constructor
@@ -35,5 +37,12 @@ define( function( require ) {
 
   areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );
 
-  return inherit( AreaScreenView, GenericAreaScreenView );
+  return inherit( AreaScreenView, GenericAreaScreenView, {
+    // TODO: doc/improve
+    createProductNode: function( model, decimalPlaces ) {
+      var horizontalDisplayProperty = model.areas[ 0 ].getDisplayProperty( Orientation.HORIZONTAL );
+      var verticalDisplayProperty = model.areas[ 0 ].getDisplayProperty( Orientation.VERTICAL );
+      return new GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, model.allowExponents );
+    }
+  } );
 } );

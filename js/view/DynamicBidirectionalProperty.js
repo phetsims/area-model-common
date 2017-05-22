@@ -18,7 +18,7 @@ define( function( require ) {
    * @constructor
    * @extends {Property}
    *
-   * @param {Property.<Property.<*>>} valuePropertyProperty
+   * @param {Property.<Property.<*>|null>} valuePropertyProperty - If the value is null, it is considered disconnected.
    * @param {Object} [options] - options
    */
   function DynamicBidirectionalProperty( valuePropertyProperty, options ) {
@@ -31,18 +31,21 @@ define( function( require ) {
       self.value = value;
     }
 
-    // Hook the current property up to change our value. "property => this"
-    valuePropertyProperty.value.link( updateValue );
-
     // Hook our value up to the current property. "this => property"
     this.link( function( value ) {
-      valuePropertyProperty.value.value = value;
+      if ( valuePropertyProperty.value ) {
+        valuePropertyProperty.value.value = value;
+      }
     } );
 
     // Rehook our listener to whatever is the active property.
-    valuePropertyProperty.lazyLink( function( newProperty, oldProperty ) {
-      oldProperty.unlink( updateValue );
-      newProperty.link( updateValue );
+    valuePropertyProperty.link( function( newProperty, oldProperty ) {
+      if ( oldProperty ) {
+        oldProperty.unlink( updateValue );
+      }
+      if ( newProperty ) {
+        newProperty.link( updateValue );
+      }
     } );
   }
 

@@ -19,6 +19,7 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/model/ProportionalAreaModel' );
   var ProportionalAreaNode = require( 'AREA_MODEL_COMMON/view/ProportionalAreaNode' );
+  var ProportionalProductNode = require( 'AREA_MODEL_COMMON/view/ProportionalProductNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SceneSelectionNode = require( 'AREA_MODEL_COMMON/view/SceneSelectionNode' );
   var Shape = require( 'KITE/Shape' );
@@ -100,6 +101,11 @@ define( function( require ) {
           areaNode.update();
         }
       } );
+    },
+
+    // TODO: doc
+    createProductNode: function( model, decimalPlaces ) {
+      return new ProportionalProductNode( model, decimalPlaces );
     },
 
     /**

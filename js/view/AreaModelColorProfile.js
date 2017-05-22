@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var Color = require( 'SCENERY/util/Color' );
   var ColorProfile = require( 'SCENERY_PHET/ColorProfile' );
+  var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
 
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)
@@ -113,6 +114,20 @@ define( function( require ) {
   }, [ 'default' ] );
 
   areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );
+
+  /**
+   * Returns the generic color Property for the given orientation.
+   * @public
+   *
+   * @param {Orientation} orientation
+   * @returns {Property.<Color>}
+   */
+  AreaModelColorProfile.getGenericColorProperty = function( orientation ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+
+    return orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.genericWidthProperty
+                                                  : AreaModelColorProfile.genericHeightProperty;
+  };
 
   return AreaModelColorProfile;
 } );

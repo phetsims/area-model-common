@@ -18,11 +18,9 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/view/CalculationPanel' );
-  var GenericProductNode = require( 'AREA_MODEL_COMMON/view/GenericProductNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/view/PartialProductsSelectionNode' );
-  var ProportionalProductNode = require( 'AREA_MODEL_COMMON/view/ProportionalProductNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -55,8 +53,7 @@ define( function( require ) {
     } );
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
-    var productNode = isProportional ? new ProportionalProductNode( model, decimalPlaces )
-                                     : new GenericProductNode( model );
+    var productNode = this.createProductNode( model, decimalPlaces );
     var productBoxContent = new AlignBox( productNode, {
       group: panelAlignGroup,
       xAlign: 'center'

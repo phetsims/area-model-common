@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -23,16 +24,18 @@ define( function( require ) {
    * @constructor
    * @extends {HBox}
    *
-   * @param {GenericAreaModel} model
+   * @param {Property.<TermList|null>} horizontalDisplayProperty
+   * @param {Property.<TermList|null>} verticalDisplayProperty
+   * @param {boolean} allowExponents
    */
-  function GenericProductNode( model ) {
-    var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, model );
-    var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, model );
+  function GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponents ) {
+    var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, horizontalDisplayProperty );
+    var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, verticalDisplayProperty );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
     // AccordionBox.
     var box = new HBox( {
-      children: model.allowExponents ? [
+      children: allowExponents ? [
         new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
         verticalNode,
         new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
@@ -62,13 +65,13 @@ define( function( require ) {
      * @private
      *
      * @param {Orientation} orientation
-     * @param {GenericAreaModel} model
+     * @param {Property.<TermList|null>} displayProperty
      * @returns {Node}
      */
-    createOrientationReadout: function( orientation, model ) {
+    createOrientationReadout: function( orientation, displayProperty ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      var colorProperty = model.getColorProperty( orientation );
+      var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
 
       var richText = new RichText( ' ', {
         font: AreaModelConstants.PROBLEM_X_FONT,
@@ -78,15 +81,12 @@ define( function( require ) {
       var box = new Rectangle( 0, 0, 30, 30, { stroke: colorProperty } );
 
       var node = new Node();
-      var area = model.currentAreaProperty.value;
-      var termListProperty = model.allowExponents ? area.getTermListProperty( orientation )
-                                                  : area.getTotalProperty( orientation );
-      termListProperty.link( function( total ) {
-        if ( total === null ) {
+      displayProperty.link( function( termList ) {
+        if ( termList === null ) {
           node.children = [ box ];
         }
         else {
-          richText.text = total.toRichString();
+          richText.text = termList.toRichString();
           node.children = [ richText ];
         }
       } );

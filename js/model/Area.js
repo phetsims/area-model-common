@@ -28,8 +28,9 @@ define( function( require ) {
    * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
    * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
    * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take.
+   * @param {boolean} allowExponents
    */
-  function Area( horizontalPartitions, verticalPartitions, horizontalColorProperty, verticalColorProperty, coordinateRangeMax ) {
+  function Area( horizontalPartitions, verticalPartitions, horizontalColorProperty, verticalColorProperty, coordinateRangeMax, allowExponents ) {
     assert && assert( horizontalPartitions instanceof Array );
     assert && assert( verticalPartitions instanceof Array );
     assert && assert( horizontalColorProperty instanceof Property );
@@ -81,6 +82,11 @@ define( function( require ) {
     }, {
       useDeepEquality: true
     } );
+
+    // @private {Property.<TermList|null>} - Displayed term list for the product
+    // Null if there is no defined total - Prefer getDisplayProperty()
+    this.horizontalDisplayProperty = allowExponents ? this.horizontalTermListProperty : this.horizontalTotalProperty;
+    this.verticalDisplayProperty = allowExponents ? this.verticalTermListProperty : this.verticalTotalProperty;
 
     // @private {Property.<Range|null>} - Prefer getCoordinateRangeProperty()
     this.horizontalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.HORIZONTAL );
@@ -204,6 +210,20 @@ define( function( require ) {
 
       return orientation === Orientation.HORIZONTAL ? this.horizontalCoordinateRangeProperty
                                                     : this.verticalCoordinateRangeProperty;
+    },
+
+    /**
+     * Returns the TermList Property to be displayed in the Product panel
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Range|null>}
+     */
+    getDisplayProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalDisplayProperty
+                                                    : this.verticalDisplayProperty;
     },
 
     /**
