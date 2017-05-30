@@ -81,7 +81,7 @@ define( function( require ) {
 
     // @protected {Array.<PartialProductsLabelNode>}
     this.productLabels = area.partitionedAreas.map( function( partitionedArea ) {
-      var productLabel = new PartialProductsLabelNode( partialProductsChoiceProperty, partitionedArea, !isProportional );
+      var productLabel = new PartialProductsLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents );
       self.labelLayer.addChild( productLabel );
       return productLabel;
     } );
