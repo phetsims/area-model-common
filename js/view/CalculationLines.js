@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var TermList = require( 'AREA_MODEL_COMMON/model/TermList' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -101,9 +102,31 @@ define( function( require ) {
       var horizontalPartitions = this.area.getDefinedPartitions( Orientation.HORIZONTAL );
       var verticalPartitions = this.area.getDefinedPartitions( Orientation.VERTICAL );
 
-      // If either is empty, we will have no calculation lines.
-      if ( horizontalPartitions.length === 0 || verticalPartitions.length === 0 ) {
-        return [];
+      var horizontalEmpty = horizontalPartitions.length === 0;
+      var verticalEmpty = verticalPartitions.length === 0;
+
+      // If both are empty, show a question mark
+      if ( horizontalEmpty && verticalEmpty ) {
+        return [
+          {
+            node: new Text( '?', {
+              font: AreaModelConstants.CALCULATION_TERM_FONT,
+              fill: AreaModelColorProfile.calculationActiveProperty
+            } ),
+            index: 0,
+            isActive: true
+          }
+        ];
+      }
+      // If only one is empty, show boxes
+      else if ( horizontalEmpty || verticalEmpty ) {
+        return [
+          {
+            node: this.createTotalsLine( true ),
+            index: 0,
+            isActive: true
+          }
+        ];
       }
 
       var horizontalTermList = this.area.getTermList( Orientation.HORIZONTAL );
@@ -204,6 +227,15 @@ define( function( require ) {
       } );
 
       return lines;
+    },
+
+    createColoredBox: function( orientation ) {
+      var colorProperty = this.area.getColorProperty( orientation );
+      var rect = new Rectangle( 0, 0, 16, 16, { stroke: colorProperty, lineWidth: 0.7 } );
+      if ( this.allowExponents ) {
+        rect.localBounds = rect.localBounds.dilatedX( 2 );
+      }
+      return rect;
     },
 
     // NOTE: Term or Polynomial, includeBinaryOperation ignored for polynomial
@@ -331,8 +363,14 @@ define( function( require ) {
     // TODO: doc
     createTotalsLine: function( isActive ) {
       var totalFunction = ( this.allowExponents ? this.area.getTermListProperty : this.area.getTotalProperty ).bind( this.area );
-      var widthText = this.createColoredRichText( totalFunction( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive );
-      var heightText = this.createColoredRichText( totalFunction( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive );
+
+      var horizontalTotal = totalFunction( Orientation.HORIZONTAL ).value;
+      var verticalTotal = totalFunction( Orientation.VERTICAL ).value;
+
+      var widthText = horizontalTotal ? this.createColoredRichText( totalFunction( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive )
+                                      : this.createColoredBox( Orientation.HORIZONTAL );
+      var heightText = verticalTotal ? this.createColoredRichText( totalFunction( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive )
+                                     : this.createColoredBox( Orientation.VERTICAL );
 
       if ( this.allowExponents ) {
         return new HBox( {

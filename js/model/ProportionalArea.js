@@ -84,6 +84,8 @@ define( function( require ) {
         var primaryPartition = self.getPrimaryPartition( orientation );
         var secondaryPartition = self.getSecondaryPartition( orientation );
 
+        secondaryPartition.visibleProperty.value = split !== null;
+
         if ( split ) {
           primaryPartition.sizeProperty.value = new Term( split );
           secondaryPartition.sizeProperty.value = new Term( size - split );

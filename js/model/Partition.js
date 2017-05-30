@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Property = require( 'AXON/Property' );
@@ -37,7 +38,7 @@ define( function( require ) {
     this.colorProperty = colorProperty;
 
     // @public {Property.<boolean>}
-    this.visibleProperty = new Property( true );
+    this.visibleProperty = new BooleanProperty( true );
 
     // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when
     // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it

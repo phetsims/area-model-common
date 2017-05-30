@@ -104,8 +104,7 @@ define( function( require ) {
     this.addChild( lineLayer );
 
     function update() {
-      self.visible = model.areaCalculationChoiceProperty.value !== AreaCalculationChoice.HIDDEN &&
-                     model.currentAreaProperty.value.totalAreaProperty.value !== null;
+      self.visible = model.areaCalculationChoiceProperty.value !== AreaCalculationChoice.HIDDEN;
 
       var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
 
