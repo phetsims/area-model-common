@@ -109,7 +109,10 @@ define( function( require ) {
 
     // Area sign highlights
     genericPositiveBackground: { default: new Color( 0xd4f3fe ) },
-    genericNegativeBackground: { default: new Color( 0xe5a5ab ) }
+    genericNegativeBackground: { default: new Color( 0xe5a5ab ) },
+
+    // Layout grid icon color
+    layoutGrid: { default: Color.BLACK }
 
   }, [ 'default' ] );
 

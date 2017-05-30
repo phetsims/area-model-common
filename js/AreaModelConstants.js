@@ -30,6 +30,7 @@ define( function( require ) {
     TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 20 ),
+    LAYOUT_FONT: new PhetFont( 22 ),
 
     AREA_SIZE: 350,
 
@@ -47,6 +48,10 @@ define( function( require ) {
 
     GENERIC_FIRST_OFFSET: 0.45,
     GENERIC_SECOND_OFFSET: 0.78,
+
+    GENERIC_ICON_SINGLE_OFFSET: 0.68,
+    GENERIC_ICON_FIRST_OFFSET: 0.55,
+    GENERIC_ICON_SECOND_OFFSET: 0.80,
 
     HORIZONTAL_RANGE_OFFSET: -40, // Vertical offset from the main area for horizontal range labels
     VERTICAL_RANGE_OFFSET: -60, // Horizontal offset from the main area for vertical range labels

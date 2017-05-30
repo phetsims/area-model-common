@@ -13,7 +13,9 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
+  var GenericLayout = require( 'AREA_MODEL_COMMON/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -23,8 +25,11 @@ define( function( require ) {
    */
   function GenericAreaModel( allowExponents ) {
 
+    // @public {Property.<GenericLayout>}
+    this.genericLayoutProperty = new Property( GenericLayout.TWO_BY_TWO );
+
     // @public {Area}
-    this.genericArea = new GenericArea( allowExponents );
+    this.genericArea = new GenericArea( this.genericLayoutProperty, allowExponents );
 
     AreaModel.call( this, [ this.genericArea ], allowExponents, AreaModelColorProfile.genericWidthProperty,
                                                                 AreaModelColorProfile.genericHeightProperty );

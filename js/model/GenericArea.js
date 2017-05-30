@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    * @param {Property.<Color>} colorProperty
    */
-  function GenericArea( allowExponents, colorProperty ) {
+  function GenericArea( genericLayoutProperty, allowExponents, colorProperty ) {
     assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
@@ -45,6 +45,9 @@ define( function( require ) {
       new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
     ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1, allowExponents );
+
+    // @public {Property.<GenericLayout>}
+    this.genericLayoutProperty = genericLayoutProperty;
 
     // @private {Array.<Property.<boolean>>} - Whether partition lines are toggled on (2 in each orientation)
     this.horizontalPartitionLineActiveProperties = [ new Property( false ), new Property( false ) ];

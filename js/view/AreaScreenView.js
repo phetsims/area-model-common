@@ -53,6 +53,7 @@ define( function( require ) {
     } );
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
+    //TODO: abstract method
     var productNode = this.createProductNode( model, decimalPlaces );
     var productBoxContent = new AlignBox( productNode, {
       group: panelAlignGroup,
@@ -72,14 +73,17 @@ define( function( require ) {
     var productBox = this.createAccordionBox( productString, model.productBoxExpanded, productBoxContent );
     var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
+    // TODO: sizing
+    var layoutNode = this.createLayoutNode && this.createLayoutNode( model, productBox.width ); // TODO: better way
+
     // @protected {VBox} - Available for suptype positioning relative to this.
     this.panelContainer = new VBox( {
-      children: [
+      children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
         productBox,
         areaBox,
         calculationSelectionPanel,
         productsSelectionPanel
-      ],
+      ] ),
       spacing: AreaModelConstants.PANEL_SPACING,
       top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
