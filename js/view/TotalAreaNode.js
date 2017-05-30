@@ -45,7 +45,7 @@ define( function( require ) {
 
     // Update the text.
     totalAreaProperty.link( function( polynomial ) {
-      areaText.text = polynomial === null ? '-' : polynomial.toRichString();
+      areaText.text = polynomial === null ? '?' : polynomial.toRichString();
     } );
 
     Node.call( this, {

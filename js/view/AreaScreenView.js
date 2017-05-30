@@ -76,7 +76,6 @@ define( function( require ) {
     model.totalAreaProperty.link( function( area ) {
       var hasArea = area !== null;
 
-      areaBox.visible = hasArea;
       calculationSelectionPanel.visible = hasArea;
       productsSelectionPanel.visible = hasArea;
     } );
