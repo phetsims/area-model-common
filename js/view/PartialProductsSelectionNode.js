@@ -35,6 +35,52 @@ define( function( require ) {
 
     Node.call( this );
 
+    var aText = new Text( 'a', {
+      font: AreaModelConstants.SYMBOL_FONT,
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.VERTICAL ) ], function( value, heightColor ) {
+        return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
+      } )
+    } );
+
+    var bText = new Text( 'b', {
+      font: AreaModelConstants.SYMBOL_FONT,
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
+        return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
+      } )
+    } );
+
+    var factorsIcon;
+    if ( model.allowExponents ) {
+      factorsIcon = new HBox( {
+        children: [
+          new Text( '(', {
+            font: AreaModelConstants.SYMBOL_FONT
+          } ),
+          aText,
+          new Text( ')(', {
+            font: AreaModelConstants.SYMBOL_FONT
+          } ),
+          bText,
+          new Text( ')', {
+            font: AreaModelConstants.SYMBOL_FONT
+          } )
+        ],
+        spacing: 0
+      } );
+    }
+    else {
+      factorsIcon = new HBox( {
+        children: [
+          aText,
+          new Text( AreaModelConstants.X_STRING, {
+            font: AreaModelConstants.SYMBOL_FONT
+          } ),
+          bText
+        ],
+        spacing: 5
+      } );
+    }
+
     var group = new AlignGroup();
 
     var radioItems = [
@@ -48,26 +94,7 @@ define( function( require ) {
       },
       {
         value: PartialProductsChoice.FACTORS,
-        node: new AlignBox( new HBox( {
-          children: [
-            new Text( 'a', {
-              font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.VERTICAL ) ], function( value, heightColor ) {
-                return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
-              } )
-            } ),
-            new Text( AreaModelConstants.X_STRING, {
-              font: AreaModelConstants.SYMBOL_FONT
-            } ),
-            new Text( 'b', {
-              font: AreaModelConstants.SYMBOL_FONT,
-              fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
-                return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
-              } )
-            } )
-          ],
-          spacing: 5
-        } ), { group: group } )
+        node: new AlignBox( factorsIcon, { group: group } )
       }
     ];
 

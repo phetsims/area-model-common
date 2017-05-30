@@ -29,7 +29,7 @@ define( function( require ) {
    *
    * @param {Area} area
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
-   * @param {boolean} isProportional
+   * @param {boolean} isProportional TODO: Unused?
    * @param {boolean} allowExponents
    */
   function AreaNode( area, partialProductsChoiceProperty, isProportional, allowExponents ) {
