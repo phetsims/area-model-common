@@ -35,54 +35,26 @@ define( function( require ) {
 
     Node.call( this );
 
-    var aText = new Text( 'a', {
+
+    var horizontalText = new Text( 'b', {
+      font: AreaModelConstants.SYMBOL_FONT,
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
+        return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
+      } )
+    } );
+    var verticalText = new Text( 'a', {
       font: AreaModelConstants.SYMBOL_FONT,
       fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.VERTICAL ) ], function( value, heightColor ) {
         return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
       } )
     } );
 
-    var bText = new Text( 'b', {
-      font: AreaModelConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
-        return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
-      } )
-    } );
-
-    var factorsIcon;
-    if ( model.allowExponents ) {
-      factorsIcon = new HBox( {
-        children: [
-          new Text( '(', {
-            font: AreaModelConstants.SYMBOL_FONT
-          } ),
-          aText,
-          new Text( ')(', {
-            font: AreaModelConstants.SYMBOL_FONT
-          } ),
-          bText,
-          new Text( ')', {
-            font: AreaModelConstants.SYMBOL_FONT
-          } )
-        ],
-        spacing: 0
-      } );
-    }
-    else {
-      factorsIcon = new HBox( {
-        children: [
-          aText,
-          new Text( AreaModelConstants.X_STRING, {
-            font: AreaModelConstants.SYMBOL_FONT
-          } ),
-          bText
-        ],
-        spacing: 5
-      } );
-    }
+    //TODO: don't require both to be built
+    var iconGroup = new AlignGroup();
+    var exponentsIcon = new AlignBox( this.createExponentIcon( horizontalText, verticalText ), { group: iconGroup } );
+    var noExponentsIcon = new AlignBox( this.createNonExponentIcon( horizontalText, verticalText ), { group: iconGroup } );
 
     var group = new AlignGroup();
-
     var radioItems = [
       {
         value: PartialProductsChoice.HIDDEN,
@@ -94,7 +66,7 @@ define( function( require ) {
       },
       {
         value: PartialProductsChoice.FACTORS,
-        node: new AlignBox( factorsIcon, { group: group } )
+        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: group } )
       }
     ];
 
@@ -111,5 +83,40 @@ define( function( require ) {
 
   areaModelCommon.register( 'PartialProductsSelectionNode', PartialProductsSelectionNode );
 
-  return inherit( Node, PartialProductsSelectionNode );
+  return inherit( Node, PartialProductsSelectionNode, {
+    // TODO: doc
+    createExponentIcon: function( horizontalNode, verticalNode ) {
+      return new HBox( {
+        children: [
+          new Text( '(', {
+            font: AreaModelConstants.SYMBOL_FONT
+          } ),
+          new Node( { children: [ verticalNode ] } ),
+          new Text( ')(', {
+            font: AreaModelConstants.SYMBOL_FONT
+          } ),
+          new Node( { children: [ horizontalNode ] } ),
+          new Text( ')', {
+            font: AreaModelConstants.SYMBOL_FONT
+          } )
+        ],
+        spacing: 0,
+        scale: 0.9
+      } );
+    },
+
+    // TODO: doc
+    createNonExponentIcon: function( horizontalNode, verticalNode ) {
+      return new HBox( {
+        children: [
+          new Node( { children: [ verticalNode ] } ),
+          new Text( AreaModelConstants.X_STRING, {
+            font: AreaModelConstants.SYMBOL_FONT
+          } ),
+          new Node( { children: [ horizontalNode ] } )
+        ],
+        spacing: 5
+      } );
+    }
+  } );
 } );
