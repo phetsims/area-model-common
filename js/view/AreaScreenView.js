@@ -72,14 +72,6 @@ define( function( require ) {
     var productBox = this.createAccordionBox( productString, model.productBoxExpanded, productBoxContent );
     var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
-    // Update panel/box visibility based on whether a total area exists
-    model.totalAreaProperty.link( function( area ) {
-      var hasArea = area !== null;
-
-      calculationSelectionPanel.visible = hasArea;
-      productsSelectionPanel.visible = hasArea;
-    } );
-
     // @protected {VBox} - Available for suptype positioning relative to this.
     this.panelContainer = new VBox( {
       children: [
