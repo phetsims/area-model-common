@@ -13,6 +13,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
@@ -50,8 +51,15 @@ define( function( require ) {
     this.genericLayoutProperty = genericLayoutProperty;
 
     // @private {Array.<Property.<boolean>>} - Whether partition lines are toggled on (2 in each orientation)
-    this.horizontalPartitionLineActiveProperties = [ new Property( false ), new Property( false ) ];
-    this.verticalPartitionLineActiveProperties = [ new Property( false ), new Property( false ) ];
+    //TODO: Consider simplification
+    this.horizontalPartitionLineActiveProperties = [
+      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.HORIZONTAL ) >= 2; } ),
+      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.HORIZONTAL ) >= 3; } )
+    ];
+    this.verticalPartitionLineActiveProperties = [
+      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.VERTICAL ) >= 2; } ),
+      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.VERTICAL ) >= 3; } )
+    ];
 
     // @public {Array.<Property.<boolean>>}
     this.partitionLineActiveProperties = this.horizontalPartitionLineActiveProperties.concat( this.verticalPartitionLineActiveProperties );
@@ -59,11 +67,12 @@ define( function( require ) {
     // Set up partition coordinate/size updates
     Orientation.VALUES.forEach( function( orientation ) {
       Property.multilink( self.getPartitionLineActiveProperties( orientation ), function( first, second ) {
+        // TODO: simplification, since we don't allow some configurations now (e.g. missing middle line)
         var firstPartition = self.getFirstPartition( orientation );
         var secondPartition = self.getSecondPartition( orientation );
         var thirdPartition = self.getThirdPartition( orientation );
 
-        var firstOffset = AreaModelConstants.GENERIC_FIRST_OFFSET;
+        var firstOffset = second ? AreaModelConstants.GENERIC_FIRST_OFFSET : AreaModelConstants.GENERIC_SINGLE_OFFSET;
         var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
 
         // e.g. 0 splits => left, first => left+middle, second => left+right, all => left+middle+right
@@ -115,10 +124,6 @@ define( function( require ) {
      */
     reset: function() {
       Area.prototype.reset.call( this );
-
-      this.partitionLineActiveProperties.forEach( function( partitionLineActiveProperty ) {
-        partitionLineActiveProperty.reset();
-      } );
 
       this.partitions.forEach( function( partition ) {
         partition.sizeProperty.reset();

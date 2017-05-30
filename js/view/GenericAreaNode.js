@@ -13,14 +13,11 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/view/AreaNode' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var GenericPartitionedAreaNode = require( 'AREA_MODEL_COMMON/view/GenericPartitionedAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var PartitionSizeEditNode = require( 'AREA_MODEL_COMMON/view/PartitionSizeEditNode' );
   var Property = require( 'AXON/Property' );
@@ -46,6 +43,7 @@ define( function( require ) {
 
     AreaNode.call( this, area, partialProductsChoiceProperty, false, allowExponents );
 
+    var singleOffset = this.viewSize * AreaModelConstants.GENERIC_SINGLE_OFFSET;
     var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;
 
@@ -63,17 +61,18 @@ define( function( require ) {
     Orientation.VALUES.forEach( function( orientation ) {
       // Partition line docks
       var properties = area.getPartitionLineActiveProperties( orientation );
-      var dockOptions = {};
-      dockOptions[ orientation.opposite.coordinate ] = self.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
 
-      dockOptions[ orientation.coordinate ] = firstOffset;
-      self.areaLayer.addChild( self.createDock( properties[ 0 ], dockOptions ) );
-
-      dockOptions[ orientation.coordinate ] = secondOffset;
-      self.areaLayer.addChild( self.createDock( properties[ 1 ], dockOptions ) );
+      var onlyFirstProperty = new DerivedProperty( properties, function( first, second ) {
+        return first && !second;
+      } );
+      var bothProperty = new DerivedProperty( properties, function( first, second ) {
+        return first && second;
+      } );
 
       // Partition lines
-      self.areaLayer.addChild( self.createPartitionLine( properties[ 0 ], orientation, firstOffset ) );
+      //TODO: simplfy now
+      self.areaLayer.addChild( self.createPartitionLine( onlyFirstProperty, orientation, singleOffset ) );
+      self.areaLayer.addChild( self.createPartitionLine( bothProperty, orientation, firstOffset ) );
       self.areaLayer.addChild( self.createPartitionLine( properties[ 1 ], orientation, secondOffset ) );
     } );
 
@@ -128,29 +127,6 @@ define( function( require ) {
     },
 
     /**
-     * Creates a partition line dock that when clicked toggles whether a particular partition line exists.
-     * @private
-     *
-     * @param {Property.<boolean>} toggleProperty
-     * @param {Object} [nodeOptions]
-     */
-    createDock: function( toggleProperty, nodeOptions ) {
-      return new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, _.extend( {
-        fill: AreaModelColorProfile.dockBackgroundProperty,
-        stroke: AreaModelColorProfile.dockBorderProperty,
-        lineDash: [ 3, 3 ],
-        cursor: 'pointer',
-        inputListeners: [
-          new FireListener( {
-            fire: function() {
-              toggleProperty.toggle();
-            }
-          } )
-        ]
-      }, nodeOptions ) );
-    },
-
-    /**
      * Creates a partition line (view only)
      * @private
      *
@@ -164,25 +140,16 @@ define( function( require ) {
 
       firstPoint[ orientation.coordinate ] = offset;
       secondPoint[ orientation.coordinate ] = offset;
-      firstPoint[ orientation.opposite.coordinate ] = this.viewSize + AreaModelConstants.PARTITION_HANDLE_RADIUS;
+      firstPoint[ orientation.opposite.coordinate ] = this.viewSize;
       secondPoint[ orientation.opposite.coordinate ] = 0;
 
-      var node = new Node( {
-        children: [
-          new Line( {
-            p1: firstPoint,
-            p2: secondPoint,
-            stroke: AreaModelColorProfile.partitionLineStrokeProperty
-          } ),
-          new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-            translation: firstPoint,
-            fill: this.area.getColorProperty( orientation ),
-            stroke: AreaModelColorProfile.partitionLineBorderProperty
-          } )
-        ]
+      var line = new Line( {
+        p1: firstPoint,
+        p2: secondPoint,
+        stroke: AreaModelColorProfile.partitionLineStrokeProperty
       } );
-      visibleProperty.linkAttribute( node, 'visible' );
-      return node;
+      visibleProperty.linkAttribute( line, 'visible' );
+      return line;
     }
   } );
 } );

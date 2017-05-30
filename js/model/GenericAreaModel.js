@@ -44,6 +44,8 @@ define( function( require ) {
      * @override
      */
     reset: function() {
+      this.genericLayoutProperty.reset();
+
       AreaModel.prototype.reset.call( this );
     }
   } );
