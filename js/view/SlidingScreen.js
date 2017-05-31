@@ -1,0 +1,144 @@
+// Copyright 2015, University of Colorado Boulder
+
+/**
+ * Behavior that allows sliding between two full-screenview sized panels based on a Property.
+ *
+ * TODO: Refactor out from this and make-a-ten. Copied. DO NOT LEAVE IN. Will attempt removing TWEEN references.
+ *
+ * TODO: Review, bring up to common code standards
+ *
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ */
+define( function( require ) {
+  'use strict';
+
+  // modules
+  var inherit = require( 'PHET_CORE/inherit' );
+  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var Easing = require( 'TWIXT/Easing' );
+  var Node = require( 'SCENERY/nodes/Node' );
+
+  /**
+   * @constructor
+   *
+   * @param {Node} leftNode
+   * @param {Node} rightNode
+   * @param {Property.<Bounds2>} visibleBoundsProperty - ScreenView's visibleBoundsProperty
+   * @param {Property.<boolean>} showingLeftProperty - Whether the left-hand side should be in the view. When
+   *                                                   false, the right-hand side should be in view.
+   */
+  function SlidingScreen( leftNode, rightNode, visibleBoundsProperty, showingLeftProperty ) {
+
+    Node.call( this );
+
+    // @private
+    this.leftNode = leftNode;
+    this.rightNode = rightNode;
+    this.visibleBoundsProperty = visibleBoundsProperty;
+    this.showingLeftProperty = showingLeftProperty;
+
+    this.addChild( leftNode );
+    this.addChild( rightNode );
+
+    showingLeftProperty.link( this.onPropertyChange.bind( this ) );
+    visibleBoundsProperty.link( this.onVisibleBoundsChange.bind( this ) );
+
+    // @private {boolean}
+    this.animating = false;
+
+    // @private {number} - Where the animation is taking us
+    this.targetX = 0;
+
+    // @private {number} - Where the animation started
+    this.sourceX = 0;
+
+    // @private {number} - How close to completing is the animation, from 0 to 1
+    this.ratio = 0;
+  }
+
+  areaModelCommon.register( 'SlidingScreen', SlidingScreen );
+
+  return inherit( Node, SlidingScreen, {
+    /**
+     * Steps forward in time, possibly animating from side to side.
+     * @public
+     *
+     * @param {number} dt
+     */
+    step: function( dt ) {
+      if ( this.animating ) {
+        this.ratio = Math.min( 1, this.ratio + 2 * dt );
+        var easedRatio = Easing.QUADRATIC_IN_OUT.value( this.ratio );
+        this.x = easedRatio * this.targetX + ( 1 - easedRatio ) * this.sourceX;
+
+        if ( this.ratio === 1 ) {
+          this.setMoving( false );
+        }
+      }
+    },
+
+    /**
+     * Sets options that depend on whether our view is moving (switching from level selection to challenges or back).
+     * @public
+     */
+    setMoving: function( isMoving ) {
+      this.leftNode.pickable = !isMoving;
+      this.rightNode.pickable = !isMoving;
+    },
+
+    /**
+     * The x offset that should be applied to this when we are in a particular game state.
+     * @private
+     *
+     * @returns {number}
+     */
+    getIdealSlideOffset: function( showingLeft ) {
+      var mainOffset = this.visibleBoundsProperty.value.left - this.visibleBoundsProperty.value.right;
+      return showingLeft ? 0 : mainOffset;
+    },
+
+    /**
+     * Stops animation.
+     * @private
+     */
+    stopAnimation: function() {
+      this.animating = false; // TODO: simplify
+    },
+
+    /**
+     * Moves into place immediately, instead of sliding.
+     * @private
+     */
+    moveImmediately: function() {
+      this.stopAnimation();
+      this.x = this.getIdealSlideOffset( this.showingLeftProperty.value );
+      this.setMoving( false );
+    },
+
+    /**
+     * Called when the visible bounds change
+     * @private
+     */
+    onVisibleBoundsChange: function() {
+      this.rightNode.x = -this.getIdealSlideOffset( false );
+      this.moveImmediately();
+    },
+
+    /**
+     * Called when our showingLeftProperty changes.
+     * @private
+     */
+    onPropertyChange: function() {
+      var idealOffset = this.getIdealSlideOffset( this.showingLeftProperty.value );
+
+      if ( this.x !== idealOffset ) {
+        this.stopAnimation();
+
+        this.targetX = idealOffset;
+        this.sourceX = this.x;
+        this.ratio = 0;
+        this.setMoving( true );
+      }
+    },
+  } );
+} );

@@ -20,7 +20,7 @@ define( function( require ) {
   areaModelCommon.register( 'AreaCalculationChoice', AreaCalculationChoice );
 
   // All values the enumeration can take.
-  AreaCalculationChoice.CHOICES = [
+  AreaCalculationChoice.VALUES = [
     AreaCalculationChoice.HIDDEN,
     AreaCalculationChoice.LINE_BY_LINE,
     AreaCalculationChoice.SHOW_ALL_LINES,

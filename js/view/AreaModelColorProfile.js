@@ -112,7 +112,14 @@ define( function( require ) {
     genericNegativeBackground: { default: new Color( 0xe5a5ab ) },
 
     // Layout grid icon color
-    layoutGrid: { default: Color.BLACK }
+    layoutGrid: { default: Color.BLACK },
+
+    /*---------------------------------------------------------------------------*
+    * Game colors
+    *----------------------------------------------------------------------------*/
+
+    numbersIconBackground: { default: new Color( '#FC4280' ) },
+    variablesIconBackground: { default: new Color( '#9778CC' ) }
 
   }, [ 'default' ] );
 
