@@ -79,6 +79,8 @@ define( function( require ) {
       self.labelLayer.addChild( new PartitionSizeEditNode( area, partition, self.modelViewTransform, allowExponents ) );
     } );
 
+    //TODO: Move the keypad to the screen view
+    //TODO: switching scenes drops keypad
     // Keypad
     var digitCountProperty = new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
       return activePartition === null ? 1 : activePartition.digitCount;

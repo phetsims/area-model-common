@@ -299,8 +299,8 @@ define( function( require ) {
         return _.reduce( partitions, function( totalRange, partition ) {
           var range = partition.coordinateRangeProperty.value;
 
-          // Ignore null range or size
-          if ( range === null || partition.sizeProperty.value === null ) {
+          // Ignore null range or invisible
+          if ( range === null || !partition.visibleProperty.value ) {
             return totalRange;
           }
 
