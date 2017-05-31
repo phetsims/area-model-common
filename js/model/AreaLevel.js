@@ -23,6 +23,17 @@ define( function( require ) {
    */
   function AreaLevel( number, colorProperty, icon, description ) {
 
+    // @public {number}
+    this.number = number;
+
+    // @public {Property.<Color>}
+    this.colorProperty = colorProperty;
+
+    // @public {Node}
+    this.icon = icon;
+
+    // @public {string}
+    this.description = description;
   }
 
   areaModelCommon.register( 'AreaLevel', AreaLevel );

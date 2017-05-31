@@ -137,6 +137,7 @@ define( function( require ) {
         this.targetX = idealOffset;
         this.sourceX = this.x;
         this.ratio = 0;
+        this.animating = true;
         this.setMoving( true );
       }
     },
