@@ -28,5 +28,8 @@
   },
   "enter": {
     "value": "Enter"
+  },
+  "levelNumberPattern": {
+    "value": "Level {{level}}"
   }
 }

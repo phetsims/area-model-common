@@ -16,6 +16,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
+  var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -78,6 +79,13 @@ define( function( require ) {
       button.centerX = self.layoutBounds.centerX + ( ( index % 6 ) - 2.5 ) * 100;
       button.centerY = self.layoutBounds.centerY + ( Math.floor( index / 6 ) - 0.5 ) * 100;
       self.levelSelectionLayer.addChild( button );
+    } );
+
+    // Status bar
+    var gameStatusBar = new GameStatusBar( model.currentLevelProperty, model.moveToChoosingLevel.bind( model ) );
+    this.challengeLayer.addChild( gameStatusBar );
+    this.visibleBoundsProperty.link( function( visibleBounds ) {
+      gameStatusBar.layout( visibleBounds );
     } );
 
     // Reset All button

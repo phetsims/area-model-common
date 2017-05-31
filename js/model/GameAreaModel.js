@@ -78,6 +78,14 @@ define( function( require ) {
     },
 
     /**
+     * Moves back to the level selection.
+     * @public
+     */
+    moveToChoosingLevel: function() {
+      this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
+    },
+
+    /**
      * Returns the model to its initial state.
      * @public
      */

@@ -118,8 +118,8 @@ define( function( require ) {
     * Game colors
     *----------------------------------------------------------------------------*/
 
-    numbersIconBackground: { default: new Color( '#FC4280' ) },
-    variablesIconBackground: { default: new Color( '#9778CC' ) }
+    numbersIconBackground: { default: new Color( '#b26fac' ) },
+    variablesIconBackground: { default: new Color( '#6f9fb2' ) }
 
   }, [ 'default' ] );
 
