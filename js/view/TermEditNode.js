@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
@@ -57,6 +58,13 @@ define( function( require ) {
       cornerRadius: 4,
       children: [
         readoutText
+      ],
+      // Allow clicking the readout to edit, see https://github.com/phetsims/area-model-common/issues/23
+      cursor: 'pointer',
+      inputListeners: [
+        new FireListener( {
+          fire: editCallback
+        } )
       ]
     } );
 
@@ -94,6 +102,8 @@ define( function( require ) {
         } )
       ]
     } );
+
+    readoutBackground.touchArea = readoutBackground.parentToLocalBounds( this.localBounds ).dilated( 6 );
   }
 
   areaModelCommon.register( 'TermEditNode', TermEditNode );
