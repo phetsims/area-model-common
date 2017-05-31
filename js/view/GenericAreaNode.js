@@ -47,16 +47,20 @@ define( function( require ) {
     var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;
 
-    // Background
+    // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
-      stroke: AreaModelColorProfile.areaBorderProperty
     } ) );
 
     // Sign-colored partition area backgrounds
     area.partitionedAreas.forEach( function( partitionedArea ) {
       self.areaLayer.addChild( new GenericPartitionedAreaNode( partitionedArea, self.modelViewTransform ) );
     } );
+
+    // Background stroke
+    this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
+      stroke: AreaModelColorProfile.areaBorderProperty
+    } ) );
 
     Orientation.VALUES.forEach( function( orientation ) {
       // Partition line docks
