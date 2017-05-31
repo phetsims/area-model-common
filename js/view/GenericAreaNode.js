@@ -92,7 +92,7 @@ define( function( require ) {
       // Hide the keypad.
       area.activePartitionProperty.value = null;
     }, {
-      x: this.viewSize + 35, // padding constant allows it to fit between the area and the other panels
+      x: this.viewSize + 25, // padding constant allows it to fit between the area and the other panels
       centerY: this.viewSize / 2
     } );
     this.labelLayer.addChild( termKeypadPanel );
