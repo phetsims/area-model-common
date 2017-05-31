@@ -25,6 +25,7 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/view/SlidingScreen' );
+  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
 
   /**
    * @constructor
@@ -87,6 +88,14 @@ define( function( require ) {
     this.visibleBoundsProperty.link( function( visibleBounds ) {
       gameStatusBar.layout( visibleBounds );
     } );
+
+    // Spimd tpgg;e
+    this.levelSelectionLayer.addChild( new SoundToggleButton( model.soundEnabledProperty, {
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
+      x: 20,
+      bottom: this.layoutBounds.height - 20
+    } ) );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {
