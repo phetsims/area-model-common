@@ -13,7 +13,6 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
@@ -24,10 +23,11 @@ define( function( require ) {
    * @constructor
    * @extends {Area}
    *
+   * @param {GenericLayout} layout
    * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    * @param {Property.<Color>} colorProperty
    */
-  function GenericArea( genericLayoutProperty, allowExponents, colorProperty ) {
+  function GenericArea( layout, allowExponents, colorProperty ) {
     assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
@@ -41,77 +41,37 @@ define( function( require ) {
       new GenericPartition( Orientation.HORIZONTAL, firstDigitCount ),
       new GenericPartition( Orientation.HORIZONTAL, secondDigitCount ),
       new GenericPartition( Orientation.HORIZONTAL, thirdDigitCount )
-    ], [
+    ].slice( 0, layout.size.width ), [
       new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
       new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
-    ], AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1, allowExponents );
+    ].slice( 0, layout.size.height ), AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1, allowExponents );
 
     // @public {Property.<GenericLayout>}
-    this.genericLayoutProperty = genericLayoutProperty;
+    this.layout = layout;
 
-    // @private {Array.<Property.<boolean>>} - Whether partition lines are toggled on (2 in each orientation)
-    //TODO: Consider simplification
-    this.horizontalPartitionLineActiveProperties = [
-      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.HORIZONTAL ) >= 2; } ),
-      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.HORIZONTAL ) >= 3; } )
-    ];
-    this.verticalPartitionLineActiveProperties = [
-      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.VERTICAL ) >= 2; } ),
-      new DerivedProperty( [ genericLayoutProperty ], function( layout ) { return layout.getPartitionQuantity( Orientation.VERTICAL ) >= 3; } )
-    ];
-
-    // @public {Array.<Property.<boolean>>}
-    this.partitionLineActiveProperties = this.horizontalPartitionLineActiveProperties.concat( this.verticalPartitionLineActiveProperties );
-
-    // Set up partition coordinate/size updates
+    // Set up partition coordinate/size
     Orientation.VALUES.forEach( function( orientation ) {
-      Property.multilink( self.getPartitionLineActiveProperties( orientation ), function( first, second ) {
-        // TODO: simplification, since we don't allow some configurations now (e.g. missing middle line)
-        var firstPartition = self.getFirstPartition( orientation );
-        var secondPartition = self.getSecondPartition( orientation );
-        var thirdPartition = self.getThirdPartition( orientation );
+      var quantity = layout.getPartitionQuantity( orientation );
 
-        var firstOffset = second ? AreaModelConstants.GENERIC_FIRST_OFFSET : AreaModelConstants.GENERIC_SINGLE_OFFSET;
-        var secondOffset = AreaModelConstants.GENERIC_SECOND_OFFSET;
+      var partitions = self.getPartitions( orientation );
 
-        // e.g. 0 splits => left, first => left+middle, second => left+right, all => left+middle+right
-        secondPartition.visibleProperty.value = first;
-        thirdPartition.visibleProperty.value = second;
-
-        if ( first ) {
-          firstPartition.coordinateRangeProperty.value = new Range( 0, firstOffset );
-          if ( second ) {
-            secondPartition.coordinateRangeProperty.value = new Range( firstOffset, secondOffset );
-          }
-          else {
-            secondPartition.coordinateRangeProperty.value = new Range( firstOffset, 1 );
-          }
-        }
-        else {
-          secondPartition.coordinateRangeProperty.value = null;
-          if ( second ) {
-            firstPartition.coordinateRangeProperty.value = new Range( 0, secondOffset );
-          }
-          else {
-            firstPartition.coordinateRangeProperty.value = new Range( 0, 1 );
-          }
-        }
-        thirdPartition.coordinateRangeProperty.value = second ? new Range( secondOffset, 1 ) : null;
-      } );
+      if ( quantity === 1 ) {
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );
+      }
+      else if ( quantity === 2 ) {
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelConstants.GENERIC_SINGLE_OFFSET );
+        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelConstants.GENERIC_SINGLE_OFFSET, 1 );
+      }
+      else if ( quantity === 3 ) {
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelConstants.GENERIC_FIRST_OFFSET );
+        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelConstants.GENERIC_FIRST_OFFSET, AreaModelConstants.GENERIC_SECOND_OFFSET );
+        partitions[ 2 ].coordinateRangeProperty.value = new Range( AreaModelConstants.GENERIC_SECOND_OFFSET, 1 );
+      }
     } );
 
     // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
     this.activePartitionProperty = new Property( null );
-
-    // If a partition was active and is made invisible, make it not active
-    this.partitions.forEach( function( partition ) {
-      partition.visibleProperty.lazyLink( function( visible ) {
-        if ( self.activePartitionProperty.value === partition && !visible ) {
-          self.activePartitionProperty.reset();
-        }
-      } );
-    } );
   }
 
   areaModelCommon.register( 'GenericArea', GenericArea );
@@ -130,47 +90,6 @@ define( function( require ) {
       } );
 
       this.activePartitionProperty.reset();
-    },
-
-    /**
-     * Returns the first partition for a given orientation.
-     * @public
-     *
-     * @returns {GenericPartition}
-     */
-    getFirstPartition: function( orientation ) {
-      return this.getPartitions( orientation )[ 0 ];
-    },
-
-    /**
-     * Returns the second partition for a given orientation.
-     * @public
-     *
-     * @returns {GenericPartition}
-     */
-    getSecondPartition: function( orientation ) {
-      return this.getPartitions( orientation )[ 1 ];
-    },
-
-    /**
-     * Returns the third partition for a given orientation.
-     * @public
-     *
-     * @returns {GenericPartition}
-     */
-    getThirdPartition: function( orientation ) {
-      return this.getPartitions( orientation )[ 2 ];
-    },
-
-    /**
-     * Returns the partitionLineActive properties for a given orientation.
-     * @public
-     *
-     * @returns {Array.<Property.<boolean>>}
-     */
-    getPartitionLineActiveProperties: function( orientation ) {
-      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitionLineActiveProperties
-                                                    : this.verticalPartitionLineActiveProperties;
     }
   } );
 } );

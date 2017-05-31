@@ -46,6 +46,8 @@ define( function( require ) {
     assert && assert( typeof isProportional === 'boolean' );
     assert && assert( typeof decimalPlaces === 'number' );
 
+    var self = this;
+
     ScreenView.call( this );
 
     var panelAlignGroup = new AlignGroup( {
@@ -103,6 +105,20 @@ define( function( require ) {
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
     this.addChild( resetAllButton );
+
+    // @protected {Array.<ProportionalAreaNode>}
+    this.areaNodes = model.areas.map( this.createAreaNode.bind( this, model ) );
+
+    this.areaNodes.forEach( function( areaNode ) {
+      self.addChild( areaNode );
+    } );
+
+    // Only show the current area
+    model.currentAreaProperty.link( function( currentArea ) {
+      self.areaNodes.forEach( function( areaNode ) {
+        areaNode.visible = areaNode.area === currentArea;
+      } );
+    } );
   }
 
   areaModelCommon.register( 'AreaScreenView', AreaScreenView );

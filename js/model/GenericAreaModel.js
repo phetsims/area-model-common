@@ -24,15 +24,24 @@ define( function( require ) {
    * @param {boolean} allowExponents - Whether the user is able to add powers of x.
    */
   function GenericAreaModel( allowExponents ) {
+    var self = this;
 
     // @public {Property.<GenericLayout>}
     this.genericLayoutProperty = new Property( GenericLayout.TWO_BY_TWO );
 
-    // @public {Area}
-    this.genericArea = new GenericArea( this.genericLayoutProperty, allowExponents );
+    var areas = GenericLayout.VALUES.map( function( layout ) {
+      return new GenericArea( layout, allowExponents );
+    } );
 
-    AreaModel.call( this, [ this.genericArea ], allowExponents, AreaModelColorProfile.genericWidthProperty,
-                                                                AreaModelColorProfile.genericHeightProperty );
+    AreaModel.call( this, areas, allowExponents, AreaModelColorProfile.genericWidthProperty,
+                                                 AreaModelColorProfile.genericHeightProperty );
+
+    // Adjust the current area based on the layout.
+    this.genericLayoutProperty.link( function( layout ) {
+      self.currentAreaProperty.value = _.find( self.areas, function( area ) {
+        return area.layout === layout;
+      } );
+    } );
   }
 
   areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );

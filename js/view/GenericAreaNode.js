@@ -63,21 +63,15 @@ define( function( require ) {
     } ) );
 
     Orientation.VALUES.forEach( function( orientation ) {
-      // Partition line docks
-      var properties = area.getPartitionLineActiveProperties( orientation );
+      var quantity = area.layout.getPartitionQuantity( orientation );
 
-      var onlyFirstProperty = new DerivedProperty( properties, function( first, second ) {
-        return first && !second;
-      } );
-      var bothProperty = new DerivedProperty( properties, function( first, second ) {
-        return first && second;
-      } );
-
-      // Partition lines
-      //TODO: simplfy now
-      self.areaLayer.addChild( self.createPartitionLine( onlyFirstProperty, orientation, singleOffset ) );
-      self.areaLayer.addChild( self.createPartitionLine( bothProperty, orientation, firstOffset ) );
-      self.areaLayer.addChild( self.createPartitionLine( properties[ 1 ], orientation, secondOffset ) );
+      if ( quantity === 2 ) {
+        self.areaLayer.addChild( self.createPartitionLine( orientation, singleOffset ) );
+      }
+      else if ( quantity === 3 ) {
+        self.areaLayer.addChild( self.createPartitionLine( orientation, firstOffset ) );
+        self.areaLayer.addChild( self.createPartitionLine( orientation, secondOffset ) );
+      }
     } );
 
     // Edit readouts/buttons
@@ -134,11 +128,10 @@ define( function( require ) {
      * Creates a partition line (view only)
      * @private
      *
-     * @param {Property.<boolean>} visibleProperty
      * @param {Orientation} orientation
      * @param {number} offset
      */
-    createPartitionLine: function( visibleProperty, orientation, offset ) {
+    createPartitionLine: function( orientation, offset ) {
       var firstPoint = new Vector2();
       var secondPoint = new Vector2();
 
@@ -147,13 +140,11 @@ define( function( require ) {
       firstPoint[ orientation.opposite.coordinate ] = this.viewSize;
       secondPoint[ orientation.opposite.coordinate ] = 0;
 
-      var line = new Line( {
+      return new Line( {
         p1: firstPoint,
         p2: secondPoint,
         stroke: AreaModelColorProfile.partitionLineStrokeProperty
       } );
-      visibleProperty.linkAttribute( line, 'visible' );
-      return line;
     }
   } );
 } );

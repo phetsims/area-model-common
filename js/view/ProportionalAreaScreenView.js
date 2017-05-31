@@ -37,27 +37,7 @@ define( function( require ) {
     assert && assert( model instanceof ProportionalAreaModel );
     assert && assert( typeof decimalPlaces === 'number' );
 
-    var self = this;
-
     AreaScreenView.call( this, model, true, decimalPlaces );
-
-    // @private {Array.<ProportionalAreaNode>}
-    this.areaNodes = model.areas.map( function( area ) {
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.partialProductsChoiceProperty, {
-        translation: self.getAreaTranslation()
-      } );
-    } );
-
-    this.areaNodes.forEach( function( areaNode ) {
-      self.addChild( areaNode );
-    } );
-
-    // Only show the current area
-    model.currentAreaProperty.link( function( currentArea ) {
-      self.areaNodes.forEach( function( areaNode ) {
-        areaNode.visible = areaNode.area === currentArea;
-      } );
-    } );
 
     // Scene selection
     this.addChild( new SceneSelectionNode( model, {
@@ -100,6 +80,13 @@ define( function( require ) {
         if ( areaNode.visible ) {
           areaNode.update();
         }
+      } );
+    },
+
+    // TODO: doc, abstract
+    createAreaNode: function( model, area ) {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.partialProductsChoiceProperty, {
+        translation: this.getAreaTranslation()
       } );
     },
 
