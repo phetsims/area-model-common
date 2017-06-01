@@ -17,7 +17,8 @@ define( function( require ) {
     SECOND_ATTEMPT: 'SECOND_ATTEMPT',
     CORRECT_ANSWER: 'CORRECT_ANSWER',
     WRONG_FIRST_ANSWER: 'WRONG_FIRST_ANSWER',
-    WRONG_SECOND_ANSWER: 'WRONG_FIRST_ANSWER'
+    WRONG_SECOND_ANSWER: 'WRONG_FIRST_ANSWER',
+    SHOW_SOLUTION: 'SHOW_SOLUTION'
   };
 
   areaModelCommon.register( 'GameState', GameState );
@@ -29,7 +30,8 @@ define( function( require ) {
     GameState.SECOND_ATTEMPT,
     GameState.CORRECT_ANSWER,
     GameState.WRONG_FIRST_ANSWER,
-    GameState.WRONG_SECOND_ANSWER
+    GameState.WRONG_SECOND_ANSWER,
+    GameState.SHOW_SOLUTION
   ];
 
   // verify that enum is immutable, without the runtime penalty in production code
