@@ -130,7 +130,7 @@ define( function( require ) {
      * @private
      *
      * @param {Orientation} orientation
-     * @param {Function} callback - callback( largeCount, smallCount, min, border, max )
+     * @param {function} callback - callback( largeCount, smallCount, min, border, max )
      */
     forPartitions: function( orientation, callback ) {
       var self = this;

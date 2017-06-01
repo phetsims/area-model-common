@@ -37,7 +37,7 @@ define( function( require ) {
    * @param {Property.<boolean>} isActiveProperty
    * @param {number} digitCount
    * @param {boolean} allowExponents
-   * @param {Function} editCallback - Called when editing is triggered
+   * @param {function} editCallback - Called when editing is triggered
    */
   function TermEditNode( orientation, termProperty, textColorProperty, borderColorProperty, isActiveProperty, digitCount, allowExponents, editCallback ) {
     assert && assert( Orientation.isOrientation( orientation ) );

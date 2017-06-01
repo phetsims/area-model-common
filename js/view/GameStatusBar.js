@@ -39,7 +39,7 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<AreaLevel>} currentLevelProperty
-   * @param {Function} backCallback - Called with no args to go back to choose a level
+   * @param {function} backCallback - Called with no args to go back to choose a level
    */
   function GameStatusBar( currentLevelProperty, backCallback ) {
     Node.call( this );

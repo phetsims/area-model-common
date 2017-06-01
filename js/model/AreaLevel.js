@@ -44,8 +44,11 @@ define( function( require ) {
     createChallengeSeries: function() {
 
       var SINGLE_DIGIT = 'SINGLE_DIGIT';
-      var EDITABLE = 'EDITABLE';
-      var COMPUTED = 'COMPUTED';
+      var STATIC_COMPUTED = 'STATIC_COMPUTED';
+      var DYNAMIC_COMPUTED = 'DYNAMIC_COMPUTED';
+      var EDITABLE_COMPUTED = 'EDITABLE_COMPUTED';
+      var EDITABLE_SINGLE_DIGIT = 'EDITABLE_SINGLE_DIGIT';
+      var DYNAMIC_SINGLE_DIGIT = 'DYNAMIC_SINGLE_DIGIT';
 
       var random = phet.joist.random;
 
@@ -65,8 +68,8 @@ define( function( require ) {
           shuffle: true,
           horizontal: constantTimes( width, SINGLE_DIGIT ),
           vertical: constantTimes( height, SINGLE_DIGIT ),
-          products: createProducts( width, height, _.constant( COMPUTED ) ),
-          total: EDITABLE
+          products: createProducts( width, height, _.constant( STATIC_COMPUTED ) ),
+          total: EDITABLE_COMPUTED
         } );
       }
       function singleDigitSinglePartialEditable( width, height, total ) {
@@ -75,7 +78,7 @@ define( function( require ) {
           horizontal: constantTimes( width, SINGLE_DIGIT ),
           vertical: constantTimes( height, SINGLE_DIGIT ),
           products: createProducts( width, height, function( hIndex, vIndex ) {
-            return ( vIndex === 0 && hIndex === 0 ) ? EDITABLE : COMPUTED;
+            return ( vIndex === 0 && hIndex === 0 ) ? EDITABLE_COMPUTED : STATIC_COMPUTED;
           } ),
           total: total
         } );
@@ -86,9 +89,9 @@ define( function( require ) {
           horizontal: constantTimes( width, SINGLE_DIGIT ),
           vertical: constantTimes( height, SINGLE_DIGIT ),
           products: createProducts( width, height, function( hIndex, vIndex ) {
-            return ( vIndex === hIndex && ( !maxDiagonalIndex || vIndex <= maxDiagonalIndex ) ) ? EDITABLE : COMPUTED;
+            return ( vIndex === hIndex && ( !maxDiagonalIndex || vIndex <= maxDiagonalIndex ) ) ? EDITABLE_COMPUTED : STATIC_COMPUTED;
           } ),
-          total: COMPUTED
+          total: STATIC_COMPUTED
         } );
       }
 
@@ -97,11 +100,11 @@ define( function( require ) {
         return [
           singleDigitTotalEditable( 1, 2 ) // 1-1
         ].concat( random.shuffle( [
-          singleDigitSinglePartialEditable( 1, 2, COMPUTED ), // 1-2
+          singleDigitSinglePartialEditable( 1, 2, STATIC_COMPUTED ), // 1-2
           singleDigitTotalEditable( 1, 3 ), // 1-3
-          singleDigitSinglePartialEditable( 1, 3, COMPUTED ), // 1-4
+          singleDigitSinglePartialEditable( 1, 3, STATIC_COMPUTED ), // 1-4
           singleDigitTotalEditable( 2, 2 ), // 1-5
-          singleDigitSinglePartialEditable( 2, 2, COMPUTED ) // 1-6
+          singleDigitSinglePartialEditable( 2, 2, STATIC_COMPUTED ) // 1-6
         ] ) );
       }
       // Level 2 - Numbers
@@ -109,15 +112,68 @@ define( function( require ) {
         return [
           singleDigitDiagonalPartialEditable( 2, 2 ) // 2-1
         ].concat( random.shuffle( [
-          singleDigitSinglePartialEditable( 2, 2, EDITABLE ), // 2-2
+          singleDigitSinglePartialEditable( 2, 2, EDITABLE_COMPUTED ), // 2-2
           singleDigitDiagonalPartialEditable( 2, 3 ), // 2-3
-          singleDigitSinglePartialEditable( 2, 3, EDITABLE ), // 2-4
+          singleDigitSinglePartialEditable( 2, 3, EDITABLE_COMPUTED ), // 2-4
           singleDigitDiagonalPartialEditable( 3, 3, 1 ) // 2-5
         ] ) );
       }
       // Level 3 - Numbers
       else if ( this.number === 3 ) {
-        // TODO ----------------------------- Need to include total dimensions when it is constrained?
+        return [
+          // 3-1
+          new AreaChallenge( {
+            shuffle: true,
+            horizontal: [ EDITABLE_COMPUTED, EDITABLE_COMPUTED ],
+            vertical: [ STATIC_COMPUTED ],
+            products: [
+              [ EDITABLE_SINGLE_DIGIT, SINGLE_DIGIT ]
+            ],
+            total: STATIC_COMPUTED
+          } )
+        ].concat( random.shuffle( [
+          // 3-2
+          new AreaChallenge( {
+            shuffle: true,
+            horizontal: [ EDITABLE_COMPUTED, STATIC_COMPUTED ],
+            vertical: [ EDITABLE_COMPUTED ],
+            products: [
+              [ DYNAMIC_COMPUTED, SINGLE_DIGIT ]
+            ],
+            total: STATIC_COMPUTED
+          } ),
+          // 3-3
+          new AreaChallenge( {
+            shuffle: true,
+            horizontal: [ EDITABLE_COMPUTED, EDITABLE_COMPUTED, STATIC_COMPUTED ],
+            vertical: [ STATIC_COMPUTED ],
+            products: [
+              [ DYNAMIC_COMPUTED, SINGLE_DIGIT, SINGLE_DIGIT ]
+            ],
+            total: STATIC_COMPUTED
+          } ),
+          // 3-4
+          new AreaChallenge( {
+            shuffle: true,
+            horizontal: [ EDITABLE_COMPUTED, STATIC_COMPUTED, STATIC_COMPUTED ],
+            vertical: [ EDITABLE_COMPUTED ],
+            products: [
+              [ SINGLE_DIGIT, SINGLE_DIGIT, SINGLE_DIGIT ]
+            ],
+            total: STATIC_COMPUTED
+          } ),
+          // 3-5
+          new AreaChallenge( {
+            shuffle: true,
+            horizontal: [ EDITABLE_COMPUTED, STATIC_COMPUTED ],
+            vertical: [ EDITABLE_COMPUTED, STATIC_COMPUTED ],
+            products: [
+              [ SINGLE_DIGIT, DYNAMIC_SINGLE_DIGIT ],
+              [ DYNAMIC_SINGLE_DIGIT, SINGLE_DIGIT ]
+            ],
+            total: STATIC_COMPUTED
+          } ),
+        ] ) );
       }
       // Level 4 - Numbers
       else if ( this.number === 4 ) {

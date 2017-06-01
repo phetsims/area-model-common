@@ -55,6 +55,10 @@ define( function( require ) {
       options.horizontal = options.vertical;
       options.vertical = tmpPartition;
 
+      // var tmpTotal = options.horizontalTotal;
+      // options.horizontalTotal = options.verticalTotal;
+      // options.verticalTotal = tmpTotal;
+
       options.products = _.range( options.vertical.length ).map( function( verticalIndex ) {
         return _.range( options.horizontal.length ).map( function( horizontalIndex ) {
           return options.products[ horizontalIndex ][ verticalIndex ];

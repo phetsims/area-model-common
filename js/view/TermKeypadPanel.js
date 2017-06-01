@@ -47,7 +47,7 @@ define( function( require ) {
    *
    * @param {Property.<number>} digitCountProperty
    * @param {boolean} allowExponents
-   * @param {Function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
+   * @param {function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
    * @param {Object} [options]
    */
   function TermKeypadPanel( digitCountProperty, allowExponents, enterCallback, nodeOptions ) {
