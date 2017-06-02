@@ -1,12 +1,12 @@
 {
-  "screen.raccoon": {
-    "value": "Raccoon"
+  "screen.explore": {
+    "value": "Explore"
   },
-  "screen.crimson": {
-    "value": "Crimson"
+  "screen.generic": {
+    "value": "Generic"
   },
-  "screen.grape": {
-    "value": "Grape"
+  "screen.variables": {
+    "value": "Variables"
   },
   "screen.decimals": {
     "value": "Decimals"
