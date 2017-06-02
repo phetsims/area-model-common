@@ -12,6 +12,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaChallengeType = require( 'AREA_MODEL_COMMON/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -24,7 +25,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // Template for inserting the level number
-  var levelNumberPatternString = require( 'string!AREA_MODEL_COMMON/levelNumberPattern' );
+  var numbersLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/numbersLevelNumberPattern' );
+  var variablesLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/variablesLevelNumberPattern' );
 
   // constants
   //TODO: Colors in the color profile!
@@ -73,7 +75,8 @@ define( function( require ) {
     this.addChild( this.levelNumberText );
 
     // @private {Text} - Text updated in updateLevelInfo
-    this.levelDescriptionText = new Text( 'Blah blah', {
+    // TODO: Really don't let this get to testing?
+    this.levelDescriptionText = new Text( 'Fill in the things with some stuff', {
       font: LEVEL_DESCRIPTION_FONT,
       fill: TEXT_COLOR,
       pickable: false
@@ -103,10 +106,10 @@ define( function( require ) {
       var level = this.currentLevelProperty.value;
 
       this.backgroundRectangle.fill = level.colorProperty;
-      this.levelNumberText.text = StringUtils.fillIn( levelNumberPatternString, {
+      var template = level.type === AreaChallengeType.NUMBERS ? numbersLevelNumberPatternString : variablesLevelNumberPatternString;
+      this.levelNumberText.text = StringUtils.fillIn( template, {
         level: '' + level.number
       } );
-      this.levelDescriptionText.text = level.description;
 
       this.layout();
     },

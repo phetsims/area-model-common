@@ -29,7 +29,10 @@
   "enter": {
     "value": "Enter"
   },
-  "levelNumberPattern": {
-    "value": "Level {{level}}"
+  "numbersLevelNumberPattern": {
+    "value": "Numbers: Level {{level}}"
+  },
+  "variablesLevelNumberPattern": {
+    "value": "Variables: Level {{level}}"
   }
 }

@@ -9,6 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/model/AreaChallengeDescription' );
+  var AreaChallengeType = require( 'AREA_MODEL_COMMON/model/AreaChallengeType' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/model/AreaLevel' );
@@ -29,20 +31,88 @@ define( function( require ) {
     var tmpFont = new PhetFont( 30 );
     var tmpOptions = { font: tmpFont };
 
+    // TODO: replace with actual icons? TODO: DO it in the view
+    var numbers1Icon = new Text( '1', tmpOptions );
+    var numbers2Icon = new Text( '2', tmpOptions );
+    var numbers3Icon = new Text( '3', tmpOptions );
+    var numbers4Icon = new Text( '4', tmpOptions );
+    var numbers5Icon = new Text( '5', tmpOptions );
+    var numbers6Icon = new Text( '6', tmpOptions );
+    var variables1Icon = new Text( '1x', tmpOptions );
+    var variables2Icon = new Text( '2x', tmpOptions );
+    var variables3Icon = new Text( '3x', tmpOptions );
+    var variables4Icon = new Text( '4x', tmpOptions );
+    var variables5Icon = new Text( '5x', tmpOptions );
+    var variables6Icon = new Text( '6x', tmpOptions );
+
     // @public {Array.<AreaLevel>}
     this.levels = [
-      new AreaLevel( 1, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '1', tmpOptions ), 'Numbers: 1' ),
-      new AreaLevel( 2, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '2', tmpOptions ), 'Numbers: 2' ),
-      new AreaLevel( 3, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '3', tmpOptions ), 'Numbers: 3' ),
-      new AreaLevel( 4, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '4', tmpOptions ), 'Numbers: 4' ),
-      new AreaLevel( 5, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '5', tmpOptions ), 'Numbers: 5' ),
-      new AreaLevel( 6, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '6', tmpOptions ), 'Numbers: 6' ),
-      new AreaLevel( 7, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '1x', tmpOptions ), 'Variables: 1x' ),
-      new AreaLevel( 8, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '2x', tmpOptions ), 'Variables: 2x' ),
-      new AreaLevel( 9, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3x', tmpOptions ), 'Variables: 3x' ),
-      new AreaLevel( 10, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '4x', tmpOptions ), 'Variables: 4x' ),
-      new AreaLevel( 11, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '5x', tmpOptions ), 'Variables: 5x' ),
-      new AreaLevel( 12, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '6x', tmpOptions ), 'Variables: 6x' ),
+      new AreaLevel( 1, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, numbers1Icon, [
+        AreaChallengeDescription.LEVEL_1_NUMBERS_1,
+        AreaChallengeDescription.LEVEL_1_NUMBERS_2,
+        AreaChallengeDescription.LEVEL_1_NUMBERS_3,
+        AreaChallengeDescription.LEVEL_1_NUMBERS_4,
+        AreaChallengeDescription.LEVEL_1_NUMBERS_5,
+        AreaChallengeDescription.LEVEL_1_NUMBERS_6
+      ] ),
+      new AreaLevel( 2, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, numbers2Icon, [
+        AreaChallengeDescription.LEVEL_2_NUMBERS_1,
+        AreaChallengeDescription.LEVEL_2_NUMBERS_2,
+        AreaChallengeDescription.LEVEL_2_NUMBERS_3,
+        AreaChallengeDescription.LEVEL_2_NUMBERS_4,
+        AreaChallengeDescription.LEVEL_2_NUMBERS_5
+      ] ),
+      new AreaLevel( 3, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, numbers3Icon, [
+        AreaChallengeDescription.LEVEL_3_NUMBERS_1,
+        AreaChallengeDescription.LEVEL_3_NUMBERS_2,
+        AreaChallengeDescription.LEVEL_3_NUMBERS_3,
+        AreaChallengeDescription.LEVEL_3_NUMBERS_4,
+        AreaChallengeDescription.LEVEL_3_NUMBERS_5,
+        AreaChallengeDescription.LEVEL_3_NUMBERS_6
+      ] ),
+      new AreaLevel( 4, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, numbers4Icon, [
+        AreaChallengeDescription.LEVEL_4_NUMBERS_1,
+        AreaChallengeDescription.LEVEL_4_NUMBERS_2,
+        AreaChallengeDescription.LEVEL_4_NUMBERS_3,
+        AreaChallengeDescription.LEVEL_4_NUMBERS_4,
+        AreaChallengeDescription.LEVEL_4_NUMBERS_5
+      ] ),
+      new AreaLevel( 5, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, numbers5Icon, [
+        AreaChallengeDescription.LEVEL_5_NUMBERS_1,
+        AreaChallengeDescription.LEVEL_5_NUMBERS_3
+      ] ),
+      new AreaLevel( 6, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, numbers6Icon, [
+        AreaChallengeDescription.LEVEL_6_NUMBERS_1
+      ] ),
+      new AreaLevel( 1, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables1Icon, [
+        AreaChallengeDescription.LEVEL_1_VARIABLES_1,
+        AreaChallengeDescription.LEVEL_1_VARIABLES_2,
+        AreaChallengeDescription.LEVEL_1_VARIABLES_3,
+        AreaChallengeDescription.LEVEL_1_VARIABLES_4
+      ] ),
+      new AreaLevel( 2, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables2Icon, [
+        AreaChallengeDescription.LEVEL_2_VARIABLES_1,
+        AreaChallengeDescription.LEVEL_2_VARIABLES_2
+      ] ),
+      new AreaLevel( 3, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables3Icon, [
+        AreaChallengeDescription.LEVEL_3_VARIABLES_1,
+        AreaChallengeDescription.LEVEL_3_VARIABLES_2,
+        AreaChallengeDescription.LEVEL_3_VARIABLES_3,
+        AreaChallengeDescription.LEVEL_3_VARIABLES_4,
+        AreaChallengeDescription.LEVEL_3_VARIABLES_5,
+        AreaChallengeDescription.LEVEL_3_VARIABLES_6
+      ] ),
+      new AreaLevel( 4, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables4Icon, [
+        AreaChallengeDescription.LEVEL_4_VARIABLES_1,
+        AreaChallengeDescription.LEVEL_4_VARIABLES_2
+      ] ),
+      new AreaLevel( 5, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables5Icon, [
+        AreaChallengeDescription.LEVEL_5_VARIABLES_1,
+        AreaChallengeDescription.LEVEL_5_VARIABLES_2
+      ] ),
+      new AreaLevel( 6, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables6Icon, [
+        AreaChallengeDescription.LEVEL_6_VARIABLES_1
+      ] )
     ];
 
     // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.

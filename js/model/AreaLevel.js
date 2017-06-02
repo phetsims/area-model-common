@@ -17,16 +17,19 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {number} number
+   * @param {AreaChallengeType} type
    * @param {Property.<Color>} colorProperty
    * @param {Node} icon
-   * @param {string} description
+   * @param {Array.<AreaChallengeDescription>} challengeDescriptions
    */
-  function AreaLevel( number, colorProperty, icon, description ) {
-    // TODO: remove description?
+  function AreaLevel( number, type, colorProperty, icon, challengeDescriptions ) {
     // TODO: Pass through AreaChallengeDescriptions?
 
     // @public {number}
     this.number = number;
+
+    // @public {AreaChallengeType}
+    this.type = type;
 
     // @public {Property.<Color>}
     this.colorProperty = colorProperty;
@@ -34,8 +37,8 @@ define( function( require ) {
     // @public {Node}
     this.icon = icon;
 
-    // @public {string}
-    this.description = description;
+    // @public {Array.<AreaChallengeDescription>}
+    this.challengeDescriptions = challengeDescriptions;
   }
 
   areaModelCommon.register( 'AreaLevel', AreaLevel );
