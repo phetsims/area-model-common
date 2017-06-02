@@ -48,6 +48,9 @@ define( function( require ) {
 
     // @public {AreaChallengeType} - The type of challenge
     this.type = options.type;
+
+    // @public {boolean} - Whether transposing is supported
+    this.transposable = options.transposable === undefined ? ( this.type === AreaChallengeType.NUMBERS ) : options.transposable;
   }
 
   areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
@@ -65,26 +68,23 @@ define( function( require ) {
         vertical: this.verticalValues,
         products: this.productValues,
         total: this.totalValue,
-        type: this.type
+        type: this.type,
+        transposable: this.transposable
       };
 
-      var horizontalShuffle = true;
-      var verticalShuffle = true;
-      var transposeShuffle = this.type === AreaChallengeType.NUMBERS;
+      // Horizontal shuffle
+      var horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
+      horizontalPermutation.apply( options.horizontal );
+      options.products.forEach( function( row ) {
+        horizontalPermutation.apply( row );
+      } );
 
-      if ( horizontalShuffle ) {
-        var horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
-        horizontalPermutation.apply( options.horizontal );
-        options.products.forEach( function( row ) {
-          horizontalPermutation.apply( row );
-        } );
-      }
-      if ( verticalShuffle ) {
-        var verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
-        verticalPermutation.apply( options.vertical );
-        verticalPermutation.apply( options.products );
-      }
-      if ( transposeShuffle && phet.joist.random.nextBoolean() ) {
+      // Vertical shuffle
+      var verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
+      verticalPermutation.apply( options.vertical );
+      verticalPermutation.apply( options.products );
+
+      if ( this.transposable && phet.joist.random.nextBoolean() ) {
         var tmpPartition = options.horizontal;
         options.horizontal = options.vertical;
         options.vertical = tmpPartition;
@@ -390,6 +390,199 @@ define( function( require ) {
       ],
       total: GIVEN,
       type: AreaChallengeType.NUMBERS
+    } ),
+
+    // L1-1
+    LEVEL_1_VARIABLES_1: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ EDITABLE, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L1-2
+    LEVEL_1_VARIABLES_2: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ GIVEN, GIVEN ]
+      ],
+      total: EDITABLE,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L1-3
+    LEVEL_1_VARIABLES_3: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, GIVEN, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ EDITABLE, GIVEN, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L1-4
+    LEVEL_1_VARIABLES_4: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, GIVEN, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ GIVEN, GIVEN, GIVEN ]
+      ],
+      total: EDITABLE,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L2-1
+    LEVEL_2_VARIABLES_1: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, GIVEN ],
+      vertical: [ GIVEN, GIVEN ],
+      products: [
+        [ EDITABLE, GIVEN ],
+        [ GIVEN, EDITABLE ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L2-2
+    LEVEL_2_VARIABLES_2: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, GIVEN ],
+      vertical: [ GIVEN, GIVEN ],
+      products: [
+        [ EDITABLE, GIVEN ],
+        [ GIVEN, GIVEN ]
+      ],
+      total: EDITABLE,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L3-1
+    LEVEL_3_VARIABLES_1: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN ],
+      vertical: [ EDITABLE ],
+      products: [
+        [ GIVEN, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L3-2
+    LEVEL_3_VARIABLES_2: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, EDITABLE ],
+      vertical: [ GIVEN ],
+      products: [
+        [ DYNAMIC, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L3-3
+    LEVEL_3_VARIABLES_3: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ GIVEN, EDITABLE ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L3-4
+    LEVEL_3_VARIABLES_4: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN, GIVEN ],
+      vertical: [ EDITABLE ],
+      products: [
+        [ GIVEN, DYNAMIC, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L3-5
+    LEVEL_3_VARIABLES_5: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, EDITABLE, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ DYNAMIC, GIVEN, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L3-6
+    LEVEL_3_VARIABLES_6: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN, GIVEN ],
+      vertical: [ GIVEN ],
+      products: [
+        [ GIVEN, EDITABLE, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L4-1
+    LEVEL_4_VARIABLES_1: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN ],
+      vertical: [ EDITABLE, GIVEN ],
+      products: [
+        [ GIVEN, DYNAMIC ],
+        [ DYNAMIC, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L4-2  TODO" L4-3 is a transpose of this
+    LEVEL_4_VARIABLES_2: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN ],
+      vertical: [ GIVEN, GIVEN ],
+      products: [
+        [ GIVEN, EDITABLE ],
+        [ GIVEN, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L5-1 TODO: Too similar to L3-1?
+    LEVEL_5_VARIABLES_1: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN ],
+      vertical: [ EDITABLE ],
+      products: [
+        [ GIVEN, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L5-2
+    LEVEL_5_VARIABLES_2: new AreaChallengeDescription( {
+      horizontal: [ EDITABLE, GIVEN, GIVEN ],
+      vertical: [ EDITABLE ],
+      products: [
+        [ GIVEN, GIVEN, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES
+    } ),
+
+    // L6-1
+    LEVEL_6_VARIABLES_1: new AreaChallengeDescription( {
+      horizontal: [ GIVEN, EDITABLE ],
+      vertical: [ GIVEN, EDITABLE ],
+      products: [
+        [ GIVEN, DYNAMIC ],
+        [ DYNAMIC, GIVEN ]
+      ],
+      total: GIVEN,
+      type: AreaChallengeType.VARIABLES,
+      transposable: false
     } )
 
   } );
