@@ -12,26 +12,26 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var GameState = {
-    CHOOSING_LEVEL: 'CHOOSING_LEVEL',
     FIRST_ATTEMPT: 'FIRST_ATTEMPT',
     SECOND_ATTEMPT: 'SECOND_ATTEMPT',
     CORRECT_ANSWER: 'CORRECT_ANSWER',
     WRONG_FIRST_ANSWER: 'WRONG_FIRST_ANSWER',
     WRONG_SECOND_ANSWER: 'WRONG_FIRST_ANSWER',
-    SHOW_SOLUTION: 'SHOW_SOLUTION'
+    SHOW_SOLUTION: 'SHOW_SOLUTION',
+    FINISHED_LEVEL: 'FINISHED_LEVEL'
   };
 
   areaModelCommon.register( 'GameState', GameState );
 
   // All values the enumeration can take.
   GameState.VALUES = [
-    GameState.CHOOSING_LEVEL,
     GameState.FIRST_ATTEMPT,
     GameState.SECOND_ATTEMPT,
     GameState.CORRECT_ANSWER,
     GameState.WRONG_FIRST_ANSWER,
     GameState.WRONG_SECOND_ANSWER,
-    GameState.SHOW_SOLUTION
+    GameState.SHOW_SOLUTION,
+    GameState.FINISHED_LEVEL
   ];
 
   // verify that enum is immutable, without the runtime penalty in production code

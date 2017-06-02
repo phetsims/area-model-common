@@ -105,6 +105,11 @@ define( function( require ) {
     updateLevelInfo: function() {
       var level = this.currentLevelProperty.value;
 
+      // Don't update if there is no level, leave last appearance during the fade.
+      if ( level === null ) {
+        return;
+      }
+
       this.backgroundRectangle.fill = level.colorProperty;
       var template = level.type === AreaChallengeType.NUMBERS ? numbersLevelNumberPatternString : variablesLevelNumberPatternString;
       this.levelNumberText.text = StringUtils.fillIn( template, {

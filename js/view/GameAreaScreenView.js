@@ -15,12 +15,10 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
-  var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
@@ -47,7 +45,9 @@ define( function( require ) {
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
 
-    var showingLeftProperty = DerivedProperty.valueEquals( model.gameStateProperty, new Property( GameState.CHOOSING_LEVEL ) );
+    var showingLeftProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
+      return level === null;
+    } );
     // @private {SlidingScreen}
     this.slidingScreen = new SlidingScreen( this.levelSelectionLayer,
       this.challengeLayer,
@@ -70,7 +70,7 @@ define( function( require ) {
         touchAreaYDilation: 13,
         cornerRadius: 10,
         listener: function() {
-          model.startLevel( level );
+          model.currentLevelProperty.value = level;
         }
       }, {
         // dynamic
@@ -83,7 +83,9 @@ define( function( require ) {
     } );
 
     // Status bar
-    var gameStatusBar = new GameStatusBar( model.currentLevelProperty, model.moveToChoosingLevel.bind( model ) );
+    var gameStatusBar = new GameStatusBar( model.currentLevelProperty, function() {
+      model.currentLevelProperty.value = null;
+    } );
     this.challengeLayer.addChild( gameStatusBar );
     this.visibleBoundsProperty.link( function( visibleBounds ) {
       gameStatusBar.layout( visibleBounds );

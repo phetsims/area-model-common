@@ -15,7 +15,6 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -118,43 +117,13 @@ define( function( require ) {
     // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.
     this.soundEnabledProperty = new BooleanProperty( true );
 
-    // @public {Property.<AreaLevel>} - The current level
-    this.currentLevelProperty = new Property( this.levels[ 0 ] );
-
-    // TODO: current challenge?
-
-    // @public {Property.<GameState>} - Current game state
-    this.gameStateProperty = new Property( GameState.CHOOSING_LEVEL );
+    // @public {Property.<AreaLevel|null>} - The current level
+    this.currentLevelProperty = new Property( null );
   }
 
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );
 
   return inherit( Object, GameAreaModel, {
-    /**
-     * Starts a new challenge with the level specified
-     * @public
-     *
-     * @param {AreaLevel} level
-     */
-    startLevel: function( level ) {
-      this.currentLevelProperty.value = level;
-
-      // Set up the model for the next challenge
-      // TODO
-      // this.currentChallengeProperty.value = level.generateChallenge();
-
-      // Change to new game state.
-      this.gameStateProperty.value = GameState.FIRST_ATTEMPT;
-    },
-
-    /**
-     * Moves back to the level selection.
-     * @public
-     */
-    moveToChoosingLevel: function() {
-      this.gameStateProperty.value = GameState.CHOOSING_LEVEL;
-    },
-
     /**
      * Returns the model to its initial state.
      * @public
@@ -162,8 +131,6 @@ define( function( require ) {
     reset: function() {
       this.soundEnabledProperty.reset();
       this.currentLevelProperty.reset();
-      this.gameStateProperty.reset();
-
       this.levels.forEach( function( level ) {
         level.reset();
       } );

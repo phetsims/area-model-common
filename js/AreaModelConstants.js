@@ -57,6 +57,9 @@ define( function( require ) {
     HORIZONTAL_RANGE_OFFSET: -40, // Vertical offset from the main area for horizontal range labels
     VERTICAL_RANGE_OFFSET: -60, // Horizontal offset from the main area for vertical range labels
 
-    X_STRING: '\u00D7'
+    X_STRING: '\u00D7',
+
+    // Number of challenges per level
+    NUM_CHALLENGES: 6
   } );
 } );

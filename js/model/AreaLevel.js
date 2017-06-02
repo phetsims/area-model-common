@@ -10,7 +10,10 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -39,6 +42,13 @@ define( function( require ) {
 
     // @public {Array.<AreaChallengeDescription>}
     this.challengeDescriptions = challengeDescriptions;
+
+    // @public {Property.<number>} - Ranges from 0 to AreaModelConstants.NUM_CHALLENGES * 2
+    //                               (since 2 points are rewarded for first attempt correct)
+    this.scoreProperty = new NumberProperty( 0 );
+
+    // @public {Property.<GameState>}
+    this.stateProperty = new Property( GameState.FIRST_ATTEMPT );
   }
 
   areaModelCommon.register( 'AreaLevel', AreaLevel );
@@ -49,7 +59,10 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      // TODO
+      // TODO: regenerate challenges?
+
+      this.stateProperty.reset();
+      this.scoreProperty.reset();
     }
   } );
 } );
