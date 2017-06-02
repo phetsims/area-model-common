@@ -56,8 +56,9 @@ define( function( require ) {
     calculationIconDark: { default: Color.BLACK },
     calculationIconLight: { default: new Color( 0xaaaaaa ) },
 
-    // Background color shown behind partial product labels
+    // Shown behind partial product labels
     partialProductBackground: { default: new Color( 255, 255, 255, 0.75 ) },
+    partialProductBorder: { default: new Color( 0, 0, 0, 0.2 ) },
 
     /*---------------------------------------------------------------------------*
     * Proportional colors

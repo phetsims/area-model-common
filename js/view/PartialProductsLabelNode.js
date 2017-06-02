@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -47,7 +48,9 @@ define( function( require ) {
 
     var background = new Rectangle( {
       cornerRadius: 3,
-      stroke: 'rgba(0,0,0,0.2)',
+      stroke: new DerivedProperty( [ partitionedArea.areaProperty, AreaModelColorProfile.partialProductBorderProperty ], function( area, color ) {
+        return ( area === null || area.coefficient === 0 ) ? 'transparent' : color;
+      } ),
       fill: AreaModelColorProfile.partialProductBackgroundProperty
     } );
     this.addChild( background );
