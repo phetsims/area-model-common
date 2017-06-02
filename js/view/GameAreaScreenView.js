@@ -16,14 +16,18 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
+  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor
@@ -33,9 +37,6 @@ define( function( require ) {
    */
   function GameAreaScreenView( model ) {
     assert && assert( model instanceof GameAreaModel );
-
-    // TODO: check whether this usage is appropriate (levelSelectionLayer used outside?)
-    var self = this;
 
     ScreenView.call( this );
 
@@ -57,13 +58,28 @@ define( function( require ) {
 
     var levelIconAlignGroup = new AlignGroup();
     var levelIcons = model.levels.map( function( level ) {
-      return new AlignBox( level.icon, { group: levelIconAlignGroup } );
+      return new AlignBox( level.icon, {
+        group: levelIconAlignGroup,
+        xMargin: 10,
+        yMargin: 30
+      } );
     } );
 
-    model.levels.forEach( function( level, index ) {
-      var button = new MutableOptionsNode( RectangularPushButton, [], {
+    var levelButtons = model.levels.map( function( level, index ) {
+      var scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, level.scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2, {
+        scale: 0.8
+      } );
+      return new MutableOptionsNode( RectangularPushButton, [], {
         // static
-        content: levelIcons[ index ],
+        content: new VBox( {
+          children: [
+            levelIcons[ index ],
+            new Panel( scoreNode, {
+              // TODO
+            } )
+          ],
+          spacing: 10
+        } ),
         xMargin: 10,
         yMargin: 10,
         touchAreaXDilation: 18,
@@ -76,11 +92,23 @@ define( function( require ) {
         // dynamic
         baseColor: level.colorProperty,
       } );
-
-      button.centerX = self.layoutBounds.centerX + ( ( index % 6 ) - 2.5 ) * 100;
-      button.centerY = self.layoutBounds.centerY + ( Math.floor( index / 6 ) - 0.5 ) * 100;
-      self.levelSelectionLayer.addChild( button );
     } );
+
+    var buttonSpacing = 15;
+    this.levelSelectionLayer.addChild( new VBox( {
+      children: [
+        new HBox( {
+          children: levelButtons.slice( 0, 6 ),
+          spacing: buttonSpacing
+        } ),
+        new HBox( {
+          children: levelButtons.slice( 6 ),
+          spacing: buttonSpacing
+        } )
+      ],
+      spacing: buttonSpacing,
+      center: this.layoutBounds.center
+    } ) );
 
     // Status bar
     var gameStatusBar = new GameStatusBar( model.currentLevelProperty, function() {
