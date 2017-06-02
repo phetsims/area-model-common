@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -43,6 +44,13 @@ define( function( require ) {
     // TODO: pull this reference, check where it is used
     // @public {PartitionedArea}
     this.partitionedArea = partitionedArea;
+
+    var background = new Rectangle( {
+      cornerRadius: 3,
+      stroke: 'rgba(0,0,0,0.2)',
+      fill: AreaModelColorProfile.partialProductBackgroundProperty
+    } );
+    this.addChild( background );
 
     var box = new HBox();
     this.addChild( box );
@@ -114,6 +122,7 @@ define( function( require ) {
       }
       if ( isFinite( box.width ) ) {
         box.center = Vector2.ZERO;
+        background.rectBounds = box.bounds.dilatedXY( 4, 2 );
       }
     } );
   }
