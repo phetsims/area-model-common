@@ -99,6 +99,10 @@ define( function( require ) {
       return new AreaChallengeDescription( options );
     }
   }, {
+    /*---------------------------------------------------------------------------*
+    * Numbers 1
+    *----------------------------------------------------------------------------*/
+
     // L1-1
     LEVEL_1_NUMBERS_1: new AreaChallengeDescription( {
       horizontal: [ GIVEN, GIVEN ],
@@ -167,6 +171,10 @@ define( function( require ) {
       type: AreaChallengeType.NUMBERS
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Numbers 2
+    *----------------------------------------------------------------------------*/
+
     // L2-1
     LEVEL_2_NUMBERS_1: new AreaChallengeDescription( {
       horizontal: [ GIVEN, GIVEN ],
@@ -227,6 +235,10 @@ define( function( require ) {
       total: GIVEN,
       type: AreaChallengeType.NUMBERS
     } ),
+
+    /*---------------------------------------------------------------------------*
+    * Numbers 3
+    *----------------------------------------------------------------------------*/
 
     // L3-1
     LEVEL_3_NUMBERS_1: new AreaChallengeDescription( {
@@ -296,6 +308,10 @@ define( function( require ) {
       type: AreaChallengeType.NUMBERS
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Numbers 4
+    *----------------------------------------------------------------------------*/
+
     // L4-1
     LEVEL_4_NUMBERS_1: new AreaChallengeDescription( {
       horizontal: [ EDITABLE, EDITABLE, EDITABLE ],
@@ -358,6 +374,10 @@ define( function( require ) {
       type: AreaChallengeType.NUMBERS
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Numbers 5
+    *----------------------------------------------------------------------------*/
+
     // L5-1   TODO l5-2 is a transpose of this?
     LEVEL_5_NUMBERS_1: new AreaChallengeDescription( {
       horizontal: [ EDITABLE, GIVEN ],
@@ -380,6 +400,10 @@ define( function( require ) {
       type: AreaChallengeType.NUMBERS
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Numbers 6
+    *----------------------------------------------------------------------------*/
+
     // L6-1
     LEVEL_6_NUMBERS_1: new AreaChallengeDescription( {
       horizontal: [ EDITABLE, EDITABLE ],
@@ -391,6 +415,10 @@ define( function( require ) {
       total: GIVEN,
       type: AreaChallengeType.NUMBERS
     } ),
+
+    /*---------------------------------------------------------------------------*
+    * Variables 1
+    *----------------------------------------------------------------------------*/
 
     // L1-1
     LEVEL_1_VARIABLES_1: new AreaChallengeDescription( {
@@ -436,6 +464,10 @@ define( function( require ) {
       type: AreaChallengeType.VARIABLES
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Variables 2
+    *----------------------------------------------------------------------------*/
+
     // L2-1
     LEVEL_2_VARIABLES_1: new AreaChallengeDescription( {
       horizontal: [ GIVEN, GIVEN ],
@@ -459,6 +491,10 @@ define( function( require ) {
       total: EDITABLE,
       type: AreaChallengeType.VARIABLES
     } ),
+
+    /*---------------------------------------------------------------------------*
+    * Variables 3
+    *----------------------------------------------------------------------------*/
 
     // L3-1
     LEVEL_3_VARIABLES_1: new AreaChallengeDescription( {
@@ -526,6 +562,10 @@ define( function( require ) {
       type: AreaChallengeType.VARIABLES
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Variables 4
+    *----------------------------------------------------------------------------*/
+
     // L4-1
     LEVEL_4_VARIABLES_1: new AreaChallengeDescription( {
       horizontal: [ EDITABLE, GIVEN ],
@@ -550,6 +590,10 @@ define( function( require ) {
       type: AreaChallengeType.VARIABLES
     } ),
 
+    /*---------------------------------------------------------------------------*
+    * Variables 5
+    *----------------------------------------------------------------------------*/
+
     // L5-1 TODO: Too similar to L3-1?
     LEVEL_5_VARIABLES_1: new AreaChallengeDescription( {
       horizontal: [ EDITABLE, GIVEN ],
@@ -571,6 +615,10 @@ define( function( require ) {
       total: GIVEN,
       type: AreaChallengeType.VARIABLES
     } ),
+
+    /*---------------------------------------------------------------------------*
+    * Variables 6
+    *----------------------------------------------------------------------------*/
 
     // L6-1
     LEVEL_6_VARIABLES_1: new AreaChallengeDescription( {
