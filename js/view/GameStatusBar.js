@@ -13,12 +13,17 @@ define( function( require ) {
 
   // modules
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/model/AreaChallengeType' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   // var ScoreNode = require( 'AREA_MODEL_COMMON/make-a-ten/game/view/ScoreNode' ); TODO what to do here? ignore?
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -83,16 +88,21 @@ define( function( require ) {
     } );
     this.addChild( this.levelDescriptionText );
 
-    // @private {ScoreNode}
-    // this.scoreNode = new ScoreNode( model.currentScoreProperty, {
-    //   pickable: false,
-    //   labelColor: TEXT_COLOR
-    // } );
-    // this.addChild( this.scoreNode );
+    var lastKnownLevel = null;
+    var scoreProperty = new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
+      level = level || lastKnownLevel;
+      if ( level === null ) {
+        return new Property( 0 );
+      }
+      return level.scoreProperty;
+    } ) );
+
+    // @private {ProgressIndicator}
+    this.scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2 );
+    this.addChild( this.scoreNode );
 
     // Persistent, no need to worry about unlinking
     currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
-    // this.scoreNode.scoreChangedEmitter.addListener( this.layout.bind( this, null ) );
   }
 
   areaModelCommon.register( 'GameStatusBar', GameStatusBar );
@@ -143,14 +153,14 @@ define( function( require ) {
       this.backButton.left = this.backgroundRectangle.left + BAR_PADDING;
       this.backButton.centerY = verticalCenter;
 
-      // this.scoreNode.right = this.backgroundRectangle.right - BAR_PADDING;
-      // this.scoreNode.centerY = verticalCenter;
+      this.scoreNode.right = this.backgroundRectangle.right - BAR_PADDING;
+      this.scoreNode.centerY = verticalCenter;
 
       this.levelNumberText.left = this.backButton.right + BAR_PADDING;
       this.levelNumberText.centerY = verticalCenter;
 
       // TODO: Adjust maxWidth based on score
-      this.levelDescriptionText.maxWidth = ( this.backgroundRectangle.right - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
+      this.levelDescriptionText.maxWidth = ( this.scoreNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
       this.levelDescriptionText.left = this.levelNumberText.right + BAR_PADDING;
       this.levelDescriptionText.centerY = verticalCenter;
     }
