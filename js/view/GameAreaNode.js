@@ -71,44 +71,48 @@ define( function( require ) {
     } );
 
     // Partition size labels
-    var horizontalPartitionLabels = _.range( 0, 3 ).map( function( partitionIndex ) {
-      // TODO: Horizontal. Abstract for both?
-      var valueProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ display.horizontalPartitionValuesProperty ], function( values ) {
-        return values[ partitionIndex ] ? values[ partitionIndex ] : new Property( null );
-      } ) );
-      var displayTypeProperty = new DerivedProperty( [ display.horizontalPartitionValuesDisplayProperty ], function( values ) {
-        return values[ partitionIndex ] ? values[ partitionIndex ] : DisplayType.HIDDEN;
+    Orientation.VALUES.forEach( function( orientation ) {
+      var labels = _.range( 0, 3 ).map( function( partitionIndex ) {
+        // TODO: better way
+        var orientationName = orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical';
+
+        var valueProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ display[ orientationName + 'PartitionValuesProperty' ] ], function( values ) {
+          return values[ partitionIndex ] ? values[ partitionIndex ] : new Property( null );
+        } ) );
+        var displayTypeProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesDisplayProperty' ] ], function( values ) {
+          return values[ partitionIndex ] ? values[ partitionIndex ] : DisplayType.HIDDEN;
+        } );
+        var digitsProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesDigitsProperty' ] ], function( values ) {
+          return values[ partitionIndex ] ? values[ partitionIndex ] : 1;
+        } );
+        var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
+        var isActiveProperty = new Property( false ); // TODO
+
+        var label = new GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, orientation, false, function() {
+          console.log( orientationName + ' EDIT TODO' );
+        } );
+
+        label[ orientation.opposite.coordinate ] = orientation === Orientation.HORIZONTAL ? -20 : -30;
+        self.addChild( label );
+
+        return label;
       } );
-      var digitsProperty = new DerivedProperty( [ display.horizontalPartitionValuesDigitsProperty ], function( values ) {
-        return values[ partitionIndex ] ? values[ partitionIndex ] : 1;
+      display.layoutProperty.link( function( layout ) {
+        var quantity = layout.getPartitionQuantity( orientation );
+
+        if ( quantity === 1 ) {
+          labels[ 0 ][ orientation.coordinate ] = fullOffset / 2;
+        }
+        else if ( quantity === 2 ) {
+          labels[ 0 ][ orientation.coordinate ] = singleOffset / 2;
+          labels[ 1 ][ orientation.coordinate ] = ( fullOffset + singleOffset ) / 2;
+        }
+        else if ( quantity === 3 ) {
+          labels[ 0 ][ orientation.coordinate ] = firstOffset / 2;
+          labels[ 1 ][ orientation.coordinate ] = ( secondOffset + firstOffset ) / 2;
+          labels[ 2 ][ orientation.coordinate ] = ( fullOffset + secondOffset ) / 2;
+        }
       } );
-      var colorProperty = AreaModelColorProfile.getGenericColorProperty( Orientation.HORIZONTAL );
-      var isActiveProperty = new Property( false ); // TODO
-
-      var label = new GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.HORIZONTAL, false, function() {
-        console.log( 'HORIZ EDIT TODO' );
-      } );
-
-      label.y = -20; // TODO -30 for x
-      self.addChild( label );
-
-      return label;
-    } );
-    display.layoutProperty.link( function( layout ) {
-      var horizontalQuantity = layout.getPartitionQuantity( Orientation.HORIZONTAL );
-
-      if ( horizontalQuantity === 1 ) {
-        horizontalPartitionLabels[ 0 ].x = fullOffset / 2;
-      }
-      else if ( horizontalQuantity === 2 ) {
-        horizontalPartitionLabels[ 0 ].x = singleOffset / 2;
-        horizontalPartitionLabels[ 1 ].x = ( fullOffset + singleOffset ) / 2;
-      }
-      else if ( horizontalQuantity === 3 ) {
-        horizontalPartitionLabels[ 0 ].x = firstOffset / 2;
-        horizontalPartitionLabels[ 1 ].x = ( secondOffset + firstOffset ) / 2;
-        horizontalPartitionLabels[ 2 ].x = ( fullOffset + secondOffset ) / 2;
-      }
     } );
 
     // var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
