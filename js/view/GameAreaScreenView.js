@@ -119,7 +119,7 @@ define( function( require ) {
       gameStatusBar.layout( visibleBounds );
     } );
 
-    // Spimd tpgg;e
+    // "Spimd tpgg;e" was apparently what I typed. "Sound toggle" is probably more accurate.
     this.levelSelectionLayer.addChild( new SoundToggleButton( model.soundEnabledProperty, {
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
