@@ -55,6 +55,7 @@ define( function( require ) {
       }
     } );
 
+    //TODO: factor out offsets with game view?
     // Secondary (offsets)
     if ( partition.orientation === Orientation.HORIZONTAL ) {
       this.centerY = -20;

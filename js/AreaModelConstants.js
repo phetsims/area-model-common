@@ -27,6 +27,7 @@ define( function( require ) {
     PARTIAL_FACTOR_FONT: new PhetFont( 14 ),
     EDIT_READOUT_FONT: new PhetFont( 18 ),
     PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
+    GAME_VALUE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 20 ),

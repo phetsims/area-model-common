@@ -48,6 +48,14 @@ define( function( require ) {
     this.horizontalPartitionSizes = AreaChallenge.generatePartitionTerms( description.horizontalValues.length, description.allowExponents );
     this.verticalPartitionSizes = AreaChallenge.generatePartitionTerms( description.verticalValues.length, description.allowExponents );
 
+    //TODO doc
+    this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size ) {
+      return new Property( size );
+    } );
+    this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size ) {
+      return new Property( size );
+    } );
+
     // @public {Array.<Array.<Term>>}
     this.partialProductSizes = this.verticalPartitionSizes.map( function( verticalSize ) {
       return self.horizontalPartitionSizes.map( function( horizontalSize ) {
@@ -104,6 +112,29 @@ define( function( require ) {
       else {
         display.verticalTotalProperty.value = this.verticalTotal;
       }
+
+      display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
+      display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
+      display.horizontalPartitionValuesDisplayProperty.value = this.description.horizontalValues.map( function( gameValue ) {
+        if ( gameValue === GameValue.EDITABLE ) {
+          return DisplayType.EDITABLE;
+        }
+        else {
+          // dynamic or given
+          return DisplayType.READOUT;
+        }
+      } );
+      display.verticalPartitionValuesDisplayProperty.value = this.description.verticalValues.map( function( gameValue ) {
+        if ( gameValue === GameValue.EDITABLE ) {
+          return DisplayType.EDITABLE;
+        }
+        else {
+          // dynamic or given
+          return DisplayType.READOUT;
+        }
+      } );
+      display.horizontalPartitionValuesDigitsProperty.value = _.range( this.horizontalPartitionSizes.length, 0 );
+      display.verticalPartitionValuesDigitsProperty.value = _.range( this.verticalPartitionSizes.length, 0 );
 
       // TODO
     }

@@ -13,6 +13,9 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
+  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
+  var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   // var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
@@ -39,6 +42,7 @@ define( function( require ) {
     var singleOffset = AreaModelConstants.AREA_SIZE * AreaModelConstants.GENERIC_SINGLE_OFFSET;
     var firstOffset = AreaModelConstants.AREA_SIZE * AreaModelConstants.GENERIC_FIRST_OFFSET;
     var secondOffset = AreaModelConstants.AREA_SIZE * AreaModelConstants.GENERIC_SECOND_OFFSET;
+    var fullOffset = AreaModelConstants.AREA_SIZE;
 
     // Background fill and stroke
     this.addChild( new Rectangle( 0, 0, AreaModelConstants.AREA_SIZE, AreaModelConstants.AREA_SIZE, {
@@ -64,6 +68,47 @@ define( function( require ) {
       var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
       var termListProperty = orientation === Orientation.HORIZONTAL ? display.horizontalTotalProperty : display.verticalTotalProperty;
       self.addChild( new RangeLabelNode( termListProperty, orientation, new Property( new Range( 0, AreaModelConstants.AREA_SIZE ) ), colorProperty ) );
+    } );
+
+    // Partition size labels
+    var horizontalPartitionLabels = _.range( 0, 3 ).map( function( partitionIndex ) {
+      // TODO: Horizontal. Abstract for both?
+      var valueProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ display.horizontalPartitionValuesProperty ], function( values ) {
+        return values[ partitionIndex ] ? values[ partitionIndex ] : new Property( null );
+      } ) );
+      var displayTypeProperty = new DerivedProperty( [ display.horizontalPartitionValuesDisplayProperty ], function( values ) {
+        return values[ partitionIndex ] ? values[ partitionIndex ] : DisplayType.HIDDEN;
+      } );
+      var digitsProperty = new DerivedProperty( [ display.horizontalPartitionValuesDigitsProperty ], function( values ) {
+        return values[ partitionIndex ] ? values[ partitionIndex ] : 1;
+      } );
+      var colorProperty = AreaModelColorProfile.getGenericColorProperty( Orientation.HORIZONTAL );
+      var isActiveProperty = new Property( false ); // TODO
+
+      var label = new GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.HORIZONTAL, false, function() {
+        console.log( 'HORIZ EDIT TODO' );
+      } );
+
+      label.y = -20; // TODO -30 for x
+      self.addChild( label );
+
+      return label;
+    } );
+    display.layoutProperty.link( function( layout ) {
+      var horizontalQuantity = layout.getPartitionQuantity( Orientation.HORIZONTAL );
+
+      if ( horizontalQuantity === 1 ) {
+        horizontalPartitionLabels[ 0 ].x = fullOffset / 2;
+      }
+      else if ( horizontalQuantity === 2 ) {
+        horizontalPartitionLabels[ 0 ].x = singleOffset / 2;
+        horizontalPartitionLabels[ 1 ].x = ( fullOffset + singleOffset ) / 2;
+      }
+      else if ( horizontalQuantity === 3 ) {
+        horizontalPartitionLabels[ 0 ].x = firstOffset / 2;
+        horizontalPartitionLabels[ 1 ].x = ( secondOffset + firstOffset ) / 2;
+        horizontalPartitionLabels[ 2 ].x = ( fullOffset + secondOffset ) / 2;
+      }
     } );
 
     // var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );

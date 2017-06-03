@@ -37,9 +37,11 @@ define( function( require ) {
   function GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
     Node.call( this );
 
-    var font = AreaModelConstants.PARTIAL_PRODUCT_FONT;
+    // TODO: support font switching in different contexts?
+    var font = AreaModelConstants.GAME_VALUE_FONT;
 
     var readoutText = new RichText( '?', {
+      fill: colorProperty,
       font: font
     } );
     this.addChild( readoutText );
