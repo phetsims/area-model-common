@@ -55,21 +55,13 @@ define( function( require ) {
 
     // @public {boolean} - Whether transposing is supported
     this.transposable = options.transposable === undefined ? ( this.type === AreaChallengeType.NUMBERS ) : options.transposable;
+
+    this.layout = GenericLayout.fromValues( this.horizontalValues.length, this.verticalValues.length );
   }
 
   areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
 
   inherit( Object, AreaChallengeDescription, {
-    /**
-     * Returns the layout for the problem.
-     * @public
-     *
-     * @returns {GenericLayout}
-     */
-    getLayout: function() {
-      return GenericLayout.fromValues( this.horizontalValues.length, this.verticalValues.length );
-    },
-
     /**
      * Creates a permuted/transposed version of this description, where allowed.
      * @public

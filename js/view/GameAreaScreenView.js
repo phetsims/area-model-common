@@ -160,12 +160,7 @@ define( function( require ) {
         return;
       }
 
-      var newArea = newChallenge.area;
-
-      self.display.layoutProperty.value = newArea.layout;
-      self.display.allowExponentsProperty.value = newChallenge.description.allowExponents;
-
-      // TODO: fill in everything else
+      newChallenge.attachDisplay( self.display );
     } );
 
     var gameAreaNode = new GameAreaNode( this.display );

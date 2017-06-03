@@ -44,6 +44,10 @@ define( function( require ) {
     this.horizontalPartitionValuesDisplayProperty = new Property( [ DisplayType.HIDDEN, DisplayType.HIDDEN ] );
     this.verticalPartitionValuesDisplayProperty = new Property( [ DisplayType.HIDDEN, DisplayType.HIDDEN ] );
 
+    // @public {Property.<Array.<number>>} - TODO doc
+    this.horizontalPartitionValuesDigitsProperty = new Property( [ 2, 1 ] );
+    this.verticalPartitionValuesDigitsProperty = new Property( [ 2, 1 ] );
+
     // @public {Property.<Array.<Array.<Term|null>>} TODO doc
     this.partialProductsProperty = new Property( [
       [ new Property( null ), new Property( null ) ],
@@ -56,11 +60,20 @@ define( function( require ) {
       [ DisplayType.HIDDEN, DisplayType.HIDDEN ]
     ] );
 
+    // @public {Property.<Array.<Array.<DisplayType>>} TODO doc
+    this.partialProductsDigitsProperty = new Property( [
+      [ 4, 3 ],
+      [ 3, 2 ]
+    ] );
+
     // @public {Property.<TermList|null>} TODO doc
     this.totalProperty = new Property( null );
 
     // @public {Property.<DisplayType>} TODO doc
     this.totalDisplayProperty = new Property( DisplayType.READOUT );
+
+    // @public {Property.<number>} TODO doc
+    this.totalDigitsProperty = new Property( 5 );
   }
 
   areaModelCommon.register( 'GenericAreaDisplay', GenericAreaDisplay );
