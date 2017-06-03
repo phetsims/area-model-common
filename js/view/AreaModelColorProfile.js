@@ -136,7 +136,7 @@ define( function( require ) {
    * @param {Orientation} orientation
    * @returns {Property.<Color>}
    */
-  AreaModelColorProfile.getGenericColorProperty = function( orientation ) {
+  AreaModelColorProfile.getProportionalColorProperty = function( orientation ) {
     assert && assert( Orientation.isOrientation( orientation ) );
 
     return orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.proportionalWidthProperty
