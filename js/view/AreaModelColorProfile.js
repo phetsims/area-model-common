@@ -130,6 +130,20 @@ define( function( require ) {
   areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );
 
   /**
+   * Returns the proportional color Property for the given orientation.
+   * @public
+   *
+   * @param {Orientation} orientation
+   * @returns {Property.<Color>}
+   */
+  AreaModelColorProfile.getGenericColorProperty = function( orientation ) {
+    assert && assert( Orientation.isOrientation( orientation ) );
+
+    return orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.proportionalWidthProperty
+                                                  : AreaModelColorProfile.proportionalHeightProperty;
+  };
+
+  /**
    * Returns the generic color Property for the given orientation.
    * @public
    *

@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -26,16 +27,16 @@ define( function( require ) {
    * @constructor
    * @extends {HBox}
    *
-   * @param {ProportionalAreaModel} model
-   * @param {number} decimalPlaces
+   * @param {Property.<Area>} currentAreaProperty
+   * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
    */
-  function ProportionalProductNode( model, decimalPlaces ) {
+  function ProportionalProductNode( currentAreaProperty, decimalPlaces ) {
 
     HBox.call( this, {
       children: [
-        this.createPicker( Orientation.VERTICAL, model, decimalPlaces ),
+        this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
         new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
-        this.createPicker( Orientation.HORIZONTAL, model, decimalPlaces )
+        this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
       ],
       spacing: 10
     } );
@@ -49,14 +50,14 @@ define( function( require ) {
      * @private
      *
      * @param {Orientation} orientation
-     * @param {ProportionalAreaModel} model
+     * @param {Property.<Area>} currentAreaProperty
      * @param {number} decimalPlaces
      */
-    createPicker: function( orientation, model, decimalPlaces ) {
+    createPicker: function( orientation, currentAreaProperty, decimalPlaces ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       // {Property.<Property<Polynomial|null>>}
-      var currentTotalProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
+      var currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
         return area.getActiveTotalProperty( orientation );
       } );
 
@@ -64,13 +65,13 @@ define( function( require ) {
       var bidirectionalProperty = new DynamicBidirectionalProperty( currentTotalProperty );
 
       // {Property.<Range>}
-      var rangeProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
+      var rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
         return new Range( area.minimumSize, area.maximumSize );
       } );
 
       return new MutableOptionsNode( NumberPicker, [ bidirectionalProperty, rangeProperty ], {
-        upFunction: function( value ) { return value + model.currentAreaProperty.value.snapSize; },
-        downFunction: function( value ) { return value - model.currentAreaProperty.value.snapSize; },
+        upFunction: function( value ) { return value + currentAreaProperty.value.snapSize; },
+        downFunction: function( value ) { return value - currentAreaProperty.value.snapSize; },
         decimalPlaces: decimalPlaces,
         scale: 1.5,
         formatValue: function( value ) {
@@ -82,7 +83,7 @@ define( function( require ) {
           }
         }
       }, {
-        color: model.getColorProperty( orientation )
+        color: AreaModelColorProfile.getGenericColorProperty( orientation )
       } );
     }
   } );

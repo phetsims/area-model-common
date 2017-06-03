@@ -92,7 +92,7 @@ define( function( require ) {
 
     // TODO: doc
     createProductNode: function( model, decimalPlaces ) {
-      return new ProportionalProductNode( model, decimalPlaces );
+      return new ProportionalProductNode( model.currentAreaProperty, decimalPlaces );
     },
 
     /**
