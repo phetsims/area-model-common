@@ -16,6 +16,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
+  var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/model/GenericAreaDisplay' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
@@ -37,6 +38,8 @@ define( function( require ) {
    */
   function GameAreaScreenView( model ) {
     assert && assert( model instanceof GameAreaModel );
+
+    var self = this;
 
     ScreenView.call( this );
 
@@ -136,6 +139,21 @@ define( function( require ) {
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
     this.levelSelectionLayer.addChild( resetAllButton );
+
+    // Display
+    this.display = new GenericAreaDisplay();
+    model.currentChallengeProperty.link( function( newChallenge, oldChallenge ) {
+      // Make no immediate changes if the challenge turns null.
+      if ( newChallenge === null ) {
+        return;
+      }
+
+      var newArea = newChallenge.area;
+
+      self.display.layoutProperty.value = newArea.layout;
+
+      // TODO: fill in everything else
+    } );
   }
 
   areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
