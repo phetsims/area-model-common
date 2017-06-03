@@ -20,8 +20,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   // var PartialProductsLabelNode = require( 'AREA_MODEL_COMMON/view/PartialProductsLabelNode' );
-  // var Range = require( 'DOT/Range' );
-  // var RangeLabelNode = require( 'AREA_MODEL_COMMON/view/RangeLabelNode' );
+  var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
+  var RangeLabelNode = require( 'AREA_MODEL_COMMON/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -59,25 +60,12 @@ define( function( require ) {
       self.addChild( self.createPartitionLine( orientation, secondOffset, hasThreeProperty ) );
     } );
 
-
-    // // @protected {Property.<Range|null>} - Coordinate ranges for orientations (like in Area), but in view coordinates.
-    // this.horizontalViewRangeProperty = new DerivedProperty( [ area.getCoordinateRangeProperty( Orientation.HORIZONTAL ) ], function( range ) {
-    //   if ( range === null ) { return null; }
-    //   return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
-    // } );
-    // this.verticalViewRangeProperty = new DerivedProperty( [ area.getCoordinateRangeProperty( Orientation.VERTICAL ) ], function( range ) {
-    //   if ( range === null ) { return null; }
-    //   return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
-    // } );
-
-    // // Range views
-    // Orientation.VALUES.forEach( function( orientation ) {
-    //   var colorProperty = self.area.getColorProperty( orientation );
-    //   var termListProperty = allowExponents ? self.area.getTermListProperty( orientation )
-    //                                         : self.area.getTotalProperty( orientation );
-    //   var viewRangeProperty = self.getViewRangeProperty( orientation );
-    //   self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
-    // } );
+    // Range views
+    Orientation.VALUES.forEach( function( orientation ) {
+      var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
+      var termListProperty = orientation === Orientation.HORIZONTAL ? display.horizontalTotalProperty : display.verticalTotalProperty;
+      self.addChild( new RangeLabelNode( termListProperty, orientation, new Property( new Range( 0, AreaModelConstants.AREA_SIZE ) ), colorProperty ) );
+    } );
 
     // var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
     // var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
