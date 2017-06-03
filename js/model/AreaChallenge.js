@@ -50,16 +50,26 @@ define( function( require ) {
 
     //TODO doc
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size ) {
+      // TODO: start null if it's editable, OR hook it up if it's dynamic
       return new Property( size );
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size ) {
+      // TODO: start null if it's editable, OR hook it up if it's dynamic
       return new Property( size );
     } );
 
-    // @public {Array.<Array.<Term>>}
+    // @public {Array.<Array.<Term|null>>}
     this.partialProductSizes = this.verticalPartitionSizes.map( function( verticalSize ) {
       return self.horizontalPartitionSizes.map( function( horizontalSize ) {
         return horizontalSize.times( verticalSize );
+      } );
+    } );
+
+    // TODO: doc
+    this.partialProductSizeProperties = this.partialProductSizes.map( function( row ) {
+      return row.map( function( size ) {
+        // TODO: start null if it's editable, OR hook it up if it's dynamic
+        return new Property( size );
       } );
     } );
 
@@ -81,6 +91,8 @@ define( function( require ) {
      * @param {GenericAreaDisplay} display
      */
     attachDisplay: function( display ) {
+      var self = this;
+
       display.layoutProperty.value = this.description.layout;
       display.allowExponentsProperty.value = this.description.allowExponents;
 
@@ -96,7 +108,7 @@ define( function( require ) {
       }
 
       if ( this.description.horizontalTotalValue === GameValue.DYNAMIC ) {
-        // TODO
+        // TODO: Hook up the dynamic bits
         display.horizontalTotalProperty.value = null;
       }
       // GIVEN TODO check
@@ -105,7 +117,7 @@ define( function( require ) {
       }
 
       if ( this.description.verticalTotalValue === GameValue.DYNAMIC ) {
-        // TODO
+        // TODO: Hook up the dynamic bits
         display.verticalTotalProperty.value = null;
       }
       // GIVEN TODO check
@@ -135,6 +147,24 @@ define( function( require ) {
       } );
       display.horizontalPartitionValuesDigitsProperty.value = _.range( this.horizontalPartitionSizes.length, 0 );
       display.verticalPartitionValuesDigitsProperty.value = _.range( this.verticalPartitionSizes.length, 0 );
+
+      display.partialProductsProperty.value = this.partialProductSizeProperties;
+      display.partialProductsDisplayProperty.value = this.description.productValues.map( function( row ) {
+        return row.map( function( gameValue ) {
+          if ( gameValue === GameValue.EDITABLE ) {
+            return DisplayType.EDITABLE;
+          }
+          else {
+            // dynamic or given
+            return DisplayType.READOUT;
+          }
+        } );
+      } );
+      display.partialProductsDigitsProperty.value = _.range( this.verticalPartitionSizes.length, 0 ).map( function( verticalDigits ) {
+        return _.range( self.horizontalPartitionSizes.length, 0 ).map( function( horizontalDigits ) {
+          return verticalDigits + horizontalDigits;
+        } );
+      } );
 
       // TODO
     }

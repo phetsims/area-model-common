@@ -70,9 +70,40 @@ define( function( require ) {
       self.addChild( new RangeLabelNode( termListProperty, orientation, new Property( new Range( 0, AreaModelConstants.AREA_SIZE ) ), colorProperty ) );
     } );
 
+    var centerProperties = {}; // TODO: doc key/value
+    Orientation.VALUES.forEach( function( orientation ) {
+      centerProperties[ orientation === Orientation.HORIZONTAL ] = [
+        new DerivedProperty( [ display.layoutProperty ], function( layout ) {
+          var quantity = layout.getPartitionQuantity( orientation );
+          if ( quantity === 1 ) {
+            return fullOffset / 2;
+          }
+          else if ( quantity === 2 ) {
+            return singleOffset / 2;
+          }
+          else if ( quantity === 3 ) {
+            return firstOffset / 2;
+          }
+        } ),
+        new DerivedProperty( [ display.layoutProperty ], function( layout ) {
+          var quantity = layout.getPartitionQuantity( orientation );
+          if ( quantity === 2 ) {
+            return ( fullOffset + singleOffset ) / 2;
+          }
+          else if ( quantity === 3 ) {
+            return ( secondOffset + firstOffset ) / 2;
+          }
+          else {
+            return 0; // no need to position here?
+          }
+        } ),
+        new Property( ( fullOffset + secondOffset ) / 2 )
+      ];
+    } );
+
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
-      var labels = _.range( 0, 3 ).map( function( partitionIndex ) {
+      _.range( 0, 3 ).forEach( function( partitionIndex ) {
         // TODO: better way
         var orientationName = orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical';
 
@@ -95,23 +126,34 @@ define( function( require ) {
         label[ orientation.opposite.coordinate ] = orientation === Orientation.HORIZONTAL ? -20 : -30;
         self.addChild( label );
 
-        return label;
+        centerProperties[ orientation === Orientation.HORIZONTAL ][ partitionIndex ].link( function( location ) {
+          label[ orientation.coordinate ] = location;
+        } );
       } );
-      display.layoutProperty.link( function( layout ) {
-        var quantity = layout.getPartitionQuantity( orientation );
+    } );
 
-        if ( quantity === 1 ) {
-          labels[ 0 ][ orientation.coordinate ] = fullOffset / 2;
-        }
-        else if ( quantity === 2 ) {
-          labels[ 0 ][ orientation.coordinate ] = singleOffset / 2;
-          labels[ 1 ][ orientation.coordinate ] = ( fullOffset + singleOffset ) / 2;
-        }
-        else if ( quantity === 3 ) {
-          labels[ 0 ][ orientation.coordinate ] = firstOffset / 2;
-          labels[ 1 ][ orientation.coordinate ] = ( secondOffset + firstOffset ) / 2;
-          labels[ 2 ][ orientation.coordinate ] = ( fullOffset + secondOffset ) / 2;
-        }
+    _.range( 0, 3 ).forEach( function( horizontalIndex ) {
+      _.range( 0, 3 ).forEach( function( verticalIndex ) {
+        var valueProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ display.partialProductsProperty ], function( values ) {
+          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new Property( null );
+        } ) );
+        var displayTypeProperty = new DerivedProperty( [ display.partialProductsDisplayProperty ], function( values ) {
+          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : DisplayType.HIDDEN;
+        } );
+        var digitsProperty = new DerivedProperty( [ display.partialProductsDigitsProperty ], function( values ) {
+          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : 1;
+        } );
+
+        var colorProperty = new Property( 'black' ); // TODO
+        var isActiveProperty = new Property( false ); // TODO
+
+        var label = new GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
+          console.log( 'PRODUCT EDIT TODO' );
+        } );
+        self.addChild( label );
+
+        centerProperties.true[ horizontalIndex ].linkAttribute( label, 'x' );
+        centerProperties.false[ verticalIndex ].linkAttribute( label, 'y' );
       } );
     } );
 
