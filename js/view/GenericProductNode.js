@@ -26,28 +26,35 @@ define( function( require ) {
    *
    * @param {Property.<TermList|null>} horizontalDisplayProperty
    * @param {Property.<TermList|null>} verticalDisplayProperty
-   * @param {boolean} allowExponents
+   * @param {Property.<boolean>} allowExponentsProperty
    */
-  function GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponents ) {
+  function GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponentsProperty ) {
     var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, horizontalDisplayProperty );
     var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, verticalDisplayProperty );
+
+    var leftParenText = new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
+    var middleParenText = new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
+    var rightParenText = new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
+    var xText = new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
     // AccordionBox.
     var box = new HBox( {
-      children: allowExponents ? [
-        new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
+      spacing: 10
+    } );
+
+    allowExponentsProperty.link( function( allowExponents ) {
+      box.children = allowExponents ? [
+        leftParenText,
         verticalNode,
-        new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } ),
+        middleParenText,
         horizontalNode,
-        new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } )
+        rightParenText
       ] : [
         verticalNode,
-        new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
+        xText,
         horizontalNode
-      ],
-      spacing: 10,
-      centerY: 0
+      ];
     } );
 
     // TODO: why isn't maxWidth centering properly (vertically?) See https://github.com/phetsims/area-model-common/issues/18

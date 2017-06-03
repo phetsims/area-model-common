@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -25,6 +26,9 @@ define( function( require ) {
 
     // @public {Property.<GenericLayout>}
     this.layoutProperty = new Property( GenericLayout.TWO_BY_TWO );
+
+    // @public {Property.<boolean>}
+    this.allowExponentsProperty = new BooleanProperty( false );
 
     // @public {Property.<TermList|null>} - Values for dimension line label and product box, null is hidden.
     this.horizontalTotalProperty = new Property( null );

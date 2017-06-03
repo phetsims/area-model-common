@@ -96,6 +96,9 @@ define( function( require ) {
 
       this.scoreProperty.reset();
       this.challengeIndexProperty.reset();
+
+      // TODO: better way. done because we change the challenges that it indexes
+      this.challengeIndexProperty.notifyObserversStatic();
     }
   } );
 } );

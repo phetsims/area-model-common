@@ -42,6 +42,7 @@ define( function( require ) {
     PANEL_CORNER_RADIUS: 5,
 
     MAIN_AREA_OFFSET: new Vector2( 180, 80 ),
+    GAME_AREA_OFFSET: new Vector2( 180, 140 ),
 
     PARTITION_HANDLE_OFFSET: 15,
     PARTITION_HANDLE_RADIUS: 10,

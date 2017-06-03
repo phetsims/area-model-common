@@ -20,6 +20,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -60,7 +61,7 @@ define( function( require ) {
       var verticalDisplayProperty = new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
         return area.getDisplayProperty( Orientation.VERTICAL );
       } ) );
-      return new GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, model.allowExponents );
+      return new GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, new Property( model.allowExponents ) );
     },
 
     // TODO: doc/improve

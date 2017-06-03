@@ -11,13 +11,17 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
+  var GameAreaNode = require( 'AREA_MODEL_COMMON/view/GameAreaNode' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/model/GenericAreaDisplay' );
+  var GenericProductNode = require( 'AREA_MODEL_COMMON/view/GenericProductNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -28,7 +32,11 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+
+  // strings
+  var productString = require( 'string!AREA_MODEL_COMMON/product' );
 
   /**
    * @constructor
@@ -140,6 +148,10 @@ define( function( require ) {
     } );
     this.levelSelectionLayer.addChild( resetAllButton );
 
+    /*---------------------------------------------------------------------------*
+    * Area display
+    *----------------------------------------------------------------------------*/
+
     // Display
     this.display = new GenericAreaDisplay();
     model.currentChallengeProperty.link( function( newChallenge, oldChallenge ) {
@@ -151,14 +163,82 @@ define( function( require ) {
       var newArea = newChallenge.area;
 
       self.display.layoutProperty.value = newArea.layout;
+      self.display.allowExponentsProperty.value = newChallenge.description.allowExponents;
 
       // TODO: fill in everything else
     } );
+
+    var gameAreaNode = new GameAreaNode( this.display );
+    this.challengeLayer.addChild( gameAreaNode );
+    gameAreaNode.translation = this.layoutBounds.leftTop.plus( AreaModelConstants.GAME_AREA_OFFSET );
+
+    /*---------------------------------------------------------------------------*
+    * Panels
+    *----------------------------------------------------------------------------*/
+
+    var panelAlignGroup = new AlignGroup( {
+      matchVertical: false
+    } );
+
+    // TODO: ensure sizing doesn't spill out? AreaModelConstants.PANEL_INTERIOR_MAX
+    var productNode = new GenericProductNode( this.display.horizontalTotalProperty, this.display.verticalTotalProperty, this.display.allowExponentsProperty );
+    var productContent = this.createPanel( productString, panelAlignGroup, productNode );
+
+    // TODO... hmm? Improve this?
+    this.throwaway = new AlignBox( new HStrut( AreaModelConstants.PANEL_INTERIOR_MAX ), { group: panelAlignGroup } );
+
+    var panelBox = new VBox( {
+      children: [
+        productContent
+      ],
+      spacing: AreaModelConstants.PANEL_SPACING,
+      top: gameAreaNode.y,
+      right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
+    } );
+    this.challengeLayer.addChild( panelBox );
   }
 
   areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
 
   return inherit( ScreenView, GameAreaScreenView, {
+    /**
+     * Creates a panel interior with the title left-aligned, and the content somewhat offset from the left with a
+     * guaranteed margin.
+     * @private
+     *
+     * TODO: deduplicate with AreaScreenView
+     *
+     * @param {string} titleString
+     * @param {AlignGroup} panelAlignGroup
+     * @param {Node} content
+     */
+    createPanel: function( titleString, panelAlignGroup, content ) {
+      var panelContent = new VBox( {
+        children: [
+          new AlignBox( new Text( titleString, {
+            font: AreaModelConstants.TITLE_FONT,
+            maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+          } ), {
+            group: panelAlignGroup,
+            xAlign: 'left'
+          } ),
+          new AlignBox( content, {
+            group: panelAlignGroup,
+            xAlign: 'center',
+            xMargin: 15
+          } )
+        ],
+        spacing: 10
+      } );
+      return new Panel( panelContent, {
+        xMargin: 15,
+        yMargin: 10,
+        fill: AreaModelColorProfile.panelBackgroundProperty,
+        stroke: AreaModelColorProfile.panelBorderProperty,
+        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+      } );
+    },
+
     /**
      * Steps forward in time.
      * @public
