@@ -13,6 +13,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Property = require( 'AXON/Property' );
   var TermEditNode = require( 'AREA_MODEL_COMMON/view/TermEditNode' );
 
   /**
@@ -39,8 +40,8 @@ define( function( require ) {
       new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
         return activePartition === partition;
       } ),
-      partition.digitCount, // digitCount
-      allowExponents, // allowExponents
+      new Property( partition.digitCount ), // digitCountProperty
+      new Property( allowExponents ), // allowExponentsProperty
       // editCallback
       function() {
         area.activePartitionProperty.value = partition;

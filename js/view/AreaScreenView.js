@@ -28,10 +28,10 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var productString = require( 'string!AREA_MODEL_COMMON/product' );
-  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
+  var productString = require( 'string!AREA_MODEL_COMMON/product' );
+  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   /**
    * @constructor
@@ -61,7 +61,7 @@ define( function( require ) {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.allowExponents ), {
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );

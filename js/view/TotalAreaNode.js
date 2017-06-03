@@ -22,12 +22,11 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Polynomial|null} totalAreaProperty
-   * @param {boolean} allowExponents
    */
-  function TotalAreaNode( totalAreaProperty, allowExponents ) {
+  function TotalAreaNode( totalAreaProperty ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
-    var areaText = new RichText( Term.getLongestGenericString( allowExponents, 3 ), {
+    var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
       font: AreaModelConstants.TOTAL_AREA_FONT
     } );
 
@@ -46,6 +45,7 @@ define( function( require ) {
     // Update the text.
     totalAreaProperty.link( function( polynomial ) {
       areaText.text = polynomial === null ? '?' : polynomial.toRichString();
+      centeredContainer.centerX = 0;
     } );
 
     Node.call( this, {

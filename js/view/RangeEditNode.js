@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Property = require( 'AXON/Property' );
   var RangeNode = require( 'AREA_MODEL_COMMON/view/RangeNode' );
   var TermEditNode = require( 'AREA_MODEL_COMMON/view/TermEditNode' );
 
@@ -39,8 +40,8 @@ define( function( require ) {
       colorProperty, // textColorProperty
       borderColorProperty, // borderColorProperty
       isActiveProperty, // isActiveProperty
-      digitCount, // digitCount
-      allowExponents, // allowExponents
+      new Property( digitCount ), // digitCountProperty
+      new Property( allowExponents ), // allowExponentsProperty
       editCallback // editCallback
     );
 

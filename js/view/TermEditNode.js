@@ -35,25 +35,27 @@ define( function( require ) {
    * @param {Property.<Color>} textColorProperty
    * @param {Property.<Color>} borderColorProperty
    * @param {Property.<boolean>} isActiveProperty
-   * @param {number} digitCount
-   * @param {boolean} allowExponents
+   * @param {Property.<number>} digitCountProperty
+   * @param {Property.<boolean>} allowExponentsProperty
    * @param {function} editCallback - Called when editing is triggered
    */
-  function TermEditNode( orientation, termProperty, textColorProperty, borderColorProperty, isActiveProperty, digitCount, allowExponents, editCallback ) {
+  function TermEditNode( orientation, termProperty, textColorProperty, borderColorProperty, isActiveProperty, digitCountProperty, allowExponentsProperty, editCallback ) {
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( termProperty instanceof Property );
     assert && assert( textColorProperty instanceof Property );
     assert && assert( borderColorProperty instanceof Property );
     assert && assert( isActiveProperty instanceof Property );
-    assert && assert( typeof digitCount === 'number' );
-    assert && assert( typeof allowExponents === 'boolean' );
+    assert && assert( digitCountProperty instanceof Property );
+    assert && assert( allowExponentsProperty instanceof Property );
 
-    var readoutText = new RichText( Term.getLongestGenericString( allowExponents, digitCount ), {
+    var self = this;
+
+    var readoutText = new RichText( '#covfefe', {
       fill: textColorProperty,
       font: AreaModelConstants.EDIT_READOUT_FONT
     } );
 
-    var readoutBackground = new Rectangle( 0, 0, readoutText.width + 5, readoutText.height + 5, {
+    var readoutBackground = new Rectangle( {
       stroke: borderColorProperty,
       cornerRadius: 4,
       children: [
@@ -66,21 +68,6 @@ define( function( require ) {
           fire: editCallback
         } )
       ]
-    } );
-
-    termProperty.link( function( term ) {
-      if ( term === null ) {
-        readoutText.text = '';
-      }
-      else {
-        readoutText.text = term.toRichString( false );
-        readoutText.center = readoutBackground.selfBounds.center;
-      }
-    } );
-
-    isActiveProperty.link( function( isActive ) {
-      readoutBackground.fill = isActive ? AreaModelColorProfile.editActiveBackgroundProperty
-                                        : AreaModelColorProfile.editInactiveBackgroundProperty;
     } );
 
     LayoutBox.call( this, {
@@ -103,7 +90,38 @@ define( function( require ) {
       ]
     } );
 
-    readoutBackground.touchArea = readoutBackground.parentToLocalBounds( this.localBounds ).dilated( 6 );
+    isActiveProperty.link( function( isActive ) {
+      readoutBackground.fill = isActive ? AreaModelColorProfile.editActiveBackgroundProperty
+                                        : AreaModelColorProfile.editInactiveBackgroundProperty;
+    } );
+
+    function layout() {
+      readoutText.center = readoutBackground.selfBounds.center;
+      readoutBackground.touchArea = readoutBackground.parentToLocalBounds( self.localBounds ).dilated( 6 );
+    }
+
+    function updateText() {
+      if ( termProperty.value === null ) {
+        readoutText.text = ' ';
+      }
+      else {
+        readoutText.text = termProperty.value.toRichString( false );
+      }
+      layout();
+    }
+
+    function updateDigits() {
+      readoutText.text = Term.getLongestGenericString( allowExponentsProperty.value, digitCountProperty.value );
+      readoutBackground.rectWidth = readoutText.width + 5;
+      readoutBackground.rectHeight = readoutText.height + 5;
+      updateText();
+    }
+
+    termProperty.lazyLink( updateText );
+    digitCountProperty.lazyLink( updateDigits );
+    allowExponentsProperty.lazyLink( updateDigits );
+
+    updateDigits();
   }
 
   areaModelCommon.register( 'TermEditNode', TermEditNode );
