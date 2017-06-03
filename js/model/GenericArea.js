@@ -25,9 +25,8 @@ define( function( require ) {
    *
    * @param {GenericLayout} layout
    * @param {boolean} allowExponents - Whether the user is able to add powers of x.
-   * @param {Property.<Color>} colorProperty
    */
-  function GenericArea( layout, allowExponents, colorProperty ) {
+  function GenericArea( layout, allowExponents ) {
     assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;

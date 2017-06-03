@@ -9,11 +9,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaChallenge = require( 'AREA_MODEL_COMMON/model/AreaChallenge' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -26,7 +27,7 @@ define( function( require ) {
    * @param {Array.<AreaChallengeDescription>} challengeDescriptions
    */
   function AreaLevel( number, type, colorProperty, icon, challengeDescriptions ) {
-    // TODO: Pass through AreaChallengeDescriptions?
+    var self = this;
 
     // @public {number}
     this.number = number;
@@ -40,29 +41,61 @@ define( function( require ) {
     // @public {Node}
     this.icon = icon;
 
-    // @public {Array.<AreaChallengeDescription>}
+    // @public {Array.<AreaChallengeDescription>} - Descriptions for each type of level
     this.challengeDescriptions = challengeDescriptions;
 
     // @public {Property.<number>} - Ranges from 0 to AreaModelConstants.NUM_CHALLENGES * 2
     //                               (since 2 points are rewarded for first attempt correct)
     this.scoreProperty = new NumberProperty( 0 );
 
-    // @public {Property.<GameState>}
-    this.stateProperty = new Property( GameState.FIRST_ATTEMPT );
+    // @public {Array.<AreaChallenge>}
+    this.challenges = this.generateChallenges();
+
+    // @public {Property.<number>} - The index of the current challenge.
+    this.challengeIndexProperty = new NumberProperty( 0 );
+
+    // @public {Property.<AreaChallenge>}
+    this.currentChallengeProperty = new DerivedProperty( [ this.challengeIndexProperty ], function( index ) {
+      return self.challenges[ index ];
+    } );
   }
 
   areaModelCommon.register( 'AreaLevel', AreaLevel );
 
   return inherit( Object, AreaLevel, {
     /**
+     * Generates six challenges.
+     * @private
+     *
+     * @returns {Array.<AreaChallenge>}
+     */
+    generateChallenges: function() {
+      // Always include the first description as the first challenge
+      var descriptions = [ this.challengeDescriptions[ 0 ] ];
+
+      // Shuffle the rest of them in a random order
+      descriptions = descriptions.concat( phet.joist.random.shuffle( descriptions.slice( 1 ) ) );
+
+      // Then fill with random challenges if there are any more spaces
+      while ( descriptions.length < AreaModelConstants.NUM_CHALLENGES ) {
+        descriptions.push( phet.joist.random.sample( this.challengeDescriptions ) );
+      }
+
+      // Generate based on the descriptions
+      return descriptions.map( function( description ) {
+        return new AreaChallenge( description );
+      } );
+    },
+
+    /**
      * Returns the model to its initial state.
      * @public
      */
     reset: function() {
-      // TODO: regenerate challenges?
+      this.challenges = this.generateChallenges();
 
-      this.stateProperty.reset();
       this.scoreProperty.reset();
+      this.challengeIndexProperty.reset();
     }
   } );
 } );
