@@ -13,6 +13,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
+  var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
@@ -30,12 +31,8 @@ define( function( require ) {
     this.verticalPartition = verticalPartition;
 
     // @public {Property.<Term|null>} - Area may not be defined if the size of a partition is not defined.
-    this.areaProperty = new DerivedProperty( [ horizontalPartition.sizeProperty, verticalPartition.sizeProperty ], function( horizontalSize, verticalSize ) {
-      if ( horizontalSize === null || verticalSize === null ) {
-        return null;
-      }
-      return horizontalSize.times( verticalSize );
-    }, {
+    // TODO: handle resets properly in the game here?
+    this.areaProperty = new Property( null, {
       useDeepEquality: true
     } );
 

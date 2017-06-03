@@ -37,6 +37,8 @@ define( function( require ) {
     assert && assert( verticalColorProperty instanceof Property );
     assert && assert( typeof coordinateRangeMax === 'number' );
 
+    var self = this;
+
     // @public {Array.<Partition>}
     this.horizontalPartitions = horizontalPartitions;
 
@@ -61,7 +63,7 @@ define( function( require ) {
     // @public {Array.<PartitionedArea>}
     this.partitionedAreas = _.flatten( horizontalPartitions.map( function( horizontalPartition ) {
       return verticalPartitions.map( function( verticalPartition ) {
-        return new PartitionedArea( horizontalPartition, verticalPartition );
+        return self.createPartitionedArea( horizontalPartition, verticalPartition );
       } );
     } ) );
 
@@ -96,6 +98,30 @@ define( function( require ) {
   areaModelCommon.register( 'Area', Area );
 
   return inherit( Object, Area, {
+    /**
+     * Creates a partitioned area given two partitions. Meant to be overridden where needed.
+     * @protected
+     *
+     * @param {Partition} horizontalPartition
+     * @param {Partition} verticalPartition
+     * @returns {PartitionedArea}
+     */
+    createPartitionedArea: function( horizontalPartition, verticalPartition ) {
+      var partitionedArea = new PartitionedArea( horizontalPartition, verticalPartition );
+
+      // By default, have the area linked to the partitions. This won't work for the game.
+      Property.multilink( [ horizontalPartition.sizeProperty, verticalPartition.sizeProperty ], function( horizontalSize, verticalSize ) {
+        if ( horizontalSize === null || verticalSize === null ) {
+          partitionedArea.areaProperty.value = null;
+        }
+        else {
+          partitionedArea.areaProperty.value = horizontalSize.times( verticalSize );
+        }
+      } );
+
+      return partitionedArea;
+    },
+
     /**
      * Resets the area to its initial values.
      * @public
