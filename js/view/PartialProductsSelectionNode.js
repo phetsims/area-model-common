@@ -32,9 +32,9 @@ define( function( require ) {
    * @param {AreaModel} model
    */
   function PartialProductsSelectionNode( model ) {
+    //TODO: rename to 'product' singular instead of plural
 
     Node.call( this );
-
 
     var horizontalText = new Text( 'b', {
       font: AreaModelConstants.SYMBOL_FONT,

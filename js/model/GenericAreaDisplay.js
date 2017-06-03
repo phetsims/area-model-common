@@ -70,7 +70,7 @@ define( function( require ) {
     this.totalProperty = new Property( null );
 
     // @public {Property.<DisplayType>} TODO doc
-    this.totalDisplayProperty = new Property( DisplayType.READOUT );
+    this.totalDisplayProperty = new Property( DisplayType.READOUT ); // TODO: rename things like this DisplayTypeProperty?
 
     // @public {Property.<number>} TODO doc
     this.totalDigitsProperty = new Property( 5 );

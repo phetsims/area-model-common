@@ -15,9 +15,9 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/view/GameAreaNode' );
+  var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/model/GenericAreaDisplay' );
   var GenericProductNode = require( 'AREA_MODEL_COMMON/view/GenericProductNode' );
@@ -35,11 +35,8 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
-  var TermEditNode = require( 'AREA_MODEL_COMMON/view/TermEditNode' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var TotalAreaNode = require( 'AREA_MODEL_COMMON/view/TotalAreaNode' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // strings
   var productString = require( 'string!AREA_MODEL_COMMON/product' );
@@ -186,26 +183,10 @@ define( function( require ) {
     var productNode = new GenericProductNode( this.display.horizontalTotalProperty, this.display.verticalTotalProperty, this.display.allowExponentsProperty );
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
-    var totalReadoutNode = new TotalAreaNode( this.display.totalProperty );
-    totalReadoutNode.center = Vector2.ZERO;
-    var totalEditActiveProperty = new Property( false ); // TODO
-    var totalTermEditNode = new TermEditNode( Orientation.HORIZONTAL, this.display.totalProperty, new Property( 'black' ), new Property( 'black' ), totalEditActiveProperty, this.display.totalDigitsProperty, this.display.allowExponentsProperty, function() {
+    var totalNode = new GameEditableLabelNode( this.display.totalProperty, this.display.totalDisplayProperty, this.display.totalDigitsProperty, new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       console.log( 'EDIT TODO' );
     } );
-    totalTermEditNode.center = Vector2.ZERO;
-
-    // TODO: Handle editable polynomial
-    this.display.totalDisplayProperty.link( function( displayType ) {
-      totalReadoutNode.visible = displayType === DisplayType.READOUT;
-      totalTermEditNode.visible = displayType === DisplayType.EDITABLE;
-    } );
-
-    var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, new Node( {
-      children: [
-        totalReadoutNode,
-        totalTermEditNode
-      ]
-    } ) );
+    var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalNode );
 
     // TODO... hmm? Improve this?
     this.throwaway = new AlignBox( new HStrut( AreaModelConstants.PANEL_INTERIOR_MAX ), { group: panelAlignGroup } );

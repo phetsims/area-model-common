@@ -13,7 +13,6 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  // var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   // var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
@@ -84,15 +83,6 @@ define( function( require ) {
     //   partition.coordinateRangeProperty.lazyLink( productLabelListener );
     // } );
     // productLabelListener();
-
-    // var eraseButton = new EraserButton( {
-    //   listener: function() {
-    //     area.reset();
-    //   },
-    //   centerX: AreaModelConstants.VERTICAL_RANGE_OFFSET,
-    //   centerY: AreaModelConstants.HORIZONTAL_RANGE_OFFSET
-    // } );
-    // this.labelLayer.addChild( eraseButton );
   }
 
   areaModelCommon.register( 'GameAreaNode', GameAreaNode );

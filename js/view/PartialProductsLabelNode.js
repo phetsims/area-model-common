@@ -34,6 +34,7 @@ define( function( require ) {
    * @param {boolean} allowExponents
    */
   function PartialProductsLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
+    //TODO: rename to 'product' singular instead of plural
     assert && assert( partialProductsChoiceProperty instanceof Property );
     assert && assert( partitionedArea instanceof PartitionedArea );
     assert && assert( typeof allowExponents === 'boolean' );
