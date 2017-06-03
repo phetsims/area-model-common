@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GenericArea = require( 'AREA_MODEL_COMMON/model/GenericArea' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PartitionedArea = require( 'AREA_MODEL_COMMON/model/PartitionedArea' );
 
   /**
    * @constructor
@@ -29,6 +30,19 @@ define( function( require ) {
   areaModelCommon.register( 'GameArea', GameArea );
 
   return inherit( GenericArea, GameArea, {
+    /**
+     * Creates a partitioned area given two partitions. Overridden so that we don't hook up automatic computation of this value.
+     * @protected
+     * @override
+     *
+     * @param {Partition} horizontalPartition
+     * @param {Partition} verticalPartition
+     * @returns {PartitionedArea}
+     */
+    createPartitionedArea: function( horizontalPartition, verticalPartition ) {
+      return new PartitionedArea( horizontalPartition, verticalPartition );
+    },
+
     /**
      * Resets the area to its initial values.
      * @public

@@ -15,10 +15,15 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
+
+  // constants
+  var nullProperty = new Property( null );
 
   /**
    * @constructor
@@ -119,6 +124,16 @@ define( function( require ) {
 
     // @public {Property.<AreaLevel|null>} - The current level
     this.currentLevelProperty = new Property( null );
+
+    // @public {Property.<AreaChallenge|null>}
+    this.currentChallengeProperty = new DynamicProperty( new DerivedProperty( [ this.currentLevelProperty ], function( level ) {
+      return level ? level.currentChallengeProperty : nullProperty;
+    } ) );
+
+    // @public {Property.<GameState|null>}
+    this.stateProperty = new DynamicProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
+      return challenge ? challenge.stateProperty : nullProperty;
+    } ) );
   }
 
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );
