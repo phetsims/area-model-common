@@ -14,7 +14,6 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
-  var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -39,12 +38,9 @@ define( function( require ) {
     Node.call( this );
 
     var valueProperty = new DynamicBidirectionalProperty( valuePropertyProperty );
-    var displayProperty = new DynamicProperty( new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
-      return valueProperty.displayProperty;
-    } ) );
-    var digitsProperty = new DynamicProperty( new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
-      return valueProperty.digitsProperty;
-    } ) );
+    var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
+      return valueProperty.digits;
+    } );
 
     // TODO: support font switching in different contexts?
     var font = AreaModelConstants.GAME_VALUE_FONT;
@@ -73,7 +69,8 @@ define( function( require ) {
     allowExponentsProperty.link( centerTermEditNode );
 
     // TODO: Handle editable polynomial
-    displayProperty.link( function( displayType ) {
+    valuePropertyProperty.link( function( valueProperty ) {
+      var displayType = valueProperty.displayType;
       readoutText.visible = displayType === DisplayType.READOUT;
       termEditNode.visible = displayType === DisplayType.EDITABLE;
     } );

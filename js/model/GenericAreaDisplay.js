@@ -46,7 +46,7 @@ define( function( require ) {
     ] );
 
     // @public {Property.<TermList|null>} TODO doc
-    this.totalProperty = new EditableProperty( null );
+    this.totalPropertyProperty = new Property( new EditableProperty( null ) );
   }
 
   areaModelCommon.register( 'GenericAreaDisplay', GenericAreaDisplay );

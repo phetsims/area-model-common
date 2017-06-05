@@ -14,7 +14,7 @@ define( function( require ) {
   var DisplayType = {
     EDITABLE: 'EDITABLE',
     READOUT: 'READOUT',
-    HIDDEN: 'HIDDEN'
+    HIDDEN: 'HIDDEN' //TODO: is HIDDEN used? (set)?
   };
 
   areaModelCommon.register( 'DisplayType', DisplayType );

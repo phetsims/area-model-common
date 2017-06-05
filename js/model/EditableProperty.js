@@ -13,7 +13,6 @@ define( function( require ) {
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -24,18 +23,27 @@ define( function( require ) {
    * @param {Object} [options] - Options passed to the Property
    */
   function EditableProperty( value, options ) {
+    options = _.extend( {
+      displayType: DisplayType.HIDDEN,
+      keypadType: KeypadType.CONSTANT,
+      digits: 0
+    }, options );
+
+    // Always start off by editing null, and it should be the default value.
+    if ( options.displayType === DisplayType.EDITABLE ) {
+      value = null;
+    }
+
     Property.call( this, value, options );
 
-    // TODO: Can these be constant (not properties), and we move totalProperty to a property-property? YES
+    // @public {DisplayType}
+    this.displayType = options.displayType;
 
-    // @public {Property.<DisplayType>} - How our property's value is displayed (or if it is editable)
-    this.displayProperty = new Property( DisplayType.HIDDEN );
+    // @public {KeypadType}
+    this.keypadType = options.keypadType;
 
-    // @public {Property.<number>} - How many digits are included in any editable interface.
-    this.digitsProperty = new NumberProperty( 0 );
-
-    // @public {Property.<KeypadType}
-    this.keypadProperty = new Property( KeypadType.CONSTANT );
+    // @public {number}
+    this.digits = options.digits;
   }
 
   areaModelCommon.register( 'EditableProperty', EditableProperty );

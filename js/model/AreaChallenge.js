@@ -22,6 +22,11 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/model/Term' );
 
+  var gameToDisplayMap = {};
+  gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
+  gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
+  gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
+
   /**
    * @constructor
    * @extends {Object}
@@ -43,7 +48,9 @@ define( function( require ) {
     // @public {GameArea}
     this.area = new GameArea( description.layout, description.allowExponents );
 
-
+    // @private {KeypadType}
+    //TODO: var?
+    var mainKeypadType = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.TERM : KeypadType.CONSTANT;
 
     // TODO: Check whether visibility is needed on things below.
 
@@ -54,31 +61,21 @@ define( function( require ) {
     //TODO doc
     // TODO: deduplicate
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
+      var property = new EditableProperty( size, {
+        displayType: gameToDisplayMap[ description.horizontalValues[ index ] ],
+        keypadType: mainKeypadType, // TODO: dedup?
+        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
+      } );
       // TODO: hook it up if it's dynamic
-      var property = new EditableProperty( size );
-      if ( description.horizontalValues[ index ] === GameValue.EDITABLE ) {
-        property.displayProperty.value = DisplayType.EDITABLE;
-        property.value = null;
-      }
-      else {
-        property.displayProperty.value = DisplayType.READOUT;
-      }
-      property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index;
-      property.keypadProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.TERM : KeypadType.CONSTANT;
       return property;
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
+      var property = new EditableProperty( size, {
+        displayType: gameToDisplayMap[ description.verticalValues[ index ] ],
+        keypadType: mainKeypadType, // TODO: dedup?
+        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
+      } );
       // TODO: hook it up if it's dynamic
-      var property = new EditableProperty( size );
-      if ( description.verticalValues[ index ] === GameValue.EDITABLE ) {
-        property.displayProperty.value = DisplayType.EDITABLE;
-        property.value = null;
-      }
-      else {
-        property.displayProperty.value = DisplayType.READOUT;
-      }
-      property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index;
-      property.keypadProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.TERM : KeypadType.CONSTANT;
       return property;
     } );
 
@@ -92,22 +89,13 @@ define( function( require ) {
     // TODO: doc
     this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
       return row.map( function( size, horizontalIndex ) {
-        // TODO: start null if it's editable, OR hook it up if it's dynamic
-        var property = new EditableProperty( size );
-
-        if ( description.productValues[ verticalIndex ][ horizontalIndex ] === GameValue.EDITABLE ) {
-          property.displayProperty.value = DisplayType.EDITABLE;
-        }
-        else {
-          // dynamic or given
-          property.displayProperty.value = DisplayType.READOUT;
-        }
-
-        // Add number of digits from vertical and horizontal
         var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
-        property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits;
-        property.keypadProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.POLYNOMIAL : KeypadType.CONSTANT;
-
+        var property = new EditableProperty( size, {
+          displayType: gameToDisplayMap[ description.productValues[ verticalIndex ][ horizontalIndex ] ],
+          keypadType: mainKeypadType,
+          digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits
+        } );
+        // TODO: hook it up if it's dynamic
         return property;
       } );
     } );
@@ -118,6 +106,13 @@ define( function( require ) {
 
     // @public {Polynomial}
     this.total = this.horizontalTotal.times( this.verticalTotal );
+
+    // @public {EditableProperty.<Polynomial|null>}
+    this.totalProperty = new EditableProperty( this.total, {
+      displayType: gameToDisplayMap[ description.totalValue ],
+      keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.POLYNOMIAL : KeypadType.CONSTANT,
+      digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
+    } );
   }
 
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
@@ -133,17 +128,10 @@ define( function( require ) {
 
       display.layoutProperty.value = this.description.layout;
       display.allowExponentsProperty.value = this.description.allowExponents;
-
-      if ( this.description.totalValue === GameValue.EDITABLE ) {
-        display.totalProperty.value = null;
-        display.totalProperty.displayProperty.value = DisplayType.EDITABLE;
-        display.totalProperty.digitsProperty.value = this.description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length );
-      }
-      else {
-        display.totalProperty.value = this.total;
-        display.totalProperty.displayProperty.value = DisplayType.READOUT;
-        display.totalProperty.digitsProperty.value = 0;
-      }
+      display.totalPropertyProperty.value = this.totalProperty;
+      display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
+      display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
+      display.partialProductsProperty.value = this.partialProductSizeProperties;
 
       if ( this.description.horizontalTotalValue === GameValue.DYNAMIC ) {
         // TODO: Hook up the dynamic bits
@@ -162,13 +150,6 @@ define( function( require ) {
       else {
         display.verticalTotalProperty.value = this.verticalTotal;
       }
-
-      display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
-      display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
-
-      display.partialProductsProperty.value = this.partialProductSizeProperties;
-
-      // TODO
     }
   }, {
 

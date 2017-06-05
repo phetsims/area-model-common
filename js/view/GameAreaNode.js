@@ -13,7 +13,6 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -145,9 +144,9 @@ define( function( require ) {
       } );
     } );
 
-    var digitsProperty = new DynamicProperty( new DerivedProperty( [ activeEditableProperty ], function( editableProperty ) {
-      return editableProperty ? editableProperty.digitsProperty : new Property( 1 );
-    } ) );
+    var digitsProperty = new DerivedProperty( [ activeEditableProperty ], function( editableProperty ) {
+      return editableProperty ? editableProperty.digits : 1;
+    } );
 
     function setActiveTerm( term ) {
       activeEditableProperty.value.value = term;
