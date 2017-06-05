@@ -159,6 +159,10 @@ define( function( require ) {
     // Display
     this.display = new GenericAreaDisplay();
     model.currentChallengeProperty.link( function( newChallenge, oldChallenge ) {
+      if ( oldChallenge ) {
+        oldChallenge.detachDisplay( self.display );
+      }
+
       // Make no immediate changes if the challenge turns null.
       if ( newChallenge === null ) {
         return;

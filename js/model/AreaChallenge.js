@@ -104,6 +104,10 @@ define( function( require ) {
     this.horizontalTotal = new Polynomial( this.horizontalPartitionSizes );
     this.verticalTotal = new Polynomial( this.verticalPartitionSizes );
 
+    // @public {Property.<Polynomial|null>}
+    this.horizontalTotalProperty = new Property( this.horizontalTotal );
+    this.verticalTotalProperty = new Property( this.verticalTotal );
+
     // @public {Polynomial}
     this.total = this.horizontalTotal.times( this.verticalTotal );
 
@@ -113,6 +117,29 @@ define( function( require ) {
       keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.POLYNOMIAL : KeypadType.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
+
+    // Now hook up dynamic parts, setting their values to null
+    //TODO: dedup
+    if ( description.horizontalTotalValue === GameValue.DYNAMIC ) {
+      Property.multilink( this.horizontalPartitionSizeProperties, function() {
+        var terms = _.map( self.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
+          return term !== null;
+        } );
+        self.horizontalTotalProperty.value = terms.length ? new Polynomial( terms ) : null;
+      } );
+    }
+    if ( description.verticalTotalValue === GameValue.DYNAMIC ) {
+      Property.multilink( this.verticalPartitionSizeProperties, function() {
+        var terms = _.map( self.verticalPartitionSizeProperties, 'value' ).filter( function( term ) {
+          return term !== null;
+        } );
+        self.verticalTotalProperty.value = terms.length ? new Polynomial( terms ) : null;
+      } );
+    }
+
+    // @private {function} - Listeners to remove
+    this.horizontalTotalListener = null;
+    this.verticalTotalListener = null;
   }
 
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
@@ -133,23 +160,14 @@ define( function( require ) {
       display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
       display.partialProductsProperty.value = this.partialProductSizeProperties;
 
-      if ( this.description.horizontalTotalValue === GameValue.DYNAMIC ) {
-        // TODO: Hook up the dynamic bits
-        display.horizontalTotalProperty.value = null;
-      }
-      // GIVEN TODO check
-      else {
-        display.horizontalTotalProperty.value = this.horizontalTotal;
-      }
+      this.horizontalTotalListener = this.horizontalTotalProperty.linkAttribute( display.horizontalTotalProperty, 'value' );
+      this.verticalTotalListener = this.verticalTotalProperty.linkAttribute( display.verticalTotalProperty, 'value' );
+    },
 
-      if ( this.description.verticalTotalValue === GameValue.DYNAMIC ) {
-        // TODO: Hook up the dynamic bits
-        display.verticalTotalProperty.value = null;
-      }
-      // GIVEN TODO check
-      else {
-        display.verticalTotalProperty.value = this.verticalTotal;
-      }
+    // TODO
+    detachDisplay: function( display ) {
+      this.horizontalTotalProperty.unlink( this.horizontalTotalListener );
+      this.verticalTotalProperty.unlink( this.verticalTotalListener );
     }
   }, {
 
