@@ -118,6 +118,10 @@ define( function( require ) {
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
 
+    /*---------------------------------------------------------------------------*
+    * Dynamic hooks
+    *----------------------------------------------------------------------------*/
+
     // Now hook up dynamic parts, setting their values to null
     //TODO: dedup
     if ( description.horizontalTotalValue === GameValue.DYNAMIC ) {
@@ -156,9 +160,24 @@ define( function( require ) {
       display.layoutProperty.value = this.description.layout;
       display.allowExponentsProperty.value = this.description.allowExponents;
       display.totalPropertyProperty.value = this.totalProperty;
-      display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
-      display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
       display.partialProductsProperty.value = this.partialProductSizeProperties;
+
+      // TODO: cleanup and dedup. Cleaner way to accomplish this?
+      if ( this.horizontalPartitionSizeProperties.length === 1 &&
+           this.description.horizontalValues[ 0 ] === GameValue.GIVEN ) {
+        display.horizontalPartitionValuesProperty.value = [ new EditableProperty( null ) ];
+      }
+      else {
+        display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
+      }
+      // TODO: cleanup and dedup. Cleaner way to accomplish this?
+      if ( this.verticalPartitionSizeProperties.length === 1 &&
+           this.description.verticalValues[ 0 ] === GameValue.GIVEN ) {
+        display.verticalPartitionValuesProperty.value = [ new EditableProperty( null ) ];
+      }
+      else {
+        display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
+      }
 
       this.horizontalTotalListener = this.horizontalTotalProperty.linkAttribute( display.horizontalTotalProperty, 'value' );
       this.verticalTotalListener = this.verticalTotalProperty.linkAttribute( display.verticalTotalProperty, 'value' );
