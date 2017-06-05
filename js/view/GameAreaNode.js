@@ -16,6 +16,7 @@ define( function( require ) {
   var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
@@ -166,19 +167,14 @@ define( function( require ) {
     noExponentKeypadPanel.visible = false;
     exponentKeypadPanel.visible = false;
 
-    // var activeKeypadPanel = new DerivedProperty( [ display.allowExponentsProperty ], function( allowExponentsProperty ) {
+    activeEditableProperty.link( function( newEditableProperty ) {
+      noExponentKeypadPanel.clear();
+      exponentKeypadPanel.clear();
 
-    // } );
-
-    // activeEditableProperty.link( function( newEditableProperty ) {
-
-    // } );
-
-    // // If this changes, we clear and switch to it
-    // area.activePartitionProperty.link( function( newArea ) {
-    //   termKeypadPanel.visible = newArea !== null;
-    //   termKeypadPanel.clear();
-    // } );
+      noExponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.keypadType === KeypadType.CONSTANT;
+      exponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.keypadType === KeypadType.TERM;
+      // TODO: entry for polynomials
+    } );
   }
 
   areaModelCommon.register( 'GameAreaNode', GameAreaNode );

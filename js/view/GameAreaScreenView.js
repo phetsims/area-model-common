@@ -184,7 +184,7 @@ define( function( require ) {
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
-      model.activeEditableProperty = self.display.totalProperty;
+      model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
     } );
     var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalNode );
 

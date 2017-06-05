@@ -30,6 +30,7 @@ define( function( require ) {
     }, options );
 
     // Always start off by editing null, and it should be the default value.
+    //TODO: do this elsewhere?
     if ( options.displayType === DisplayType.EDITABLE ) {
       value = null;
     }

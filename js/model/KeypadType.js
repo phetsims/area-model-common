@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
+  //TODO: rename to EntryType, as we don't use a keypad for polynomials
   var KeypadType = {
     CONSTANT: 'CONSTANT',
     TERM: 'TERM',
