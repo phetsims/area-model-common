@@ -17,6 +17,7 @@ define( function( require ) {
   var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var GameValue = require( 'AREA_MODEL_COMMON/model/GameValue' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var Polynomial = require( 'AREA_MODEL_COMMON/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/model/Term' );
@@ -63,6 +64,7 @@ define( function( require ) {
         property.displayProperty.value = DisplayType.READOUT;
       }
       property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index;
+      property.keypadProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.TERM : KeypadType.CONSTANT;
       return property;
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
@@ -76,6 +78,7 @@ define( function( require ) {
         property.displayProperty.value = DisplayType.READOUT;
       }
       property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index;
+      property.keypadProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.TERM : KeypadType.CONSTANT;
       return property;
     } );
 
@@ -103,6 +106,7 @@ define( function( require ) {
         // Add number of digits from vertical and horizontal
         var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
         property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits;
+        property.keypadProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.POLYNOMIAL : KeypadType.CONSTANT;
 
         return property;
       } );

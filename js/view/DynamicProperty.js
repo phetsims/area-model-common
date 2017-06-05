@@ -4,6 +4,8 @@
  * Creates a Property that does one-way synchronization of values with a swappable Property that itself can change.
  * Handles the case where you need a Property that can switch between acting like multiple other properties.
  *
+ * TODO: Handle the common case where we're grabbing a sub-property via DerivedProperty?
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

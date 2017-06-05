@@ -23,7 +23,7 @@ define( function( require ) {
   DisplayType.VALUES = [
     DisplayType.EDITABLE,
     DisplayType.READOUT,
-    DisplayType.HIDDEN,
+    DisplayType.HIDDEN
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code

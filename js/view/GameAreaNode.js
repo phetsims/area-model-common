@@ -13,18 +13,18 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  // var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
-  // var PartialProductsLabelNode = require( 'AREA_MODEL_COMMON/view/PartialProductsLabelNode' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var TermKeypadPanel = require( 'AREA_MODEL_COMMON/view/TermKeypadPanel' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -32,8 +32,9 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {GenericAreaDisplay} display
+   * @param {Property.<EditableProperty.<Term|TermList|null>|null} activeEditableProperty
    */
-  function GameAreaNode( display ) {
+  function GameAreaNode( display, activeEditableProperty ) {
     var self = this;
 
     Node.call( this );
@@ -113,7 +114,7 @@ define( function( require ) {
         var isActiveProperty = new Property( false ); // TODO
 
         var label = new GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, orientation, false, function() {
-          console.log( orientationName + ' EDIT TODO' );
+          activeEditableProperty.value = valuePropertyProperty.value;
         } );
 
         label[ orientation.opposite.coordinate ] = orientation === Orientation.HORIZONTAL ? -20 : -30;
@@ -135,7 +136,7 @@ define( function( require ) {
         var isActiveProperty = new Property( false ); // TODO
 
         var label = new GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
-          console.log( 'PRODUCT EDIT TODO' );
+          activeEditableProperty.value = valuePropertyProperty.value;
         } );
         self.addChild( label );
 
@@ -144,23 +145,41 @@ define( function( require ) {
       } );
     } );
 
-    // var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
-    // var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
+    var digitsProperty = new DynamicProperty( new DerivedProperty( [ activeEditableProperty ], function( editableProperty ) {
+      return editableProperty ? editableProperty.digitsProperty : new Property( 1 );
+    } ) );
 
-    // // @protected {ModelViewTransform2} - Maps from coordinate range values to view values.
-    // this.modelViewTransform = ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
+    function setActiveTerm( term ) {
+      activeEditableProperty.value.value = term;
+      activeEditableProperty.value = null;
+    }
+    var keypadOptions = {
+      // TODO: dedup with other keypad?
+      x: AreaModelConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
+      centerY: AreaModelConstants.AREA_SIZE / 2
+    };
+    var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, setActiveTerm, keypadOptions );
+    var exponentKeypadPanel = new TermKeypadPanel( digitsProperty, true, setActiveTerm, keypadOptions );
 
-    // // @protected {Array.<PartialProductsLabelNode>}
-    // this.productLabels = area.partitionedAreas.map( function( partitionedArea ) {
-    //   var productLabel = new PartialProductsLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents );
-    //   self.labelLayer.addChild( productLabel );
-    //   return productLabel;
+    this.addChild( noExponentKeypadPanel );
+    this.addChild( exponentKeypadPanel );
+
+    noExponentKeypadPanel.visible = false;
+    exponentKeypadPanel.visible = false;
+
+    // var activeKeypadPanel = new DerivedProperty( [ display.allowExponentsProperty ], function( allowExponentsProperty ) {
+
     // } );
-    // var productLabelListener = this.positionProductLabels.bind( this );
-    // area.partitions.forEach( function( partition ) {
-    //   partition.coordinateRangeProperty.lazyLink( productLabelListener );
+
+    // activeEditableProperty.link( function( newEditableProperty ) {
+
     // } );
-    // productLabelListener();
+
+    // // If this changes, we clear and switch to it
+    // area.activePartitionProperty.link( function( newArea ) {
+    //   termKeypadPanel.visible = newArea !== null;
+    //   termKeypadPanel.clear();
+    // } );
   }
 
   areaModelCommon.register( 'GameAreaNode', GameAreaNode );

@@ -125,12 +125,16 @@ define( function( require ) {
     // @public {Property.<AreaLevel|null>} - The current level
     this.currentLevelProperty = new Property( null );
 
+    // @public {Property.<EditableProperty.<Term|TermList|null>|null}
+    this.activeEditableProperty = new Property( null );
+
     // @public {Property.<AreaChallenge|null>}
     this.currentChallengeProperty = new DynamicProperty( new DerivedProperty( [ this.currentLevelProperty ], function( level ) {
       return level ? level.currentChallengeProperty : nullProperty;
     } ) );
+    this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
-    // @public {Property.<GameState|null>}
+    // @public {Property.<GameState|null>} TODO check if used
     this.stateProperty = new DynamicProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
       return challenge ? challenge.stateProperty : nullProperty;
     } ) );
@@ -144,6 +148,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
+      this.activeEditableProperty.reset();
       this.soundEnabledProperty.reset();
       this.currentLevelProperty.reset();
       this.levels.forEach( function( level ) {

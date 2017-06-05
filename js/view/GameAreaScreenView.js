@@ -167,7 +167,7 @@ define( function( require ) {
       newChallenge.attachDisplay( self.display );
     } );
 
-    var gameAreaNode = new GameAreaNode( this.display );
+    var gameAreaNode = new GameAreaNode( this.display, model.activeEditableProperty );
     this.challengeLayer.addChild( gameAreaNode );
     gameAreaNode.translation = this.layoutBounds.leftTop.plus( AreaModelConstants.GAME_AREA_OFFSET );
 
@@ -184,7 +184,7 @@ define( function( require ) {
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
     var totalNode = new GameEditableLabelNode( new Property( this.display.totalProperty ), new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
-      console.log( 'EDIT TODO' );
+      model.activeEditableProperty = self.display.totalProperty;
     } );
     var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalNode );
 
