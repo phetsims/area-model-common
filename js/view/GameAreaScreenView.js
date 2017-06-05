@@ -183,7 +183,7 @@ define( function( require ) {
     var productNode = new GenericProductNode( this.display.horizontalTotalProperty, this.display.verticalTotalProperty, this.display.allowExponentsProperty );
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
-    var totalNode = new GameEditableLabelNode( this.display.totalProperty, this.display.totalDisplayProperty, this.display.totalDigitsProperty, new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
+    var totalNode = new GameEditableLabelNode( new Property( this.display.totalProperty ), new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       console.log( 'EDIT TODO' );
     } );
     var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalNode );

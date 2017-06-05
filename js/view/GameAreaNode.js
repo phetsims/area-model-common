@@ -13,8 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
-  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
+  var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -107,19 +106,13 @@ define( function( require ) {
         // TODO: better way
         var orientationName = orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical';
 
-        var valueProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ display[ orientationName + 'PartitionValuesProperty' ] ], function( values ) {
-          return values[ partitionIndex ] ? values[ partitionIndex ] : new Property( null );
-        } ) );
-        var displayTypeProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesDisplayProperty' ] ], function( values ) {
-          return values[ partitionIndex ] ? values[ partitionIndex ] : DisplayType.HIDDEN;
-        } );
-        var digitsProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesDigitsProperty' ] ], function( values ) {
-          return values[ partitionIndex ] ? values[ partitionIndex ] : 1;
+        var valuePropertyProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesProperty' ] ], function( values ) {
+          return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
         var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
         var isActiveProperty = new Property( false ); // TODO
 
-        var label = new GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, orientation, false, function() {
+        var label = new GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, orientation, false, function() {
           console.log( orientationName + ' EDIT TODO' );
         } );
 
@@ -134,20 +127,14 @@ define( function( require ) {
 
     _.range( 0, 3 ).forEach( function( horizontalIndex ) {
       _.range( 0, 3 ).forEach( function( verticalIndex ) {
-        var valueProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ display.partialProductsProperty ], function( values ) {
-          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new Property( null );
-        } ) );
-        var displayTypeProperty = new DerivedProperty( [ display.partialProductsDisplayProperty ], function( values ) {
-          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : DisplayType.HIDDEN;
-        } );
-        var digitsProperty = new DerivedProperty( [ display.partialProductsDigitsProperty ], function( values ) {
-          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : 1;
+        var valuePropertyProperty = new DerivedProperty( [ display.partialProductsProperty ], function( values ) {
+          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
         } );
 
         var colorProperty = new Property( 'black' ); // TODO
         var isActiveProperty = new Property( false ); // TODO
 
-        var label = new GameEditableLabelNode( valueProperty, displayTypeProperty, digitsProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
+        var label = new GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
           console.log( 'PRODUCT EDIT TODO' );
         } );
         self.addChild( label );

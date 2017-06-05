@@ -9,8 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaChallengeType = require( 'AREA_MODEL_COMMON/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
+  var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GameArea = require( 'AREA_MODEL_COMMON/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var GameValue = require( 'AREA_MODEL_COMMON/model/GameValue' );
@@ -49,13 +51,32 @@ define( function( require ) {
     this.verticalPartitionSizes = AreaChallenge.generatePartitionTerms( description.verticalValues.length, description.allowExponents );
 
     //TODO doc
-    this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size ) {
-      // TODO: start null if it's editable, OR hook it up if it's dynamic
-      return new Property( size );
+    // TODO: deduplicate
+    this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
+      // TODO: hook it up if it's dynamic
+      var property = new EditableProperty( size );
+      if ( description.horizontalValues[ index ] === GameValue.EDITABLE ) {
+        property.displayProperty.value = DisplayType.EDITABLE;
+        property.value = null;
+      }
+      else {
+        property.displayProperty.value = DisplayType.READOUT;
+      }
+      property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index;
+      return property;
     } );
-    this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size ) {
-      // TODO: start null if it's editable, OR hook it up if it's dynamic
-      return new Property( size );
+    this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
+      // TODO: hook it up if it's dynamic
+      var property = new EditableProperty( size );
+      if ( description.verticalValues[ index ] === GameValue.EDITABLE ) {
+        property.displayProperty.value = DisplayType.EDITABLE;
+        property.value = null;
+      }
+      else {
+        property.displayProperty.value = DisplayType.READOUT;
+      }
+      property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index;
+      return property;
     } );
 
     // @public {Array.<Array.<Term|null>>}
@@ -66,10 +87,24 @@ define( function( require ) {
     } );
 
     // TODO: doc
-    this.partialProductSizeProperties = this.partialProductSizes.map( function( row ) {
-      return row.map( function( size ) {
+    this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
+      return row.map( function( size, horizontalIndex ) {
         // TODO: start null if it's editable, OR hook it up if it's dynamic
-        return new Property( size );
+        var property = new EditableProperty( size );
+
+        if ( description.productValues[ verticalIndex ][ horizontalIndex ] === GameValue.EDITABLE ) {
+          property.displayProperty.value = DisplayType.EDITABLE;
+        }
+        else {
+          // dynamic or given
+          property.displayProperty.value = DisplayType.READOUT;
+        }
+
+        // Add number of digits from vertical and horizontal
+        var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
+        property.digitsProperty.value = ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits;
+
+        return property;
       } );
     } );
 
@@ -91,20 +126,19 @@ define( function( require ) {
      * @param {GenericAreaDisplay} display
      */
     attachDisplay: function( display ) {
-      var self = this;
 
       display.layoutProperty.value = this.description.layout;
       display.allowExponentsProperty.value = this.description.allowExponents;
 
       if ( this.description.totalValue === GameValue.EDITABLE ) {
         display.totalProperty.value = null;
-        display.totalDisplayProperty.value = DisplayType.EDITABLE;
-        display.totalDigitsProperty.value = this.description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length );
+        display.totalProperty.displayProperty.value = DisplayType.EDITABLE;
+        display.totalProperty.digitsProperty.value = this.description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length );
       }
       else {
         display.totalProperty.value = this.total;
-        display.totalDisplayProperty.value = DisplayType.READOUT;
-        // ignore digits
+        display.totalProperty.displayProperty.value = DisplayType.READOUT;
+        display.totalProperty.digitsProperty.value = 0;
       }
 
       if ( this.description.horizontalTotalValue === GameValue.DYNAMIC ) {
@@ -127,44 +161,8 @@ define( function( require ) {
 
       display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
       display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
-      display.horizontalPartitionValuesDisplayProperty.value = this.description.horizontalValues.map( function( gameValue ) {
-        if ( gameValue === GameValue.EDITABLE ) {
-          return DisplayType.EDITABLE;
-        }
-        else {
-          // dynamic or given
-          return DisplayType.READOUT;
-        }
-      } );
-      display.verticalPartitionValuesDisplayProperty.value = this.description.verticalValues.map( function( gameValue ) {
-        if ( gameValue === GameValue.EDITABLE ) {
-          return DisplayType.EDITABLE;
-        }
-        else {
-          // dynamic or given
-          return DisplayType.READOUT;
-        }
-      } );
-      display.horizontalPartitionValuesDigitsProperty.value = _.range( this.horizontalPartitionSizes.length, 0 );
-      display.verticalPartitionValuesDigitsProperty.value = _.range( this.verticalPartitionSizes.length, 0 );
 
       display.partialProductsProperty.value = this.partialProductSizeProperties;
-      display.partialProductsDisplayProperty.value = this.description.productValues.map( function( row ) {
-        return row.map( function( gameValue ) {
-          if ( gameValue === GameValue.EDITABLE ) {
-            return DisplayType.EDITABLE;
-          }
-          else {
-            // dynamic or given
-            return DisplayType.READOUT;
-          }
-        } );
-      } );
-      display.partialProductsDigitsProperty.value = _.range( this.verticalPartitionSizes.length, 0 ).map( function( verticalDigits ) {
-        return _.range( self.horizontalPartitionSizes.length, 0 ).map( function( horizontalDigits ) {
-          return verticalDigits + horizontalDigits;
-        } );
-      } );
 
       // TODO
     }

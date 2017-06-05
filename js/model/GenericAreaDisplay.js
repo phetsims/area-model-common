@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
+  var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -36,44 +36,17 @@ define( function( require ) {
 
     // @public {Property.<Array.<Term|null>>} - Value for the partition sizes. Inner values may be changed by
     //                                          the view client.
-    this.horizontalPartitionValuesProperty = new Property( [ new Property( null ), new Property( null ) ] );
-    this.verticalPartitionValuesProperty = new Property( [ new Property( null ), new Property( null ) ] );
-
-    // @public {Property.<Array.<DisplayType>>} - Value for the partition sizes. Inner values may be changed by
-    //                                          the view client.
-    this.horizontalPartitionValuesDisplayProperty = new Property( [ DisplayType.HIDDEN, DisplayType.HIDDEN ] );
-    this.verticalPartitionValuesDisplayProperty = new Property( [ DisplayType.HIDDEN, DisplayType.HIDDEN ] );
-
-    // @public {Property.<Array.<number>>} - TODO doc
-    this.horizontalPartitionValuesDigitsProperty = new Property( [ 2, 1 ] );
-    this.verticalPartitionValuesDigitsProperty = new Property( [ 2, 1 ] );
+    this.horizontalPartitionValuesProperty = new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] );
+    this.verticalPartitionValuesProperty = new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] );
 
     // @public {Property.<Array.<Array.<Term|null>>} TODO doc
     this.partialProductsProperty = new Property( [
-      [ new Property( null ), new Property( null ) ],
-      [ new Property( null ), new Property( null ) ]
-    ] );
-
-    // @public {Property.<Array.<Array.<DisplayType>>} TODO doc
-    this.partialProductsDisplayProperty = new Property( [
-      [ DisplayType.HIDDEN, DisplayType.HIDDEN ],
-      [ DisplayType.HIDDEN, DisplayType.HIDDEN ]
-    ] );
-
-    // @public {Property.<Array.<Array.<DisplayType>>} TODO doc
-    this.partialProductsDigitsProperty = new Property( [
-      [ 4, 3 ],
-      [ 3, 2 ]
+      [ new EditableProperty( null ), new EditableProperty( null ) ],
+      [ new EditableProperty( null ), new EditableProperty( null ) ]
     ] );
 
     // @public {Property.<TermList|null>} TODO doc
-    this.totalProperty = new Property( null );
-
-    // @public {Property.<DisplayType>} TODO doc
-    this.totalDisplayProperty = new Property( DisplayType.READOUT ); // TODO: rename things like this DisplayTypeProperty?
-
-    // @public {Property.<number>} TODO doc
-    this.totalDigitsProperty = new Property( 5 );
+    this.totalProperty = new EditableProperty( null );
   }
 
   areaModelCommon.register( 'GenericAreaDisplay', GenericAreaDisplay );

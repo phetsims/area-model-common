@@ -13,7 +13,7 @@ define( function( require ) {
 
   var AreaChallengeType = {
     NUMBERS: 'NUMBERS',
-    Variables: 'Variables'
+    VARIABLES: 'VARIABLES'
   };
 
   areaModelCommon.register( 'AreaChallengeType', AreaChallengeType );
@@ -21,7 +21,7 @@ define( function( require ) {
   // All values the enumeration can take.
   AreaChallengeType.VALUES = [
     AreaChallengeType.NUMBERS,
-    AreaChallengeType.Variables
+    AreaChallengeType.VARIABLES
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code
