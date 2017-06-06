@@ -13,10 +13,12 @@ define( function( require ) {
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/model/AreaChallengeType' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
+  var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -143,6 +145,63 @@ define( function( require ) {
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );
 
   return inherit( Object, GameAreaModel, {
+    // TODO: doc... move to challenge?
+    check: function() {
+      // TODO: consider putting this in the challenge?
+      var challenge = this.currentChallengeProperty.value;
+
+      // Sanity check (multitouch?)
+      if ( challenge === null ) { return; }
+
+      var isCorrect = challenge.isCorrect();
+      var currentState = challenge.stateProperty.value;
+
+      if ( currentState === GameState.FIRST_ATTEMPT ) {
+        if ( isCorrect ) {
+          this.currentLevelProperty.value.scoreProperty.value += 2;
+        }
+        challenge.stateProperty.value = isCorrect ? GameState.CORRECT_ANSWER : GameState.WRONG_FIRST_ANSWER;
+      }
+      else if ( currentState === GameState.SECOND_ATTEMPT ) {
+        if ( isCorrect ) {
+          this.currentLevelProperty.value.scoreProperty.value += 1;
+        }
+        challenge.stateProperty.value = isCorrect ? GameState.CORRECT_ANSWER : GameState.WRONG_SECOND_ANSWER;
+      }
+      else {
+        throw new Error( 'How is check possible here?' );
+      }
+    },
+
+    // TODO: doc, cleanup.. move to challenge?
+    tryAgain: function() {
+      if ( this.currentChallengeProperty.value ) {
+        this.currentChallengeProperty.value.stateProperty.value = GameState.SECOND_ATTEMPT;
+      }
+    },
+
+    // TODO: doc
+    next: function() {
+      // TODO: simplify, move to challenge
+      if ( this.currentLevelProperty.value ) {
+        var level = this.currentLevelProperty.value;
+
+        if ( level.challengeIndexProperty.value === AreaModelConstants.NUM_CHALLENGES - 1 ) {
+          level.reset();
+        }
+        else {
+          level.challengeIndexProperty.value += 1;
+        }
+      }
+    },
+
+    // TODO: DOC
+    showSolution: function() {
+      if ( this.currentChallengeProperty.value ) {
+        this.currentChallengeProperty.value.stateProperty.value = GameState.SHOW_SOLUTION;
+      }
+    },
+
     /**
      * Returns the model to its initial state.
      * @public

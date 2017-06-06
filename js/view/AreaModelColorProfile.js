@@ -125,7 +125,7 @@ define( function( require ) {
     numbersIconBackground: { default: new Color( '#b26fac' ) },
     variablesIconBackground: { default: new Color( '#6f9fb2' ) },
 
-    checkButtonBackground: { default: new Color( 241, 232, 0 ) }
+    gameButtonBackground: { default: new Color( 241, 232, 0 ) }
 
   }, [ 'default' ] );
 

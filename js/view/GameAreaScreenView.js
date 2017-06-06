@@ -20,6 +20,7 @@ define( function( require ) {
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/view/GameAreaNode' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
+  var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/model/GenericAreaDisplay' );
   var GenericProductNode = require( 'AREA_MODEL_COMMON/view/GenericProductNode' );
@@ -46,6 +47,9 @@ define( function( require ) {
   var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var checkString = require( 'string!VEGAS/check' );
+  var tryAgainString = require( 'string!VEGAS/tryAgain' );
+  var nextString = require( 'string!VEGAS/next' );
+  var showAnswerString = require( 'string!VEGAS/showAnswer' );
 
   /**
    * @constructor
@@ -225,23 +229,65 @@ define( function( require ) {
     } );
     this.challengeLayer.addChild( panelBox );
 
+    //TODO: button deduplication
+    var buttonLocationOptions = {
+      centerX: panelBox.centerX,
+      top: panelBox.bottom + 80
+    };
     var checkButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( checkString, {
         font: AreaModelConstants.BUTTON_FONT
       } ),
       listener: function() {
-        // sanity check!
-        if ( model.currentChallengeProperty.value !== null ) {
-          console.log( model.currentChallengeProperty.value.isCorrect() );
-        }
+        model.check();
       }
     }, {
-      baseColor: AreaModelColorProfile.checkButtonBackgroundProperty
-    }, {
-      centerX: panelBox.centerX,
-      top: panelBox.bottom + 50
-    } );
+      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+    }, buttonLocationOptions );
     this.challengeLayer.addChild( checkButton );
+
+    var tryAgainButton = new MutableOptionsNode( RectangularPushButton, [], {
+      content: new Text( tryAgainString, {
+        font: AreaModelConstants.BUTTON_FONT
+      } ),
+      listener: function() {
+        model.tryAgain();
+      }
+    }, {
+      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+    }, buttonLocationOptions );
+    this.challengeLayer.addChild( tryAgainButton );
+
+    var nextButton = new MutableOptionsNode( RectangularPushButton, [], {
+      content: new Text( nextString, {
+        font: AreaModelConstants.BUTTON_FONT
+      } ),
+      listener: function() {
+        model.next();
+      }
+    }, {
+      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+    }, buttonLocationOptions );
+    this.challengeLayer.addChild( nextButton );
+
+    var showSolutionButton = new MutableOptionsNode( RectangularPushButton, [], {
+      content: new Text( showAnswerString, { // TODO: show solution or answer
+        font: AreaModelConstants.BUTTON_FONT
+      } ),
+      listener: function() {
+        model.showSolution();
+      }
+    }, {
+      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+    }, buttonLocationOptions );
+    this.challengeLayer.addChild( showSolutionButton );
+
+    model.stateProperty.link( function( state ) {
+      checkButton.visible = state === GameState.FIRST_ATTEMPT || state === GameState.SECOND_ATTEMPT;
+      tryAgainButton.visible = state === GameState.WRONG_FIRST_ANSWER;
+      nextButton.visible = state === GameState.CORRECT_ANSWER || state === GameState.SHOW_SOLUTION;
+      showSolutionButton.visible = state === GameState.WRONG_SECOND_ANSWER;
+    } );
   }
 
   areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );

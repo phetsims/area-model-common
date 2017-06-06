@@ -26,7 +26,7 @@ define( function( require ) {
     WRONG_FIRST_ANSWER: 'WRONG_FIRST_ANSWER',
 
     // "show solution" button, sad face (editable?) - no trigger on edit?
-    WRONG_SECOND_ANSWER: 'WRONG_FIRST_ANSWER',
+    WRONG_SECOND_ANSWER: 'WRONG_SECOND_ANSWER',
 
     // "next" button, NOT editable, replaced with a solution
     SHOW_SOLUTION: 'SHOW_SOLUTION'
