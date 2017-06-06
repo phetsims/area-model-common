@@ -22,6 +22,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/model/Term' );
 
+  //TOOD: Move to GameValue or DisplayType?
   var gameToDisplayMap = {};
   gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
   gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
