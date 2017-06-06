@@ -164,25 +164,34 @@ define( function( require ) {
     isCorrect: function() {
       var self = this;
 
+      // Easier to assume in code these are null (would mean not complete, so not correct)
+      if ( this.horizontalTotalProperty.value === null ||
+           this.verticalTotalProperty.value === null ||
+           this.totalProperty.value === null ) {
+        return false;
+      }
+
+      // TODO: replace with returns structures
       var correct = true;
 
       // Check partial products
-      this.horizontalPartitionSizeProperties.forEach( function( horizontalSize, horizontalIndex ) {
-        self.verticalPartitionSizeProperties.forEach( function( verticalSize, verticalIndex ) {
+      this.horizontalPartitionSizeProperties.forEach( function( horizontalSizeProperty, horizontalIndex ) {
+        self.verticalPartitionSizeProperties.forEach( function( verticalSizeProperty, verticalIndex ) {
           var partialProductSize = self.partialProductSizeProperties[ verticalIndex ][ horizontalIndex ].value;
           correct = correct &&
-                    ( horizontalSize !== null ) &&
-                    ( verticalSize !== null ) &&
-                    horizontalSize.times( verticalSize ).equals( partialProductSize );
+                    ( partialProductSize !== null ) &&
+                    ( horizontalSizeProperty.value !== null ) &&
+                    ( verticalSizeProperty.value !== null ) &&
+                    horizontalSizeProperty.value.times( verticalSizeProperty.value ).equals( partialProductSize );
         } );
       } );
 
       // Check total with dimension sums (should catch total issues, or if there are some partition size issues)
+      var totalPolynomial = this.totalProperty.value instanceof Polynomial ?
+                            this.totalProperty.value :
+                            new Polynomial( [ this.totalProperty.value ] );
       correct = correct &&
-                ( this.horizontalTotalProperty.value !== null ) &&
-                ( this.verticalTotalProperty.value !== null ) &&
-                ( this.totalProperty.value !== null ) &&
-                this.horizontalTotalProperty.value.times( this.verticalTotalProperty.value ).equals( this.totalProperty.value );
+                this.horizontalTotalProperty.value.times( this.verticalTotalProperty.value ).equals( totalPolynomial );
 
       //TODO: dedup with above
       var horizontalTotal = new Polynomial( _.map( this.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {

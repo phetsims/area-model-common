@@ -39,7 +39,7 @@ define( function( require ) {
 
     var readoutText = new RichText( '0', { font: readoutFont } );
     polynomialProperty.link( function( polynomial ) {
-      readoutText.text = polynomial ? polynomial.toRichString() : '?';
+      readoutText.text = polynomial ? polynomial.toRichString( false ) : '?';
     } );
 
     var constantProperty = new Property( 0 );

@@ -33,6 +33,7 @@ define( function( require ) {
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 20 ),
     LAYOUT_FONT: new PhetFont( 22 ),
+    BUTTON_FONT: new PhetFont( 20 ),
 
     AREA_SIZE: 350,
 

@@ -156,7 +156,7 @@ define( function( require ) {
     var keypadOptions = {
       // TODO: dedup with other keypad?
       x: AreaModelConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
-      centerY: AreaModelConstants.AREA_SIZE / 2
+      top: 0
     };
     var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, setActiveTerm, keypadOptions );
     var exponentKeypadPanel = new TermKeypadPanel( digitsProperty, true, setActiveTerm, keypadOptions );

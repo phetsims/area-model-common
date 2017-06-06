@@ -45,6 +45,7 @@ define( function( require ) {
   // strings
   var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
+  var checkString = require( 'string!VEGAS/check' );
 
   /**
    * @constructor
@@ -223,6 +224,25 @@ define( function( require ) {
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
     } );
     this.challengeLayer.addChild( panelBox );
+
+    var checkButton = new MutableOptionsNode( RectangularPushButton, [], {
+      content: new Text( checkString, {
+        font: AreaModelConstants.BUTTON_FONT
+      } ),
+      listener: function() {
+        // sanity check!
+        if ( model.currentChallengeProperty.value !== null ) {
+          console.log( model.currentChallengeProperty.value.isCorrect() );
+        }
+        console.log( 'TODO check' );
+      }
+    }, {
+      baseColor: AreaModelColorProfile.checkButtonBackgroundProperty
+    }, {
+      centerX: panelBox.centerX,
+      top: panelBox.bottom + 50
+    } );
+    this.challengeLayer.addChild( checkButton );
   }
 
   areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
