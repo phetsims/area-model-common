@@ -27,19 +27,22 @@ define( function( require ) {
    * TODO: options object?
    *
    * @param {Property.<EditableProperty.<Term|TermList|null>>} valuePropertyProperty
+   * @param {Property.<EditableProperty.<Term|TermList|null>>} activeEditableProperty
    * @param {Property.<Color>} colorProperty
-   * @param {Property.<boolean>} isActiveProperty
    * @param {Property.<boolean>} allowExponentsProperty
    * @param {Orientation} orientation
    * @param {boolean} canBePolynomial
    * @param {function} editCallback - Called when editing is triggered
    */
-  function GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
+  function GameEditableLabelNode( valuePropertyProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
     Node.call( this );
 
     var valueProperty = new DynamicBidirectionalProperty( valuePropertyProperty );
     var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
       return valueProperty.digits;
+    } );
+    var isActiveProperty = new DerivedProperty( [ valuePropertyProperty, activeEditableProperty ], function( valueProperty, activeProperty ) {
+      return valueProperty === activeProperty;
     } );
 
     // TODO: support font switching in different contexts?

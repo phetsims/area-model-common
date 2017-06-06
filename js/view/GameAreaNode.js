@@ -111,9 +111,8 @@ define( function( require ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
         var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
-        var isActiveProperty = new Property( false ); // TODO
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, orientation, false, function() {
+        var label = new GameEditableLabelNode( valuePropertyProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
           activeEditableProperty.value = valuePropertyProperty.value;
         } );
 
@@ -133,9 +132,8 @@ define( function( require ) {
         } );
 
         var colorProperty = new Property( 'black' ); // TODO
-        var isActiveProperty = new Property( false ); // TODO
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, colorProperty, isActiveProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
+        var label = new GameEditableLabelNode( valuePropertyProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
           activeEditableProperty.value = valuePropertyProperty.value;
         } );
         self.addChild( label );

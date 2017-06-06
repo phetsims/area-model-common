@@ -199,7 +199,7 @@ define( function( require ) {
     var productNode = new GenericProductNode( this.display.horizontalTotalProperty, this.display.verticalTotalProperty, this.display.allowExponentsProperty );
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
-    var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
+    var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
     } );
     var polynomialEditNode = new PolynomialEditNode( new DynamicBidirectionalProperty( this.display.totalPropertyProperty ) );
