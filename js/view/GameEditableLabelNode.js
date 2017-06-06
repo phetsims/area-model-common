@@ -14,6 +14,8 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/view/DynamicProperty' );
+  var HighlightType = require( 'AREA_MODEL_COMMON/model/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var RichText = require( 'SCENERY_PHET/RichText' );
@@ -41,6 +43,9 @@ define( function( require ) {
     var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
       return valueProperty.digits;
     } );
+    var highlightProperty = new DynamicProperty( new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
+      return valueProperty.highlightProperty;
+    } ) );
     var isActiveProperty = new DerivedProperty( [ valuePropertyProperty, activeEditableProperty ], function( valueProperty, activeProperty ) {
       return valueProperty === activeProperty;
     } );
@@ -61,7 +66,17 @@ define( function( require ) {
 
     // TODO: coloring
     var textColorProperty = colorProperty;
-    var borderColorProperty = colorProperty;
+    var borderColorProperty = new DerivedProperty( [ highlightProperty ], function( highlight ) {
+      if ( highlight === HighlightType.NORMAL ) {
+        return 'black'; // TODO: color profile?
+      }
+      else if ( highlight === HighlightType.DIRTY ) {
+        return 'blue'; // TODO: color profile?
+      }
+      else {
+        return 'red'; // TODO: color profile?
+      }
+    } );
     var termEditNode = new TermEditNode( orientation, valueProperty, textColorProperty, borderColorProperty, isActiveProperty, digitsProperty, allowExponentsProperty, editCallback );
     this.addChild( termEditNode );
 

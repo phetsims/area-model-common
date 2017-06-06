@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
+  var HighlightType = require( 'AREA_MODEL_COMMON/model/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var Property = require( 'AXON/Property' );
@@ -49,6 +50,9 @@ define( function( require ) {
 
     // @public {number}
     this.digits = options.digits;
+
+    // @public {Property.<HighlightType>} - TODO doc
+    this.highlightProperty = new Property( HighlightType.DIRTY );
   }
 
   areaModelCommon.register( 'EditableProperty', EditableProperty );

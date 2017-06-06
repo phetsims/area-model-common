@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
+  var HighlightType = require( 'AREA_MODEL_COMMON/model/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -149,6 +150,7 @@ define( function( require ) {
 
     function setActiveTerm( term ) {
       activeEditableProperty.value.value = term;
+      activeEditableProperty.value.highlightProperty.value = HighlightType.NORMAL;
       activeEditableProperty.value = null;
     }
     var keypadOptions = {
