@@ -234,7 +234,6 @@ define( function( require ) {
         if ( model.currentChallengeProperty.value !== null ) {
           console.log( model.currentChallengeProperty.value.isCorrect() );
         }
-        console.log( 'TODO check' );
       }
     }, {
       baseColor: AreaModelColorProfile.checkButtonBackgroundProperty
