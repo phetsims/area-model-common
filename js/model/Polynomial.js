@@ -43,6 +43,25 @@ define( function( require ) {
   areaModelCommon.register( 'Polynomial', Polynomial );
 
   return inherit( TermList, Polynomial, {
+    // TODO: doc
+    getCoefficient: function( power ) {
+      var term = _.find( this.terms, function( term ) {
+        return term.power === power;
+      } );
+      if ( term ) {
+        return term.coefficient;
+      }
+      else {
+        return 0;
+      }
+    },
+
+    // TODO: doc
+    withCoefficient: function( coefficient, power ) {
+      var currentCoefficient = this.getCoefficient( power );
+      return new Polynomial( this.terms.concat( [ new Term( coefficient - currentCoefficient, power ) ] ) );
+    },
+
     /**
      * Addition of polynomials.
      * @public

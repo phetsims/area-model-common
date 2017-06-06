@@ -24,9 +24,13 @@ define( function( require ) {
    */
   function EditableProperty( value, options ) {
     options = _.extend( {
+      // Property option
+      useDeepEquality: true,
+
+      // Our options
       displayType: DisplayType.HIDDEN,
       keypadType: KeypadType.CONSTANT,
-      digits: 0
+      digits: 0,
     }, options );
 
     // Always start off by editing null, and it should be the default value.

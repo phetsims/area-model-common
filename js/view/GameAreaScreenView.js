@@ -15,6 +15,8 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
+  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/view/GameAreaNode' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
@@ -24,10 +26,12 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/model/Orientation' );
   var Panel = require( 'SUN/Panel' );
+  var PolynomialEditNode = require( 'AREA_MODEL_COMMON/view/PolynomialEditNode' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -190,7 +194,22 @@ define( function( require ) {
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, new Property( 'black' ), new Property( false ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
     } );
-    var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalNode );
+    var polynomialEditNode = new PolynomialEditNode( new DynamicBidirectionalProperty( this.display.totalPropertyProperty ) );
+
+    var totalContainer = new Node();
+    //TODO: simplify
+    this.display.totalPropertyProperty.link( function( totalProperty ) {
+      console.log( totalProperty.keypadType );
+      if ( totalProperty.displayType === DisplayType.EDITABLE &&
+           totalProperty.keypadType === KeypadType.POLYNOMIAL ) {
+        totalContainer.children = [ polynomialEditNode ];
+      }
+      else {
+        totalContainer.children = [ totalNode ];
+      }
+    } );
+
+    var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
 
     // TODO... hmm? Improve this?
     this.throwaway = new AlignBox( new HStrut( AreaModelConstants.PANEL_INTERIOR_MAX ), { group: panelAlignGroup } );
