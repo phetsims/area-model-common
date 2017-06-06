@@ -161,6 +161,58 @@ define( function( require ) {
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
 
   return inherit( Object, AreaChallenge, {
+    getIncorrectEditableProperties: function() {
+      var incorrectProperties = [];
+
+      // Check partial products
+      this.horizontalPartitionSizeProperties.forEach( function( horizontalSizeProperty, horizontalIndex ) {
+        self.verticalPartitionSizeProperties.forEach( function( verticalSizeProperty, verticalIndex ) {
+          var partialProductProperty = self.partialProductSizeProperties[ verticalIndex ][ horizontalIndex ];
+
+          // Invalidate the partial product AND partition sizes if there is an issue
+          if ( partialProductProperty.value === null ||
+               horizontalSizeProperty.value === null ||
+               verticalSizeProperty.value === null ||
+               !horizontalSizeProperty.value.times( verticalSizeProperty.value ).equals( partialProductProperty.value ) ) {
+            incorrectProperties.push( partialProductProperty, horizontalSizeProperty, verticalSizeProperty );
+          }
+        } );
+      } );
+
+      // Check total with dimension sums (should catch total issues, or if there are some partition size issues)
+      if ( this.totalProperty.value === null ) {
+        incorrectProperties.push( this.totalProperty );
+      }
+      else {
+        var totalPolynomial = this.totalProperty.value instanceof Polynomial ?
+                              this.totalProperty.value :
+                              new Polynomial( [ this.totalProperty.value ] );
+        if ( !this.horizontalTotalProperty.value.times( this.verticalTotalProperty.value ).equals( totalPolynomial ) ) {
+          incorrectProperties.push( this.totalProperty );
+          //TODO: how would we figure out which partitions are the issue here?
+        }
+      }
+
+      // //TODO: dedup with above
+      // var horizontalTotal = new Polynomial( _.map( this.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
+      //   return term !== null;
+      // } ) );
+      // var verticalTotal = new Polynomial( _.map( this.verticalPartitionSizeProperties, 'value' ).filter( function( term ) {
+      //   return term !== null;
+      // } ) );
+
+      // // Check partition totals
+      // correct = correct &&
+      //           ( horizontalTotal !== null ) &&
+      //           ( verticalTotal !== null ) &&
+      //           horizontalTotal.equals( this.horizontalTotalProperty.value ) &&
+      //           verticalTotal.equals( this.verticalTotalProperty.value );
+
+      return _.uniq( incorrectProperties ).filter( function( property ) {
+        return property.displayType === DisplayType.EDITABLE;
+      } );
+    },
+
     // TODO: doc
     isCorrect: function() {
       var self = this;
