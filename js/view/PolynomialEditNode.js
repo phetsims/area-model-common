@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
@@ -46,23 +47,31 @@ define( function( require ) {
     var xSquaredProperty = new Property( 0 );
 
     polynomialProperty.link( function( polynomial ) {
-      if ( polynomial === null ) {
-        polynomialProperty.value = new Polynomial( [] ); // zero
-      }
-      else {
-        constantProperty.value = polynomial.getCoefficient( 0 );
-        xProperty.value = polynomial.getCoefficient( 1 );
-        xSquaredProperty.value = polynomial.getCoefficient( 2 );
+      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
+        if ( polynomial === null ) {
+          polynomialProperty.value = new Polynomial( [] ); // zero
+        }
+        else {
+          constantProperty.value = polynomial.getCoefficient( 0 );
+          xProperty.value = polynomial.getCoefficient( 1 );
+          xSquaredProperty.value = polynomial.getCoefficient( 2 );
+        }
       }
     } );
     constantProperty.lazyLink( function( value ) {
-      polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 0 );
+      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
+        polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 0 );
+      }
     } );
     xProperty.lazyLink( function( value ) {
-      polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 1 );
+      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
+        polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 1 );
+      }
     } );
     xSquaredProperty.lazyLink( function( value ) {
-      polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 2 );
+      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
+        polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 2 );
+      }
     } );
 
     var rangeProperty = new Property( new Range( -99, 99 ) ); // TODO: -81,81?
