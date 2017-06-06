@@ -85,7 +85,7 @@ define( function( require ) {
     var digitCountProperty = new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
       return activePartition === null ? 1 : activePartition.digitCount;
     } );
-    var termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, function( term ) {
+    var termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, true, function( term ) {
       // Update the size of the partition.
       area.activePartitionProperty.value.sizeProperty.value = term;
 

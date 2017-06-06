@@ -37,6 +37,12 @@ define( function( require ) {
     [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
     [ new Key( '\u002b/\u2212', Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
   ];
+  var noNegativeLayout = [
+    [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
+    [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
+    [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
+    [ null, new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
+  ];
   var exponentLayout = noExponentLayout.concat( [
     [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.XSQUARED ), new Key( 'x', Keys.X ) ],
   ] );
@@ -50,12 +56,14 @@ define( function( require ) {
    * @param {function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
    * @param {Object} [options]
    */
-  function TermKeypadPanel( digitCountProperty, allowExponents, enterCallback, nodeOptions ) {
+  function TermKeypadPanel( digitCountProperty, allowExponents, allowNegative, enterCallback, nodeOptions ) {
+    assert && assert( allowNegative || !allowExponents );
+
     // Handles logic for keypresses and conversion to strings/Terms.
     var termAccumulator = new TermAccumulator( digitCountProperty );
 
     // @private {Keypad}
-    this.keypad = new Keypad( allowExponents ? exponentLayout : noExponentLayout, {
+    this.keypad = new Keypad( allowExponents ? exponentLayout : ( allowNegative ? noExponentLayout : noNegativeLayout ), {
       accumulator: termAccumulator
     } );
 

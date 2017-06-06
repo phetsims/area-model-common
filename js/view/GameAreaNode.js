@@ -158,8 +158,8 @@ define( function( require ) {
       x: AreaModelConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
       top: 0
     };
-    var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, setActiveTerm, keypadOptions );
-    var exponentKeypadPanel = new TermKeypadPanel( digitsProperty, true, setActiveTerm, keypadOptions );
+    var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, false, setActiveTerm, keypadOptions );
+    var exponentKeypadPanel = new TermKeypadPanel( digitsProperty, true, true, setActiveTerm, keypadOptions );
 
     this.addChild( noExponentKeypadPanel );
     this.addChild( exponentKeypadPanel );
