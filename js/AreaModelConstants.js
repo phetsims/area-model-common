@@ -34,6 +34,7 @@ define( function( require ) {
     KEYPAD_READOUT_FONT: new PhetFont( 20 ),
     LAYOUT_FONT: new PhetFont( 22 ),
     BUTTON_FONT: new PhetFont( 20 ),
+    SCORE_INCREASE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
 
     AREA_SIZE: 350,
 
