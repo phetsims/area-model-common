@@ -16,7 +16,6 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/model/DisplayType' );
-  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/view/GameAreaNode' );
@@ -206,7 +205,7 @@ define( function( require ) {
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
     } );
-    var polynomialEditNode = new PolynomialEditNode( new DynamicBidirectionalProperty( this.display.totalPropertyProperty ) );
+    var polynomialEditNode = new PolynomialEditNode( this.display.totalPropertyProperty );
 
     var totalContainer = new Node();
     //TODO: simplify

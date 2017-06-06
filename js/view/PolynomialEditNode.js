@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/AreaModelConstants' );
+  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/view/DynamicBidirectionalProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadType = require( 'AREA_MODEL_COMMON/model/KeypadType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
@@ -27,9 +28,9 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Property.<Polynomial|null>} polynomialProperty
+   * @param {Property.<EditableProperty.<Polynomial|term|null>|null>} polynomialPropertyProperty - Ignored if it has another keypadType
    */
-  function PolynomialEditNode( polynomialProperty ) {
+  function PolynomialEditNode( polynomialPropertyProperty ) {
     // TODO: consider only showing relative terms?
     // TODO: check to make sure a polynomial isn't out of range?
 
@@ -38,7 +39,7 @@ define( function( require ) {
     var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT; // TODO: bigger
 
     var readoutText = new RichText( '0', { font: readoutFont } );
-    polynomialProperty.link( function( polynomial ) {
+    new DynamicBidirectionalProperty( polynomialPropertyProperty ).link( function( polynomial ) {
       readoutText.text = polynomial ? polynomial.toRichString( false ) : '?';
     } );
 
@@ -46,10 +47,17 @@ define( function( require ) {
     var xProperty = new Property( 0 );
     var xSquaredProperty = new Property( 0 );
 
-    polynomialProperty.link( function( polynomial ) {
+    polynomialPropertyProperty.link( function( polynomialProperty ) {
+      if ( polynomialProperty === null ) { return; }
+
+      var polynomial = polynomialProperty.value;
+
       if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
         if ( polynomial === null ) {
           polynomialProperty.value = new Polynomial( [] ); // zero
+          constantProperty.value = 0;
+          xProperty.value = 0;
+          xSquaredProperty.value = 0;
         }
         else {
           constantProperty.value = polynomial.getCoefficient( 0 );
@@ -58,19 +66,20 @@ define( function( require ) {
         }
       }
     } );
+    //TODO: cleanup
     constantProperty.lazyLink( function( value ) {
-      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
-        polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 0 );
+      if ( polynomialPropertyProperty.value && polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL ) {
+        polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 0 );
       }
     } );
     xProperty.lazyLink( function( value ) {
-      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
-        polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 1 );
+      if ( polynomialPropertyProperty.value && polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL ) {
+        polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 1 );
       }
     } );
     xSquaredProperty.lazyLink( function( value ) {
-      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
-        polynomialProperty.value = polynomialProperty.value.withCoefficient( value, 2 );
+      if ( polynomialPropertyProperty.value && polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL ) {
+        polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 2 );
       }
     } );
 
