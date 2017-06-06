@@ -199,7 +199,6 @@ define( function( require ) {
     var totalContainer = new Node();
     //TODO: simplify
     this.display.totalPropertyProperty.link( function( totalProperty ) {
-      console.log( totalProperty.keypadType );
       if ( totalProperty.displayType === DisplayType.EDITABLE &&
            totalProperty.keypadType === KeypadType.POLYNOMIAL ) {
         totalContainer.children = [ polynomialEditNode ];

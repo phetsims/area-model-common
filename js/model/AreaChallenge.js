@@ -61,22 +61,18 @@ define( function( require ) {
     //TODO doc
     // TODO: deduplicate
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
-      var property = new EditableProperty( size, {
+      return new EditableProperty( size, {
         displayType: gameToDisplayMap[ description.horizontalValues[ index ] ],
         keypadType: mainKeypadType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
       } );
-      // TODO: hook it up if it's dynamic
-      return property;
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
-      var property = new EditableProperty( size, {
+      return new EditableProperty( size, {
         displayType: gameToDisplayMap[ description.verticalValues[ index ] ],
         keypadType: mainKeypadType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
       } );
-      // TODO: hook it up if it's dynamic
-      return property;
     } );
 
     // @public {Array.<Array.<Term|null>>}
@@ -90,12 +86,27 @@ define( function( require ) {
     this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
       return row.map( function( size, horizontalIndex ) {
         var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
+        var gameValue = description.productValues[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
-          displayType: gameToDisplayMap[ description.productValues[ verticalIndex ][ horizontalIndex ] ],
+          displayType: gameToDisplayMap[ gameValue ],
           keypadType: mainKeypadType,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits
         } );
-        // TODO: hook it up if it's dynamic
+        // Link up if dynamic
+        if ( gameValue === GameValue.DYNAMIC ) {
+          var properties = [
+            self.horizontalPartitionSizeProperties[ horizontalIndex ],
+            self.verticalPartitionSizeProperties[ verticalIndex ]
+          ];
+          Property.multilink( properties, function( horizontal, vertical ) {
+            if ( horizontal === null || vertical === null ) {
+              property.value = null;
+            }
+            else {
+              property.value = horizontal.times( vertical );
+            }
+          } );
+        }
         return property;
       } );
     } );
@@ -149,6 +160,11 @@ define( function( require ) {
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
 
   return inherit( Object, AreaChallenge, {
+    // TODO: doc
+    isCorrect: function() {
+      return true; // TODO
+    },
+
     /**
      * Modifies the given display so that it will be connected to this challenge.
      * @public
