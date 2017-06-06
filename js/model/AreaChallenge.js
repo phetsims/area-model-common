@@ -162,7 +162,44 @@ define( function( require ) {
   return inherit( Object, AreaChallenge, {
     // TODO: doc
     isCorrect: function() {
-      return true; // TODO
+      var self = this;
+
+      var correct = true;
+
+      // Check partial products
+      this.horizontalPartitionSizeProperties.forEach( function( horizontalSize, horizontalIndex ) {
+        self.verticalPartitionSizeProperties.forEach( function( verticalSize, verticalIndex ) {
+          var partialProductSize = self.partialProductSizeProperties[ verticalIndex ][ horizontalIndex ].value;
+          correct = correct &&
+                    ( horizontalSize !== null ) &&
+                    ( verticalSize !== null ) &&
+                    horizontalSize.times( verticalSize ).equals( partialProductSize );
+        } );
+      } );
+
+      // Check total with dimension sums (should catch total issues, or if there are some partition size issues)
+      correct = correct &&
+                ( this.horizontalTotalProperty.value !== null ) &&
+                ( this.verticalTotalProperty.value !== null ) &&
+                ( this.totalProperty.value !== null ) &&
+                this.horizontalTotalProperty.value.times( this.verticalTotalProperty.value ).equals( this.totalProperty.value );
+
+      //TODO: dedup with above
+      var horizontalTotal = new Polynomial( _.map( this.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
+        return term !== null;
+      } ) );
+      var verticalTotal = new Polynomial( _.map( this.verticalPartitionSizeProperties, 'value' ).filter( function( term ) {
+        return term !== null;
+      } ) );
+
+      // Check partition totals
+      correct = correct &&
+                ( horizontalTotal !== null ) &&
+                ( verticalTotal !== null ) &&
+                horizontalTotal.equals( this.horizontalTotalProperty.value ) &&
+                verticalTotal.equals( this.verticalTotalProperty.value );
+
+      return correct;
     },
 
     /**
