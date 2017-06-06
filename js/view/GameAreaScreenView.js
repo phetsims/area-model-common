@@ -20,6 +20,7 @@ define( function( require ) {
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/view/GameAreaNode' );
+  var GameAudio = require( 'AREA_MODEL_COMMON/view/GameAudio' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/model/GameState' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/view/GameStatusBar' );
@@ -72,6 +73,9 @@ define( function( require ) {
 
     // @private {Node} - The "right" half of the sliding layer, will slide into view when the user selects a level
     this.challengeLayer = new Node();
+
+    // @private {GameAudio} - Responsible for all audio
+    this.audio = new GameAudio( model );
 
     var showingLeftProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
       return level === null;
