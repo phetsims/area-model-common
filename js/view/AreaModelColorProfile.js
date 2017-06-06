@@ -101,7 +101,7 @@ define( function( require ) {
     editButtonBackground: { default: new Color( 241, 232, 0 ) },
 
     // Edit readout
-    editActiveBackground: { default: new Color( 255, 240, 0 ) },
+    editActiveBackground: { default: new Color( 255, 255, 130 ) },
     editInactiveBackground: { default: Color.WHITE },
 
     // Keypad panel
