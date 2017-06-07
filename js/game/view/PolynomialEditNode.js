@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
-  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadType = require( 'AREA_MODEL_COMMON/generic/enum/KeypadType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
@@ -22,7 +21,6 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor
@@ -34,14 +32,9 @@ define( function( require ) {
     // TODO: consider only showing relative terms?
     // TODO: check to make sure a polynomial isn't out of range?
 
-    // TODO: support font switching in different contexts?
-    var readoutFont = AreaModelConstants.GAME_VALUE_FONT;
-    var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT; // TODO: bigger
+    var self = this;
 
-    var readoutText = new RichText( '0', { font: readoutFont } );
-    new DynamicBidirectionalProperty( polynomialPropertyProperty ).link( function( polynomial ) {
-      readoutText.text = polynomial ? polynomial.toRichString( false ) : '?';
-    } );
+    var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
     var constantProperty = new Property( 0 );
     var xProperty = new Property( 0 );
@@ -108,7 +101,7 @@ define( function( require ) {
     var plus1 = new Text( '+', { font: editFont } );
     var plus2 = new Text( '+', { font: editFont } );
 
-    var editContainer = new Node( {
+    Node.call( this, {
       children: [
         xSquaredPicker,
         xSquaredText,
@@ -121,25 +114,17 @@ define( function( require ) {
     } );
 
     // TODO: See if HBox can have align option of "don't screw with it, handle manually"
-    editContainer.children.forEach( function( node, index ) {
+    this.children.forEach( function( node, index ) {
       if ( index > 0 ) {
-        node.left = editContainer.children[ index - 1 ].right + 5;
+        node.left = self.children[ index - 1 ].right + 5;
       }
     } );
     constantPicker.centerY = xText.centerY;
     xPicker.centerY = xText.centerY;
     xSquaredPicker.centerY = xText.centerY;
-
-    VBox.call( this, {
-      children: [
-        readoutText,
-        editContainer
-      ],
-      spacing: 10
-    } );
   }
 
   areaModelCommon.register( 'PolynomialEditNode', PolynomialEditNode );
 
-  return inherit( VBox, PolynomialEditNode );
+  return inherit( Node, PolynomialEditNode );
 } );
