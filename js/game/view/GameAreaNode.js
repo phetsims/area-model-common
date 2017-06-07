@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
+  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
@@ -115,6 +116,9 @@ define( function( require ) {
         var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
+          if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
+            gameStateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
+          }
           activeEditableProperty.value = valuePropertyProperty.value;
         } );
 
@@ -136,6 +140,9 @@ define( function( require ) {
         var colorProperty = new Property( 'black' ); // TODO
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
+          if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
+            gameStateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
+          }
           activeEditableProperty.value = valuePropertyProperty.value;
         } );
         self.addChild( label );

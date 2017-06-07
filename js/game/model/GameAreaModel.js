@@ -17,6 +17,7 @@ define( function( require ) {
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
@@ -191,7 +192,7 @@ define( function( require ) {
     this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
     // @public {Property.<GameState|null>} TODO check if used
-    this.stateProperty = new DynamicProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
+    this.stateProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
       return challenge ? challenge.stateProperty : nullProperty;
     } ) );
 
