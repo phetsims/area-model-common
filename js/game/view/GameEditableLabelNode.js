@@ -69,12 +69,12 @@ define( function( require ) {
 
     // TODO: coloring
     var textColorProperty = colorProperty;
-    var borderColorProperty = new DerivedProperty( [ highlightProperty ], function( highlight ) {
+    var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty ], function( highlight, color ) {
       if ( highlight === HighlightType.NORMAL ) {
-        return 'black'; // TODO: color profile?
+        return color;
       }
       else if ( highlight === HighlightType.DIRTY ) {
-        return 'blue'; // TODO: color profile?
+        return '#884400'; // TODO: color profile?
       }
       else {
         return 'red'; // TODO: color profile?

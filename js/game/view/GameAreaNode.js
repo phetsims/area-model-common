@@ -137,7 +137,7 @@ define( function( require ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
         } );
 
-        var colorProperty = new Property( 'black' ); // TODO
+        var colorProperty = new Property( 'black' ); // TODO color profile
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
           if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
