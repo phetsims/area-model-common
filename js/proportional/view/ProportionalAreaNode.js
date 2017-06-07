@@ -94,9 +94,16 @@ define( function( require ) {
     // Partition labels
     Orientation.VALUES.forEach( function( orientation ) {
       var partitions = area.getPartitions( orientation );
-      partitions.forEach( function( partition, index ) {
-        self.labelLayer.addChild( self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ), index ) );
+      var labels = partitions.map( function( partition, index ) {
+        var label = self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ), index );
+        self.labelLayer.addChild( label );
+        return label;
       } );
+      if ( orientation === Orientation.HORIZONTAL ) {
+        partitions.forEach( function( partition ) {
+          partition.coordinateRangeProperty.link( self.positionHorizontalPartitionLabels.bind( self, labels ) );
+        } );
+      }
     } );
 
     this.mutate( nodeOptions );
@@ -253,6 +260,29 @@ define( function( require ) {
       return dock;
     },
 
+    // TODO doc
+    positionHorizontalPartitionLabels: function( labels ) {
+      var leftRange = this.area.horizontalPartitions[ 0 ].coordinateRangeProperty.value;
+      var rightRange = this.area.horizontalPartitions[ 1 ].coordinateRangeProperty.value;
+
+      // TODO: make this prettier? lots of cleanup
+      var left = this.modelViewTransform.modelToViewX( leftRange.min );
+      var middle = this.modelViewTransform.modelToViewX( leftRange.max );
+      var right = rightRange ? this.modelViewTransform.modelToViewX( rightRange.max ) : 0;
+
+      labels[ 0 ].x = ( left + middle ) / 2;
+      labels[ 1 ].x = ( middle + right ) / 2;
+
+      var horizontalPad = 2;
+
+      if ( rightRange && labels[ 0 ].right > labels[ 1 ].left - horizontalPad * 2 ) {
+        var center = ( labels[ 0 ].right + labels[ 1 ].left ) / 2;
+
+        labels[ 0 ].right = center - horizontalPad;
+        labels[ 1 ].left = center + horizontalPad;
+      }
+    },
+
     /**
      * Creates a partition label for the given orientation.
      * @private
@@ -274,34 +304,6 @@ define( function( require ) {
         children: [ text ]
       } );
 
-      function updatePrimaryLayout() {
-        var range = partition.coordinateRangeProperty.value;
-        if ( range ) {
-          var center = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
-          var min = partition.orientation.modelToView( self.modelViewTransform, range.min );
-          var max = partition.orientation.modelToView( self.modelViewTransform, range.max );
-
-          labelContainer[ partition.orientation.coordinate ] = center;
-
-          if ( partition.orientation === Orientation.HORIZONTAL ) {
-            var horizontalPad = 2;
-
-            // left
-            if ( index === 0 ) {
-              if ( labelContainer.right > max - horizontalPad ) {
-                labelContainer.right = max - horizontalPad;
-              }
-            }
-            // right
-            else {
-              if ( labelContainer.left < min + horizontalPad ) {
-                labelContainer.left = min + horizontalPad;
-              }
-            }
-          }
-        }
-      }
-
       // Text label
       partition.sizeProperty.link( function( size ) {
         if ( size === null ) {
@@ -310,12 +312,18 @@ define( function( require ) {
         else {
           text.text = size.toRichString( false );
           text.center = Vector2.ZERO;
-          updatePrimaryLayout();
         }
       } );
 
-      // Primary coordinate
-      partition.coordinateRangeProperty.link( updatePrimaryLayout );
+      // Primary coordinate (only handle if vertical, horizontal will be handled in positionHorizontalPartitionLabels)
+      if ( partition.orientation === Orientation.VERTICAL ) {
+        partition.coordinateRangeProperty.link( function( range ) {
+          if ( range ) {
+            var center = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
+            labelContainer[ partition.orientation.coordinate ] = center;
+          }
+        } );
+      }
 
       // Secondary coordinate
       if ( partition.orientation === Orientation.HORIZONTAL ) {
