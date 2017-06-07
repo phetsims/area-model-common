@@ -56,6 +56,9 @@ define( function( require ) {
     // @public {boolean} - Whether transposing is supported
     this.transposable = options.transposable === undefined ? ( this.type === AreaChallengeType.NUMBERS ) : options.transposable;
 
+    // @public {boolean}
+    this.unique = options.unique === undefined ? true : options.unique;
+
     this.layout = GenericLayout.fromValues( this.horizontalValues.length, this.verticalValues.length );
   }
 
@@ -77,7 +80,8 @@ define( function( require ) {
         horizontalTotal: this.horizontalTotalValue,
         verticalTotal: this.verticalTotalValue,
         type: this.type,
-        transposable: this.transposable
+        transposable: this.transposable,
+        unique: this.unique
       };
 
       // Horizontal shuffle
@@ -727,7 +731,8 @@ define( function( require ) {
     horizontalTotal: DYNAMIC,
     verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES,
-    transposable: false
+    transposable: false,
+    unique: false
   } );
 
   return AreaChallengeDescription;

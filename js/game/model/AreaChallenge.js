@@ -205,7 +205,7 @@ define( function( require ) {
       }
 
       // TODO: improve! This just checks for variables 6-1, which has multiple solutions
-      if ( !this.description.transposable ) {
+      if ( !this.description.unique ) {
         var expected1 = this.horizontalPartitionSizes[ 1 ];
         var expected2 = this.verticalPartitionSizes[ 1 ];
 

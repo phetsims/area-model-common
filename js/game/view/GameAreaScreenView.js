@@ -16,6 +16,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaNode' );
@@ -39,6 +40,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var RichText = require( 'SCENERY_PHET/RichText' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Shape = require( 'KITE/Shape' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/game/view/SlidingScreen' );
@@ -227,15 +229,26 @@ define( function( require ) {
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
     } );
-    //TODO: a readout here when not editable?
     var polynomialEditNode = new PolynomialEditNode( this.display.totalPropertyProperty );
+    var polynomialReadoutText = new RichText( '?', {
+      font: AreaModelConstants.TOTAL_AREA_FONT,
+      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+    } );
+    new DynamicProperty( this.display.totalPropertyProperty ).link( function( total ) {
+      if ( total ) {
+        polynomialReadoutText.text = total.toRichString( false );
+      }
+    } );
 
     var totalContainer = new Node();
     //TODO: simplify
-    this.display.totalPropertyProperty.link( function( totalProperty ) {
+    Property.multilink( [ this.display.totalPropertyProperty, model.stateProperty ], function( totalProperty, gameState ) {
       if ( totalProperty.displayType === DisplayType.EDITABLE &&
            ( totalProperty.keypadType === KeypadType.POLYNOMIAL_2 || totalProperty.keypadType === KeypadType.POLYNOMIAL_1 ) ) {
-        totalContainer.children = [ polynomialEditNode ];
+
+        //TODO: is this really necessary?
+        var isReadout = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
+        totalContainer.children = [ isReadout ? polynomialReadoutText : polynomialEditNode ];
       }
       else {
         totalContainer.children = [ totalNode ];
