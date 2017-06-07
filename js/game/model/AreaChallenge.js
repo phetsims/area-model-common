@@ -242,7 +242,7 @@ define( function( require ) {
             compareProperty( property, self.partialProductSizes[ verticalIndex ][ horizontalIndex ] );
           } );
         } );
-        if ( this.totalProperty.value instanceof Term ) {
+        if ( this.totalProperty.value instanceof Term ) { // TODO: hackish workaround. Can we always have it be a Polynomial?
           compareProperty( this.totalProperty, this.total.terms[ 0 ] );
         }
         else {
@@ -253,6 +253,31 @@ define( function( require ) {
       return _.uniq( incorrectProperties ).filter( function( property ) {
         return property.displayType === DisplayType.EDITABLE;
       } );
+    },
+
+    // TODO: doc
+    showAnswers: function() {
+      var self = this;
+
+      //TODO: dedup possible with incorrect bits above?
+      this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
+        property.value = self.horizontalPartitionSizes[ index ];
+      } );
+      this.verticalPartitionSizeProperties.forEach( function( property, index ) {
+        property.value = self.verticalPartitionSizes[ index ];
+      } );
+      // TODO: look at common iteration patterns like this and abstract out more (and name it)
+      this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
+        row.forEach( function( property, horizontalIndex ) {
+          property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
+        } );
+      } );
+      if ( this.totalProperty.value instanceof Term ) { // TODO: hackish workaround. Can we always have it be a Polynomial?
+        this.totalProperty.value = this.total.terms[ 0 ];
+      }
+      else {
+        this.totalProperty.value = this.total;
+      }
     },
 
     // TODO: doc
