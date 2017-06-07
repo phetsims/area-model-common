@@ -731,7 +731,7 @@ define( function( require ) {
     horizontalTotal: DYNAMIC,
     verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES,
-    transposable: false,
+    transposable: false, // TODO: is this doing ANYTHING? use the unique bit below?
     unique: false
   } );
 
