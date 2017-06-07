@@ -360,17 +360,20 @@ define( function( require ) {
     this.challengeLayer.addChild( dropletNode );
 
     model.stateProperty.link( function( state, oldState ) {
-      checkButton.visible = state === GameState.FIRST_ATTEMPT || state === GameState.SECOND_ATTEMPT;
-      tryAgainButton.visible = state === GameState.WRONG_FIRST_ANSWER;
-      nextButton.visible = state === GameState.CORRECT_ANSWER || state === GameState.SHOW_SOLUTION;
-      showSolutionButton.visible = state === GameState.WRONG_SECOND_ANSWER;
-      faceNode.visible = state === GameState.CORRECT_ANSWER || state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER;
-      scoreIncreaseText.visible = state === GameState.CORRECT_ANSWER;
-      dropletNode.visible = state === GameState.WRONG_SECOND_ANSWER;
+      // When we switch back to level selection, try to leave things as they were.
+      if ( state !== null ) {
+        checkButton.visible = state === GameState.FIRST_ATTEMPT || state === GameState.SECOND_ATTEMPT;
+        tryAgainButton.visible = state === GameState.WRONG_FIRST_ANSWER;
+        nextButton.visible = state === GameState.CORRECT_ANSWER || state === GameState.SHOW_SOLUTION;
+        showSolutionButton.visible = state === GameState.WRONG_SECOND_ANSWER;
+        faceNode.visible = state === GameState.CORRECT_ANSWER || state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER;
+        scoreIncreaseText.visible = state === GameState.CORRECT_ANSWER;
+        dropletNode.visible = state === GameState.WRONG_SECOND_ANSWER;
+      }
       if ( state === GameState.CORRECT_ANSWER ) {
         faceNode.smile();
       }
-      else {
+      else if ( state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER ) {
         faceNode.frown();
       }
       if ( state === GameState.CORRECT_ANSWER ) {
