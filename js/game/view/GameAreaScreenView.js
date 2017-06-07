@@ -270,7 +270,11 @@ define( function( require ) {
         model.check();
       }
     }, {
-      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty,
+      // TODO: potential input issues recreating the button? Let's find a better way.
+      enabled: new DerivedProperty( [ model.hasNullProperty ], function( hasNull ) {
+        return !hasNull;
+      } )
     }, buttonLocationOptions );
     this.challengeLayer.addChild( checkButton );
 

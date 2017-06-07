@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
@@ -128,6 +129,20 @@ define( function( require ) {
       displayType: gameToDisplayMap[ description.totalValue ],
       keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.POLYNOMIAL : KeypadType.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
+    } );
+
+    // Properties for all of the values
+    var availableProperties = this.horizontalPartitionSizeProperties.concat( this.verticalPartitionSizeProperties ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
+      this.horizontalTotalProperty,
+      this.verticalTotalProperty,
+      this.totalProperty
+    ] );
+
+    // @public {Property.<boolean>}
+    this.hasNullProperty = new DerivedProperty( availableProperties, function() {
+      return _.some( availableProperties, function( property ) {
+        return property.value === null;
+      } );
     } );
 
     /*---------------------------------------------------------------------------*

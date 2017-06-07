@@ -26,6 +26,7 @@ define( function( require ) {
 
   // constants
   var nullProperty = new Property( null );
+  var trueProperty = new BooleanProperty( true );
 
   /**
    * @constructor
@@ -192,6 +193,11 @@ define( function( require ) {
     // @public {Property.<GameState|null>} TODO check if used
     this.stateProperty = new DynamicProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
       return challenge ? challenge.stateProperty : nullProperty;
+    } ) );
+
+    // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)
+    this.hasNullProperty = new DynamicProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
+      return challenge ? challenge.hasNullProperty : trueProperty;
     } ) );
   }
 
