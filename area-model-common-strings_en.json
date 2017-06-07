@@ -37,5 +37,8 @@
   },
   "variablesLevelNumberPattern": {
     "value": "Variables: Level {{level}}"
+  },
+  "challengeProgressPattern": {
+    "value": "{{current}} of {{total}}"
   }
 }

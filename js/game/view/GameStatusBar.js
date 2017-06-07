@@ -32,6 +32,7 @@ define( function( require ) {
   // Template for inserting the level number
   var numbersLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/numbersLevelNumberPattern' );
   var variablesLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/variablesLevelNumberPattern' );
+  var challengeProgressPatternString = require( 'string!AREA_MODEL_COMMON/challengeProgressPattern' );
 
   // constants
   //TODO: Colors in the color profile!
@@ -40,6 +41,7 @@ define( function( require ) {
   var TEXT_COLOR = 'black';
   var LEVEL_NUMBER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   var LEVEL_DESCRIPTION_FONT = new PhetFont( 18 );
+  var OF_FONT = new PhetFont( { size: 18, weight: 'bold' } );
 
   /**
    * @constructor
@@ -50,6 +52,8 @@ define( function( require ) {
    */
   function GameStatusBar( currentLevelProperty, backCallback ) {
     Node.call( this );
+
+    var self = this;
 
     // @private {Property.<AreaLevel>}
     this.currentLevelProperty = currentLevelProperty;
@@ -75,7 +79,7 @@ define( function( require ) {
       font: LEVEL_NUMBER_FONT,
       fill: TEXT_COLOR,
       pickable: false,
-      maxWidth: 120
+      maxWidth: 180
     } );
     this.addChild( this.levelNumberText );
 
@@ -100,6 +104,22 @@ define( function( require ) {
     // @private {ProgressIndicator}
     this.scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2 );
     this.addChild( this.scoreNode );
+
+    // @private {Text}
+    this.challengeProgressNode = new Text( ' ', {
+      font: OF_FONT
+    } );
+    this.addChild( this.challengeProgressNode );
+    new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
+      return level ? level.challengeIndexProperty : new Property( null ); // TODO: reduce allocations
+    } ) ).link( function( index ) {
+      if ( index !== null ) {
+        self.challengeProgressNode.text = StringUtils.fillIn( challengeProgressPatternString, {
+          current: '' + ( index + 1 ),
+          total: '' + AreaModelConstants.NUM_CHALLENGES
+        } );
+      }
+    } );
 
     // Persistent, no need to worry about unlinking
     currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
@@ -156,11 +176,14 @@ define( function( require ) {
       this.scoreNode.right = this.backgroundRectangle.right - BAR_PADDING;
       this.scoreNode.centerY = verticalCenter;
 
+      this.challengeProgressNode.right = this.scoreNode.left - BAR_PADDING;
+      this.challengeProgressNode.centerY = verticalCenter;
+
       this.levelNumberText.left = this.backButton.right + BAR_PADDING;
       this.levelNumberText.centerY = verticalCenter;
 
       // TODO: Adjust maxWidth based on score
-      this.levelDescriptionText.maxWidth = ( this.scoreNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
+      this.levelDescriptionText.maxWidth = ( this.challengeProgressNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
       this.levelDescriptionText.left = this.levelNumberText.right + BAR_PADDING;
       this.levelDescriptionText.centerY = verticalCenter;
     }
