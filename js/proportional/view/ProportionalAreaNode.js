@@ -113,6 +113,17 @@ define( function( require ) {
       this.tiledAreaNode && this.tiledAreaNode.update();
     },
 
+    //TODO: doc @private
+    getProductLabel: function( horizontalIndex, verticalIndex ) {
+      var horizontalPartitions = this.area.horizontalPartitions;
+      var verticalPartitions = this.area.verticalPartitions;
+
+      return _.find( this.productLabels, function( productLabel ) {
+        return productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
+               productLabel.partitionedArea.getPartition( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
+      } );
+    },
+
     /**
      * Positions all of the partial products labels.
      * @protected
@@ -120,33 +131,75 @@ define( function( require ) {
     positionProductLabels: function() {
       var self = this;
 
+      // {Array.<Range|null>} - View coordinates - TODO: potential to dedup horiz/vert
+      var horizontalRanges = this.area.horizontalPartitions.map( function( partition ) {
+        var range = partition.coordinateRangeProperty.value;
+        if ( range === null ) { return null; }
+        return new Range( self.modelViewTransform.modelToViewX( range.min ),
+                          self.modelViewTransform.modelToViewX( range.max ) );
+      } );
+      var verticalRanges = this.area.verticalPartitions.map( function( partition ) {
+        var range = partition.coordinateRangeProperty.value;
+        if ( range === null ) { return null; }
+        return new Range( self.modelViewTransform.modelToViewY( range.min ),
+                          self.modelViewTransform.modelToViewY( range.max ) );
+      } );
+
+      //TODO: potential to dedup horiz/vert
       this.productLabels.forEach( function( productLabel ) {
+        // {Partition}
         var horizontalPartition = productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL );
         var verticalPartition = productLabel.partitionedArea.getPartition( Orientation.VERTICAL );
 
-        var horizontalRange = horizontalPartition.coordinateRangeProperty.value;
-        var verticalRange = verticalPartition.coordinateRangeProperty.value;
+        // {Range|null}
+        var horizontalRange = horizontalRanges[ _.indexOf( self.area.horizontalPartitions, horizontalPartition ) ];
+        var verticalRange = verticalRanges[ _.indexOf( self.area.verticalPartitions, verticalPartition ) ];
 
         // Ignore it if any parts are null
         if ( horizontalRange === null || verticalRange === null ) {
           return true;
         }
 
-        // Convert to view coordinates
-        horizontalRange = new Range( self.modelViewTransform.modelToViewX( horizontalRange.min ),
-                                     self.modelViewTransform.modelToViewX( horizontalRange.max ) );
-        verticalRange = new Range( self.modelViewTransform.modelToViewY( verticalRange.min ),
-                                   self.modelViewTransform.modelToViewY( verticalRange.max ) );
+        productLabel.x = horizontalRange.getCenter();
+        productLabel.y = verticalRange.getCenter();
+      } );
 
-        // var fits = productLabel.width < horizontalRange.getLength() && productLabel.height < verticalRange.getLength();
-        // if ( fits ) {
-          productLabel.x = horizontalRange.getCenter();
-          productLabel.y = verticalRange.getCenter();
-        //   return true;
-        // }
-        // else {
-        //   return false;
-        // }
+      // Handle each row separately
+      [ 0, 1 ].forEach( function( verticalIndex ) {
+        var verticalRange = verticalRanges[ verticalIndex ];
+
+        // Bail if this row isn't shown at all.
+        if ( verticalRange === null ) { return; }
+
+        var leftLabel = self.getProductLabel( 0, verticalIndex );
+        var rightLabel = self.getProductLabel( 1, verticalIndex );
+        var hasTwo = rightLabel.partitionedArea.visibleProperty.value;
+
+        var leftOverlapBump = 20;
+        var labelOverlapBump = 10;
+
+        var hasLeftOverlap = verticalRanges[ 1 ] !== null && leftLabel.left < -7;
+        var canAvoidLeftOverlap = leftLabel.top - leftOverlapBump >= verticalRange.min - 5;
+        var hasLabelOverlap = hasTwo && leftLabel.right > rightLabel.left;
+        var canAvoidLabelOverlap = leftLabel.top - labelOverlapBump >= verticalRange.min - 3;
+
+        var leftOffset = 0;
+        var rightOffset = 0;
+        if ( hasLeftOverlap && canAvoidLeftOverlap ) {
+          leftOffset = leftOverlapBump;
+        }
+        if ( hasLabelOverlap && canAvoidLabelOverlap ) {
+          var labelOverlapOffset = Math.max( labelOverlapBump, verticalRange.getLength() / 6 );
+          leftOffset = Math.max( leftOffset, labelOverlapOffset );
+          rightOffset = labelOverlapOffset;
+        }
+
+        if ( leftOffset ) {
+          leftLabel.y -= leftOffset;
+        }
+        if ( rightOffset && hasTwo ) {
+          rightLabel.y += rightOffset;
+        }
       } );
     },
 
