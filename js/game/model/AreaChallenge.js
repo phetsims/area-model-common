@@ -141,7 +141,8 @@ define( function( require ) {
         var terms = _.map( self.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
         } );
-        self.horizontalTotalProperty.value = terms.length ? new Polynomial( terms ) : null;
+        var lostATerm = terms.length !== self.horizontalPartitionSizeProperties.length;
+        self.horizontalTotalProperty.value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
     if ( description.verticalTotalValue === GameValue.DYNAMIC ) {
@@ -149,7 +150,8 @@ define( function( require ) {
         var terms = _.map( self.verticalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
         } );
-        self.verticalTotalProperty.value = terms.length ? new Polynomial( terms ) : null;
+        var lostATerm = terms.length !== self.verticalPartitionSizeProperties.length;
+        self.verticalTotalProperty.value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
 
