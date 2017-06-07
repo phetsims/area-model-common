@@ -86,7 +86,9 @@ define( function( require ) {
       return productLabel;
     } );
     var productLabelListener = this.positionProductLabels.bind( this );
+    //TODO: Note this needs to be linked after the product labels are created, so the order dependency works
     area.partitions.forEach( function( partition ) {
+      //TODO: this gets called a LOT?
       partition.coordinateRangeProperty.lazyLink( productLabelListener );
     } );
     productLabelListener();

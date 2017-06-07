@@ -115,7 +115,7 @@ define( function( require ) {
             ];
           }
           else {
-            box.spacing = 3;
+            box.spacing = 2;
             box.children = [
               verticalNode,
               new Text( AreaModelConstants.X_STRING, textOptions ),
