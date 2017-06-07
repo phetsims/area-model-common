@@ -94,8 +94,8 @@ define( function( require ) {
     // Partition labels
     Orientation.VALUES.forEach( function( orientation ) {
       var partitions = area.getPartitions( orientation );
-      partitions.forEach( function( partition ) {
-        self.labelLayer.addChild( self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ) ) );
+      partitions.forEach( function( partition, index ) {
+        self.labelLayer.addChild( self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ), index ) );
       } );
     } );
 
@@ -259,15 +259,48 @@ define( function( require ) {
      *
      * @param {Partition} partition
      * @param {Partition} secondaryPartition - The partition that is empty if there is only one
+     * @param {number} index - The index of the partition
      * @returns {Node}
      */
-    createPartitionLabel: function( partition, secondaryPartition ) {
+    createPartitionLabel: function( partition, secondaryPartition, index ) {
       var self = this;
 
       var text = new Text( '', {
         font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
         fill: partition.colorProperty
       } );
+
+      var labelContainer = new Node( {
+        children: [ text ]
+      } );
+
+      function updatePrimaryLayout() {
+        var range = partition.coordinateRangeProperty.value;
+        if ( range ) {
+          var center = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
+          var min = partition.orientation.modelToView( self.modelViewTransform, range.min );
+          var max = partition.orientation.modelToView( self.modelViewTransform, range.max );
+
+          labelContainer[ partition.orientation.coordinate ] = center;
+
+          if ( partition.orientation === Orientation.HORIZONTAL ) {
+            var horizontalPad = 2;
+
+            // left
+            if ( index === 0 ) {
+              if ( labelContainer.right > max - horizontalPad ) {
+                labelContainer.right = max - horizontalPad;
+              }
+            }
+            // right
+            else {
+              if ( labelContainer.left < min + horizontalPad ) {
+                labelContainer.left = min + horizontalPad;
+              }
+            }
+          }
+        }
+      }
 
       // Text label
       partition.sizeProperty.link( function( size ) {
@@ -277,19 +310,12 @@ define( function( require ) {
         else {
           text.text = size.toRichString( false );
           text.center = Vector2.ZERO;
+          updatePrimaryLayout();
         }
-      } );
-
-      var labelContainer = new Node( {
-        children: [ text ]
       } );
 
       // Primary coordinate
-      partition.coordinateRangeProperty.link( function( range ) {
-        if ( range ) {
-          labelContainer[ partition.orientation.coordinate ] = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
-        }
-      } );
+      partition.coordinateRangeProperty.link( updatePrimaryLayout );
 
       // Secondary coordinate
       if ( partition.orientation === Orientation.HORIZONTAL ) {
