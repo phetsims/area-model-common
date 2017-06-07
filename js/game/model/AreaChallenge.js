@@ -126,7 +126,7 @@ define( function( require ) {
     // @public {Polynomial}
     this.total = this.horizontalTotal.times( this.verticalTotal );
 
-    // @public {EditableProperty.<Polynomial|null>}
+    // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
       displayType: gameToDisplayMap[ description.totalValue ],
       keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? KeypadType.POLYNOMIAL_2 : KeypadType.POLYNOMIAL_1 ) : KeypadType.CONSTANT,
@@ -181,51 +181,53 @@ define( function( require ) {
 
   return inherit( Object, AreaChallenge, {
     getIncorrectEditableProperties: function() {
+      var self = this;
+
       var incorrectProperties = [];
 
-      // Check partial products
-      this.horizontalPartitionSizeProperties.forEach( function( horizontalSizeProperty, horizontalIndex ) {
-        self.verticalPartitionSizeProperties.forEach( function( verticalSizeProperty, verticalIndex ) {
-          var partialProductProperty = self.partialProductSizeProperties[ verticalIndex ][ horizontalIndex ];
-
-          // Invalidate the partial product AND partition sizes if there is an issue
-          if ( partialProductProperty.value === null ||
-               horizontalSizeProperty.value === null ||
-               verticalSizeProperty.value === null ||
-               !horizontalSizeProperty.value.times( verticalSizeProperty.value ).equals( partialProductProperty.value ) ) {
-            incorrectProperties.push( partialProductProperty, horizontalSizeProperty, verticalSizeProperty );
+      function compareProperty( property, expectedValue ) {
+        //TODO: maybe put this in EditableProperty?
+        var value = property.value;
+        if ( value === null ) {
+          incorrectProperties.push( property );
+        }
+        else if ( typeof value === 'number' ) {
+          if ( value !== expectedValue ) {
+            incorrectProperties.push( property );
           }
-        } );
-      } );
-
-      // Check total with dimension sums (should catch total issues, or if there are some partition size issues)
-      if ( this.totalProperty.value === null ) {
-        incorrectProperties.push( this.totalProperty );
-      }
-      else {
-        var totalPolynomial = this.totalProperty.value instanceof Polynomial ?
-                              this.totalProperty.value :
-                              new Polynomial( [ this.totalProperty.value ] );
-        if ( !this.horizontalTotalProperty.value.times( this.verticalTotalProperty.value ).equals( totalPolynomial ) ) {
-          incorrectProperties.push( this.totalProperty );
-          //TODO: how would we figure out which partitions are the issue here?
+        }
+        else {
+          if ( !value.equals( expectedValue ) ) {
+            incorrectProperties.push( property );
+          }
         }
       }
 
-      // //TODO: dedup with above
-      // var horizontalTotal = new Polynomial( _.map( this.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
-      //   return term !== null;
-      // } ) );
-      // var verticalTotal = new Polynomial( _.map( this.verticalPartitionSizeProperties, 'value' ).filter( function( term ) {
-      //   return term !== null;
-      // } ) );
-
-      // // Check partition totals
-      // correct = correct &&
-      //           ( horizontalTotal !== null ) &&
-      //           ( verticalTotal !== null ) &&
-      //           horizontalTotal.equals( this.horizontalTotalProperty.value ) &&
-      //           verticalTotal.equals( this.verticalTotalProperty.value );
+      // TODO: improve! This just checks for variables 6-1, which has multiple solutions
+      if ( !this.description.transposable ) {
+        // REALLY TODO THIS
+        // TODO: better handling for this custom variables 6-1 code!
+      }
+      else {
+        this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
+          compareProperty( property, self.horizontalPartitionSizes[ index ] );
+        } );
+        this.verticalPartitionSizeProperties.forEach( function( property, index ) {
+          compareProperty( property, self.verticalPartitionSizes[ index ] );
+        } );
+        // TODO: look at common iteration patterns like this and abstract out more (and name it)
+        this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
+          row.forEach( function( property, horizontalIndex ) {
+            compareProperty( property, self.partialProductSizes[ verticalIndex ][ horizontalIndex ] );
+          } );
+        } );
+        if ( this.totalProperty.value instanceof Term ) {
+          compareProperty( this.totalProperty, this.total.terms[ 0 ] );
+        }
+        else {
+          compareProperty( this.totalProperty, this.total );
+        }
+      }
 
       return _.uniq( incorrectProperties ).filter( function( property ) {
         return property.displayType === DisplayType.EDITABLE;
