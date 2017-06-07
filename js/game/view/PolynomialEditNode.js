@@ -12,7 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/generic/enum/KeypadType' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
@@ -40,12 +40,17 @@ define( function( require ) {
     var xProperty = new Property( 0 );
     var xSquaredProperty = new Property( 0 );
 
+    function isPolynomial() {
+      return polynomialPropertyProperty.value && ( polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL_2 ||
+                                                   polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL_1 );
+    }
+
     polynomialPropertyProperty.link( function( polynomialProperty ) {
       if ( polynomialProperty === null ) { return; }
 
       var polynomial = polynomialProperty.value;
 
-      if ( polynomialProperty.keypadType === KeypadType.POLYNOMIAL ) {
+      if ( isPolynomial() ) {
         if ( polynomial === null ) {
           polynomialProperty.value = new Polynomial( [] ); // zero
           constantProperty.value = 0;
@@ -61,17 +66,17 @@ define( function( require ) {
     } );
     //TODO: cleanup
     constantProperty.lazyLink( function( value ) {
-      if ( polynomialPropertyProperty.value && polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL ) {
+      if ( isPolynomial ) {
         polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 0 );
       }
     } );
     xProperty.lazyLink( function( value ) {
-      if ( polynomialPropertyProperty.value && polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL ) {
+      if ( isPolynomial ) {
         polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 1 );
       }
     } );
     xSquaredProperty.lazyLink( function( value ) {
-      if ( polynomialPropertyProperty.value && polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL ) {
+      if ( isPolynomial ) {
         polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 2 );
       }
     } );
@@ -101,22 +106,32 @@ define( function( require ) {
     var plus1 = new Text( '+', { font: editFont } );
     var plus2 = new Text( '+', { font: editFont } );
 
-    Node.call( this, {
-      children: [
-        xSquaredPicker,
-        xSquaredText,
-        plus1,
-        xPicker,
-        xText,
-        plus2,
-        constantPicker
-      ]
+    var xSquaredChildren = [
+      xSquaredPicker,
+      xSquaredText,
+      plus1,
+      xPicker,
+      xText,
+      plus2,
+      constantPicker
+    ];
+    var xChildren = [
+      xPicker,
+      xText,
+      plus2,
+      constantPicker
+    ];
+
+    Node.call( this );
+    // Hide the x^2 term if we won't use it
+    polynomialPropertyProperty.link( function( polynomialProperty ) {
+      self.children = polynomialProperty.keypadType === KeypadType.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
     } );
 
     // TODO: See if HBox can have align option of "don't screw with it, handle manually"
-    this.children.forEach( function( node, index ) {
+    xSquaredChildren.forEach( function( node, index ) {
       if ( index > 0 ) {
-        node.left = self.children[ index - 1 ].right + 5;
+        node.left = xSquaredChildren[ index - 1 ].right + 5;
       }
     } );
     constantPicker.centerY = xText.centerY;

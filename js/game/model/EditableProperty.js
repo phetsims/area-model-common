@@ -13,7 +13,7 @@ define( function( require ) {
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/generic/enum/KeypadType' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -31,7 +31,7 @@ define( function( require ) {
       // Our options
       displayType: DisplayType.HIDDEN,
       keypadType: KeypadType.CONSTANT,
-      digits: 0,
+      digits: 0
     }, options );
 
     // Always start off by editing null, and it should be the default value.

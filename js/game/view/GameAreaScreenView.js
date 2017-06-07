@@ -28,7 +28,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/generic/enum/KeypadType' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -233,7 +233,7 @@ define( function( require ) {
     //TODO: simplify
     this.display.totalPropertyProperty.link( function( totalProperty ) {
       if ( totalProperty.displayType === DisplayType.EDITABLE &&
-           totalProperty.keypadType === KeypadType.POLYNOMIAL ) {
+           ( totalProperty.keypadType === KeypadType.POLYNOMIAL_2 || totalProperty.keypadType === KeypadType.POLYNOMIAL_1 ) ) {
         totalContainer.children = [ polynomialEditNode ];
       }
       else {

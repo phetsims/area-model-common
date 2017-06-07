@@ -18,7 +18,7 @@ define( function( require ) {
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/generic/enum/KeypadType' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
@@ -113,6 +113,8 @@ define( function( require ) {
       } );
     } );
 
+    var hasXSquaredTotal = ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length ) >= 4;
+
     // @public {Polynomial}
     this.horizontalTotal = new Polynomial( this.horizontalPartitionSizes );
     this.verticalTotal = new Polynomial( this.verticalPartitionSizes );
@@ -127,7 +129,7 @@ define( function( require ) {
     // @public {EditableProperty.<Polynomial|null>}
     this.totalProperty = new EditableProperty( this.total, {
       displayType: gameToDisplayMap[ description.totalValue ],
-      keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.POLYNOMIAL : KeypadType.CONSTANT,
+      keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? KeypadType.POLYNOMIAL_2 : KeypadType.POLYNOMIAL_1 ) : KeypadType.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
 

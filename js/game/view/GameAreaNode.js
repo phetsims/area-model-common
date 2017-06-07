@@ -17,7 +17,7 @@ define( function( require ) {
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/generic/enum/KeypadType' );
+  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
