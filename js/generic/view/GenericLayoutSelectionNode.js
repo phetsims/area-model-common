@@ -138,9 +138,9 @@ define( function( require ) {
 
       var buttonSpacing = 12;
       var buttonsNode = new VBox( {
-        children: [ 1, 2, 3 ].map( function( numHorizontal ) {
+        children: [ 1, 2, 3 ].map( function( numVertical ) {
           return new HBox( {
-            children: [ 1, 2, 3 ].map( function( numVertical ) {
+            children: [ 1, 2, 3 ].map( function( numHorizontal ) {
               var layout = GenericLayout.fromValues( numHorizontal, numVertical );
               var icon = createLayoutIcon( layout.size, 0.7 );
               icon.pickable = false; // TODO: annoying that we have to specify this?
