@@ -132,19 +132,19 @@ define( function( require ) {
           spacing: buttonSpacing
         } ),
         new HBox( {
-          children: levelButtons.slice( 9, 18 ),
+          children: levelButtons.slice( 9, 17 ),
           spacing: buttonSpacing
         } ),
         new HBox( {
-          children: levelButtons.slice( 18, 26 ),
+          children: levelButtons.slice( 17, 25 ),
           spacing: buttonSpacing
         } ),
         new HBox( {
-          children: levelButtons.slice( 26, 35 ),
+          children: levelButtons.slice( 25, 34 ),
           spacing: buttonSpacing
         } ),
         new HBox( {
-          children: levelButtons.slice( 35, 44 ),
+          children: levelButtons.slice( 34, 43 ),
           spacing: buttonSpacing
         } )
       ] : [

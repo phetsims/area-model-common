@@ -130,7 +130,6 @@ define( function( require ) {
     if ( isLevelDebug ) {
       this.levels = [
         new AreaLevel( count++, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '1-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_NUMBERS_1 ] ),
-        new AreaLevel( count++, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '1-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_NUMBERS_1 ] ),
         new AreaLevel( count++, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '1-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_NUMBERS_2 ] ),
         new AreaLevel( count++, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '1-3', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_NUMBERS_3 ] ),
         new AreaLevel( count++, AreaChallengeType.NUMBERS, AreaModelColorProfile.numbersIconBackgroundProperty, new Text( '1-4', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_NUMBERS_4 ] ),
