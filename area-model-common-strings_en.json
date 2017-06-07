@@ -14,6 +14,9 @@
   "screen.game": {
     "value": "Game"
   },
+  "screen.challenges": {
+    "value": "Challenges"
+  },
   "product": {
     "value": "Product"
   },
