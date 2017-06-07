@@ -205,8 +205,28 @@ define( function( require ) {
 
       // TODO: improve! This just checks for variables 6-1, which has multiple solutions
       if ( !this.description.transposable ) {
-        // REALLY TODO THIS
-        // TODO: better handling for this custom variables 6-1 code!
+        var expected1 = this.horizontalPartitionSizes[ 1 ];
+        var expected2 = this.verticalPartitionSizes[ 1 ];
+
+        var actual1Property = this.horizontalPartitionSizeProperties[ 1 ];
+        var actual2Property = this.verticalPartitionSizeProperties[ 1 ];
+
+        var actual1 = actual1Property.value;
+        var actual2 = actual2Property.value;
+
+        var matches1 = actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
+        var matches2 = actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
+
+        if ( !matches1 ) { incorrectProperties.push( actual1Property ); }
+        if ( !matches2 ) { incorrectProperties.push( actual2Property ); }
+
+        // Check for a case where both properties match one answer but not the other
+        if ( matches1 && matches2 &&
+             !( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) &&
+             !( actual1.equals( expected2 ) && actual2.equals( expected1 ) ) ) {
+          // Logic described by https://github.com/phetsims/area-model-common/issues/39
+          incorrectProperties.push( actual1Property, actual2Property );
+        }
       }
       else {
         this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
