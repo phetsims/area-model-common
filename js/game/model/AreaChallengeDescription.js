@@ -43,8 +43,8 @@ define( function( require ) {
     this.productValues = options.products;
 
     // @public {GameValue} - Values for the horizontal/vertical totals (sum of partition sizes) and the total area
-    this.horizontalTotalValue = _.every( options.horizontal, function( value ) { return value === EDITABLE; } ) ? DYNAMIC : GIVEN;
-    this.verticalTotalValue = _.every( options.vertical, function( value ) { return value === EDITABLE; } ) ? DYNAMIC : GIVEN;
+    this.horizontalTotalValue = options.horizontalTotal;
+    this.verticalTotalValue = options.verticalTotal;
     this.totalValue = options.total;
 
     // @public {AreaChallengeType} - The type of challenge
@@ -74,6 +74,8 @@ define( function( require ) {
         vertical: this.verticalValues,
         products: this.productValues,
         total: this.totalValue,
+        horizontalTotal: this.horizontalTotalValue,
+        verticalTotal: this.verticalTotalValue,
         type: this.type,
         transposable: this.transposable
       };
@@ -94,6 +96,10 @@ define( function( require ) {
         var tmpPartition = options.horizontal;
         options.horizontal = options.vertical;
         options.vertical = tmpPartition;
+
+        var tmpTotal = options.horizontalTotal;
+        options.horizontalTotal = options.verticalTotal;
+        options.verticalTotal = tmpTotal;
 
         options.products = _.range( options.vertical.length ).map( function( verticalIndex ) {
           return _.range( options.horizontal.length ).map( function( horizontalIndex ) {
@@ -118,6 +124,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -129,6 +137,8 @@ define( function( require ) {
       [ EDITABLE, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -140,6 +150,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -151,6 +163,8 @@ define( function( require ) {
       [ EDITABLE, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -163,6 +177,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -175,6 +191,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -191,6 +209,8 @@ define( function( require ) {
       [ GIVEN, EDITABLE ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -203,6 +223,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -215,6 +237,8 @@ define( function( require ) {
       [ GIVEN, EDITABLE, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -227,6 +251,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -240,6 +266,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -255,6 +283,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -266,6 +296,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -277,6 +309,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -288,6 +322,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -300,6 +336,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -312,6 +350,8 @@ define( function( require ) {
       [ GIVEN, DYNAMIC ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -328,6 +368,8 @@ define( function( require ) {
       [ GIVEN, DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -340,6 +382,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, DYNAMIC ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -352,6 +396,8 @@ define( function( require ) {
       [ GIVEN, DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -365,6 +411,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, DYNAMIC ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -378,6 +426,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, DYNAMIC ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -393,6 +443,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -404,6 +456,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -420,6 +474,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -435,6 +491,8 @@ define( function( require ) {
       [ EDITABLE, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -446,6 +504,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -457,6 +517,8 @@ define( function( require ) {
       [ EDITABLE, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -468,6 +530,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -484,6 +548,8 @@ define( function( require ) {
       [ GIVEN, EDITABLE ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -496,6 +562,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: EDITABLE,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -511,6 +579,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -522,6 +592,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -533,6 +605,8 @@ define( function( require ) {
       [ GIVEN, EDITABLE ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -544,6 +618,8 @@ define( function( require ) {
       [ GIVEN, DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -555,6 +631,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -566,6 +644,8 @@ define( function( require ) {
       [ GIVEN, EDITABLE, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -582,6 +662,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -594,6 +676,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: GIVEN,
+    verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -609,6 +693,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -620,6 +706,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES
   } );
 
@@ -636,6 +724,8 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES,
     transposable: false
   } );
