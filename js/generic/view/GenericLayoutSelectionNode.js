@@ -136,7 +136,7 @@ define( function( require ) {
         pickable: true
       } );
 
-      var buttonSpacing = 6;
+      var buttonSpacing = 12;
       var buttonsNode = new VBox( {
         children: [ 1, 2, 3 ].map( function( numHorizontal ) {
           return new HBox( {
