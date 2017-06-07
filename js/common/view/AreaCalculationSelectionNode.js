@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
@@ -27,12 +26,11 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<AreaCalculationChoice} areaCalculationChoiceProperty
+   * @param {AlignGroup} selectionButtonAlignGroup
    */
-  function AreaCalculationSelectionNode( areaCalculationChoiceProperty ) {
+  function AreaCalculationSelectionNode( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
     Node.call( this );
-
-    var group = new AlignGroup();
 
     var darkColorProperty = AreaModelColorProfile.calculationIconDarkProperty;
     var lightColorProperty = AreaModelColorProfile.calculationIconLightProperty;
@@ -40,15 +38,15 @@ define( function( require ) {
     var radioItems = [
       {
         value: AreaCalculationChoice.HIDDEN,
-        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: group } )
+        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
       },
       {
         value: AreaCalculationChoice.LINE_BY_LINE,
-        node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: group } )
+        node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
       },
       {
         value: AreaCalculationChoice.SHOW_ALL_LINES,
-        node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: group } )
+        node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
       }
     ];
 

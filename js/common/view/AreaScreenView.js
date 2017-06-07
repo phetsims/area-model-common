@@ -65,11 +65,13 @@ define( function( require ) {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
-    var calculationSelectionPanel = this.createPanel( areaModelCalculationString, panelAlignGroup,
-                                                      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty ) );
 
+    var selectionButtonAlignGroup = new AlignGroup();
+    // TODO: don't require this ordering of creation just for sizing. creating the "bigger" one first
     var productsSelectionPanel = this.createPanel( partialProductsString, panelAlignGroup,
-                                                   new PartialProductsSelectionNode( model ) );
+                                                   new PartialProductsSelectionNode( model, selectionButtonAlignGroup ) );
+    var calculationSelectionPanel = this.createPanel( areaModelCalculationString, panelAlignGroup,
+                                                      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
 
     // Create accordion boxes after all group-aligned content is created.
     var productBox = this.createAccordionBox( productString, model.productBoxExpanded, productBoxContent );

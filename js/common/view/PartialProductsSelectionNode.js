@@ -30,8 +30,9 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {AreaModel} model
+   * @param {AlignGroup} selectionButtonAlignGroup
    */
-  function PartialProductsSelectionNode( model ) {
+  function PartialProductsSelectionNode( model, selectionButtonAlignGroup ) {
     //TODO: rename to 'product' singular instead of plural
 
     Node.call( this );
@@ -54,19 +55,18 @@ define( function( require ) {
     var exponentsIcon = new AlignBox( this.createExponentIcon( horizontalText, verticalText ), { group: iconGroup } );
     var noExponentsIcon = new AlignBox( this.createNonExponentIcon( horizontalText, verticalText ), { group: iconGroup } );
 
-    var group = new AlignGroup();
     var radioItems = [
       {
         value: PartialProductsChoice.HIDDEN,
-        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: group } )
+        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
       },
       {
         value: PartialProductsChoice.PRODUCTS,
-        node: new AlignBox( new Text( 'A', { font: AreaModelConstants.SYMBOL_FONT } ), { group: group } )
+        node: new AlignBox( new Text( 'A', { font: AreaModelConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } )
       },
       {
         value: PartialProductsChoice.FACTORS,
-        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: group } )
+        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } )
       }
     ];
 
