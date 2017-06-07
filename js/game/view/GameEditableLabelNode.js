@@ -15,9 +15,11 @@ define( function( require ) {
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Property = require( 'AXON/Property' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -29,6 +31,7 @@ define( function( require ) {
    * TODO: options object?
    *
    * @param {Property.<EditableProperty.<Term|TermList|null>>} valuePropertyProperty
+   * @param {Property.<GameState>} gameStateProperty
    * @param {Property.<EditableProperty.<Term|TermList|null>>} activeEditableProperty
    * @param {Property.<Color>} colorProperty
    * @param {Property.<boolean>} allowExponentsProperty
@@ -36,7 +39,7 @@ define( function( require ) {
    * @param {boolean} canBePolynomial
    * @param {function} editCallback - Called when editing is triggered
    */
-  function GameEditableLabelNode( valuePropertyProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
+  function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
     Node.call( this );
 
     var valueProperty = new DynamicBidirectionalProperty( valuePropertyProperty );
@@ -86,11 +89,12 @@ define( function( require ) {
     digitsProperty.link( centerTermEditNode );
     allowExponentsProperty.link( centerTermEditNode );
 
-    // TODO: Handle editable polynomial
-    valuePropertyProperty.link( function( valueProperty ) {
-      var displayType = valueProperty.displayType;
-      readoutText.visible = displayType === DisplayType.READOUT;
-      termEditNode.visible = displayType === DisplayType.EDITABLE;
+    // TODO: Handle editable polynomial?
+    Property.multilink( [ valuePropertyProperty, gameStateProperty ], function( valueProperty, gameState ) {
+      var isReadoutOverride = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
+      readoutText.visible = valueProperty.displayType === DisplayType.READOUT ||
+                            ( isReadoutOverride && valueProperty.displayType === DisplayType.EDITABLE );
+      termEditNode.visible = valueProperty.displayType === DisplayType.EDITABLE && !isReadoutOverride;
     } );
   }
 

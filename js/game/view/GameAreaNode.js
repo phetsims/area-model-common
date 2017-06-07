@@ -34,8 +34,9 @@ define( function( require ) {
    *
    * @param {GenericAreaDisplay} display
    * @param {Property.<EditableProperty.<Term|TermList|null>|null} activeEditableProperty
+   * @param {Property.<GameState>}
    */
-  function GameAreaNode( display, activeEditableProperty ) {
+  function GameAreaNode( display, activeEditableProperty, gameStateProperty ) {
     var self = this;
 
     Node.call( this );
@@ -113,7 +114,7 @@ define( function( require ) {
         } );
         var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
+        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
           activeEditableProperty.value = valuePropertyProperty.value;
         } );
 
@@ -134,7 +135,7 @@ define( function( require ) {
 
         var colorProperty = new Property( 'black' ); // TODO
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
+        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
           activeEditableProperty.value = valuePropertyProperty.value;
         } );
         self.addChild( label );

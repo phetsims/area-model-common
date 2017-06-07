@@ -208,7 +208,7 @@ define( function( require ) {
       newChallenge.attachDisplay( self.display );
     } );
 
-    var gameAreaNode = new GameAreaNode( this.display, model.activeEditableProperty );
+    var gameAreaNode = new GameAreaNode( this.display, model.activeEditableProperty, model.stateProperty );
     this.challengeLayer.addChild( gameAreaNode );
     gameAreaNode.translation = this.layoutBounds.leftTop.plus( AreaModelConstants.GAME_AREA_OFFSET );
 
@@ -224,9 +224,10 @@ define( function( require ) {
     var productNode = new GenericProductNode( this.display.horizontalTotalProperty, this.display.verticalTotalProperty, this.display.allowExponentsProperty );
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
-    var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
+    var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
     } );
+    //TODO: a readout here when not editable?
     var polynomialEditNode = new PolynomialEditNode( this.display.totalPropertyProperty );
 
     var totalContainer = new Node();
