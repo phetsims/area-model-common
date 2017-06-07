@@ -180,6 +180,7 @@ define( function( require ) {
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
 
   return inherit( Object, AreaChallenge, {
+    // TODO: doc
     getIncorrectEditableProperties: function() {
       var self = this;
 

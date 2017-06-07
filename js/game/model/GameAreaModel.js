@@ -19,6 +19,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
+  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -216,6 +217,12 @@ define( function( require ) {
       assert && assert( isCorrect === ( badProperties.length === 0 ) );
 
       var currentState = challenge.stateProperty.value;
+
+      if ( !isCorrect ) {
+        badProperties.forEach( function( property ) {
+          property.highlightProperty.value = HighlightType.ERROR;
+        } );
+      }
 
       if ( currentState === GameState.FIRST_ATTEMPT ) {
         if ( isCorrect ) {
