@@ -47,7 +47,7 @@ define( function( require ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
-    AreaNode.call( this, area, partialProductsChoiceProperty, true, false );
+    AreaNode.call( this, area, partialProductsChoiceProperty, false );
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {

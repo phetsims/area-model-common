@@ -29,12 +29,10 @@ define( function( require ) {
    *
    * @param {Area} area
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
-   * @param {boolean} isProportional TODO: Unused?
    * @param {boolean} allowExponents
    */
-  function AreaNode( area, partialProductsChoiceProperty, isProportional, allowExponents ) {
+  function AreaNode( area, partialProductsChoiceProperty, allowExponents ) {
     assert && assert( area instanceof Area );
-    assert && assert( typeof isProportional === 'boolean' );
     assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;

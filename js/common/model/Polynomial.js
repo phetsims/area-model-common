@@ -43,7 +43,14 @@ define( function( require ) {
   areaModelCommon.register( 'Polynomial', Polynomial );
 
   return inherit( TermList, Polynomial, {
-    // TODO: doc
+    /**
+     * Returns the coefficient in front of the term with the specific power. If it doesn't exist, 0 is used (since it's
+     * like an implicit term with a 0-coefficient)
+     * @public
+     *
+     * @param {number} power
+     * @returns {number}
+     */
     getCoefficient: function( power ) {
       var term = _.find( this.terms, function( term ) {
         return term.power === power;
@@ -56,7 +63,14 @@ define( function( require ) {
       }
     },
 
-    // TODO: doc
+    /**
+     * Returns a new Polynomial with a specific term's coefficient replaced.
+     * @public
+     *
+     * @param {number} coefficient
+     * @param {number} power
+     * @returns {Polynomial}
+     */
     withCoefficient: function( coefficient, power ) {
       var currentCoefficient = this.getCoefficient( power );
       return new Polynomial( this.terms.concat( [ new Term( coefficient - currentCoefficient, power ) ] ) );

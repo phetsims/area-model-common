@@ -61,7 +61,7 @@ define( function( require ) {
     centerCoordinate: 'centerY',
     modelViewName: 'modelToViewY',
     minSide: 'top',
-    maxSide: 'bottom' // TODO: use these where possible?
+    maxSide: 'bottom'
   } );
 
   // Set up opposites as object references (circular)
