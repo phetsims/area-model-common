@@ -34,7 +34,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Panel = require( 'SUN/Panel' );
-  var Path = require( 'SCENERY/nodes/Path' );
   var PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
@@ -42,7 +41,6 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var Shape = require( 'KITE/Shape' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -340,40 +338,6 @@ define( function( require ) {
     } );
     this.challengeLayer.addChild( scoreIncreaseText );
 
-    // TODO: Remove this. TEMPORARY DROPLET
-    // Constants for creating the droplet shape.
-    var xRadius = 22; // the radius of the "bottom" part of the droplet
-    var yRadius = 18; // the half-width of the droplet
-    var yTail = 3; // slight control-point width near the pointed tip (so it isn't as pointy)
-    var cp1x = xRadius * 0.84;
-    var cp2x = xRadius * 1.12;
-    var endX = xRadius * 2.1;
-    // {Shape} - Droplet shape
-    var dropletShape = new Shape().ellipticalArc( 0, 0, xRadius, yRadius, 0, Math.PI / 2, 3 * Math.PI / 2, false )
-      .cubicCurveTo( cp1x, -yRadius, cp2x, -yTail, endX, 0 )
-      .cubicCurveTo( cp2x, yTail, cp1x, yRadius, 0, yRadius )
-      .close().makeImmutable();
-    var dropletNode = new Node();
-    for ( var i = 0; i < 5; i++ ) {
-      dropletNode.addChild( new Path( dropletShape, {
-        fill: 'rgba(0,100,255,0.6)',
-        rotation: -Math.PI / 2,
-        scale: 0.25,
-        x: faceNode.x - 20,
-        y: faceNode.y + 4 + i * 15,
-        opacity: 1 - 0.17 * i
-      } ) );
-      dropletNode.addChild( new Path( dropletShape, {
-        fill: 'rgba(0,100,255,0.6)',
-        rotation: -Math.PI / 2,
-        scale: 0.25,
-        x: faceNode.x + 20,
-        y: faceNode.y + 4 + i * 15,
-        opacity: 1 - 0.17 * i
-      } ) );
-    }
-    this.challengeLayer.addChild( dropletNode );
-
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
@@ -383,7 +347,6 @@ define( function( require ) {
         showSolutionButton.visible = state === GameState.WRONG_SECOND_ANSWER;
         faceNode.visible = state === GameState.CORRECT_ANSWER || state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER;
         scoreIncreaseText.visible = state === GameState.CORRECT_ANSWER;
-        dropletNode.visible = state === GameState.WRONG_SECOND_ANSWER;
       }
       if ( state === GameState.CORRECT_ANSWER ) {
         faceNode.smile();
