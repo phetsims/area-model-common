@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
@@ -58,7 +59,7 @@ define( function( require ) {
     this.coordinateRangeMax = coordinateRangeMax;
 
     // @public {Property.<number>}
-    this.calculationIndexProperty = new Property( 0 );
+    this.calculationIndexProperty = new NumberProperty( 0 );
 
     // @public {Array.<PartitionedArea>}
     this.partitionedAreas = _.flatten( horizontalPartitions.map( function( horizontalPartition ) {

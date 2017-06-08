@@ -16,6 +16,7 @@ define( function( require ) {
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
@@ -36,9 +37,9 @@ define( function( require ) {
 
     var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
-    var constantProperty = new Property( 0 );
-    var xProperty = new Property( 0 );
-    var xSquaredProperty = new Property( 0 );
+    var constantProperty = new NumberProperty( 0 );
+    var xProperty = new NumberProperty( 0 );
+    var xSquaredProperty = new NumberProperty( 0 );
 
     function isPolynomial() {
       return polynomialPropertyProperty.value && ( polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL_2 ||

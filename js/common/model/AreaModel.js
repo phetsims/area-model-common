@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -45,10 +46,10 @@ define( function( require ) {
     this.currentAreaProperty = new Property( areas[ 0 ] );
 
     // @public {Property.<boolean>}
-    this.productBoxExpanded = new Property( true );
+    this.productBoxExpanded = new BooleanProperty( true );
 
     // @public {Property.<boolean>}
-    this.totalModelBoxExpanded = new Property( false );
+    this.totalModelBoxExpanded = new BooleanProperty( false );
 
     // @public {Property.<AreaCalculationChoice}
     this.areaCalculationChoiceProperty = new Property( AreaCalculationChoice.HIDDEN );

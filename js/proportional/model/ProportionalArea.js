@@ -13,6 +13,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
   var Property = require( 'AXON/Property' );
@@ -42,10 +43,10 @@ define( function( require ) {
     }, options );
 
     // @private {Property.<number>} - Width of the contained area - Prefer getActiveTotalProperty
-    this.activeWidthProperty = new Property( options.initialWidth );
+    this.activeWidthProperty = new NumberProperty( options.initialWidth );
 
     // @private {Property.<number>} - Height of the contained area - Prefer getActiveTotalProperty
-    this.activeHeightProperty = new Property( options.initialHeight );
+    this.activeHeightProperty = new NumberProperty( options.initialHeight );
 
     // @private {Property.<number|null>} - If there is an active partition line, its location.
     this.horizontalPartitionSplitProperty = new Property( null );

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -38,7 +39,7 @@ define( function( require ) {
     var self = this;
 
     // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
-    var draggedProperty = new Property( false );
+    var draggedProperty = new BooleanProperty( false );
 
     // {Property.<Vector2>} - The current view "offset" from where the pointer is compared to the point it is controlling
     var offsetProperty = new Property( new Vector2() );
