@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -20,7 +21,6 @@ define( function( require ) {
 
   // constants
   var TICK_LENGTH = 8; // How long the tick marks are for the range labels
-  var LABEL_OFFSET = -7; // How far the label text should be from the line/ticks
 
   /**
    * @constructor
@@ -37,25 +37,29 @@ define( function( require ) {
     assert && assert( viewRangeProperty instanceof Property );
     assert && assert( colorProperty instanceof Property );
 
+    var mainLineWidth = AreaModelQueryParameters.singleLine ? 1 : 2.5;
+
     var tickOptions = {
       y1: -TICK_LENGTH / 2,
       y2: TICK_LENGTH / 2,
       stroke: colorProperty,
+      lineWidth: mainLineWidth,
       rotation: orientation === Orientation.HORIZONTAL ? 0 : Math.PI / 2
     };
     var minTick = new Line( tickOptions );
     var maxTick = new Line( tickOptions );
 
     var line = new Line( {
+      lineWidth: mainLineWidth,
       stroke: colorProperty
     } );
 
     // Coordinates that don't change.
     if ( orientation === Orientation.HORIZONTAL ) {
-      labelNode.y = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + LABEL_OFFSET;
+      labelNode.y = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -3 );
     }
     else {
-      labelNode.x = AreaModelConstants.VERTICAL_RANGE_OFFSET + LABEL_OFFSET;
+      labelNode.x = AreaModelConstants.VERTICAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -5 );
     }
 
 

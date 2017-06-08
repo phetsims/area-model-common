@@ -15,7 +15,10 @@ define( function( require ) {
 
     // TODO: remove before deployment
     // use a ComboBox for generic layout selection
-    combobox: { type: 'flag' }
+    combobox: { type: 'flag' },
+
+    // TODO: remove before deployment
+    singleLine: { type: 'flag' }
   } );
 
   areaModelCommon.register( 'AreaModelQueryParameters', AreaModelQueryParameters );

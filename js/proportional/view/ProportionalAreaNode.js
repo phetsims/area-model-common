@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -311,7 +312,12 @@ define( function( require ) {
         }
         else {
           text.text = size.toRichString( false );
-          text.center = Vector2.ZERO;
+          if ( AreaModelQueryParameters.singleLine ) {
+            text.center = Vector2.ZERO;
+          }
+          else {
+            text[ partition.orientation.centerCoordinate ] = 0;
+          }
         }
       } );
 
@@ -327,10 +333,20 @@ define( function( require ) {
 
       // Secondary coordinate
       if ( partition.orientation === Orientation.HORIZONTAL ) {
-        labelContainer.y = -15;
+        if ( AreaModelQueryParameters.singleLine ) {
+          labelContainer.y = -15;
+        }
+        else {
+          labelContainer.top = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + 3;
+        }
       }
       else {
-        labelContainer.x = -20;
+        if ( AreaModelQueryParameters.singleLine ) {
+          labelContainer.x = -20;
+        }
+        else {
+          labelContainer.left = AreaModelConstants.VERTICAL_RANGE_OFFSET + 5;
+        }
       }
 
       Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
