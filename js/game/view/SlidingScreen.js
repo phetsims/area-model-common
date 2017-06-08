@@ -5,8 +5,6 @@
  *
  * TODO: Refactor out from this and make-a-ten. Copied. DO NOT LEAVE IN. Will attempt removing TWEEN references.
  *
- * TODO: Review, bring up to common code standards
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
@@ -31,10 +29,14 @@ define( function( require ) {
 
     Node.call( this );
 
-    // @private
+    // @private {Node}
     this.leftNode = leftNode;
     this.rightNode = rightNode;
+
+    // @private {Property.<Bounds2>}
     this.visibleBoundsProperty = visibleBoundsProperty;
+
+    // @private {Property.<boolean>}
     this.showingLeftProperty = showingLeftProperty;
 
     this.addChild( leftNode );
@@ -98,30 +100,16 @@ define( function( require ) {
     },
 
     /**
-     * Stops animation.
-     * @private
-     */
-    stopAnimation: function() {
-      this.animating = false; // TODO: simplify
-    },
-
-    /**
-     * Moves into place immediately, instead of sliding.
-     * @private
-     */
-    moveImmediately: function() {
-      this.stopAnimation();
-      this.x = this.getIdealSlideOffset( this.showingLeftProperty.value );
-      this.setMoving( false );
-    },
-
-    /**
      * Called when the visible bounds change
      * @private
      */
     onVisibleBoundsChange: function() {
       this.rightNode.x = -this.getIdealSlideOffset( false );
-      this.moveImmediately();
+
+      // move immediately, instead of sliding
+      this.animating = false;
+      this.x = this.getIdealSlideOffset( this.showingLeftProperty.value );
+      this.setMoving( false );
     },
 
     /**
@@ -132,8 +120,6 @@ define( function( require ) {
       var idealOffset = this.getIdealSlideOffset( this.showingLeftProperty.value );
 
       if ( this.x !== idealOffset ) {
-        this.stopAnimation();
-
         this.targetX = idealOffset;
         this.sourceX = this.x;
         this.ratio = 0;
