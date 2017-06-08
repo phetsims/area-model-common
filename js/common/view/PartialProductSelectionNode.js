@@ -32,8 +32,7 @@ define( function( require ) {
    * @param {AreaModel} model
    * @param {AlignGroup} selectionButtonAlignGroup
    */
-  function PartialProductsSelectionNode( model, selectionButtonAlignGroup ) {
-    //TODO: rename to 'product' singular instead of plural
+  function PartialProductSelectionNode( model, selectionButtonAlignGroup ) {
 
     Node.call( this );
 
@@ -81,9 +80,9 @@ define( function( require ) {
     } ) );
   }
 
-  areaModelCommon.register( 'PartialProductsSelectionNode', PartialProductsSelectionNode );
+  areaModelCommon.register( 'PartialProductSelectionNode', PartialProductSelectionNode );
 
-  return inherit( Node, PartialProductsSelectionNode, {
+  return inherit( Node, PartialProductSelectionNode, {
     // TODO: doc
     createExponentIcon: function( horizontalNode, verticalNode ) {
       return new HBox( {

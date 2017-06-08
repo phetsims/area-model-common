@@ -33,7 +33,7 @@ define( function( require ) {
    * @param {PartitionedArea} partitionedArea
    * @param {boolean} allowExponents
    */
-  function PartialProductsLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
+  function PartialProductLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
     //TODO: rename to 'product' singular instead of plural
     assert && assert( partialProductsChoiceProperty instanceof Property );
     assert && assert( partitionedArea instanceof PartitionedArea );
@@ -131,7 +131,7 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'PartialProductsLabelNode', PartialProductsLabelNode );
+  areaModelCommon.register( 'PartialProductLabelNode', PartialProductLabelNode );
 
-  return inherit( Node, PartialProductsLabelNode );
+  return inherit( Node, PartialProductLabelNode );
 } );

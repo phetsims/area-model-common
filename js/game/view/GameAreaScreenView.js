@@ -106,9 +106,7 @@ define( function( require ) {
         content: new VBox( {
           children: [
             levelIcons[ index ],
-            new Panel( scoreNode, {
-              // TODO
-            } )
+            new Panel( scoreNode )
           ],
           spacing: 10
         } ),

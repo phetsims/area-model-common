@@ -20,7 +20,7 @@ define( function( require ) {
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
-  var PartialProductsSelectionNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductsSelectionNode' );
+  var PartialProductSelectionNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductSelectionNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -69,7 +69,7 @@ define( function( require ) {
     var selectionButtonAlignGroup = new AlignGroup();
     // TODO: don't require this ordering of creation just for sizing. creating the "bigger" one first
     var productsSelectionPanel = this.createPanel( partialProductsString, panelAlignGroup,
-                                                   new PartialProductsSelectionNode( model, selectionButtonAlignGroup ) );
+                                                   new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
     var calculationSelectionPanel = this.createPanel( areaModelCalculationString, panelAlignGroup,
                                                       new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
 
