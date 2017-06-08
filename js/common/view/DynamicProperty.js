@@ -25,29 +25,63 @@ define( function( require ) {
    * @param {Object} [options] - options
    */
   function DynamicProperty( valuePropertyProperty, options ) {
-    var self = this;
 
     // Use the property's initial value
     Property.call( this, valuePropertyProperty.value.value, options );
 
-    function updateValue( value ) {
-      self.value = value;
-    }
+    // @private {Property.<Property.<*>|null>}
+    this.valuePropertyProperty = valuePropertyProperty;
+
+    // @private {function}
+    this.propertyPropertyListener = this.onPropertyPropertyChange.bind( this );
+
+    // @private
+    this.propertyListener = this.onPropertyChange.bind( this );
 
     // Rehook our listener to whatever is the active property.
-    valuePropertyProperty.link( function( newProperty, oldProperty ) {
-      if ( oldProperty ) {
-        oldProperty.unlink( updateValue );
-      }
-      if ( newProperty ) {
-        newProperty.link( updateValue );
-      }
-    } );
+    valuePropertyProperty.link( this.propertyListener );
   }
 
   areaModelCommon.register( 'DynamicProperty', DynamicProperty );
 
-  return inherit( Property, DynamicProperty, {}, {
+  return inherit( Property, DynamicProperty, {
+    /**
+     * Listener added to the active inner Property.
+     * @private
+     *
+     * @param {*} value
+     */
+    onPropertyPropertyChange: function( value ) {
+      this.value = value;
+    },
+
+    /**
+     * Listener added to the outer Property.
+     * @private
+     *
+     * @param {Property.<*>|null} newProperty
+     * @param {Property.<*>|null|undefined} oldProperty - Initial link passes undefined
+     */
+    onPropertyChange: function( newProperty, oldProperty ) {
+      if ( oldProperty ) {
+        oldProperty.unlink( this.propertyPropertyListener );
+      }
+      if ( newProperty ) {
+        newProperty.link( this.propertyPropertyListener );
+      }
+    },
+
+    /**
+     * Disposes this property
+     * @public
+     */
+    dispose: function() {
+      this.valuePropertyProperty.unlink( this.propertyListener );
+      this.valuePropertyProperty.value && this.valuePropertyProperty.value.unlink( this.propertyPropertyListener );
+
+      Property.prototype.dispose.call( this );
+    }
+  }, {
     /**
      * Creates a dynamic (read-only) property whose value is `mainProperty.value[ name ].value`.
      * @public
