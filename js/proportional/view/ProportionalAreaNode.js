@@ -15,7 +15,6 @@ define( function( require ) {
   var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -27,7 +26,6 @@ define( function( require ) {
   var ProportionalDragHandle = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalDragHandle' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalPartitionLineNode' );
   var Range = require( 'DOT/Range' );
-  var RangeNode = require( 'AREA_MODEL_COMMON/common/view/RangeNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
@@ -106,20 +104,6 @@ define( function( require ) {
         partition.coordinateRangeProperty.link( self.positionPartitionLabels.bind( self, orientation, labels ) );
       } );
     } );
-
-    // Smaller Range views
-    if ( !AreaModelQueryParameters.singleLine ) {
-      Orientation.VALUES.forEach( function( orientation ) {
-        var colorProperty = self.area.getColorProperty( orientation );
-        var partitions = area.getPartitions( orientation );
-        partitions.forEach( function( partition ) {
-          var viewRangeProperty = new DerivedProperty( [ partition.coordinateRangeProperty, partitions[ 1 ].coordinateRangeProperty ], function( modelRange, secondaryModelRange ) {
-            return ( modelRange && secondaryModelRange ) ? new Range( self.mapCoordinate( modelRange.min ), self.mapCoordinate( modelRange.max ) ) : null;
-          } );
-          self.labelLayer.addChild( new RangeNode( null, orientation, viewRangeProperty, colorProperty, false ) );
-        } );
-      } );
-    }
 
     this.mutate( nodeOptions );
   }

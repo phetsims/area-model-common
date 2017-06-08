@@ -59,7 +59,7 @@ define( function( require ) {
       }
     } );
 
-    RangeNode.call( this, label, orientation, viewRangeProperty, colorProperty, true );
+    RangeNode.call( this, label, orientation, viewRangeProperty, colorProperty );
   }
 
   areaModelCommon.register( 'RangeLabelNode', RangeLabelNode );

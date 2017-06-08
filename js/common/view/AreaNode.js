@@ -52,22 +52,12 @@ define( function( require ) {
     // @public {number}
     this.viewSize = AreaModelConstants.AREA_SIZE;
 
-    // @protected {Property.<Range|null>} - Coordinate ranges for orientations (like in Area), but in view coordinates.
-    this.horizontalViewRangeProperty = new DerivedProperty( [ area.getCoordinateRangeProperty( Orientation.HORIZONTAL ) ], function( range ) {
-      if ( range === null ) { return null; }
-      return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
-    } );
-    this.verticalViewRangeProperty = new DerivedProperty( [ area.getCoordinateRangeProperty( Orientation.VERTICAL ) ], function( range ) {
-      if ( range === null ) { return null; }
-      return new Range( self.mapCoordinate( range.min ), self.mapCoordinate( range.max ) );
-    } );
-
-    // Range views
+    // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = self.area.getColorProperty( orientation );
       var termListProperty = allowExponents ? self.area.getTermListProperty( orientation )
                                             : self.area.getTotalProperty( orientation );
-      var viewRangeProperty = self.getViewRangeProperty( orientation );
+      var viewRangeProperty = self.toViewRangeProperty( area.getCoordinateRangeProperty( orientation ) );
       self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
     } );
 
@@ -109,6 +99,8 @@ define( function( require ) {
      * origin.
      * @private
      *
+     * TODO: check usage to see if we can use mapRange instead
+     *
      * @param {number} value
      * @returns {number}
      */
@@ -116,16 +108,18 @@ define( function( require ) {
       return this.viewSize * value / this.area.coordinateRangeMax;
     },
 
-    /**
-     * Returns the coordinate range for a particular orientation in view coordinates.
-     * @public
-     *
-     * @param {Property.<Range|null>} - Null if there is no defined coordinate range.
-     */
-    getViewRangeProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+    //TODO: doc
+    mapRange: function( range ) {
+      return new Range( this.mapCoordinate( range.min ), this.mapCoordinate( range.max ) );
+    },
 
-      return orientation === Orientation.HORIZONTAL ? this.horizontalViewRangeProperty : this.verticalViewRangeProperty;
+    // TODO doc {Property.<Range|null>} in and out
+    toViewRangeProperty: function( rangeProperty ) {
+      var self = this;
+
+      return new DerivedProperty( [ rangeProperty ], function( range ) {
+        return range ? self.mapRange( range ) : null;
+      } );
     }
   } );
 } );

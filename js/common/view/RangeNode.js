@@ -27,19 +27,20 @@ define( function( require ) {
    * @extends {Node}
    *
    * TODO: Don't handle label positioning in this node
+   * TODO: Can we collapse this and RangeLabelNode?
+   *
    * @param {Node|null} labelNode
    * @param {Orientation} orientation
    * @param {Property.<Range>} viewRangeProperty - Expected to be in view coordinates
    * @param {Property.<Color>} colorProperty
-   * @param {boolean} isMain
    */
-  function RangeNode( labelNode, orientation, viewRangeProperty, colorProperty, isMain ) {
+  function RangeNode( labelNode, orientation, viewRangeProperty, colorProperty ) {
     assert && assert( labelNode === null || labelNode instanceof Node );
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( viewRangeProperty instanceof Property );
     assert && assert( colorProperty instanceof Property );
 
-    var lineWidth = AreaModelQueryParameters.singleLine ? 1 : ( isMain ? 2.5 : 1 );
+    var lineWidth = AreaModelQueryParameters.singleLine ? 1 : 1.5;
 
     var tickOptions = {
       y1: -TICK_LENGTH / 2,
@@ -79,13 +80,11 @@ define( function( require ) {
         return;
       }
 
-      var offset = isMain ? 0 : AreaModelConstants.NON_MAIN_OFFSET;
-
       // Points on each end of our line
-      var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.min, AreaModelConstants.HORIZONTAL_RANGE_OFFSET + offset )
-                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET + offset, range.min );
-      var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.max, AreaModelConstants.HORIZONTAL_RANGE_OFFSET + offset )
-                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET + offset, range.max );
+      var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.min, AreaModelConstants.HORIZONTAL_RANGE_OFFSET )
+                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET, range.min );
+      var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.max, AreaModelConstants.HORIZONTAL_RANGE_OFFSET )
+                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET, range.max );
 
       minTick.translation = minPoint;
       maxTick.translation = maxPoint;
