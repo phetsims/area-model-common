@@ -51,13 +51,17 @@ define( function( require ) {
   Orientation.HORIZONTAL = new Orientation( {
     coordinate: 'x',
     centerCoordinate: 'centerX',
-    modelViewName: 'modelToViewX'
+    modelViewName: 'modelToViewX',
+    minSide: 'left',
+    maxSide: 'right'
   } );
 
   Orientation.VERTICAL = new Orientation( {
     coordinate: 'y',
     centerCoordinate: 'centerY',
-    modelViewName: 'modelToViewY'
+    modelViewName: 'modelToViewY',
+    minSide: 'top',
+    maxSide: 'bottom' // TODO: use these where possible?
   } );
 
   // Set up opposites as object references (circular)

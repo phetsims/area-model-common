@@ -102,11 +102,9 @@ define( function( require ) {
         self.labelLayer.addChild( label );
         return label;
       } );
-      if ( orientation === Orientation.HORIZONTAL ) {
-        partitions.forEach( function( partition ) {
-          partition.coordinateRangeProperty.link( self.positionHorizontalPartitionLabels.bind( self, labels ) );
-        } );
-      }
+      partitions.forEach( function( partition ) {
+        partition.coordinateRangeProperty.link( self.positionPartitionLabels.bind( self, orientation, labels ) );
+      } );
     } );
 
     // Smaller Range views
@@ -278,26 +276,26 @@ define( function( require ) {
     },
 
     // TODO doc
-    // TODO: ALso handle the vertical labels in a similar way.
-    positionHorizontalPartitionLabels: function( labels ) {
-      var leftRange = this.area.horizontalPartitions[ 0 ].coordinateRangeProperty.value;
-      var rightRange = this.area.horizontalPartitions[ 1 ].coordinateRangeProperty.value;
+    positionPartitionLabels: function( orientation, labels ) {
+      var partitions = this.area.getPartitions( orientation );
+      var primaryRange = partitions[ 0 ].coordinateRangeProperty.value;
+      var secondaryRange = partitions[ 1 ].coordinateRangeProperty.value;
 
       // TODO: make this prettier? lots of cleanup
-      var left = this.modelViewTransform.modelToViewX( leftRange.min );
-      var middle = this.modelViewTransform.modelToViewX( leftRange.max );
-      var right = rightRange ? this.modelViewTransform.modelToViewX( rightRange.max ) : 0;
+      var min = orientation.modelToView( this.modelViewTransform, primaryRange.min );
+      var middle = orientation.modelToView( this.modelViewTransform, primaryRange.max );
+      var max = secondaryRange ? orientation.modelToView( this.modelViewTransform, secondaryRange.max ) : 0;
 
-      labels[ 0 ].x = ( left + middle ) / 2;
-      labels[ 1 ].x = ( middle + right ) / 2;
+      labels[ 0 ][ orientation.coordinate ] = ( min + middle ) / 2;
+      labels[ 1 ][ orientation.coordinate ] = ( middle + max ) / 2;
 
-      var horizontalPad = 2;
+      var pad = orientation === Orientation.HORIZONTAL ? 2 : 0; // TODO: consider different value for vertical
 
-      if ( rightRange && labels[ 0 ].right > labels[ 1 ].left - horizontalPad * 2 ) {
-        var center = ( labels[ 0 ].right + labels[ 1 ].left ) / 2;
+      if ( secondaryRange && labels[ 0 ][ orientation.maxSide ] > labels[ 1 ][ orientation.minSide ] - pad * 2 ) {
+        var center = ( labels[ 0 ][ orientation.maxSide ] + labels[ 1 ][ orientation.minSide ] ) / 2;
 
-        labels[ 0 ].right = center - horizontalPad;
-        labels[ 1 ].left = center + horizontalPad;
+        labels[ 0 ][ orientation.maxSide ] = center - pad;
+        labels[ 1 ][ orientation.minSide ] = center + pad;
       }
     },
 
@@ -311,8 +309,6 @@ define( function( require ) {
      * @returns {Node}
      */
     createPartitionLabel: function( partition, secondaryPartition, index ) {
-      var self = this;
-
       var text = new Text( '', {
         font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
         fill: partition.colorProperty
@@ -337,16 +333,6 @@ define( function( require ) {
           }
         }
       } );
-
-      // Primary coordinate (only handle if vertical, horizontal will be handled in positionHorizontalPartitionLabels)
-      if ( partition.orientation === Orientation.VERTICAL ) {
-        partition.coordinateRangeProperty.link( function( range ) {
-          if ( range ) {
-            var center = partition.orientation.modelToView( self.modelViewTransform, range.getCenter() );
-            labelContainer[ partition.orientation.coordinate ] = center;
-          }
-        } );
-      }
 
       // Secondary coordinate
       if ( partition.orientation === Orientation.HORIZONTAL ) {
