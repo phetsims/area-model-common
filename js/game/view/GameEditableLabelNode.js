@@ -46,9 +46,7 @@ define( function( require ) {
     var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
       return valueProperty.digits;
     } );
-    var highlightProperty = new DynamicProperty( new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
-      return valueProperty.highlightProperty;
-    } ) );
+    var highlightProperty = DynamicProperty.createDerived( valuePropertyProperty, 'highlightProperty' );
     var isActiveProperty = new DerivedProperty( [ valuePropertyProperty, activeEditableProperty ], function( valueProperty, activeProperty ) {
       return valueProperty === activeProperty;
     } );

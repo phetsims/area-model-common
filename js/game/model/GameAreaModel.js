@@ -16,7 +16,6 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
@@ -25,10 +24,6 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
-
-  // constants
-  var nullProperty = new Property( null );
-  var trueProperty = new BooleanProperty( true );
 
   /**
    * @constructor
@@ -186,20 +181,14 @@ define( function( require ) {
     this.activeEditableProperty = new Property( null );
 
     // @public {Property.<AreaChallenge|null>}
-    this.currentChallengeProperty = new DynamicProperty( new DerivedProperty( [ this.currentLevelProperty ], function( level ) {
-      return level ? level.currentChallengeProperty : nullProperty;
-    } ) );
+    this.currentChallengeProperty = DynamicProperty.createDerived( this.currentLevelProperty, 'currentChallengeProperty', null );
     this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
     // @public {Property.<GameState|null>} TODO check if used
-    this.stateProperty = new DynamicBidirectionalProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
-      return challenge ? challenge.stateProperty : nullProperty;
-    } ) );
+    this.stateProperty = DynamicBidirectionalProperty.createDerived( this.currentChallengeProperty, 'stateProperty', null );
 
     // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)
-    this.hasNullProperty = new DynamicProperty( new DerivedProperty( [ this.currentChallengeProperty ], function( challenge ) {
-      return challenge ? challenge.hasNullProperty : trueProperty;
-    } ) );
+    this.hasNullProperty = DynamicProperty.createDerived( this.currentChallengeProperty, 'hasNullProperty', true );
   }
 
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );

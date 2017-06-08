@@ -13,6 +13,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
@@ -46,5 +47,16 @@ define( function( require ) {
 
   areaModelCommon.register( 'DynamicProperty', DynamicProperty );
 
-  return inherit( Property, DynamicProperty );
+  return inherit( Property, DynamicProperty, {}, {
+    //TODO: doc
+    //TODO: rename to derived()
+    createDerived: function( propertyProperty, name, defaultValue ) {
+      var hasDefault = defaultValue !== undefined;
+      var defaultProperty = new Property( defaultValue );
+
+      return new DynamicProperty( new DerivedProperty( [ propertyProperty ], function( property ) {
+        return ( hasDefault && property === null ) ? defaultProperty : property[ name ];
+      } ) );
+    }
+  } );
 } );
