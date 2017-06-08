@@ -95,7 +95,7 @@ define( function( require ) {
       readoutText.text = longestString;
 
       // Update the background
-      readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 5 ) );
+      readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 1 ) );
 
       // Reposition our text
       readoutText.center = readoutBackground.center;
