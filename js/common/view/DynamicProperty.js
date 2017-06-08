@@ -48,14 +48,25 @@ define( function( require ) {
   areaModelCommon.register( 'DynamicProperty', DynamicProperty );
 
   return inherit( Property, DynamicProperty, {}, {
-    //TODO: doc
-    //TODO: rename to derived()
-    createDerived: function( propertyProperty, name, defaultValue ) {
+    /**
+     * Creates a dynamic (read-only) property whose value is `mainProperty.value[ name ].value`.
+     * @public
+     *
+     * @param {Property.<[name]: {Property.<*>}|null>} mainProperty - A property whose values are either null, or
+     *                                                   objects such that object[ name ] is a Property. If the value
+     *                                                   is null, the default will be used instead.
+     * @param {string} name - When the mainProperty's value is non-null, mainProperty.value[ name ] should be the
+     *                        property to use.
+     * @param {*} [defaultValue] - If mainProperty.value === null, this is the value that is used instead of
+     *                             mainProperty.value[ name ].value.
+     * @returns {DynamicProperty.<*>}
+     */
+    derived: function( mainProperty, name, defaultValue ) {
       var hasDefault = defaultValue !== undefined;
-      var defaultProperty = new Property( defaultValue );
+      var defaultProperty = new Property( hasDefault ? defaultValue : null ); // Forward null by default
 
-      return new DynamicProperty( new DerivedProperty( [ propertyProperty ], function( property ) {
-        return ( hasDefault && property === null ) ? defaultProperty : property[ name ];
+      return new DynamicProperty( new DerivedProperty( [ mainProperty ], function( property ) {
+        return ( property === null ) ? defaultProperty : property[ name ];
       } ) );
     }
   } );

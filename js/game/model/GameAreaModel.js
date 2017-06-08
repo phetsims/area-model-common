@@ -181,14 +181,14 @@ define( function( require ) {
     this.activeEditableProperty = new Property( null );
 
     // @public {Property.<AreaChallenge|null>}
-    this.currentChallengeProperty = DynamicProperty.createDerived( this.currentLevelProperty, 'currentChallengeProperty', null );
+    this.currentChallengeProperty = DynamicProperty.derived( this.currentLevelProperty, 'currentChallengeProperty', null );
     this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
     // @public {Property.<GameState|null>} TODO check if used
-    this.stateProperty = DynamicBidirectionalProperty.createDerived( this.currentChallengeProperty, 'stateProperty', null );
+    this.stateProperty = DynamicBidirectionalProperty.derived( this.currentChallengeProperty, 'stateProperty', null );
 
     // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)
-    this.hasNullProperty = DynamicProperty.createDerived( this.currentChallengeProperty, 'hasNullProperty', true );
+    this.hasNullProperty = DynamicProperty.derived( this.currentChallengeProperty, 'hasNullProperty', true );
   }
 
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );
