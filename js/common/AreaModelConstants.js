@@ -63,6 +63,9 @@ define( function( require ) {
     HORIZONTAL_RANGE_OFFSET: AreaModelQueryParameters.singleLine ? -40 : -50, // Vertical offset from the main area for horizontal range labels
     VERTICAL_RANGE_OFFSET: AreaModelQueryParameters.singleLine ? -60 : -70, // Horizontal offset from the main area for vertical range labels
 
+    // TODO:
+    NON_MAIN_OFFSET: 10,
+
     X_STRING: '\u00D7',
 
     // Number of challenges per level

@@ -26,40 +26,44 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Node} labelNode
+   * TODO: Don't handle label positioning in this node
+   * @param {Node|null} labelNode
    * @param {Orientation} orientation
    * @param {Property.<Range>} viewRangeProperty - Expected to be in view coordinates
    * @param {Property.<Color>} colorProperty
+   * @param {boolean} isMain
    */
-  function RangeNode( labelNode, orientation, viewRangeProperty, colorProperty ) {
-    assert && assert( labelNode instanceof Node );
+  function RangeNode( labelNode, orientation, viewRangeProperty, colorProperty, isMain ) {
+    assert && assert( labelNode === null || labelNode instanceof Node );
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( viewRangeProperty instanceof Property );
     assert && assert( colorProperty instanceof Property );
 
-    var mainLineWidth = AreaModelQueryParameters.singleLine ? 1 : 2.5;
+    var lineWidth = AreaModelQueryParameters.singleLine ? 1 : ( isMain ? 2.5 : 1 );
 
     var tickOptions = {
       y1: -TICK_LENGTH / 2,
       y2: TICK_LENGTH / 2,
       stroke: colorProperty,
-      lineWidth: mainLineWidth,
+      lineWidth: lineWidth,
       rotation: orientation === Orientation.HORIZONTAL ? 0 : Math.PI / 2
     };
     var minTick = new Line( tickOptions );
     var maxTick = new Line( tickOptions );
 
     var line = new Line( {
-      lineWidth: mainLineWidth,
+      lineWidth: lineWidth,
       stroke: colorProperty
     } );
 
     // Coordinates that don't change.
-    if ( orientation === Orientation.HORIZONTAL ) {
-      labelNode.y = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -3 );
-    }
-    else {
-      labelNode.x = AreaModelConstants.VERTICAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -5 );
+    if ( labelNode ) { // TODO: don't require this workaround
+      if ( orientation === Orientation.HORIZONTAL ) {
+        labelNode.y = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -3 );
+      }
+      else {
+        labelNode.x = AreaModelConstants.VERTICAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -5 );
+      }
     }
 
 
@@ -75,26 +79,29 @@ define( function( require ) {
         return;
       }
 
+      var offset = isMain ? 0 : AreaModelConstants.NON_MAIN_OFFSET;
+
       // Points on each end of our line
-      var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.min, AreaModelConstants.HORIZONTAL_RANGE_OFFSET )
-                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET, range.min );
-      var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.max, AreaModelConstants.HORIZONTAL_RANGE_OFFSET )
-                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET, range.max );
+      var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.min, AreaModelConstants.HORIZONTAL_RANGE_OFFSET + offset )
+                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET + offset, range.min );
+      var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.max, AreaModelConstants.HORIZONTAL_RANGE_OFFSET + offset )
+                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET + offset, range.max );
 
       minTick.translation = minPoint;
       maxTick.translation = maxPoint;
       line.p1 = minPoint;
       line.p2 = maxPoint;
-      labelNode[ orientation.coordinate ] = range.getCenter();
+      if ( labelNode ) {
+        labelNode[ orientation.coordinate ] = range.getCenter();
+      }
     } );
 
     Node.call( this, {
       children: [
         minTick,
         maxTick,
-        line,
-        labelNode
-      ]
+        line
+      ].concat( labelNode ? [ labelNode ] : [] )
     } );
   }
 
