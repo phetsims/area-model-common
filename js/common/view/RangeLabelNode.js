@@ -39,6 +39,10 @@ define( function( require ) {
       children: [ text ]
     } );
 
+    if ( orientation === Orientation.VERTICAL ) {
+      text.maxWidth = AreaModelConstants.MAIN_AREA_OFFSET.x + AreaModelConstants.VERTICAL_RANGE_OFFSET - AreaModelConstants.PANEL_MARGIN;
+    }
+
     // Update the label text
     termListProperty.link( function( termList ) {
       var hasTerms = termList !== null && termList.terms.length > 0;
