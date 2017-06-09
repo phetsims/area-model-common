@@ -148,6 +148,8 @@ define( function( require ) {
      * Returns the partition that contains the entire active size when there is no partition line (in that orientation).
      * @public
      *
+     * TODO search for usages that should be replaced by this
+     *
      * @returns {Partition}
      */
     getPrimaryPartition: function( orientation ) {
@@ -157,6 +159,8 @@ define( function( require ) {
     /**
      * Returns the partition that has zero size when there is no partition line (in that orientation).
      * @public
+     *
+     * TODO search for usages that should be replaced by this
      *
      * @returns {Partition}
      */
