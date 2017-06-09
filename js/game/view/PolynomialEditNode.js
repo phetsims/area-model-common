@@ -12,7 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Property.<EditableProperty.<Polynomial|term|null>|null>} polynomialPropertyProperty - Ignored if it has another keypadType
+   * @param {Property.<EditableProperty.<Polynomial|term|null>|null>} polynomialPropertyProperty - Ignored if it has another entryType
    */
   function PolynomialEditNode( polynomialPropertyProperty ) {
     // TODO: consider only showing relative terms?
@@ -42,8 +42,8 @@ define( function( require ) {
     var xSquaredProperty = new NumberProperty( 0 );
 
     function isPolynomial() {
-      return polynomialPropertyProperty.value && ( polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL_2 ||
-                                                   polynomialPropertyProperty.value.keypadType === KeypadType.POLYNOMIAL_1 );
+      return polynomialPropertyProperty.value && ( polynomialPropertyProperty.value.entryType === EntryType.POLYNOMIAL_2 ||
+                                                   polynomialPropertyProperty.value.entryType === EntryType.POLYNOMIAL_1 );
     }
 
     polynomialPropertyProperty.link( function( polynomialProperty ) {
@@ -126,7 +126,7 @@ define( function( require ) {
     Node.call( this );
     // Hide the x^2 term if we won't use it
     polynomialPropertyProperty.link( function( polynomialProperty ) {
-      self.children = polynomialProperty.keypadType === KeypadType.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
+      self.children = polynomialProperty.entryType === EntryType.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
     } );
 
     // TODO: See if HBox can have align option of "don't screw with it, handle manually"

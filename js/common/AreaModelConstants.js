@@ -60,15 +60,14 @@ define( function( require ) {
     GENERIC_ICON_FIRST_OFFSET: 0.55,
     GENERIC_ICON_SECOND_OFFSET: 0.80,
 
-    RANGE_OFFSET: new Vector2(
-      //TODO
-      AreaModelQueryParameters.singleLine ? -60 : -60, // Horizontal offset from the main area for vertical range labels
-      AreaModelQueryParameters.singleLine ? -40 : -40 // Vertical offset from the main area for horizontal range labels
-    ),
+    // {Vector2} - Offset vector from the upper-left of the area to the x,y location where the dimension line labels
+    //             would intersect.
+    RANGE_OFFSET: new Vector2( -60, -40 ),
 
+    // {string} - We prefer this string when denoting multiplication instead of the 'x' character
     X_STRING: '\u00D7',
 
-    // Number of challenges per level
+    // {number} - Number of challenges per level
     NUM_CHALLENGES: 6
   } );
 } );

@@ -13,25 +13,25 @@ define( function( require ) {
 
   //TODO: rename to EntryType, as we don't use a keypad for polynomials
   //TODO: add values like isPolynomial
-  var KeypadType = {
+  var EntryType = {
     CONSTANT: 'CONSTANT',
     TERM: 'TERM',
     POLYNOMIAL_2: 'POLYNOMIAL_2', // with x^2
     POLYNOMIAL_1: 'POLYNOMIAL_1' // without x^2
   };
 
-  areaModelCommon.register( 'KeypadType', KeypadType );
+  areaModelCommon.register( 'EntryType', EntryType );
 
   // All values the enumeration can take.
-  KeypadType.VALUES = [
-    KeypadType.CONSTANT,
-    KeypadType.TERM,
-    KeypadType.POLYNOMIAL_2,
-    KeypadType.POLYNOMIAL_1
+  EntryType.VALUES = [
+    EntryType.CONSTANT,
+    EntryType.TERM,
+    EntryType.POLYNOMIAL_2,
+    EntryType.POLYNOMIAL_1
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( KeypadType ); }
+  if ( assert ) { Object.freeze( EntryType ); }
 
-  return KeypadType;
+  return EntryType;
 } );

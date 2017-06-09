@@ -18,7 +18,7 @@ define( function( require ) {
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
@@ -50,9 +50,9 @@ define( function( require ) {
     // @public {GameArea}
     this.area = new GameArea( description.layout, description.allowExponents );
 
-    // @private {KeypadType}
+    // @private {EntryType}
     //TODO: var?
-    var mainKeypadType = ( description.type === AreaChallengeType.VARIABLES ) ? KeypadType.TERM : KeypadType.CONSTANT;
+    var mainEntryType = ( description.type === AreaChallengeType.VARIABLES ) ? EntryType.TERM : EntryType.CONSTANT;
 
     // TODO: Check whether visibility is needed on things below.
 
@@ -65,14 +65,14 @@ define( function( require ) {
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
         displayType: gameToDisplayMap[ description.horizontalValues[ index ] ],
-        keypadType: mainKeypadType, // TODO: dedup?
+        entryType: mainEntryType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
       } );
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
         displayType: gameToDisplayMap[ description.verticalValues[ index ] ],
-        keypadType: mainKeypadType, // TODO: dedup?
+        entryType: mainEntryType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
       } );
     } );
@@ -91,7 +91,7 @@ define( function( require ) {
         var gameValue = description.productValues[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
           displayType: gameToDisplayMap[ gameValue ],
-          keypadType: mainKeypadType,
+          entryType: mainEntryType,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits
         } );
         // Link up if dynamic
@@ -129,7 +129,7 @@ define( function( require ) {
     // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
       displayType: gameToDisplayMap[ description.totalValue ],
-      keypadType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? KeypadType.POLYNOMIAL_2 : KeypadType.POLYNOMIAL_1 ) : KeypadType.CONSTANT,
+      entryType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? EntryType.POLYNOMIAL_2 : EntryType.POLYNOMIAL_1 ) : EntryType.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
 

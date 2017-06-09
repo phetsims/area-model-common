@@ -13,7 +13,7 @@ define( function( require ) {
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -30,7 +30,7 @@ define( function( require ) {
 
       // Our options
       displayType: DisplayType.HIDDEN,
-      keypadType: KeypadType.CONSTANT,
+      entryType: EntryType.CONSTANT,
       digits: 0
     }, options );
 
@@ -45,8 +45,8 @@ define( function( require ) {
     // @public {DisplayType}
     this.displayType = options.displayType;
 
-    // @public {KeypadType}
-    this.keypadType = options.keypadType;
+    // @public {EntryType}
+    this.entryType = options.entryType;
 
     // @public {number}
     this.digits = options.digits;

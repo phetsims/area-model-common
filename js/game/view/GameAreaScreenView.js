@@ -29,7 +29,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -243,7 +243,7 @@ define( function( require ) {
     //TODO: simplify
     Property.multilink( [ this.display.totalPropertyProperty, model.stateProperty ], function( totalProperty, gameState ) {
       if ( totalProperty.displayType === DisplayType.EDITABLE &&
-           ( totalProperty.keypadType === KeypadType.POLYNOMIAL_2 || totalProperty.keypadType === KeypadType.POLYNOMIAL_1 ) ) {
+           ( totalProperty.entryType === EntryType.POLYNOMIAL_2 || totalProperty.entryType === EntryType.POLYNOMIAL_1 ) ) {
 
         //TODO: is this really necessary?
         var isReadout = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;

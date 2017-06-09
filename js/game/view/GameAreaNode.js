@@ -18,7 +18,7 @@ define( function( require ) {
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeypadType = require( 'AREA_MODEL_COMMON/game/enum/KeypadType' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -187,8 +187,8 @@ define( function( require ) {
       noExponentKeypadPanel.clear();
       exponentKeypadPanel.clear();
 
-      noExponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.keypadType === KeypadType.CONSTANT;
-      exponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.keypadType === KeypadType.TERM;
+      noExponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.entryType === EntryType.CONSTANT;
+      exponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.entryType === EntryType.TERM;
       // TODO: entry for polynomials
     } );
   }
