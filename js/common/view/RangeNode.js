@@ -17,10 +17,9 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var TICK_LENGTH = 8; // How long the tick marks are for the range labels
+  var TICK_LENGTH = 10; // How long the tick marks are for the range labels
 
   /**
    * @constructor
@@ -29,78 +28,81 @@ define( function( require ) {
    * TODO: Don't handle label positioning in this node
    * TODO: Can we collapse this and RangeLabelNode?
    *
-   * @param {Node|null} labelNode
+   * @param {Node} labelNode
    * @param {Orientation} orientation
-   * @param {Property.<Range>} viewRangeProperty - Expected to be in view coordinates
+   * @param {Property.<Array.<number>>} tickLocationsProperty - In view coordinates
    * @param {Property.<Color>} colorProperty
    */
-  function RangeNode( labelNode, orientation, viewRangeProperty, colorProperty ) {
-    assert && assert( labelNode === null || labelNode instanceof Node );
+  function RangeNode( labelNode, orientation, tickLocationsProperty, colorProperty ) {
+    assert && assert( labelNode instanceof Node );
     assert && assert( Orientation.isOrientation( orientation ) );
-    assert && assert( viewRangeProperty instanceof Property );
     assert && assert( colorProperty instanceof Property );
 
-    var lineWidth = AreaModelQueryParameters.singleLine ? 1 : 1.5;
+    var self = this;
+
+    Node.call( this, {
+      children: [ labelNode ]
+    } );
+
+    var lineWidth = AreaModelQueryParameters.singleLine ? 1 : 2;
 
     var tickOptions = {
-      y1: -TICK_LENGTH / 2,
+      y1: 0,
       y2: TICK_LENGTH / 2,
       stroke: colorProperty,
       lineWidth: lineWidth,
-      rotation: orientation === Orientation.HORIZONTAL ? 0 : Math.PI / 2
+      rotation: orientation === Orientation.HORIZONTAL ? 0 : -Math.PI / 2
     };
-    var minTick = new Line( tickOptions );
-    var maxTick = new Line( tickOptions );
+
+    var ticks = [];
 
     var line = new Line( {
       lineWidth: lineWidth,
       stroke: colorProperty
     } );
+    this.addChild( line );
 
-    // Coordinates that don't change.
-    if ( labelNode ) { // TODO: don't require this workaround
-      if ( orientation === Orientation.HORIZONTAL ) {
-        labelNode.y = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -3 );
-      }
-      else {
-        labelNode.x = AreaModelConstants.VERTICAL_RANGE_OFFSET + ( AreaModelQueryParameters.singleLine ? -7 : -5 );
-      }
-    }
+    var rangeOffset = AreaModelConstants.RANGE_OFFSET[ orientation.opposite.coordinate ];
 
+    // Coordinate that doesn't change.
+    //TODO: simplify
+    labelNode[ orientation.opposite.coordinate ] = rangeOffset + ( AreaModelQueryParameters.singleLine ? -7 : ( orientation === Orientation.HORIZONTAL ? -3 : -5 ) );
 
     // Update the layout
-    viewRangeProperty.link( function( range ) {
-      var hasRange = range !== null;
+    tickLocationsProperty.link( function( tickLocations ) {
+      assert && assert( tickLocations.length === 0 || tickLocations.length >= 2 );
 
-      minTick.visible = hasRange;
-      maxTick.visible = hasRange;
-      line.visible = hasRange;
-
-      if ( !hasRange ) {
-        return;
+      if ( tickLocations.length === 0 ) {
+        ticks.forEach( function( tick ) {
+          tick.visible = false;
+        } );
       }
+      else {
+        // Add any ticks that we need
+        while ( ticks.length < tickLocations.length ) {
+          var tick = new Line( tickOptions );
+          ticks.push( tick );
+          self.addChild( tick );
+        }
 
-      // Points on each end of our line
-      var minPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.min, AreaModelConstants.HORIZONTAL_RANGE_OFFSET )
-                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET, range.min );
-      var maxPoint = orientation === Orientation.HORIZONTAL ? new Vector2( range.max, AreaModelConstants.HORIZONTAL_RANGE_OFFSET )
-                                                            : new Vector2( AreaModelConstants.VERTICAL_RANGE_OFFSET, range.max );
+        ticks.forEach( function( tick, index ) {
+          if ( index < tickLocations.length ) {
+            tick.visible = true;
+            tick.translation = orientation.vector( tickLocations[ index ], rangeOffset );
+            tick.y1 = ( index === 0 || index === tickLocations.length - 1 ) ? -TICK_LENGTH / 2 : 0;
+          }
+          else {
+            tick.visible = false;
+          }
+        } );
 
-      minTick.translation = minPoint;
-      maxTick.translation = maxPoint;
-      line.p1 = minPoint;
-      line.p2 = maxPoint;
-      if ( labelNode ) {
-        labelNode[ orientation.coordinate ] = range.getCenter();
+        var minLocation = tickLocations[ 0 ];
+        var maxLocation = tickLocations[ tickLocations.length - 1 ];
+
+        line.p1 = orientation.vector( minLocation, rangeOffset );
+        line.p2 = orientation.vector( maxLocation, rangeOffset );
+        labelNode[ orientation.coordinate ] = ( maxLocation + minLocation ) / 2; // centered
       }
-    } );
-
-    Node.call( this, {
-      children: [
-        minTick,
-        maxTick,
-        line
-      ].concat( labelNode ? [ labelNode ] : [] )
     } );
   }
 

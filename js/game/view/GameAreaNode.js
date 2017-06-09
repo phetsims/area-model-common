@@ -23,7 +23,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
@@ -67,10 +66,19 @@ define( function( require ) {
     } );
 
     // Range views
+    var tickVariations = {
+      1: [ 0, fullOffset ],
+      2: [ 0, singleOffset, fullOffset ],
+      3: [ 0, firstOffset, secondOffset, fullOffset ]
+    };
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
       var termListProperty = orientation === Orientation.HORIZONTAL ? display.horizontalTotalProperty : display.verticalTotalProperty;
-      self.addChild( new RangeLabelNode( termListProperty, orientation, new Property( new Range( 0, AreaModelConstants.AREA_SIZE ) ), colorProperty ) );
+
+      var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
+        return tickVariations[ layout.getPartitionQuantity( orientation ) ];
+      } );
+      self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty ) );
     } );
 
     var centerProperties = {}; // TODO: doc key/value

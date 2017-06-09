@@ -27,10 +27,10 @@ define( function( require ) {
     PARTIAL_PRODUCT_FONT: new PhetFont( 19 ),
     PARTIAL_FACTOR_FONT: new PhetFont( 14 ),
     EDIT_READOUT_FONT: new PhetFont( 18 ),
-    PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: AreaModelQueryParameters.singleLine ? 18 : 15, weight: 'bold' } ),
+    PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: AreaModelQueryParameters.singleLine ? 18 : 18, weight: 'bold' } ),
     GAME_VALUE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     GAME_POLYNOMIAL_EDIT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),
-    TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: AreaModelQueryParameters.singleLine ? 18 : 19, weight: 'bold' } ),
+    TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: AreaModelQueryParameters.singleLine ? 18 : 22, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 20 ),
     LAYOUT_FONT: new PhetFont( 22 ),
@@ -60,11 +60,11 @@ define( function( require ) {
     GENERIC_ICON_FIRST_OFFSET: 0.55,
     GENERIC_ICON_SECOND_OFFSET: 0.80,
 
-    HORIZONTAL_RANGE_OFFSET: AreaModelQueryParameters.singleLine ? -40 : -50, // Vertical offset from the main area for horizontal range labels
-    VERTICAL_RANGE_OFFSET: AreaModelQueryParameters.singleLine ? -60 : -70, // Horizontal offset from the main area for vertical range labels
-
-    // TODO:
-    NON_MAIN_OFFSET: 10,
+    RANGE_OFFSET: new Vector2(
+      //TODO
+      AreaModelQueryParameters.singleLine ? -60 : -60, // Horizontal offset from the main area for vertical range labels
+      AreaModelQueryParameters.singleLine ? -40 : -40 // Vertical offset from the main area for horizontal range labels
+    ),
 
     X_STRING: '\u00D7',
 

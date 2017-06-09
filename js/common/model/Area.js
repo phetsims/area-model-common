@@ -94,6 +94,10 @@ define( function( require ) {
     // @private {Property.<Range|null>} - Prefer getCoordinateRangeProperty()
     this.horizontalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.HORIZONTAL );
     this.verticalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.VERTICAL );
+
+    // @private {Property.<Array.<number>>} - Prefer getPartitionBoundariesProperty()
+    this.horizontalPartitionBoundariesProperty = this.createPartitionBoundariesProperty( Orientation.HORIZONTAL );
+    this.verticalPartitionBoundariesProperty = this.createPartitionBoundariesProperty( Orientation.VERTICAL );
   }
 
   areaModelCommon.register( 'Area', Area );
@@ -240,6 +244,20 @@ define( function( require ) {
     },
 
     /**
+     * Returns the partition boundaries property associated with the particular orientation.
+     * @public
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Array.<number>>}
+     */
+    getPartitionBoundariesProperty: function( orientation ) {
+      assert && assert( Orientation.isOrientation( orientation ) );
+
+      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitionBoundariesProperty
+                                                    : this.verticalPartitionBoundariesProperty;
+    },
+
+    /**
      * Returns the TermList Property to be displayed in the Product panel
      * @public
      *
@@ -304,6 +322,30 @@ define( function( require ) {
         }
       }, {
         useDeepEquality: true
+      } );
+    },
+
+    // TODO doc returns {Property.<Array.<number>>}
+    createPartitionBoundariesProperty: function( orientation ) {
+      var partitions = this.getPartitions( orientation );
+
+      // We need to listen to every partition's properties for the given orientation
+      var coordinateProperties = _.flatten( partitions.map( function( partition ) {
+        return [ partition.coordinateRangeProperty, partition.sizeProperty ];
+      } ) );
+
+      return new DerivedProperty( coordinateProperties, function() {
+        return _.uniq( _.flatten( partitions.map( function( partition ) {
+          var range = partition.coordinateRangeProperty.value;
+
+          // Ignore null range or invisible
+          if ( range === null || !partition.visibleProperty.value ) {
+            return [];
+          }
+          else {
+            return [ range.min, range.max ];
+          }
+        } ) ) );
       } );
     },
 

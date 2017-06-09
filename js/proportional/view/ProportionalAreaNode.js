@@ -324,7 +324,7 @@ define( function( require ) {
           labelContainer.y = -15;
         }
         else {
-          labelContainer.top = AreaModelConstants.HORIZONTAL_RANGE_OFFSET + AreaModelConstants.NON_MAIN_OFFSET + 3;
+          labelContainer.top = AreaModelConstants.RANGE_OFFSET.y + 4;
         }
       }
       else {
@@ -332,7 +332,7 @@ define( function( require ) {
           labelContainer.x = -20;
         }
         else {
-          labelContainer.left = AreaModelConstants.VERTICAL_RANGE_OFFSET + AreaModelConstants.NON_MAIN_OFFSET + 5;
+          labelContainer.left = AreaModelConstants.RANGE_OFFSET.x + 6;
         }
       }
 

@@ -57,8 +57,13 @@ define( function( require ) {
       var colorProperty = self.area.getColorProperty( orientation );
       var termListProperty = allowExponents ? self.area.getTermListProperty( orientation )
                                             : self.area.getTotalProperty( orientation );
-      var viewRangeProperty = self.toViewRangeProperty( area.getCoordinateRangeProperty( orientation ) );
-      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, viewRangeProperty, colorProperty ) );
+      var tickLocationsProperty = new DerivedProperty( [ area.getPartitionBoundariesProperty( orientation ) ], function( partitionBoundaries ) {
+        return partitionBoundaries.map( function( boundary ) {
+          return self.mapCoordinate( boundary );
+        } );
+      } );
+      //TODO: reduce duplication with the game?
+      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty ) );
     } );
 
     var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
@@ -85,8 +90,7 @@ define( function( require ) {
       listener: function() {
         area.reset();
       },
-      centerX: AreaModelConstants.VERTICAL_RANGE_OFFSET,
-      centerY: AreaModelConstants.HORIZONTAL_RANGE_OFFSET
+      center: AreaModelConstants.RANGE_OFFSET
     } );
     this.labelLayer.addChild( eraseButton );
   }

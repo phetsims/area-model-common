@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -34,6 +35,14 @@ define( function( require ) {
      */
     modelToView: function( modelViewTransform, value ) {
       return modelViewTransform[ this.modelViewName ]( value );
+    },
+
+    // TODO: doc
+    vector: function( primary, secondary ) {
+      var vector = new Vector2();
+      vector[ this.coordinate ] = primary;
+      vector[ this.opposite.coordinate ] = secondary;
+      return vector;
     }
   }, {
     /**
