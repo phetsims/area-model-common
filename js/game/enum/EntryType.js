@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  //TODO: rename to EntryType, as we don't use a keypad for polynomials
   //TODO: add values like isPolynomial
   var EntryType = {
     CONSTANT: 'CONSTANT',
@@ -21,6 +20,17 @@ define( function( require ) {
   };
 
   areaModelCommon.register( 'EntryType', EntryType );
+
+  /**
+   * Whether an entry needs polynomal or term input.
+   * @public
+   *
+   * @param {EntryType} entryType
+   * @returns {boolean}
+   */
+  EntryType.isPolynomial = function( entryType ) {
+    return entryType === EntryType.POLYNOMIAL_1 || entryType === EntryType.POLYNOMIAL_2;
+  };
 
   // All values the enumeration can take.
   EntryType.VALUES = [

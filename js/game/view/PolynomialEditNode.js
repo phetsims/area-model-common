@@ -41,9 +41,9 @@ define( function( require ) {
     var xProperty = new NumberProperty( 0 );
     var xSquaredProperty = new NumberProperty( 0 );
 
+    // TODO: workaround for this?
     function isPolynomial() {
-      return polynomialPropertyProperty.value && ( polynomialPropertyProperty.value.entryType === EntryType.POLYNOMIAL_2 ||
-                                                   polynomialPropertyProperty.value.entryType === EntryType.POLYNOMIAL_1 );
+      return polynomialPropertyProperty.value && EntryType.isPolynomial( polynomialPropertyProperty.value.entryType );
     }
 
     polynomialPropertyProperty.link( function( polynomialProperty ) {

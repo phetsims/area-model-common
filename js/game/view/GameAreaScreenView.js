@@ -242,8 +242,7 @@ define( function( require ) {
     var totalContainer = new Node();
     //TODO: simplify
     Property.multilink( [ this.display.totalPropertyProperty, model.stateProperty ], function( totalProperty, gameState ) {
-      if ( totalProperty.displayType === DisplayType.EDITABLE &&
-           ( totalProperty.entryType === EntryType.POLYNOMIAL_2 || totalProperty.entryType === EntryType.POLYNOMIAL_1 ) ) {
+      if ( totalProperty.displayType === DisplayType.EDITABLE && EntryType.isPolynomial( totalProperty.entryType ) ) {
 
         //TODO: is this really necessary?
         var isReadout = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
