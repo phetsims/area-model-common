@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
 
   var GameValue = {
     EDITABLE: 'EDITABLE',
@@ -25,6 +26,22 @@ define( function( require ) {
     GameValue.DYNAMIC,
     GameValue.GIVEN,
   ];
+
+  var gameToDisplayMap = {};
+  gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
+  gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
+  gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
+
+  /**
+   * Returns the preferred display type for a given game value.
+   * @public
+   *
+   * @param {GameValue} gameValue
+   * @returns {boolean}
+   */
+  GameValue.toDisplayType = function( gameValue ) {
+    return gameToDisplayMap[ gameValue ];
+  };
 
   // verify that enumeration is immutable, without the runtime penalty in production code
   if ( assert ) { Object.freeze( GameValue ); }

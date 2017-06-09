@@ -23,12 +23,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
-  //TOOD: Move to GameValue or DisplayType?
-  var gameToDisplayMap = {};
-  gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
-  gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
-  gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
-
   /**
    * @constructor
    * @extends {Object}
@@ -64,14 +58,14 @@ define( function( require ) {
     // TODO: deduplicate
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
-        displayType: gameToDisplayMap[ description.horizontalValues[ index ] ],
+        displayType: GameValue.toDisplayType( [ description.horizontalValues[ index ] ] ),
         entryType: mainEntryType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
       } );
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
-        displayType: gameToDisplayMap[ description.verticalValues[ index ] ],
+        displayType: GameValue.toDisplayType( [ description.verticalValues[ index ] ] ),
         entryType: mainEntryType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
       } );
@@ -90,7 +84,7 @@ define( function( require ) {
         var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
         var gameValue = description.productValues[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
-          displayType: gameToDisplayMap[ gameValue ],
+          displayType: GameValue.toDisplayType( [ gameValue ] ),
           entryType: mainEntryType,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits
         } );
@@ -128,7 +122,7 @@ define( function( require ) {
 
     // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
-      displayType: gameToDisplayMap[ description.totalValue ],
+      displayType: GameValue.toDisplayType( [ description.totalValue ] ),
       entryType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? EntryType.POLYNOMIAL_2 : EntryType.POLYNOMIAL_1 ) : EntryType.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
