@@ -17,7 +17,7 @@ define( function( require ) {
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
-  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -181,14 +181,14 @@ define( function( require ) {
     this.activeEditableProperty = new Property( null );
 
     // @public {Property.<AreaChallenge|null>}
-    this.currentChallengeProperty = DynamicProperty.derived( this.currentLevelProperty, 'currentChallengeProperty', null );
+    this.currentChallengeProperty = new DynamicDerivedProperty( this.currentLevelProperty, 'currentChallengeProperty', null );
     this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
-    // @public {Property.<GameState|null>} TODO check if used
+    // @public {Property.<GameState|null>} - TODO: Check why bidirectional is required, null default feels weird
     this.stateProperty = DynamicBidirectionalProperty.derived( this.currentChallengeProperty, 'stateProperty', null );
 
     // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)
-    this.hasNullProperty = DynamicProperty.derived( this.currentChallengeProperty, 'hasNullProperty', true );
+    this.hasNullProperty = new DynamicDerivedProperty( this.currentChallengeProperty, 'hasNullProperty', true );
   }
 
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );

@@ -14,7 +14,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
-  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -46,7 +46,7 @@ define( function( require ) {
     var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
       return valueProperty.digits;
     } );
-    var highlightProperty = DynamicProperty.derived( valuePropertyProperty, 'highlightProperty' );
+    var highlightProperty = new DynamicDerivedProperty( valuePropertyProperty, 'highlightProperty' );
     var isActiveProperty = new DerivedProperty( [ valuePropertyProperty, activeEditableProperty ], function( valueProperty, activeProperty ) {
       return valueProperty === activeProperty;
     } );

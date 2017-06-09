@@ -110,6 +110,7 @@ define( function( require ) {
       font: OF_FONT
     } );
     this.addChild( this.challengeProgressNode );
+    //TODO: Use DynamicDerivedProperty!!
     new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
       return level ? level.challengeIndexProperty : new Property( null ); // TODO: reduce allocations
     } ) ).link( function( index ) {

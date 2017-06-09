@@ -4,7 +4,32 @@
  * Creates a Property that does one-way synchronization of values with a swappable Property that itself can change.
  * Handles the case where you need a Property that can switch between acting like multiple other properties.
  *
- * TODO: Handle the common case where we're grabbing a sub-property via DerivedProperty?
+ * The value of this property is:
+ * - null, if valuePropertyProperty.value === null
+ * - valuePropertyProperty.value.value otherwise
+ *
+ * For example:
+ *   var firstProperty = new Property( Color.RED );
+ *   var secondProperty = new Property( Color.BLUE );
+ *   var currentProperty = new Property( firstProperty ); // {Property.<Property.<Color>>}
+ *
+ *   var backgroundFill = new DynamicProperty( currentProperty ) // Turns into a {Property.<Color>}
+ *   backgroundFill.value; // Color.RED, since: currentProperty.value === firstProperty and
+ *                                              firstProperty.value === Color.RED
+ *   firstProperty.value = Color.YELLOW;
+ *   backgroundFill.value; // Color.YELLOW - It's connected to firstProperty right now
+ *
+ *   currentProperty.value = secondProperty;
+ *   backgroundFill.value; // Color.BLUE - It's the secondProperty's value
+ *
+ *   secondProperty.value = Color.MAGENTA;
+ *   backgroundFill.value; // Color.MAGENTA - Yes, it's listening to the other property now.
+ *
+ * Also supports falling back to null if our main property is set to null:
+ *   currentProperty.value = null;
+ *   backgroundFill.value; // null
+ *
+ * Do NOT set the value of this property.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -13,7 +38,6 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
@@ -52,7 +76,8 @@ define( function( require ) {
      * @param {*} value
      */
     onPropertyPropertyChange: function( value ) {
-      this.value = value;
+      // Since we override the setter here, we need to call the version on the prototype
+      Property.prototype.set.call( this, value );
     },
 
     /**
@@ -69,6 +94,10 @@ define( function( require ) {
       if ( newProperty ) {
         newProperty.link( this.propertyPropertyListener );
       }
+      else {
+        // Switch to null when our Property's value is null.
+        this.onPropertyChange( null );
+      }
     },
 
     /**
@@ -80,28 +109,19 @@ define( function( require ) {
       this.valuePropertyProperty.value && this.valuePropertyProperty.value.unlink( this.propertyPropertyListener );
 
       Property.prototype.dispose.call( this );
-    }
-  }, {
-    /**
-     * Creates a dynamic (read-only) property whose value is `mainProperty.value[ name ].value`.
-     * @public
-     *
-     * @param {Property.<[name]: {Property.<*>}|null>} mainProperty - A property whose values are either null, or
-     *                                                   objects such that object[ name ] is a Property. If the value
-     *                                                   is null, the default will be used instead.
-     * @param {string} name - When the mainProperty's value is non-null, mainProperty.value[ name ] should be the
-     *                        property to use.
-     * @param {*} [defaultValue] - If mainProperty.value === null, this is the value that is used instead of
-     *                             mainProperty.value[ name ].value.
-     * @returns {DynamicProperty.<*>}
-     */
-    derived: function( mainProperty, name, defaultValue ) {
-      var hasDefault = defaultValue !== undefined;
-      var defaultProperty = new Property( hasDefault ? defaultValue : null ); // Forward null by default
+    },
 
-      return new DynamicProperty( new DerivedProperty( [ mainProperty ], function( property ) {
-        return ( property === null ) ? defaultProperty : property[ name ];
-      } ) );
+    /**
+     * Prevent setting this property manually
+     * @public
+     * @override
+     *
+     * TODO: DerivedProperty should only need to do this, not all of the other methods it's also doing
+     *
+     * @param {*} value
+     */
+    set: function( value ) {
+      throw new Error( 'Cannot set values directly to a DynamicProperty, tried to set: ' + value );
     }
   } );
 } );
