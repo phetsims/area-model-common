@@ -14,7 +14,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var Property = require( 'AXON/Property' );
 
@@ -36,11 +36,9 @@ define( function( require ) {
     // @public {boolean}
     this.allowExponents = allowExponents;
 
-    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
-    this.horizontalColorProperty = horizontalColorProperty;
-
-    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
-    this.verticalColorProperty = verticalColorProperty;
+    // TODO: pass in a pair?
+    // @public {OrientationPair.<Property.<Color>>}
+    this.colorProperties =  new OrientationPair( horizontalColorProperty, verticalColorProperty );
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( areas[ 0 ] );
@@ -84,19 +82,6 @@ define( function( require ) {
       this.areas.forEach( function( area ) {
         area.reset();
       } );
-    },
-
-    /**
-     * Returns the color property associated with the particular orientation.
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<Color>}
-     */
-    getColorProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalColorProperty : this.verticalColorProperty;
     }
   } );
 } );

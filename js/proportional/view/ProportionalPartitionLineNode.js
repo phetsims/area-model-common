@@ -41,7 +41,7 @@ define( function( require ) {
     this.area = area;
 
     var handle = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-      fill: area.getColorProperty( orientation ),
+      fill: area.colorProperties.get( orientation ),
       stroke: AreaModelColorProfile.partitionLineBorderProperty,
       cursor: 'pointer'
     } );

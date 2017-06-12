@@ -54,7 +54,7 @@ define( function( require ) {
 
     // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {
-      var colorProperty = self.area.getColorProperty( orientation );
+      var colorProperty = self.area.colorProperties.get( orientation );
       var termListProperty = allowExponents ? self.area.getTermListProperty( orientation )
                                             : self.area.getTotalProperty( orientation );
       var tickLocationsProperty = new DerivedProperty( [ area.getPartitionBoundariesProperty( orientation ) ], function( partitionBoundaries ) {

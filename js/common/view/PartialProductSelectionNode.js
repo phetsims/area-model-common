@@ -38,13 +38,13 @@ define( function( require ) {
 
     var horizontalText = new Text( 'b', {
       font: AreaModelConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
         return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
       } )
     } );
     var verticalText = new Text( 'a', {
       font: AreaModelConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.getColorProperty( Orientation.VERTICAL ) ], function( value, heightColor ) {
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( Orientation.VERTICAL ) ], function( value, heightColor ) {
         return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
       } )
     } );

@@ -230,7 +230,7 @@ define( function( require ) {
     },
 
     createColoredBox: function( orientation ) {
-      var colorProperty = this.area.getColorProperty( orientation );
+      var colorProperty = this.area.colorProperties.get( orientation );
       var rect = new Rectangle( 0, 0, 16, 16, { stroke: colorProperty, lineWidth: 0.7 } );
       if ( this.allowExponents ) {
         rect.localBounds = rect.localBounds.dilatedX( 2 );
@@ -240,7 +240,7 @@ define( function( require ) {
 
     // NOTE: Term or Polynomial, includeBinaryOperation ignored for polynomial
     createColoredRichText: function( term, orientation, isActive, includeBinaryOperation, excludeSign ) {
-      var colorProperty = this.area.getColorProperty( orientation );
+      var colorProperty = this.area.colorProperties.get( orientation );
       var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
       return new RichText( string, {
         font: AreaModelConstants.CALCULATION_TERM_FONT,

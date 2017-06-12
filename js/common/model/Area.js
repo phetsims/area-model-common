@@ -48,11 +48,9 @@ define( function( require ) {
     // @public {Array.<Partition>}
     this.allPartitions = horizontalPartitions.concat( verticalPartitions );
 
-    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
-    this.horizontalColorProperty = horizontalColorProperty;
-
-    // @private {Property.<Color>} - Prefer getColorProperty( orientation )
-    this.verticalColorProperty = verticalColorProperty;
+    // TODO: pass in a pair?
+    // @public {OrientationPair.<Property.<Color>>}
+    this.colorProperties =  new OrientationPair( horizontalColorProperty, verticalColorProperty );
 
     // @public {number}
     this.coordinateRangeMax = coordinateRangeMax;
@@ -200,19 +198,6 @@ define( function( require ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       return orientation === Orientation.HORIZONTAL ? this.horizontalTermListProperty : this.verticalTermListProperty;
-    },
-
-    /**
-     * Returns the color property associated with the particular orientation.
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<Color>}
-     */
-    getColorProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalColorProperty : this.verticalColorProperty;
     },
 
     /**
