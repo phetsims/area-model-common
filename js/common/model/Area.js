@@ -33,14 +33,12 @@ define( function( require ) {
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
     var self = this;
 
-    // TODO: pass in a pair?
     // @public {OrientationPair.<Array.<Partition>>}
     this.partitions = partitions;
 
     // @public {Array.<Partition>}
     this.allPartitions = partitions.get( Orientation.HORIZONTAL ).concat( partitions.get( Orientation.VERTICAL ) );
 
-    // TODO: pass in a pair?
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = colorProperties;
 
