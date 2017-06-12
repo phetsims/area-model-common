@@ -153,7 +153,7 @@ define( function( require ) {
      * @returns {Partition}
      */
     getPrimaryPartition: function( orientation ) {
-      return this.getPartitions( orientation )[ 0 ];
+      return this.partitions.get( orientation )[ 0 ];
     },
 
     /**
@@ -165,7 +165,7 @@ define( function( require ) {
      * @returns {Partition}
      */
     getSecondaryPartition: function( orientation ) {
-      return this.getPartitions( orientation )[ 1 ];
+      return this.partitions.get( orientation )[ 1 ];
     }
   } );
 } );

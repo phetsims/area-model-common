@@ -53,7 +53,7 @@ define( function( require ) {
     Orientation.VALUES.forEach( function( orientation ) {
       var quantity = layout.getPartitionQuantity( orientation );
 
-      var partitions = self.getPartitions( orientation );
+      var partitions = self.partitions.get( orientation );
 
       if ( quantity === 1 ) {
         partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );

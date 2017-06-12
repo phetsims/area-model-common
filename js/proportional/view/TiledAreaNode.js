@@ -135,7 +135,7 @@ define( function( require ) {
     forPartitions: function( orientation, callback ) {
       var self = this;
 
-      this.area.getPartitions( orientation ).forEach( function( partition ) {
+      this.area.partitions.get( orientation ).forEach( function( partition ) {
         var range = partition.coordinateRangeProperty.value;
 
         // Ignore partitions without a visible well-defined range.

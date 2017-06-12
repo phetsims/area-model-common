@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
@@ -40,11 +41,9 @@ define( function( require ) {
 
     var self = this;
 
-    // @public {Array.<Partition>}
-    this.horizontalPartitions = horizontalPartitions;
-
-    // @public {Array.<Partition>}
-    this.verticalPartitions = verticalPartitions;
+    // TODO: pass in a pair?
+    // @public {OrientationPair.<Array.<Partition>>}
+    this.partitions = new OrientationPair( horizontalPartitions, verticalPartitions );
 
     // @public {Array.<Partition>}
     this.allPartitions = horizontalPartitions.concat( verticalPartitions );
@@ -137,19 +136,6 @@ define( function( require ) {
     },
 
     /**
-     * Returns all of the partitions for a given orientation.
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Array.<Partition>}
-     */
-    getPartitions: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitions : this.verticalPartitions;
-    },
-
-    /**
      * Returns all defined partitions for a given orientation.
      * @public
      *
@@ -159,7 +145,7 @@ define( function( require ) {
     getDefinedPartitions: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      return this.getPartitions( orientation ).filter( function( partition ) {
+      return this.partitions.get( orientation ).filter( function( partition ) {
         return partition.isDefined();
       } );
     },
@@ -281,7 +267,7 @@ define( function( require ) {
     createTotalProperty: function( orientation ) {
       var self = this;
 
-      var properties = _.flatten( this.getPartitions( orientation ).map( function( partition ) {
+      var properties = _.flatten( this.partitions.get( orientation ).map( function( partition ) {
         return [ partition.sizeProperty, partition.visibleProperty ];
       } ) );
 
@@ -308,7 +294,7 @@ define( function( require ) {
     createTermListProperty: function( orientation ) {
       var self = this;
 
-      var properties = _.flatten( this.getPartitions( orientation ).map( function( partition ) {
+      var properties = _.flatten( this.partitions.get( orientation ).map( function( partition ) {
         return [ partition.sizeProperty, partition.visibleProperty ];
       } ) );
 
@@ -327,7 +313,7 @@ define( function( require ) {
 
     // TODO doc returns {Property.<Array.<number>>}
     createPartitionBoundariesProperty: function( orientation ) {
-      var partitions = this.getPartitions( orientation );
+      var partitions = this.partitions.get( orientation );
 
       // We need to listen to every partition's properties for the given orientation
       var coordinateProperties = _.flatten( partitions.map( function( partition ) {
@@ -357,7 +343,7 @@ define( function( require ) {
      * @returns {Property.<Range|null>}
      */
     createCoordinateRangeProperty: function( orientation ) {
-      var partitions = this.getPartitions( orientation );
+      var partitions = this.partitions.get( orientation );
 
       // We need to listen to every partition's properties for the given orientation
       var coordinateProperties = _.flatten( partitions.map( function( partition ) {

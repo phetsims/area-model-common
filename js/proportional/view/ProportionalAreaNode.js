@@ -94,7 +94,7 @@ define( function( require ) {
 
     // Partition labels
     Orientation.VALUES.forEach( function( orientation ) {
-      var partitions = area.getPartitions( orientation );
+      var partitions = area.partitions.get( orientation );
       var labels = partitions.map( function( partition, index ) {
         var label = self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ), index );
         self.labelLayer.addChild( label );
@@ -121,8 +121,8 @@ define( function( require ) {
 
     //TODO: doc @private
     getProductLabel: function( horizontalIndex, verticalIndex ) {
-      var horizontalPartitions = this.area.horizontalPartitions;
-      var verticalPartitions = this.area.verticalPartitions;
+      var horizontalPartitions = this.area.partitions.get( Orientation.HORIZONTAL );
+      var verticalPartitions = this.area.partitions.get( Orientation.VERTICAL );
 
       return _.find( this.productLabels, function( productLabel ) {
         return productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
@@ -138,13 +138,13 @@ define( function( require ) {
       var self = this;
 
       // {Array.<Range|null>} - View coordinates - TODO: potential to dedup horiz/vert
-      var horizontalRanges = this.area.horizontalPartitions.map( function( partition ) {
+      var horizontalRanges = this.area.partitions.get( Orientation.HORIZONTAL ).map( function( partition ) {
         var range = partition.coordinateRangeProperty.value;
         if ( range === null ) { return null; }
         return new Range( self.modelViewTransform.modelToViewX( range.min ),
                           self.modelViewTransform.modelToViewX( range.max ) );
       } );
-      var verticalRanges = this.area.verticalPartitions.map( function( partition ) {
+      var verticalRanges = this.area.partitions.get( Orientation.VERTICAL ).map( function( partition ) {
         var range = partition.coordinateRangeProperty.value;
         if ( range === null ) { return null; }
         return new Range( self.modelViewTransform.modelToViewY( range.min ),
@@ -158,8 +158,8 @@ define( function( require ) {
         var verticalPartition = productLabel.partitionedArea.getPartition( Orientation.VERTICAL );
 
         // {Range|null}
-        var horizontalRange = horizontalRanges[ _.indexOf( self.area.horizontalPartitions, horizontalPartition ) ];
-        var verticalRange = verticalRanges[ _.indexOf( self.area.verticalPartitions, verticalPartition ) ];
+        var horizontalRange = horizontalRanges[ _.indexOf( self.area.partitions.get( Orientation.HORIZONTAL ), horizontalPartition ) ];
+        var verticalRange = verticalRanges[ _.indexOf( self.area.partitions.get( Orientation.VERTICAL ), verticalPartition ) ];
 
         // Ignore it if any parts are null
         if ( horizontalRange === null || verticalRange === null ) {
@@ -261,7 +261,7 @@ define( function( require ) {
 
     // TODO doc
     positionPartitionLabels: function( orientation, labels ) {
-      var partitions = this.area.getPartitions( orientation );
+      var partitions = this.area.partitions.get( orientation );
       var primaryRange = partitions[ 0 ].coordinateRangeProperty.value;
       var secondaryRange = partitions[ 1 ].coordinateRangeProperty.value;
 

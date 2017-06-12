@@ -118,6 +118,7 @@ define( function( require ) {
         // TODO: better way
         var orientationName = orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical';
 
+        //TODO: Really fix this, it will break
         var valuePropertyProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesProperty' ] ], function( values ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
