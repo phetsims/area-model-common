@@ -47,7 +47,7 @@ define( function( require ) {
     this.verticalPartitions = verticalPartitions;
 
     // @public {Array.<Partition>}
-    this.partitions = horizontalPartitions.concat( verticalPartitions );
+    this.allPartitions = horizontalPartitions.concat( verticalPartitions );
 
     // @private {Property.<Color>} - Prefer getColorProperty( orientation )
     this.horizontalColorProperty = horizontalColorProperty;

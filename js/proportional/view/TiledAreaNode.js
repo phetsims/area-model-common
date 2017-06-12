@@ -56,7 +56,7 @@ define( function( require ) {
       self.dirty = true;
     }
     tilesVisibleProperty.link( invalidate );
-    area.partitions.forEach( function( partition ) {
+    area.allPartitions.forEach( function( partition ) {
       partition.visibleProperty.link( invalidate );
       partition.coordinateRangeProperty.link( invalidate );
     } );

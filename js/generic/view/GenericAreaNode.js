@@ -75,7 +75,7 @@ define( function( require ) {
     } );
 
     // Edit readouts/buttons
-    area.partitions.forEach( function( partition ) {
+    area.allPartitions.forEach( function( partition ) {
       self.labelLayer.addChild( new PartitionSizeEditNode( area, partition, self.modelViewTransform, allowExponents ) );
     } );
 

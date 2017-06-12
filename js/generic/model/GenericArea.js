@@ -84,7 +84,7 @@ define( function( require ) {
     reset: function() {
       Area.prototype.reset.call( this );
 
-      this.partitions.forEach( function( partition ) {
+      this.allPartitions.forEach( function( partition ) {
         partition.sizeProperty.reset();
       } );
 
