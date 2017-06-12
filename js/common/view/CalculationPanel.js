@@ -103,8 +103,22 @@ define( function( require ) {
     var lineLayer = new Node();
     this.addChild( lineLayer );
 
+    model.areaCalculationChoiceProperty.link( function( choice ) {
+      self.visible = choice !== AreaCalculationChoice.HIDDEN;
+    } );
+
+    var dirty = true;
+
+    function makeDirty() {
+      dirty = true;
+    }
+
     function update() {
-      self.visible = model.areaCalculationChoiceProperty.value !== AreaCalculationChoice.HIDDEN;
+      if ( model.areaCalculationChoiceProperty.value === AreaCalculationChoice.HIDDEN || !dirty ) {
+        return;
+      }
+
+      dirty = false;
 
       var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
 
@@ -189,25 +203,28 @@ define( function( require ) {
 
     }
 
-    model.areaCalculationChoiceProperty.lazyLink( update );
+    model.areaCalculationChoiceProperty.lazyLink( makeDirty );
 
     model.currentAreaProperty.link( function( newArea, oldArea ) {
       if ( oldArea ) {
         oldArea.allPartitions.forEach( function( partition ) {
-          partition.sizeProperty.unlink( update );
-          partition.visibleProperty.unlink( update );
+          partition.sizeProperty.unlink( makeDirty );
+          partition.visibleProperty.unlink( makeDirty );
         } );
-        oldArea.calculationIndexProperty.unlink( update );
+        oldArea.calculationIndexProperty.unlink( makeDirty );
       }
 
       newArea.allPartitions.forEach( function( partition ) {
-        partition.sizeProperty.lazyLink( update );
-        partition.visibleProperty.lazyLink( update );
+        partition.sizeProperty.lazyLink( makeDirty );
+        partition.visibleProperty.lazyLink( makeDirty );
       } );
-      newArea.calculationIndexProperty.link( update );
+      newArea.calculationIndexProperty.link( makeDirty );
 
       update();
     } );
+
+    //TODO: better
+    this.update = update;
   }
 
   areaModelCommon.register( 'CalculationPanel', CalculationPanel );

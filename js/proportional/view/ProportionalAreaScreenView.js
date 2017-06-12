@@ -70,12 +70,15 @@ define( function( require ) {
 
   return inherit( AreaScreenView, ProportionalAreaScreenView, {
     /**
-     * Steps forward in time.
+     * Steps the view forward, updating things that only update once a frame.
      * @public
+     * @override
      *
      * @param {number} dt
      */
     step: function( dt ) {
+      AreaScreenView.prototype.step.call( this, dt );
+
       this.areaNodes.forEach( function( areaNode ) {
         if ( areaNode.visible ) {
           areaNode.update();

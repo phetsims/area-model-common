@@ -127,6 +127,16 @@ define( function( require ) {
 
   return inherit( ScreenView, AreaScreenView, {
     /**
+     * Steps the view forward, updating things that only update once a frame.
+     * @public
+     *
+     * @param {number} dt
+     */
+    step: function( dt ) {
+      this.calculationDisplayPanel.update();
+    },
+
+    /**
      * Creates a panel interior with the title left-aligned, and the content somewhat offset from the left with a
      * guaranteed margin.
      * @private
