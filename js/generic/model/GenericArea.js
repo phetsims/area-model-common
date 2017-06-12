@@ -16,6 +16,7 @@ define( function( require ) {
   var GenericPartition = require( 'AREA_MODEL_COMMON/generic/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
 
@@ -36,15 +37,19 @@ define( function( require ) {
     var secondDigitCount = allowExponents ? 1 : 2;
     var thirdDigitCount = 1;
 
-    Area.call( this, [
+    var horizontalPartitions = [
       new GenericPartition( Orientation.HORIZONTAL, firstDigitCount ),
       new GenericPartition( Orientation.HORIZONTAL, secondDigitCount ),
       new GenericPartition( Orientation.HORIZONTAL, thirdDigitCount )
-    ].slice( 0, layout.size.width ), [
+    ].slice( 0, layout.size.width );
+
+    var verticalPartitions = [
       new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
       new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
-    ].slice( 0, layout.size.height ), AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty, 1, allowExponents );
+    ].slice( 0, layout.size.height );
+
+    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelColorProfile.genericColorProperties, 1, allowExponents );
 
     // @public {Property.<GenericLayout>}
     this.layout = layout;

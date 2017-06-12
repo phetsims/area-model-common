@@ -12,7 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var Color = require( 'SCENERY/util/Color' );
   var ColorProfile = require( 'SCENERY_PHET/ColorProfile' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
 
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)
@@ -131,33 +131,9 @@ define( function( require ) {
 
   areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );
 
-  /**
-   * Returns the proportional color Property for the given orientation.
-   * @public
-   *
-   * @param {Orientation} orientation
-   * @returns {Property.<Color>}
-   */
-  AreaModelColorProfile.getProportionalColorProperty = function( orientation ) {
-    assert && assert( Orientation.isOrientation( orientation ) );
-
-    return orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.proportionalWidthProperty
-                                                  : AreaModelColorProfile.proportionalHeightProperty;
-  };
-
-  /**
-   * Returns the generic color Property for the given orientation.
-   * @public
-   *
-   * @param {Orientation} orientation
-   * @returns {Property.<Color>}
-   */
-  AreaModelColorProfile.getGenericColorProperty = function( orientation ) {
-    assert && assert( Orientation.isOrientation( orientation ) );
-
-    return orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.genericWidthProperty
-                                                  : AreaModelColorProfile.genericHeightProperty;
-  };
+  // @public {OrientationPair.<Property.<Color>>}
+  AreaModelColorProfile.proportionalColorProperties = new OrientationPair( AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
+  AreaModelColorProfile.genericColorProperties = new OrientationPair( AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty );
 
   return AreaModelColorProfile;
 } );

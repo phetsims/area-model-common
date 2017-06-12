@@ -14,7 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
@@ -25,32 +24,24 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Array.<Partition>} horizontalPartitions
-   * @param {Array.<Partition>} verticalPartitions
-   * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
-   * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
+   * @param {OrientationPair.<Array.<Partition>>} partitions
+   * @param {OrientationPair.<Property.<Color>>} colorProperties
    * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take.
    * @param {boolean} allowExponents
    */
-  function Area( horizontalPartitions, verticalPartitions, horizontalColorProperty, verticalColorProperty, coordinateRangeMax, allowExponents ) {
-    assert && assert( horizontalPartitions instanceof Array );
-    assert && assert( verticalPartitions instanceof Array );
-    assert && assert( horizontalColorProperty instanceof Property );
-    assert && assert( verticalColorProperty instanceof Property );
-    assert && assert( typeof coordinateRangeMax === 'number' );
-
+  function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
     var self = this;
 
     // TODO: pass in a pair?
     // @public {OrientationPair.<Array.<Partition>>}
-    this.partitions = new OrientationPair( horizontalPartitions, verticalPartitions );
+    this.partitions = partitions;
 
     // @public {Array.<Partition>}
-    this.allPartitions = horizontalPartitions.concat( verticalPartitions );
+    this.allPartitions = partitions.get( Orientation.HORIZONTAL ).concat( partitions.get( Orientation.VERTICAL ) );
 
     // TODO: pass in a pair?
     // @public {OrientationPair.<Property.<Color>>}
-    this.colorProperties =  new OrientationPair( horizontalColorProperty, verticalColorProperty );
+    this.colorProperties = colorProperties;
 
     // @public {number}
     this.coordinateRangeMax = coordinateRangeMax;
@@ -59,8 +50,8 @@ define( function( require ) {
     this.calculationIndexProperty = new NumberProperty( 0 );
 
     // @public {Array.<PartitionedArea>}
-    this.partitionedAreas = _.flatten( horizontalPartitions.map( function( horizontalPartition ) {
-      return verticalPartitions.map( function( verticalPartition ) {
+    this.partitionedAreas = _.flatten( partitions.get( Orientation.HORIZONTAL ).map( function( horizontalPartition ) {
+      return partitions.get( Orientation.VERTICAL ).map( function( verticalPartition ) {
         return self.createPartitionedArea( horizontalPartition, verticalPartition );
       } );
     } ) );

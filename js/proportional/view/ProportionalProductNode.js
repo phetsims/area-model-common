@@ -83,7 +83,7 @@ define( function( require ) {
           }
         }
       }, {
-        color: AreaModelColorProfile.getProportionalColorProperty( orientation )
+        color: AreaModelColorProfile.proportionalColorProperties.get( orientation )
       } );
     }
   } );

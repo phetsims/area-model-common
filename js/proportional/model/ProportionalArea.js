@@ -15,6 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
@@ -66,13 +67,17 @@ define( function( require ) {
     // @public {boolean}
     this.tilesAvailable = options.tilesAvailable;
 
-    Area.call( this, [
+    var horizontalPartitions = [
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty ),
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty )
-    ], [
+    ];
+
+    var verticalPartitions = [
       new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty ),
       new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty )
-    ], AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty, this.maximumSize, false );
+    ];
+
+    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelColorProfile.proportionalColorProperties, this.maximumSize, false );
 
     // Keep partition sizes up-to-date
     Orientation.VALUES.forEach( function( orientation ) {

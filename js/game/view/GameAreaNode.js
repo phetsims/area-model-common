@@ -72,7 +72,7 @@ define( function( require ) {
       3: [ 0, firstOffset, secondOffset, fullOffset ]
     };
     Orientation.VALUES.forEach( function( orientation ) {
-      var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
+      var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
       var termListProperty = orientation === Orientation.HORIZONTAL ? display.horizontalTotalProperty : display.verticalTotalProperty;
 
       var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
@@ -122,7 +122,7 @@ define( function( require ) {
         var valuePropertyProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesProperty' ] ], function( values ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
-        var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
+        var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
           if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {

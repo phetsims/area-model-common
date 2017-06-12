@@ -82,7 +82,7 @@ define( function( require ) {
     createOrientationReadout: function( orientation, displayProperty ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      var colorProperty = AreaModelColorProfile.getGenericColorProperty( orientation );
+      var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
 
       var richText = new RichText( ' ', {
         font: AreaModelConstants.PROBLEM_X_FONT,
