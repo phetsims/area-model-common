@@ -55,11 +55,12 @@ define( function( require ) {
 
     // TODO: doc/improve
     createProductNode: function( model, decimalPlaces ) {
+      //TODO: don't duplicate horizontal/vertical here
       var horizontalDisplayProperty = new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-        return area.getDisplayProperty( Orientation.HORIZONTAL );
+        return area.displayProperties.get( Orientation.HORIZONTAL );
       } ) );
       var verticalDisplayProperty = new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-        return area.getDisplayProperty( Orientation.VERTICAL );
+        return area.displayProperties.get( Orientation.VERTICAL );
       } ) );
       return new GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, new Property( model.allowExponents ) );
     },

@@ -14,6 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
@@ -56,16 +57,14 @@ define( function( require ) {
       } );
     } ) );
 
-    // @private {Property.<Polynomial|null>} - Null if there is no defined total - Prefer getTotalProperty()
-    this.horizontalTotalProperty = this.createTotalProperty( Orientation.HORIZONTAL );
-    this.verticalTotalProperty = this.createTotalProperty( Orientation.VERTICAL );
+    // @public {OrientationPair.<Property.<Polynomial|null>>} - Null if there is no defined total
+    this.totalProperties = OrientationPair.create( this.createTotalProperty.bind( this ) );
 
-    // @private {Property.<TermList|null>} - Null if there is no defined total - Prefer getTermListProperty()
-    this.horizontalTermListProperty = this.createTermListProperty( Orientation.HORIZONTAL );
-    this.verticalTermListProperty = this.createTermListProperty( Orientation.VERTICAL );
+    // @public {OrientationPair.<Property.<TermList|null>>} - Null if there is no defiend total
+    this.termListProperties = OrientationPair.create( this.createTermListProperty.bind( this ) );
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total
-    this.totalAreaProperty = new DerivedProperty( [ this.horizontalTotalProperty, this.verticalTotalProperty ], function( horizontalTotal, verticalTotal ) {
+    this.totalAreaProperty = new DerivedProperty( this.totalProperties.array, function( horizontalTotal, verticalTotal ) {
       if ( horizontalTotal === null || verticalTotal === null ) {
         return null;
       }
@@ -74,18 +73,14 @@ define( function( require ) {
       useDeepEquality: true
     } );
 
-    // @private {Property.<TermList|null>} - Displayed term list for the product
-    // Null if there is no defined total - Prefer getDisplayProperty()
-    this.horizontalDisplayProperty = allowExponents ? this.horizontalTermListProperty : this.horizontalTotalProperty;
-    this.verticalDisplayProperty = allowExponents ? this.verticalTermListProperty : this.verticalTotalProperty;
+    // @public {OrientationPair.<Property.<TermList|null>>} - Displayed term list for the product. Null if there is no defined total.
+    this.displayProperties = allowExponents ? this.termListProperties : this.totalProperties;
 
-    // @private {Property.<Range|null>} - Prefer getCoordinateRangeProperty()
-    this.horizontalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.HORIZONTAL );
-    this.verticalCoordinateRangeProperty = this.createCoordinateRangeProperty( Orientation.VERTICAL );
+    // @public {OrientationPair.<Property.<Range|null>>} TODO: why no usages of this currently? what's wrong?
+    this.coordinateRangeProperties = OrientationPair.create( this.createCoordinateRangeProperty.bind( this ) );
 
-    // @private {Property.<Array.<number>>} - Prefer getPartitionBoundariesProperty()
-    this.horizontalPartitionBoundariesProperty = this.createPartitionBoundariesProperty( Orientation.HORIZONTAL );
-    this.verticalPartitionBoundariesProperty = this.createPartitionBoundariesProperty( Orientation.VERTICAL );
+    // @public {OrientationPair.<Property.<Array.<number>>>} TODO doc
+    this.partitionBoundariesProperties = OrientationPair.create( this.createPartitionBoundariesProperty.bind( this ) );
   }
 
   areaModelCommon.register( 'Area', Area );
@@ -165,72 +160,6 @@ define( function( require ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       return new TermList( this.getTerms( orientation ) );
-    },
-
-    /**
-     * Returns the property for the sum of all defined partitions for a particular orientation.
-     * @public
-     *
-     * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
-     */
-    getTotalProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalTotalProperty : this.verticalTotalProperty;
-    },
-
-    /**
-     * Returns the property for the combined term list of all defined partitions for a particular orientation.
-     * @public
-     *
-     * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
-     */
-    getTermListProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalTermListProperty : this.verticalTermListProperty;
-    },
-
-    /**
-     * Returns the coordiante range property associated with the particular orientation.
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<Range|null>}
-     */
-    getCoordinateRangeProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalCoordinateRangeProperty
-                                                    : this.verticalCoordinateRangeProperty;
-    },
-
-    /**
-     * Returns the partition boundaries property associated with the particular orientation.
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<Array.<number>>}
-     */
-    getPartitionBoundariesProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitionBoundariesProperty
-                                                    : this.verticalPartitionBoundariesProperty;
-    },
-
-    /**
-     * Returns the TermList Property to be displayed in the Product panel
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<Range|null>}
-     */
-    getDisplayProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalDisplayProperty
-                                                    : this.verticalDisplayProperty;
     },
 
     /**

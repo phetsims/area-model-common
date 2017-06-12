@@ -135,8 +135,8 @@ define( function( require ) {
       var horizontalTerms = horizontalTermList.terms;
       var verticalTerms = verticalTermList.terms;
 
-      var horizontalPolynomial = this.area.getTotalProperty( Orientation.HORIZONTAL ).value;
-      var verticalPolynomial = this.area.getTotalProperty( Orientation.VERTICAL ).value;
+      var horizontalPolynomial = this.area.totalProperties.get( Orientation.HORIZONTAL ).value;
+      var verticalPolynomial = this.area.totalProperties.get( Orientation.VERTICAL ).value;
 
       var multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
@@ -362,14 +362,12 @@ define( function( require ) {
 
     // TODO: doc
     createTotalsLine: function( isActive ) {
-      var totalFunction = ( this.allowExponents ? this.area.getTermListProperty : this.area.getTotalProperty ).bind( this.area );
+      var horizontalTotal = this.area.displayProperties.get( Orientation.HORIZONTAL ).value;
+      var verticalTotal = this.area.displayProperties.get( Orientation.VERTICAL ).value;
 
-      var horizontalTotal = totalFunction( Orientation.HORIZONTAL ).value;
-      var verticalTotal = totalFunction( Orientation.VERTICAL ).value;
-
-      var widthText = horizontalTotal ? this.createColoredRichText( totalFunction( Orientation.HORIZONTAL ).value, Orientation.HORIZONTAL, isActive )
+      var widthText = horizontalTotal ? this.createColoredRichText( horizontalTotal, Orientation.HORIZONTAL, isActive )
                                       : this.createColoredBox( Orientation.HORIZONTAL );
-      var heightText = verticalTotal ? this.createColoredRichText( totalFunction( Orientation.VERTICAL ).value, Orientation.VERTICAL, isActive )
+      var heightText = verticalTotal ? this.createColoredRichText( verticalTotal, Orientation.VERTICAL, isActive )
                                      : this.createColoredBox( Orientation.VERTICAL );
 
       if ( this.allowExponents ) {

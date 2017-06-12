@@ -219,7 +219,8 @@ define( function( require ) {
     } );
 
     // TODO: ensure sizing doesn't spill out? AreaModelConstants.PANEL_INTERIOR_MAX
-    var productNode = new GenericProductNode( this.display.horizontalTotalProperty, this.display.verticalTotalProperty, this.display.allowExponentsProperty );
+    // TODO: make it accept a pair
+    var productNode = new GenericProductNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
     var productContent = this.createPanel( productString, panelAlignGroup, productNode );
 
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {

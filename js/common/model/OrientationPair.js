@@ -26,6 +26,9 @@ define( function( require ) {
 
     // @public {*}
     this.vertical = vertical;
+
+    // @public {Array.<*>}
+    this.array = [ horizontal, vertical ];
   }
 
   areaModelCommon.register( 'OrientationPair', OrientationPair );

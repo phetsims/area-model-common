@@ -14,6 +14,7 @@ define( function( require ) {
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -30,14 +31,15 @@ define( function( require ) {
     // @public {Property.<boolean>}
     this.allowExponentsProperty = new BooleanProperty( false );
 
-    // @public {Property.<TermList|null>} - Values for dimension line label and product box, null is hidden.
-    this.horizontalTotalProperty = new Property( null );
-    this.verticalTotalProperty = new Property( null );
+    // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
+    this.totalProperties = new OrientationPair( new Property( null ), new Property( null ) );
 
-    // @public {Property.<Array.<Term|null>>} - Value for the partition sizes. Inner values may be changed by
-    //                                          the view client.
-    this.horizontalPartitionValuesProperty = new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] );
-    this.verticalPartitionValuesProperty = new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] );
+    // @public {OrientationPair.<Property.<Array.<Term|null>>>} - Values for the partition sizes. Inner values may be
+    //                                                            changed by the view client.
+    this.partitionValuesProperties = new OrientationPair(
+      new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] ),
+      new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] )
+    );
 
     // @public {Property.<Array.<Array.<Term|null>>} TODO doc
     this.partialProductsProperty = new Property( [

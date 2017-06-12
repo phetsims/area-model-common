@@ -73,7 +73,7 @@ define( function( require ) {
     };
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
-      var termListProperty = orientation === Orientation.HORIZONTAL ? display.horizontalTotalProperty : display.verticalTotalProperty;
+      var termListProperty = display.totalProperties.get( orientation );
 
       var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
         return tickVariations[ layout.getPartitionQuantity( orientation ) ];
@@ -115,11 +115,7 @@ define( function( require ) {
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
       _.range( 0, 3 ).forEach( function( partitionIndex ) {
-        // TODO: better way
-        var orientationName = orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical';
-
-        //TODO: Really fix this, it will break
-        var valuePropertyProperty = new DerivedProperty( [ display[ orientationName + 'PartitionValuesProperty' ] ], function( values ) {
+        var valuePropertyProperty = new DerivedProperty( [ display.partitionValuesProperties.get( orientation ) ], function( values ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
         var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );

@@ -25,6 +25,7 @@ define( function( require ) {
    * @constructor
    * @extends {HBox}
    *
+   * TODO: accept orientation pair
    * @param {Property.<TermList|null>} horizontalDisplayProperty
    * @param {Property.<TermList|null>} verticalDisplayProperty
    * @param {Property.<boolean>} allowExponentsProperty

@@ -19,6 +19,8 @@ define( function( require ) {
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var inherit = require( 'PHET_CORE/inherit' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
+  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
@@ -109,16 +111,14 @@ define( function( require ) {
 
     var hasXSquaredTotal = ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length ) >= 4;
 
-    // @public {Polynomial}
-    this.horizontalTotal = new Polynomial( this.horizontalPartitionSizes );
-    this.verticalTotal = new Polynomial( this.verticalPartitionSizes );
+    // @public {OrientationPair.<Polynomial>}
+    this.totals = new OrientationPair( new Polynomial( this.horizontalPartitionSizes ), new Polynomial( this.verticalPartitionSizes ) );
 
-    // @public {Property.<Polynomial|null>}
-    this.horizontalTotalProperty = new Property( this.horizontalTotal );
-    this.verticalTotalProperty = new Property( this.verticalTotal );
+    // @public {OrientationPair.<Property.<Polynomial|null>>}
+    this.totalProperties = new OrientationPair( new Property( this.totals.get( Orientation.HORIZONTAL ) ), new Property( this.totals.get( Orientation.VERTICAL ) ) );
 
     // @public {Polynomial}
-    this.total = this.horizontalTotal.times( this.verticalTotal );
+    this.total = this.totals.get( Orientation.HORIZONTAL ).times( this.totals.get( Orientation.VERTICAL ) );
 
     // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
@@ -129,8 +129,8 @@ define( function( require ) {
 
     // Properties for all of the values
     var availableProperties = this.horizontalPartitionSizeProperties.concat( this.verticalPartitionSizeProperties ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
-      this.horizontalTotalProperty,
-      this.verticalTotalProperty,
+      this.totalProperties.get( Orientation.HORIZONTAL ),
+      this.totalProperties.get( Orientation.VERTICAL ),
       this.totalProperty
     ] );
 
@@ -153,7 +153,7 @@ define( function( require ) {
           return term !== null;
         } );
         var lostATerm = terms.length !== self.horizontalPartitionSizeProperties.length;
-        self.horizontalTotalProperty.value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
+        self.totalProperties.get( Orientation.HORIZONTAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
     if ( description.verticalTotalValue === GameValue.DYNAMIC ) {
@@ -162,7 +162,7 @@ define( function( require ) {
           return term !== null;
         } );
         var lostATerm = terms.length !== self.verticalPartitionSizeProperties.length;
-        self.verticalTotalProperty.value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
+        self.totalProperties.get( Orientation.VERTICAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
 
@@ -279,8 +279,8 @@ define( function( require ) {
       var self = this;
 
       // Easier to assume in code these are null (would mean not complete, so not correct)
-      if ( this.horizontalTotalProperty.value === null ||
-           this.verticalTotalProperty.value === null ||
+      if ( this.totalProperties.get( Orientation.HORIZONTAL ).value === null ||
+           this.totalProperties.get( Orientation.VERTICAL ).value === null ||
            this.totalProperty.value === null ) {
         return false;
       }
@@ -305,7 +305,7 @@ define( function( require ) {
                             this.totalProperty.value :
                             new Polynomial( [ this.totalProperty.value ] );
       correct = correct &&
-                this.horizontalTotalProperty.value.times( this.verticalTotalProperty.value ).equals( totalPolynomial );
+                this.totalProperties.get( Orientation.HORIZONTAL ).value.times( this.totalProperties.get( Orientation.VERTICAL ).value ).equals( totalPolynomial );
 
       //TODO: dedup with above
       var horizontalTotal = new Polynomial( _.map( this.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
@@ -319,8 +319,8 @@ define( function( require ) {
       correct = correct &&
                 ( horizontalTotal !== null ) &&
                 ( verticalTotal !== null ) &&
-                horizontalTotal.equals( this.horizontalTotalProperty.value ) &&
-                verticalTotal.equals( this.verticalTotalProperty.value );
+                horizontalTotal.equals( this.totalProperties.get( Orientation.HORIZONTAL ).value ) &&
+                verticalTotal.equals( this.totalProperties.get( Orientation.VERTICAL ).value );
 
       return correct;
     },
@@ -341,28 +341,28 @@ define( function( require ) {
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
       if ( this.horizontalPartitionSizeProperties.length === 1 &&
            this.description.horizontalValues[ 0 ] === GameValue.GIVEN ) {
-        display.horizontalPartitionValuesProperty.value = [ new EditableProperty( null ) ];
+        display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = [ new EditableProperty( null ) ];
       }
       else {
-        display.horizontalPartitionValuesProperty.value = this.horizontalPartitionSizeProperties;
+        display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = this.horizontalPartitionSizeProperties;
       }
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
       if ( this.verticalPartitionSizeProperties.length === 1 &&
            this.description.verticalValues[ 0 ] === GameValue.GIVEN ) {
-        display.verticalPartitionValuesProperty.value = [ new EditableProperty( null ) ];
+        display.partitionValuesProperties.get( Orientation.VERTICAL ).value = [ new EditableProperty( null ) ];
       }
       else {
-        display.verticalPartitionValuesProperty.value = this.verticalPartitionSizeProperties;
+        display.partitionValuesProperties.get( Orientation.VERTICAL ).value = this.verticalPartitionSizeProperties;
       }
 
-      this.horizontalTotalListener = this.horizontalTotalProperty.linkAttribute( display.horizontalTotalProperty, 'value' );
-      this.verticalTotalListener = this.verticalTotalProperty.linkAttribute( display.verticalTotalProperty, 'value' );
+      this.horizontalTotalListener = this.totalProperties.get( Orientation.HORIZONTAL ).linkAttribute( display.totalProperties.get( Orientation.HORIZONTAL ), 'value' );
+      this.verticalTotalListener = this.totalProperties.get( Orientation.VERTICAL ).linkAttribute( display.totalProperties.get( Orientation.VERTICAL ), 'value' );
     },
 
     // TODO
     detachDisplay: function( display ) {
-      this.horizontalTotalProperty.unlink( this.horizontalTotalListener );
-      this.verticalTotalProperty.unlink( this.verticalTotalListener );
+      this.totalProperties.get( Orientation.HORIZONTAL ).unlink( this.horizontalTotalListener );
+      this.totalProperties.get( Orientation.VERTICAL ).unlink( this.verticalTotalListener );
     }
   }, {
 
