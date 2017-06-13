@@ -87,15 +87,15 @@ define( function( require ) {
 
       // Horizontal shuffle
       var horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
-      horizontalPermutation.apply( options.horizontal );
-      options.products.forEach( function( row ) {
-        horizontalPermutation.apply( row );
+      options.horizontal = horizontalPermutation.apply( options.horizontal );
+      options.products = options.products.map( function( row ) {
+        return horizontalPermutation.apply( row );
       } );
 
       // Vertical shuffle
       var verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
-      verticalPermutation.apply( options.vertical );
-      verticalPermutation.apply( options.products );
+      options.vertical = verticalPermutation.apply( options.vertical );
+      options.products = verticalPermutation.apply( options.products );
 
       if ( this.transposable && phet.joist.random.nextBoolean() ) {
         var tmpPartition = options.horizontal;
