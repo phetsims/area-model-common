@@ -265,19 +265,55 @@ define( function( require ) {
     showAnswers: function() {
       var self = this;
 
-      //TODO: dedup possible with incorrect bits above?
-      this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
-        property.value = self.horizontalPartitionSizes[ index ];
-      } );
-      this.verticalPartitionSizeProperties.forEach( function( property, index ) {
-        property.value = self.verticalPartitionSizes[ index ];
-      } );
-      // TODO: look at common iteration patterns like this and abstract out more (and name it)
-      this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
-        row.forEach( function( property, horizontalIndex ) {
-          property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
+      //TODO: improve 6-1 variables hack
+      // Match solutions for 6-1 variables, see https://github.com/phetsims/area-model-common/issues/42
+      if ( !this.description.unique ) {
+        var reversed = false;
+
+        // TODO: dedup with the editable property bit above
+        var expected1 = this.horizontalPartitionSizes[ 1 ];
+        var expected2 = this.verticalPartitionSizes[ 1 ];
+
+        var actual1Property = this.horizontalPartitionSizeProperties[ 1 ];
+        var actual2Property = this.verticalPartitionSizeProperties[ 1 ];
+
+        var actual1 = actual1Property.value;
+        var actual2 = actual2Property.value;
+
+        // TODO: null checks not needed, right?
+        var matches1 = actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
+        var matches2 = actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
+
+        if ( matches1 !== matches2 && ( actual1.equals( expected2 ) || actual2.equals( expected1 ) ) ) {
+          reversed = true;
+        }
+
+        if ( reversed ) {
+          actual1Property.value = expected2;
+          actual2Property.value = expected1;
+        }
+        else {
+          actual1Property.value = expected1;
+          actual2Property.value = expected2;
+        }
+      }
+      else {
+        //TODO: dedup possible with incorrect bits above?
+        this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
+          property.value = self.horizontalPartitionSizes[ index ];
         } );
-      } );
+        this.verticalPartitionSizeProperties.forEach( function( property, index ) {
+          property.value = self.verticalPartitionSizes[ index ];
+        } );
+
+        // TODO: look at common iteration patterns like this and abstract out more (and name it)
+        this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
+          row.forEach( function( property, horizontalIndex ) {
+            property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
+          } );
+        } );
+      }
+
       if ( this.totalProperty.value instanceof Term ) { // TODO: hackish workaround. Can we always have it be a Polynomial?
         this.totalProperty.value = this.total.terms[ 0 ];
       }
