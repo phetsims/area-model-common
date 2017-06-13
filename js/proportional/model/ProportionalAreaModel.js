@@ -24,9 +24,11 @@ define( function( require ) {
    */
   function ProportionalAreaModel( areaOptionObjects ) {
 
-    AreaModel.call( this, areaOptionObjects.map( function( options ) {
+    var areas = areaOptionObjects.map( function( options ) {
       return new ProportionalArea( options );
-    } ), false, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
+    } );
+
+    AreaModel.call( this, areas, areas[ 0 ], false, AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
 
     // @public {BooleanProperty}
     this.gridLinesVisibleProperty = new BooleanProperty( true );

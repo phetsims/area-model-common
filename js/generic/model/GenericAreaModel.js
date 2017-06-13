@@ -17,6 +17,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
+  var DEFAULT_LAYOUT = GenericLayout.TWO_BY_TWO;
+
   /**
    * @constructor
    * @extends {AreaModel}
@@ -27,14 +29,18 @@ define( function( require ) {
     var self = this;
 
     // @public {Property.<GenericLayout>}
-    this.genericLayoutProperty = new Property( GenericLayout.TWO_BY_TWO );
+    this.genericLayoutProperty = new Property( DEFAULT_LAYOUT );
 
     var areas = GenericLayout.VALUES.map( function( layout ) {
       return new GenericArea( layout, allowExponents );
     } );
 
-    AreaModel.call( this, areas, allowExponents, AreaModelColorProfile.genericWidthProperty,
-                                                 AreaModelColorProfile.genericHeightProperty );
+    var defaultArea = _.find( areas, function( area ) {
+      return area.layout === DEFAULT_LAYOUT;
+    } );
+
+    AreaModel.call( this, areas, defaultArea, allowExponents, AreaModelColorProfile.genericWidthProperty,
+                                                              AreaModelColorProfile.genericHeightProperty );
 
     // Adjust the current area based on the layout.
     this.genericLayoutProperty.link( function( layout ) {

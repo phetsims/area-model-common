@@ -23,11 +23,12 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
+   * @param {Area} defaultArea - The initial area
    * @param {boolean} allowExponents
    * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
    * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
    */
-  function AreaModel( areas, allowExponents, horizontalColorProperty, verticalColorProperty ) {
+  function AreaModel( areas, defaultArea, allowExponents, horizontalColorProperty, verticalColorProperty ) {
     var self = this;
 
     // @public {Array.<Area>}
@@ -41,7 +42,7 @@ define( function( require ) {
     this.colorProperties =  new OrientationPair( horizontalColorProperty, verticalColorProperty );
 
     // @public {Property.<Area>} - The current area
-    this.currentAreaProperty = new Property( areas[ 0 ] );
+    this.currentAreaProperty = new Property( defaultArea );
 
     // @public {Property.<boolean>}
     this.productBoxExpanded = new BooleanProperty( true );
