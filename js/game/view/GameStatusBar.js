@@ -18,21 +18,29 @@ define( function( require ) {
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  // var ScoreNode = require( 'AREA_MODEL_COMMON/make-a-ten/game/view/ScoreNode' ); TODO what to do here? ignore?
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // Template for inserting the level number
+  // strings
   var numbersLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/numbersLevelNumberPattern' );
   var variablesLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/variablesLevelNumberPattern' );
   var challengeProgressPatternString = require( 'string!AREA_MODEL_COMMON/challengeProgressPattern' );
+  var levelPromptTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.totalArea' );
+  var levelPromptOneProductString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct' );
+  var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
+  var levelPromptOneProductTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.totalArea' );
+  var levelPromptOneProductOneLengthString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.oneLength' );
+  var levelPromptTwoLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoLengths' );
+  var levelPromptThreeLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.threeLengths' );
 
   // constants
   //TODO: Colors in the color profile!
@@ -83,14 +91,14 @@ define( function( require ) {
     } );
     this.addChild( this.levelNumberText );
 
-    // @private {Text} - Text updated in updateLevelInfo
+    // @private {Text}
     // TODO: Really don't let this get to testing?
-    this.levelDescriptionText = new Text( 'Fill in the things with some stuff', {
+    this.levelPromptText = new Text( 'Fill in the things with some stuff', {
       font: LEVEL_DESCRIPTION_FONT,
       fill: TEXT_COLOR,
       pickable: false
     } );
-    this.addChild( this.levelDescriptionText );
+    this.addChild( this.levelPromptText );
 
     var lastKnownLevel = null;
     var scoreProperty = new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
@@ -124,9 +132,33 @@ define( function( require ) {
 
     // Persistent, no need to worry about unlinking
     currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
+
+    new DynamicDerivedProperty( currentLevelProperty, 'currentChallengeProperty' ).link( this.updateChallengeInfo.bind( this ) );
   }
 
   areaModelCommon.register( 'GameStatusBar', GameStatusBar );
+
+  /**
+   * Returns a string key used for looking up the proper prompt in promptMap below.
+   * @private
+   *
+   * @param {boolean} hasAreaEntry
+   * @param {number} numProductEntries
+   * @param {number} numPartitionEntries
+   * @returns {string}
+   */
+  function getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) {
+    return hasAreaEntry + ',' + numProductEntries + ',' + numPartitionEntries;
+  }
+
+  var promptMap = {};
+  promptMap[ getPromptKey( true, 0, 0 ) ] = levelPromptTotalAreaString;
+  promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductString;
+  promptMap[ getPromptKey( false, 2, 0 ) ] = levelPromptTwoProductsString;
+  promptMap[ getPromptKey( true, 1, 0 ) ] = levelPromptOneProductTotalAreaString;
+  promptMap[ getPromptKey( false, 1, 1 ) ] = levelPromptOneProductOneLengthString;
+  promptMap[ getPromptKey( false, 0, 2 ) ] = levelPromptTwoLengthsString;
+  promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
 
   return inherit( Node, GameStatusBar, {
     /**
@@ -146,6 +178,31 @@ define( function( require ) {
       this.levelNumberText.text = StringUtils.fillIn( template, {
         level: '' + level.number
       } );
+
+      this.layout();
+    },
+
+    // TODO: doc
+    updateChallengeInfo: function( challenge ) {
+      // Don't update if there is no challenge, leave last appearance during the fade.
+      if ( challenge === null ) {
+        return;
+      }
+
+      var description = challenge.description;
+
+      var hasAreaEntry = description.totalValue === GameValue.EDITABLE;
+      var numProductEntries = _.flatten( description.productValues ).filter( function( value ) {
+        return value === GameValue.EDITABLE; // TODO dedup
+      } ).length;
+      var numPartitionEntries = description.horizontalValues.concat( description.verticalValues ).filter( function( value ) {
+        return value === GameValue.EDITABLE;
+      } ).length;
+
+      var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
+      assert && assert( text );
+
+      this.levelPromptText.text = text;
 
       this.layout();
     },
@@ -184,9 +241,9 @@ define( function( require ) {
       this.levelNumberText.centerY = verticalCenter;
 
       // TODO: Adjust maxWidth based on score
-      this.levelDescriptionText.maxWidth = ( this.challengeProgressNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
-      this.levelDescriptionText.left = this.levelNumberText.right + BAR_PADDING;
-      this.levelDescriptionText.centerY = verticalCenter;
+      this.levelPromptText.maxWidth = ( this.challengeProgressNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
+      this.levelPromptText.left = this.levelNumberText.right + BAR_PADDING;
+      this.levelPromptText.centerY = verticalCenter;
     }
   } );
 } );

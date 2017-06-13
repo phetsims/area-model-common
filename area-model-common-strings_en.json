@@ -40,5 +40,26 @@
   },
   "challengeProgressPattern": {
     "value": "{{current}} of {{total}}"
+  },
+  "levelPrompt.totalArea": {
+    "value": "Find the total area."
+  },
+  "levelPrompt.oneProduct": {
+    "value": "Find the partial product."
+  },
+  "levelPrompt.twoProducts": {
+    "value": "Find the partial products."
+  },
+  "levelPrompt.oneProduct.totalArea": {
+    "value": "Find the partial product and total area."
+  },
+  "levelPrompt.oneProduct.oneLength": {
+    "value": "Find the partial product and side length."
+  },
+  "levelPrompt.twoLengths": {
+    "value": "Find the side lengths."
+  },
+  "levelPrompt.threeLengths": {
+    "value": "Find the side lengths."
   }
 }
