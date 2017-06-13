@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -65,17 +66,23 @@ define( function( require ) {
       readoutText.center = Vector2.ZERO;
     } );
 
-    // TODO: coloring
-    var textColorProperty = colorProperty;
-    var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty ], function( highlight, color ) {
+    var textColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelColorProfile.errorHighlightProperty ], function( highlight, color, errorColor ) {
+      if ( highlight === HighlightType.ERROR ) {
+        return errorColor;
+      }
+      else {
+        return color;
+      }
+    } );
+    var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], function( highlight, color, errorColor, dirtyColor ) {
       if ( highlight === HighlightType.NORMAL ) {
         return color;
       }
       else if ( highlight === HighlightType.DIRTY ) {
-        return '#884400'; // TODO: color profile?
+        return dirtyColor;
       }
       else {
-        return 'red'; // TODO: color profile?
+        return errorColor;
       }
     } );
     var termEditNode = new TermEditNode( orientation, valueProperty, textColorProperty, borderColorProperty, isActiveProperty, digitsProperty, allowExponentsProperty, editCallback );
