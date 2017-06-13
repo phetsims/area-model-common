@@ -382,7 +382,7 @@ define( function( require ) {
     generatePartitionTerms: function( quantity, allowExponents ) {
       var maxPower = quantity - 1;
       return _.range( maxPower, -1 ).map( function( power ) {
-        return AreaChallenge.generateTerm( power, maxPower, allowExponents );
+        return AreaChallenge.generateTerm( power, maxPower, quantity, allowExponents );
       } );
     },
 
@@ -392,11 +392,11 @@ define( function( require ) {
      *
      * @param {number} power - Power of 'x' or '10' that the single digit is multiplied times
      * @param {number} maxPower - Maximum power for all terms of this orientation.
+     * @param {number} quantity - Quantity of terms generated total
      * @param {boolean} allowExponents
      * @returns {Term}
      */
-    generateTerm: function( power, maxPower, allowExponents ) {
-      var digit = phet.joist.random.nextIntBetween( 1, 9 );
+    generateTerm: function( power, maxPower, quantity, allowExponents ) {
       if ( allowExponents ) {
         // Don't let leading x or x^2 have a coefficient.
         if ( power === maxPower && power > 0 ) {
@@ -404,11 +404,15 @@ define( function( require ) {
         }
         else {
           var sign = phet.joist.random.nextBoolean() ? 1 : -1;
+
+          // Exclude a 1 if our length is 1
+          var digit = phet.joist.random.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
           return new Term( sign * digit, power );
         }
       }
       else {
-        return new Term( digit * Math.pow( 10, power ) );
+        // Exclude a 1 if our length is 1
+        return new Term( phet.joist.random.nextIntBetween( quantity === 1 ? 2 : 1, 9 ) * Math.pow( 10, power ) );
       }
     }
   } );
