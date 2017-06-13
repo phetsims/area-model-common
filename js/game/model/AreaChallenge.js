@@ -73,6 +73,14 @@ define( function( require ) {
       } );
     } );
 
+    //TODO: dedup
+    this.nonErrorHorizontalPartitionSizeProperties = this.horizontalPartitionSizeProperties.map( function( editableProperty ) {
+      return editableProperty.nonErrorValueProperty;
+    } );
+    this.nonErrorVerticalPartitionSizeProperties = this.verticalPartitionSizeProperties.map( function( editableProperty ) {
+      return editableProperty.nonErrorValueProperty;
+    } );
+
     // @public {Array.<Array.<Term|null>>}
     this.partialProductSizes = this.verticalPartitionSizes.map( function( verticalSize ) {
       return self.horizontalPartitionSizes.map( function( horizontalSize ) {
@@ -93,8 +101,8 @@ define( function( require ) {
         // Link up if dynamic
         if ( gameValue === GameValue.DYNAMIC ) {
           var properties = [
-            self.horizontalPartitionSizeProperties[ horizontalIndex ],
-            self.verticalPartitionSizeProperties[ verticalIndex ]
+            self.nonErrorHorizontalPartitionSizeProperties[ horizontalIndex ],
+            self.nonErrorVerticalPartitionSizeProperties[ verticalIndex ]
           ];
           Property.multilink( properties, function( horizontal, vertical ) {
             if ( horizontal === null || vertical === null ) {
@@ -148,20 +156,20 @@ define( function( require ) {
     // Now hook up dynamic parts, setting their values to null
     //TODO: dedup
     if ( description.horizontalTotalValue === GameValue.DYNAMIC ) {
-      Property.multilink( this.horizontalPartitionSizeProperties, function() {
-        var terms = _.map( self.horizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
+      Property.multilink( this.nonErrorHorizontalPartitionSizeProperties, function() {
+        var terms = _.map( self.nonErrorHorizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
         } );
-        var lostATerm = terms.length !== self.horizontalPartitionSizeProperties.length;
+        var lostATerm = terms.length !== self.nonErrorHorizontalPartitionSizeProperties.length;
         self.totalProperties.get( Orientation.HORIZONTAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
     if ( description.verticalTotalValue === GameValue.DYNAMIC ) {
-      Property.multilink( this.verticalPartitionSizeProperties, function() {
-        var terms = _.map( self.verticalPartitionSizeProperties, 'value' ).filter( function( term ) {
+      Property.multilink( this.nonErrorVerticalPartitionSizeProperties, function() {
+        var terms = _.map( self.nonErrorVerticalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
         } );
-        var lostATerm = terms.length !== self.verticalPartitionSizeProperties.length;
+        var lostATerm = terms.length !== self.nonErrorVerticalPartitionSizeProperties.length;
         self.totalProperties.get( Orientation.VERTICAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }

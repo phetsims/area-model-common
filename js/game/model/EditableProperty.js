@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -53,6 +54,11 @@ define( function( require ) {
 
     // @public {Property.<HighlightType>} - TODO doc
     this.highlightProperty = new Property( HighlightType.DIRTY );
+
+    // TODO doc
+    this.nonErrorValueProperty = new DerivedProperty( [ this, this.highlightProperty ], function( value, highlight ) {
+      return ( highlight === HighlightType.ERROR ) ? null : value;
+    } );
   }
 
   areaModelCommon.register( 'EditableProperty', EditableProperty );
