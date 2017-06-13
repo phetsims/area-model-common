@@ -60,6 +60,7 @@ define( function( require ) {
     // TODO: deduplicate
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
+        gameValue: description.horizontalValues[ index ],
         displayType: GameValue.toDisplayType( [ description.horizontalValues[ index ] ] ),
         entryType: mainEntryType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
@@ -67,6 +68,7 @@ define( function( require ) {
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
+        gameValue: description.verticalValues[ index ],
         displayType: GameValue.toDisplayType( [ description.verticalValues[ index ] ] ),
         entryType: mainEntryType, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
@@ -94,6 +96,7 @@ define( function( require ) {
         var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
         var gameValue = description.productValues[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
+          gameValue: gameValue,
           displayType: GameValue.toDisplayType( [ gameValue ] ),
           entryType: mainEntryType,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits
@@ -130,6 +133,7 @@ define( function( require ) {
 
     // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
+      gameValue: description.totalValue, // TODO: check dup with gameValue/displayType
       displayType: GameValue.toDisplayType( [ description.totalValue ] ),
       entryType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? EntryType.POLYNOMIAL_2 : EntryType.POLYNOMIAL_1 ) : EntryType.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )

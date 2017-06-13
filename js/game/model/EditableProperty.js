@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
+  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
@@ -30,6 +31,7 @@ define( function( require ) {
       useDeepEquality: true,
 
       // Our options
+      gameValue: GameValue.GIVEN,
       displayType: DisplayType.HIDDEN,
       entryType: EntryType.CONSTANT,
       digits: 0
@@ -42,6 +44,11 @@ define( function( require ) {
     }
 
     Property.call( this, value, options );
+
+    //TODO: cleanup which of these are necessary once game is done
+
+    // @public {GameValue}
+    this.gameValue = options.gameValue;
 
     // @public {DisplayType}
     this.displayType = options.displayType;

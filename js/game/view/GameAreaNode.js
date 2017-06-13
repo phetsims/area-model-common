@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
+  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -142,7 +143,14 @@ define( function( require ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
         } );
 
-        var colorProperty = new Property( 'black' ); // TODO color profile
+        var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelColorProfile.dynamicPartialProductProperty ], function( editableProperty, color ) {
+          if ( editableProperty && editableProperty.gameValue === GameValue.DYNAMIC ) {
+            return color;
+          }
+          else {
+            return 'black'; // TODO: color profile it?
+          }
+        } );
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
           if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
