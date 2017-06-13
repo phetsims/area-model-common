@@ -44,20 +44,16 @@ define( function( require ) {
       children: [ labelNode ]
     } );
 
-    var lineWidth = AreaModelQueryParameters.singleLine ? 1 : 2;
-
     var tickOptions = {
       y1: 0,
       y2: TICK_LENGTH / 2,
       stroke: colorProperty,
-      lineWidth: lineWidth,
       rotation: orientation === Orientation.HORIZONTAL ? 0 : -Math.PI / 2
     };
 
     var ticks = [];
 
     var line = new Line( {
-      lineWidth: lineWidth,
       stroke: colorProperty
     } );
     this.addChild( line );
