@@ -55,7 +55,9 @@ define( function( require ) {
     this.allowExponents = this.type === AreaChallengeType.VARIABLES;
 
     // @public {boolean} - Whether transposing is supported
-    this.transposable = options.transposable === undefined ? ( this.type === AreaChallengeType.NUMBERS ) : options.transposable;
+    this.transposable = this.type === AreaChallengeType.NUMBERS;
+
+    this.shufflable = options.shufflable === undefined ? true : options.shufflable;
 
     // @public {boolean}
     this.unique = options.unique === undefined ? true : options.unique;
@@ -85,17 +87,19 @@ define( function( require ) {
         unique: this.unique
       };
 
-      // Horizontal shuffle
-      var horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
-      options.horizontal = horizontalPermutation.apply( options.horizontal );
-      options.products = options.products.map( function( row ) {
-        return horizontalPermutation.apply( row );
-      } );
+      if ( this.shufflable ) {
+        // Horizontal shuffle
+        var horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
+        options.horizontal = horizontalPermutation.apply( options.horizontal );
+        options.products = options.products.map( function( row ) {
+          return horizontalPermutation.apply( row );
+        } );
 
-      // Vertical shuffle
-      var verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
-      options.vertical = verticalPermutation.apply( options.vertical );
-      options.products = verticalPermutation.apply( options.products );
+        // Vertical shuffle
+        var verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
+        options.vertical = verticalPermutation.apply( options.vertical );
+        options.products = verticalPermutation.apply( options.products );
+      }
 
       if ( this.transposable && phet.joist.random.nextBoolean() ) {
         var tmpPartition = options.horizontal;
@@ -732,7 +736,7 @@ define( function( require ) {
     horizontalTotal: DYNAMIC,
     verticalTotal: DYNAMIC,
     type: AreaChallengeType.VARIABLES,
-    transposable: false, // TODO: is this doing ANYTHING? use the unique bit below?
+    shufflable: false,
     unique: false
   } );
 
