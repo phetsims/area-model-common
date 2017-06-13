@@ -432,7 +432,7 @@ define( function( require ) {
     products: [
       [ DYNAMIC, GIVEN, GIVEN ],
       [ GIVEN, DYNAMIC, GIVEN ],
-      [ GIVEN, GIVEN, DYNAMIC ]
+      [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
     horizontalTotal: GIVEN,
