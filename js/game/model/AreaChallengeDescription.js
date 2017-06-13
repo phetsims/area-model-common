@@ -19,6 +19,7 @@ define( function( require ) {
   var EDITABLE = GameValue.EDITABLE;
   var DYNAMIC = GameValue.DYNAMIC;
   var GIVEN = GameValue.GIVEN;
+  var HIDDEN = GameValue.HIDDEN;
 
   // TODO: doc
   var permutations = {
@@ -287,7 +288,7 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: DYNAMIC,
+    horizontalTotal: GIVEN,
     verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
@@ -372,7 +373,7 @@ define( function( require ) {
       [ GIVEN, DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: DYNAMIC,
+    horizontalTotal: GIVEN,
     verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
@@ -415,7 +416,7 @@ define( function( require ) {
       [ GIVEN, GIVEN, DYNAMIC ]
     ],
     total: GIVEN,
-    horizontalTotal: DYNAMIC,
+    horizontalTotal: GIVEN,
     verticalTotal: GIVEN,
     type: AreaChallengeType.NUMBERS
   } );
@@ -447,8 +448,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: GIVEN,
-    verticalTotal: DYNAMIC,
+    horizontalTotal: HIDDEN,
+    verticalTotal: HIDDEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -460,8 +461,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: GIVEN,
-    verticalTotal: DYNAMIC,
+    horizontalTotal: HIDDEN,
+    verticalTotal: HIDDEN,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -596,7 +597,7 @@ define( function( require ) {
       [ DYNAMIC, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: DYNAMIC,
+    horizontalTotal: GIVEN,
     verticalTotal: GIVEN,
     type: AreaChallengeType.VARIABLES
   } );

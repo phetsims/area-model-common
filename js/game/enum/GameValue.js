@@ -15,7 +15,8 @@ define( function( require ) {
   var GameValue = {
     EDITABLE: 'EDITABLE',
     DYNAMIC: 'DYNAMIC',
-    GIVEN: 'GIVEN'
+    GIVEN: 'GIVEN',
+    HIDDEN: 'HIDDEN'
   };
 
   areaModelCommon.register( 'GameValue', GameValue );
@@ -25,12 +26,14 @@ define( function( require ) {
     GameValue.EDITABLE,
     GameValue.DYNAMIC,
     GameValue.GIVEN,
+    GameValue.HIDDEN
   ];
 
   var gameToDisplayMap = {};
   gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
   gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
   gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
+  gameToDisplayMap[ GameValue.HIDDEN ] = DisplayType.HIDDEN;
 
   /**
    * Returns the preferred display type for a given game value.
