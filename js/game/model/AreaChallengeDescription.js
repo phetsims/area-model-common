@@ -356,7 +356,7 @@ define( function( require ) {
     vertical: [ EDITABLE, GIVEN ],
     products: [
       [ DYNAMIC, GIVEN ],
-      [ GIVEN, DYNAMIC ]
+      [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
     horizontalTotal: GIVEN,
