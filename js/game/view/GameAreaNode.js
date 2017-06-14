@@ -74,7 +74,18 @@ define( function( require ) {
     };
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
-      var termListProperty = display.totalProperties.get( orientation );
+
+      // TODO: don't require this
+      var lastGameState = gameStateProperty.value;
+      var termListProperty = new DerivedProperty( [ display.totalProperties.get( orientation ), display.totalHiddenProperties.get( orientation ), gameStateProperty ], function( total, hidden, gameState ) {
+        if ( gameState === null ) {
+          gameState = lastGameState;
+        }
+        else {
+          lastGameState = gameState;
+        }
+        return ( hidden && gameState !== GameState.SHOW_SOLUTION ) ? null : total;
+      } );
 
       var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
         return tickVariations[ layout.getPartitionQuantity( orientation ) ];

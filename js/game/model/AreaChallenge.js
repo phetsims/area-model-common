@@ -403,29 +403,17 @@ define( function( require ) {
         display.partitionValuesProperties.get( Orientation.VERTICAL ).value = this.verticalPartitionSizeProperties;
       }
 
-      // TODO: simplify
-      if ( this.description.horizontalTotalValue !== GameValue.HIDDEN ) {
-        this.horizontalTotalListener = this.totalProperties.get( Orientation.HORIZONTAL ).linkAttribute( display.totalProperties.get( Orientation.HORIZONTAL ), 'value' );
-      }
-      else {
-        display.totalProperties.get( Orientation.HORIZONTAL ).value = null;
-      }
-      if ( this.description.verticalTotalValue !== GameValue.HIDDEN ) {
-        this.verticalTotalListener = this.totalProperties.get( Orientation.VERTICAL ).linkAttribute( display.totalProperties.get( Orientation.VERTICAL ), 'value' );
-      }
-      else {
-        display.totalProperties.get( Orientation.VERTICAL ).value = null;
-      }
+      this.horizontalTotalListener = this.totalProperties.get( Orientation.HORIZONTAL ).linkAttribute( display.totalProperties.get( Orientation.HORIZONTAL ), 'value' );
+      this.verticalTotalListener = this.totalProperties.get( Orientation.VERTICAL ).linkAttribute( display.totalProperties.get( Orientation.VERTICAL ), 'value' );
+
+      display.totalHiddenProperties.get( Orientation.HORIZONTAL ).value = this.description.horizontalTotalValue === GameValue.HIDDEN;
+      display.totalHiddenProperties.get( Orientation.VERTICAL ).value = this.description.verticalTotalValue === GameValue.HIDDEN;
     },
 
     // TODO
     detachDisplay: function( display ) {
-      if ( this.description.horizontalTotalValue !== GameValue.HIDDEN ) {
-        this.totalProperties.get( Orientation.HORIZONTAL ).unlink( this.horizontalTotalListener );
-      }
-      if ( this.description.verticalTotalValue !== GameValue.HIDDEN ) {
-        this.totalProperties.get( Orientation.VERTICAL ).unlink( this.verticalTotalListener );
-      }
+      this.totalProperties.get( Orientation.HORIZONTAL ).unlink( this.horizontalTotalListener );
+      this.totalProperties.get( Orientation.VERTICAL ).unlink( this.verticalTotalListener );
     }
   }, {
 
