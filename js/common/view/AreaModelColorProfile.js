@@ -130,6 +130,7 @@ define( function( require ) {
     // border/text highlights for editable values
     errorHighlight: { default: Color.RED },
     dirtyHighlight: { default: new Color( '#884400' ) },
+    polynomialDirtyHighlight: { default: new Color( '#75d9ff' ) },
 
     // Readout colors for partial products
     dynamicPartialProduct: { default: new Color( 128, 130, 133 ) }
