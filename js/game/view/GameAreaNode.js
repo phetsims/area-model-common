@@ -15,7 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
-  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
+  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -143,7 +143,7 @@ define( function( require ) {
         } );
 
         var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelColorProfile.dynamicPartialProductProperty ], function( editableProperty, color ) {
-          if ( editableProperty && editableProperty.gameValue === GameValue.DYNAMIC ) {
+          if ( editableProperty && editableProperty.field === Field.DYNAMIC ) {
             return color;
           }
           else {

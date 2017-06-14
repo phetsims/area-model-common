@@ -20,7 +20,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
-  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
+  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -191,12 +191,12 @@ define( function( require ) {
 
       var description = challenge.description;
 
-      var hasAreaEntry = description.totalValue === GameValue.EDITABLE;
+      var hasAreaEntry = description.totalValue === Field.EDITABLE;
       var numProductEntries = _.flatten( description.productValues ).filter( function( value ) {
-        return value === GameValue.EDITABLE; // TODO dedup
+        return value === Field.EDITABLE; // TODO dedup
       } ).length;
       var numPartitionEntries = description.horizontalValues.concat( description.verticalValues ).filter( function( value ) {
-        return value === GameValue.EDITABLE;
+        return value === Field.EDITABLE;
       } ).length;
 
       var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];

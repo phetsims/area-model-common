@@ -16,7 +16,7 @@ define( function( require ) {
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
+  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
@@ -61,16 +61,16 @@ define( function( require ) {
     // TODO: deduplicate
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
-        gameValue: description.horizontalValues[ index ],
-        displayType: GameValue.toDisplayType( description.horizontalValues[ index ] ),
+        field: description.horizontalValues[ index ],
+        displayType: Field.toDisplayType( description.horizontalValues[ index ] ),
         inputMethod: mainInputMethod, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
       } );
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
-        gameValue: description.verticalValues[ index ],
-        displayType: GameValue.toDisplayType( description.verticalValues[ index ] ),
+        field: description.verticalValues[ index ],
+        displayType: Field.toDisplayType( description.verticalValues[ index ] ),
         inputMethod: mainInputMethod, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
       } );
@@ -95,15 +95,15 @@ define( function( require ) {
     this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
       return row.map( function( size, horizontalIndex ) {
         var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
-        var gameValue = description.productValues[ verticalIndex ][ horizontalIndex ];
+        var field = description.productValues[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
-          gameValue: gameValue,
-          displayType: GameValue.toDisplayType( gameValue ),
+          field: field,
+          displayType: Field.toDisplayType( field ),
           inputMethod: mainInputMethod,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits
         } );
         // Link up if dynamic
-        if ( gameValue === GameValue.DYNAMIC ) {
+        if ( field === Field.DYNAMIC ) {
           var properties = [
             self.nonErrorHorizontalPartitionSizeProperties[ horizontalIndex ],
             self.nonErrorVerticalPartitionSizeProperties[ verticalIndex ]
@@ -134,8 +134,8 @@ define( function( require ) {
 
     // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
-      gameValue: description.totalValue, // TODO: check dup with gameValue/displayType
-      displayType: GameValue.toDisplayType( description.totalValue ),
+      field: description.totalValue, // TODO: check dup with field/displayType
+      displayType: Field.toDisplayType( description.totalValue ),
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
@@ -150,7 +150,7 @@ define( function( require ) {
     // @public {Property.<boolean>}
     this.hasNullProperty = new DerivedProperty( availableProperties, function() {
       return _.some( availableProperties, function( property ) {
-        return property.value === null && property.gameValue !== GameValue.DYNAMIC;
+        return property.value === null && property.field !== Field.DYNAMIC;
       } );
     } );
 
@@ -160,7 +160,7 @@ define( function( require ) {
 
     // Now hook up dynamic parts, setting their values to null
     //TODO: dedup
-    if ( description.horizontalTotalValue === GameValue.DYNAMIC ) {
+    if ( description.horizontalTotalValue === Field.DYNAMIC ) {
       Property.multilink( this.nonErrorHorizontalPartitionSizeProperties, function() {
         var terms = _.map( self.nonErrorHorizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
@@ -169,7 +169,7 @@ define( function( require ) {
         self.totalProperties.get( Orientation.HORIZONTAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
-    if ( description.verticalTotalValue === GameValue.DYNAMIC ) {
+    if ( description.verticalTotalValue === Field.DYNAMIC ) {
       Property.multilink( this.nonErrorVerticalPartitionSizeProperties, function() {
         var terms = _.map( self.nonErrorVerticalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
@@ -385,7 +385,7 @@ define( function( require ) {
 
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
       if ( this.horizontalPartitionSizeProperties.length === 1 &&
-           this.description.horizontalValues[ 0 ] === GameValue.GIVEN ) {
+           this.description.horizontalValues[ 0 ] === Field.GIVEN ) {
         display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = [ new EditableProperty( null ) ];
       }
       else {
@@ -393,7 +393,7 @@ define( function( require ) {
       }
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
       if ( this.verticalPartitionSizeProperties.length === 1 &&
-           this.description.verticalValues[ 0 ] === GameValue.GIVEN ) {
+           this.description.verticalValues[ 0 ] === Field.GIVEN ) {
         display.partitionValuesProperties.get( Orientation.VERTICAL ).value = [ new EditableProperty( null ) ];
       }
       else {

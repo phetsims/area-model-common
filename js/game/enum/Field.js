@@ -12,52 +12,52 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
 
-  var GameValue = {
+  var Field = {
     EDITABLE: 'EDITABLE',
     DYNAMIC: 'DYNAMIC',
     GIVEN: 'GIVEN'
   };
 
-  areaModelCommon.register( 'GameValue', GameValue );
+  areaModelCommon.register( 'Field', Field );
 
   // All values the enumeration can take.
-  GameValue.VALUES = [
-    GameValue.EDITABLE,
-    GameValue.DYNAMIC,
-    GameValue.GIVEN
+  Field.VALUES = [
+    Field.EDITABLE,
+    Field.DYNAMIC,
+    Field.GIVEN
   ];
 
   var gameToDisplayMap = {};
-  gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
-  gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
-  gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
+  gameToDisplayMap[ Field.EDITABLE ] = DisplayType.EDITABLE;
+  gameToDisplayMap[ Field.DYNAMIC ] = DisplayType.READOUT;
+  gameToDisplayMap[ Field.GIVEN ] = DisplayType.READOUT;
 
   /**
-   * Returns whether the value is a GameValue
+   * Returns whether the value is a Field
    * @public
    *
-   * @param {GameValue} gameValue
+   * @param {Field} field
    * @returns {boolean}
    */
-  GameValue.isGameValue = function( gameValue ) {
-    return _.includes( GameValue.VALUES, gameValue );
+  Field.isField = function( field ) {
+    return _.includes( Field.VALUES, field );
   };
 
   /**
    * Returns the preferred display type for a given game value.
    * @public
    *
-   * @param {GameValue} gameValue
+   * @param {Field} field
    * @returns {boolean}
    */
-  GameValue.toDisplayType = function( gameValue ) {
-    assert && assert( GameValue.isGameValue( gameValue ) );
+  Field.toDisplayType = function( field ) {
+    assert && assert( Field.isField( field ) );
 
-    return gameToDisplayMap[ gameValue ];
+    return gameToDisplayMap[ field ];
   };
 
   // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( GameValue ); }
+  if ( assert ) { Object.freeze( Field ); }
 
-  return GameValue;
+  return Field;
 } );

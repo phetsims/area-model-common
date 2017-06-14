@@ -11,14 +11,14 @@ define( function( require ) {
   // modules
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
+  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Permutation = require( 'DOT/Permutation' );
 
-  var EDITABLE = GameValue.EDITABLE;
-  var DYNAMIC = GameValue.DYNAMIC;
-  var GIVEN = GameValue.GIVEN;
+  var EDITABLE = Field.EDITABLE;
+  var DYNAMIC = Field.DYNAMIC;
+  var GIVEN = Field.GIVEN;
 
   // TODO: doc
   var permutations = {
@@ -35,14 +35,14 @@ define( function( require ) {
    */
   function AreaChallengeDescription( options ) {
 
-    // @public {Array.<GameValue>} - Values for partition sizes for each orientation
+    // @public {Array.<Field>} - Values for partition sizes for each orientation
     this.horizontalValues = options.horizontal;
     this.verticalValues = options.vertical;
 
-    // @public {Array.<Array.<GameValue>>} - Values for partitioned areas
+    // @public {Array.<Array.<Field>>} - Values for partitioned areas
     this.productValues = options.products;
 
-    // @public {GameValue} - Values for the horizontal/vertical totals (sum of partition sizes) and the total area
+    // @public {Field} - Values for the horizontal/vertical totals (sum of partition sizes) and the total area
     this.horizontalTotalValue = options.horizontalTotal;
     this.verticalTotalValue = options.verticalTotal;
     this.totalValue = options.total;
