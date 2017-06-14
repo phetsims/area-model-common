@@ -402,9 +402,6 @@ define( function( require ) {
 
       this.horizontalTotalListener = this.totalProperties.get( Orientation.HORIZONTAL ).linkAttribute( display.totalProperties.get( Orientation.HORIZONTAL ), 'value' );
       this.verticalTotalListener = this.totalProperties.get( Orientation.VERTICAL ).linkAttribute( display.totalProperties.get( Orientation.VERTICAL ), 'value' );
-
-      display.totalHiddenProperties.get( Orientation.HORIZONTAL ).value = this.description.horizontalTotalValue === GameValue.HIDDEN;
-      display.totalHiddenProperties.get( Orientation.VERTICAL ).value = this.description.verticalTotalValue === GameValue.HIDDEN;
     },
 
     // TODO

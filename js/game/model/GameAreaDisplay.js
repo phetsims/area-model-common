@@ -34,9 +34,6 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
     this.totalProperties = new OrientationPair( new Property( null ), new Property( null ) );
 
-    // TODO: doc, simplify
-    this.totalHiddenProperties = new OrientationPair( new BooleanProperty( false ), new BooleanProperty( false ) );
-
     // @public {OrientationPair.<Property.<Array.<Term|null>>>} - Values for the partition sizes. Inner values may be
     //                                                            changed by the view client.
     this.partitionValuesProperties = new OrientationPair(

@@ -25,15 +25,13 @@ define( function( require ) {
   GameValue.VALUES = [
     GameValue.EDITABLE,
     GameValue.DYNAMIC,
-    GameValue.GIVEN,
-    GameValue.HIDDEN
+    GameValue.GIVEN
   ];
 
   var gameToDisplayMap = {};
   gameToDisplayMap[ GameValue.EDITABLE ] = DisplayType.EDITABLE;
   gameToDisplayMap[ GameValue.DYNAMIC ] = DisplayType.READOUT;
   gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
-  gameToDisplayMap[ GameValue.HIDDEN ] = DisplayType.HIDDEN;
 
   /**
    * Returns the preferred display type for a given game value.
