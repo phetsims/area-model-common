@@ -33,6 +33,17 @@ define( function( require ) {
   gameToDisplayMap[ GameValue.GIVEN ] = DisplayType.READOUT;
 
   /**
+   * Returns whether the value is a GameValue
+   * @public
+   *
+   * @param {GameValue} gameValue
+   * @returns {boolean}
+   */
+  GameValue.isGameValue = function( gameValue ) {
+    return _.includes( GameValue.VALUES, gameValue );
+  };
+
+  /**
    * Returns the preferred display type for a given game value.
    * @public
    *
@@ -40,6 +51,8 @@ define( function( require ) {
    * @returns {boolean}
    */
   GameValue.toDisplayType = function( gameValue ) {
+    assert && assert( GameValue.isGameValue( gameValue ) );
+
     return gameToDisplayMap[ gameValue ];
   };
 
