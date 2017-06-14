@@ -19,7 +19,6 @@ define( function( require ) {
   var EDITABLE = GameValue.EDITABLE;
   var DYNAMIC = GameValue.DYNAMIC;
   var GIVEN = GameValue.GIVEN;
-  var HIDDEN = GameValue.HIDDEN;
 
   // TODO: doc
   var permutations = {
@@ -452,8 +451,8 @@ define( function( require ) {
       [ GIVEN, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: HIDDEN,
-    verticalTotal: HIDDEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 
@@ -465,8 +464,8 @@ define( function( require ) {
       [ GIVEN, GIVEN, GIVEN ]
     ],
     total: GIVEN,
-    horizontalTotal: HIDDEN,
-    verticalTotal: HIDDEN,
+    horizontalTotal: DYNAMIC,
+    verticalTotal: DYNAMIC,
     type: AreaChallengeType.NUMBERS
   } );
 

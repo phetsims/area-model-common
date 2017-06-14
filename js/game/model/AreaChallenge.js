@@ -312,6 +312,9 @@ define( function( require ) {
             property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
           } );
         } );
+
+        this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.HORIZONTAL );
+        this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.VERTICAL );
       }
 
       if ( this.totalProperty.value instanceof Term ) { // TODO: hackish workaround. Can we always have it be a Polynomial?
