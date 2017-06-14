@@ -13,7 +13,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
-  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Property = require( 'AXON/Property' );
@@ -59,12 +59,12 @@ define( function( require ) {
     // @public {number}
     this.digits = options.digits;
 
-    // @public {Property.<HighlightType>} - TODO doc
-    this.highlightProperty = new Property( HighlightType.DIRTY );
+    // @public {Property.<Highlight>} - TODO doc
+    this.highlightProperty = new Property( Highlight.DIRTY );
 
     // TODO doc
     this.nonErrorValueProperty = new DerivedProperty( [ this, this.highlightProperty ], function( value, highlight ) {
-      return ( highlight === HighlightType.ERROR ) ? null : value;
+      return ( highlight === Highlight.ERROR ) ? null : value;
     } );
   }
 

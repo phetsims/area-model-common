@@ -17,7 +17,7 @@ define( function( require ) {
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
-  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -296,8 +296,8 @@ define( function( require ) {
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
-          this.horizontalPartitionSizeProperties[ 1 ].highlightProperty.value = HighlightType.NORMAL;
-          this.verticalPartitionSizeProperties[ 1 ].highlightProperty.value = HighlightType.NORMAL;
+          this.horizontalPartitionSizeProperties[ 1 ].highlightProperty.value = Highlight.NORMAL;
+          this.verticalPartitionSizeProperties[ 1 ].highlightProperty.value = Highlight.NORMAL;
         }
       }
     },

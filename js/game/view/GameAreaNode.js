@@ -17,7 +17,7 @@ define( function( require ) {
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -170,7 +170,7 @@ define( function( require ) {
 
     function setActiveTerm( term ) {
       activeEditableProperty.value.value = term;
-      activeEditableProperty.value.highlightProperty.value = HighlightType.NORMAL;
+      activeEditableProperty.value.highlightProperty.value = Highlight.NORMAL;
       activeEditableProperty.value = null;
     }
     var keypadOptions = {

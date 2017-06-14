@@ -19,7 +19,7 @@ define( function( require ) {
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Property = require( 'AXON/Property' );
@@ -207,7 +207,7 @@ define( function( require ) {
       this.currentChallengeProperty.value.checkNonUniqueChanges();
 
       this.activeEditableProperty.value.value = term;
-      this.activeEditableProperty.value.highlightProperty.value = HighlightType.NORMAL;
+      this.activeEditableProperty.value.highlightProperty.value = Highlight.NORMAL;
       this.activeEditableProperty.value = null;
     },
 
@@ -226,7 +226,7 @@ define( function( require ) {
 
       if ( !isCorrect ) {
         badProperties.forEach( function( property ) {
-          property.highlightProperty.value = HighlightType.ERROR;
+          property.highlightProperty.value = Highlight.ERROR;
         } );
       }
 

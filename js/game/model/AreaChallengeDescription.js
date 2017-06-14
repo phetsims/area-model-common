@@ -35,6 +35,8 @@ define( function( require ) {
    */
   function AreaChallengeDescription( options ) {
 
+    //TODO: rename values to fields
+
     // @public {Array.<Field>} - Values for partition sizes for each orientation
     this.horizontalValues = options.horizontal;
     this.verticalValues = options.vertical;

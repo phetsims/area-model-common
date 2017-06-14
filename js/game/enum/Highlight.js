@@ -11,23 +11,23 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var HighlightType = {
+  var Highlight = {
     NORMAL: 'NORMAL',
     DIRTY: 'DIRTY',
     ERROR: 'ERROR'
   };
 
-  areaModelCommon.register( 'HighlightType', HighlightType );
+  areaModelCommon.register( 'Highlight', Highlight );
 
   // All values the enumeration can take.
-  HighlightType.VALUES = [
-    HighlightType.NORMAL,
-    HighlightType.DIRTY,
-    HighlightType.ERROR
+  Highlight.VALUES = [
+    Highlight.NORMAL,
+    Highlight.DIRTY,
+    Highlight.ERROR
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( HighlightType ); }
+  if ( assert ) { Object.freeze( Highlight ); }
 
-  return HighlightType;
+  return Highlight;
 } );

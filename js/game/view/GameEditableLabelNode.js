@@ -17,7 +17,7 @@ define( function( require ) {
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
@@ -67,7 +67,7 @@ define( function( require ) {
     } );
 
     var textColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelColorProfile.errorHighlightProperty ], function( highlight, color, errorColor ) {
-      if ( highlight === HighlightType.ERROR ) {
+      if ( highlight === Highlight.ERROR ) {
         return errorColor;
       }
       else {
@@ -75,10 +75,10 @@ define( function( require ) {
       }
     } );
     var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], function( highlight, color, errorColor, dirtyColor ) {
-      if ( highlight === HighlightType.NORMAL ) {
+      if ( highlight === Highlight.NORMAL ) {
         return color;
       }
-      else if ( highlight === HighlightType.DIRTY ) {
+      else if ( highlight === Highlight.DIRTY ) {
         return dirtyColor;
       }
       else {
