@@ -87,11 +87,15 @@ define( function( require ) {
         calculationSelectionPanel,
         productsSelectionPanel
       ] ),
-      spacing: AreaModelConstants.PANEL_SPACING,
-      top: this.layoutBounds.top + AreaModelConstants.PANEL_MARGIN,
-      right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
+      spacing: AreaModelConstants.PANEL_SPACING
     } );
-    this.addChild( this.panelContainer );
+    this.addChild( new AlignBox( this.panelContainer, {
+      alignBounds: this.layoutBounds,
+      xAlign: 'right',
+      yAlign: 'top',
+      margin: AreaModelConstants.PANEL_MARGIN
+    } ) );
+
 
     // @protected {Node}
     this.calculationDisplayPanel = new CalculationPanel( model );

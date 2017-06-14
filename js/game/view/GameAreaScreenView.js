@@ -266,11 +266,15 @@ define( function( require ) {
         productContent,
         totalContent
       ],
-      spacing: AreaModelConstants.PANEL_SPACING,
-      top: gameAreaNode.y,
-      right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN
+      spacing: AreaModelConstants.PANEL_SPACING
     } );
-    this.challengeLayer.addChild( panelBox );
+    this.challengeLayer.addChild( new AlignBox( panelBox, {
+      alignBounds: this.layoutBounds,
+      xAlign: 'right',
+      yAlign: 'top',
+      topMargin: gameAreaNode.y,
+      rightMargin: AreaModelConstants.PANEL_MARGIN
+    } ) );
 
     //TODO: button deduplication
     var buttonLocationOptions = {
