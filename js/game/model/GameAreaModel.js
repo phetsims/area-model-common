@@ -200,6 +200,17 @@ define( function( require ) {
       this.currentLevelProperty.value = level;
     },
 
+    // TODO: doc
+    setActiveTerm: function( term ) {
+      //TODO: cleanup
+      // Highlighting for https://github.com/phetsims/area-model-common/issues/42
+      this.currentChallengeProperty.value.checkNonUniqueChanges();
+
+      this.activeEditableProperty.value.value = term;
+      this.activeEditableProperty.value.highlightProperty.value = HighlightType.NORMAL;
+      this.activeEditableProperty.value = null;
+    },
+
     // TODO: doc... move to challenge?
     check: function() {
       // TODO: consider putting this in the challenge?

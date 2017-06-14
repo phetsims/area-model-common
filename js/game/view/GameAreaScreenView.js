@@ -211,7 +211,9 @@ define( function( require ) {
       newChallenge.attachDisplay( self.display );
     } );
 
-    var gameAreaNode = new GameAreaNode( this.display, model.activeEditableProperty, model.stateProperty );
+    var gameAreaNode = new GameAreaNode( this.display, model.activeEditableProperty, model.stateProperty, function( term ) {
+      model.setActiveTerm( term );
+    } );
     this.challengeLayer.addChild( gameAreaNode );
     gameAreaNode.translation = this.layoutBounds.leftTop.plus( AreaModelConstants.GAME_AREA_OFFSET );
 

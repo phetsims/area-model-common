@@ -17,6 +17,7 @@ define( function( require ) {
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
+  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -212,27 +213,17 @@ define( function( require ) {
 
       // TODO: improve! This just checks for variables 6-1, which has multiple solutions
       if ( !this.description.unique ) {
-        var expected1 = this.horizontalPartitionSizes[ 1 ];
-        var expected2 = this.verticalPartitionSizes[ 1 ];
-
-        var actual1Property = this.horizontalPartitionSizeProperties[ 1 ];
-        var actual2Property = this.verticalPartitionSizeProperties[ 1 ];
-
-        var actual1 = actual1Property.value;
-        var actual2 = actual2Property.value;
-
-        var matches1 = actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
-        var matches2 = actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
-
-        if ( !matches1 ) { incorrectProperties.push( actual1Property ); }
-        if ( !matches2 ) { incorrectProperties.push( actual2Property ); }
-
-        // Check for a case where both properties match one answer but not the other
-        if ( matches1 && matches2 &&
-             !( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) &&
-             !( actual1.equals( expected2 ) && actual2.equals( expected1 ) ) ) {
-          // Logic described by https://github.com/phetsims/area-model-common/issues/39
-          incorrectProperties.push( actual1Property, actual2Property );
+        // Logic described by https://github.com/phetsims/area-model-common/issues/39
+        if ( this.hasNonUniqueBadMatch() ) {
+          incorrectProperties.push( this.horizontalPartitionSizeProperties[ 1 ], this.verticalPartitionSizeProperties[ 1 ] );
+        }
+        else {
+          if ( !this.nonUniqueHorizontalMatches() ) {
+            incorrectProperties.push( this.horizontalPartitionSizeProperties[ 1 ] );
+          }
+          if ( !this.nonUniqueVerticalMatches() ) {
+            incorrectProperties.push( this.verticalPartitionSizeProperties[ 1 ] );
+          }
         }
       }
       else {
@@ -259,6 +250,56 @@ define( function( require ) {
       return _.uniq( incorrectProperties ).filter( function( property ) {
         return property.displayType === DisplayType.EDITABLE;
       } );
+    },
+
+    //TODO: doc
+    nonUniqueHorizontalMatches: function() {
+      var expected1 = this.horizontalPartitionSizes[ 1 ];
+      var expected2 = this.verticalPartitionSizes[ 1 ];
+
+      var actual1 = this.horizontalPartitionSizeProperties[ 1 ].value;
+
+      return actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
+    },
+
+    //TODO: doc
+    nonUniqueVerticalMatches: function() {
+      var expected1 = this.horizontalPartitionSizes[ 1 ];
+      var expected2 = this.verticalPartitionSizes[ 1 ];
+
+      var actual2 = this.verticalPartitionSizeProperties[ 1 ].value;
+
+      return actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
+    },
+
+    //TODO: doc
+    hasNonUniqueMatch: function() {
+      var expected1 = this.horizontalPartitionSizes[ 1 ];
+      var expected2 = this.verticalPartitionSizes[ 1 ];
+
+      var actual1 = this.horizontalPartitionSizeProperties[ 1 ].value;
+      var actual2 = this.verticalPartitionSizeProperties[ 1 ].value;
+
+      return actual1 !== null && actual2 !== null &&
+             ( ( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) ||
+               ( actual1.equals( expected2 ) && actual2.equals( expected1 ) ) );
+    },
+
+    //TODO: doc
+    hasNonUniqueBadMatch: function() {
+      // Check for a case where both properties match one answer but not the other
+      return this.nonUniqueHorizontalMatches() && this.nonUniqueVerticalMatches() && !this.hasNonUniqueMatch();
+    },
+
+    //TODO: doc
+    // Highlighting for https://github.com/phetsims/area-model-common/issues/42
+    checkNonUniqueChanges: function() {
+      if ( !this.description.unique ) {
+        if ( this.hasNonUniqueBadMatch() ) {
+          this.horizontalPartitionSizeProperties[ 1 ].highlightProperty.value = HighlightType.NORMAL;
+          this.verticalPartitionSizeProperties[ 1 ].highlightProperty.value = HighlightType.NORMAL;
+        }
+      }
     },
 
     // TODO: doc
