@@ -202,9 +202,8 @@ define( function( require ) {
       // Sanity check (multitouch?)
       if ( challenge === null ) { return; }
 
-      var isCorrect = challenge.isCorrect(); // TODO: remove this redundant check
       var badProperties = challenge.getIncorrectEditableProperties();
-      assert && assert( isCorrect === ( badProperties.length === 0 ) );
+      var isCorrect = badProperties.length === 0;
 
       var currentState = challenge.stateProperty.value;
 
