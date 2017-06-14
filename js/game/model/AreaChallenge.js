@@ -374,7 +374,7 @@ define( function( require ) {
      * Modifies the given display so that it will be connected to this challenge.
      * @public
      *
-     * @param {GenericAreaDisplay} display
+     * @param {GameAreaDisplay} display
      */
     attachDisplay: function( display ) {
 

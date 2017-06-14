@@ -17,6 +17,7 @@ define( function( require ) {
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
+  var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -32,12 +33,11 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {GenericAreaDisplay} display
+   * @param {GameAreaDisplay} display
    * @param {Property.<EditableProperty.<Term|TermList|null>|null} activeEditableProperty
-   * @param {Property.<GameState>} gameStateProperty
-   * @param {function} setActiveTerm - setActiveTerm( {Term|null} )
+   * @param {Property.<GameState>}
    */
-  function GameAreaNode( display, activeEditableProperty, gameStateProperty, setActiveTerm ) {
+  function GameAreaNode( display, activeEditableProperty, gameStateProperty ) {
     var self = this;
 
     Node.call( this );
@@ -180,6 +180,11 @@ define( function( require ) {
       return editableProperty ? editableProperty.digits : 1;
     } );
 
+    function setActiveTerm( term ) {
+      activeEditableProperty.value.value = term;
+      activeEditableProperty.value.highlightProperty.value = HighlightType.NORMAL;
+      activeEditableProperty.value = null;
+    }
     var keypadOptions = {
       // TODO: dedup with other keypad?
       x: AreaModelConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels

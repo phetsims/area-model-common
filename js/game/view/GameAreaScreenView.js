@@ -26,7 +26,7 @@ define( function( require ) {
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/game/view/GameStatusBar' );
-  var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GenericAreaDisplay' );
+  var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
   var GenericProductNode = require( 'AREA_MODEL_COMMON/generic/view/GenericProductNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -197,7 +197,7 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
 
     // Display
-    this.display = new GenericAreaDisplay();
+    this.display = new GameAreaDisplay();
     model.currentChallengeProperty.link( function( newChallenge, oldChallenge ) {
       if ( oldChallenge ) {
         oldChallenge.detachDisplay( self.display );

@@ -23,7 +23,7 @@ define( function( require ) {
    *
    * TODO: Extend so this can be used in all generic displays
    */
-  function GenericAreaDisplay() {
+  function GameAreaDisplay() {
 
     // @public {Property.<GenericLayout>}
     this.layoutProperty = new Property( GenericLayout.TWO_BY_TWO );
@@ -54,7 +54,7 @@ define( function( require ) {
     this.totalPropertyProperty = new Property( new EditableProperty( null ) );
   }
 
-  areaModelCommon.register( 'GenericAreaDisplay', GenericAreaDisplay );
+  areaModelCommon.register( 'GameAreaDisplay', GameAreaDisplay );
 
-  return inherit( Object, GenericAreaDisplay );
+  return inherit( Object, GameAreaDisplay );
 } );
