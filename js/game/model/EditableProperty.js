@@ -15,7 +15,7 @@ define( function( require ) {
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
+  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -33,7 +33,7 @@ define( function( require ) {
       // Our options
       gameValue: GameValue.GIVEN,
       displayType: DisplayType.HIDDEN,
-      entryType: EntryType.CONSTANT,
+      inputMethod: InputMethod.CONSTANT,
       digits: 0
     }, options );
 
@@ -53,8 +53,8 @@ define( function( require ) {
     // @public {DisplayType}
     this.displayType = options.displayType;
 
-    // @public {EntryType}
-    this.entryType = options.entryType;
+    // @public {InputMethod}
+    this.inputMethod = options.inputMethod;
 
     // @public {number}
     this.digits = options.digits;

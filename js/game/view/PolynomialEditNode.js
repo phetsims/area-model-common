@@ -12,7 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
+  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Property.<EditableProperty.<Polynomial|term|null>|null>} polynomialPropertyProperty - Ignored if it has another entryType
+   * @param {Property.<EditableProperty.<Polynomial|term|null>|null>} polynomialPropertyProperty - Ignored if it has another inputMethod
    */
   function PolynomialEditNode( polynomialPropertyProperty ) {
     // TODO: consider only showing relative terms?
@@ -43,7 +43,7 @@ define( function( require ) {
 
     // TODO: workaround for this?
     function isPolynomial() {
-      return polynomialPropertyProperty.value && EntryType.isPolynomial( polynomialPropertyProperty.value.entryType );
+      return polynomialPropertyProperty.value && InputMethod.isPolynomial( polynomialPropertyProperty.value.inputMethod );
     }
 
     polynomialPropertyProperty.link( function( polynomialProperty ) {
@@ -126,7 +126,7 @@ define( function( require ) {
     Node.call( this );
     // Hide the x^2 term if we won't use it
     polynomialPropertyProperty.link( function( polynomialProperty ) {
-      self.children = polynomialProperty.entryType === EntryType.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
+      self.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
     } );
 
     // TODO: See if HBox can have align option of "don't screw with it, handle manually"

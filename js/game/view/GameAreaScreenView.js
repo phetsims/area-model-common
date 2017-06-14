@@ -18,7 +18,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
+  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaNode' );
@@ -248,7 +248,7 @@ define( function( require ) {
     var totalContainer = new Node();
     //TODO: simplify
     Property.multilink( [ this.display.totalPropertyProperty, model.stateProperty ], function( totalProperty, gameState ) {
-      if ( totalProperty.displayType === DisplayType.EDITABLE && EntryType.isPolynomial( totalProperty.entryType ) ) {
+      if ( totalProperty.displayType === DisplayType.EDITABLE && InputMethod.isPolynomial( totalProperty.inputMethod ) ) {
 
         //TODO: is this really necessary?
         var isReadout = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;

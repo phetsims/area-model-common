@@ -19,7 +19,7 @@ define( function( require ) {
   var GameValue = require( 'AREA_MODEL_COMMON/game/enum/GameValue' );
   var HighlightType = require( 'AREA_MODEL_COMMON/game/enum/HighlightType' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
+  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
@@ -47,9 +47,9 @@ define( function( require ) {
     // @public {GameArea}
     this.area = new GameArea( description.layout, description.allowExponents );
 
-    // @private {EntryType}
+    // @private {InputMethod}
     //TODO: var?
-    var mainEntryType = ( description.type === AreaChallengeType.VARIABLES ) ? EntryType.TERM : EntryType.CONSTANT;
+    var mainInputMethod = ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT;
 
     // TODO: Check whether visibility is needed on things below.
 
@@ -63,7 +63,7 @@ define( function( require ) {
       return new EditableProperty( size, {
         gameValue: description.horizontalValues[ index ],
         displayType: GameValue.toDisplayType( description.horizontalValues[ index ] ),
-        entryType: mainEntryType, // TODO: dedup?
+        inputMethod: mainInputMethod, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
       } );
     } );
@@ -71,7 +71,7 @@ define( function( require ) {
       return new EditableProperty( size, {
         gameValue: description.verticalValues[ index ],
         displayType: GameValue.toDisplayType( description.verticalValues[ index ] ),
-        entryType: mainEntryType, // TODO: dedup?
+        inputMethod: mainInputMethod, // TODO: dedup?
         digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
       } );
     } );
@@ -99,7 +99,7 @@ define( function( require ) {
         var property = new EditableProperty( size, {
           gameValue: gameValue,
           displayType: GameValue.toDisplayType( gameValue ),
-          entryType: mainEntryType,
+          inputMethod: mainInputMethod,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits
         } );
         // Link up if dynamic
@@ -136,7 +136,7 @@ define( function( require ) {
     this.totalProperty = new EditableProperty( this.total, {
       gameValue: description.totalValue, // TODO: check dup with gameValue/displayType
       displayType: GameValue.toDisplayType( description.totalValue ),
-      entryType: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? EntryType.POLYNOMIAL_2 : EntryType.POLYNOMIAL_1 ) : EntryType.CONSTANT,
+      inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
 
