@@ -194,6 +194,12 @@ define( function( require ) {
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );
 
   return inherit( Object, GameAreaModel, {
+    //TODO: doc
+    selectLevel: function( level ) {
+      level.select();
+      this.currentLevelProperty.value = level;
+    },
+
     // TODO: doc... move to challenge?
     check: function() {
       // TODO: consider putting this in the challenge?
@@ -244,12 +250,18 @@ define( function( require ) {
         var level = this.currentLevelProperty.value;
 
         if ( level.challengeIndexProperty.value === AreaModelConstants.NUM_CHALLENGES - 1 ) {
-          level.reset();
+          this.currentLevelProperty.value.finish();
+          this.currentChallengeProperty.value.stateProperty.value = GameState.LEVEL_COMPLETE;
         }
         else {
           level.challengeIndexProperty.value += 1;
         }
       }
+    },
+
+    //TODO: use this
+    continueFromComplete: function() {
+      this.currentLevelProperty.value = null; // move to no level
     },
 
     // TODO: DOC

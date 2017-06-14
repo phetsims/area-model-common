@@ -58,6 +58,9 @@ define( function( require ) {
     this.currentChallengeProperty = new DerivedProperty( [ this.challengeIndexProperty ], function( index ) {
       return self.challenges[ index ];
     } );
+
+    // TODO doc
+    this.finished = false;
   }
 
   areaModelCommon.register( 'AreaLevel', AreaLevel );
@@ -85,6 +88,19 @@ define( function( require ) {
       return descriptions.map( function( description ) {
         return new AreaChallenge( description );
       } );
+    },
+
+    // TODO: doc
+    select: function() {
+      if ( this.finished ) {
+        this.finished = false;
+        this.reset();
+      }
+    },
+
+    // TODO doc
+    finish: function() {
+      this.finished = true;
     },
 
     /**

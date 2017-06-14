@@ -29,7 +29,9 @@ define( function( require ) {
     WRONG_SECOND_ANSWER: 'WRONG_SECOND_ANSWER',
 
     // "next" button, NOT editable, replaced with a solution
-    SHOW_SOLUTION: 'SHOW_SOLUTION'
+    SHOW_SOLUTION: 'SHOW_SOLUTION',
+
+    LEVEL_COMPLETE: 'LEVEL_COMPLETE'
   };
 
   areaModelCommon.register( 'GameState', GameState );
@@ -41,7 +43,8 @@ define( function( require ) {
     GameState.CORRECT_ANSWER,
     GameState.WRONG_FIRST_ANSWER,
     GameState.WRONG_SECOND_ANSWER,
-    GameState.SHOW_SOLUTION
+    GameState.SHOW_SOLUTION,
+    GameState.LEVEL_COMPLETE
   ];
 
   // verify that enum is immutable, without the runtime penalty in production code

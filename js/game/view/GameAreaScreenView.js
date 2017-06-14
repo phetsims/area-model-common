@@ -17,6 +17,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaNode' );
@@ -29,20 +30,24 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/enum/EntryType' );
+  var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Panel = require( 'SUN/Panel' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  var RewardNode = require( 'VEGAS/RewardNode' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
+  var StarNode = require( 'SCENERY_PHET/StarNode' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -114,7 +119,7 @@ define( function( require ) {
         touchAreaYDilation: 13,
         cornerRadius: 10,
         listener: function() {
-          model.currentLevelProperty.value = level;
+          model.selectLevel( level );
         }
       }, {
         // dynamic
@@ -338,9 +343,16 @@ define( function( require ) {
     } );
     this.challengeLayer.addChild( scoreIncreaseText );
 
+    var levelCompleteContainer = new Node();
+    this.challengeLayer.addChild( levelCompleteContainer );
+
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
+        gameAreaNode.visible = state !== GameState.LEVEL_COMPLETE;
+        panelBox.visible = state !== GameState.LEVEL_COMPLETE;
+        gameStatusBar.visible = state !== GameState.LEVEL_COMPLETE;
+        levelCompleteContainer.visible = state === GameState.LEVEL_COMPLETE;
         checkButton.visible = state === GameState.FIRST_ATTEMPT || state === GameState.SECOND_ATTEMPT;
         tryAgainButton.visible = state === GameState.WRONG_FIRST_ANSWER;
         nextButton.visible = state === GameState.CORRECT_ANSWER || state === GameState.SHOW_SOLUTION;
@@ -357,10 +369,58 @@ define( function( require ) {
       if ( state === GameState.CORRECT_ANSWER ) {
         scoreIncreaseText.text = ( oldState === GameState.FIRST_ATTEMPT ) ? '+2' : '+1';
       }
+      if ( state === GameState.LEVEL_COMPLETE ) {
+        var level = model.currentLevelProperty.value;
+        //TODO: cleanup
+        levelCompleteContainer.children = [
+          //TODO: recommend time gets put to options
+          new LevelCompletedNode( level.number - 1, level.scoreProperty.value, AreaModelConstants.NUM_CHALLENGES * 2, AreaModelConstants.NUM_CHALLENGES, false, 0, 0, 0, function() {
+            model.continueFromComplete();
+          }, {
+            cornerRadius: 8,
+            center: self.layoutBounds.center,
+            fill: level.colorProperty
+          } )
+        ];
+
+        if ( level.scoreProperty.value === AreaModelConstants.NUM_CHALLENGES * 2 ) {
+          //TODO: cleanup
+          self.rewardNode = new RewardNode( {
+            nodes: rewardNodes
+          } );
+          levelCompleteContainer.insertChild( 0, self.rewardNode );
+        }
+      }
+      else {
+        if ( self.rewardNode ) {
+          self.rewardNode.detach();
+          self.rewardNode.dispose();
+          self.rewardNode = null;
+        }
+      }
     } );
   }
 
   areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
+
+  var rewardNodes = RewardNode.createRandomNodes( [
+    new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
+    new StarNode()
+  ], 100 );
+  Orientation.VALUES.forEach( function( orientation ) {
+    var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
+
+    _.range( 1, 10 ).forEach( function( digit ) {
+      [ -1, 1 ].forEach( function( sign ) {
+        [ 0, 1, 2 ].forEach( function( power ) {
+          rewardNodes.push( new RichText( new Term( sign * digit, power ).toRichString( false ), {
+            font: new PhetFont( { size: 35, weight: 'bold' } ), // TODO: move to common
+            fill: colorProperty
+          } ) );
+        } );
+      } );
+    } );
+  } );
 
   return inherit( ScreenView, GameAreaScreenView, {
     /**
@@ -409,6 +469,8 @@ define( function( require ) {
      */
     step: function( dt ) {
       this.slidingScreen.step( dt );
+
+      this.rewardNode && this.rewardNode.step( dt );
     }
   } );
 } );
