@@ -332,10 +332,14 @@ define( function( require ) {
         if ( reversed ) {
           actual1Property.value = expected2;
           actual2Property.value = expected1;
+          this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.VERTICAL );
+          this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.HORIZONTAL );
         }
         else {
           actual1Property.value = expected1;
           actual2Property.value = expected2;
+          this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.HORIZONTAL );
+          this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.VERTICAL );
         }
       }
       else {
