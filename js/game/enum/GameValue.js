@@ -15,8 +15,7 @@ define( function( require ) {
   var GameValue = {
     EDITABLE: 'EDITABLE',
     DYNAMIC: 'DYNAMIC',
-    GIVEN: 'GIVEN',
-    HIDDEN: 'HIDDEN'
+    GIVEN: 'GIVEN'
   };
 
   areaModelCommon.register( 'GameValue', GameValue );
