@@ -99,7 +99,7 @@ define( function( require ) {
           gameValue: gameValue,
           displayType: GameValue.toDisplayType( [ gameValue ] ),
           entryType: mainEntryType,
-          digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : numbersDigits
+          digits: ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits
         } );
         // Link up if dynamic
         if ( gameValue === GameValue.DYNAMIC ) {
