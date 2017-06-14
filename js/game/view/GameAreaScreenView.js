@@ -14,6 +14,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelGlobals' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
@@ -28,7 +29,6 @@ define( function( require ) {
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GenericAreaDisplay' );
   var GenericProductNode = require( 'AREA_MODEL_COMMON/generic/view/GenericProductNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
@@ -221,9 +221,7 @@ define( function( require ) {
     * Panels
     *----------------------------------------------------------------------------*/
 
-    var panelAlignGroup = new AlignGroup( {
-      matchVertical: false
-    } );
+    var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
 
     // TODO: ensure sizing doesn't spill out? AreaModelConstants.PANEL_INTERIOR_MAX
     // TODO: make it accept a pair
@@ -262,9 +260,6 @@ define( function( require ) {
     } );
 
     var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
-
-    // TODO... hmm? Improve this?
-    this.throwaway = new AlignBox( new HStrut( AreaModelConstants.PANEL_INTERIOR_MAX ), { group: panelAlignGroup } );
 
     var panelBox = new VBox( {
       children: [
@@ -448,8 +443,8 @@ define( function( require ) {
           } ),
           new AlignBox( content, {
             group: panelAlignGroup,
-            xAlign: 'center',
-            xMargin: 15
+            xAlign: 'center'
+            //TODO: note there IS NO MARGIN HERE because.... yeah.
           } )
         ],
         spacing: 10

@@ -17,6 +17,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelGlobals' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
@@ -50,9 +51,7 @@ define( function( require ) {
 
     ScreenView.call( this );
 
-    var panelAlignGroup = new AlignGroup( {
-      matchVertical: false
-    } );
+    var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
     //TODO: abstract method
