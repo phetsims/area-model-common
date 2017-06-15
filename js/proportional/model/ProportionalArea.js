@@ -12,6 +12,7 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -67,6 +68,9 @@ define( function( require ) {
     // @public {boolean}
     this.tilesAvailable = options.tilesAvailable;
 
+    // @public {OrientationPair.<BooleanProperty>}
+    this.hasHintArrows = new OrientationPair( new BooleanProperty( true ), new BooleanProperty( true ) );
+
     var horizontalPartitions = [
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty ),
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty )
@@ -118,6 +122,10 @@ define( function( require ) {
      */
     reset: function() {
       Area.prototype.reset.call( this );
+
+      // TODO: make doing things like this easier
+      this.hasHintArrows.horizontal.reset();
+      this.hasHintArrows.vertical.reset();
 
       this.horizontalPartitionSplitProperty.reset();
       this.verticalPartitionSplitProperty.reset();

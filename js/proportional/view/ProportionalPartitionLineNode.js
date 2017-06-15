@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -40,10 +41,36 @@ define( function( require ) {
     // @public {ProportionalArea}
     this.area = area;
 
+    var showHintArrowsProperty = area.hasHintArrows.get( orientation );
+
+    var minHintArrow;
+    var maxHintArrow;
+    //TODO: dedup
+    var hintOffset = 15;
+    var hintLength = 20;
+    var arrowOptions = {
+      fill: 'yellow',
+      pickable: false
+    };
+    if ( orientation === Orientation.HORIZONTAL ) {
+      minHintArrow = new ArrowNode( -hintOffset, 0, -( hintLength + hintOffset ), 0, arrowOptions );
+      maxHintArrow = new ArrowNode( hintOffset, 0, hintLength + hintOffset, 0, arrowOptions );
+    }
+    else {
+      minHintArrow = new ArrowNode( 0, -hintOffset, 0, -( hintLength + hintOffset ), arrowOptions );
+      maxHintArrow = new ArrowNode( 0, hintOffset, 0, hintLength + hintOffset, arrowOptions );
+    }
+    showHintArrowsProperty.linkAttribute( minHintArrow, 'visible' );
+    showHintArrowsProperty.linkAttribute( maxHintArrow, 'visible' );
+
     var handle = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
       fill: area.colorProperties.get( orientation ),
       stroke: AreaModelColorProfile.partitionLineBorderProperty,
-      cursor: 'pointer'
+      cursor: 'pointer',
+      children: [
+        minHintArrow,
+        maxHintArrow
+      ]
     } );
 
     var line = new Line( 0, 0, 0, 0, {
@@ -99,6 +126,7 @@ define( function( require ) {
         if ( partitionSplitProperty.value === activeTotalProperty.value ) {
           partitionSplitProperty.value = null;
         }
+        showHintArrowsProperty.value = false;
       }
     } );
     handle.addInputListener( dragHandler );
