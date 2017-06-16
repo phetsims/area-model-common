@@ -47,47 +47,34 @@ define( function( require ) {
     // @public {GameArea}
     this.area = new GameArea( description.layout, description.allowExponents );
 
-    // @private {InputMethod}
-    //TODO: var?
-    var mainInputMethod = ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT;
-
-    // TODO: Check whether visibility is needed on things below.
-
-    // @public {Array.<Term>} - The actual partition sizes
-    //TODO: dedup
-    this.horizontalPartitionSizes = AreaChallenge.generatePartitionTerms( description.partitionFields.get( Orientation.HORIZONTAL ).length, description.allowExponents );
-    this.verticalPartitionSizes = AreaChallenge.generatePartitionTerms( description.partitionFields.get( Orientation.VERTICAL ).length, description.allowExponents );
-
-    //TODO doc
-    // TODO: deduplicate
-    this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
-      return new EditableProperty( size, {
-        field: description.partitionFields.get( Orientation.HORIZONTAL )[ index ],
-        displayType: Field.toDisplayType( description.partitionFields.get( Orientation.HORIZONTAL )[ index ] ),
-        inputMethod: mainInputMethod, // TODO: dedup?
-        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( Orientation.HORIZONTAL ).length - index
-      } );
+    // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
+    this.partitionSizes = OrientationPair.create( function( orientation ) {
+      return AreaChallenge.generatePartitionTerms( description.partitionFields.get( orientation ).length, description.allowExponents );
     } );
-    this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
-      return new EditableProperty( size, {
-        field: description.partitionFields.get( Orientation.VERTICAL )[ index ],
-        displayType: Field.toDisplayType( description.partitionFields.get( Orientation.VERTICAL )[ index ] ),
-        inputMethod: mainInputMethod, // TODO: dedup?
-        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( Orientation.VERTICAL ).length - index
+
+    // @public {OrientationPair.<Array.<EditableProperty>>}
+    this.partitionSizeProperties = OrientationPair.create( function( orientation ) {
+      return self.partitionSizes.get( orientation ).map( function( size, index ) {
+        return new EditableProperty( size, {
+          field: description.partitionFields.get( orientation )[ index ],
+          displayType: Field.toDisplayType( description.partitionFields.get( orientation )[ index ] ),
+          inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
+          digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( orientation ).length - index
+        } );
       } );
     } );
 
     //TODO: dedup
-    this.nonErrorHorizontalPartitionSizeProperties = this.horizontalPartitionSizeProperties.map( function( editableProperty ) {
+    this.nonErrorHorizontalPartitionSizeProperties = this.partitionSizeProperties.get( Orientation.HORIZONTAL ).map( function( editableProperty ) {
       return editableProperty.nonErrorValueProperty;
     } );
-    this.nonErrorVerticalPartitionSizeProperties = this.verticalPartitionSizeProperties.map( function( editableProperty ) {
+    this.nonErrorVerticalPartitionSizeProperties = this.partitionSizeProperties.get( Orientation.VERTICAL ).map( function( editableProperty ) {
       return editableProperty.nonErrorValueProperty;
     } );
 
     // @public {Array.<Array.<Term|null>>}
-    this.partialProductSizes = this.verticalPartitionSizes.map( function( verticalSize ) {
-      return self.horizontalPartitionSizes.map( function( horizontalSize ) {
+    this.partialProductSizes = this.partitionSizes.get( Orientation.VERTICAL ).map( function( verticalSize ) {
+      return self.partitionSizes.get( Orientation.HORIZONTAL ).map( function( horizontalSize ) {
         return horizontalSize.times( verticalSize );
       } );
     } );
@@ -100,7 +87,7 @@ define( function( require ) {
         var property = new EditableProperty( size, {
           field: field,
           displayType: Field.toDisplayType( field ),
-          inputMethod: mainInputMethod,
+          inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
           digits: ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits
         } );
         // Link up if dynamic
@@ -122,10 +109,10 @@ define( function( require ) {
       } );
     } );
 
-    var hasXSquaredTotal = ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length ) >= 4;
+    var hasXSquaredTotal = ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
-    this.totals = new OrientationPair( new Polynomial( this.horizontalPartitionSizes ), new Polynomial( this.verticalPartitionSizes ) );
+    this.totals = new OrientationPair( new Polynomial( this.partitionSizes.get( Orientation.HORIZONTAL ) ), new Polynomial( this.partitionSizes.get( Orientation.VERTICAL ) ) );
 
     // @public {OrientationPair.<Property.<Polynomial|null>>}
     this.totalProperties = new OrientationPair( new Property( this.totals.get( Orientation.HORIZONTAL ) ), new Property( this.totals.get( Orientation.VERTICAL ) ) );
@@ -138,11 +125,11 @@ define( function( require ) {
       field: description.totalField, // TODO: check dup with field/displayType
       displayType: Field.toDisplayType( description.totalField ),
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
-      digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
+      digits: description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length )
     } );
 
     // Properties for all of the values
-    var availableProperties = this.horizontalPartitionSizeProperties.concat( this.verticalPartitionSizeProperties ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
+    var availableProperties = this.partitionSizeProperties.get( Orientation.HORIZONTAL ).concat( this.partitionSizeProperties.get( Orientation.VERTICAL ) ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
       this.totalProperties.get( Orientation.HORIZONTAL ),
       this.totalProperties.get( Orientation.VERTICAL ),
       this.totalProperty
@@ -216,23 +203,23 @@ define( function( require ) {
       if ( !this.description.unique ) {
         // Logic described by https://github.com/phetsims/area-model-common/issues/39
         if ( this.hasNonUniqueBadMatch() ) {
-          incorrectProperties.push( this.horizontalPartitionSizeProperties[ 1 ], this.verticalPartitionSizeProperties[ 1 ] );
+          incorrectProperties.push( this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ], this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ] );
         }
         else {
           if ( !this.nonUniqueHorizontalMatches() ) {
-            incorrectProperties.push( this.horizontalPartitionSizeProperties[ 1 ] );
+            incorrectProperties.push( this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ] );
           }
           if ( !this.nonUniqueVerticalMatches() ) {
-            incorrectProperties.push( this.verticalPartitionSizeProperties[ 1 ] );
+            incorrectProperties.push( this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ] );
           }
         }
       }
       else {
-        this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
-          compareProperty( property, self.horizontalPartitionSizes[ index ] );
+        this.partitionSizeProperties.get( Orientation.HORIZONTAL ).forEach( function( property, index ) {
+          compareProperty( property, self.partitionSizes.get( Orientation.HORIZONTAL )[ index ] );
         } );
-        this.verticalPartitionSizeProperties.forEach( function( property, index ) {
-          compareProperty( property, self.verticalPartitionSizes[ index ] );
+        this.partitionSizeProperties.get( Orientation.VERTICAL ).forEach( function( property, index ) {
+          compareProperty( property, self.partitionSizes.get( Orientation.VERTICAL )[ index ] );
         } );
         // TODO: look at common iteration patterns like this and abstract out more (and name it)
         this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
@@ -255,31 +242,31 @@ define( function( require ) {
 
     //TODO: doc
     nonUniqueHorizontalMatches: function() {
-      var expected1 = this.horizontalPartitionSizes[ 1 ];
-      var expected2 = this.verticalPartitionSizes[ 1 ];
+      var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
+      var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
 
-      var actual1 = this.horizontalPartitionSizeProperties[ 1 ].value;
+      var actual1 = this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ].value;
 
       return actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
     },
 
     //TODO: doc
     nonUniqueVerticalMatches: function() {
-      var expected1 = this.horizontalPartitionSizes[ 1 ];
-      var expected2 = this.verticalPartitionSizes[ 1 ];
+      var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
+      var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
 
-      var actual2 = this.verticalPartitionSizeProperties[ 1 ].value;
+      var actual2 = this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ].value;
 
       return actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
     },
 
     //TODO: doc
     hasNonUniqueMatch: function() {
-      var expected1 = this.horizontalPartitionSizes[ 1 ];
-      var expected2 = this.verticalPartitionSizes[ 1 ];
+      var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
+      var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
 
-      var actual1 = this.horizontalPartitionSizeProperties[ 1 ].value;
-      var actual2 = this.verticalPartitionSizeProperties[ 1 ].value;
+      var actual1 = this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ].value;
+      var actual2 = this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ].value;
 
       return actual1 !== null && actual2 !== null &&
              ( ( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) ||
@@ -297,8 +284,8 @@ define( function( require ) {
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
-          this.horizontalPartitionSizeProperties[ 1 ].highlightProperty.value = Highlight.NORMAL;
-          this.verticalPartitionSizeProperties[ 1 ].highlightProperty.value = Highlight.NORMAL;
+          this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ].highlightProperty.value = Highlight.NORMAL;
+          this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ].highlightProperty.value = Highlight.NORMAL;
         }
       }
     },
@@ -313,11 +300,11 @@ define( function( require ) {
         var reversed = false;
 
         // TODO: dedup with the editable property bit above
-        var expected1 = this.horizontalPartitionSizes[ 1 ];
-        var expected2 = this.verticalPartitionSizes[ 1 ];
+        var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
+        var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
 
-        var actual1Property = this.horizontalPartitionSizeProperties[ 1 ];
-        var actual2Property = this.verticalPartitionSizeProperties[ 1 ];
+        var actual1Property = this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ];
+        var actual2Property = this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ];
 
         var actual1 = actual1Property.value;
         var actual2 = actual2Property.value;
@@ -345,11 +332,11 @@ define( function( require ) {
       }
       else {
         //TODO: dedup possible with incorrect bits above?
-        this.horizontalPartitionSizeProperties.forEach( function( property, index ) {
-          property.value = self.horizontalPartitionSizes[ index ];
+        this.partitionSizeProperties.get( Orientation.HORIZONTAL ).forEach( function( property, index ) {
+          property.value = self.partitionSizes.get( Orientation.HORIZONTAL )[ index ];
         } );
-        this.verticalPartitionSizeProperties.forEach( function( property, index ) {
-          property.value = self.verticalPartitionSizes[ index ];
+        this.partitionSizeProperties.get( Orientation.VERTICAL ).forEach( function( property, index ) {
+          property.value = self.partitionSizes.get( Orientation.VERTICAL )[ index ];
         } );
 
         // TODO: look at common iteration patterns like this and abstract out more (and name it)
@@ -385,20 +372,20 @@ define( function( require ) {
       display.partialProductsProperty.value = this.partialProductSizeProperties;
 
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
-      if ( this.horizontalPartitionSizeProperties.length === 1 &&
+      if ( this.partitionSizeProperties.get( Orientation.HORIZONTAL ).length === 1 &&
            this.description.partitionFields.get( Orientation.HORIZONTAL )[ 0 ] === Field.GIVEN ) {
         display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = [ new EditableProperty( null ) ];
       }
       else {
-        display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = this.horizontalPartitionSizeProperties;
+        display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = this.partitionSizeProperties.get( Orientation.HORIZONTAL );
       }
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
-      if ( this.verticalPartitionSizeProperties.length === 1 &&
+      if ( this.partitionSizeProperties.get( Orientation.VERTICAL ).length === 1 &&
            this.description.partitionFields.get( Orientation.VERTICAL )[ 0 ] === Field.GIVEN ) {
         display.partitionValuesProperties.get( Orientation.VERTICAL ).value = [ new EditableProperty( null ) ];
       }
       else {
-        display.partitionValuesProperties.get( Orientation.VERTICAL ).value = this.verticalPartitionSizeProperties;
+        display.partitionValuesProperties.get( Orientation.VERTICAL ).value = this.partitionSizeProperties.get( Orientation.VERTICAL );
       }
 
       this.horizontalTotalListener = this.totalProperties.get( Orientation.HORIZONTAL ).linkAttribute( display.totalProperties.get( Orientation.HORIZONTAL ), 'value' );
