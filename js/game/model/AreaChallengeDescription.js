@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Enumeration for all of the types of challenges available in the game screen.
+ * Describes a template for the generation of a challenge.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -14,13 +14,15 @@ define( function( require ) {
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Permutation = require( 'DOT/Permutation' );
 
   var EDITABLE = Field.EDITABLE;
   var DYNAMIC = Field.DYNAMIC;
   var GIVEN = Field.GIVEN;
 
-  // TODO: doc
+  // We need the ability to generate random permutations for different numbers of elements. It's simplest if we
+  // enumerate the possibilities here.
   var permutations = {
     1: Permutation.permutations( 1 ),
     2: Permutation.permutations( 2 ),
@@ -35,19 +37,17 @@ define( function( require ) {
    */
   function AreaChallengeDescription( options ) {
 
-    //TODO: rename values to fields
+    // @public {OrientationPair.<Array.<Field>>} - Field types for partition sizes
+    this.partitionFields = new OrientationPair( options.horizontal, options.vertical );
 
-    // @public {Array.<Field>} - Values for partition sizes for each orientation
-    this.horizontalValues = options.horizontal;
-    this.verticalValues = options.vertical;
+    // @public {Array.<Array.<Field>>} - Field types for partitioned areas
+    this.productFields = options.products;
 
-    // @public {Array.<Array.<Field>>} - Values for partitioned areas
-    this.productValues = options.products;
+    // @public {OrientationPair.<Field>} - Field types for horizontal and vertical dimension totals
+    this.dimensionFields = new OrientationPair( options.horizontalTotal, options.verticalTotal );
 
-    // @public {Field} - Values for the horizontal/vertical totals (sum of partition sizes) and the total area
-    this.horizontalTotalValue = options.horizontalTotal;
-    this.verticalTotalValue = options.verticalTotal;
-    this.totalValue = options.total;
+    // @public {Field} - Field type for the total area
+    this.totalField = options.total;
 
     // @public {AreaChallengeType} - The type of challenge
     this.type = options.type;
@@ -58,12 +58,14 @@ define( function( require ) {
     // @public {boolean} - Whether transposing is supported
     this.transposable = this.type === AreaChallengeType.NUMBERS;
 
+    // @public {boolean}
     this.shufflable = options.shufflable === undefined ? true : options.shufflable;
 
     // @public {boolean}
     this.unique = options.unique === undefined ? true : options.unique;
 
-    this.layout = GenericLayout.fromValues( this.horizontalValues.length, this.verticalValues.length );
+    // @public {GenericLayout}
+    this.layout = GenericLayout.fromValues( options.horizontal.length, options.vertical.length );
   }
 
   areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
@@ -77,12 +79,12 @@ define( function( require ) {
      */
     getPermutedDescription: function() {
       var options = {
-        horizontal: this.horizontalValues,
-        vertical: this.verticalValues,
-        products: this.productValues,
-        total: this.totalValue,
-        horizontalTotal: this.horizontalTotalValue,
-        verticalTotal: this.verticalTotalValue,
+        horizontal: this.partitionFields.horizontal,
+        vertical: this.partitionFields.vertical,
+        products: this.productFields,
+        total: this.totalField,
+        horizontalTotal: this.dimensionFields.horizontal,
+        verticalTotal: this.dimensionFields.vertical,
         type: this.type,
         transposable: this.transposable,
         unique: this.unique

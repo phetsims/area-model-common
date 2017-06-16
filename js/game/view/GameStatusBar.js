@@ -191,12 +191,12 @@ define( function( require ) {
 
       var description = challenge.description;
 
-      var hasAreaEntry = description.totalValue === Field.EDITABLE;
-      var numProductEntries = _.flatten( description.productValues ).filter( function( value ) {
-        return value === Field.EDITABLE; // TODO dedup
+      var hasAreaEntry = description.totalField === Field.EDITABLE;
+      var numProductEntries = _.flatten( description.productFields ).filter( function( field ) {
+        return field === Field.EDITABLE; // TODO dedup
       } ).length;
-      var numPartitionEntries = description.horizontalValues.concat( description.verticalValues ).filter( function( value ) {
-        return value === Field.EDITABLE;
+      var numPartitionEntries = description.partitionFields.horizontal.concat( description.partitionFields.vertical ).filter( function( field ) {
+        return field === Field.EDITABLE;
       } ).length;
 
       var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];

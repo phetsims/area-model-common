@@ -54,25 +54,26 @@ define( function( require ) {
     // TODO: Check whether visibility is needed on things below.
 
     // @public {Array.<Term>} - The actual partition sizes
-    this.horizontalPartitionSizes = AreaChallenge.generatePartitionTerms( description.horizontalValues.length, description.allowExponents );
-    this.verticalPartitionSizes = AreaChallenge.generatePartitionTerms( description.verticalValues.length, description.allowExponents );
+    //TODO: dedup
+    this.horizontalPartitionSizes = AreaChallenge.generatePartitionTerms( description.partitionFields.get( Orientation.HORIZONTAL ).length, description.allowExponents );
+    this.verticalPartitionSizes = AreaChallenge.generatePartitionTerms( description.partitionFields.get( Orientation.VERTICAL ).length, description.allowExponents );
 
     //TODO doc
     // TODO: deduplicate
     this.horizontalPartitionSizeProperties = this.horizontalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
-        field: description.horizontalValues[ index ],
-        displayType: Field.toDisplayType( description.horizontalValues[ index ] ),
+        field: description.partitionFields.get( Orientation.HORIZONTAL )[ index ],
+        displayType: Field.toDisplayType( description.partitionFields.get( Orientation.HORIZONTAL )[ index ] ),
         inputMethod: mainInputMethod, // TODO: dedup?
-        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.horizontalValues.length - index
+        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( Orientation.HORIZONTAL ).length - index
       } );
     } );
     this.verticalPartitionSizeProperties = this.verticalPartitionSizes.map( function( size, index ) {
       return new EditableProperty( size, {
-        field: description.verticalValues[ index ],
-        displayType: Field.toDisplayType( description.verticalValues[ index ] ),
+        field: description.partitionFields.get( Orientation.VERTICAL )[ index ],
+        displayType: Field.toDisplayType( description.partitionFields.get( Orientation.VERTICAL )[ index ] ),
         inputMethod: mainInputMethod, // TODO: dedup?
-        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.verticalValues.length - index
+        digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( Orientation.VERTICAL ).length - index
       } );
     } );
 
@@ -94,8 +95,8 @@ define( function( require ) {
     // TODO: doc
     this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
       return row.map( function( size, horizontalIndex ) {
-        var numbersDigits = description.verticalValues.length + description.horizontalValues.length - verticalIndex - horizontalIndex;
-        var field = description.productValues[ verticalIndex ][ horizontalIndex ];
+        var numbersDigits = description.partitionFields.get( Orientation.VERTICAL ).length + description.partitionFields.get( Orientation.HORIZONTAL ).length - verticalIndex - horizontalIndex;
+        var field = description.productFields[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
           field: field,
           displayType: Field.toDisplayType( field ),
@@ -134,8 +135,8 @@ define( function( require ) {
 
     // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
     this.totalProperty = new EditableProperty( this.total, {
-      field: description.totalValue, // TODO: check dup with field/displayType
-      displayType: Field.toDisplayType( description.totalValue ),
+      field: description.totalField, // TODO: check dup with field/displayType
+      displayType: Field.toDisplayType( description.totalField ),
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
       digits: description.allowExponents ? 2 : ( this.horizontalPartitionSizes.length + this.verticalPartitionSizes.length )
     } );
@@ -160,7 +161,7 @@ define( function( require ) {
 
     // Now hook up dynamic parts, setting their values to null
     //TODO: dedup
-    if ( description.horizontalTotalValue === Field.DYNAMIC ) {
+    if ( description.dimensionFields.get( Orientation.HORIZONTAL ) === Field.DYNAMIC ) {
       Property.multilink( this.nonErrorHorizontalPartitionSizeProperties, function() {
         var terms = _.map( self.nonErrorHorizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
@@ -169,7 +170,7 @@ define( function( require ) {
         self.totalProperties.get( Orientation.HORIZONTAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
       } );
     }
-    if ( description.verticalTotalValue === Field.DYNAMIC ) {
+    if ( description.dimensionFields.get( Orientation.VERTICAL ) === Field.DYNAMIC ) {
       Property.multilink( this.nonErrorVerticalPartitionSizeProperties, function() {
         var terms = _.map( self.nonErrorVerticalPartitionSizeProperties, 'value' ).filter( function( term ) {
           return term !== null;
@@ -385,7 +386,7 @@ define( function( require ) {
 
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
       if ( this.horizontalPartitionSizeProperties.length === 1 &&
-           this.description.horizontalValues[ 0 ] === Field.GIVEN ) {
+           this.description.partitionFields.get( Orientation.HORIZONTAL )[ 0 ] === Field.GIVEN ) {
         display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = [ new EditableProperty( null ) ];
       }
       else {
@@ -393,7 +394,7 @@ define( function( require ) {
       }
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
       if ( this.verticalPartitionSizeProperties.length === 1 &&
-           this.description.verticalValues[ 0 ] === Field.GIVEN ) {
+           this.description.partitionFields.get( Orientation.VERTICAL )[ 0 ] === Field.GIVEN ) {
         display.partitionValuesProperties.get( Orientation.VERTICAL ).value = [ new EditableProperty( null ) ];
       }
       else {
