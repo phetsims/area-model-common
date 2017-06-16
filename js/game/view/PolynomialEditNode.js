@@ -9,11 +9,14 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -68,37 +71,45 @@ define( function( require ) {
     //TODO: cleanup
     constantProperty.lazyLink( function( value ) {
       if ( isPolynomial ) {
+        polynomialPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
         polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 0 );
       }
     } );
     xProperty.lazyLink( function( value ) {
       if ( isPolynomial ) {
+        polynomialPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
         polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 1 );
       }
     } );
     xSquaredProperty.lazyLink( function( value ) {
       if ( isPolynomial ) {
+        polynomialPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
         polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 2 );
       }
     } );
 
     var rangeProperty = new Property( new Range( -99, 99 ) ); // TODO: -81,81?
 
-    var colorProperty = new Property( 'black' ); // Fill in more when we need to change color
+    var highlightProperty = new DynamicDerivedProperty( polynomialPropertyProperty, 'highlightProperty' );
+    var colorProperty = new DerivedProperty( [ highlightProperty, AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], function( highlight, errorColor, dirtyColor ) {
+      if ( highlight === Highlight.NORMAL ) {
+        return 'black';
+      }
+      else if ( highlight === Highlight.DIRTY ) {
+        return dirtyColor;
+      }
+      else {
+        return errorColor;
+      }
+    } );
 
-    var constantPicker = new MutableOptionsNode( NumberPicker, [ constantProperty, rangeProperty ], {
-      scale: 1
-    }, {
+    var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
       color: colorProperty
     } );
-    var xPicker = new MutableOptionsNode( NumberPicker, [ xProperty, rangeProperty ], {
-      scale: 1
-    }, {
+    var xPicker = new NumberPicker( xProperty, rangeProperty, {
       color: colorProperty
     } );
-    var xSquaredPicker = new MutableOptionsNode( NumberPicker, [ xSquaredProperty, rangeProperty ], {
-      scale: 1
-    }, {
+    var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
       color: colorProperty
     } );
 

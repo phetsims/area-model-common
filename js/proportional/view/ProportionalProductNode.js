@@ -16,7 +16,6 @@ define( function( require ) {
   var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Range = require( 'DOT/Range' );
@@ -69,7 +68,7 @@ define( function( require ) {
         return new Range( area.minimumSize, area.maximumSize );
       } );
 
-      return new MutableOptionsNode( NumberPicker, [ bidirectionalProperty, rangeProperty ], {
+      return new NumberPicker( bidirectionalProperty, rangeProperty, {
         upFunction: function( value ) { return value + currentAreaProperty.value.snapSize; },
         downFunction: function( value ) { return value - currentAreaProperty.value.snapSize; },
         decimalPlaces: decimalPlaces,
@@ -81,8 +80,7 @@ define( function( require ) {
           else {
             return Util.toFixed( value, 1 );
           }
-        }
-      }, {
+        },
         color: AreaModelColorProfile.proportionalColorProperties.get( orientation )
       } );
     }
