@@ -353,7 +353,7 @@ define( function( require ) {
     type: AreaChallengeType.NUMBERS
   } );
 
-  // L3-6 TODO: why is bottom-right dynamic?
+  // L3-6
   AreaChallengeDescription.LEVEL_3_NUMBERS_6 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, GIVEN ],
     vertical: [ EDITABLE, GIVEN ],
@@ -385,7 +385,7 @@ define( function( require ) {
     type: AreaChallengeType.NUMBERS
   } );
 
-  // L4-2 TODO: why is there a dynamic here?
+  // L4-2
   AreaChallengeDescription.LEVEL_4_NUMBERS_2 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, EDITABLE, GIVEN ],
     vertical: [ EDITABLE, GIVEN ],
@@ -428,7 +428,7 @@ define( function( require ) {
     type: AreaChallengeType.NUMBERS
   } );
 
-  // L4-5 TODO why dynamic?   AND note that it's permutation-equivalent to L4-6
+  // L4-5
   AreaChallengeDescription.LEVEL_4_NUMBERS_5 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, EDITABLE, GIVEN ],
     vertical: [ EDITABLE, GIVEN, GIVEN ],
@@ -447,7 +447,7 @@ define( function( require ) {
   * Numbers 5
   *----------------------------------------------------------------------------*/
 
-  // L5-1   TODO l5-2 is a transpose of this?
+  // L5-1
   AreaChallengeDescription.LEVEL_5_NUMBERS_1 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, GIVEN ],
     vertical: [ EDITABLE ],
@@ -460,7 +460,7 @@ define( function( require ) {
     type: AreaChallengeType.NUMBERS
   } );
 
-  // L5-3 TODO: potential rename?     TODO :5-4 is a transpose of this
+  // L5-3
   AreaChallengeDescription.LEVEL_5_NUMBERS_3 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, GIVEN, GIVEN ],
     vertical: [ EDITABLE ],
@@ -679,7 +679,7 @@ define( function( require ) {
     type: AreaChallengeType.VARIABLES
   } );
 
-  // L4-2  TODO" L4-3 is a transpose of this
+  // L4-2
   AreaChallengeDescription.LEVEL_4_VARIABLES_2 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, GIVEN ],
     vertical: [ GIVEN, GIVEN ],
@@ -697,7 +697,7 @@ define( function( require ) {
   * Variables 5
   *----------------------------------------------------------------------------*/
 
-  // L5-1 TODO: Too similar to L3-1?
+  // L5-1
   AreaChallengeDescription.LEVEL_5_VARIABLES_1 = new AreaChallengeDescription( {
     horizontal: [ EDITABLE, GIVEN ],
     vertical: [ EDITABLE ],
