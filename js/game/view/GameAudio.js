@@ -30,26 +30,22 @@ define( function( require ) {
       if ( state === null || oldState === null ) { return; }
 
       if ( state === GameState.CORRECT_ANSWER ) {
-        var level = model.currentLevelProperty.value;
-        if ( level.challengeIndexProperty.value === AreaModelConstants.NUM_CHALLENGES - 1 ) {
-          // we are at the end
-          var score = level.scoreProperty.value;
-          if ( score === AreaModelConstants.NUM_CHALLENGES * 2 ) {
-            audioPlayer.gameOverPerfectScore();
-          }
-          else if ( score === 0 ) {
-            audioPlayer.gameOverZeroScore();
-          }
-          else {
-            audioPlayer.gameOverImperfectScore();
-          }
-        }
-        else {
-          audioPlayer.correctAnswer();
-        }
+        audioPlayer.correctAnswer();
       }
       if ( state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER ) {
         audioPlayer.wrongAnswer();
+      }
+      if ( state === GameState.LEVEL_COMPLETE ) {
+        var score = model.currentLevelProperty.value.scoreProperty.value;
+        if ( score === AreaModelConstants.NUM_CHALLENGES * 2 ) {
+          audioPlayer.gameOverPerfectScore();
+        }
+        else if ( score === 0 ) {
+          audioPlayer.gameOverZeroScore();
+        }
+        else {
+          audioPlayer.gameOverImperfectScore();
+        }
       }
     } );
   }
