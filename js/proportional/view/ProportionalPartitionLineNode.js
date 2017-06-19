@@ -13,12 +13,14 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var Matrix3 = require( 'DOT/Matrix3' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
+  var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Util = require( 'DOT/Util' );
 
@@ -63,7 +65,14 @@ define( function( require ) {
     showHintArrowsProperty.linkAttribute( minHintArrow, 'visible' );
     showHintArrowsProperty.linkAttribute( maxHintArrow, 'visible' );
 
-    var handle = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
+    var arrowHalfLength = 10;
+    var arrowHalfWidth = 10;
+    var handleShape = new Shape().moveTo( -arrowHalfLength, 0 ).lineTo( arrowHalfLength, arrowHalfWidth ).lineTo( arrowHalfLength, -arrowHalfWidth ).close();
+    if ( orientation === Orientation.HORIZONTAL ) {
+      handleShape = handleShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
+    }
+
+    var handle = new Path( handleShape, {
       fill: area.colorProperties.get( orientation ),
       stroke: AreaModelColorProfile.partitionLineBorderProperty,
       cursor: 'pointer',
