@@ -17,8 +17,8 @@
   "screen.challenges": {
     "value": "Challenges"
   },
-  "product": {
-    "value": "Product"
+  "dimensions": {
+    "value": "Dimensions"
   },
   "totalAreaOfModel": {
     "value": "Total area of model"

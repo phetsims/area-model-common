@@ -52,7 +52,7 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var productString = require( 'string!AREA_MODEL_COMMON/product' );
+  var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var checkString = require( 'string!VEGAS/check' );
   var tryAgainString = require( 'string!VEGAS/tryAgain' );
@@ -226,7 +226,7 @@ define( function( require ) {
     // TODO: ensure sizing doesn't spill out? AreaModelConstants.PANEL_INTERIOR_MAX
     // TODO: make it accept a pair
     var productNode = new GenericProductNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
-    var productContent = this.createPanel( productString, panelAlignGroup, productNode );
+    var productContent = this.createPanel( dimensionsString, panelAlignGroup, productNode );
 
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
     if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {

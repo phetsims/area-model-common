@@ -31,7 +31,7 @@ define( function( require ) {
   // strings
   var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
-  var productString = require( 'string!AREA_MODEL_COMMON/product' );
+  var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   /**
@@ -73,7 +73,7 @@ define( function( require ) {
                                                       new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
 
     // Create accordion boxes after all group-aligned content is created.
-    var productBox = this.createAccordionBox( productString, model.productBoxExpanded, productBoxContent );
+    var productBox = this.createAccordionBox( dimensionsString, model.productBoxExpanded, productBoxContent );
     var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
     // TODO: sizing
