@@ -17,7 +17,6 @@ define( function( require ) {
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -36,8 +35,9 @@ define( function( require ) {
    * @param {GameAreaDisplay} display
    * @param {Property.<EditableProperty.<Term|TermList|null>|null} activeEditableProperty
    * @param {Property.<GameState>}
+   * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */
-  function GameAreaNode( display, activeEditableProperty, gameStateProperty ) {
+  function GameAreaNode( display, activeEditableProperty, gameStateProperty, setActiveTerm ) {
     var self = this;
 
     Node.call( this );
@@ -168,11 +168,6 @@ define( function( require ) {
       return editableProperty ? editableProperty.digits : 1;
     } );
 
-    function setActiveTerm( term ) {
-      activeEditableProperty.value.value = term;
-      activeEditableProperty.value.highlightProperty.value = Highlight.NORMAL;
-      activeEditableProperty.value = null;
-    }
     var keypadOptions = {
       // TODO: dedup with other keypad?
       x: AreaModelConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
