@@ -51,7 +51,7 @@ define( function( require ) {
     } );
     readoutText.centerY = readoutBackground.centerY; // Don't reposition vertically with exponents
     new DynamicProperty( polynomialPropertyProperty ).link( function( polynomial ) {
-      readoutText.text = polynomial === null ? '?' : polynomial.toRichString();
+      readoutText.text = polynomial === null ? '?' : polynomial.toRichString( false );
       readoutText.centerX = readoutBackground.centerX;
     } );
     var readout = new Node( {
