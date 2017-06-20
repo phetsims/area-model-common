@@ -213,6 +213,9 @@ define( function( require ) {
 
     // TODO: doc... move to challenge?
     check: function() {
+      // Close any keypads, see https://github.com/phetsims/area-model-common/issues/66
+      this.activeEditableProperty.value = null;
+
       // TODO: consider putting this in the challenge?
       var challenge = this.currentChallengeProperty.value;
 

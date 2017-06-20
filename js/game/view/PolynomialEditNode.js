@@ -51,7 +51,7 @@ define( function( require ) {
     } );
     readoutText.centerY = readoutBackground.centerY; // Don't reposition vertically with exponents
     new DynamicProperty( polynomialPropertyProperty ).link( function( polynomial ) {
-      readoutText.text = polynomial === null ? '?' : polynomial.toRichString( false );
+      readoutText.text = polynomial === null ? '?' : polynomial.toRichString( false ); // TODO: no parameter, but it seems we support a Term too? yikes
       readoutText.centerX = readoutBackground.centerX;
     } );
     var readout = new Node( {
