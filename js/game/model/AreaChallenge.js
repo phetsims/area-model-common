@@ -59,7 +59,8 @@ define( function( require ) {
           field: description.partitionFields.get( orientation )[ index ],
           displayType: Field.toDisplayType( description.partitionFields.get( orientation )[ index ] ),
           inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
-          digits: ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( orientation ).length - index
+          // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
+          digits: ( ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( orientation ).length - index ) + 1
         } );
       } );
     } );
@@ -88,7 +89,8 @@ define( function( require ) {
           field: field,
           displayType: Field.toDisplayType( field ),
           inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
-          digits: ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits
+          // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
+          digits: ( ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits ) + 1
         } );
         // Link up if dynamic
         if ( field === Field.DYNAMIC ) {
@@ -125,7 +127,8 @@ define( function( require ) {
       field: description.totalField, // TODO: check dup with field/displayType
       displayType: Field.toDisplayType( description.totalField ),
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
-      digits: description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length )
+      // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
+      digits: ( description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) ) + 1
     } );
 
     // Properties for all of the values
