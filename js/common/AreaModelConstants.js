@@ -26,7 +26,8 @@ define( function( require ) {
     SYMBOL_FONT: new PhetFont( 20 ),
     PARTIAL_PRODUCT_FONT: new PhetFont( 19 ),
     PARTIAL_FACTOR_FONT: new PhetFont( 14 ),
-    EDIT_READOUT_FONT: new PhetFont( 18 ),
+    EDIT_READOUT_FONT: new PhetFont( 18 ), // TODO: rename to be about terms?
+    POLYNOMIAL_EDIT_READOUT_FONT: new PhetFont( 18 ),
     PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: AreaModelQueryParameters.singleLine ? 18 : 18, weight: 'bold' } ),
     GAME_VALUE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     GAME_POLYNOMIAL_EDIT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),

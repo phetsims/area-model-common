@@ -14,6 +14,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
@@ -23,8 +24,10 @@ define( function( require ) {
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY_PHET/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor
@@ -36,7 +39,27 @@ define( function( require ) {
     // TODO: consider only showing relative terms?
     // TODO: check to make sure a polynomial isn't out of range?
 
-    var self = this;
+    var longestString = '-9x<sup>2</sup> - 9x - 9';
+
+    var readoutText = new RichText( longestString, {
+      font: AreaModelConstants.POLYNOMIAL_EDIT_READOUT_FONT
+    } );
+    var readoutBackground = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
+      cornerRadius: 3,
+      stroke: 'black', // TODO color profile
+      fill: 'white'
+    } );
+    readoutText.centerY = readoutBackground.centerY; // Don't reposition vertically with exponents
+    new DynamicProperty( polynomialPropertyProperty ).link( function( polynomial ) {
+      readoutText.text = polynomial === null ? '?' : polynomial.toRichString();
+      readoutText.centerX = readoutBackground.centerX;
+    } );
+    var readout = new Node( {
+      children: [
+        readoutBackground,
+        readoutText
+      ]
+    } );
 
     var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
@@ -134,10 +157,10 @@ define( function( require ) {
       constantPicker
     ];
 
-    Node.call( this );
+    var pickerContainer = new Node();
     // Hide the x^2 term if we won't use it
     polynomialPropertyProperty.link( function( polynomialProperty ) {
-      self.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
+      pickerContainer.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
     } );
 
     // TODO: See if HBox can have align option of "don't screw with it, handle manually"
@@ -149,9 +172,17 @@ define( function( require ) {
     constantPicker.centerY = xText.centerY;
     xPicker.centerY = xText.centerY;
     xSquaredPicker.centerY = xText.centerY;
+
+    VBox.call( this, {
+      children: [
+        readout,
+        pickerContainer
+      ],
+      spacing: 10
+    } );
   }
 
   areaModelCommon.register( 'PolynomialEditNode', PolynomialEditNode );
 
-  return inherit( Node, PolynomialEditNode );
+  return inherit( VBox, PolynomialEditNode );
 } );
