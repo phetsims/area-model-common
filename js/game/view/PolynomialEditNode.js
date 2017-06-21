@@ -26,6 +26,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY_PHET/RichText' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -39,7 +40,11 @@ define( function( require ) {
     // TODO: consider only showing relative terms?
     // TODO: check to make sure a polynomial isn't out of range?
 
-    var longestString = '-9x<sup>2</sup> - 9x - 9';
+    var longestString = new Polynomial( [
+      new Term( -9, 2 ),
+      new Term( -9, 1 ),
+      new Term( -9, 0 )
+    ] ).toRichString();
 
     var readoutText = new RichText( longestString, {
       font: AreaModelConstants.POLYNOMIAL_EDIT_READOUT_FONT

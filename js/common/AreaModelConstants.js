@@ -67,6 +67,9 @@ define( function( require ) {
 
     // {string} - We prefer this string when denoting multiplication instead of the 'x' character
     X_STRING: '\u00D7',
+    PLUS_STRING: '+',
+    NEGATIVE_STRING: '-',
+    MINUS_STRING: '\u2013', // TODO Does https://github.com/phetsims/area-model-common/issues/65 want \u2212?
 
     // {number} - Number of challenges per level
     NUM_CHALLENGES: 6

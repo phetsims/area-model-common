@@ -35,11 +35,11 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
-  var activePlus = new Text( '+', {
+  var activePlus = new Text( AreaModelConstants.PLUS_STRING, {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
-  var activeMinus = new Text( '-', {
+  var activeMinus = new Text( AreaModelConstants.MINUS_STRING, {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
@@ -56,11 +56,11 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
-  var inactivePlus = new Text( '+', {
+  var inactivePlus = new Text( AreaModelConstants.PLUS_STRING, {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
-  var inactiveMinus = new Text( '-', {
+  var inactiveMinus = new Text( AreaModelConstants.MINUS_STRING, {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AbstractKeyAccumulator = require( 'SCENERY_PHET/keypad/AbstractKeyAccumulator' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Keys = require( 'SCENERY_PHET/keypad/Keys' );
@@ -36,7 +37,7 @@ define( function( require ) {
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
       return accumulatedKeys.map( function( key ) {
         if ( key === Keys.PLUSMINUS ) {
-          return '-';
+          return AreaModelConstants.NEGATIVE_STRING;
         }
         else if ( key === Keys.X ) {
           return 'x';
