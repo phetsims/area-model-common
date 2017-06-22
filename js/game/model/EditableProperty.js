@@ -34,7 +34,8 @@ define( function( require ) {
       field: Field.GIVEN,
       displayType: DisplayType.HIDDEN,
       inputMethod: InputMethod.CONSTANT,
-      digits: 0
+      digits: 0,
+      correctValue: null // Only used for the total coefficients
     }, options );
 
     // Always start off by editing null, and it should be the default value.

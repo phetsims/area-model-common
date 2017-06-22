@@ -14,12 +14,12 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
@@ -33,9 +33,9 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Property.<EditableProperty.<Polynomial|term|null>|null>} polynomialPropertyProperty - Ignored if it has another inputMethod
+   * @param {Property.<Polynomial|null>} polynomialProperty
    */
-  function PolynomialEditNode( polynomialPropertyProperty ) {
+  function PolynomialEditNode( polynomialProperty, totalPropertiesProperty ) {
     // TODO: consider only showing relative terms?
     // TODO: check to make sure a polynomial isn't out of range?
 
@@ -54,8 +54,8 @@ define( function( require ) {
       fill: 'white'
     } );
     readoutText.centerY = readoutBackground.centerY; // Don't reposition vertically with exponents
-    new DynamicProperty( polynomialPropertyProperty ).link( function( polynomial ) {
-      readoutText.text = polynomial === null ? '?' : polynomial.toRichString( false ); // TODO: no parameter, but it seems we support a Term too? yikes
+    polynomialProperty.link( function( polynomial ) {
+      readoutText.text = polynomial === null ? '0' : polynomial.toRichString();
       readoutText.centerX = readoutBackground.centerX;
     } );
     var readout = new Node( {
@@ -67,60 +67,52 @@ define( function( require ) {
 
     var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
-    var constantProperty = new NumberProperty( 0 );
-    var xProperty = new NumberProperty( 0 );
-    var xSquaredProperty = new NumberProperty( 0 );
-
-    // TODO: workaround for this?
-    function isPolynomial() {
-      return polynomialPropertyProperty.value && InputMethod.isPolynomial( polynomialPropertyProperty.value.inputMethod );
-    }
-
-    polynomialPropertyProperty.link( function( polynomialProperty ) {
-      if ( polynomialProperty === null ) { return; }
-
-      var polynomial = polynomialProperty.value;
-
-      if ( isPolynomial() ) {
-        if ( polynomial === null ) {
-          polynomialProperty.value = new Polynomial( [] ); // zero
-          constantProperty.value = 0;
-          xProperty.value = 0;
-          xSquaredProperty.value = 0;
-        }
-        else {
-          constantProperty.value = polynomial.getCoefficient( 0 );
-          xProperty.value = polynomial.getCoefficient( 1 );
-          xSquaredProperty.value = polynomial.getCoefficient( 2 );
-        }
-      }
+    var constantPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
+      return totalProperties.length > 1 ? totalProperties[ 0 ] : new EditableProperty( null );
     } );
-    //TODO: cleanup
-    constantProperty.lazyLink( function( value ) {
-      if ( isPolynomial ) {
-        polynomialPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
-        polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 0 );
-      }
+
+    var xPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
+      return totalProperties.length > 1 ? totalProperties[ 1 ] : new EditableProperty( null );
     } );
-    xProperty.lazyLink( function( value ) {
-      if ( isPolynomial ) {
-        polynomialPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
-        polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 1 );
-      }
+
+    var xSquaredPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
+      return totalProperties.length > 1 ? totalProperties[ 2 ] : new EditableProperty( null );
     } );
-    xSquaredProperty.lazyLink( function( value ) {
-      if ( isPolynomial ) {
-        polynomialPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
-        polynomialPropertyProperty.value.value = polynomialPropertyProperty.value.value.withCoefficient( value, 2 );
-      }
+
+    var constantProperty = new DynamicProperty( constantPropertyProperty, {
+      map: function( term ) {
+        return term === null ? 0 : term.coefficient;
+      },
+      inverseMap: function( number ) {
+        return new Term( number, 0 );
+      },
+      bidirectional: true
+    } );
+
+    var xProperty = new DynamicProperty( xPropertyProperty, {
+      map: function( term ) {
+        return term === null ? 0 : term.coefficient;
+      },
+      inverseMap: function( number ) {
+        return new Term( number, 1 );
+      },
+      bidirectional: true
+    } );
+
+    var xSquaredProperty = new DynamicProperty( xSquaredPropertyProperty, {
+      map: function( term ) {
+        return term === null ? 0 : term.coefficient;
+      },
+      inverseMap: function( number ) {
+        return new Term( number, 2 );
+      },
+      bidirectional: true
     } );
 
     var rangeProperty = new Property( new Range( -99, 99 ) ); // TODO: -81,81?
 
-    var highlightProperty = new DynamicProperty( polynomialPropertyProperty, {
-      derive: 'highlightProperty'
-    } );
-    var colorProperty = new DerivedProperty( [ highlightProperty, AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], function( highlight, errorColor, dirtyColor ) {
+    // TODO: change for each
+    function highlightFunction( highlight, errorColor, dirtyColor ) {
       if ( highlight === Highlight.NORMAL ) {
         return 'black';
       }
@@ -130,16 +122,16 @@ define( function( require ) {
       else {
         return errorColor;
       }
-    } );
+    }
 
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
-      color: colorProperty
+      color: new DerivedProperty( [ new DynamicProperty( constantPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
     var xPicker = new NumberPicker( xProperty, rangeProperty, {
-      color: colorProperty
+      color: new DerivedProperty( [ new DynamicProperty( xPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
     var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
-      color: colorProperty
+      color: new DerivedProperty( [ new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
 
     var xText = new Text( 'x', { font: editFont } );
@@ -165,7 +157,7 @@ define( function( require ) {
 
     var pickerContainer = new Node();
     // Hide the x^2 term if we won't use it
-    polynomialPropertyProperty.link( function( polynomialProperty ) {
+    constantPropertyProperty.link( function( polynomialProperty ) {
       pickerContainer.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
     } );
 

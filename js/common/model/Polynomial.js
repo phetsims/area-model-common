@@ -64,6 +64,17 @@ define( function( require ) {
     },
 
     /**
+     * Returns a new Term with the coefficient and power for the specified coefficient in our polynomial.
+     * @public
+     *
+     * @param {number} power
+     * @returns {Term}
+     */
+    getTerm: function( power ) {
+      return new Term( this.getCoefficient( power ), power );
+    },
+
+    /**
      * Returns a new Polynomial with a specific term's coefficient replaced.
      * @public
      *

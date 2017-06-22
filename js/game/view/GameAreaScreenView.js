@@ -18,7 +18,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
+  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaNode' );
@@ -228,18 +228,24 @@ define( function( require ) {
     var productNode = new GenericProductNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
     var productContent = this.createPanel( dimensionsString, panelAlignGroup, productNode );
 
-    var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
+    //TODO: remove this workaround
+    var totalTermPropertyProperty = new DerivedProperty( [ this.display.totalPropertiesProperty ], function( totalProperties ) {
+      return totalProperties.length === 1 ? totalProperties[ 0 ] : new EditableProperty( null );
+    } );
+
+    var totalNode = new GameEditableLabelNode( totalTermPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
       }
-      model.activeEditableProperty.value = self.display.totalPropertyProperty.value;
+      model.activeEditableProperty.value = totalTermPropertyProperty.value;
     } );
-    var polynomialEditNode = new PolynomialEditNode( this.display.totalPropertyProperty );
+    var totalProperty = new DynamicProperty( this.display.totalPropertyProperty );
+    var polynomialEditNode = new PolynomialEditNode( totalProperty, this.display.totalPropertiesProperty );
     var polynomialReadoutText = new RichText( '?', {
       font: AreaModelConstants.TOTAL_AREA_FONT,
       maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
     } );
-    new DynamicProperty( this.display.totalPropertyProperty ).link( function( total ) {
+    totalProperty.link( function( total ) {
       if ( total ) {
         polynomialReadoutText.text = total.toRichString( false );
       }
@@ -247,12 +253,14 @@ define( function( require ) {
 
     var totalContainer = new Node();
     //TODO: simplify
-    Property.multilink( [ this.display.totalPropertyProperty, model.stateProperty ], function( totalProperty, gameState ) {
-      if ( totalProperty.displayType === DisplayType.EDITABLE && InputMethod.isPolynomial( totalProperty.inputMethod ) ) {
-
-        //TODO: is this really necessary?
-        var isReadout = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
-        totalContainer.children = [ isReadout ? polynomialReadoutText : polynomialEditNode ];
+    Property.multilink( [ this.display.totalPropertiesProperty, model.stateProperty ], function( totalProperties, gameState ) {
+      if ( totalProperties.length > 1 ) {
+        if ( totalProperties[ 0 ].displayType === DisplayType.EDITABLE && gameState !== GameState.CORRECT_ANSWER && gameState !== GameState.SHOW_SOLUTION ) {
+          totalContainer.children = [ polynomialEditNode ];
+        }
+        else {
+          totalContainer.children = [ polynomialReadoutText ];
+        }
       }
       else {
         totalContainer.children = [ totalNode ];

@@ -122,20 +122,48 @@ define( function( require ) {
     // @public {Polynomial}
     this.total = this.totals.get( Orientation.HORIZONTAL ).times( this.totals.get( Orientation.VERTICAL ) );
 
-    // @public {EditableProperty.<Polynomial|Term|null>} TODO: check if this being a term is a problem
-    this.totalProperty = new EditableProperty( this.total, {
-      field: description.totalField, // TODO: check dup with field/displayType
-      displayType: Field.toDisplayType( description.totalField ),
+    var totalOptions = {
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
       // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
       digits: ( description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) ) + 1
+    };
+    // @public {EditableProperty.<Term|null>}
+    this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {
+      correctValue: this.total.getTerm( 0 ),
+      field: description.totalField,
+      displayType: Field.toDisplayType( description.totalField )
+    }, totalOptions ) );
+    this.totalXProperty = new EditableProperty( this.total.getTerm( 1 ), _.extend( {
+      correctValue: this.total.getTerm( 1 ),
+      field: ( description.type !== AreaChallengeType.VARIABLES ) ? Field.GIVEN : description.totalField,
+      displayType: ( description.type !== AreaChallengeType.VARIABLES ) ? DisplayType.READOUT : Field.toDisplayType( description.totalField )
+    }, totalOptions ) );
+    this.totalXSquaredProperty = new EditableProperty( this.total.getTerm( 2 ), _.extend( {
+      correctValue: this.total.getTerm( 2 ),
+      field: ( description.type !== AreaChallengeType.VARIABLES ) ? Field.GIVEN : description.totalField,
+      displayType: ( description.type !== AreaChallengeType.VARIABLES ) ? DisplayType.READOUT : Field.toDisplayType( description.totalField )
+    }, totalOptions ) );
+
+    // @public {EditableProperty.<Polynomial|null>}
+    this.totalProperty = new DerivedProperty( [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ], function( constant, x, xSquared ) {
+      var terms = [ constant, x, xSquared ].filter( function( term ) {
+        return term !== null;
+      } );
+      if ( terms.length ) {
+        return new Polynomial( terms );
+      }
+      else {
+        return null;
+      }
     } );
 
     // Properties for all of the values
     var availableProperties = this.partitionSizeProperties.get( Orientation.HORIZONTAL ).concat( this.partitionSizeProperties.get( Orientation.VERTICAL ) ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
       this.totalProperties.get( Orientation.HORIZONTAL ),
       this.totalProperties.get( Orientation.VERTICAL ),
-      this.totalProperty
+      this.totalConstantProperty,
+      this.totalXProperty,
+      this.totalXSquaredProperty
     ] );
 
     // @public {Property.<boolean>}
@@ -230,12 +258,9 @@ define( function( require ) {
             compareProperty( property, self.partialProductSizes[ verticalIndex ][ horizontalIndex ] );
           } );
         } );
-        if ( this.totalProperty.value instanceof Term ) { // TODO: hackish workaround. Can we always have it be a Polynomial?
-          compareProperty( this.totalProperty, this.total.terms[ 0 ] );
-        }
-        else {
-          compareProperty( this.totalProperty, this.total );
-        }
+        compareProperty( this.totalConstantProperty, this.total.getTerm( 0 ) );
+        compareProperty( this.totalXProperty, this.total.getTerm( 1 ) );
+        compareProperty( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
       }
 
       return _.uniq( incorrectProperties ).filter( function( property ) {
@@ -353,12 +378,9 @@ define( function( require ) {
         this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.VERTICAL );
       }
 
-      if ( this.totalProperty.value instanceof Term ) { // TODO: hackish workaround. Can we always have it be a Polynomial?
-        this.totalProperty.value = this.total.terms[ 0 ];
-      }
-      else {
-        this.totalProperty.value = this.total;
-      }
+      this.totalConstantProperty.value = this.total.getTerm( 0 );
+      this.totalXProperty.value = this.total.getTerm( 1 );
+      this.totalXSquaredProperty.value = this.total.getTerm( 2 );
     },
 
     /**
@@ -372,6 +394,14 @@ define( function( require ) {
       display.layoutProperty.value = this.description.layout;
       display.allowExponentsProperty.value = this.description.allowExponents;
       display.totalPropertyProperty.value = this.totalProperty;
+      //TODO: refactor to coefficient properties?
+      display.totalPropertiesProperty.value = ( this.description.type === AreaChallengeType.VARIABLES ) ? [
+        this.totalConstantProperty,
+        this.totalXProperty,
+        this.totalXSquaredProperty
+      ] : [
+        this.totalConstantProperty
+      ];
       display.partialProductsProperty.value = this.partialProductSizeProperties;
 
       // TODO: cleanup and dedup. Cleaner way to accomplish this?

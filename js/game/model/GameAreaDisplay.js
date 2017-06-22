@@ -25,6 +25,8 @@ define( function( require ) {
    */
   function GameAreaDisplay() {
 
+    //TODO: fix type documentation in this file!!!!!!!!!!!!!!!!!!
+
     // @public {Property.<GenericLayout>}
     this.layoutProperty = new Property( GenericLayout.TWO_BY_TWO );
 
@@ -41,14 +43,17 @@ define( function( require ) {
       new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] )
     );
 
-    // @public {Property.<Array.<Array.<Term|null>>} TODO doc
+    // @public {Property.<Array.<Array.<EditableProperty.<Term|null>>>} TODO doc
     this.partialProductsProperty = new Property( [
       [ new EditableProperty( null ), new EditableProperty( null ) ],
       [ new EditableProperty( null ), new EditableProperty( null ) ]
     ] );
 
-    // @public {Property.<TermList|null>} TODO doc
-    this.totalPropertyProperty = new Property( new EditableProperty( null ) );
+    // @public {Property.<Array.<EditableProperty.<Term|null>>>}
+    this.totalPropertiesProperty = new Property( [ new EditableProperty( null ) ] );
+
+    // @public {Property.<EditableProperty.<TermList|null>>} TODO doc
+    this.totalPropertyProperty = new Property( new Property( null ) );
   }
 
   areaModelCommon.register( 'GameAreaDisplay', GameAreaDisplay );
