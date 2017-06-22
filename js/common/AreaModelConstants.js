@@ -63,7 +63,8 @@ define( function( require ) {
 
     // {Vector2} - Offset vector from the upper-left of the area to the x,y location where the dimension line labels
     //             would intersect.
-    RANGE_OFFSET: new Vector2( -60, -40 ),
+    PROPORTIONAL_RANGE_OFFSET: new Vector2( -35, -28 ),
+    GENERIC_RANGE_OFFSET: new Vector2( -60, -40 ),
 
     // {string} - We prefer this string when denoting multiplication instead of the 'x' character
     X_STRING: '\u00D7',

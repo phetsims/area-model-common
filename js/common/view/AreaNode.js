@@ -30,10 +30,12 @@ define( function( require ) {
    * @param {Area} area
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {boolean} allowExponents
+   * @param {boolean} isProportional
    */
-  function AreaNode( area, partialProductsChoiceProperty, allowExponents ) {
+  function AreaNode( area, partialProductsChoiceProperty, allowExponents, isProportional ) {
     assert && assert( area instanceof Area );
     assert && assert( typeof allowExponents === 'boolean' );
+    assert && assert( typeof isProportional === 'boolean' );
 
     var self = this;
 
@@ -63,7 +65,7 @@ define( function( require ) {
         } );
       } );
       //TODO: reduce duplication with the game?
-      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty ) );
+      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) );
     } );
 
     var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
@@ -90,7 +92,7 @@ define( function( require ) {
       listener: function() {
         area.reset();
       },
-      center: AreaModelConstants.RANGE_OFFSET
+      center: isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET
     } );
     this.labelLayer.addChild( eraseButton );
   }

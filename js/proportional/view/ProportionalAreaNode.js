@@ -45,7 +45,7 @@ define( function( require ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
-    AreaNode.call( this, area, partialProductsChoiceProperty, false );
+    AreaNode.call( this, area, partialProductsChoiceProperty, false, true );
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
@@ -181,10 +181,10 @@ define( function( require ) {
         var rightLabel = self.getProductLabel( 1, verticalIndex );
         var hasTwo = rightLabel.partitionedArea.visibleProperty.value;
 
-        var leftOverlapBump = 20;
+        var leftOverlapBump = 22;
         var labelOverlapBump = 10;
 
-        var hasLeftOverlap = AreaModelQueryParameters.singleLine && verticalRanges[ 1 ] !== null && leftLabel.left < -7;
+        var hasLeftOverlap = verticalRanges[ 1 ] !== null && leftLabel.left < -5;
         var canAvoidLeftOverlap = leftLabel.top - leftOverlapBump >= verticalRange.min - 5;
         var hasLabelOverlap = hasTwo && leftLabel.right > rightLabel.left;
         var canAvoidLabelOverlap = leftLabel.top - labelOverlapBump >= verticalRange.min - 3;
@@ -324,7 +324,7 @@ define( function( require ) {
           labelContainer.y = -15;
         }
         else {
-          labelContainer.top = AreaModelConstants.RANGE_OFFSET.y + 4;
+          labelContainer.top = AreaModelConstants.PROPORTIONAL_RANGE_OFFSET.y + 4;
         }
       }
       else {
@@ -332,7 +332,7 @@ define( function( require ) {
           labelContainer.x = -20;
         }
         else {
-          labelContainer.left = AreaModelConstants.RANGE_OFFSET.x + 6;
+          labelContainer.left = AreaModelConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
         }
       }
 

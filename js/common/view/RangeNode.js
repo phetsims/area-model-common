@@ -33,7 +33,7 @@ define( function( require ) {
    * @param {Property.<Array.<number>>} tickLocationsProperty - In view coordinates
    * @param {Property.<Color>} colorProperty
    */
-  function RangeNode( labelNode, orientation, tickLocationsProperty, colorProperty ) {
+  function RangeNode( labelNode, orientation, tickLocationsProperty, colorProperty, isProportional ) {
     assert && assert( labelNode instanceof Node );
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( colorProperty instanceof Property );
@@ -58,7 +58,7 @@ define( function( require ) {
     } );
     this.addChild( line );
 
-    var rangeOffset = AreaModelConstants.RANGE_OFFSET[ orientation.opposite.coordinate ];
+    var rangeOffset = ( isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
     // Coordinate that doesn't change.
     //TODO: simplify

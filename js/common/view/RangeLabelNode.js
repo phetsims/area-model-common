@@ -20,14 +20,14 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {Node}
+   * @extends {RangeLabel}
    *
    * @param {Property.<TermList|null>} termListProperty
    * @param {Orientation} orientation
    * @param {Property.<Array.<number>>} tickLocationsProperty - In view coordinates
    * @param {Property.<Color>} colorProperty
    */
-  function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty ) {
+  function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) {
 
     var text = new RichText( '', {
       font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
@@ -40,7 +40,7 @@ define( function( require ) {
     } );
 
     if ( orientation === Orientation.VERTICAL ) {
-      text.maxWidth = AreaModelConstants.MAIN_AREA_OFFSET.x + AreaModelConstants.RANGE_OFFSET.x - AreaModelConstants.PANEL_MARGIN;
+      text.maxWidth = AreaModelConstants.MAIN_AREA_OFFSET.x + ( isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET ).x - AreaModelConstants.PANEL_MARGIN;
     }
 
     // Update the label text
@@ -59,7 +59,7 @@ define( function( require ) {
       }
     } );
 
-    RangeNode.call( this, label, orientation, tickLocationsProperty, colorProperty );
+    RangeNode.call( this, label, orientation, tickLocationsProperty, colorProperty, isProportional );
   }
 
   areaModelCommon.register( 'RangeLabelNode', RangeLabelNode );

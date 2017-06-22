@@ -41,7 +41,7 @@ define( function( require ) {
 
     var self = this;
 
-    AreaNode.call( this, area, partialProductsChoiceProperty, allowExponents );
+    AreaNode.call( this, area, partialProductsChoiceProperty, allowExponents, false );
 
     var singleOffset = this.viewSize * AreaModelConstants.GENERIC_SINGLE_OFFSET;
     var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;

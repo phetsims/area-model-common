@@ -78,7 +78,7 @@ define( function( require ) {
       var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
         return tickVariations[ layout.getPartitionQuantity( orientation ) ];
       } );
-      self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty ) );
+      self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
     } );
 
     var centerProperties = {}; // TODO: doc key/value
