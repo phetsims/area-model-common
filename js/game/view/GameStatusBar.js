@@ -18,7 +18,6 @@ define( function( require ) {
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -118,7 +117,7 @@ define( function( require ) {
       font: OF_FONT
     } );
     this.addChild( this.challengeProgressNode );
-    //TODO: Use DynamicDerivedProperty!!
+    //TODO: Use derive!!
     new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
       return level ? level.challengeIndexProperty : new Property( null ); // TODO: reduce allocations
     } ) ).link( function( index ) {
@@ -133,7 +132,9 @@ define( function( require ) {
     // Persistent, no need to worry about unlinking
     currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
 
-    new DynamicDerivedProperty( currentLevelProperty, 'currentChallengeProperty' ).link( this.updateChallengeInfo.bind( this ) );
+    new DynamicProperty( currentLevelProperty, {
+      derive: 'currentChallengeProperty'
+    } ).link( this.updateChallengeInfo.bind( this ) );
   }
 
   areaModelCommon.register( 'GameStatusBar', GameStatusBar );

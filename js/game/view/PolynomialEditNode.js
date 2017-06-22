@@ -13,7 +13,6 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicDerivedProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicDerivedProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -118,7 +117,9 @@ define( function( require ) {
 
     var rangeProperty = new Property( new Range( -99, 99 ) ); // TODO: -81,81?
 
-    var highlightProperty = new DynamicDerivedProperty( polynomialPropertyProperty, 'highlightProperty' );
+    var highlightProperty = new DynamicProperty( polynomialPropertyProperty, {
+      derive: 'highlightProperty'
+    } );
     var colorProperty = new DerivedProperty( [ highlightProperty, AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], function( highlight, errorColor, dirtyColor ) {
       if ( highlight === Highlight.NORMAL ) {
         return 'black';
