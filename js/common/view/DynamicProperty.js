@@ -216,7 +216,7 @@ define( function( require ) {
      * @param {*} value
      */
     onSelfChange: function( value ) {
-      if ( this.valuePropertyProperty !== null ) {
+      if ( this.valuePropertyProperty.value !== null ) {
         this.derive( this.valuePropertyProperty.value ).value = this.inverseMap( value );
       }
     },
