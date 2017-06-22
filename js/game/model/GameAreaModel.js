@@ -16,7 +16,6 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
@@ -187,7 +186,10 @@ define( function( require ) {
     this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
     // @public {Property.<GameState|null>} - TODO: Check why bidirectional is required, null default feels weird
-    this.stateProperty = DynamicBidirectionalProperty.derived( this.currentChallengeProperty, 'stateProperty', null );
+    this.stateProperty = new DynamicProperty( this.currentChallengeProperty, {
+      derive: 'stateProperty',
+      bidirectional: true
+    } );
 
     // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)
     this.hasNullProperty = new DynamicProperty( this.currentChallengeProperty, {

@@ -14,7 +14,6 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
-  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
   var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
@@ -43,7 +42,9 @@ define( function( require ) {
   function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
     Node.call( this );
 
-    var valueProperty = new DynamicBidirectionalProperty( valuePropertyProperty );
+    var valueProperty = new DynamicProperty( valuePropertyProperty, {
+      bidirectional: true
+    } );
     var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
       return valueProperty.digits;
     } );

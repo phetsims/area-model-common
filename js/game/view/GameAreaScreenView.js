@@ -229,7 +229,7 @@ define( function( require ) {
     var productContent = this.createPanel( dimensionsString, panelAlignGroup, productNode );
 
     var totalNode = new GameEditableLabelNode( this.display.totalPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
-    if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
+      if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
       }
       model.activeEditableProperty.value = self.display.totalPropertyProperty.value;

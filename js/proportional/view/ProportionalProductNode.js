@@ -13,7 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicBidirectionalProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicBidirectionalProperty' );
+  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
@@ -61,7 +61,9 @@ define( function( require ) {
       } );
 
       // {Property.<Polynomial|null>}
-      var bidirectionalProperty = new DynamicBidirectionalProperty( currentTotalProperty );
+      var bidirectionalProperty = new DynamicProperty( currentTotalProperty, {
+        bidirectional: true
+      } );
 
       // {Property.<Range>}
       var rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
