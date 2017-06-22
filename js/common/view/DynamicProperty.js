@@ -137,6 +137,9 @@ define( function( require ) {
     // @private {Property.<*|null>}
     this.valuePropertyProperty = valuePropertyProperty;
 
+    // @private {boolean}
+    this.bidirectional = bidirectional;
+
     // @private {*}
     this.defaultValue = options.defaultValue;
 
