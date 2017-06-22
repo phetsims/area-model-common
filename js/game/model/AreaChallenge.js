@@ -59,8 +59,7 @@ define( function( require ) {
           field: description.partitionFields.get( orientation )[ index ],
           displayType: Field.toDisplayType( description.partitionFields.get( orientation )[ index ] ),
           inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
-          // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
-          digits: ( ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( orientation ).length - index ) + 1
+          digits: ( ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( orientation ).length - index )
         } );
       } );
     } );
@@ -124,8 +123,7 @@ define( function( require ) {
 
     var totalOptions = {
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
-      // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
-      digits: ( description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) ) + 1
+      digits: ( description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) )
     };
     // @public {EditableProperty.<Term|null>}
     this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {

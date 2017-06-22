@@ -130,11 +130,12 @@ define( function( require ) {
      * @returns {string}
      */
     getLongestGenericString: function( allowExponents, digitCount ) {
+      var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
-        return AreaModelConstants.MINUS_STRING + '9x<sup>2</sup>';
+        return AreaModelConstants.MINUS_STRING + digits + 'x<sup>2</sup>';
       }
       else {
-        return AreaModelConstants.MINUS_STRING + _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
+        return AreaModelConstants.MINUS_STRING + digits;
       }
     }
   } );
