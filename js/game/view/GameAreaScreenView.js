@@ -240,7 +240,11 @@ define( function( require ) {
       model.activeEditableProperty.value = totalTermPropertyProperty.value;
     } );
     var totalProperty = new DynamicProperty( this.display.totalPropertyProperty );
-    var polynomialEditNode = new PolynomialEditNode( totalProperty, this.display.totalPropertiesProperty );
+    var polynomialEditNode = new PolynomialEditNode( totalProperty, this.display.totalPropertiesProperty, function() {
+      if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
+        model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
+      }
+    } );
     var polynomialReadoutText = new RichText( '?', {
       font: AreaModelConstants.TOTAL_AREA_FONT,
       maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX

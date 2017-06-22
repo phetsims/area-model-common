@@ -134,6 +134,9 @@ define( function( require ) {
       inverseMap: _.identity
     }, options );
 
+    // @public {boolean} - Set to true when this Property's value is changing from an external source.
+    this.isExternallyChanging = false;
+
     // @private {Property.<*|null>}
     this.valuePropertyProperty = valuePropertyProperty;
 
@@ -250,7 +253,11 @@ define( function( require ) {
     set: function( value ) {
       assert && assert( this.bidirectional, 'Cannot set values directly to a DynamicProperty, tried to set: ' + value );
 
+      this.isExternallyChanging = true;
+
       Property.prototype.set.call( this, value );
+
+      this.isExternallyChanging = false;
     }
   } );
 } );

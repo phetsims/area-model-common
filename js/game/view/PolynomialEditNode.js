@@ -34,8 +34,10 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<Polynomial|null>} polynomialProperty
+   * @param {Property.<Array.<EditableProperty.<Term|null>>>} totalPropertiesProperty
+   * @param {function} editedCallback - Called with no arguments when something is edited
    */
-  function PolynomialEditNode( polynomialProperty, totalPropertiesProperty ) {
+  function PolynomialEditNode( polynomialProperty, totalPropertiesProperty, editedCallback ) {
     // TODO: consider only showing relative terms?
     // TODO: check to make sure a polynomial isn't out of range?
 
@@ -107,6 +109,44 @@ define( function( require ) {
         return new Term( number, 2 );
       },
       bidirectional: true
+    } );
+
+    // TODO: dedup
+    constantProperty.link( function( value ) {
+      if ( constantProperty.isExternallyChanging ) {
+        editedCallback();
+
+        var editableProperty = constantPropertyProperty.value;
+        if ( editableProperty.correctValue.coefficient === 0 ) {
+          editableProperty.highlightProperty.value = editableProperty.value.coefficient === 0 ? Highlight.NORMAL : Highlight.DIRTY;
+        } else {
+          editableProperty.highlightProperty.value = Highlight.NORMAL;
+        }
+      }
+    } );
+    xProperty.link( function( value ) {
+      if ( xProperty.isExternallyChanging ) {
+        editedCallback();
+
+        var editableProperty = xPropertyProperty.value;
+        if ( editableProperty.correctValue.coefficient === 0 ) {
+          editableProperty.highlightProperty.value = editableProperty.value.coefficient === 0 ? Highlight.NORMAL : Highlight.DIRTY;
+        } else {
+          editableProperty.highlightProperty.value = Highlight.NORMAL;
+        }
+      }
+    } );
+    xSquaredProperty.link( function( value ) {
+      if ( xSquaredProperty.isExternallyChanging ) {
+        editedCallback();
+
+        var editableProperty = xSquaredPropertyProperty.value;
+        if ( editableProperty.correctValue.coefficient === 0 ) {
+          editableProperty.highlightProperty.value = editableProperty.value.coefficient === 0 ? Highlight.NORMAL : Highlight.DIRTY;
+        } else {
+          editableProperty.highlightProperty.value = Highlight.NORMAL;
+        }
+      }
     } );
 
     var rangeProperty = new Property( new Range( -99, 99 ) ); // TODO: -81,81?

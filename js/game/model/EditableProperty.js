@@ -22,7 +22,7 @@ define( function( require ) {
    * @constructor
    * @extends {Property}
    *
-   * @param {Term|TermValue|number|null} value - The initial value of the property
+   * @param {Term|number|null} value - The initial value of the property
    * @param {Object} [options] - Options passed to the Property
    */
   function EditableProperty( value, options ) {
@@ -59,6 +59,9 @@ define( function( require ) {
 
     // @public {number}
     this.digits = options.digits;
+
+    // @public {Term|number|null}
+    this.correctValue = options.correctValue;
 
     // @public {Property.<Highlight>} - TODO doc
     this.highlightProperty = new Property( Highlight.DIRTY );
