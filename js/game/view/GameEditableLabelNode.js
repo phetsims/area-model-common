@@ -45,9 +45,7 @@ define( function( require ) {
     var valueProperty = new DynamicProperty( valuePropertyProperty, {
       bidirectional: true
     } );
-    var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], function( valueProperty ) {
-      return valueProperty.digits;
-    } );
+    var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], _.property( 'digits' ) );
     var highlightProperty = new DynamicProperty( valuePropertyProperty, {
       derive: 'highlightProperty'
     } );
