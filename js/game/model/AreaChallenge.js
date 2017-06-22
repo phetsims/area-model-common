@@ -64,12 +64,11 @@ define( function( require ) {
       } );
     } );
 
-    //TODO: dedup
-    this.nonErrorHorizontalPartitionSizeProperties = this.partitionSizeProperties.get( Orientation.HORIZONTAL ).map( function( editableProperty ) {
-      return editableProperty.nonErrorValueProperty;
-    } );
-    this.nonErrorVerticalPartitionSizeProperties = this.partitionSizeProperties.get( Orientation.VERTICAL ).map( function( editableProperty ) {
-      return editableProperty.nonErrorValueProperty;
+    // @public {OrientationPair.<Array.<EditableProperty>>}
+    this.nonErrorPartitionSizeProperties = OrientationPair.create( function( orientation ) {
+      return self.partitionSizeProperties.get( orientation ).map( function( editableProperty ) {
+        return editableProperty.nonErrorValueProperty;
+      } );
     } );
 
     // @public {Array.<Array.<Term|null>>}
@@ -94,8 +93,8 @@ define( function( require ) {
         // Link up if dynamic
         if ( field === Field.DYNAMIC ) {
           var properties = [
-            self.nonErrorHorizontalPartitionSizeProperties[ horizontalIndex ],
-            self.nonErrorVerticalPartitionSizeProperties[ verticalIndex ]
+            self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
+            self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
           ];
           Property.multilink( properties, function( horizontal, vertical ) {
             if ( horizontal === null || vertical === null ) {
@@ -176,25 +175,18 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
 
     // Now hook up dynamic parts, setting their values to null
-    //TODO: dedup
-    if ( description.dimensionFields.get( Orientation.HORIZONTAL ) === Field.DYNAMIC ) {
-      Property.multilink( this.nonErrorHorizontalPartitionSizeProperties, function() {
-        var terms = _.map( self.nonErrorHorizontalPartitionSizeProperties, 'value' ).filter( function( term ) {
-          return term !== null;
+    Orientation.VALUES.forEach( function( orientation ) {
+      if ( description.dimensionFields.get( orientation ) === Field.DYNAMIC ) {
+        var nonErrorProperties = self.nonErrorPartitionSizeProperties.get( orientation );
+        Property.multilink( nonErrorProperties, function() {
+          var terms = _.map( nonErrorProperties, 'value' ).filter( function( term ) {
+            return term !== null;
+          } );
+          var lostATerm = terms.length !== nonErrorProperties.length;
+          self.totalProperties.get( orientation ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
         } );
-        var lostATerm = terms.length !== self.nonErrorHorizontalPartitionSizeProperties.length;
-        self.totalProperties.get( Orientation.HORIZONTAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
-      } );
-    }
-    if ( description.dimensionFields.get( Orientation.VERTICAL ) === Field.DYNAMIC ) {
-      Property.multilink( this.nonErrorVerticalPartitionSizeProperties, function() {
-        var terms = _.map( self.nonErrorVerticalPartitionSizeProperties, 'value' ).filter( function( term ) {
-          return term !== null;
-        } );
-        var lostATerm = terms.length !== self.nonErrorVerticalPartitionSizeProperties.length;
-        self.totalProperties.get( Orientation.VERTICAL ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
-      } );
-    }
+      }
+    } );
 
     // @private {function} - Listeners to remove
     this.horizontalTotalListener = null;

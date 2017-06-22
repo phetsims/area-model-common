@@ -66,7 +66,7 @@ define( function( require ) {
     // @public {Property.<Highlight>} - TODO doc
     this.highlightProperty = new Property( Highlight.DIRTY );
 
-    // TODO doc
+    // @public {Property.<Term|number|null>} - Our value, except for null if there is an error highlight
     this.nonErrorValueProperty = new DerivedProperty( [ this, this.highlightProperty ], function( value, highlight ) {
       return ( highlight === Highlight.ERROR ) ? null : value;
     } );
