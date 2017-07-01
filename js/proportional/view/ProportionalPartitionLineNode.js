@@ -128,6 +128,12 @@ define( function( require ) {
         value = Math.round( value / area.partitionSnapSize ) * area.partitionSnapSize;
         value = Util.clamp( value, 0, activeTotalProperty.value );
 
+        // Hint arrows disappear when the actual split changes during a drag, see https://github.com/phetsims/area-model-common/issues/68
+        var currentSplitValue = partitionSplitProperty.value;
+        if ( value !== currentSplitValue && value !== 0 ) {
+          showHintArrowsProperty.value = false;
+        }
+
         partitionSplitProperty.value = value;
       },
 
@@ -135,7 +141,6 @@ define( function( require ) {
         if ( partitionSplitProperty.value === activeTotalProperty.value ) {
           partitionSplitProperty.value = null;
         }
-        showHintArrowsProperty.value = false;
       }
     } );
     handle.addInputListener( dragHandler );
