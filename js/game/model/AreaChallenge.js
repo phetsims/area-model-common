@@ -166,7 +166,7 @@ define( function( require ) {
     // @public {Property.<boolean>}
     this.hasNullProperty = new DerivedProperty( availableProperties, function() {
       return _.some( availableProperties, function( property ) {
-        return property.value === null && property.field !== Field.DYNAMIC;
+        return property.value === null && property.field === Field.EDITABLE;
       } );
     } );
 
