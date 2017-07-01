@@ -84,44 +84,35 @@ define( function( require ) {
       }
       // Factors
       else {
-        // Sometimes we can write something as a square, e.g. '8^2'
-        if ( horizontalSize && verticalSize && horizontalSize.equals( verticalSize ) && !allowExponents ) {
-          assert && assert( horizontalSize.power === 0 );
+        var rectangleSize = allowExponents ? 12 : 14;
+        var horizontalRectangle = new Rectangle( 0, 0, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
+        var verticalRectangle = new Rectangle( 0, 0, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
+        if ( allowExponents ) {
+          var exponentPadding = 2;
+          horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
+          verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
+        }
+
+        var horizontalNode = horizontalSize ? new RichText( horizontalSize.toRichString( false ), textOptions ) : horizontalRectangle;
+        var verticalNode = verticalSize ? new RichText( verticalSize.toRichString( false ), textOptions ) : verticalRectangle;
+
+        if ( allowExponents ) {
+          box.spacing = 0;
           box.children = [
-            new RichText( ( Math.round( 100 * horizontalSize.coefficient ) / 100 ) + '<sup>2</sup>', textOptions )
+            new Text( '(', textOptions ),
+            verticalNode,
+            new Text( ')(', textOptions ),
+            horizontalNode,
+            new Text( ')', textOptions )
           ];
         }
         else {
-          var rectangleSize = allowExponents ? 12 : 14;
-          var horizontalRectangle = new Rectangle( 0, 0, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
-          var verticalRectangle = new Rectangle( 0, 0, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
-          if ( allowExponents ) {
-            var exponentPadding = 2;
-            horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
-            verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
-          }
-
-          var horizontalNode = horizontalSize ? new RichText( horizontalSize.toRichString( false ), textOptions ) : horizontalRectangle;
-          var verticalNode = verticalSize ? new RichText( verticalSize.toRichString( false ), textOptions ) : verticalRectangle;
-
-          if ( allowExponents ) {
-            box.spacing = 0;
-            box.children = [
-              new Text( '(', textOptions ),
-              verticalNode,
-              new Text( ')(', textOptions ),
-              horizontalNode,
-              new Text( ')', textOptions )
-            ];
-          }
-          else {
-            box.spacing = 2;
-            box.children = [
-              verticalNode,
-              new Text( AreaModelConstants.X_STRING, textOptions ),
-              horizontalNode,
-            ];
-          }
+          box.spacing = 2;
+          box.children = [
+            verticalNode,
+            new Text( AreaModelConstants.X_STRING, textOptions ),
+            horizontalNode,
+          ];
         }
       }
       if ( isFinite( box.width ) ) {
