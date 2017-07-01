@@ -75,7 +75,7 @@ define( function( require ) {
 
   var PAREN_PADDING = 0;
   var PAREN_PAREN_PADDING = 0;
-  var X_PADDING = 5;
+  var X_PADDING = 3;
   var DOT_PADDING = 1;
   var OP_PADDING = 5;
   var TERM_PAREN_PADDING = 1;
@@ -426,14 +426,19 @@ define( function( require ) {
         verticalNode = this.parenWrap( verticalNode, isActive );
       }
 
-      return new HBox( {
-        children: [
-          verticalNode,
-          horizontalNode
-        ],
-        align: 'bottom',
-        spacing: ( horizontalSingle || verticalSingle ) ? TERM_PAREN_PADDING : PAREN_PAREN_PADDING
-      } );
+      if ( this.isProportional ) {
+        return this.xMultiply( verticalNode, horizontalNode, isActive );
+      }
+      else {
+        return new HBox( {
+          children: [
+            verticalNode,
+            horizontalNode
+          ],
+          align: 'bottom',
+          spacing: ( horizontalSingle || verticalSingle ) ? TERM_PAREN_PADDING : PAREN_PAREN_PADDING
+        } );
+      }
     },
 
     createDistributionLine: function( horizontalTerms, verticalTerms, isActive ) {
@@ -443,15 +448,19 @@ define( function( require ) {
         return horizontalTerms.map( function( horizontalTerm ) {
           var horizontalText = self.createColoredRichText( horizontalTerm, Orientation.HORIZONTAL, isActive, false );
           var verticalText = self.createColoredRichText( verticalTerm, Orientation.VERTICAL, isActive, false );
-          if ( self.isProportional || self.allowExponents ) {
-            var hasFirstInParentheses = self.allowExponents || verticalTerm.coefficient < 0;
+
+          // Proportional uses X-multiplication, see https://github.com/phetsims/area-model-common/issues/71
+          if ( self.isProportional ) {
+            return self.parenWrap( self.xMultiply( verticalText, horizontalText, isActive ), isActive );
+          }
+          else if ( self.allowExponents ) {
             return new HBox( {
               children: [
-                hasFirstInParentheses ? self.parenWrap( verticalText, isActive ) : verticalText,
+                self.parenWrap( verticalText, isActive ),
                 self.parenWrap( horizontalText, isActive )
               ],
               align: 'bottom',
-              spacing: hasFirstInParentheses ? PAREN_PAREN_PADDING : TERM_PAREN_PADDING
+              spacing: PAREN_PAREN_PADDING
             } );
           }
           // Generic Screen (non-proportional, no exponents) uses dot, see https://github.com/phetsims/area-model-common/issues/72
