@@ -36,6 +36,8 @@ define( function( require ) {
       minimumSize: 1, // {number} - Minimum size our area can take up
       initialWidth: 1, // {number} - Initial width
       initialHeight: 1, // {number} - Initial height
+      initialHorizontalSplit: null, // {number|null} - Initial location (if any) of a horizontal partition split
+      initialVerticalSplit: null, // {number|null} - Initial location (if any) of a vertical partition split
       snapSize: 1, // {number} - Smallest unit size (that is snapped to)
       partitionSnapSize: 10, // {number} - Smallest left/top partition size
       gridSpacing: 1, // {number} - Space between grid lines
@@ -51,10 +53,10 @@ define( function( require ) {
     this.activeHeightProperty = new NumberProperty( options.initialHeight );
 
     // @private {Property.<number|null>} - If there is an active partition line, its location.
-    this.horizontalPartitionSplitProperty = new Property( null );
+    this.horizontalPartitionSplitProperty = new Property( options.initialHorizontalSplit );
 
     // @private {Property.<number|null>} - If there is an active partition line, its location.
-    this.verticalPartitionSplitProperty = new Property( null );
+    this.verticalPartitionSplitProperty = new Property( options.initialVerticalSplit );
 
     // @public {number}
     this.maximumSize = options.maximumSize;

@@ -10,11 +10,11 @@ define( function( require ) {
 
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var Property = require( 'AXON/Property' );
 
@@ -22,13 +22,13 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
+   * TODO: options instead?
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
    * @param {Area} defaultArea - The initial area
    * @param {boolean} allowExponents
-   * @param {Property.<Color>} horizontalColorProperty - Highlight color for the horizontal orientation
-   * @param {Property.<Color>} verticalColorProperty - Highlight color for the vertical orientation
+   * @param {boolean} isProportional
    */
-  function AreaModel( areas, defaultArea, allowExponents, horizontalColorProperty, verticalColorProperty ) {
+  function AreaModel( areas, defaultArea, allowExponents, isProportional ) {
     var self = this;
 
     // @public {Array.<Area>}
@@ -37,9 +37,8 @@ define( function( require ) {
     // @public {boolean}
     this.allowExponents = allowExponents;
 
-    // TODO: pass in a pair?
     // @public {OrientationPair.<Property.<Color>>}
-    this.colorProperties =  new OrientationPair( horizontalColorProperty, verticalColorProperty );
+    this.colorProperties = AreaModelColorProfile.mainColorProperties[ isProportional ];
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( defaultArea );
@@ -48,13 +47,13 @@ define( function( require ) {
     this.productBoxExpanded = new BooleanProperty( true );
 
     // @public {Property.<boolean>}
-    this.totalModelBoxExpanded = new BooleanProperty( false );
+    this.totalModelBoxExpanded = new BooleanProperty( isProportional );
 
     // @public {Property.<AreaCalculationChoice}
     this.areaCalculationChoiceProperty = new Property( AreaCalculationChoice.HIDDEN );
 
     // @public {Property.<PartialProductsChoice}
-    this.partialProductsChoiceProperty = new Property( PartialProductsChoice.HIDDEN );
+    this.partialProductsChoiceProperty = new Property( isProportional ? PartialProductsChoice.PRODUCTS : PartialProductsChoice.HIDDEN );
 
     var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
 

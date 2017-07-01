@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var AreaModel = require( 'AREA_MODEL_COMMON/common/model/AreaModel' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
@@ -39,8 +38,7 @@ define( function( require ) {
       return area.layout === DEFAULT_LAYOUT;
     } );
 
-    AreaModel.call( this, areas, defaultArea, allowExponents, AreaModelColorProfile.genericWidthProperty,
-                                                              AreaModelColorProfile.genericHeightProperty );
+    AreaModel.call( this, areas, defaultArea, allowExponents, false );
 
     // Adjust the current area based on the layout.
     this.genericLayoutProperty.link( function( layout ) {

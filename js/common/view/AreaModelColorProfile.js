@@ -142,5 +142,11 @@ define( function( require ) {
   AreaModelColorProfile.proportionalColorProperties = new OrientationPair( AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
   AreaModelColorProfile.genericColorProperties = new OrientationPair( AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty );
 
+  // @public {boolean} isProportional => {OrientationPair.<Property.<Color>>>}
+  AreaModelColorProfile.mainColorProperties = {
+    true: AreaModelColorProfile.proportionalColorProperties,
+    false: AreaModelColorProfile.genericColorProperties
+  };
+
   return AreaModelColorProfile;
 } );
