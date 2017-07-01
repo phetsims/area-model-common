@@ -357,16 +357,16 @@ define( function( require ) {
           property.value = self.partitionSizes.get( Orientation.VERTICAL )[ index ];
         } );
 
-        // TODO: look at common iteration patterns like this and abstract out more (and name it)
-        this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
-          row.forEach( function( property, horizontalIndex ) {
-            property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
-          } );
-        } );
-
         this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.HORIZONTAL );
         this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.VERTICAL );
       }
+
+      // TODO: look at common iteration patterns like this and abstract out more (and name it)
+      this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
+        row.forEach( function( property, horizontalIndex ) {
+          property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
+        } );
+      } );
 
       this.totalConstantProperty.value = this.total.getTerm( 0 );
       this.totalXProperty.value = this.total.getTerm( 1 );
