@@ -126,7 +126,7 @@ define( function( require ) {
 
       var activeIndex = isLineByLine ? model.currentAreaProperty.value.calculationIndexProperty.value : undefined;
 
-      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowExponents ).createLines( activeIndex );
+      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowExponents, model.isProportional ).createLines( activeIndex );
       if ( calculationLines.length ) {
         var maxLineWidth = _.reduce( calculationLines, function( max, line ) {
           return Math.max( max, line.node.width );

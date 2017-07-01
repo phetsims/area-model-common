@@ -37,6 +37,9 @@ define( function( require ) {
     // @public {boolean}
     this.allowExponents = allowExponents;
 
+    // @public {boolean}
+    this.isProportional = isProportional;
+
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = AreaModelColorProfile.mainColorProperties[ isProportional ];
 

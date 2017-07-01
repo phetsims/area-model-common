@@ -71,6 +71,7 @@ define( function( require ) {
     PLUS_STRING: '+',
     NEGATIVE_STRING: '-',
     MINUS_STRING: '\u2212',
+    DOT_STRING: '\u22c5',
 
     // {number} - Number of challenges per level
     NUM_CHALLENGES: 6

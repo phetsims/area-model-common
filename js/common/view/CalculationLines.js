@@ -23,7 +23,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // TODO: reduce duplication with ProductNode -- different font though
-  var activeXText = new Text( AreaModelConstants.X_STRING, {
+  var activeX = new Text( AreaModelConstants.X_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
@@ -43,8 +43,12 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
+  var activeDot = new Text( AreaModelConstants.DOT_STRING, {
+    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    fill: AreaModelColorProfile.calculationActiveProperty
+  } );
 
-  var inactiveXText = new Text( AreaModelConstants.X_STRING, {
+  var inactiveX = new Text( AreaModelConstants.X_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
@@ -64,10 +68,15 @@ define( function( require ) {
     font: AreaModelConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
+  var inactiveDot = new Text( AreaModelConstants.DOT_STRING, {
+    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    fill: AreaModelColorProfile.calculationInactiveProperty
+  } );
 
   var PAREN_PADDING = 0;
   var PAREN_PAREN_PADDING = 0;
   var X_PADDING = 5;
+  var DOT_PADDING = 1;
   var OP_PADDING = 5;
   var TERM_PAREN_PADDING = 1;
 
@@ -77,14 +86,17 @@ define( function( require ) {
    *
    * @param {Area} area
    * @param {boolean} allowExponents
+   * @param {boolean} isProportional
    */
-  function CalculationLines( area, allowExponents ) {
+  function CalculationLines( area, allowExponents, isProportional ) {
     assert && assert( area instanceof Area );
     assert && assert( typeof allowExponents === 'boolean' );
+    assert && assert( typeof isProportional === 'boolean' );
 
     // @private
     this.area = area;
     this.allowExponents = allowExponents;
+    this.isProportional = isProportional;
   }
 
   areaModelCommon.register( 'CalculationLines', CalculationLines );
@@ -279,12 +291,26 @@ define( function( require ) {
         children: [
           firstNode,
           new Node( {
-            children: [ isActive ? activeXText : inactiveXText ]
+            children: [ isActive ? activeX : inactiveX ]
           } ),
           secondNode
         ],
         align: 'bottom',
         spacing: X_PADDING
+      } );
+    },
+
+    dotMultiply: function( firstNode, secondNode, isActive ) {
+      return new HBox( {
+        children: [
+          firstNode,
+          new Node( {
+            children: [ isActive ? activeDot : inactiveDot ]
+          } ),
+          secondNode
+        ],
+        align: 'bottom',
+        spacing: DOT_PADDING
       } );
     },
 
@@ -415,17 +441,23 @@ define( function( require ) {
 
       return this.sumOfNodes( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
-          var hasFirstInParentheses = self.allowExponents || verticalTerm.coefficient < 0;
           var horizontalText = self.createColoredRichText( horizontalTerm, Orientation.HORIZONTAL, isActive, false );
           var verticalText = self.createColoredRichText( verticalTerm, Orientation.VERTICAL, isActive, false );
-          return new HBox( {
-            children: [
-              hasFirstInParentheses ? self.parenWrap( verticalText, isActive ) : verticalText,
-              self.parenWrap( horizontalText, isActive )
-            ],
-            align: 'bottom',
-            spacing: hasFirstInParentheses ? PAREN_PAREN_PADDING : TERM_PAREN_PADDING
-          } );
+          if ( self.isProportional || self.allowExponents ) {
+            var hasFirstInParentheses = self.allowExponents || verticalTerm.coefficient < 0;
+            return new HBox( {
+              children: [
+                hasFirstInParentheses ? self.parenWrap( verticalText, isActive ) : verticalText,
+                self.parenWrap( horizontalText, isActive )
+              ],
+              align: 'bottom',
+              spacing: hasFirstInParentheses ? PAREN_PAREN_PADDING : TERM_PAREN_PADDING
+            } );
+          }
+          // Generic Screen (non-proportional, no exponents) uses dot, see https://github.com/phetsims/area-model-common/issues/72
+          else {
+            return self.parenWrap( self.dotMultiply( verticalText, horizontalText, isActive ), isActive );
+          }
         } );
       } ) ), isActive );
     },
