@@ -191,6 +191,10 @@ define( function( require ) {
     // @private {function} - Listeners to remove
     this.horizontalTotalListener = null;
     this.verticalTotalListener = null;
+
+    // @private {boolean} - Pick an arbitrary side to be wrong in particular variables 6-1 cases, see
+    // https://github.com/phetsims/area-model-common/issues/42
+    this.arbitraryNonUniqueWrongOrientation = phet.joist.random.nextBoolean() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
   }
 
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
@@ -223,8 +227,9 @@ define( function( require ) {
       // TODO: improve! This just checks for variables 6-1, which has multiple solutions
       if ( !this.description.unique ) {
         // Logic described by https://github.com/phetsims/area-model-common/issues/39
+        // Addendum to logic in https://github.com/phetsims/area-model-common/issues/42
         if ( this.hasNonUniqueBadMatch() ) {
-          incorrectProperties.push( this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ], this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ] );
+          incorrectProperties.push( this.partitionSizeProperties.get( this.arbitraryNonUniqueWrongOrientation )[ 1 ] );
         }
         else {
           if ( !this.nonUniqueHorizontalMatches() ) {
