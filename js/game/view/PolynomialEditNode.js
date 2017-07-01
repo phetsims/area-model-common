@@ -111,41 +111,34 @@ define( function( require ) {
       bidirectional: true
     } );
 
+    function makeNotDirty() {
+      [ constantPropertyProperty, xPropertyProperty, xSquaredPropertyProperty ].forEach( function( propertyProperty, index ) {
+        if ( propertyProperty.value.value === null ) {
+          propertyProperty.value.value = new Term( 0, index );
+        }
+      } );
+    }
+
     // TODO: dedup
     constantProperty.link( function( value ) {
       if ( constantProperty.isExternallyChanging ) {
         editedCallback();
-
-        var editableProperty = constantPropertyProperty.value;
-        if ( editableProperty.correctValue.coefficient === 0 ) {
-          editableProperty.highlightProperty.value = editableProperty.value.coefficient === 0 ? Highlight.NORMAL : Highlight.DIRTY;
-        } else {
-          editableProperty.highlightProperty.value = Highlight.NORMAL;
-        }
+        makeNotDirty();
+        constantPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
       }
     } );
     xProperty.link( function( value ) {
       if ( xProperty.isExternallyChanging ) {
         editedCallback();
-
-        var editableProperty = xPropertyProperty.value;
-        if ( editableProperty.correctValue.coefficient === 0 ) {
-          editableProperty.highlightProperty.value = editableProperty.value.coefficient === 0 ? Highlight.NORMAL : Highlight.DIRTY;
-        } else {
-          editableProperty.highlightProperty.value = Highlight.NORMAL;
-        }
+        makeNotDirty();
+        xPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
       }
     } );
     xSquaredProperty.link( function( value ) {
       if ( xSquaredProperty.isExternallyChanging ) {
         editedCallback();
-
-        var editableProperty = xSquaredPropertyProperty.value;
-        if ( editableProperty.correctValue.coefficient === 0 ) {
-          editableProperty.highlightProperty.value = editableProperty.value.coefficient === 0 ? Highlight.NORMAL : Highlight.DIRTY;
-        } else {
-          editableProperty.highlightProperty.value = Highlight.NORMAL;
-        }
+        makeNotDirty();
+        xSquaredPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
       }
     } );
 
