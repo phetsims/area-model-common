@@ -16,7 +16,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );

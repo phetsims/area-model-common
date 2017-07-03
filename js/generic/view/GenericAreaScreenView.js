@@ -12,7 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AREA_MODEL_COMMON/common/view/DynamicProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaModel' );
   var GenericAreaNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaNode' );
   var GenericLayoutSelectionNode = require( 'AREA_MODEL_COMMON/generic/view/GenericLayoutSelectionNode' );
