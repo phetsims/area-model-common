@@ -184,6 +184,7 @@ define( function( require ) {
      * @param {Node} content
      */
     createAccordionBox: function( titleString, expandedProperty, content ) {
+      //TODO: We can resize these now, so set resizable?
       return new AccordionBox( content, {
         titleNode: new Text( titleString, {
           font: AreaModelConstants.TITLE_FONT,
