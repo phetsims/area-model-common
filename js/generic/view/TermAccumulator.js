@@ -14,7 +14,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Keys = require( 'SCENERY_PHET/keypad/Keys' );
+  var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   // constants
@@ -36,13 +36,13 @@ define( function( require ) {
     // @public {Property.<string>} - For display
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
       return accumulatedKeys.map( function( key ) {
-        if ( key === Keys.PLUSMINUS ) {
+        if ( key === KeyID.PLUS_MINUS ) {
           return AreaModelConstants.NEGATIVE_STRING;
         }
-        else if ( key === Keys.X ) {
+        else if ( key === KeyID.X ) {
           return 'x';
         }
-        else if ( key === Keys.XSQUARED ) {
+        else if ( key === KeyID.X_SQUARED ) {
           return 'x<sup>2</sup>';
         }
         else {
@@ -57,15 +57,15 @@ define( function( require ) {
 
       var coefficient = 1;
       var power = 0;
-      if ( lastKey === Keys.X ) {
+      if ( lastKey === KeyID.X ) {
         power = 1;
         accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
       }
-      else if ( lastKey === Keys.XSQUARED ) {
+      else if ( lastKey === KeyID.X_SQUARED ) {
         power = 2;
         accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
       }
-      if ( accumulatedKeys[ 0 ] === Keys.PLUSMINUS ) {
+      if ( accumulatedKeys[ 0 ] === KeyID.PLUS_MINUS ) {
         accumulatedKeys = accumulatedKeys.slice( 1 );
 
         // handle -x
@@ -99,25 +99,25 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {Keys} keyIdentifier - identifier for the key pressed
+     * @param {KeyID} keyIdentifier - identifier for the key pressed
      */
     handleKeyPressed: function( keyIdentifier ) {
       var currentKeys = this.accumulatedKeysProperty.get();
 
-      var negative = _.includes( currentKeys, Keys.PLUSMINUS );
+      var negative = _.includes( currentKeys, KeyID.PLUS_MINUS );
       var power = _.find( currentKeys, function( key ) {
-        return key === Keys.X || key === Keys.XSQUARED;
+        return key === KeyID.X || key === KeyID.X_SQUARED;
       } );
       var digits = currentKeys.filter( function( key ) {
         return _.includes( DIGIT_STRINGS, key );
       } );
 
       var isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyIdentifier );
-      var isZero = keyIdentifier === Keys.ZERO;
-      var isBackspace = keyIdentifier === Keys.BACKSPACE;
-      var isPlusMinus = keyIdentifier === Keys.PLUSMINUS;
-      var isX = keyIdentifier === Keys.X;
-      var isXSquared = keyIdentifier === Keys.XSQUARED;
+      var isZero = keyIdentifier === KeyID.ZERO;
+      var isBackspace = keyIdentifier === KeyID.BACKSPACE;
+      var isPlusMinus = keyIdentifier === KeyID.PLUS_MINUS;
+      var isX = keyIdentifier === KeyID.X;
+      var isXSquared = keyIdentifier === KeyID.X_SQUARED;
 
       if ( isBackspace ) {
         if ( power ) {
@@ -139,12 +139,12 @@ define( function( require ) {
         negative = !negative;
       }
       else if ( isZero ) {
-        if ( digits[ 0 ] !== Keys.ZERO ) {
+        if ( digits[ 0 ] !== KeyID.ZERO ) {
           digits.push( keyIdentifier );
         }
       }
       else if ( isDigit ) {
-        if ( digits[ 0 ] === Keys.ZERO ) {
+        if ( digits[ 0 ] === KeyID.ZERO ) {
           digits = [ keyIdentifier ];
         }
         else {
@@ -155,7 +155,7 @@ define( function( require ) {
         throw new Error( 'unknown digit: ' + keyIdentifier );
       }
 
-      this.validateAndUpdate( ( negative ? [ Keys.PLUSMINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] ) );
+      this.validateAndUpdate( ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] ) );
     },
 
     /**
@@ -163,14 +163,14 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {Array.<Keys>} proposedKeys
+     * @param {Array.<KeyID>} proposedKeys
      */
     defaultValidator: function( proposedKeys ) {
       var xCount = 0;
       var digitCount = 0;
 
       proposedKeys.forEach( function( key ) {
-        if ( key === Keys.X || key === Keys.XSQUARED ) {
+        if ( key === KeyID.X || key === KeyID.X_SQUARED ) {
           xCount++;
         }
 

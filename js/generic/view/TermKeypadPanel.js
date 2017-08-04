@@ -16,7 +16,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Key = require( 'SCENERY_PHET/keypad/Key' );
   var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
-  var Keys = require( 'SCENERY_PHET/keypad/Keys' );
+  var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -32,19 +32,19 @@ define( function( require ) {
 
   // layout constants
   var noExponentLayout = [
-    [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
-    [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
-    [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
-    [ new Key( '\u002b/\u2212', Keys.PLUSMINUS ), new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
+    [ new Key( '7', KeyID.SEVEN ), new Key( '8', KeyID.EIGHT ), new Key( '9', KeyID.NINE ) ],
+    [ new Key( '4', KeyID.FOUR ), new Key( '5', KeyID.FIVE ), new Key( '6', KeyID.SIX ) ],
+    [ new Key( '1', KeyID.ONE ), new Key( '2', KeyID.TWO ), new Key( '3', KeyID.THREE ) ],
+    [ new Key( '\u002b/\u2212', KeyID.PLUS_MINUS ), new Key( '0', KeyID.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE ) ]
   ];
   var noNegativeLayout = [
-    [ new Key( '7', Keys.SEVEN ), new Key( '8', Keys.EIGHT ), new Key( '9', Keys.NINE ) ],
-    [ new Key( '4', Keys.FOUR ), new Key( '5', Keys.FIVE ), new Key( '6', Keys.SIX ) ],
-    [ new Key( '1', Keys.ONE ), new Key( '2', Keys.TWO ), new Key( '3', Keys.THREE ) ],
-    [ null, new Key( '0', Keys.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), Keys.BACKSPACE ) ]
+    [ new Key( '7', KeyID.SEVEN ), new Key( '8', KeyID.EIGHT ), new Key( '9', KeyID.NINE ) ],
+    [ new Key( '4', KeyID.FOUR ), new Key( '5', KeyID.FIVE ), new Key( '6', KeyID.SIX ) ],
+    [ new Key( '1', KeyID.ONE ), new Key( '2', KeyID.TWO ), new Key( '3', KeyID.THREE ) ],
+    [ null, new Key( '0', KeyID.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE ) ]
   ];
   var exponentLayout = noExponentLayout.concat( [
-    [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), Keys.XSQUARED ), new Key( 'x', Keys.X ) ],
+    [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ), new Key( 'x', KeyID.X ) ],
   ] );
 
   /**
