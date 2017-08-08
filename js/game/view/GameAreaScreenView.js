@@ -42,7 +42,7 @@ define( function( require ) {
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RewardNode = require( 'VEGAS/RewardNode' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'AREA_MODEL_COMMON/game/view/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );

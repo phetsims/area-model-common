@@ -20,7 +20,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
   var Vector2 = require( 'DOT/Vector2' );
 

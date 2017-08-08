@@ -21,7 +21,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var TermAccumulator = require( 'AREA_MODEL_COMMON/generic/view/TermAccumulator' );
   var Text = require( 'SCENERY/nodes/Text' );

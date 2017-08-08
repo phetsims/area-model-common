@@ -13,7 +13,7 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var RichText = require( 'SCENERY_PHET/RichText' );
+  var RichText = require( 'SCENERY/nodes/RichText' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var VStrut = require( 'SCENERY/nodes/VStrut' );
 
