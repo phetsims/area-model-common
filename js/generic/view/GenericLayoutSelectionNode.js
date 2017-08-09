@@ -208,12 +208,12 @@ define( function( require ) {
           popup.leftTop = matrix.timesVector2( rectangle.leftBottom );
           listParent.addChild( popup );
 
-          self.getUniqueTrail().rootNode().addInputListener( dismissListener );
+          phet.joist.display.addInputListener( dismissListener );
         }
         else {
           listParent.removeChild( popup );
 
-          self.getUniqueTrail().rootNode().removeInputListener( dismissListener );
+          phet.joist.display.removeInputListener( dismissListener );
         }
       } );
 
