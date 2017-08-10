@@ -102,7 +102,7 @@ define( function( require ) {
 
     function updateText() {
       if ( termProperty.value === null ) {
-        readoutText.text = ' ';
+        readoutText.text = '-';
       }
       else {
         readoutText.text = termProperty.value.toRichString( false );
