@@ -81,8 +81,11 @@ define( function( require ) {
 
     function updateText( string ) {
       // Trick to be able to position an empty string
-      readoutText.text = string.length === 0 ? ' ' : string;
-      readoutText.centerX = readoutBackground.centerX;
+      readoutText.visible = string.length > 0;
+      if ( readoutText.visible ) {
+        readoutText.text = string;
+        readoutText.centerX = readoutBackground.centerX;
+      }
     }
 
     // Update the text whem the accumulator's string output changes
