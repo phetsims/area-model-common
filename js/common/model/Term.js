@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**

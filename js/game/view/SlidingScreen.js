@@ -11,9 +11,9 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var Easing = require( 'TWIXT/Easing' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
 
   /**

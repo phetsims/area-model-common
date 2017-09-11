@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );

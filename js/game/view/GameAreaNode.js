@@ -14,8 +14,8 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
+  var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );

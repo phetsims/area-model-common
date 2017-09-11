@@ -15,8 +15,8 @@ define( function( require ) {
   var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Key = require( 'SCENERY_PHET/keypad/Key' );
-  var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
   var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
+  var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );

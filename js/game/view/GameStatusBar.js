@@ -13,8 +13,8 @@ define( function( require ) {
 
   // modules
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -30,16 +30,16 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
+  var challengeProgressPatternString = require( 'string!AREA_MODEL_COMMON/challengeProgressPattern' );
+  var levelPromptOneProductOneLengthString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.oneLength' );
+  var levelPromptOneProductString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct' );
+  var levelPromptOneProductTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.totalArea' );
+  var levelPromptThreeLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.threeLengths' );
+  var levelPromptTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.totalArea' );
+  var levelPromptTwoLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoLengths' );
+  var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
   var numbersLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/numbersLevelNumberPattern' );
   var variablesLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/variablesLevelNumberPattern' );
-  var challengeProgressPatternString = require( 'string!AREA_MODEL_COMMON/challengeProgressPattern' );
-  var levelPromptTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.totalArea' );
-  var levelPromptOneProductString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct' );
-  var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
-  var levelPromptOneProductTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.totalArea' );
-  var levelPromptOneProductOneLengthString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.oneLength' );
-  var levelPromptTwoLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoLengths' );
-  var levelPromptThreeLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.threeLengths' );
 
   // constants
   //TODO: Colors in the color profile!

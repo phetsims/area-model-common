@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
 

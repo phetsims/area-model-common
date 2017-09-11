@@ -15,8 +15,8 @@ define( function( require ) {
   var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
+  var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );

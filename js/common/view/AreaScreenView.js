@@ -30,8 +30,8 @@ define( function( require ) {
 
   // strings
   var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
-  var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
   var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
+  var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   /**

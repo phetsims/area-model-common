@@ -20,13 +20,13 @@ define( function( require ) {
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAreaNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaNode' );
   var GameAudio = require( 'AREA_MODEL_COMMON/game/view/GameAudio' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/game/view/GameStatusBar' );
-  var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
   var GenericProductNode = require( 'AREA_MODEL_COMMON/generic/view/GenericProductNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -52,12 +52,12 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
-  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var checkString = require( 'string!VEGAS/check' );
-  var tryAgainString = require( 'string!VEGAS/tryAgain' );
+  var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
   var nextString = require( 'string!VEGAS/next' );
   var showAnswerString = require( 'string!VEGAS/showAnswer' );
+  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
+  var tryAgainString = require( 'string!VEGAS/tryAgain' );
 
   /**
    * @constructor
