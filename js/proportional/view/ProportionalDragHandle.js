@@ -55,6 +55,7 @@ define( function( require ) {
       inputListeners: [
         // TODO: DragHandler? See https://github.com/phetsims/area-model-common/issues/17
         new SimpleDragHandler( {
+          allowTouchSnag: true,
           start: function( event, trail ) {
             draggedProperty.value = true;
           },

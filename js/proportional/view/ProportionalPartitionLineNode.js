@@ -118,6 +118,7 @@ define( function( require ) {
 
     // TODO: DragHandler? See https://github.com/phetsims/area-model-common/issues/17
     var dragHandler = new SimpleDragHandler( {
+      allowTouchSnag: true,
       // TODO: key into starting drag point? See https://github.com/phetsims/area-model-common/issues/17
       drag: function( event, trail ) {
         var viewPoint = self.globalToParentPoint( event.pointer.point );
