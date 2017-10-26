@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Matrix3 = require( 'DOT/Matrix3' );
@@ -21,7 +22,6 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
   var Shape = require( 'KITE/Shape' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Util = require( 'DOT/Util' );
 
   /**
@@ -116,15 +116,12 @@ define( function( require ) {
       self.visible = total >= ( area.partitionSnapSize + area.snapSize ) - 1e-7;
     } );
 
-    // TODO: DragHandler? See https://github.com/phetsims/area-model-common/issues/17
-    var dragHandler = new SimpleDragHandler( {
+    var dragHandler = new DragListener( {
       allowTouchSnag: true,
-      // TODO: key into starting drag point? See https://github.com/phetsims/area-model-common/issues/17
-      drag: function( event, trail ) {
-        var viewPoint = self.globalToParentPoint( event.pointer.point );
-        var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
-
-        var value = modelPoint[ orientation.coordinate ];
+      transform: modelViewTransform,
+      targetNode: this,
+      drag: function( event, listener ) {
+        var value = listener.modelPoint[ orientation.coordinate ];
 
         value = Math.round( value / area.partitionSnapSize ) * area.partitionSnapSize;
         value = Util.clamp( value, 0, activeTotalProperty.value );
@@ -138,7 +135,7 @@ define( function( require ) {
         partitionSplitProperty.value = value;
       },
 
-      end: function( event, trail ) {
+      end: function( event, listener ) {
         if ( partitionSplitProperty.value === activeTotalProperty.value ) {
           partitionSplitProperty.value = null;
         }
@@ -149,7 +146,7 @@ define( function( require ) {
     // Remove splits that are at or past the current boundary.
     activeTotalProperty.link( function( total ) {
       if ( partitionSplitProperty.value >= activeTotalProperty.value ) {
-        partitionSplitProperty.value = dragHandler.dragging ? activeTotalProperty.value : null;
+        partitionSplitProperty.value = dragHandler.isPressedProperty.value ? activeTotalProperty.value : null;
       }
     } );
   }
