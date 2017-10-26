@@ -13,12 +13,12 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
-  var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -53,15 +53,16 @@ define( function( require ) {
       stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',
       inputListeners: [
-        // TODO: DragHandler? See https://github.com/phetsims/area-model-common/issues/17
-        new SimpleDragHandler( {
+        new DragListener( {
           allowTouchSnag: true,
-          start: function( event, trail ) {
+          targetNode: this,
+          applyOffset: false,
+          start: function( event, listener ) {
             draggedProperty.value = true;
           },
           // TODO: key into starting drag point? See https://github.com/phetsims/area-model-common/issues/17
-          drag: function( event, trail ) {
-            var pointerViewPoint = self.globalToParentPoint( event.pointer.point );
+          drag: function( event, listener ) {
+            var pointerViewPoint = listener.parentPoint;
             var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
             var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
 
@@ -79,7 +80,7 @@ define( function( require ) {
               viewPoint.y - modelViewTransform.modelToViewY( height )
             );
           },
-          end: function( event, trail ) {
+          end: function( event, listener ) {
             draggedProperty.value = false;
           }
         } )
