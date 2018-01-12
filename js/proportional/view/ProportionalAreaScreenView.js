@@ -13,7 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -46,8 +46,8 @@ define( function( require ) {
     } ) );
 
     // Checkboxes
-    var gridCheckbox = new CheckBox( this.createGridIconNode(), model.gridLinesVisibleProperty );
-    var tileCheckbox = new CheckBox( this.createTileIconNode(), model.tilesVisibleProperty );
+    var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
+    var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty );
 
     model.currentAreaProperty.link( function( area ) {
       tileCheckbox.visible = area.tilesAvailable;
