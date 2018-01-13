@@ -8,14 +8,20 @@
   "screen.variables": {
     "value": "Variables"
   },
+  "screen.counting": {
+    "value": "Counting"
+  },
   "screen.decimals": {
     "value": "Decimals"
   },
-  "screen.game": {
-    "value": "Game"
+  "screen.scaledGame": {
+    "value": "Scaled Game"
   },
-  "screen.challenges": {
-    "value": "Challenges"
+  "screen.genericGame": {
+    "value": "Generic Game"
+  },
+  "screen.variablesGame": {
+    "value": "Variables Game"
   },
   "dimensions": {
     "value": "Dimensions"
