@@ -11,10 +11,10 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAreaScreenView = require( 'AREA_MODEL_COMMON/game/view/GameAreaScreenView' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
+  var VariablesGameAreaModel = require( 'AREA_MODEL_COMMON/game/model/VariablesGameAreaModel' );
 
   // strings
   var screenVariablesGameString = require( 'string!AREA_MODEL_COMMON/screen.variablesGame' );
@@ -30,7 +30,7 @@ define( function( require ) {
     };
 
     Screen.call( this,
-      function() { return new GameAreaModel( false ); },
+      function() { return new VariablesGameAreaModel( false ); },
       function( model ) { return new GameAreaScreenView( model ); },
       options
     );

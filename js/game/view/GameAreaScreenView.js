@@ -129,37 +129,12 @@ define( function( require ) {
 
     var buttonSpacing = 15;
     this.levelSelectionLayer.addChild( new VBox( {
-      children: model.isLevelDebug ? [ // TODO: remove
-        new HBox( {
-          children: levelButtons.slice( 0, 9 ),
+      children: _.chunk( levelButtons, 6 ).map( function( children ) {
+        return new HBox( {
+          children: children,
           spacing: buttonSpacing
-        } ),
-        new HBox( {
-          children: levelButtons.slice( 9, 17 ),
-          spacing: buttonSpacing
-        } ),
-        new HBox( {
-          children: levelButtons.slice( 17, 25 ),
-          spacing: buttonSpacing
-        } ),
-        new HBox( {
-          children: levelButtons.slice( 25, 34 ),
-          spacing: buttonSpacing
-        } ),
-        new HBox( {
-          children: levelButtons.slice( 34, 43 ),
-          spacing: buttonSpacing
-        } )
-      ] : [
-        new HBox( {
-          children: levelButtons.slice( 0, 6 ),
-          spacing: buttonSpacing
-        } ),
-        new HBox( {
-          children: levelButtons.slice( 6 ),
-          spacing: buttonSpacing
-        } )
-      ],
+        } );
+      } ),
       maxHeight: 400, // TODO: remove when isLevelDebug goes away
       spacing: buttonSpacing,
       center: this.layoutBounds.center
