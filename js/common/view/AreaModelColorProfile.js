@@ -89,6 +89,9 @@ define( function( require ) {
     gridIcon: { default: new Color( 0x55, 0x55, 0x55 ) },
     tileIconStroke: { default: Color.BLACK },
 
+    // Color for the counting/numbering labels for each grid square
+    countingLabel: { default: Color.BLACK },
+
     /*---------------------------------------------------------------------------*
     * Generic colors
     *----------------------------------------------------------------------------*/

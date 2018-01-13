@@ -38,7 +38,9 @@ define( function( require ) {
       scale: 0.7 // TODO: factor out the scale
     } );
 
-    AreaScreenView.call( this, model, false, decimalPlaces );
+    AreaScreenView.call( this, model, false, {
+      decimalPlaces: decimalPlaces
+    } );
 
     this.addChild( this.popupLayer );
   }

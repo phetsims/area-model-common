@@ -40,12 +40,19 @@ define( function( require ) {
    *
    * @param {AreaModel} model
    * @param {boolean} isProportional
-   * @param {number} decimalPlaces
+   * @param {Object} [options]
    */
-  function AreaScreenView( model, isProportional, decimalPlaces ) {
+  function AreaScreenView( model, isProportional, options ) {
+
+    options = _.extend( {
+      decimalPlaces: 0,
+      showProductsSelection: true,
+      showCalculationSelection: true
+    }, options );
+
     assert && assert( model instanceof AreaModel );
     assert && assert( typeof isProportional === 'boolean' );
-    assert && assert( typeof decimalPlaces === 'number' );
+    assert && assert( typeof options.decimalPlaces === 'number' );
 
     var self = this;
 
@@ -55,7 +62,7 @@ define( function( require ) {
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
     //TODO: abstract method
-    var productNode = this.createProductNode( model, decimalPlaces );
+    var productNode = this.createProductNode( model, options.decimalPlaces );
     var productBoxContent = new AlignBox( productNode, {
       group: panelAlignGroup,
       xAlign: 'center'
@@ -83,10 +90,9 @@ define( function( require ) {
     this.panelContainer = new VBox( {
       children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
         productBox,
-        areaBox,
-        calculationSelectionPanel,
-        productsSelectionPanel
-      ] ),
+        areaBox
+      ].concat( options.showCalculationSelection ? [ calculationSelectionPanel ] : [] )
+       .concat( options.showProductsSelection ? [ productsSelectionPanel ] : [] ) ),
       spacing: AreaModelConstants.PANEL_SPACING
     } );
     this.addChild( new AlignBox( this.panelContainer, {

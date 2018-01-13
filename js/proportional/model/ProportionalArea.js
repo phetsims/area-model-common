@@ -43,7 +43,8 @@ define( function( require ) {
       gridSpacing: 1, // {number} - Space between grid lines
       smallTileSize: 1, // {number} - Size of the smallest tile available (or for the thin tiles, the shorter length)
       largeTileSize: 10, // {number} - Size of the largest tile available (or for the thin tiles, the longer length)
-      tilesAvailable: true // {boolean} - Whether tiles can be shown on this area
+      tilesAvailable: true, // {boolean} - Whether tiles can be shown on this area
+      countingAvailable: false // {boolean} - Whether numbers can be shown on each grid section
     }, options );
 
     // @private {Property.<number>} - Width of the contained area - Prefer getActiveTotalProperty
@@ -69,6 +70,7 @@ define( function( require ) {
 
     // @public {boolean}
     this.tilesAvailable = options.tilesAvailable;
+    this.countingAvailable = options.countingAvailable;
 
     // @public {OrientationPair.<BooleanProperty>}
     this.hasHintArrows = new OrientationPair( new BooleanProperty( true ), new BooleanProperty( true ) );

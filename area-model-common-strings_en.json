@@ -67,5 +67,8 @@
   },
   "levelPrompt.threeLengths": {
     "value": "Find the side lengths."
+  },
+  "countingToggle": {
+    "value": "123"
   }
 }

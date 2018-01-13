@@ -27,13 +27,16 @@ define( function( require ) {
       return new ProportionalArea( options );
     } );
 
-    AreaModel.call( this, areas, areas[ 0 ], false, true );
+    AreaModel.call( this, areas, areas[ 0 ], false, true, areaOptionObjects && !areaOptionObjects.productsAvailable );
 
     // @public {BooleanProperty}
     this.gridLinesVisibleProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty}
     this.tilesVisibleProperty = new BooleanProperty( false );
+
+    // @public {BooleanProperty}
+    this.countsVisibleProperty = new BooleanProperty( false );
   }
 
   areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );
@@ -49,6 +52,7 @@ define( function( require ) {
 
       this.gridLinesVisibleProperty.reset();
       this.tilesVisibleProperty.reset();
+      this.countsVisibleProperty.reset();
     }
   } );
 } );

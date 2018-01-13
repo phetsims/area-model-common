@@ -37,6 +37,8 @@ define( function( require ) {
     LAYOUT_FONT: new PhetFont( 22 ),
     BUTTON_FONT: new PhetFont( 20 ),
     SCORE_INCREASE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
+    COUNTING_ICON_FONT: new PhetFont( 22 ),
+    COUNTING_FONT: new PhetFont( 16 ),
 
     AREA_SIZE: 350,
 

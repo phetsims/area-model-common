@@ -15,6 +15,7 @@ define( function( require ) {
   var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var Circle = require( 'SCENERY/nodes/Circle' );
+  var CountingAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/CountingAreaNode' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -38,10 +39,11 @@ define( function( require ) {
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
    * @param {Property.<boolean>} tilesVisibleProperty
+   * @param {Property.<boolean>} countingVisibleProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, partialProductsChoiceProperty, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, countingVisibleProperty, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
@@ -75,14 +77,22 @@ define( function( require ) {
 
     // Tiles
     if ( area.tilesAvailable ) {
-      this.tiledAreaNode = new TiledAreaNode( area, self.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
-      self.areaLayer.addChild( this.tiledAreaNode );
+      // TODO: visibility!
+      this.tiledAreaNode = new TiledAreaNode( area, this.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
+      this.areaLayer.addChild( this.tiledAreaNode );
     }
 
     // Background stroke
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       stroke: AreaModelColorProfile.areaBorderProperty
     } ) );
+
+    // Counting / Numbering TODO: Do we call this numbering internally, or counting?
+    if ( area.countingAvailable ) {
+      // TODO: visibility!
+      this.countingAreaNode = new CountingAreaNode( area, this.modelViewTransform, countingVisibleProperty );
+      this.areaLayer.addChild( this.countingAreaNode );
+    }
 
     // Docks
     this.areaLayer.addChild( this.createDock( Orientation.HORIZONTAL ) );
@@ -117,6 +127,7 @@ define( function( require ) {
      */
     update: function() {
       this.tiledAreaNode && this.tiledAreaNode.update();
+      this.countingAreaNode && this.countingAreaNode.update();
     },
 
     //TODO: doc @private

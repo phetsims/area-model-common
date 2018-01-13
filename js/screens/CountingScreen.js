@@ -32,29 +32,34 @@ define( function( require ) {
     Screen.call( this,
       function() { return new ProportionalAreaModel( [
         {
-          maximumSize: 20,
+          maximumSize: 10,
           minimumSize: 1,
-          initialWidth: 10,
-          initialHeight: 10,
-          initialVerticalSplit: 5,
+          initialWidth: 1,
+          initialHeight: 1,
           snapSize: 1,
-          partitionSnapSize: 1,
           gridSpacing: 1,
-          smallTileSize: 1,
-          largeTileSize: 10
+          partitionSnapSize: 20, // TODO: just have it disabled?
+          tilesAvailable: true,
+          productsAvailable: false,
+          countingAvailable: true
         },
         {
-          maximumSize: 100,
+          maximumSize: 12,
           minimumSize: 1,
-          initialWidth: 50,
-          initialHeight: 50,
-          initialVerticalSplit: 30,
+          initialWidth: 1,
+          initialHeight: 1,
           snapSize: 1,
-          gridSpacing: 10,
-          tilesAvailable: false
+          gridSpacing: 1,
+          partitionSnapSize: 20, // TODO: just have it disabled?
+          tilesAvailable: true,
+          productsAvailable: false,
+          countingAvailable: true
         }
       ] ); },
-      function( model ) { return new ProportionalAreaScreenView( model, 0 ); },
+      function( model ) { return new ProportionalAreaScreenView( model, {
+        showProductsSelection: false,
+        showCalculationSelection: false
+      } ); },
       options
     );
   }

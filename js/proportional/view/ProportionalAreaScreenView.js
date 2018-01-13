@@ -23,7 +23,10 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SceneSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/SceneSelectionNode' );
   var Shape = require( 'KITE/Shape' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+
+  var countingToggleString = require( 'string!AREA_MODEL_COMMON/countingToggle' );
 
   var RADIO_ICON_SIZE = 30;
 
@@ -32,12 +35,12 @@ define( function( require ) {
    * @extends {AreaScreenView}
    *
    * @param {AreaModel} model
+   * @param {Object} options
    */
-  function ProportionalAreaScreenView( model, decimalPlaces ) {
+  function ProportionalAreaScreenView( model, options ) {
     assert && assert( model instanceof ProportionalAreaModel );
-    assert && assert( typeof decimalPlaces === 'number' );
 
-    AreaScreenView.call( this, model, true, decimalPlaces );
+    AreaScreenView.call( this, model, true, options );
 
     // Scene selection
     this.addChild( new SceneSelectionNode( model, {
@@ -47,23 +50,23 @@ define( function( require ) {
 
     // Checkboxes
     var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
+    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countsVisibleProperty );
     var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty );
 
-    model.currentAreaProperty.link( function( area ) {
-      tileCheckbox.visible = area.tilesAvailable;
-    } );
-
-    this.addChild( new VBox( {
-      children: [
-        gridCheckbox,
-        tileCheckbox
-      ],
+    var checkboxContainer = new VBox( {
+      children: [ gridCheckbox, countingCheckbox, tileCheckbox ],
       align: 'left',
       spacing: 20,
       // Manual positioning works best here
       top: 50,
       left: 600
-    } ) );
+    } );
+
+    model.currentAreaProperty.link( function( area ) {
+      checkboxContainer.children = [ gridCheckbox ].concat( area.countingAvailable ? [ countingCheckbox ] : [] ).concat( area.tilesAvailable ? [ tileCheckbox ] : [] );
+    } );
+
+    this.addChild( checkboxContainer );
   }
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
@@ -88,7 +91,8 @@ define( function( require ) {
 
     // TODO: doc, abstract
     createAreaNode: function( model, area ) {
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.partialProductsChoiceProperty, {
+      //TODO: countsVisibleProperty or countingVisibleProperty? decide!
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, {
         translation: this.getAreaTranslation()
       } );
     },
@@ -150,6 +154,18 @@ define( function( require ) {
         ],
         align: 'top',
         spacing: RADIO_ICON_SIZE / 8
+      } );
+    },
+
+    /**
+     * Creates a counting icon.
+     * @private
+     *
+     * @returns {Node}
+     */
+    createCountingIconNode: function() {
+      return new Text( countingToggleString, {
+        font: AreaModelConstants.COUNTING_ICON_FONT
       } );
     }
   } );

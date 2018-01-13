@@ -69,7 +69,9 @@ define( function( require ) {
           largeTileSize: 1
         }
       ] ); },
-      function( model ) { return new ProportionalAreaScreenView( model, 1 ); },
+      function( model ) { return new ProportionalAreaScreenView( model, {
+        decimalPlaces: 1
+      } ); },
       options
     );
   }

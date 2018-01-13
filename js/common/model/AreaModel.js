@@ -27,8 +27,12 @@ define( function( require ) {
    * @param {Area} defaultArea - The initial area
    * @param {boolean} allowExponents
    * @param {boolean} isProportional
+   * @param {boolean} hideProducts
    */
-  function AreaModel( areas, defaultArea, allowExponents, isProportional ) {
+  function AreaModel( areas, defaultArea, allowExponents, isProportional, hideProducts ) {
+
+    assert( typeof hideProducts === 'boolean' );
+
     var self = this;
 
     // @public {Array.<Area>}
@@ -56,7 +60,8 @@ define( function( require ) {
     this.areaCalculationChoiceProperty = new Property( AreaCalculationChoice.HIDDEN );
 
     // @public {Property.<PartialProductsChoice}
-    this.partialProductsChoiceProperty = new Property( isProportional ? PartialProductsChoice.PRODUCTS : PartialProductsChoice.HIDDEN );
+    // TODO: better logic for the initialization here
+    this.partialProductsChoiceProperty = new Property( ( isProportional && !hideProducts ) ? PartialProductsChoice.PRODUCTS : PartialProductsChoice.HIDDEN );
 
     var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
 

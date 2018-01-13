@@ -54,7 +54,7 @@ define( function( require ) {
           tilesAvailable: false
         }
       ] ); },
-      function( model ) { return new ProportionalAreaScreenView( model, 0 ); },
+      function( model ) { return new ProportionalAreaScreenView( model ); },
       options
     );
   }

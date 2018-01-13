@@ -38,7 +38,7 @@ define( function( require ) {
       return area.layout === DEFAULT_LAYOUT;
     } );
 
-    AreaModel.call( this, areas, defaultArea, allowExponents, false );
+    AreaModel.call( this, areas, defaultArea, allowExponents, false, false );
 
     // Adjust the current area based on the layout.
     this.genericLayoutProperty.link( function( layout ) {
