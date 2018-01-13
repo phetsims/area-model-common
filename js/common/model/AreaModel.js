@@ -31,7 +31,7 @@ define( function( require ) {
    */
   function AreaModel( areas, defaultArea, allowExponents, isProportional, hideProducts ) {
 
-    assert( typeof hideProducts === 'boolean' );
+    assert && assert( typeof hideProducts === 'boolean' );
 
     var self = this;
 
