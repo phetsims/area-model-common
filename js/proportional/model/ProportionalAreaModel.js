@@ -36,7 +36,7 @@ define( function( require ) {
     this.tilesVisibleProperty = new BooleanProperty( false );
 
     // @public {BooleanProperty}
-    this.countsVisibleProperty = new BooleanProperty( false );
+    this.countsVisibleProperty = new BooleanProperty( true );
   }
 
   areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );

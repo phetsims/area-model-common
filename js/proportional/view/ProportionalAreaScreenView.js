@@ -63,7 +63,20 @@ define( function( require ) {
     } );
 
     model.currentAreaProperty.link( function( area ) {
-      checkboxContainer.children = [ gridCheckbox ].concat( area.countingAvailable ? [ countingCheckbox ] : [] ).concat( area.tilesAvailable ? [ tileCheckbox ] : [] );
+      // TODO: some cleanup?
+      var children = [];
+
+      // Don't show the grid/tiles checkboxes if counting is enabled
+      if ( !area.countingAvailable ) {
+        children.push( gridCheckbox );
+        if ( area.tilesAvailable ) {
+          children.push( tileCheckbox );
+        }
+      }
+      else {
+        children.push( countingCheckbox );
+      }
+      checkboxContainer.children = children;
     } );
 
     this.addChild( checkboxContainer );
