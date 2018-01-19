@@ -32,6 +32,18 @@ define( function( require ) {
     Screen.call( this,
       function() { return new ProportionalAreaModel( [
         {
+          maximumSize: 10,
+          minimumSize: 1,
+          initialWidth: 5,
+          initialHeight: 5,
+          initialVerticalSplit: 2,
+          snapSize: 1,
+          partitionSnapSize: 1,
+          gridSpacing: 1,
+          smallTileSize: 1,
+          largeTileSize: 10
+        },
+        {
           maximumSize: 20,
           minimumSize: 1,
           initialWidth: 10,
