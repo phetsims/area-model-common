@@ -36,14 +36,16 @@ define( function( require ) {
    * @constructor
    * @extends {AreaNode}
    *
+   * TODO: more options-like?
    * @param {ProportionalArea} area
    * @param {Property.<boolean>} gridLinesVisibleProperty
    * @param {Property.<boolean>} tilesVisibleProperty
    * @param {Property.<boolean>} countingVisibleProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
+   * @param {boolean} useTileLikeBackground
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, countingVisibleProperty, partialProductsChoiceProperty, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, countingVisibleProperty, partialProductsChoiceProperty, useTileLikeBackground, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
@@ -64,7 +66,7 @@ define( function( require ) {
 
     // Active area background
     var activeAreaBackground = new Rectangle( {
-      fill: AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
+      fill: useTileLikeBackground ? AreaModelColorProfile.semiTransparentSmallTileProperty : AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
     } );
     area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {

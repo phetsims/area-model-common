@@ -83,6 +83,7 @@ define( function( require ) {
     bigTile: { default: new Color( 255, 220, 120 ) },
     mediumTile: { default: new Color( 249, 244, 136 ) },
     smallTile: { default: new Color( 252, 250, 202 ) },
+    semiTransparentSmallTile: { default: new Color( 243, 235, 43, 0.25 ) }, // blends onto white to look the same as smallTile
     tileBorder: { default: new Color( 0xaaaaaa ) },
 
     // Proportional icon colors

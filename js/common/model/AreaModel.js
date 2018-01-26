@@ -22,16 +22,21 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * TODO: options instead?
    * @param {Array.<Area>} areas - A list of all areas that can be switched between.
    * @param {Area} defaultArea - The initial area
-   * @param {boolean} allowExponents
-   * @param {boolean} isProportional
-   * @param {boolean} hideProducts
+   * @param {Object} [options]
    */
-  function AreaModel( areas, defaultArea, allowExponents, isProportional, hideProducts ) {
+  function AreaModel( areas, defaultArea, options ) {
 
-    assert && assert( typeof hideProducts === 'boolean' );
+    assert && assert( options === undefined || typeof options === 'object', 'If provided, options should be an object' );
+
+    options = _.extend( {
+      allowExponents: false,
+      isProportional: false,
+      initialTotalModelBoxExpanded: false,
+      initialAreaCalculationChoice: AreaCalculationChoice.HIDDEN,
+      initialPartialProductsChoice: PartialProductsChoice.PRODUCTS
+    }, options );
 
     var self = this;
 
@@ -39,13 +44,13 @@ define( function( require ) {
     this.areas = areas;
 
     // @public {boolean}
-    this.allowExponents = allowExponents;
+    this.allowExponents = options.allowExponents;
 
     // @public {boolean}
-    this.isProportional = isProportional;
+    this.isProportional = options.isProportional;
 
     // @public {OrientationPair.<Property.<Color>>}
-    this.colorProperties = AreaModelColorProfile.mainColorProperties[ isProportional ];
+    this.colorProperties = AreaModelColorProfile.mainColorProperties[ options.isProportional ];
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( defaultArea );
@@ -54,14 +59,13 @@ define( function( require ) {
     this.productBoxExpanded = new BooleanProperty( true );
 
     // @public {Property.<boolean>}
-    this.totalModelBoxExpanded = new BooleanProperty( isProportional );
+    this.totalModelBoxExpanded = new BooleanProperty( options.initialTotalModelBoxExpanded );
 
     // @public {Property.<AreaCalculationChoice}
-    this.areaCalculationChoiceProperty = new Property( AreaCalculationChoice.HIDDEN );
+    this.areaCalculationChoiceProperty = new Property( options.initialAreaCalculationChoice );
 
     // @public {Property.<PartialProductsChoice}
-    // TODO: better logic for the initialization here
-    this.partialProductsChoiceProperty = new Property( ( isProportional && !hideProducts ) ? PartialProductsChoice.PRODUCTS : PartialProductsChoice.HIDDEN );
+    this.partialProductsChoiceProperty = new Property( options.initialPartialProductsChoice );
 
     var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
 

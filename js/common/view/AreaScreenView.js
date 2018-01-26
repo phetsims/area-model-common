@@ -31,7 +31,9 @@ define( function( require ) {
   // strings
   var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
   var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
+  var factorsString = require( 'string!AREA_MODEL_COMMON/factors' );
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
+  var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   /**
@@ -39,24 +41,27 @@ define( function( require ) {
    * @extends {ScrenView}
    *
    * @param {AreaModel} model
-   * @param {boolean} isProportional
    * @param {Object} [options]
    */
-  function AreaScreenView( model, isProportional, options ) {
+  function AreaScreenView( model, options ) {
 
     options = _.extend( {
       decimalPlaces: 0,
       showProductsSelection: true,
-      showCalculationSelection: true
+      showCalculationSelection: true,
+      useTileLikeBackground: false, // {boolean} - Selected area background and products box use a light-tile-colored background
+      useSimplifiedNames: false // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
     }, options );
 
     assert && assert( model instanceof AreaModel );
-    assert && assert( typeof isProportional === 'boolean' );
     assert && assert( typeof options.decimalPlaces === 'number' );
 
     var self = this;
 
     ScreenView.call( this );
+
+    // @protected {boolean}
+    this.useTileLikeBackground = options.useTileLikeBackground;
 
     var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
 
@@ -80,8 +85,9 @@ define( function( require ) {
                                                       new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
 
     // Create accordion boxes after all group-aligned content is created.
-    var productBox = this.createAccordionBox( dimensionsString, model.productBoxExpanded, productBoxContent );
-    var areaBox = this.createAccordionBox( totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
+    // TODO: FML. product => factors, area => product.
+    var productBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.productBoxExpanded, productBoxContent );
+    var areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
     // TODO: sizing
     var layoutNode = this.createLayoutNode && this.createLayoutNode( model, productBox.width ); // TODO: better way

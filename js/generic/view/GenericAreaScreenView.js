@@ -27,7 +27,7 @@ define( function( require ) {
    * @extends {AreaScreenView}
    *
    * @param {AreaModel} model
-   * @param {number} decimalPlaces
+   * @param {number} decimalPlaces TODO: to options?
    */
   function GenericAreaScreenView( model, decimalPlaces ) {
     assert && assert( model instanceof GenericAreaModel );
@@ -38,7 +38,8 @@ define( function( require ) {
       scale: 0.7 // TODO: factor out the scale
     } );
 
-    AreaScreenView.call( this, model, false, {
+    AreaScreenView.call( this, model, {
+      isProportional: false,
       decimalPlaces: decimalPlaces
     } );
 

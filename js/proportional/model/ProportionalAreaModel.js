@@ -20,14 +20,20 @@ define( function( require ) {
    * @extends {AreaModel}
    *
    * @param {Array.<Object>} - An array of options objects to be passed to the ProportionalArea constructors.
+   * @param {Object} [options]
    */
-  function ProportionalAreaModel( areaOptionObjects ) {
+  function ProportionalAreaModel( areaOptionObjects, options ) {
+
+    options = _.extend( {
+      isProportional: true,
+      initialTotalModelBoxExpanded: true
+    }, options );
 
     var areas = areaOptionObjects.map( function( options ) {
       return new ProportionalArea( options );
     } );
 
-    AreaModel.call( this, areas, areas[ 0 ], false, true, areaOptionObjects && !areaOptionObjects.productsAvailable );
+    AreaModel.call( this, areas, areas[ 0 ], options );
 
     // @public {BooleanProperty}
     this.gridLinesVisibleProperty = new BooleanProperty( true );

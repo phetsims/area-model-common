@@ -22,23 +22,29 @@ define( function( require ) {
    * @constructor
    * @extends {AreaModel}
    *
-   * @param {boolean} allowExponents - Whether the user is able to add powers of x.
+   * @param {Object} [options]
    */
-  function GenericAreaModel( allowExponents ) {
+  function GenericAreaModel( options ) {
     var self = this;
+
+    assert && assert( options === undefined || typeof options === 'object', 'If provided, options should be an object' );
+
+    options = _.extend( {
+      allowExponents: false
+    }, options );
 
     // @public {Property.<GenericLayout>}
     this.genericLayoutProperty = new Property( DEFAULT_LAYOUT );
 
     var areas = GenericLayout.VALUES.map( function( layout ) {
-      return new GenericArea( layout, allowExponents );
+      return new GenericArea( layout, options.allowExponents );
     } );
 
     var defaultArea = _.find( areas, function( area ) {
       return area.layout === DEFAULT_LAYOUT;
     } );
 
-    AreaModel.call( this, areas, defaultArea, allowExponents, false, false );
+    AreaModel.call( this, areas, defaultArea, options );
 
     // Adjust the current area based on the layout.
     this.genericLayoutProperty.link( function( layout ) {

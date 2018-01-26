@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   var Screen = require( 'JOIST/Screen' );
@@ -39,7 +40,7 @@ define( function( require ) {
           snapSize: 1,
           gridSpacing: 1,
           partitionSnapSize: 20, // TODO: just have it disabled?
-          tilesAvailable: true,
+          tilesAvailable: false,
           productsAvailable: false,
           countingAvailable: true
         },
@@ -51,14 +52,18 @@ define( function( require ) {
           snapSize: 1,
           gridSpacing: 1,
           partitionSnapSize: 20, // TODO: just have it disabled?
-          tilesAvailable: true,
+          tilesAvailable: false,
           productsAvailable: false,
           countingAvailable: true
         }
-      ] ); },
+      ], {
+        initialPartialProductsChoice: PartialProductsChoice.HIDDEN
+      } ); },
       function( model ) { return new ProportionalAreaScreenView( model, {
         showProductsSelection: false,
-        showCalculationSelection: false
+        showCalculationSelection: false,
+        useTileLikeBackground: true,
+        useSimplifiedNames: true
       } ); },
       options
     );

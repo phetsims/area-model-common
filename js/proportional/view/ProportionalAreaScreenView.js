@@ -40,7 +40,11 @@ define( function( require ) {
   function ProportionalAreaScreenView( model, options ) {
     assert && assert( model instanceof ProportionalAreaModel );
 
-    AreaScreenView.call( this, model, true, options );
+    options = _.extend( {
+      isProportional: true
+    }, options );
+
+    AreaScreenView.call( this, model, options );
 
     // Scene selection
     this.addChild( new SceneSelectionNode( model, {
@@ -105,7 +109,7 @@ define( function( require ) {
     // TODO: doc, abstract
     createAreaNode: function( model, area ) {
       //TODO: countsVisibleProperty or countingVisibleProperty? decide!
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, {
         translation: this.getAreaTranslation()
       } );
     },

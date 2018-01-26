@@ -39,9 +39,8 @@ define( function( require ) {
           snapSize: 1,
           gridSpacing: 1,
           partitionSnapSize: 20, // TODO: just have it disabled?
-          tilesAvailable: true,
-          productsAvailable: false,
-          countingAvailable: true
+          tilesAvailable: false,
+          productsAvailable: false
         },
         {
           maximumSize: 12,
@@ -51,14 +50,14 @@ define( function( require ) {
           snapSize: 1,
           gridSpacing: 1,
           partitionSnapSize: 20, // TODO: just have it disabled?
-          tilesAvailable: true,
-          productsAvailable: false,
-          countingAvailable: true
+          tilesAvailable: false,
+          productsAvailable: false
         }
       ] ); },
       function( model ) { return new ProportionalAreaScreenView( model, {
-        showProductsSelection: false,
-        showCalculationSelection: false
+        showCalculationSelection: false,
+        useTileLikeBackground: true,
+        useSimplifiedNames: true
       } ); },
       options
     );

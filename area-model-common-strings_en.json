@@ -26,8 +26,14 @@
   "dimensions": {
     "value": "Dimensions"
   },
+  "factors": {
+    "value": "Factors"
+  },
   "totalAreaOfModel": {
     "value": "Total area of model"
+  },
+  "product": {
+    "value": "Product"
   },
   "areaModelCalculation": {
     "value": "Area model calculation"
