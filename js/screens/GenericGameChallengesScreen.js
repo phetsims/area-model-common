@@ -22,7 +22,7 @@ define( function( require ) {
   function GenericGameChallengesScreen() {
 
     var options = {
-      name: 'Generic Challenges',
+      name: '[dev] Challenges',
       backgroundColorProperty: AreaModelColorProfile.backgroundProperty
     };
 

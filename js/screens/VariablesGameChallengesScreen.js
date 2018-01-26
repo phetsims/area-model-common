@@ -22,7 +22,7 @@ define( function( require ) {
   function VariablesGameChallengesScreen() {
 
     var options = {
-      name: 'Variables Challenges',
+      name: '[dev] Challenges',
       backgroundColorProperty: AreaModelColorProfile.backgroundProperty
     };
 
