@@ -9,35 +9,59 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AlignBox = require( 'SCENERY/nodes/AlignBox' );
+  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  var VStrut = require( 'SCENERY/nodes/VStrut' );
+  var Text = require( 'SCENERY/nodes/Text' );
+
+  // strings
+  var areaEqualsString = require( 'string!AREA_MODEL_COMMON/areaEquals' );
 
   /**
    * @constructor
    * @extends {Node}
    *
    * @param {Polynomial|null} totalAreaProperty
+   * @param {boolean} useSimplifiedNames - Whether the panel is using simplified names. We'll add an extra "Area = " with a box for this use
    */
-  function TotalAreaNode( totalAreaProperty ) {
+  function TotalAreaNode( totalAreaProperty, useSimplifiedNames ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
-      font: AreaModelConstants.TOTAL_AREA_FONT
+      font: useSimplifiedNames ? AreaModelConstants.SIMPLIFIED_TOTAL_AREA_FONT : AreaModelConstants.TOTAL_AREA_FONT
     } );
+
+    var areaContainer;
+    // TODO: cleanup
+    if ( useSimplifiedNames ) {
+      areaText.text = '144'; // TODO: hardcode the constant better?
+      areaContainer = new HBox( {
+        spacing: 4,
+        children: [
+          new Text( areaEqualsString, { font: AreaModelConstants.TOTAL_AREA_FONT } ),
+          // AlignBox it so that it is always centered and keeps the same bounds
+          new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
+            fill: AreaModelColorProfile.smallTileProperty
+          } )
+        ]
+      } );
+    }
+    else {
+      // AlignBox it so that it is always centered and keeps the same bounds
+      areaContainer = new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } );
+    }
 
     // Wrap with a centered container, so that when maxWidth kicks in, the AccordionBox centers this vertically.
     var centeredContainer = new Node( {
       children: [
-        areaText,
-        // A vertical strut with the maximum height of the text, so it will always take up the proper vertical amount
-        new VStrut( areaText.height, {
-          top: areaText.top
-        } )
+        areaContainer
       ],
       centerY: 0
     } );

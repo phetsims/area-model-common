@@ -72,7 +72,7 @@ define( function( require ) {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty ), {
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, options.useSimplifiedNames ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );

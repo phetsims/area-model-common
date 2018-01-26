@@ -44,6 +44,9 @@
   "enter": {
     "value": "Enter"
   },
+  "areaEquals": {
+    "value": "Area ="
+  },
   "numbersLevelNumberPattern": {
     "value": "Numbers: Level {{level}}"
   },
