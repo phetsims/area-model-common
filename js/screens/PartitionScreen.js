@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * The main "Partition" screen of the "Introduction" sim.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -17,15 +17,15 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
 
   // strings
-  var screenCountingString = require( 'string!AREA_MODEL_COMMON/screen.counting' );
+  var screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
 
   /**
    * @constructor
    */
-  function CountingScreen() {
+  function PartitionScreen() {
 
     var options = {
-      name: screenCountingString,
+      name: screenPartitionString,
       backgroundColorProperty: AreaModelColorProfile.backgroundProperty
     };
 
@@ -64,7 +64,7 @@ define( function( require ) {
     );
   }
 
-  areaModelCommon.register( 'CountingScreen', CountingScreen );
+  areaModelCommon.register( 'PartitionScreen', PartitionScreen );
 
-  return inherit( Screen, CountingScreen );
+  return inherit( Screen, PartitionScreen );
 } );

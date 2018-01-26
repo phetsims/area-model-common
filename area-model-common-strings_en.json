@@ -8,17 +8,20 @@
   "screen.variables": {
     "value": "Variables"
   },
-  "screen.counting": {
-    "value": "Counting"
+  "screen.multiply": {
+    "value": "Multiply"
+  },
+  "screen.partition": {
+    "value": "Partition"
   },
   "screen.decimals": {
     "value": "Decimals"
   },
   "screen.genericGame": {
-    "value": "Generic Game"
+    "value": "Game"
   },
   "screen.variablesGame": {
-    "value": "Variables Game"
+    "value": "Game"
   },
   "dimensions": {
     "value": "Dimensions"
