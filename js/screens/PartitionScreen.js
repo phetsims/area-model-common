@@ -34,22 +34,26 @@ define( function( require ) {
         {
           maximumSize: 10,
           minimumSize: 1,
-          initialWidth: 1,
-          initialHeight: 1,
+          initialWidth: 5,
+          initialHeight: 5,
+          initialVerticalSplit: 2,
+          initialHorizontalSplit: 2,
           snapSize: 1,
           gridSpacing: 1,
-          partitionSnapSize: 20, // TODO: just have it disabled?
+          partitionSnapSize: 1,
           tilesAvailable: false,
           productsAvailable: false
         },
         {
           maximumSize: 12,
           minimumSize: 1,
-          initialWidth: 1,
-          initialHeight: 1,
+          initialWidth: 5,
+          initialHeight: 5,
+          initialVerticalSplit: 2,
+          initialHorizontalSplit: 2,
           snapSize: 1,
           gridSpacing: 1,
-          partitionSnapSize: 20, // TODO: just have it disabled?
+          partitionSnapSize: 1,
           tilesAvailable: false,
           productsAvailable: false
         }
