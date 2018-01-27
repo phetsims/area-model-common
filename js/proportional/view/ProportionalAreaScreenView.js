@@ -9,22 +9,29 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var Checkbox = require( 'SUN/Checkbox' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaNode' );
+  var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalPartitionLineNode' );
   var ProportionalProductNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalProductNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SceneSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/SceneSelectionNode' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   var countingToggleString = require( 'string!AREA_MODEL_COMMON/countingToggle' );
 
@@ -40,6 +47,8 @@ define( function( require ) {
   function ProportionalAreaScreenView( model, options ) {
     assert && assert( model instanceof ProportionalAreaModel );
 
+    var self = this;
+
     options = _.extend( {
       isProportional: true
     }, options );
@@ -51,6 +60,18 @@ define( function( require ) {
       top: this.panelContainer.bottom + AreaModelConstants.PANEL_SPACING,
       centerX: this.panelContainer.centerX
     } ) );
+
+    var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
+      derive: 'visiblePartitionOrientationProperty',
+      bidirectional: true
+    } );
+
+    // Radio buttons
+    var orientationRadioButtons = OrientationPair.create( function( orientation ) {
+      return new AquaRadioButton( currentAreaOrientationProperty, orientation, self.createPartitionOrientationIcon( orientation ), {
+        radius: 9
+      } );
+    } );
 
     // Checkboxes
     var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
@@ -69,6 +90,11 @@ define( function( require ) {
     model.currentAreaProperty.link( function( area ) {
       // TODO: some cleanup?
       var children = [];
+
+      if ( area.partitionLineChoice === PartitionLineChoice.ONE ) {
+        children.push( orientationRadioButtons.horizontal );
+        children.push( orientationRadioButtons.vertical );
+      }
 
       // Don't show the grid/tiles checkboxes if counting is enabled
       if ( !area.countingAvailable ) {
@@ -141,6 +167,42 @@ define( function( require ) {
       return new Path( gridIconShape, {
         stroke: AreaModelColorProfile.gridIconProperty
       } );
+    },
+
+    /**
+     * Creates an icon showing a switch to partition lines of a given orientation.
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @returns {Node}
+     */
+    createPartitionOrientationIcon: function( orientation ) {
+      var size = RADIO_ICON_SIZE * 1.2;
+      var background = new Rectangle( 0, 0, size, size, {
+        stroke: AreaModelColorProfile.partitionLineIconBorderProperty,
+        fill: AreaModelColorProfile.partitionLineIconBackgroundProperty
+      } );
+
+      var p1 = new Vector2();
+      var p2 = new Vector2();
+
+      p1[ orientation.coordinate ] = size * 2 / 3;
+      p2[ orientation.coordinate ] = size * 2 / 3;
+      p2[ orientation.opposite.coordinate ] = size * 1.1;
+
+      background.addChild( new Line( p1, p2, {
+        stroke: AreaModelColorProfile.partitionLineIconLineProperty
+      } ) );
+
+      var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
+
+      background.addChild( new Path( handleShape, {
+        fill: AreaModelColorProfile.proportionalColorProperties.get( orientation ),
+        scale: 0.5,
+        translation: p2
+      } ) );
+
+      return background;
     },
 
     /**

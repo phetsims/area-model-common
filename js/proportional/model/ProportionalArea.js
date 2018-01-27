@@ -82,6 +82,9 @@ define( function( require ) {
     this.tilesAvailable = options.tilesAvailable;
     this.countingAvailable = options.countingAvailable;
 
+    // @public {PartitionLineChoice}
+    this.partitionLineChoice = options.partitionLineChoice;
+
     // @public {OrientationPair.<BooleanProperty>}
     this.hasHintArrows = new OrientationPair( new BooleanProperty( true ), new BooleanProperty( true ) );
 

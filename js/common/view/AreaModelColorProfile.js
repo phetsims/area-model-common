@@ -89,6 +89,9 @@ define( function( require ) {
     // Proportional icon colors
     gridIcon: { default: new Color( 0x55, 0x55, 0x55 ) },
     tileIconStroke: { default: Color.BLACK },
+    partitionLineIconBorder: { default: new Color( 0xaa, 0xaa, 0xaa ) },
+    partitionLineIconBackground: { default: Color.WHITE },
+    partitionLineIconLine: { default: Color.BLACK },
 
     // Color for the counting/numbering labels for each grid square
     countingLabel: { default: Color.BLACK },

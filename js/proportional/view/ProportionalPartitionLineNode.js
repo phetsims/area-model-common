@@ -19,6 +19,7 @@ define( function( require ) {
   var Matrix3 = require( 'DOT/Matrix3' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
   var Shape = require( 'KITE/Shape' );
@@ -65,12 +66,7 @@ define( function( require ) {
     showHintArrowsProperty.linkAttribute( minHintArrow, 'visible' );
     showHintArrowsProperty.linkAttribute( maxHintArrow, 'visible' );
 
-    var arrowHalfLength = 10;
-    var arrowHalfWidth = 10;
-    var handleShape = new Shape().moveTo( -arrowHalfLength, 0 ).lineTo( arrowHalfLength, arrowHalfWidth ).lineTo( arrowHalfLength, -arrowHalfWidth ).close();
-    if ( orientation === Orientation.HORIZONTAL ) {
-      handleShape = handleShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
-    }
+    var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
 
     var handle = new Path( handleShape, {
       fill: area.colorProperties.get( orientation ),
@@ -151,5 +147,13 @@ define( function( require ) {
 
   areaModelCommon.register( 'ProportionalPartitionLineNode', ProportionalPartitionLineNode );
 
-  return inherit( Node, ProportionalPartitionLineNode );
+  // Handle arrows
+  var arrowHalfLength = 10;
+  var arrowHalfWidth = 10;
+  var verticalArrowShape = new Shape().moveTo( -arrowHalfLength, 0 ).lineTo( arrowHalfLength, arrowHalfWidth ).lineTo( arrowHalfLength, -arrowHalfWidth ).close();
+  var horizontalArrowShape = verticalArrowShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
+
+  return inherit( Node, ProportionalPartitionLineNode, {}, {
+    HANDLE_ARROW_SHAPES: new OrientationPair( horizontalArrowShape, verticalArrowShape )
+  } );
 } );
