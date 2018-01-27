@@ -50,6 +50,7 @@ define( function( require ) {
       partitionLineChoice: PartitionLineChoice.BOTH
     }, options );
 
+    // TODO: OrientationPair
     // @private {Property.<number>} - Width of the contained area - Prefer getActiveTotalProperty
     this.activeWidthProperty = new NumberProperty( options.initialWidth );
 
@@ -59,7 +60,9 @@ define( function( require ) {
     // @public {Property.<Orientation>} - If PartitionLineChoice.ONE is active, which partition line is active
     this.visiblePartitionOrientationProperty = new Property( Orientation.HORIZONTAL );
 
-    // TODO: OrientationPair?
+    // @public {OrientationPair.<Property.<number|null>>} - If there is an active partition line, its location
+    this.partitionSplitProperties = new OrientationPair( new Property( options.initialHorizontalSplit ), new Property( options.initialVerticalSplit ) );
+
     // @private {Property.<number|null>} - If there is an active partition line, its location.
     this.horizontalPartitionSplitProperty = new Property( options.initialHorizontalSplit );
 
@@ -91,6 +94,15 @@ define( function( require ) {
       } );
     } );
 
+    // TODO: improve doc naming throughout here! Lots of confusingness
+    // @public {OrientationPair.<Property.<number|null>>} - Like partitionSplitProperties, but null if the partition line is not visible
+    // TODO: find usages of partitionSplitVisibleProperties and getActiveTotalProperty
+    this.visiblePartitionLineSplitProperties = OrientationPair.create( function( orientation ) {
+      return new DerivedProperty( [ self.partitionSplitProperties.get( orientation ), self.partitionSplitVisibleProperties.get( orientation ) ], function( partitionSplit, partitionVisible ) {
+        return partitionVisible ? partitionSplit : null;
+      } );
+    } );
+
     var horizontalPartitions = [
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty ),
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty )
@@ -105,7 +117,7 @@ define( function( require ) {
 
     // Keep partition sizes up-to-date
     Orientation.VALUES.forEach( function( orientation ) {
-      Property.multilink( [ self.getActiveTotalProperty( orientation ), self.getPartitionSplitProperty( orientation ) ], function( size, split ) {
+      Property.multilink( [ self.getActiveTotalProperty( orientation ), self.visiblePartitionLineSplitProperties.get( orientation ) ], function( size, split ) {
         // Ignore splits at the boundary or outside our active area.
         if ( split <= 0 || split >= size ) {
           split = null;
@@ -147,8 +159,9 @@ define( function( require ) {
       this.hasHintArrows.horizontal.reset();
       this.hasHintArrows.vertical.reset();
 
-      this.horizontalPartitionSplitProperty.reset();
-      this.verticalPartitionSplitProperty.reset();
+      this.partitionSplitProperties.horizontal.reset();
+      this.partitionSplitProperties.vertical.reset();
+      this.visiblePartitionOrientationProperty.reset();
       this.activeWidthProperty.reset();
       this.activeHeightProperty.reset();
     },
@@ -163,18 +176,6 @@ define( function( require ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       return orientation === Orientation.HORIZONTAL ? this.activeWidthProperty : this.activeHeightProperty;
-    },
-
-    /**
-     * Returns the split property for a given orientation
-     * @public
-     *
-     * @param {Property.<number|null>}
-     */
-    getPartitionSplitProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalPartitionSplitProperty : this.verticalPartitionSplitProperty;
     },
 
     /**

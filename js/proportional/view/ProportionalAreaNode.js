@@ -229,6 +229,7 @@ define( function( require ) {
      *
      * @param {Orientation} orientation
      * @returns {Node}
+     * TODO: deprecated?
      */
     createDock: function( orientation ) {
       assert && assert( Orientation.isOrientation( orientation ) );
@@ -255,7 +256,7 @@ define( function( require ) {
           new FireListener( {
             fire: function() {
               // TODO: Input sync https://github.com/phetsims/area-model-common/issues/17
-              self.area.getPartitionSplitProperty( orientation ).reset();
+              self.area.partitionSplitProperties.get( orientation ).reset();
             }
           } )
         ]

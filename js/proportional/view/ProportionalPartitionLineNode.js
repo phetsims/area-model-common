@@ -95,7 +95,7 @@ define( function( require ) {
     } );
 
     // Relevant properties
-    var partitionSplitProperty = area.getPartitionSplitProperty( orientation );
+    var partitionSplitProperty = area.partitionSplitProperties.get( orientation );
     var oppositeActiveTotalProperty = area.getActiveTotalProperty( orientation.opposite );
     var activeTotalProperty = area.getActiveTotalProperty( orientation );
 
