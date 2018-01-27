@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   var Screen = require( 'JOIST/Screen' );
@@ -39,7 +40,7 @@ define( function( require ) {
           initialHeight: 1,
           snapSize: 1,
           gridSpacing: 1,
-          partitionSnapSize: 20, // TODO: just have it disabled?
+          partitionLineChoice: PartitionLineChoice.NONE,
           tilesAvailable: false,
           productsAvailable: false,
           countingAvailable: true
@@ -51,7 +52,7 @@ define( function( require ) {
           initialHeight: 1,
           snapSize: 1,
           gridSpacing: 1,
-          partitionSnapSize: 20, // TODO: just have it disabled?
+          partitionLineChoice: PartitionLineChoice.NONE,
           tilesAvailable: false,
           productsAvailable: false,
           countingAvailable: true

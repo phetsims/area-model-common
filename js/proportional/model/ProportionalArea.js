@@ -13,11 +13,13 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
@@ -44,7 +46,8 @@ define( function( require ) {
       smallTileSize: 1, // {number} - Size of the smallest tile available (or for the thin tiles, the shorter length)
       largeTileSize: 10, // {number} - Size of the largest tile available (or for the thin tiles, the longer length)
       tilesAvailable: true, // {boolean} - Whether tiles can be shown on this area
-      countingAvailable: false // {boolean} - Whether numbers can be shown on each grid section
+      countingAvailable: false, // {boolean} - Whether numbers can be shown on each grid section
+      partitionLineChoice: PartitionLineChoice.BOTH
     }, options );
 
     // @private {Property.<number>} - Width of the contained area - Prefer getActiveTotalProperty
@@ -53,6 +56,10 @@ define( function( require ) {
     // @private {Property.<number>} - Height of the contained area - Prefer getActiveTotalProperty
     this.activeHeightProperty = new NumberProperty( options.initialHeight );
 
+    // @public {Property.<Orientation>} - If PartitionLineChoice.ONE is active, which partition line is active
+    this.visiblePartitionOrientationProperty = new Property( Orientation.HORIZONTAL );
+
+    // TODO: OrientationPair?
     // @private {Property.<number|null>} - If there is an active partition line, its location.
     this.horizontalPartitionSplitProperty = new Property( options.initialHorizontalSplit );
 
@@ -74,6 +81,15 @@ define( function( require ) {
 
     // @public {OrientationPair.<BooleanProperty>}
     this.hasHintArrows = new OrientationPair( new BooleanProperty( true ), new BooleanProperty( true ) );
+
+    // @public {OrientationPair.<Property.<boolean>>} - Whether the partition line for each orientation is visible
+    this.partitionSplitVisibleProperties = OrientationPair.create( function( orientation ) {
+      return new DerivedProperty( [ self.getActiveTotalProperty( orientation ), self.visiblePartitionOrientationProperty ], function( totalSize, visibleOrientation ) {
+        if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
+        if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
+        return totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
+      } );
+    } );
 
     var horizontalPartitions = [
       new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty ),

@@ -261,6 +261,8 @@ define( function( require ) {
         ]
       } );
 
+      // TODO: Docks disappeared sometime. Should they be here? 'self' doesn't have the below properties
+      // this.area.partitionSplitVisibleProperties.get( orientation ).linkAttribute( dock, 'visible' );
       this.area.getActiveTotalProperty( orientation ).link( function( totalSize ) {
         dock.visible = totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
       } );

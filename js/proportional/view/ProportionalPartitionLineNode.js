@@ -112,9 +112,7 @@ define( function( require ) {
     } );
 
     // Visibility
-    activeTotalProperty.link( function( total ) {
-      self.visible = total >= ( area.partitionSnapSize + area.snapSize ) - 1e-7;
-    } );
+    area.partitionSplitVisibleProperties.get( orientation ).linkAttribute( self, 'visible' );
 
     var dragHandler = new DragListener( {
       allowTouchSnag: true,

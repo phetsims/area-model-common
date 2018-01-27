@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   var Screen = require( 'JOIST/Screen' );
@@ -38,6 +39,7 @@ define( function( require ) {
           initialHeight: 5,
           initialVerticalSplit: 2,
           initialHorizontalSplit: 2,
+          partitionLineChoice: PartitionLineChoice.ONE,
           snapSize: 1,
           gridSpacing: 1,
           partitionSnapSize: 1,
@@ -51,6 +53,7 @@ define( function( require ) {
           initialHeight: 5,
           initialVerticalSplit: 2,
           initialHorizontalSplit: 2,
+          partitionLineChoice: PartitionLineChoice.ONE,
           snapSize: 1,
           gridSpacing: 1,
           partitionSnapSize: 1,
