@@ -15,6 +15,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -28,7 +29,7 @@ define( function( require ) {
    * @extends {AccordionBox}
    *
    * @param {ProportionalAreaModel} model
-   * @param {Bounds2} bounds - Where to lay out the box in view space
+   * @param {Bounds2} bounds - Where to lay out the box in view space TODO: Pass Dimension2 instead, we don't use x/y really
    * @param {Object} [nodeOptions]
    */
   function CalculationBox( model, bounds, nodeOptions ) {
@@ -43,23 +44,26 @@ define( function( require ) {
 
     var alignBox = new AlignBox( lineContainer, {
       // Since our AccorionBox expands by our margin, we need to set content bounds without that
+      // TODO: This is an initial "guess". We still need to resize later :(
       alignBounds: bounds.eroded( margin )
     } );
 
-    AccordionBox.call( this, alignBox, _.extend( {
-      // TODO: deduplicate options with CalculationPanel?
+    AccordionBox.call( this, alignBox, {
+      resize: true,
       cornerRadius: 5,
       fill: AreaModelColorProfile.panelBackgroundProperty,
       stroke: AreaModelColorProfile.panelBorderProperty,
       contentXMargin: margin,
       contentYMargin: margin,
+      showTitleWhenExpanded: false,
+      contentXSpacing: -10,
       titleNode: new Text( calculationString, {
         font: AreaModelConstants.TITLE_FONT,
         maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
       } ),
       expandedProperty: model.calculationBoxVisibleProperty,
       titleAlignX: 'left'
-    }, nodeOptions ) );
+    } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
       assert && assert( choice !== AreaCalculationChoice.LINE_BY_LINE, 'Should be HIDDEN or SHOW_ALL_LINES' );
@@ -107,6 +111,11 @@ define( function( require ) {
 
     //TODO: better
     this.update = update;
+
+    // Resize things so our AccordionBox is the correct size (we can't get bounds correct intially, because of the expand button shifting content)
+    alignBox.alignBounds = new Bounds2( 0, 0, alignBox.alignBounds.width - ( this.width - bounds.width ), alignBox.alignBounds.height - ( this.height - bounds.height ) );
+
+    this.mutate( nodeOptions );
   }
 
   areaModelCommon.register( 'CalculationBox', CalculationBox );

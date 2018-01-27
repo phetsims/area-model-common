@@ -116,9 +116,8 @@ define( function( require ) {
 
     // @protected {Node}
     if ( options.useCalculationBox ) {
-      var calculationExtraMargin = 15;
-      var calculationTop = AreaModelConstants.MAIN_AREA_OFFSET.y + AreaModelConstants.AREA_SIZE + AreaModelConstants.PANEL_MARGIN + calculationExtraMargin;
-      var calculationBottom = this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN - 20 - calculationExtraMargin;
+      var calculationTop = AreaModelConstants.MAIN_AREA_OFFSET.y + AreaModelConstants.AREA_SIZE + AreaModelConstants.PANEL_MARGIN + 30;
+      var calculationBottom = this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN - 20;
       this.calculationDisplayPanel = new CalculationBox( model, new Bounds2( 0, 0, AreaModelConstants.AREA_SIZE, calculationBottom - calculationTop ), {
         x: AreaModelConstants.MAIN_AREA_OFFSET.x,
         y: calculationTop
