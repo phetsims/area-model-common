@@ -27,15 +27,18 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
+   * TODO: Options?
    * @param {Area} area
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {boolean} allowExponents
    * @param {boolean} isProportional
+   * @param {boolean} useLargeArea
    */
-  function AreaNode( area, partialProductsChoiceProperty, allowExponents, isProportional ) {
+  function AreaNode( area, partialProductsChoiceProperty, allowExponents, isProportional, useLargeArea ) {
     assert && assert( area instanceof Area );
     assert && assert( typeof allowExponents === 'boolean' );
     assert && assert( typeof isProportional === 'boolean' );
+    assert && assert( typeof useLargeArea === 'boolean' );
 
     var self = this;
 
@@ -52,7 +55,7 @@ define( function( require ) {
     this.addChild( this.labelLayer );
 
     // @public {number}
-    this.viewSize = AreaModelConstants.AREA_SIZE;
+    this.viewSize = useLargeArea ? AreaModelConstants.LARGE_AREA_SIZE : AreaModelConstants.AREA_SIZE;
 
     // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {

@@ -43,13 +43,14 @@ define( function( require ) {
    * @param {Property.<boolean>} countingVisibleProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {boolean} useTileLikeBackground
+   * @param {boolean} useLargeArea
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, countingVisibleProperty, partialProductsChoiceProperty, useTileLikeBackground, nodeOptions ) {
+  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, countingVisibleProperty, partialProductsChoiceProperty, useTileLikeBackground, useLargeArea, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
     var self = this;
 
-    AreaNode.call( this, area, partialProductsChoiceProperty, false, true );
+    AreaNode.call( this, area, partialProductsChoiceProperty, false, true, useLargeArea );
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {

@@ -63,7 +63,8 @@ define( function( require ) {
         showProductsSelection: false,
         showCalculationSelection: false,
         useTileLikeBackground: true,
-        useSimplifiedNames: true
+        useSimplifiedNames: true,
+        useLargeArea: true
       } ); },
       options
     );

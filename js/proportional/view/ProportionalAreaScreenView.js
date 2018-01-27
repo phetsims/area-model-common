@@ -109,7 +109,7 @@ define( function( require ) {
     // TODO: doc, abstract
     createAreaNode: function( model, area ) {
       //TODO: countsVisibleProperty or countingVisibleProperty? decide!
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, this.useLargeArea, {
         translation: this.getAreaTranslation()
       } );
     },

@@ -50,7 +50,8 @@ define( function( require ) {
       showProductsSelection: true,
       showCalculationSelection: true,
       useTileLikeBackground: false, // {boolean} - Selected area background and products box use a light-tile-colored background
-      useSimplifiedNames: false // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
+      useSimplifiedNames: false, // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
+      useLargeArea: false // {boolean} - If true, changes the location/size of the area to take up more space
     }, options );
 
     assert && assert( model instanceof AreaModel );
@@ -62,6 +63,7 @@ define( function( require ) {
 
     // @protected {boolean}
     this.useTileLikeBackground = options.useTileLikeBackground;
+    this.useLargeArea = options.useLargeArea;
 
     var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
 
@@ -219,7 +221,7 @@ define( function( require ) {
      * @returns {Vector2}
      */
     getAreaTranslation: function() {
-      return this.layoutBounds.leftTop.plus( AreaModelConstants.MAIN_AREA_OFFSET );
+      return this.layoutBounds.leftTop.plus( this.useLargeArea ? AreaModelConstants.LARGE_AREA_OFFSET : AreaModelConstants.MAIN_AREA_OFFSET );
     }
   } );
 } );
