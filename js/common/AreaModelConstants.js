@@ -39,7 +39,7 @@ define( function( require ) {
     BUTTON_FONT: new PhetFont( 20 ),
     SCORE_INCREASE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     COUNTING_ICON_FONT: new PhetFont( 22 ),
-    COUNTING_FONT: new PhetFont( 16 ),
+    COUNTING_FONT: new PhetFont( 20 ),
 
     AREA_SIZE: 350,
     LARGE_AREA_SIZE: 450, // TODO: 458 would make spacing above/below exactly equal?
