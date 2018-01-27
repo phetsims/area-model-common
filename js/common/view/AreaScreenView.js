@@ -18,6 +18,8 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaModelGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelGlobals' );
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
@@ -51,7 +53,8 @@ define( function( require ) {
       showCalculationSelection: true,
       useTileLikeBackground: false, // {boolean} - Selected area background and products box use a light-tile-colored background
       useSimplifiedNames: false, // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
-      useLargeArea: false // {boolean} - If true, changes the location/size of the area to take up more space
+      useLargeArea: false, // {boolean} - If true, changes the location/size of the area to take up more space
+      useCalculationBox: false // {boolean} - If true, a simplified accordion box will be used for the calculation lines
     }, options );
 
     assert && assert( model instanceof AreaModel );
@@ -112,7 +115,19 @@ define( function( require ) {
 
 
     // @protected {Node}
-    this.calculationDisplayPanel = new CalculationPanel( model );
+    if ( options.useCalculationBox ) {
+      var calculationExtraMargin = 15;
+      var calculationTop = AreaModelConstants.MAIN_AREA_OFFSET.y + AreaModelConstants.AREA_SIZE + AreaModelConstants.PANEL_MARGIN + calculationExtraMargin;
+      var calculationBottom = this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN - 20 - calculationExtraMargin;
+      this.calculationDisplayPanel = new CalculationBox( model, new Bounds2( 0, 0, AreaModelConstants.AREA_SIZE, calculationBottom - calculationTop ), {
+        x: AreaModelConstants.MAIN_AREA_OFFSET.x,
+        y: calculationTop
+      } );
+      // TODO: positioning
+    }
+    else {
+      this.calculationDisplayPanel = new CalculationPanel( model );
+    }
     this.addChild( this.calculationDisplayPanel );
 
     // Reset All button

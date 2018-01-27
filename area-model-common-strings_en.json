@@ -38,6 +38,9 @@
   "areaModelCalculation": {
     "value": "Area model calculation"
   },
+  "calculation": {
+    "value": "Calculation"
+  },
   "partialProducts": {
     "value": "Partial products"
   },

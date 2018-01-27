@@ -43,6 +43,9 @@ define( function( require ) {
 
     // @public {BooleanProperty}
     this.countsVisibleProperty = new BooleanProperty( true );
+
+    // @public {BooleanProperty}
+    this.calculationBoxVisibleProperty = new BooleanProperty( false );
   }
 
   areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );
@@ -59,6 +62,7 @@ define( function( require ) {
       this.gridLinesVisibleProperty.reset();
       this.tilesVisibleProperty.reset();
       this.countsVisibleProperty.reset();
+      this.calculationBoxVisibleProperty.reset();
     }
   } );
 } );

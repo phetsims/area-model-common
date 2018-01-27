@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -60,11 +61,14 @@ define( function( require ) {
           tilesAvailable: false,
           productsAvailable: false
         }
-      ] ); },
+      ], {
+        initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES,
+      } ); },
       function( model ) { return new ProportionalAreaScreenView( model, {
         showCalculationSelection: false,
         useTileLikeBackground: true,
-        useSimplifiedNames: true
+        useSimplifiedNames: true,
+        useCalculationBox: true
       } ); },
       options
     );
