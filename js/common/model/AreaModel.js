@@ -35,7 +35,7 @@ define( function( require ) {
       isProportional: false,
       initialTotalModelBoxExpanded: false,
       initialAreaCalculationChoice: AreaCalculationChoice.HIDDEN,
-      initialPartialProductsChoice: PartialProductsChoice.PRODUCTS
+      initialPartialProductsChoice: PartialProductsChoice.HIDDEN
     }, options );
 
     var self = this;
