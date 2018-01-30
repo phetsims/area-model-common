@@ -26,6 +26,7 @@ define( function( require ) {
    * @param {boolean} isLevelDebug - Whether we should show one level per challenge for debugging purposes
    */
   function VariablesGameAreaModel( isLevelDebug ) {
+    // TODO: Remove all isLevelDebug support (not needed anymore)
 
     // TODO probably do this in the view
     var tmpFont = new PhetFont( 30 );
