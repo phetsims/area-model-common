@@ -13,6 +13,7 @@ define( function( require ) {
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -54,8 +55,9 @@ define( function( require ) {
       } );
     }
     else {
+      areaText.maxWidth = AreaModelConstants.PANEL_INTERIOR_MAX;
       // AlignBox it so that it is always centered and keeps the same bounds
-      areaContainer = new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } );
+      areaContainer = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
     }
 
     // Wrap with a centered container, so that when maxWidth kicks in, the AccordionBox centers this vertically.
