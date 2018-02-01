@@ -35,7 +35,7 @@ define( function( require ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
-      font: useSimplifiedNames ? AreaModelConstants.SIMPLIFIED_TOTAL_AREA_FONT : AreaModelConstants.TOTAL_AREA_FONT
+      font: AreaModelConstants.TOTAL_AREA_VALUE_FONT
     } );
 
     var areaContainer;
@@ -45,7 +45,7 @@ define( function( require ) {
       areaContainer = new HBox( {
         spacing: 4,
         children: [
-          new Text( areaEqualsString, { font: AreaModelConstants.TOTAL_AREA_FONT } ),
+          new Text( areaEqualsString, { font: AreaModelConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
             fill: AreaModelColorProfile.smallTileProperty
