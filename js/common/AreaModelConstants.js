@@ -20,6 +20,7 @@ define( function( require ) {
     PROBLEM_PAREN_FONT: new PhetFont( 40 ),
     CALCULATION_X_FONT: new PhetFont( 16 ),
     CALCULATION_PAREN_FONT: new PhetFont( 16 ),
+    CALCULATION_DOT_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
     CALCULATION_TERM_FONT: new PhetFont( 16 ),
     TITLE_FONT: new PhetFont( 16 ),
     TOTAL_AREA_LABEL_FONT: new PhetFont( 30 ),

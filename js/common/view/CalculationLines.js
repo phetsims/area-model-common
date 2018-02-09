@@ -44,7 +44,7 @@ define( function( require ) {
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
   var activeDot = new Text( AreaModelConstants.DOT_STRING, {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    font: AreaModelConstants.CALCULATION_DOT_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
 
@@ -69,14 +69,14 @@ define( function( require ) {
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
   var inactiveDot = new Text( AreaModelConstants.DOT_STRING, {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    font: AreaModelConstants.CALCULATION_DOT_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
 
   var PAREN_PADDING = 0;
   var PAREN_PAREN_PADDING = 0;
   var X_PADDING = 3;
-  var DOT_PADDING = 1;
+  var DOT_PADDING = 3;
   var OP_PADDING = 5;
   var TERM_PAREN_PADDING = 1;
 
