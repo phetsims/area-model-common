@@ -22,6 +22,7 @@ define( function( require ) {
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductSelectionNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductSelectionNode' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -83,11 +84,36 @@ define( function( require ) {
     } );
 
     var selectionButtonAlignGroup = new AlignGroup();
+
     // TODO: don't require this ordering of creation just for sizing. creating the "bigger" one first
-    var productsSelectionPanel = this.createPanel( partialProductsString, panelAlignGroup,
+    var productsSelectionPanel = this.createPanelContent( partialProductsString, panelAlignGroup,
                                                    new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
-    var calculationSelectionPanel = this.createPanel( areaModelCalculationString, panelAlignGroup,
+    var calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, panelAlignGroup,
                                                       new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
+    var selectionSeparator = new Line( {
+      x2: AreaModelConstants.PANEL_INTERIOR_MAX,
+      stroke: AreaModelColorProfile.selectionSeparatorProperty
+    } );
+    var selectionContent = new VBox( {
+      spacing: 15
+    } );
+    if ( options.showCalculationSelection && options.showProductsSelection ) {
+      selectionContent.children = [ productsSelectionPanel, selectionSeparator, calculationSelectionPanel ];
+    }
+    else if ( options.showCalculationSelection ) {
+      selectionContent.children = [ calculationSelectionPanel ];
+    }
+    else if ( options.showProductsSelection ) {
+      selectionContent.children = [ productsSelectionPanel ];
+    }
+
+    var selectionPanel = new Panel( selectionContent, {
+      xMargin: 15,
+      yMargin: 10,
+      fill: AreaModelColorProfile.panelBackgroundProperty,
+      stroke: AreaModelColorProfile.panelBorderProperty,
+      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+    } );
 
     // Create accordion boxes after all group-aligned content is created.
     // TODO: FML. product => factors, area => product.
@@ -101,9 +127,8 @@ define( function( require ) {
     this.panelContainer = new VBox( {
       children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
         productBox,
-        areaBox
-      ].concat( options.showCalculationSelection ? [ calculationSelectionPanel ] : [] )
-       .concat( options.showProductsSelection ? [ productsSelectionPanel ] : [] ) ),
+        areaBox,
+      ].concat( options.showCalculationSelection || options.showProductsSelection ? [ selectionPanel ] : [] ) ),
       spacing: AreaModelConstants.PANEL_SPACING
     } );
     this.addChild( new AlignBox( this.panelContainer, {
@@ -176,8 +201,8 @@ define( function( require ) {
      * @param {AlignGroup} panelAlignGroup
      * @param {Node} content
      */
-    createPanel: function( titleString, panelAlignGroup, content ) {
-      var panelContent = new VBox( {
+    createPanelContent: function( titleString, panelAlignGroup, content ) {
+      return new VBox( {
         children: [
           new AlignBox( new Text( titleString, {
             font: AreaModelConstants.TITLE_FONT,
@@ -193,13 +218,6 @@ define( function( require ) {
           } )
         ],
         spacing: 10
-      } );
-      return new Panel( panelContent, {
-        xMargin: 15,
-        yMargin: 10,
-        fill: AreaModelColorProfile.panelBackgroundProperty,
-        stroke: AreaModelColorProfile.panelBorderProperty,
-        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
       } );
     },
 
