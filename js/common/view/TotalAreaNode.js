@@ -30,9 +30,10 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Polynomial|null} totalAreaProperty
-   * @param {boolean} useSimplifiedNames - Whether the panel is using simplified names. We'll add an extra "Area = " with a box for this use
+   * @param {boolean} isProportional
+   * @param {string} maximumWidthString
    */
-  function TotalAreaNode( totalAreaProperty, useSimplifiedNames ) {
+  function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
@@ -41,8 +42,8 @@ define( function( require ) {
 
     var areaContainer;
     // TODO: cleanup
-    if ( useSimplifiedNames ) {
-      areaText.text = '144'; // TODO: hardcode the constant better?
+    if ( isProportional ) {
+      areaText.text = maximumWidthString;
       areaContainer = new HBox( {
         spacing: 4,
         children: [

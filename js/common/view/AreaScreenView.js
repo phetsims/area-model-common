@@ -78,7 +78,12 @@ define( function( require ) {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, options.useSimplifiedNames ), {
+    // TODO: better way of handling
+    var maximumArea = model.isProportional && _.max( _.map( model.areas, function( area ) {
+      return area.maximumSize * area.maximumSize;
+    } ) );
+    var maximumProportionalString = model.isProportional && _.every( model.areas, function( area ) { return area.snapSize >= 1; } ) ? ( +maximumArea ) : '7.89';
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, maximumProportionalString ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
