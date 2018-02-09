@@ -94,6 +94,21 @@ define( function( require ) {
       } );
 
       this.activePartitionProperty.reset();
-    }
+    },
+
+    /**
+     * Erase the area to a 1x1, see https://github.com/phetsims/area-model-common/issues/77
+     * @public
+     * @override
+     */
+    erase: function() {
+      Area.prototype.erase.call( this );
+
+      // Clear all partition values
+      this.allPartitions.forEach( function( partition ) {
+        partition.sizeProperty.value = null;
+      } );
+    },
+
   } );
 } );

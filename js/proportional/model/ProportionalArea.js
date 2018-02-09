@@ -170,6 +170,18 @@ define( function( require ) {
     },
 
     /**
+     * Erase the area to a 1x1, see https://github.com/phetsims/area-model-common/issues/77
+     * @public
+     * @override
+     */
+    erase: function() {
+      Area.prototype.erase.call( this );
+
+      this.activeWidthProperty.value = 1;
+      this.activeHeightProperty.value = 1;
+    },
+
+    /**
      * Returns the property for the sum of all defined partitions for a particular orientation.
      * @public
      *

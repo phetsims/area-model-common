@@ -93,7 +93,7 @@ define( function( require ) {
 
     var eraseButton = new EraserButton( {
       listener: function() {
-        area.reset();
+        area.erase();
       },
       center: isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET
     } );

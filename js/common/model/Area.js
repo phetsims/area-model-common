@@ -118,6 +118,14 @@ define( function( require ) {
     },
 
     /**
+     * Erase the area to a 1x1, see https://github.com/phetsims/area-model-common/issues/77
+     * @public
+     */
+    erase: function() {
+      // Overridden in subtypes
+    },
+
+    /**
      * Returns all defined partitions for a given orientation.
      * @public
      *
