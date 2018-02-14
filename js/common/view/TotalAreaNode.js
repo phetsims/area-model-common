@@ -32,8 +32,9 @@ define( function( require ) {
    * @param {Polynomial|null} totalAreaProperty
    * @param {boolean} isProportional
    * @param {string} maximumWidthString
+   * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */
-  function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString ) {
+  function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
@@ -50,7 +51,7 @@ define( function( require ) {
           new Text( areaEqualsString, { font: AreaModelConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
-            fill: AreaModelColorProfile.smallTileProperty
+            fill: useTileLikeBackground ? AreaModelColorProfile.smallTileProperty : AreaModelColorProfile.proportionalActiveAreaBackgroundProperty
           } )
         ]
       } );

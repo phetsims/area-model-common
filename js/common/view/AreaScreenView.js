@@ -83,7 +83,7 @@ define( function( require ) {
       return area.maximumSize * area.maximumSize;
     } ) );
     var maximumProportionalString = model.isProportional && _.every( model.areas, function( area ) { return area.snapSize >= 1; } ) ? ( +maximumArea ) : '7.89';
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, maximumProportionalString ), {
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, maximumProportionalString, this.useTileLikeBackground ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
