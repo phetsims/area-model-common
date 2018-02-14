@@ -164,6 +164,7 @@ define( function( require ) {
       listener: function() {
         model.reset();
       },
+      touchAreaDilation: 10,
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN,
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );

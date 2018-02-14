@@ -69,6 +69,7 @@ define( function( require ) {
     var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
 
     var handle = new Path( handleShape, {
+      touchArea: handleShape.getOffsetShape( 8 ),
       fill: area.colorProperties.get( orientation ),
       stroke: AreaModelColorProfile.partitionLineBorderProperty,
       cursor: 'pointer',

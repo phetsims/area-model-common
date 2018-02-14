@@ -77,7 +77,8 @@ define( function( require ) {
     // @private {BackButton}
     this.backButton = new BackButton( {
       listener: backCallback,
-      scale: 1
+      touchAreaXDilation: 8,
+      touchAreaYDilation: 8
     } );
     this.addChild( this.backButton );
 

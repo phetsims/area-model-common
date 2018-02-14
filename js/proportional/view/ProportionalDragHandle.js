@@ -19,6 +19,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
+  var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -49,6 +50,7 @@ define( function( require ) {
     } );
 
     var circle = new Circle( DRAG_RADIUS, {
+      touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2.5 ), 
       fill: AreaModelColorProfile.proportionalDragHandleBackgroundProperty,
       stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',

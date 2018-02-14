@@ -54,7 +54,9 @@ define( function( require ) {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
       buttonContentYMargin: 10,
-      selectedLineWidth: 2
+      selectedLineWidth: 2,
+      touchAreaXDilation: 6,
+      touchAreaYDilation: 6
     }, {
       selectedStroke: AreaModelColorProfile.radioBorderProperty,
       baseColor: AreaModelColorProfile.radioBackgroundProperty

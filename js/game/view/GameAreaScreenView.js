@@ -100,6 +100,7 @@ define( function( require ) {
       } );
     } );
 
+    var buttonSpacing = 15;
     var levelButtons = model.levels.map( function( level, index ) {
       var scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, level.scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2, {
         scale: 0.8
@@ -115,7 +116,7 @@ define( function( require ) {
         } ),
         xMargin: 10,
         yMargin: 10,
-        touchAreaXDilation: 18,
+        touchAreaXDilation: buttonSpacing / 2,
         touchAreaYDilation: 13,
         cornerRadius: 10,
         listener: function() {
@@ -127,7 +128,6 @@ define( function( require ) {
       } );
     } );
 
-    var buttonSpacing = 15;
     this.levelSelectionLayer.addChild( new VBox( {
       children: _.chunk( levelButtons, 6 ).map( function( children ) {
         return new HBox( {
@@ -162,6 +162,7 @@ define( function( require ) {
       listener: function() {
         model.reset();
       },
+      touchAreaDilation: 10,
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN,
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
@@ -272,6 +273,8 @@ define( function( require ) {
       content: new Text( checkString, {
         font: AreaModelConstants.BUTTON_FONT
       } ),
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
       listener: function() {
         model.check();
       }
@@ -288,6 +291,8 @@ define( function( require ) {
       content: new Text( tryAgainString, {
         font: AreaModelConstants.BUTTON_FONT
       } ),
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
       listener: function() {
         model.tryAgain();
       }
@@ -300,6 +305,8 @@ define( function( require ) {
       content: new Text( nextString, {
         font: AreaModelConstants.BUTTON_FONT
       } ),
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
       listener: function() {
         model.next();
       }
@@ -312,6 +319,8 @@ define( function( require ) {
       content: new Text( showAnswerString, { // TODO: show solution or answer
         font: AreaModelConstants.BUTTON_FONT
       } ),
+      touchAreaXDilation: 10,
+      touchAreaYDilation: 10,
       listener: function() {
         model.showSolution();
       }

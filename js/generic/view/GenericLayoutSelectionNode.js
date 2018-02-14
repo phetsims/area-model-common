@@ -148,6 +148,7 @@ define( function( require ) {
               var background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
                 cursor: 'pointer'
               } );
+              background.touchArea = background.localBounds.dilated( buttonSpacing / 2 );
               var listener = new FireListener( {
                 fire: function() {
                   genericLayoutProperty.value = layout;

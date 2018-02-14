@@ -95,7 +95,9 @@ define( function( require ) {
       listener: function() {
         area.erase();
       },
-      center: isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET
+      center: isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET,
+      touchAreaXDilation: 8,
+      touchAreaYDilation: 8
     } );
     this.labelLayer.addChild( eraseButton );
   }
