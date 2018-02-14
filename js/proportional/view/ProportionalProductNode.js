@@ -34,7 +34,7 @@ define( function( require ) {
     HBox.call( this, {
       children: [
         this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
-        new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
+        new Text( AreaModelConstants.X_MULTIPLICATION_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } ),
         this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
       ],
       spacing: 10

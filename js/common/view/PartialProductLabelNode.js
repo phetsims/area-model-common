@@ -110,7 +110,7 @@ define( function( require ) {
           box.spacing = 2;
           box.children = [
             verticalNode,
-            new Text( AreaModelConstants.X_STRING, textOptions ),
+            new Text( AreaModelConstants.X_MULTIPLICATION_STRING, textOptions ),
             horizontalNode,
           ];
         }

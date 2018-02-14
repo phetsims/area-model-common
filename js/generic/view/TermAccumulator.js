@@ -40,10 +40,10 @@ define( function( require ) {
           return AreaModelConstants.NEGATIVE_STRING;
         }
         else if ( key === KeyID.X ) {
-          return 'x';
+          return AreaModelConstants.X_VARIABLE_RICH_STRING;
         }
         else if ( key === KeyID.X_SQUARED ) {
-          return 'x<sup>2</sup>';
+          return AreaModelConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>';
         }
         else {
           return key;

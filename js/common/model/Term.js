@@ -80,7 +80,7 @@ define( function( require ) {
         string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
       }
       if ( this.power > 0 ) {
-        string += 'x';
+        string += AreaModelConstants.X_VARIABLE_RICH_STRING;
       }
       if ( this.power > 1 ) {
         string += '<sup>' + this.power + '</sup>';

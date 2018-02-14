@@ -44,7 +44,7 @@ define( function( require ) {
     [ null, new Key( '0', KeyID.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE ) ]
   ];
   var exponentLayout = noExponentLayout.concat( [
-    [ null, new Key( new RichText( 'x<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ), new Key( 'x', KeyID.X ) ],
+    [ null, new Key( new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ), new Key( new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING, { font: AreaModelConstants.KEYPAD_FONT } ), KeyID.X ) ],
   ] );
 
   /**

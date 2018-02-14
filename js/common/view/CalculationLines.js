@@ -23,7 +23,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // TODO: reduce duplication with ProductNode -- different font though
-  var activeX = new Text( AreaModelConstants.X_STRING, {
+  var activeX = new Text( AreaModelConstants.X_MULTIPLICATION_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
@@ -48,7 +48,7 @@ define( function( require ) {
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
 
-  var inactiveX = new Text( AreaModelConstants.X_STRING, {
+  var inactiveX = new Text( AreaModelConstants.X_MULTIPLICATION_STRING, {
     font: AreaModelConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );

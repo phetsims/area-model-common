@@ -167,8 +167,8 @@ define( function( require ) {
       color: new DerivedProperty( [ new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
 
-    var xText = new Text( 'x', { font: editFont } );
-    var xSquaredText = new RichText( 'x<sup>2</sup>', { font: editFont } );
+    var xText = new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
+    var xSquaredText = new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
     var plus1 = new Text( '+', { font: editFont } );
     var plus2 = new Text( '+', { font: editFont } );
 

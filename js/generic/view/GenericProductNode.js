@@ -37,7 +37,7 @@ define( function( require ) {
     var leftParenText = new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
     var middleParenText = new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
     var rightParenText = new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
-    var xText = new Text( AreaModelConstants.X_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } );
+    var xText = new Text( AreaModelConstants.X_MULTIPLICATION_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } );
 
     //TODO: a better way of this workaround
     xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );

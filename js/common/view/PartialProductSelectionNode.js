@@ -109,7 +109,7 @@ define( function( require ) {
       return new HBox( {
         children: [
           new Node( { children: [ verticalNode ] } ),
-          new Text( AreaModelConstants.X_STRING, {
+          new Text( AreaModelConstants.X_MULTIPLICATION_STRING, {
             font: AreaModelConstants.SYMBOL_FONT
           } ),
           new Node( { children: [ horizontalNode ] } )

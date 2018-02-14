@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
+  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -73,7 +74,8 @@ define( function( require ) {
     GENERIC_RANGE_OFFSET: new Vector2( -60, -40 ),
 
     // {string} - We prefer this string when denoting multiplication instead of the 'x' character
-    X_STRING: '\u00D7',
+    X_MULTIPLICATION_STRING: '\u00D7',
+    X_VARIABLE_RICH_STRING: '<font face="' + new MathSymbolFont( 10 ).family.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' ) + '"><i>x</i></font>',
     PLUS_STRING: '+',
     NEGATIVE_STRING: '-',
     MINUS_STRING: '\u2212',
