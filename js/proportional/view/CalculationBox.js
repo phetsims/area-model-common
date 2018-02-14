@@ -18,6 +18,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -45,7 +46,10 @@ define( function( require ) {
     var alignBox = new AlignBox( lineContainer, {
       // Since our AccorionBox expands by our margin, we need to set content bounds without that
       // TODO: This is an initial "guess". We still need to resize later :(
-      alignBounds: bounds.eroded( margin )
+      alignBounds: bounds.eroded( margin ),
+
+      // TODO: remove need to make this unpickable
+      pickable: false
     } );
 
     AccordionBox.call( this, alignBox, {
@@ -62,8 +66,21 @@ define( function( require ) {
         maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
       } ),
       expandedProperty: model.calculationBoxVisibleProperty,
-      titleAlignX: 'left'
+      titleAlignX: 'left',
+      cursor: 'pointer'
     } );
+
+    // TODO: Don't break private namespace, and add a feature.
+    this.expandCollapseButton.pickable = false;
+    this.titleNode.pickable = false;
+    this.collapsedBox.cursor = 'pointer';
+    this.expandedBox.cursor = 'pointer';
+    this.collapsedBox.addInputListener( new FireListener( { fire: function() {
+      model.calculationBoxVisibleProperty.value = !model.calculationBoxVisibleProperty.value;
+    } } ) );
+    this.expandedBox.addInputListener( new FireListener( { fire: function() {
+      model.calculationBoxVisibleProperty.value = !model.calculationBoxVisibleProperty.value;
+    } } ) );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
       assert && assert( choice !== AreaCalculationChoice.LINE_BY_LINE, 'Should be HIDDEN or SHOW_ALL_LINES' );
