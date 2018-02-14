@@ -38,6 +38,8 @@ define( function( require ) {
       minimumSize: 1, // {number} - Minimum size our area can take up
       initialWidth: 1, // {number} - Initial width
       initialHeight: 1, // {number} - Initial height
+      eraseWidth: 1, // {number} - The width that will be set with the erase button
+      eraseHeight: 1, // {number} - The height that will be set with the erase button
       initialHorizontalSplit: null, // {number|null} - Initial location (if any) of a horizontal partition split
       initialVerticalSplit: null, // {number|null} - Initial location (if any) of a vertical partition split
       snapSize: 1, // {number} - Smallest unit size (that is snapped to)
@@ -72,6 +74,8 @@ define( function( require ) {
     // @public {number}
     this.maximumSize = options.maximumSize;
     this.minimumSize = options.minimumSize;
+    this.eraseWidth = options.eraseWidth;
+    this.eraseHeight = options.eraseHeight;
     this.snapSize = options.snapSize;
     this.partitionSnapSize = options.partitionSnapSize;
     this.gridSpacing = options.gridSpacing;
@@ -177,8 +181,8 @@ define( function( require ) {
     erase: function() {
       Area.prototype.erase.call( this );
 
-      this.activeWidthProperty.value = 1;
-      this.activeHeightProperty.value = 1;
+      this.activeWidthProperty.value = this.eraseWidth;
+      this.activeHeightProperty.value = this.eraseHeight;
     },
 
     /**

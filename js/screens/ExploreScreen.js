@@ -49,6 +49,8 @@ define( function( require ) {
           minimumSize: 1,
           initialWidth: 50,
           initialHeight: 50,
+          eraseWidth: 10,
+          eraseHeight: 10,
           initialVerticalSplit: 30,
           snapSize: 1,
           gridSpacing: 10,
