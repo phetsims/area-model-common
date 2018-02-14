@@ -20,6 +20,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
+  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -70,7 +71,10 @@ define( function( require ) {
 
     // @private {Rectangle} - The colored background.
     this.backgroundRectangle = new Rectangle( 0, 0, 100, BAR_HEIGHT, {
-      fill: 'black'
+      fill: 'black',
+      // Entire status bar should, when clicked, go "back", see https://github.com/phetsims/area-model-common/issues/80
+      inputListeners: [ new FireListener( { fire: backCallback } ) ],
+      cursor: 'pointer'
     } );
     this.addChild( this.backgroundRectangle );
 
@@ -111,11 +115,13 @@ define( function( require ) {
 
     // @private {ProgressIndicator}
     this.scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2 );
+    this.scoreNode.pickable = false;
     this.addChild( this.scoreNode );
 
     // @private {Text}
     this.challengeProgressNode = new Text( ' ', {
-      font: OF_FONT
+      font: OF_FONT,
+      pickable: false
     } );
     this.addChild( this.challengeProgressNode );
     //TODO: Use derive!!
