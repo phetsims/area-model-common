@@ -67,10 +67,21 @@ define( function( require ) {
     showHintArrowsProperty.linkAttribute( maxHintArrow, 'visible' );
 
     var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
+    var handleMouseBounds = handleShape.bounds;
+    var handleTouchBounds = handleMouseBounds.dilated( 5 );
+    var handleClipShape = new Shape().moveToPoint( handleTouchBounds.leftTop )
+                                     .lineToPoint( handleTouchBounds.leftBottom )
+                                     .lineToPoint( handleTouchBounds.rightBottom )
+                                     .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.rightBottom, 0.4 ) )
+                                     .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.leftTop, 0.4 ) )
+                                     .close();
+    if ( orientation === Orientation.VERTICAL ) {
+      handleClipShape = handleClipShape.transformed( Matrix3.rotation2( Math.PI ) );
+    }
 
     var handle = new Path( handleShape, {
-      mouseArea: handleShape.bounds,
-      touchArea: handleShape.bounds,
+      mouseArea: Shape.bounds( handleMouseBounds ).shapeIntersection( handleClipShape ),
+      touchArea: Shape.bounds( handleTouchBounds ).shapeIntersection( handleClipShape ),
       fill: area.colorProperties.get( orientation ),
       stroke: AreaModelColorProfile.partitionLineBorderProperty,
       cursor: 'pointer',
