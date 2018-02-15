@@ -24,8 +24,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var DRAG_OFFSET = 5;
-  var DRAG_RADIUS = 7;
+  var DRAG_OFFSET = 8;
+  var DRAG_RADIUS = 10.5;
   var CIRCLE_DRAG_OFFSET = DRAG_OFFSET + Math.sqrt( 2 ) / 2 * DRAG_RADIUS;
 
   /**
@@ -50,7 +50,7 @@ define( function( require ) {
     } );
 
     var circle = new Circle( DRAG_RADIUS, {
-      touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2.5 ), 
+      touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ), 
       fill: AreaModelColorProfile.proportionalDragHandleBackgroundProperty,
       stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',
