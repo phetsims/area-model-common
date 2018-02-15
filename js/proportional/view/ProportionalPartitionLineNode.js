@@ -112,7 +112,6 @@ define( function( require ) {
     area.partitionSplitVisibleProperties.get( orientation ).linkAttribute( self, 'visible' );
 
     var dragHandler = new DragListener( {
-      allowTouchSnag: true,
       transform: modelViewTransform,
       targetNode: this,
       drag: function( event, listener ) {

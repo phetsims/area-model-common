@@ -56,7 +56,6 @@ define( function( require ) {
       cursor: 'pointer',
       inputListeners: [
         new DragListener( {
-          allowTouchSnag: true,
           targetNode: this,
           applyOffset: false,
           start: function( event, listener ) {
