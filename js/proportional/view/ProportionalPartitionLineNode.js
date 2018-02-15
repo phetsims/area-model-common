@@ -69,6 +69,8 @@ define( function( require ) {
     var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
     var handleMouseBounds = handleShape.bounds;
     var handleTouchBounds = handleMouseBounds.dilated( 5 );
+    // We need to cut off the corners that would overlap between the two partition line handles, so we create a clipping
+    // area and intersect with that. See https://github.com/phetsims/area-model-common/issues/80.
     var handleClipShape = new Shape().moveToPoint( handleTouchBounds.leftTop )
                                      .lineToPoint( handleTouchBounds.leftBottom )
                                      .lineToPoint( handleTouchBounds.rightBottom )
