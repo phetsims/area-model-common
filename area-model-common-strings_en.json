@@ -35,6 +35,9 @@
   "product": {
     "value": "Product"
   },
+  "partition": {
+    "value": "Partition"
+  },
   "areaModelCalculation": {
     "value": "Area model calculation"
   },

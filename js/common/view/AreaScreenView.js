@@ -21,10 +21,14 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductSelectionNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductSelectionNode' );
+  var PartitionSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/PartitionSelectionNode' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
+  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -36,6 +40,7 @@ define( function( require ) {
   var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
   var factorsString = require( 'string!AREA_MODEL_COMMON/factors' );
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
+  var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
   var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
@@ -95,21 +100,36 @@ define( function( require ) {
                                                    new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
     var calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, panelAlignGroup,
                                                       new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
-    var selectionSeparator = new Line( {
-      x2: AreaModelConstants.PANEL_INTERIOR_MAX,
-      stroke: AreaModelColorProfile.selectionSeparatorProperty
-    } );
+    // TODO: cleanup, let subtypes add bits
+    var partitionSelectionPanel = null;
+    if ( model instanceof ProportionalAreaModel ) {
+      var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
+        derive: 'visiblePartitionOrientationProperty',
+        bidirectional: true
+      } );
+      partitionSelectionPanel = this.createPanelContent( partitionString, panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) );
+    }
     var selectionContent = new VBox( {
       spacing: 15
     } );
-    if ( options.showCalculationSelection && options.showProductsSelection ) {
-      selectionContent.children = [ productsSelectionPanel, selectionSeparator, calculationSelectionPanel ];
+    var contentChildren = [];
+    if ( options.showProductsSelection ) {
+      contentChildren.push( productsSelectionPanel );
     }
-    else if ( options.showCalculationSelection ) {
-      selectionContent.children = [ calculationSelectionPanel ];
+    if ( options.showCalculationSelection ) {
+      contentChildren.push( calculationSelectionPanel );
     }
-    else if ( options.showProductsSelection ) {
-      selectionContent.children = [ productsSelectionPanel ];
+    // TODO: vary this based on the current area!
+    if ( model.currentAreaProperty.value.partitionLineChoice === PartitionLineChoice.ONE ) {
+      contentChildren.push( partitionSelectionPanel );
+    }
+    selectionContent.children = contentChildren;
+    // Add separators between items
+    for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
+      selectionContent.insertChild( i, new Line( {
+        x2: AreaModelConstants.PANEL_INTERIOR_MAX,
+        stroke: AreaModelColorProfile.selectionSeparatorProperty
+      } ) );
     }
 
     var selectionPanel = new Panel( selectionContent, {
