@@ -23,7 +23,7 @@ define( function( require ) {
     CALCULATION_PAREN_FONT: new PhetFont( 16 ),
     CALCULATION_DOT_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
     CALCULATION_TERM_FONT: new PhetFont( 16 ),
-    TITLE_FONT: new PhetFont( 16 ),
+    TITLE_FONT: new PhetFont( 18 ),
     TOTAL_AREA_LABEL_FONT: new PhetFont( 30 ),
     TOTAL_AREA_VALUE_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
     SYMBOL_FONT: new PhetFont( 20 ),

@@ -250,7 +250,13 @@ define( function( require ) {
         cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
         buttonTouchAreaXDilation: 5,
         buttonTouchAreaYDilation: 5,
-        titleAlignX: 'left'
+        titleAlignX: 'left',
+
+        // TODO: deduplicate AccordionBox options
+        titleXSpacing: 8,
+        buttonLength: 20,
+        buttonXMargin: 10,
+        buttonYMargin: 8
       } );
     },
 

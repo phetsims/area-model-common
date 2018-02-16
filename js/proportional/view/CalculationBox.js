@@ -70,6 +70,12 @@ define( function( require ) {
       cursor: 'pointer',
       buttonTouchAreaXDilation: 5,
       buttonTouchAreaYDilation: 5,
+
+      // TODO: deduplicate AccordionBox options
+      titleXSpacing: 8,
+      buttonLength: 20,
+      buttonXMargin: 10,
+      buttonYMargin: 8
     } );
 
     // TODO: Don't break private namespace, and add a feature.
