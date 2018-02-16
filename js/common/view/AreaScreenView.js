@@ -248,6 +248,8 @@ define( function( require ) {
         fill: AreaModelColorProfile.panelBackgroundProperty,
         stroke: AreaModelColorProfile.panelBorderProperty,
         cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
+        buttonTouchAreaXDilation: 5,
+        buttonTouchAreaYDilation: 5,
         titleAlignX: 'left'
       } );
     },

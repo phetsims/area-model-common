@@ -67,7 +67,9 @@ define( function( require ) {
       } ),
       expandedProperty: model.calculationBoxVisibleProperty,
       titleAlignX: 'left',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      buttonTouchAreaXDilation: 5,
+      buttonTouchAreaYDilation: 5,
     } );
 
     // TODO: Don't break private namespace, and add a feature.
