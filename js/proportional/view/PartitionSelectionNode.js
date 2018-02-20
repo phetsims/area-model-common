@@ -12,6 +12,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
@@ -37,11 +38,11 @@ define( function( require ) {
     var radioItems = [
       {
         value: Orientation.HORIZONTAL,
-        node: new AlignBox( PartitionSelectionNode.createPartitionOrientationIcon( Orientation.HORIZONTAL ), { group: selectionButtonAlignGroup } )
+        node: new AlignBox( PartitionSelectionNode.createPartitionOrientationIcon( Orientation.HORIZONTAL, currentAreaOrientationProperty ), { group: selectionButtonAlignGroup } )
       },
       {
         value: Orientation.VERTICAL,
-        node: new AlignBox( PartitionSelectionNode.createPartitionOrientationIcon( Orientation.VERTICAL ), { group: selectionButtonAlignGroup } )
+        node: new AlignBox( PartitionSelectionNode.createPartitionOrientationIcon( Orientation.VERTICAL, currentAreaOrientationProperty ), { group: selectionButtonAlignGroup } )
       }
     ];
 
@@ -68,7 +69,7 @@ define( function( require ) {
      * @param {Orientation} orientation
      * @returns {Node}
      */
-    createPartitionOrientationIcon: function( orientation ) {
+    createPartitionOrientationIcon: function( orientation, currentAreaOrientationProperty ) {
       // TODO: cleanup
       var sizes = {
         x: 30 * 1.2,
@@ -94,7 +95,9 @@ define( function( require ) {
       var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
 
       background.addChild( new Path( handleShape, {
-        fill: AreaModelColorProfile.proportionalColorProperties.get( orientation ),
+        fill: new DerivedProperty( [ currentAreaOrientationProperty, AreaModelColorProfile.proportionalColorProperties.get( orientation ) ], function( currentOrientation, widthColor ) {
+          return currentOrientation === orientation ? widthColor : '#333';
+        } ),
         scale: 0.5,
         translation: p2
       } ) );
