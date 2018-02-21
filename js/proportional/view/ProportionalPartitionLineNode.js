@@ -9,11 +9,15 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DragListener = require( 'SCENERY/listeners/DragListener' );
+  var FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Matrix3 = require( 'DOT/Matrix3' );
@@ -22,6 +26,7 @@ define( function( require ) {
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
+  var Range = require( 'DOT/Range' );
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
 
@@ -109,6 +114,23 @@ define( function( require ) {
     var partitionSplitProperty = area.partitionSplitProperties.get( orientation );
     var oppositeActiveTotalProperty = area.getActiveTotalProperty( orientation.opposite );
     var activeTotalProperty = area.getActiveTotalProperty( orientation );
+    var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty ], function( total ) {
+      return new Range( 0, total - 1 );
+    } );
+
+    // TODO: factor out range (import if necessary), and use for clamping below
+    this.initializeAccessibleSlider( partitionSplitProperty, accessibleRangeProperty, new BooleanProperty( true ), {
+      constrainValue: function( value ) {
+        return Util.roundSymmetric( value );
+      },
+      keyboardStep: 1,
+      shiftKeyboardStep: 1,
+      pageKeyboardStep: 5
+    } );
+
+    this.focusHighlight = new FocusHighlightPath( handleShape.getOffsetShape( 5 ) );
+    handle.addChild( this.focusHighlight );
+    this.focusHighlightLayerable = true;
 
     // Main coordinate (when dragging)
     partitionSplitProperty.link( function( split ) {
@@ -167,7 +189,11 @@ define( function( require ) {
   var verticalArrowShape = new Shape().moveTo( -arrowHalfLength, 0 ).lineTo( arrowHalfLength, arrowHalfWidth ).lineTo( arrowHalfLength, -arrowHalfWidth ).close();
   var horizontalArrowShape = verticalArrowShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
 
-  return inherit( Node, ProportionalPartitionLineNode, {}, {
+  inherit( Node, ProportionalPartitionLineNode, {}, {
     HANDLE_ARROW_SHAPES: new OrientationPair( horizontalArrowShape, verticalArrowShape )
   } );
+
+  AccessibleSlider.mixInto( ProportionalPartitionLineNode );
+
+  return ProportionalPartitionLineNode;
 } );
