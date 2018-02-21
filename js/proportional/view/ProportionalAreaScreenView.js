@@ -108,7 +108,6 @@ define( function( require ) {
     accessibleOrder.push( sceneSelectionNode );
     accessibleOrder.push( this.resetAllButton );
     this.accessibleOrder = accessibleOrder;
-    console.log( accessibleOrder );
   }
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
