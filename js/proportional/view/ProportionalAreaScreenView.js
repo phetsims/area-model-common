@@ -47,15 +47,16 @@ define( function( require ) {
     AreaScreenView.call( this, model, options );
 
     // Scene selection
-    this.addChild( new SceneSelectionNode( model, {
+    var sceneSelectionNode = new SceneSelectionNode( model, {
       top: this.panelContainer.bottom + AreaModelConstants.PANEL_SPACING,
       centerX: this.panelContainer.centerX
-    } ) );
+    } );
+    this.addChild( sceneSelectionNode );
 
     // Checkboxes
     var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
-    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countsVisibleProperty );
     var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty );
+    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countsVisibleProperty );
 
     var checkboxContainer = new VBox( {
       children: [ gridCheckbox, countingCheckbox, tileCheckbox ],
@@ -84,6 +85,30 @@ define( function( require ) {
     } );
 
     this.addChild( checkboxContainer );
+
+    var accessibleOrder = [];
+    this.areaNodes.forEach( function( areaNode ) {
+      accessibleOrder.push( areaNode.areaLayer );
+    } );
+    if ( this.partitionSelectionPanel ) {
+      accessibleOrder.push( this.partitionSelectionPanel );
+    }
+    accessibleOrder.push( gridCheckbox );
+    accessibleOrder.push( tileCheckbox );
+    accessibleOrder.push( countingCheckbox );
+    accessibleOrder.push( this.productBox );
+    accessibleOrder.push( this.areaBox );
+    accessibleOrder.push( this.productNode );
+    accessibleOrder.push( this.productsSelectionPanel );
+    accessibleOrder.push( this.calculationSelectionPanel );
+    accessibleOrder.push( this.calculationDisplayPanel );
+    this.areaNodes.forEach( function( areaNode ) {
+      accessibleOrder.push( areaNode.eraseButton );
+    } );
+    accessibleOrder.push( sceneSelectionNode );
+    accessibleOrder.push( this.resetAllButton );
+    this.accessibleOrder = accessibleOrder;
+    console.log( accessibleOrder );
   }
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );

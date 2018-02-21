@@ -78,8 +78,9 @@ define( function( require ) {
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
     //TODO: abstract method
-    var productNode = this.createProductNode( model, options.decimalPlaces );
-    var productBoxContent = new AlignBox( productNode, {
+    // @public {Node}
+    this.productNode = this.createProductNode( model, options.decimalPlaces );
+    var productBoxContent = new AlignBox( this.productNode, {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
@@ -96,32 +97,34 @@ define( function( require ) {
     var selectionButtonAlignGroup = new AlignGroup();
 
     // TODO: don't require this ordering of creation just for sizing. creating the "bigger" one first
-    var productsSelectionPanel = this.createPanelContent( partialProductsString, panelAlignGroup,
-                                                   new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
-    var calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, panelAlignGroup,
-                                                      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
+    // @public {Node}
+    this.productsSelectionPanel = this.createPanelContent( partialProductsString, panelAlignGroup,
+                                                           new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
+    this.calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, panelAlignGroup,
+                                                              new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
     // TODO: cleanup, let subtypes add bits
-    var partitionSelectionPanel = null;
+    // @public {Node|null}
+    this.partitionSelectionPanel = null;
     if ( model instanceof ProportionalAreaModel ) {
       var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
         derive: 'visiblePartitionOrientationProperty',
         bidirectional: true
       } );
-      partitionSelectionPanel = this.createPanelContent( partitionString, panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) );
+      this.partitionSelectionPanel = this.createPanelContent( partitionString, panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) );
     }
     var selectionContent = new VBox( {
       spacing: 15
     } );
     var contentChildren = [];
     if ( options.showProductsSelection ) {
-      contentChildren.push( productsSelectionPanel );
+      contentChildren.push( this.productsSelectionPanel );
     }
     if ( options.showCalculationSelection ) {
-      contentChildren.push( calculationSelectionPanel );
+      contentChildren.push( this.calculationSelectionPanel );
     }
     // TODO: vary this based on the current area!
     if ( model.currentAreaProperty.value.partitionLineChoice === PartitionLineChoice.ONE ) {
-      contentChildren.push( partitionSelectionPanel );
+      contentChildren.push( this.partitionSelectionPanel );
     }
     selectionContent.children = contentChildren;
     // Add separators between items
@@ -142,17 +145,17 @@ define( function( require ) {
 
     // Create accordion boxes after all group-aligned content is created.
     // TODO: FML. product => factors, area => product.
-    var productBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.productBoxExpanded, productBoxContent );
-    var areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
+    this.productBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.productBoxExpanded, productBoxContent );
+    this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
 
     // TODO: sizing
-    var layoutNode = this.createLayoutNode && this.createLayoutNode( model, productBox.width ); // TODO: better way
+    var layoutNode = this.createLayoutNode && this.createLayoutNode( model, this.productBox.width ); // TODO: better way
 
     // @protected {VBox} - Available for suptype positioning relative to this.
     this.panelContainer = new VBox( {
       children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
-        productBox,
-        areaBox,
+        this.productBox,
+        this.areaBox,
       ].concat( options.showCalculationSelection || options.showProductsSelection ? [ selectionPanel ] : [] ) ),
       spacing: AreaModelConstants.PANEL_SPACING
     } );
@@ -179,8 +182,8 @@ define( function( require ) {
     }
     this.addChild( this.calculationDisplayPanel );
 
-    // Reset All button
-    var resetAllButton = new ResetAllButton( {
+    // @public {Node}
+    this.resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
       },
@@ -188,7 +191,7 @@ define( function( require ) {
       right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN,
       bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
     } );
-    this.addChild( resetAllButton );
+    this.addChild( this.resetAllButton );
 
     // @protected {Array.<ProportionalAreaNode>}
     this.areaNodes = model.areas.map( this.createAreaNode.bind( this, model ) );

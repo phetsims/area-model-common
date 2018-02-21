@@ -47,7 +47,7 @@ define( function( require ) {
     // @public {Area}
     this.area = area;
 
-    // @protected {Node} - Layers
+    // @public {Node} - Layers (public for a11y)
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
@@ -91,7 +91,8 @@ define( function( require ) {
     } );
     productLabelListener();
 
-    var eraseButton = new EraserButton( {
+    // @public {Node} - Exposed publicly for a11y
+    this.eraseButton = new EraserButton( {
       listener: function() {
         area.erase();
       },
@@ -99,7 +100,7 @@ define( function( require ) {
       touchAreaXDilation: 8,
       touchAreaYDilation: 8
     } );
-    this.labelLayer.addChild( eraseButton );
+    this.labelLayer.addChild( this.eraseButton );
   }
 
   areaModelCommon.register( 'AreaNode', AreaNode );
