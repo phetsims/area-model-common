@@ -15,6 +15,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var KeyboardDragListener = require( 'SCENERY_PHET/accessibility/listeners/KeyboardDragListener' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -50,7 +51,10 @@ define( function( require ) {
     } );
 
     var circle = new Circle( DRAG_RADIUS, {
-      touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ), 
+      tagName: 'div',
+      focusable: true,
+      touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
+      focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ), // TODO deduplicate
       fill: AreaModelColorProfile.proportionalDragHandleBackgroundProperty,
       stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',
@@ -94,6 +98,44 @@ define( function( require ) {
         circle
       ]
     } );
+
+    var locationProperty = new Property( new Vector2() );
+    function updateLocationProperty() {
+      locationProperty.value = new Vector2( area.getActiveTotalProperty( Orientation.HORIZONTAL ).value, area.getActiveTotalProperty( Orientation.VERTICAL ).value );
+    }
+    updateLocationProperty();
+    locationProperty.lazyLink( function( location ) {
+      area.getActiveTotalProperty( Orientation.HORIZONTAL ).value = location.x;
+      area.getActiveTotalProperty( Orientation.VERTICAL ).value = location.y;
+    } );
+    area.getActiveTotalProperty( Orientation.HORIZONTAL ).lazyLink( updateLocationProperty );
+    area.getActiveTotalProperty( Orientation.VERTICAL ).lazyLink( updateLocationProperty );
+
+    var keyboardListener = new KeyboardDragListener( {
+      // TODO: generalize for explore screen
+      positionDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+      shiftPositionDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+      transform: modelViewTransform,
+      // locationProperty: locationProperty,
+      drag: function( delta ) {
+        // TODO: deduplicate width/height
+        var width = area.getActiveTotalProperty( Orientation.HORIZONTAL ).value;
+        var height = area.getActiveTotalProperty( Orientation.VERTICAL ).value;
+
+        width += delta.x;
+        height += delta.y;
+
+        width = Util.roundSymmetric( Util.clamp( width, area.minimumSize, area.maximumSize ) );
+        height = Util.roundSymmetric( Util.clamp( height, area.minimumSize, area.maximumSize ) );
+
+        area.getActiveTotalProperty( Orientation.HORIZONTAL ).value = width;
+        area.getActiveTotalProperty( Orientation.VERTICAL ).value = height;
+      },
+      moveOnHoldDelay: 750,
+      moveOnHoldInterval: 70
+    } );
+
+    circle.addAccessibleInputListener( keyboardListener );
 
     // Apply offsets while dragging for a smoother experience.
     // See https://github.com/phetsims/area-model-common/issues/3

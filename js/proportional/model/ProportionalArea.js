@@ -65,6 +65,7 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<number|null>>} - If there is an active partition line, its location
     this.partitionSplitProperties = new OrientationPair( new Property( options.initialHorizontalSplit ), new Property( options.initialVerticalSplit ) );
 
+    // TODO: Check on this property, doesn't seem to change with partitions
     // @private {Property.<number|null>} - If there is an active partition line, its location.
     this.horizontalPartitionSplitProperty = new Property( options.initialHorizontalSplit );
 
