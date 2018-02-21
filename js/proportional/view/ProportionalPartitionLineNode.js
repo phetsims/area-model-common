@@ -119,6 +119,7 @@ define( function( require ) {
     } );
 
     // TODO: factor out range (import if necessary), and use for clamping below
+    // TODO: Only pass in a Property.<number>, NEVER something that can be null
     this.initializeAccessibleSlider( partitionSplitProperty, accessibleRangeProperty, new BooleanProperty( true ), {
       constrainValue: function( value ) {
         return Util.roundSymmetric( value );
