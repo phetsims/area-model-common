@@ -115,7 +115,7 @@ define( function( require ) {
     var oppositeActiveTotalProperty = area.getActiveTotalProperty( orientation.opposite );
     var activeTotalProperty = area.getActiveTotalProperty( orientation );
     var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty ], function( total ) {
-      return new Range( 0, total - 1 );
+      return new Range( 0, total - area.snapSize );
     } );
 
     // TODO: factor out range (import if necessary), and use for clamping below
