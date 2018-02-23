@@ -90,9 +90,6 @@ define( function( require ) {
     this.areaNodes.forEach( function( areaNode ) {
       accessibleOrder.push( areaNode.areaLayer );
     } );
-    if ( this.partitionSelectionPanel ) {
-      accessibleOrder.push( this.partitionSelectionPanel );
-    }
     accessibleOrder.push( gridCheckbox );
     accessibleOrder.push( tileCheckbox );
     accessibleOrder.push( countingCheckbox );
@@ -101,6 +98,9 @@ define( function( require ) {
     accessibleOrder.push( this.productNode );
     accessibleOrder.push( this.productsSelectionPanel );
     accessibleOrder.push( this.calculationSelectionPanel );
+    if ( this.partitionSelectionPanel ) {
+      accessibleOrder.push( this.partitionSelectionPanel );
+    }
     accessibleOrder.push( this.calculationDisplayPanel );
     this.areaNodes.forEach( function( areaNode ) {
       accessibleOrder.push( areaNode.eraseButton );
