@@ -62,9 +62,7 @@ define( function( require ) {
         new DragListener( {
           targetNode: this,
           applyOffset: false,
-          start: function( event, listener ) {
-            draggedProperty.value = true;
-          },
+          isPressedProperty: draggedProperty,
           // TODO: key into starting drag point? See https://github.com/phetsims/area-model-common/issues/17
           drag: function( event, listener ) {
             var pointerViewPoint = listener.parentPoint;
@@ -84,9 +82,6 @@ define( function( require ) {
               viewPoint.x - modelViewTransform.modelToViewX( width ),
               viewPoint.y - modelViewTransform.modelToViewY( height )
             );
-          },
-          end: function( event, listener ) {
-            draggedProperty.value = false;
           }
         } )
       ]
