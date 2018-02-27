@@ -90,9 +90,9 @@ define( function( require ) {
     this.areaNodes.forEach( function( areaNode ) {
       accessibleOrder.push( areaNode.areaLayer );
     } );
-    accessibleOrder.push( gridCheckbox );
-    accessibleOrder.push( tileCheckbox );
-    accessibleOrder.push( countingCheckbox );
+    this.areaNodes.forEach( function( areaNode ) {
+      accessibleOrder.push( areaNode.eraseButton );
+    } );
     accessibleOrder.push( this.productBox );
     accessibleOrder.push( this.areaBox );
     accessibleOrder.push( this.productNode );
@@ -102,9 +102,9 @@ define( function( require ) {
       accessibleOrder.push( this.partitionSelectionPanel );
     }
     accessibleOrder.push( this.calculationDisplayPanel );
-    this.areaNodes.forEach( function( areaNode ) {
-      accessibleOrder.push( areaNode.eraseButton );
-    } );
+    accessibleOrder.push( gridCheckbox );
+    accessibleOrder.push( tileCheckbox );
+    accessibleOrder.push( countingCheckbox );
     accessibleOrder.push( sceneSelectionNode );
     accessibleOrder.push( this.resetAllButton );
     this.accessibleOrder = accessibleOrder;
