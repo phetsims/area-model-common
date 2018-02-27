@@ -238,7 +238,10 @@ define( function( require ) {
         isActive: availableIndex === 6
       } );
 
-      return lines;
+      return lines.map( function( line ) {
+        line.node.scale( 0.85 );
+        return line;
+      } );
     },
 
     createColoredBox: function( orientation ) {
