@@ -465,7 +465,7 @@ define( function( require ) {
           }
           // Generic Screen (non-proportional, no exponents) uses dot, see https://github.com/phetsims/area-model-common/issues/72
           else {
-            return self.parenWrap( self.dotMultiply( verticalText, horizontalText, isActive ), isActive );
+            return self.parenWrap( self.xMultiply( verticalText, horizontalText, isActive ), isActive );
           }
         } );
       } ) ), isActive );
