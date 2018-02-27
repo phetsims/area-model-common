@@ -149,6 +149,7 @@ define( function( require ) {
       if ( this.currentChallengeProperty.value ) {
         this.currentChallengeProperty.value.showAnswers();
         this.currentChallengeProperty.value.stateProperty.value = GameState.SHOW_SOLUTION;
+        this.activeEditableProperty.reset();
       }
     },
 
