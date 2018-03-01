@@ -78,18 +78,6 @@ define( function( require ) {
       buttonYMargin: 8
     } );
 
-    // TODO: Don't break private namespace, and add a feature.
-    this.expandCollapseButton.pickable = false;
-    this.titleNode.pickable = false;
-    this.collapsedBox.cursor = 'pointer';
-    this.expandedBox.cursor = 'pointer';
-    this.collapsedBox.addInputListener( new FireListener( { fire: function() {
-      model.calculationBoxVisibleProperty.value = !model.calculationBoxVisibleProperty.value;
-    } } ) );
-    this.expandedBox.addInputListener( new FireListener( { fire: function() {
-      model.calculationBoxVisibleProperty.value = !model.calculationBoxVisibleProperty.value;
-    } } ) );
-
     model.areaCalculationChoiceProperty.link( function( choice ) {
       assert && assert( choice !== AreaCalculationChoice.LINE_BY_LINE, 'Should be HIDDEN or SHOW_ALL_LINES' );
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
