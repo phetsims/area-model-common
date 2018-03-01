@@ -18,7 +18,6 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -59,7 +58,6 @@ define( function( require ) {
       stroke: AreaModelColorProfile.panelBorderProperty,
       contentXMargin: margin,
       contentYMargin: margin,
-      showTitleWhenExpanded: false,
       contentXSpacing: -10,
       titleNode: new Text( calculationString, {
         font: AreaModelConstants.TITLE_FONT,
