@@ -77,7 +77,7 @@ define( function( require ) {
     X_MULTIPLICATION_STRING: '\u00D7',
     X_VARIABLE_RICH_STRING: '<font face="' + new MathSymbolFont( 10 ).family.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' ) + '"><i>x</i></font>',
     PLUS_STRING: '+',
-    NEGATIVE_STRING: '-',
+    NEGATIVE_STRING: '-', // TODO: Use MathSymbols from CM when it is added
     MINUS_STRING: '\u2212',
     DOT_STRING: '\u22c5',
 
