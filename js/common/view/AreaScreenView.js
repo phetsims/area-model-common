@@ -77,10 +77,7 @@ define( function( require ) {
     var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
-    //TODO: abstract method
-    // @public {Node}
-    this.productNode = this.createProductNode( model, options.decimalPlaces );
-    var productBoxContent = new AlignBox( this.productNode, {
+    var factorsBoxContent = new AlignBox( this.createFactorsNode( model, options.decimalPlaces ), {
       group: panelAlignGroup,
       xAlign: 'center'
     } );
@@ -145,16 +142,16 @@ define( function( require ) {
 
     // Create accordion boxes after all group-aligned content is created.
     // TODO: FML. product => factors, area => product.
-    this.productBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.productBoxExpanded, productBoxContent );
-    this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.totalModelBoxExpanded, areaBoxContent );
+    this.factorsBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.factorsBoxExpanded, factorsBoxContent );
+    this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.areaBoxExpanded, areaBoxContent );
 
     // TODO: sizing
-    var layoutNode = this.createLayoutNode && this.createLayoutNode( model, this.productBox.width ); // TODO: better way
+    var layoutNode = this.createLayoutNode && this.createLayoutNode( model, this.factorsBox.width ); // TODO: better way
 
     // @protected {VBox} - Available for suptype positioning relative to this.
     this.panelContainer = new VBox( {
       children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
-        this.productBox,
+        this.factorsBox,
         this.areaBox,
       ].concat( options.showCalculationSelection || options.showProductsSelection ? [ selectionPanel ] : [] ) ),
       spacing: AreaModelConstants.PANEL_SPACING
@@ -291,6 +288,18 @@ define( function( require ) {
      */
     getAreaTranslation: function() {
       return this.layoutBounds.leftTop.plus( this.useLargeArea ? AreaModelConstants.LARGE_AREA_OFFSET : AreaModelConstants.MAIN_AREA_OFFSET );
+    },
+
+    /**
+     * Creates the "factors" (dimensions) content for the accordion box.
+     * @public
+     *
+     * @param {AreaModel} model
+     * @param {number} decimalPlaces
+     * @returns {Node}
+     */
+    createFactorsNode: function( model, decimalPlaces ) {
+      throw new Error( 'abstract method, should be implemented by subtype' );
     }
   } );
 } );

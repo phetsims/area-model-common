@@ -93,9 +93,8 @@ define( function( require ) {
     this.areaNodes.forEach( function( areaNode ) {
       accessibleOrder.push( areaNode.eraseButton );
     } );
-    accessibleOrder.push( this.productBox );
+    accessibleOrder.push( this.factorsBox );
     accessibleOrder.push( this.areaBox );
-    accessibleOrder.push( this.productNode );
     accessibleOrder.push( this.productsSelectionPanel );
     accessibleOrder.push( this.calculationSelectionPanel );
     if ( this.partitionSelectionPanel ) {
@@ -138,8 +137,16 @@ define( function( require ) {
       } );
     },
 
-    // TODO: doc
-    createProductNode: function( model, decimalPlaces ) {
+    /**
+     * Creates the "factors" (dimensions) content for the accordion box.
+     * @public
+     * @override
+     *
+     * @param {AreaModel} model
+     * @param {number} decimalPlaces
+     * @returns {Node}
+     */
+    createFactorsNode: function( model, decimalPlaces ) {
       return new ProportionalProductNode( model.currentAreaProperty, decimalPlaces );
     },
 

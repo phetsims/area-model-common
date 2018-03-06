@@ -33,7 +33,7 @@ define( function( require ) {
     options = _.extend( {
       allowExponents: false,
       isProportional: false,
-      initialTotalModelBoxExpanded: false,
+      initialAreaBoxExpanded: false,
       initialAreaCalculationChoice: AreaCalculationChoice.HIDDEN,
       initialPartialProductsChoice: PartialProductsChoice.HIDDEN
     }, options );
@@ -56,10 +56,10 @@ define( function( require ) {
     this.currentAreaProperty = new Property( defaultArea );
 
     // @public {Property.<boolean>}
-    this.productBoxExpanded = new BooleanProperty( true );
+    this.factorsBoxExpanded = new BooleanProperty( true );
 
     // @public {Property.<boolean>}
-    this.totalModelBoxExpanded = new BooleanProperty( options.initialTotalModelBoxExpanded );
+    this.areaBoxExpanded = new BooleanProperty( options.initialAreaBoxExpanded );
 
     // @public {Property.<AreaCalculationChoice}
     this.areaCalculationChoiceProperty = new Property( options.initialAreaCalculationChoice );
@@ -86,8 +86,8 @@ define( function( require ) {
      */
     reset: function() {
       this.currentAreaProperty.reset();
-      this.productBoxExpanded.reset();
-      this.totalModelBoxExpanded.reset();
+      this.factorsBoxExpanded.reset();
+      this.areaBoxExpanded.reset();
       this.areaCalculationChoiceProperty.reset();
       this.partialProductsChoiceProperty.reset();
 

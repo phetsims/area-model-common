@@ -56,8 +56,16 @@ define( function( require ) {
       } );
     },
 
-    // TODO: doc/improve
-    createProductNode: function( model, decimalPlaces ) {
+    /**
+     * Creates the "factors" (dimensions) content for the accordion box.
+     * @public
+     * @override
+     *
+     * @param {AreaModel} model
+     * @param {number} decimalPlaces
+     * @returns {Node}
+     */
+    createFactorsNode: function( model, decimalPlaces ) {
       //TODO: don't duplicate horizontal/vertical here
       var horizontalDisplayProperty = new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
         return area.displayProperties.get( Orientation.HORIZONTAL );

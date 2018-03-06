@@ -26,7 +26,7 @@ define( function( require ) {
 
     options = _.extend( {
       isProportional: true,
-      initialTotalModelBoxExpanded: true
+      initialAreaBoxExpanded: true
     }, options );
 
     var areas = areaOptionObjects.map( function( options ) {
