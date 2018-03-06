@@ -19,7 +19,7 @@ define( function( require ) {
   var GenericProductNode = require( 'AREA_MODEL_COMMON/generic/view/GenericProductNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Property = require( 'AXON/Property' );
 
   /**
@@ -49,7 +49,15 @@ define( function( require ) {
   areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );
 
   return inherit( AreaScreenView, GenericAreaScreenView, {
-    // TODO: doc, abstract
+    /**
+     * Creates the "area" (product) content for the accordion box.
+     * @public
+     * @override
+     *
+     * @param {AreaModel} model
+     * @param {Area} area
+     * @returns {AreaNode}
+     */
     createAreaNode: function( model, area ) {
       return new GenericAreaNode( area, model.allowExponents, model.partialProductsChoiceProperty, {
         translation: this.getAreaTranslation()
@@ -66,14 +74,12 @@ define( function( require ) {
      * @returns {Node}
      */
     createFactorsNode: function( model, decimalPlaces ) {
-      //TODO: don't duplicate horizontal/vertical here
-      var horizontalDisplayProperty = new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-        return area.displayProperties.get( Orientation.HORIZONTAL );
-      } ) );
-      var verticalDisplayProperty = new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-        return area.displayProperties.get( Orientation.VERTICAL );
-      } ) );
-      return new GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, new Property( model.allowExponents ) );
+      var dynamicProperties = OrientationPair.create( function( orientation ) {
+        return new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
+          return area.displayProperties.get( orientation );
+        } ) );
+      } );
+      return new GenericProductNode( dynamicProperties.horizontal, dynamicProperties.vertical, new Property( model.allowExponents ) );
     },
 
     // TODO: doc/improve

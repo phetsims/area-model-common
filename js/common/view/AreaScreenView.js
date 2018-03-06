@@ -190,7 +190,7 @@ define( function( require ) {
     } );
     this.addChild( this.resetAllButton );
 
-    // @protected {Array.<ProportionalAreaNode>}
+    // @protected {Array.<AreaNode>}
     this.areaNodes = model.areas.map( this.createAreaNode.bind( this, model ) );
 
     this.areaNodes.forEach( function( areaNode ) {
@@ -299,6 +299,18 @@ define( function( require ) {
      * @returns {Node}
      */
     createFactorsNode: function( model, decimalPlaces ) {
+      throw new Error( 'abstract method, should be implemented by subtype' );
+    },
+
+    /**
+     * Creates the "area" (product) content for the accordion box.
+     * @public
+     *
+     * @param {AreaModel} model
+     * @param {Area} area
+     * @returns {AreaNode}
+     */
+    createAreaNode: function( model, area ) {
       throw new Error( 'abstract method, should be implemented by subtype' );
     }
   } );

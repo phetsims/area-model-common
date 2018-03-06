@@ -129,7 +129,15 @@ define( function( require ) {
       } );
     },
 
-    // TODO: doc, abstract
+    /**
+     * Creates the "area" (product) content for the accordion box.
+     * @public
+     * @override
+     *
+     * @param {AreaModel} model
+     * @param {Area} area
+     * @returns {AreaNode}
+     */
     createAreaNode: function( model, area ) {
       //TODO: countsVisibleProperty or countingVisibleProperty? decide!
       return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, this.useLargeArea, {
