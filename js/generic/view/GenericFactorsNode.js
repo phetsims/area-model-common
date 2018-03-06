@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays the product of the horizontal sum and vertical sum.
+ * Displays the main factors (horizontal sum and vertical sum)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {Property.<TermList|null>} verticalDisplayProperty
    * @param {Property.<boolean>} allowExponentsProperty
    */
-  function GenericProductNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponentsProperty ) {
+  function GenericFactorsNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponentsProperty ) {
     var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, horizontalDisplayProperty );
     var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, verticalDisplayProperty );
 
@@ -69,9 +69,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'GenericProductNode', GenericProductNode );
+  areaModelCommon.register( 'GenericFactorsNode', GenericFactorsNode );
 
-  return inherit( HBox, GenericProductNode, {
+  return inherit( HBox, GenericFactorsNode, {
     /**
      * Creates a readout for the total sum for a particular orientation.
      * @private

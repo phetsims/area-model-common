@@ -27,7 +27,7 @@ define( function( require ) {
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var GameStatusBar = require( 'AREA_MODEL_COMMON/game/view/GameStatusBar' );
-  var GenericProductNode = require( 'AREA_MODEL_COMMON/generic/view/GenericProductNode' );
+  var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
@@ -201,8 +201,8 @@ define( function( require ) {
 
     // TODO: ensure sizing doesn't spill out? AreaModelConstants.PANEL_INTERIOR_MAX
     // TODO: make it accept a pair
-    var productNode = new GenericProductNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
-    var productContent = this.createPanel( dimensionsString, panelAlignGroup, productNode );
+    var factorsNode = new GenericFactorsNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
+    var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
     //TODO: remove this workaround
     var totalTermPropertyProperty = new DerivedProperty( [ this.display.totalPropertiesProperty ], function( totalProperties ) {
@@ -247,12 +247,12 @@ define( function( require ) {
       }
     } );
 
-    var totalContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
+    var productContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
 
     var panelBox = new VBox( {
       children: [
-        productContent,
-        totalContent
+        factorsContent,
+        productContent
       ],
       spacing: AreaModelConstants.PANEL_SPACING
     } );

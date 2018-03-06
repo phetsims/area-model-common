@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {Property.<Area>} currentAreaProperty
    * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
    */
-  function ProportionalProductNode( currentAreaProperty, decimalPlaces ) {
+  function ProportionalFactorsNode( currentAreaProperty, decimalPlaces ) {
 
     HBox.call( this, {
       children: [
@@ -41,9 +41,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'ProportionalProductNode', ProportionalProductNode );
+  areaModelCommon.register( 'ProportionalFactorsNode', ProportionalFactorsNode );
 
-  return inherit( HBox, ProportionalProductNode, {
+  return inherit( HBox, ProportionalFactorsNode, {
     /**
      * Creates a picker that adjusts the specified orientation's total size.
      * @private

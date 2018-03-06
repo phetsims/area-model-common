@@ -16,7 +16,7 @@ define( function( require ) {
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaModel' );
   var GenericAreaNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaNode' );
   var GenericLayoutSelectionNode = require( 'AREA_MODEL_COMMON/generic/view/GenericLayoutSelectionNode' );
-  var GenericProductNode = require( 'AREA_MODEL_COMMON/generic/view/GenericProductNode' );
+  var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
@@ -79,7 +79,7 @@ define( function( require ) {
           return area.displayProperties.get( orientation );
         } ) );
       } );
-      return new GenericProductNode( dynamicProperties.horizontal, dynamicProperties.vertical, new Property( model.allowExponents ) );
+      return new GenericFactorsNode( dynamicProperties.horizontal, dynamicProperties.vertical, new Property( model.allowExponents ) );
     },
 
     // TODO: doc/improve
