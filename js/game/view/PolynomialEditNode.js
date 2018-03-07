@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
@@ -48,7 +48,7 @@ define( function( require ) {
     ] ).toRichString();
 
     var readoutText = new RichText( longestString, {
-      font: AreaModelConstants.POLYNOMIAL_EDIT_READOUT_FONT
+      font: AreaModelCommonConstants.POLYNOMIAL_EDIT_READOUT_FONT
     } );
     var readoutBackground = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
       cornerRadius: 3,
@@ -67,7 +67,7 @@ define( function( require ) {
       ]
     } );
 
-    var editFont = AreaModelConstants.GAME_POLYNOMIAL_EDIT_FONT;
+    var editFont = AreaModelCommonConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
     var constantPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
       return totalProperties.length > 1 ? totalProperties[ 0 ] : new EditableProperty( null );
@@ -167,8 +167,8 @@ define( function( require ) {
       color: new DerivedProperty( [ new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
 
-    var xText = new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
-    var xSquaredText = new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
+    var xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
+    var xSquaredText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
     var plus1 = new Text( '+', { font: editFont } );
     var plus2 = new Text( '+', { font: editFont } );
 

@@ -14,7 +14,7 @@ define( function( require ) {
   // modules
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -114,7 +114,7 @@ define( function( require ) {
     } ) );
 
     // @private {ProgressIndicator}
-    this.scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2 );
+    this.scoreNode = new ProgressIndicator( AreaModelCommonConstants.NUM_CHALLENGES, scoreProperty, AreaModelCommonConstants.NUM_CHALLENGES * 2 );
     this.scoreNode.pickable = false;
     this.addChild( this.scoreNode );
 
@@ -131,7 +131,7 @@ define( function( require ) {
       if ( index !== null ) {
         self.challengeProgressNode.text = StringUtils.fillIn( challengeProgressPatternString, {
           current: '' + ( index + 1 ),
-          total: '' + AreaModelConstants.NUM_CHALLENGES
+          total: '' + AreaModelCommonConstants.NUM_CHALLENGES
         } );
       }
     } );

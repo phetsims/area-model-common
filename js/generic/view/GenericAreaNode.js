@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
@@ -43,9 +43,9 @@ define( function( require ) {
 
     AreaNode.call( this, area, partialProductsChoiceProperty, allowExponents, false, false );
 
-    var singleOffset = this.viewSize * AreaModelConstants.GENERIC_SINGLE_OFFSET;
-    var firstOffset = this.viewSize * AreaModelConstants.GENERIC_FIRST_OFFSET;
-    var secondOffset = this.viewSize * AreaModelConstants.GENERIC_SECOND_OFFSET;
+    var singleOffset = this.viewSize * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
+    var firstOffset = this.viewSize * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
+    var secondOffset = this.viewSize * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {

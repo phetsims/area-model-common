@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -52,7 +52,7 @@ define( function( require ) {
 
     var readoutText = new RichText( '#covfefe', {
       fill: textColorProperty,
-      font: AreaModelConstants.EDIT_READOUT_FONT
+      font: AreaModelCommonConstants.EDIT_READOUT_FONT
     } );
 
     var readoutBackground = new Rectangle( {

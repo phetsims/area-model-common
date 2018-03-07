@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Key = require( 'SCENERY_PHET/keypad/Key' );
@@ -44,7 +44,7 @@ define( function( require ) {
     [ null, new Key( '0', KeyID.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE ) ]
   ];
   var exponentLayout = noExponentLayout.concat( [
-    [ null, new Key( new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ), new Key( new RichText( AreaModelConstants.X_VARIABLE_RICH_STRING, { font: AreaModelConstants.KEYPAD_FONT } ), KeyID.X ) ],
+    [ null, new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ), new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X ) ],
   ] );
 
   /**
@@ -74,7 +74,7 @@ define( function( require ) {
     } );
 
     var readoutTextOptions = {
-      font: AreaModelConstants.KEYPAD_READOUT_FONT
+      font: AreaModelCommonConstants.KEYPAD_READOUT_FONT
     };
 
     var readoutText = new RichText( '', readoutTextOptions );
@@ -119,7 +119,7 @@ define( function( require ) {
         this.keypad,
         new RectangularPushButton( {
           content: new Text( enterString, {
-            font: AreaModelConstants.KEYPAD_FONT,
+            font: AreaModelCommonConstants.KEYPAD_FONT,
             maxWidth: 100
           } ),
           baseColor: 'white', // Not separated out, matches keypad.

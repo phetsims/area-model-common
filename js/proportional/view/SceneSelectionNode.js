@@ -13,7 +13,7 @@ define( function( require ) {
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -37,7 +37,7 @@ define( function( require ) {
       return {
         value: area,
         node: new AlignBox( new Text( area.maximumSize + 'x' + area.maximumSize, {
-          font: AreaModelConstants.SYMBOL_FONT
+          font: AreaModelCommonConstants.SYMBOL_FONT
         } ), { group: group } )
       };
     } );

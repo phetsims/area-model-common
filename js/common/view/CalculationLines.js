@@ -12,7 +12,7 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -23,53 +23,53 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // TODO: reduce duplication with ProductNode -- different font though
-  var activeX = new Text( AreaModelConstants.X_MULTIPLICATION_STRING, {
-    font: AreaModelConstants.CALCULATION_X_FONT,
+  var activeX = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
   var activeLeftParen = new Text( '(', {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
   var activeRightParen = new Text( ')', {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
-  var activePlus = new Text( AreaModelConstants.PLUS_STRING, {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+  var activePlus = new Text( AreaModelCommonConstants.PLUS_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
-  var activeMinus = new Text( AreaModelConstants.MINUS_STRING, {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+  var activeMinus = new Text( AreaModelCommonConstants.MINUS_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
-  var activeDot = new Text( AreaModelConstants.DOT_STRING, {
-    font: AreaModelConstants.CALCULATION_DOT_FONT,
+  var activeDot = new Text( AreaModelCommonConstants.DOT_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_DOT_FONT,
     fill: AreaModelColorProfile.calculationActiveProperty
   } );
 
-  var inactiveX = new Text( AreaModelConstants.X_MULTIPLICATION_STRING, {
-    font: AreaModelConstants.CALCULATION_X_FONT,
+  var inactiveX = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_X_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
   var inactiveLeftParen = new Text( '(', {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
   var inactiveRightParen = new Text( ')', {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
-  var inactivePlus = new Text( AreaModelConstants.PLUS_STRING, {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+  var inactivePlus = new Text( AreaModelCommonConstants.PLUS_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
-  var inactiveMinus = new Text( AreaModelConstants.MINUS_STRING, {
-    font: AreaModelConstants.CALCULATION_PAREN_FONT,
+  var inactiveMinus = new Text( AreaModelCommonConstants.MINUS_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
-  var inactiveDot = new Text( AreaModelConstants.DOT_STRING, {
-    font: AreaModelConstants.CALCULATION_DOT_FONT,
+  var inactiveDot = new Text( AreaModelCommonConstants.DOT_STRING, {
+    font: AreaModelCommonConstants.CALCULATION_DOT_FONT,
     fill: AreaModelColorProfile.calculationInactiveProperty
   } );
 
@@ -122,7 +122,7 @@ define( function( require ) {
         return [
           {
             node: new Text( '?', {
-              font: AreaModelConstants.CALCULATION_TERM_FONT,
+              font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
               fill: AreaModelColorProfile.calculationActiveProperty
             } ),
             index: 0,
@@ -258,7 +258,7 @@ define( function( require ) {
       var colorProperty = this.area.colorProperties.get( orientation );
       var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
       return new RichText( string, {
-        font: AreaModelConstants.CALCULATION_TERM_FONT,
+        font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
         fill: isActive ? colorProperty : AreaModelColorProfile.calculationInactiveProperty
       } );
     },
@@ -267,7 +267,7 @@ define( function( require ) {
     createRichText: function( term, isActive, includeBinaryOperation, excludeSign ) {
       var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
       return new RichText( string, {
-        font: AreaModelConstants.CALCULATION_TERM_FONT,
+        font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
         fill: isActive ? AreaModelColorProfile.calculationActiveProperty : AreaModelColorProfile.calculationInactiveProperty
       } );
     },

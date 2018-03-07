@@ -16,8 +16,8 @@ define( function( require ) {
   var AreaModel = require( 'AREA_MODEL_COMMON/common/model/AreaModel' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
-  var AreaModelGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelGlobals' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
@@ -74,7 +74,7 @@ define( function( require ) {
     this.useTileLikeBackground = options.useTileLikeBackground;
     this.useLargeArea = options.useLargeArea;
 
-    var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
+    var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
     // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
     var factorsBoxContent = new AlignBox( this.createFactorsNode( model, options.decimalPlaces ), {
@@ -127,7 +127,7 @@ define( function( require ) {
     // Add separators between items
     for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
       selectionContent.insertChild( i, new Line( {
-        x2: AreaModelConstants.PANEL_INTERIOR_MAX,
+        x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
         stroke: AreaModelColorProfile.selectionSeparatorProperty
       } ) );
     }
@@ -137,7 +137,7 @@ define( function( require ) {
       yMargin: 10,
       fill: AreaModelColorProfile.panelBackgroundProperty,
       stroke: AreaModelColorProfile.panelBorderProperty,
-      cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
     // Create accordion boxes after all group-aligned content is created.
@@ -154,22 +154,22 @@ define( function( require ) {
         this.factorsBox,
         this.areaBox,
       ].concat( options.showCalculationSelection || options.showProductsSelection ? [ selectionPanel ] : [] ) ),
-      spacing: AreaModelConstants.PANEL_SPACING
+      spacing: AreaModelCommonConstants.PANEL_SPACING
     } );
     this.addChild( new AlignBox( this.panelContainer, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'top',
-      margin: AreaModelConstants.PANEL_MARGIN
+      margin: AreaModelCommonConstants.PANEL_MARGIN
     } ) );
 
 
     // @protected {Node}
     if ( options.useCalculationBox ) {
-      var calculationTop = AreaModelConstants.MAIN_AREA_OFFSET.y + AreaModelConstants.AREA_SIZE + AreaModelConstants.PANEL_MARGIN + 30;
-      var calculationBottom = this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN;
-      this.calculationDisplayPanel = new CalculationBox( model, new Bounds2( 0, 0, AreaModelConstants.AREA_SIZE, calculationBottom - calculationTop ), {
-        x: AreaModelConstants.MAIN_AREA_OFFSET.x,
+      var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y + AreaModelCommonConstants.AREA_SIZE + AreaModelCommonConstants.PANEL_MARGIN + 30;
+      var calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN;
+      this.calculationDisplayPanel = new CalculationBox( model, new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop ), {
+        x: AreaModelCommonConstants.MAIN_AREA_OFFSET.x,
         y: calculationTop
       } );
       // TODO: positioning
@@ -185,8 +185,8 @@ define( function( require ) {
         model.reset();
       },
       touchAreaDilation: 10,
-      right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN,
-      bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
+      right: this.layoutBounds.right - AreaModelCommonConstants.PANEL_MARGIN,
+      bottom: this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN
     } );
     this.addChild( this.resetAllButton );
 
@@ -231,8 +231,8 @@ define( function( require ) {
       return new VBox( {
         children: [
           new AlignBox( new Text( titleString, {
-            font: AreaModelConstants.TITLE_FONT,
-            maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+            font: AreaModelCommonConstants.TITLE_FONT,
+            maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
           } ), {
             group: panelAlignGroup,
             xAlign: 'left'
@@ -259,15 +259,15 @@ define( function( require ) {
       //TODO: We can resize these now, so set resizable?
       return new AccordionBox( content, {
         titleNode: new Text( titleString, {
-          font: AreaModelConstants.TITLE_FONT,
-          maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
+          font: AreaModelCommonConstants.TITLE_FONT,
+          maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
         } ),
         expandedProperty: expandedProperty,
         contentXMargin: 15,
         contentYMargin: 12,
         fill: AreaModelColorProfile.panelBackgroundProperty,
         stroke: AreaModelColorProfile.panelBorderProperty,
-        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
+        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
         buttonTouchAreaXDilation: 5,
         buttonTouchAreaYDilation: 5,
         titleAlignX: 'left',
@@ -287,7 +287,7 @@ define( function( require ) {
      * @returns {Vector2}
      */
     getAreaTranslation: function() {
-      return this.layoutBounds.leftTop.plus( this.useLargeArea ? AreaModelConstants.LARGE_AREA_OFFSET : AreaModelConstants.MAIN_AREA_OFFSET );
+      return this.layoutBounds.leftTop.plus( this.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_OFFSET : AreaModelCommonConstants.MAIN_AREA_OFFSET );
     },
 
     /**

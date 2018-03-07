@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -67,8 +67,8 @@ define( function( require ) {
     // Text/alignment
     Property.multilink( [ partitionedArea.horizontalPartition.sizeProperty, partitionedArea.verticalPartition.sizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
       var textOptions = {
-        font: ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelConstants.PARTIAL_PRODUCT_FONT
-                                                            : AreaModelConstants.PARTIAL_FACTOR_FONT
+        font: ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
+                                                            : AreaModelCommonConstants.PARTIAL_FACTOR_FONT
       };
 
       // Hidden
@@ -110,7 +110,7 @@ define( function( require ) {
           box.spacing = 2;
           box.children = [
             verticalNode,
-            new Text( AreaModelConstants.X_MULTIPLICATION_STRING, textOptions ),
+            new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, textOptions ),
             horizontalNode,
           ];
         }

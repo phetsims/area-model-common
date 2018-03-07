@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
@@ -42,13 +42,13 @@ define( function( require ) {
 
     Node.call( this );
 
-    var singleOffset = AreaModelConstants.AREA_SIZE * AreaModelConstants.GENERIC_SINGLE_OFFSET;
-    var firstOffset = AreaModelConstants.AREA_SIZE * AreaModelConstants.GENERIC_FIRST_OFFSET;
-    var secondOffset = AreaModelConstants.AREA_SIZE * AreaModelConstants.GENERIC_SECOND_OFFSET;
-    var fullOffset = AreaModelConstants.AREA_SIZE;
+    var singleOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
+    var firstOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
+    var secondOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
+    var fullOffset = AreaModelCommonConstants.AREA_SIZE;
 
     // Background fill and stroke
-    this.addChild( new Rectangle( 0, 0, AreaModelConstants.AREA_SIZE, AreaModelConstants.AREA_SIZE, {
+    this.addChild( new Rectangle( 0, 0, AreaModelCommonConstants.AREA_SIZE, AreaModelCommonConstants.AREA_SIZE, {
       fill: AreaModelColorProfile.areaBackgroundProperty,
       stroke: AreaModelColorProfile.areaBorderProperty
     } ) );
@@ -170,7 +170,7 @@ define( function( require ) {
 
     var keypadOptions = {
       // TODO: dedup with other keypad?
-      x: AreaModelConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
+      x: AreaModelCommonConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
       top: 0
     };
     var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, false, setActiveTerm, keypadOptions );
@@ -211,7 +211,7 @@ define( function( require ) {
 
       firstPoint[ orientation.coordinate ] = offset;
       secondPoint[ orientation.coordinate ] = offset;
-      firstPoint[ orientation.opposite.coordinate ] = AreaModelConstants.AREA_SIZE;
+      firstPoint[ orientation.opposite.coordinate ] = AreaModelCommonConstants.AREA_SIZE;
       secondPoint[ orientation.opposite.coordinate ] = 0;
 
       var line = new Line( {

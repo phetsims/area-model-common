@@ -10,8 +10,8 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
-  var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -58,11 +58,11 @@ define( function( require ) {
     } );
     this.addChild( line );
 
-    var rangeOffset = ( isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
+    var rangeOffset = ( isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
     // Coordinate that doesn't change.
     //TODO: simplify
-    labelNode[ orientation.opposite.coordinate ] = rangeOffset + ( AreaModelQueryParameters.singleLine ? -7 : ( orientation === Orientation.HORIZONTAL ? -3 : -5 ) );
+    labelNode[ orientation.opposite.coordinate ] = rangeOffset + ( AreaModelCommonQueryParameters.singleLine ? -7 : ( orientation === Orientation.HORIZONTAL ? -3 : -5 ) );
 
     // Update the layout
     tickLocationsProperty.link( function( tickLocations ) {

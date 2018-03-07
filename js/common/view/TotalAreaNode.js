@@ -12,7 +12,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -38,7 +38,7 @@ define( function( require ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
-      font: AreaModelConstants.TOTAL_AREA_VALUE_FONT
+      font: AreaModelCommonConstants.TOTAL_AREA_VALUE_FONT
     } );
 
     var areaContainer;
@@ -48,7 +48,7 @@ define( function( require ) {
       areaContainer = new HBox( {
         spacing: 4,
         children: [
-          new Text( areaEqualsString, { font: AreaModelConstants.TOTAL_AREA_LABEL_FONT } ),
+          new Text( areaEqualsString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
             fill: useTileLikeBackground ? AreaModelColorProfile.smallTileProperty : AreaModelColorProfile.proportionalActiveAreaBackgroundProperty
@@ -57,9 +57,9 @@ define( function( require ) {
       } );
     }
     else {
-      areaText.maxWidth = AreaModelConstants.PANEL_INTERIOR_MAX;
+      areaText.maxWidth = AreaModelCommonConstants.PANEL_INTERIOR_MAX;
       // AlignBox it so that it is always centered and keeps the same bounds
-      areaContainer = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
+      areaContainer = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
     }
 
     // Wrap with a centered container, so that when maxWidth kicks in, the AccordionBox centers this vertically.
@@ -80,7 +80,7 @@ define( function( require ) {
       children: [
         centeredContainer
       ],
-      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
   }
 

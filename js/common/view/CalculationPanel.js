@@ -12,7 +12,7 @@ define( function( require ) {
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -184,8 +184,8 @@ define( function( require ) {
         }
 
         // Minimum width of the area size
-        if ( backgroundBounds.width < AreaModelConstants.AREA_SIZE ) {
-          backgroundBounds = backgroundBounds.dilatedX( ( AreaModelConstants.AREA_SIZE - backgroundBounds.width ) / 2 );
+        if ( backgroundBounds.width < AreaModelCommonConstants.AREA_SIZE ) {
+          backgroundBounds = backgroundBounds.dilatedX( ( AreaModelCommonConstants.AREA_SIZE - backgroundBounds.width ) / 2 );
         }
 
         // Minimum height
@@ -198,10 +198,10 @@ define( function( require ) {
         nextArrow.rightBottom = backgroundBounds.eroded( 5 ).rightBottom;
 
         // TODO: don't hardcode layoutBounds!
-        self.centerY = 618 - AreaModelConstants.PANEL_MARGIN - 75;
-        self.centerX = AreaModelConstants.MAIN_AREA_OFFSET.x + AreaModelConstants.AREA_SIZE / 2;
-        if ( self.left < AreaModelConstants.PANEL_MARGIN ) {
-          self.left = AreaModelConstants.PANEL_MARGIN;
+        self.centerY = 618 - AreaModelCommonConstants.PANEL_MARGIN - 75;
+        self.centerX = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
+        if ( self.left < AreaModelCommonConstants.PANEL_MARGIN ) {
+          self.left = AreaModelCommonConstants.PANEL_MARGIN;
         }
       }
 

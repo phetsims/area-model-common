@@ -12,7 +12,7 @@ define( function( require ) {
   var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -141,7 +141,7 @@ define( function( require ) {
 
     // Opposite coordinate (how wide the area is in the other direction)
     oppositeActiveTotalProperty.link( function( oppositeTotal ) {
-      var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
+      var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) + AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
       handle[ orientation.opposite.coordinate ] = offsetValue;
       line[ orientation.opposite.coordinate + '2' ] = offsetValue;
       line.mouseArea = line.localBounds.dilated( 4 );

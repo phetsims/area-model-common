@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaChallenge = require( 'AREA_MODEL_COMMON/game/model/AreaChallenge' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
@@ -44,7 +44,7 @@ define( function( require ) {
     // @public {Array.<AreaChallengeDescription>} - Descriptions for each type of level
     this.challengeDescriptions = challengeDescriptions;
 
-    // @public {Property.<number>} - Ranges from 0 to AreaModelConstants.NUM_CHALLENGES * 2
+    // @public {Property.<number>} - Ranges from 0 to AreaModelCommonConstants.NUM_CHALLENGES * 2
     //                               (since 2 points are rewarded for first attempt correct)
     this.scoreProperty = new NumberProperty( 0 );
 
@@ -80,7 +80,7 @@ define( function( require ) {
       descriptions = descriptions.concat( phet.joist.random.shuffle( descriptions.slice( 1 ) ) );
 
       // Then fill with random challenges if there are any more spaces
-      while ( descriptions.length < AreaModelConstants.NUM_CHALLENGES ) {
+      while ( descriptions.length < AreaModelCommonConstants.NUM_CHALLENGES ) {
         descriptions.push( phet.joist.random.sample( this.challengeDescriptions ) );
       }
 

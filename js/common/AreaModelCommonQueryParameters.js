@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var AreaModelQueryParameters = QueryStringMachine.getAll( {
+  var AreaModelCommonQueryParameters = QueryStringMachine.getAll( {
 
     // TODO: remove before deployment
     // use a ComboBox for generic layout selection
@@ -21,7 +21,7 @@ define( function( require ) {
     singleLine: { type: 'flag' }
   } );
 
-  areaModelCommon.register( 'AreaModelQueryParameters', AreaModelQueryParameters );
+  areaModelCommon.register( 'AreaModelCommonQueryParameters', AreaModelCommonQueryParameters );
 
-  return AreaModelQueryParameters;
+  return AreaModelCommonQueryParameters;
 } );

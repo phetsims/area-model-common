@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
 
   /**
@@ -80,7 +80,7 @@ define( function( require ) {
         string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
       }
       if ( this.power > 0 ) {
-        string += AreaModelConstants.X_VARIABLE_RICH_STRING;
+        string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
       }
       if ( this.power > 1 ) {
         string += '<sup>' + this.power + '</sup>';
@@ -104,15 +104,15 @@ define( function( require ) {
 
       if ( includeBinaryOperation ) {
         if ( this.coefficient < 0 ) {
-          string += ' ' + AreaModelConstants.MINUS_STRING + ' ';
+          string += ' ' + AreaModelCommonConstants.MINUS_STRING + ' ';
         }
         else {
-          string += ' ' + AreaModelConstants.PLUS_STRING + ' ';
+          string += ' ' + AreaModelCommonConstants.PLUS_STRING + ' ';
         }
       }
       else {
         if ( this.coefficient < 0 ) {
-          string += AreaModelConstants.NEGATIVE_STRING;
+          string += AreaModelCommonConstants.NEGATIVE_STRING;
         }
       }
 
@@ -132,10 +132,10 @@ define( function( require ) {
     getLongestGenericString: function( allowExponents, digitCount ) {
       var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
-        return AreaModelConstants.MINUS_STRING + digits + 'x<sup>2</sup>';
+        return AreaModelCommonConstants.MINUS_STRING + digits + 'x<sup>2</sup>';
       }
       else {
-        return AreaModelConstants.MINUS_STRING + digits;
+        return AreaModelCommonConstants.MINUS_STRING + digits;
       }
     }
   } );

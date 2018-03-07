@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -82,7 +82,7 @@ define( function( require ) {
           // TODO: Don't GC churn this, they can be shared EASILY
           // TODO: PERFORMANCE
           this.addChild( new Text( number, {
-            font: AreaModelConstants.COUNTING_FONT,
+            font: AreaModelCommonConstants.COUNTING_FONT,
             fill: AreaModelColorProfile.countingLabelProperty,
             centerX: mapX( col + 0.5 ),
             centerY: mapY( row + 0.5 )

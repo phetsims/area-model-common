@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
@@ -129,7 +129,7 @@ define( function( require ) {
       if ( this.currentLevelProperty.value ) {
         var level = this.currentLevelProperty.value;
 
-        if ( level.challengeIndexProperty.value === AreaModelConstants.NUM_CHALLENGES - 1 ) {
+        if ( level.challengeIndexProperty.value === AreaModelCommonConstants.NUM_CHALLENGES - 1 ) {
           this.currentLevelProperty.value.finish();
           this.currentChallengeProperty.value.stateProperty.value = GameState.LEVEL_COMPLETE;
         }

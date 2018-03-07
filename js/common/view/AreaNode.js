@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
@@ -55,7 +55,7 @@ define( function( require ) {
     this.addChild( this.labelLayer );
 
     // @public {number}
-    this.viewSize = useLargeArea ? AreaModelConstants.LARGE_AREA_SIZE : AreaModelConstants.AREA_SIZE;
+    this.viewSize = useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
 
     // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {
@@ -96,7 +96,7 @@ define( function( require ) {
       listener: function() {
         area.erase();
       },
-      center: isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET,
+      center: isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
       touchAreaXDilation: 8,
       touchAreaYDilation: 8
     } );

@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -37,7 +37,7 @@ define( function( require ) {
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
         var score = model.currentLevelProperty.value.scoreProperty.value;
-        if ( score === AreaModelConstants.NUM_CHALLENGES * 2 ) {
+        if ( score === AreaModelCommonConstants.NUM_CHALLENGES * 2 ) {
           audioPlayer.gameOverPerfectScore();
         }
         else if ( score === 0 ) {

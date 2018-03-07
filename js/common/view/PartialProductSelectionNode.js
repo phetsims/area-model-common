@@ -13,7 +13,7 @@ define( function( require ) {
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -37,13 +37,13 @@ define( function( require ) {
     Node.call( this );
 
     var horizontalText = new Text( 'b', {
-      font: AreaModelConstants.SYMBOL_FONT,
+      font: AreaModelCommonConstants.SYMBOL_FONT,
       fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
         return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
       } )
     } );
     var verticalText = new Text( 'a', {
-      font: AreaModelConstants.SYMBOL_FONT,
+      font: AreaModelCommonConstants.SYMBOL_FONT,
       fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( Orientation.VERTICAL ) ], function( value, heightColor ) {
         return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
       } )
@@ -61,7 +61,7 @@ define( function( require ) {
       },
       {
         value: PartialProductsChoice.PRODUCTS,
-        node: new AlignBox( new Text( 'A', { font: AreaModelConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } )
+        node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } )
       },
       {
         value: PartialProductsChoice.FACTORS,
@@ -90,15 +90,15 @@ define( function( require ) {
       return new HBox( {
         children: [
           new Text( '(', {
-            font: AreaModelConstants.SYMBOL_FONT
+            font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
           new Node( { children: [ verticalNode ] } ),
           new Text( ')(', {
-            font: AreaModelConstants.SYMBOL_FONT
+            font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
           new Node( { children: [ horizontalNode ] } ),
           new Text( ')', {
-            font: AreaModelConstants.SYMBOL_FONT
+            font: AreaModelCommonConstants.SYMBOL_FONT
           } )
         ],
         spacing: 0,
@@ -111,8 +111,8 @@ define( function( require ) {
       return new HBox( {
         children: [
           new Node( { children: [ verticalNode ] } ),
-          new Text( AreaModelConstants.X_MULTIPLICATION_STRING, {
-            font: AreaModelConstants.SYMBOL_FONT
+          new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
+            font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
           new Node( { children: [ horizontalNode ] } )
         ],

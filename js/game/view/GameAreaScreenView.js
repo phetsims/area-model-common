@@ -13,8 +13,8 @@ define( function( require ) {
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
-  var AreaModelGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelGlobals' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
@@ -102,7 +102,7 @@ define( function( require ) {
 
     var buttonSpacing = 15;
     var levelButtons = model.levels.map( function( level, index ) {
-      var scoreNode = new ProgressIndicator( AreaModelConstants.NUM_CHALLENGES, level.scoreProperty, AreaModelConstants.NUM_CHALLENGES * 2, {
+      var scoreNode = new ProgressIndicator( AreaModelCommonConstants.NUM_CHALLENGES, level.scoreProperty, AreaModelCommonConstants.NUM_CHALLENGES * 2, {
         scale: 0.8
       } );
       return new MutableOptionsNode( RectangularPushButton, [], {
@@ -163,8 +163,8 @@ define( function( require ) {
         model.reset();
       },
       touchAreaDilation: 10,
-      right: this.layoutBounds.right - AreaModelConstants.PANEL_MARGIN,
-      bottom: this.layoutBounds.bottom - AreaModelConstants.PANEL_MARGIN
+      right: this.layoutBounds.right - AreaModelCommonConstants.PANEL_MARGIN,
+      bottom: this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN
     } );
     this.levelSelectionLayer.addChild( resetAllButton );
 
@@ -191,15 +191,15 @@ define( function( require ) {
       model.setActiveTerm( term );
     } );
     this.challengeLayer.addChild( gameAreaNode );
-    gameAreaNode.translation = this.layoutBounds.leftTop.plus( AreaModelConstants.GAME_AREA_OFFSET );
+    gameAreaNode.translation = this.layoutBounds.leftTop.plus( AreaModelCommonConstants.GAME_AREA_OFFSET );
 
     /*---------------------------------------------------------------------------*
     * Panels
     *----------------------------------------------------------------------------*/
 
-    var panelAlignGroup = AreaModelGlobals.panelAlignGroup;
+    var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
-    // TODO: ensure sizing doesn't spill out? AreaModelConstants.PANEL_INTERIOR_MAX
+    // TODO: ensure sizing doesn't spill out? AreaModelCommonConstants.PANEL_INTERIOR_MAX
     // TODO: make it accept a pair
     var factorsNode = new GenericFactorsNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
     var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
@@ -222,8 +222,8 @@ define( function( require ) {
       }
     } );
     var polynomialReadoutText = new RichText( '?', {
-      font: AreaModelConstants.TOTAL_AREA_FONT,
-      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+      font: AreaModelCommonConstants.TOTAL_AREA_FONT,
+      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
     totalProperty.link( function( total ) {
       if ( total ) {
@@ -254,14 +254,14 @@ define( function( require ) {
         factorsContent,
         productContent
       ],
-      spacing: AreaModelConstants.PANEL_SPACING
+      spacing: AreaModelCommonConstants.PANEL_SPACING
     } );
     this.challengeLayer.addChild( new AlignBox( panelBox, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'top',
       topMargin: gameAreaNode.y,
-      rightMargin: AreaModelConstants.PANEL_MARGIN
+      rightMargin: AreaModelCommonConstants.PANEL_MARGIN
     } ) );
 
     //TODO: button deduplication
@@ -271,7 +271,7 @@ define( function( require ) {
     };
     var checkButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( checkString, {
-        font: AreaModelConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -289,7 +289,7 @@ define( function( require ) {
 
     var tryAgainButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( tryAgainString, {
-        font: AreaModelConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -303,7 +303,7 @@ define( function( require ) {
 
     var nextButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( nextString, {
-        font: AreaModelConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -317,7 +317,7 @@ define( function( require ) {
 
     var showSolutionButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( showAnswerString, { // TODO: show solution or answer
-        font: AreaModelConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -335,7 +335,7 @@ define( function( require ) {
     } );
     this.challengeLayer.addChild( faceNode );
     var scoreIncreaseText = new Text( ' ', {
-      font: AreaModelConstants.SCORE_INCREASE_FONT,
+      font: AreaModelCommonConstants.SCORE_INCREASE_FONT,
       leftBottom: faceNode.rightBottom
     } );
     this.challengeLayer.addChild( scoreIncreaseText );
@@ -371,7 +371,7 @@ define( function( require ) {
         //TODO: cleanup
         levelCompleteContainer.children = [
           //TODO: recommend time gets put to options
-          new LevelCompletedNode( level.number - 1, level.scoreProperty.value, AreaModelConstants.NUM_CHALLENGES * 2, AreaModelConstants.NUM_CHALLENGES, false, 0, 0, 0, function() {
+          new LevelCompletedNode( level.number - 1, level.scoreProperty.value, AreaModelCommonConstants.NUM_CHALLENGES * 2, AreaModelCommonConstants.NUM_CHALLENGES, false, 0, 0, 0, function() {
             model.continueFromComplete();
           }, {
             cornerRadius: 8,
@@ -380,7 +380,7 @@ define( function( require ) {
           } )
         ];
 
-        if ( level.scoreProperty.value === AreaModelConstants.NUM_CHALLENGES * 2 ) {
+        if ( level.scoreProperty.value === AreaModelCommonConstants.NUM_CHALLENGES * 2 ) {
           //TODO: cleanup
           self.rewardNode = new RewardNode( {
             nodes: rewardNodes
@@ -435,8 +435,8 @@ define( function( require ) {
       var panelContent = new VBox( {
         children: [
           new AlignBox( new Text( titleString, {
-            font: AreaModelConstants.TITLE_FONT,
-            maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+            font: AreaModelCommonConstants.TITLE_FONT,
+            maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
           } ), {
             group: panelAlignGroup,
             xAlign: 'left'
@@ -454,7 +454,7 @@ define( function( require ) {
         yMargin: 10,
         fill: AreaModelColorProfile.panelBackgroundProperty,
         stroke: AreaModelColorProfile.panelBorderProperty,
-        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS
+        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
       } );
     },
 

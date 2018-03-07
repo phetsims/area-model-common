@@ -12,7 +12,7 @@ define( function( require ) {
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/generic/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -64,13 +64,13 @@ define( function( require ) {
         partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );
       }
       else if ( quantity === 2 ) {
-        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelConstants.GENERIC_SINGLE_OFFSET );
-        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelConstants.GENERIC_SINGLE_OFFSET, 1 );
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_SINGLE_OFFSET );
+        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SINGLE_OFFSET, 1 );
       }
       else if ( quantity === 3 ) {
-        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelConstants.GENERIC_FIRST_OFFSET );
-        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelConstants.GENERIC_FIRST_OFFSET, AreaModelConstants.GENERIC_SECOND_OFFSET );
-        partitions[ 2 ].coordinateRangeProperty.value = new Range( AreaModelConstants.GENERIC_SECOND_OFFSET, 1 );
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_FIRST_OFFSET );
+        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_FIRST_OFFSET, AreaModelCommonConstants.GENERIC_SECOND_OFFSET );
+        partitions[ 2 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SECOND_OFFSET, 1 );
       }
     } );
 

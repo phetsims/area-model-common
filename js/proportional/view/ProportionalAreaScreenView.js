@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var Checkbox = require( 'SUN/Checkbox' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -48,7 +48,7 @@ define( function( require ) {
 
     // Scene selection
     var sceneSelectionNode = new SceneSelectionNode( model, {
-      top: this.panelContainer.bottom + AreaModelConstants.PANEL_SPACING,
+      top: this.panelContainer.bottom + AreaModelCommonConstants.PANEL_SPACING,
       centerX: this.panelContainer.centerX
     } );
     this.addChild( sceneSelectionNode );
@@ -221,7 +221,7 @@ define( function( require ) {
      */
     createCountingIconNode: function() {
       return new Text( countingToggleString, {
-        font: AreaModelConstants.COUNTING_ICON_FONT
+        font: AreaModelCommonConstants.COUNTING_ICON_FONT
       } );
     }
   } );

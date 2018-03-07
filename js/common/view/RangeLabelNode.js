@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -30,7 +30,7 @@ define( function( require ) {
   function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) {
 
     var text = new RichText( '', {
-      font: AreaModelConstants.TOTAL_SIZE_READOUT_FONT,
+      font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
       fill: colorProperty
     } );
 
@@ -40,7 +40,7 @@ define( function( require ) {
     } );
 
     if ( orientation === Orientation.VERTICAL ) {
-      text.maxWidth = AreaModelConstants.MAIN_AREA_OFFSET.x + ( isProportional ? AreaModelConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelConstants.GENERIC_RANGE_OFFSET ).x - AreaModelConstants.PANEL_MARGIN;
+      text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + ( isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET ).x - AreaModelCommonConstants.PANEL_MARGIN;
     }
 
     // Update the label text

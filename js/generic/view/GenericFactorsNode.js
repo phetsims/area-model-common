@@ -12,7 +12,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -39,10 +39,10 @@ define( function( require ) {
     var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, horizontalDisplayProperty );
     var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, verticalDisplayProperty );
 
-    var leftParenText = new Text( '(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
-    var middleParenText = new Text( ')(', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
-    var rightParenText = new Text( ')', { font: AreaModelConstants.PROBLEM_PAREN_FONT } );
-    var xText = new Text( AreaModelConstants.X_MULTIPLICATION_STRING, { font: AreaModelConstants.PROBLEM_X_FONT } );
+    var leftParenText = new Text( '(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
+    var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
+    var rightParenText = new Text( ')', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
+    var xText = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, { font: AreaModelCommonConstants.PROBLEM_X_FONT } );
 
     //TODO: a better way of this workaround
     xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );
@@ -51,7 +51,7 @@ define( function( require ) {
     // AccordionBox.
     var box = new HBox( {
       spacing: 10,
-      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
 
     allowExponentsProperty.link( function( allowExponents ) {
@@ -72,10 +72,10 @@ define( function( require ) {
 
     // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
     allowExponentsProperty.link( function( allowExponents ) {
-      var maxTextHeight = new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelConstants.PROBLEM_X_FONT } ).height;
+      var maxTextHeight = new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelCommonConstants.PROBLEM_X_FONT } ).height;
       var maxHeight = Math.max( middleParenText.height, BOX_SIZE, maxTextHeight );
 
-      self.alignBounds = new Bounds2( 0, 0, AreaModelConstants.PANEL_INTERIOR_MAX, maxHeight );
+      self.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxHeight );
     } );
   }
 
@@ -97,7 +97,7 @@ define( function( require ) {
 
       var richText = new RichText( ' ', {
         // TODO: Why are we using this font? create our own named one?
-        font: AreaModelConstants.PROBLEM_X_FONT,
+        font: AreaModelCommonConstants.PROBLEM_X_FONT,
         fill: colorProperty
       } );
 

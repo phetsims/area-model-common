@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
-  var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var CountingAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/CountingAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -251,7 +251,7 @@ define( function( require ) {
      */
     createPartitionLabel: function( partition, secondaryPartition, index ) {
       var text = new Text( '', {
-        font: AreaModelConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
+        font: AreaModelCommonConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
         fill: partition.colorProperty
       } );
 
@@ -266,7 +266,7 @@ define( function( require ) {
         }
         else {
           text.text = size.toRichString( false );
-          if ( AreaModelQueryParameters.singleLine ) {
+          if ( AreaModelCommonQueryParameters.singleLine ) {
             text.center = Vector2.ZERO;
           }
           else {
@@ -277,19 +277,19 @@ define( function( require ) {
 
       // Secondary coordinate
       if ( partition.orientation === Orientation.HORIZONTAL ) {
-        if ( AreaModelQueryParameters.singleLine ) {
+        if ( AreaModelCommonQueryParameters.singleLine ) {
           labelContainer.y = -15;
         }
         else {
-          labelContainer.top = AreaModelConstants.PROPORTIONAL_RANGE_OFFSET.y + 4;
+          labelContainer.top = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.y + 4;
         }
       }
       else {
-        if ( AreaModelQueryParameters.singleLine ) {
+        if ( AreaModelCommonQueryParameters.singleLine ) {
           labelContainer.x = -20;
         }
         else {
-          labelContainer.left = AreaModelConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
+          labelContainer.left = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
         }
       }
 

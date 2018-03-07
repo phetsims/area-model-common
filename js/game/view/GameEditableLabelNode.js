@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
@@ -54,7 +54,7 @@ define( function( require ) {
     } );
 
     // TODO: support font switching in different contexts?
-    var font = AreaModelConstants.GAME_VALUE_FONT;
+    var font = AreaModelCommonConstants.GAME_VALUE_FONT;
 
     var readoutText = new RichText( '?', {
       fill: colorProperty,

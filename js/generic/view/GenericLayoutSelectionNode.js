@@ -12,8 +12,8 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
-  var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var ComboBox = require( 'SUN/ComboBox' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -53,7 +53,7 @@ define( function( require ) {
           children: [
             createLayoutIcon( layout.size, 1 ),
             new Text( layout.size.height + 'x' + layout.size.width, {
-              font: AreaModelConstants.LAYOUT_FONT
+              font: AreaModelCommonConstants.LAYOUT_FONT
             } )
           ],
           spacing: 20
@@ -62,7 +62,7 @@ define( function( require ) {
       };
     } );
 
-    if ( AreaModelQueryParameters.combobox ) {
+    if ( AreaModelCommonQueryParameters.combobox ) {
       // TODO: better way!
       var currentComboChromeWidth = 74.5; // empirically determined, but easy to break in the future
       var maxItemWidth = Math.max.apply( Math, _.map( _.map( items, 'node' ), 'width' ) );
@@ -87,7 +87,7 @@ define( function( require ) {
         rectHeight: maxItemHeight * scale + 2 * itemMargin,
         fill: 'white',
         stroke: 'black',
-        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
+        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
         cursor: 'pointer'
       } );
       this.addChild( rectangle );
@@ -132,7 +132,7 @@ define( function( require ) {
         rectHeight: separatorX,
         fill: 'white',
         stroke: 'black',
-        cornerRadius: AreaModelConstants.PANEL_CORNER_RADIUS,
+        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
         pickable: true
       } );
 
@@ -240,18 +240,18 @@ define( function( require ) {
     var length = 30;
     var shape = new Shape().rect( 0, 0, length, length );
     if ( size.width === 2 ) {
-      shape.moveTo( length * AreaModelConstants.GENERIC_ICON_SINGLE_OFFSET, 0 ).verticalLineTo( length );
+      shape.moveTo( length * AreaModelCommonConstants.GENERIC_ICON_SINGLE_OFFSET, 0 ).verticalLineTo( length );
     }
     else if ( size.width === 3 ) {
-      shape.moveTo( length * AreaModelConstants.GENERIC_ICON_FIRST_OFFSET, 0 ).verticalLineTo( length );
-      shape.moveTo( length * AreaModelConstants.GENERIC_ICON_SECOND_OFFSET, 0 ).verticalLineTo( length );
+      shape.moveTo( length * AreaModelCommonConstants.GENERIC_ICON_FIRST_OFFSET, 0 ).verticalLineTo( length );
+      shape.moveTo( length * AreaModelCommonConstants.GENERIC_ICON_SECOND_OFFSET, 0 ).verticalLineTo( length );
     }
     if ( size.height === 2 ) {
-      shape.moveTo( 0, length * AreaModelConstants.GENERIC_ICON_SINGLE_OFFSET ).horizontalLineTo( length );
+      shape.moveTo( 0, length * AreaModelCommonConstants.GENERIC_ICON_SINGLE_OFFSET ).horizontalLineTo( length );
     }
     else if ( size.height === 3 ) {
-      shape.moveTo( 0, length * AreaModelConstants.GENERIC_ICON_FIRST_OFFSET ).horizontalLineTo( length );
-      shape.moveTo( 0, length * AreaModelConstants.GENERIC_ICON_SECOND_OFFSET ).horizontalLineTo( length );
+      shape.moveTo( 0, length * AreaModelCommonConstants.GENERIC_ICON_FIRST_OFFSET ).horizontalLineTo( length );
+      shape.moveTo( 0, length * AreaModelCommonConstants.GENERIC_ICON_SECOND_OFFSET ).horizontalLineTo( length );
     }
     return new Path( shape, {
       lineWidth: lineWidth,

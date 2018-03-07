@@ -14,7 +14,7 @@ define( function( require ) {
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -60,8 +60,8 @@ define( function( require ) {
       contentYMargin: margin,
       contentXSpacing: -10,
       titleNode: new Text( calculationString, {
-        font: AreaModelConstants.TITLE_FONT,
-        maxWidth: AreaModelConstants.ACCORDION_BOX_TITLE_MAX
+        font: AreaModelCommonConstants.TITLE_FONT,
+        maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
       } ),
       expandedProperty: model.calculationBoxVisibleProperty,
       titleAlignX: 'left',
