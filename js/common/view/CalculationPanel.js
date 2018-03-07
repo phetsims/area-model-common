@@ -48,11 +48,12 @@ define( function( require ) {
     this.addChild( background );
 
     var arrowSize = 18;
+    var arrowTouchDilation = 8;
     var previousArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
       fill: AreaModelColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
-    // TODO: add a disabled state to the listener
+    previousArrow.touchArea = previousArrow.localBounds.dilated( arrowTouchDilation );
     var previousListener = new FireListener( {
       fire: function() {
         if ( previousIndexProperty.value !== null ) {
@@ -75,6 +76,7 @@ define( function( require ) {
       fill: AreaModelColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
+    nextArrow.touchArea = nextArrow.localBounds.dilated( arrowTouchDilation );
     this.addChild( nextArrow );
     var nextListener = new FireListener( {
       fire: function() {
