@@ -36,10 +36,6 @@ define( function( require ) {
     areaBackground: { default: Color.WHITE },
     areaBorder: { default: Color.BLACK },
 
-    // Empty partition line "handle/button"
-    dockBorder: { default: Color.BLACK },
-    dockBackground: { default: Color.WHITE },
-
     // Partition line (stroke includes handle)
     partitionLineBorder: { default: Color.BLACK },
     partitionLineStroke: { default: Color.BLACK },

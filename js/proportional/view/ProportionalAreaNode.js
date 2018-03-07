@@ -14,11 +14,8 @@ define( function( require ) {
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
   var AreaModelQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
   var CountingAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/CountingAreaNode' );
-  var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
@@ -96,10 +93,6 @@ define( function( require ) {
       this.countingAreaNode = new CountingAreaNode( area, this.modelViewTransform, countingVisibleProperty );
       this.areaLayer.addChild( this.countingAreaNode );
     }
-
-    // Docks
-    this.areaLayer.addChild( this.createDock( Orientation.HORIZONTAL ) );
-    this.areaLayer.addChild( this.createDock( Orientation.VERTICAL ) );
 
     // Partition lines
     this.areaLayer.addChild( new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL ) );
@@ -221,59 +214,6 @@ define( function( require ) {
           rightLabel.y += rightOffset;
         }
       } );
-    },
-
-    /**
-     * Creates a dock node for the given orientation.
-     * @private
-     *
-     * @param {Orientation} orientation
-     * @returns {Node}
-     * TODO: deprecated?
-     */
-    createDock: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      var self = this;
-
-      var lineOptions = {
-        stroke: AreaModelColorProfile.dockBorderProperty
-      };
-      lineOptions[ orientation.coordinate + '1' ] = 0;
-      lineOptions[ orientation.opposite.coordinate + '1' ] = -AreaModelConstants.PARTITION_HANDLE_RADIUS;
-      lineOptions[ orientation.coordinate + '2' ] = 0;
-      lineOptions[ orientation.opposite.coordinate + '2' ] = -AreaModelConstants.PARTITION_HANDLE_OFFSET;
-
-      var dock = new Circle( AreaModelConstants.PARTITION_HANDLE_RADIUS, {
-        fill: AreaModelColorProfile.dockBackgroundProperty,
-        stroke: AreaModelColorProfile.dockBorderProperty,
-        lineDash: [ 3, 3 ],
-        children: [
-          new Line( lineOptions )
-        ],
-        cursor: 'pointer',
-        inputListeners: [
-          new FireListener( {
-            fire: function() {
-              // TODO: Input sync https://github.com/phetsims/area-model-common/issues/17
-              self.area.partitionSplitProperties.get( orientation ).reset();
-            }
-          } )
-        ]
-      } );
-
-      // TODO: Docks disappeared sometime. Should they be here? 'self' doesn't have the below properties
-      // this.area.partitionSplitVisibleProperties.get( orientation ).linkAttribute( dock, 'visible' );
-      this.area.getActiveTotalProperty( orientation ).link( function( totalSize ) {
-        dock.visible = totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
-      } );
-
-      this.area.getActiveTotalProperty( orientation.opposite ).link( function( totalSize ) {
-        // A little extra padding so things don't overlap
-        dock[ orientation.opposite.coordinate ] = orientation.opposite.modelToView( self.modelViewTransform, totalSize ) + AreaModelConstants.PARTITION_HANDLE_OFFSET + 0.5;
-      } );
-
-      return dock;
     },
 
     // TODO doc
