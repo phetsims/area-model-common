@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelConstants = require( 'AREA_MODEL_COMMON/common/AreaModelConstants' );
@@ -21,6 +22,8 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
 
+  var BOX_SIZE = 30;
+
   /**
    * @constructor
    * @extends {HBox}
@@ -31,6 +34,8 @@ define( function( require ) {
    * @param {Property.<boolean>} allowExponentsProperty
    */
   function GenericFactorsNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponentsProperty ) {
+    var self = this;
+
     var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, horizontalDisplayProperty );
     var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, verticalDisplayProperty );
 
@@ -45,7 +50,8 @@ define( function( require ) {
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
     // AccordionBox.
     var box = new HBox( {
-      spacing: 10
+      spacing: 10,
+      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
     } );
 
     allowExponentsProperty.link( function( allowExponents ) {
@@ -62,16 +68,20 @@ define( function( require ) {
       ];
     } );
 
-    // TODO: why isn't maxWidth centering properly (vertically?) See https://github.com/phetsims/area-model-common/issues/18
-    Node.call( this, {
-      children: [ box ],
-      maxWidth: AreaModelConstants.PANEL_INTERIOR_MAX
+    AlignBox.call( this, box );
+
+    // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
+    allowExponentsProperty.link( function( allowExponents ) {
+      var maxTextHeight = new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelConstants.PROBLEM_X_FONT } ).height;
+      var maxHeight = Math.max( middleParenText.height, BOX_SIZE, maxTextHeight );
+
+      self.alignBounds = new Bounds2( 0, 0, AreaModelConstants.PANEL_INTERIOR_MAX, maxHeight );
     } );
   }
 
   areaModelCommon.register( 'GenericFactorsNode', GenericFactorsNode );
 
-  return inherit( HBox, GenericFactorsNode, {
+  return inherit( AlignBox, GenericFactorsNode, {
     /**
      * Creates a readout for the total sum for a particular orientation.
      * @private
@@ -86,11 +96,12 @@ define( function( require ) {
       var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
 
       var richText = new RichText( ' ', {
+        // TODO: Why are we using this font? create our own named one?
         font: AreaModelConstants.PROBLEM_X_FONT,
         fill: colorProperty
       } );
 
-      var box = new Rectangle( 0, 0, 30, 30, { stroke: colorProperty } );
+      var box = new Rectangle( 0, 0, BOX_SIZE, BOX_SIZE, { stroke: colorProperty } );
 
       var node = new Node();
       displayProperty.link( function( termList ) {
