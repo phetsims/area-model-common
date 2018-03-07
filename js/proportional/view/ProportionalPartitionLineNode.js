@@ -100,7 +100,8 @@ define( function( require ) {
 
     var line = new Line( 0, 0, 0, 0, {
       stroke: AreaModelColorProfile.partitionLineStrokeProperty,
-      lineWidth: 2
+      lineWidth: 2,
+      cursor: 'pointer'
     } );
 
     Node.call( this, {
@@ -143,6 +144,8 @@ define( function( require ) {
       var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) + AreaModelConstants.PARTITION_HANDLE_OFFSET;
       handle[ orientation.opposite.coordinate ] = offsetValue;
       line[ orientation.opposite.coordinate + '2' ] = offsetValue;
+      line.mouseArea = line.localBounds.dilated( 4 );
+      line.touchArea = line.localBounds.dilated( 8 );
     } );
 
     // Visibility
@@ -150,7 +153,6 @@ define( function( require ) {
 
     var dragHandler = new DragListener( {
       transform: modelViewTransform,
-      targetNode: this,
       drag: function( event, listener ) {
         var value = listener.modelPoint[ orientation.coordinate ];
 
@@ -172,7 +174,7 @@ define( function( require ) {
         }
       }
     } );
-    handle.addInputListener( dragHandler );
+    this.addInputListener( dragHandler );
 
     // Remove splits that are at or past the current boundary.
     activeTotalProperty.link( function( total ) {

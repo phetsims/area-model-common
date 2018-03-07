@@ -53,6 +53,7 @@ define( function( require ) {
       fill: AreaModelColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
+    previousArrow.mouseArea = previousArrow.localBounds;
     previousArrow.touchArea = previousArrow.localBounds.dilated( arrowTouchDilation );
     var previousListener = new FireListener( {
       fire: function() {
@@ -76,6 +77,7 @@ define( function( require ) {
       fill: AreaModelColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
+    nextArrow.mouseArea = nextArrow.localBounds;
     nextArrow.touchArea = nextArrow.localBounds.dilated( arrowTouchDilation );
     this.addChild( nextArrow );
     var nextListener = new FireListener( {
