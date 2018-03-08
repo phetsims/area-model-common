@@ -19,11 +19,11 @@ define( function( require ) {
 
   areaModelCommon.register( 'DisplayType', DisplayType );
 
-  // All values the enumeration can take.
+  // @public {Array.<DisplayType>} - All values the enumeration can take.
   DisplayType.VALUES = [
-    DisplayType.EDITABLE,
-    DisplayType.READOUT,
-    DisplayType.HIDDEN
+    DisplayType.EDITABLE, // editable, and shows the edited value
+    DisplayType.READOUT, // just the value shown, does not look editable
+    DisplayType.HIDDEN // nothing shown
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code

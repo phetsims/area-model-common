@@ -19,7 +19,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'PartitionLineChoice', PartitionLineChoice );
 
-  // All values the enumeration can take.
+  // @public {Array.<PartitionLineChoice>} - All values the enumeration can take.
   PartitionLineChoice.VALUES = [
     PartitionLineChoice.NONE,
     PartitionLineChoice.ONE,

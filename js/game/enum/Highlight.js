@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Enumeration for the different ways an editable field
+ * Enumeration for the different ways an editable field can be highlighted
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -19,7 +19,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'Highlight', Highlight );
 
-  // All values the enumeration can take.
+  // @public {Array.<Highlight>} - All values the enumeration can take.
   Highlight.VALUES = [
     Highlight.NORMAL,
     Highlight.DIRTY,

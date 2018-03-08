@@ -19,7 +19,6 @@ define( function( require ) {
     SECOND_ATTEMPT: 'SECOND_ATTEMPT',
 
     // "next" button, happy face with +1 or +2 depending on score. NOT editable
-    // TODO: Maybe we have a "restart" button and "back" button here if we're at the end?
     CORRECT_ANSWER: 'CORRECT_ANSWER',
 
     // "try again" button, sad face (editable?) - triggers next state on edit?
@@ -36,7 +35,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'GameState', GameState );
 
-  // All values the enumeration can take.
+  // @public {Array.<GameState>} - All values the enumeration can take.
   GameState.VALUES = [
     GameState.FIRST_ATTEMPT,
     GameState.SECOND_ATTEMPT,

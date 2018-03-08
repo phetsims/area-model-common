@@ -31,7 +31,7 @@ define( function( require ) {
     return inputMethod === InputMethod.POLYNOMIAL_1 || inputMethod === InputMethod.POLYNOMIAL_2;
   };
 
-  // All values the enumeration can take.
+  // @public {Array.<InputMethod>} - All values the enumeration can take.
   InputMethod.VALUES = [
     InputMethod.CONSTANT,
     InputMethod.TERM,

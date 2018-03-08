@@ -77,7 +77,7 @@ define( function( require ) {
   Orientation.HORIZONTAL.opposite = Orientation.VERTICAL;
   Orientation.VERTICAL.opposite = Orientation.HORIZONTAL;
 
-  // All values the enumeration can take.
+  // @public {Array.<Orientation>} - All values the enumeration can take.
   Orientation.VALUES = [
     Orientation.HORIZONTAL,
     Orientation.VERTICAL

@@ -18,7 +18,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'AreaChallengeType', AreaChallengeType );
 
-  // All values the enumeration can take.
+  // @public {Array.<AreaChallengeType>} - All values the enumeration can take.
   AreaChallengeType.VALUES = [
     AreaChallengeType.NUMBERS,
     AreaChallengeType.VARIABLES

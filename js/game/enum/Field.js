@@ -20,28 +20,17 @@ define( function( require ) {
 
   areaModelCommon.register( 'Field', Field );
 
-  // All values the enumeration can take.
+  // @public {Array.<Field>} - All values the enumeration can take.
   Field.VALUES = [
-    Field.EDITABLE,
-    Field.DYNAMIC,
-    Field.GIVEN
+    Field.EDITABLE, // the user inputs this value
+    Field.DYNAMIC, // this value can change (be computed) based on the user's input
+    Field.GIVEN // this value is fixed for a given challenge
   ];
 
   var gameToDisplayMap = {};
   gameToDisplayMap[ Field.EDITABLE ] = DisplayType.EDITABLE;
   gameToDisplayMap[ Field.DYNAMIC ] = DisplayType.READOUT;
   gameToDisplayMap[ Field.GIVEN ] = DisplayType.READOUT;
-
-  /**
-   * Returns whether the value is a Field
-   * @public
-   *
-   * @param {Field} field
-   * @returns {boolean}
-   */
-  Field.isField = function( field ) {
-    return _.includes( Field.VALUES, field );
-  };
 
   /**
    * Returns the preferred display type for a given game value.
@@ -51,7 +40,7 @@ define( function( require ) {
    * @returns {boolean}
    */
   Field.toDisplayType = function( field ) {
-    assert && assert( Field.isField( field ) );
+    assert && assert( _.includes( Field.VALUES, field ) );
 
     return gameToDisplayMap[ field ];
   };
