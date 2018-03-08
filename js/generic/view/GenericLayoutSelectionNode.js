@@ -9,13 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var ComboBox = require( 'SUN/ComboBox' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
@@ -62,168 +59,152 @@ define( function( require ) {
       };
     } );
 
-    if ( AreaModelCommonQueryParameters.combobox ) {
-      // TODO: better way!
-      var currentComboChromeWidth = 74.5; // empirically determined, but easy to break in the future
-      var maxItemWidth = Math.max.apply( Math, _.map( _.map( items, 'node' ), 'width' ) );
-      var extraPadding = width / scale - currentComboChromeWidth - maxItemWidth;
-      items.forEach( function( item ) {
-        item.node = new AlignBox( item.node, { rightMargin: extraPadding } );
-      } );
+    var maxItemHeight = Math.max.apply( Math, _.map( _.map( items, 'node' ), 'height' ) );
+    var itemMargin = 6;
+    var arrowMargin = 8;
 
-      this.addChild( new ComboBox( items, genericLayoutProperty, listParent, {
-        // TODO
-        scale: scale
-      } ) );
-    }
-    else {
-      var maxItemHeight = Math.max.apply( Math, _.map( _.map( items, 'node' ), 'height' ) );
-      var itemMargin = 6;
-      var arrowMargin = 8;
+    var rectHeight = maxItemHeight * scale + 2 * itemMargin;
+    var rectangle = new Rectangle( {
+      rectWidth: width,
+      rectHeight: maxItemHeight * scale + 2 * itemMargin,
+      fill: 'white',
+      stroke: 'black',
+      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
+      cursor: 'pointer'
+    } );
+    this.addChild( rectangle );
 
-      var rectHeight = maxItemHeight * scale + 2 * itemMargin;
-      var rectangle = new Rectangle( {
-        rectWidth: width,
-        rectHeight: maxItemHeight * scale + 2 * itemMargin,
-        fill: 'white',
-        stroke: 'black',
-        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
-        cursor: 'pointer'
-      } );
-      this.addChild( rectangle );
+    var arrowSize = 15;
+    var arrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize * 0.5, arrowSize * 0.9 ).close(), {
+      fill: 'black',
+      right: rectangle.right - arrowMargin,
+      centerY: rectangle.centerY,
+      pickable: false
+    } );
+    this.addChild( arrow );
 
-      var arrowSize = 15;
-      var arrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize * 0.5, arrowSize * 0.9 ).close(), {
-        fill: 'black',
-        right: rectangle.right - arrowMargin,
-        centerY: rectangle.centerY,
-        pickable: false
-      } );
-      this.addChild( arrow );
+    var separatorX = arrow.left - arrowMargin;
+    this.addChild( new Line( {
+      x1: separatorX,
+      y1: 0,
+      x2: separatorX,
+      y2: rectHeight,
+      lineWidth: 0.5,
+      stroke: 'black',
+      pickable: false
+    } ) );
 
-      var separatorX = arrow.left - arrowMargin;
-      this.addChild( new Line( {
-        x1: separatorX,
-        y1: 0,
-        x2: separatorX,
-        y2: rectHeight,
-        lineWidth: 0.5,
-        stroke: 'black',
-        pickable: false
-      } ) );
+    var currentLabel = new Node( {
+      scale: scale, // TODO: get rid of scale when we don't need it for the ComboBox
+      pickable: false
+    } );
+    genericLayoutProperty.link( function( layout ) {
+      currentLabel.children = [
+        _.find( items, function( item ) {
+          return item.value === layout;
+        } ).node
+      ];
+      currentLabel.left = itemMargin;
+      currentLabel.centerY = rectangle.centerY;
+    } );
+    this.addChild( currentLabel );
 
-      var currentLabel = new Node( {
-        scale: scale, // TODO: get rid of scale when we don't need it for the ComboBox
-        pickable: false
-      } );
-      genericLayoutProperty.link( function( layout ) {
-        currentLabel.children = [
-          _.find( items, function( item ) {
-            return item.value === layout;
-          } ).node
-        ];
-        currentLabel.left = itemMargin;
-        currentLabel.centerY = rectangle.centerY;
-      } );
-      this.addChild( currentLabel );
+    var popup = new Rectangle( {
+      rectWidth: separatorX,
+      rectHeight: separatorX,
+      fill: 'white',
+      stroke: 'black',
+      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
+      pickable: true
+    } );
 
-      var popup = new Rectangle( {
-        rectWidth: separatorX,
-        rectHeight: separatorX,
-        fill: 'white',
-        stroke: 'black',
-        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
-        pickable: true
-      } );
+    var buttonSpacing = 12;
+    var buttonsNode = new VBox( {
+      children: [ 1, 2, 3 ].map( function( numVertical ) {
+        return new HBox( {
+          children: [ 1, 2, 3 ].map( function( numHorizontal ) {
+            var layout = GenericLayout.fromValues( numHorizontal, numVertical );
+            var icon = createLayoutIcon( layout.size, 0.7 );
+            icon.pickable = false; // TODO: annoying that we have to specify this?
+            var cornerRadius = 3;
+            var background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
+              cursor: 'pointer'
+            } );
+            background.touchArea = background.localBounds.dilated( buttonSpacing / 2 );
+            var listener = new FireListener( {
+              fire: function() {
+                genericLayoutProperty.value = layout;
+                visibleProperty.value = false; // hide
+              }
+            } );
+            background.stroke = new DerivedProperty( [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ], function( currentLayout, highlightColor ) {
+              if ( currentLayout === layout ) {
+                return highlightColor;
+              }
+              else {
+                return 'transparent';
+              }
+            } );
+            background.fill = new DerivedProperty( [ listener.isHoveringProperty ], function( isHovering ) {
+              if ( isHovering ) {
+                return 'rgb(240,240,240)'; // TODO: extract
+              }
+              else {
+                return 'transparent';
+              }
+            } );
 
-      var buttonSpacing = 12;
-      var buttonsNode = new VBox( {
-        children: [ 1, 2, 3 ].map( function( numVertical ) {
-          return new HBox( {
-            children: [ 1, 2, 3 ].map( function( numHorizontal ) {
-              var layout = GenericLayout.fromValues( numHorizontal, numVertical );
-              var icon = createLayoutIcon( layout.size, 0.7 );
-              icon.pickable = false; // TODO: annoying that we have to specify this?
-              var cornerRadius = 3;
-              var background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
-                cursor: 'pointer'
-              } );
-              background.touchArea = background.localBounds.dilated( buttonSpacing / 2 );
-              var listener = new FireListener( {
-                fire: function() {
-                  genericLayoutProperty.value = layout;
-                  visibleProperty.value = false; // hide
-                }
-              } );
-              background.stroke = new DerivedProperty( [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ], function( currentLayout, highlightColor ) {
-                if ( currentLayout === layout ) {
-                  return highlightColor;
-                }
-                else {
-                  return 'transparent';
-                }
-              } );
-              background.fill = new DerivedProperty( [ listener.isHoveringProperty ], function( isHovering ) {
-                if ( isHovering ) {
-                  return 'rgb(240,240,240)'; // TODO: extract
-                }
-                else {
-                  return 'transparent';
-                }
-              } );
+            return new Node( {
+              children: [ background, icon ],
+              inputListeners: [ listener ]
+            } );
+          } ),
+          spacing: buttonSpacing
+        } );
+      } ),
+      spacing: buttonSpacing
+    } );
+    var panelMargin = 20;
+    buttonsNode.scale( ( popup.width - 2 * panelMargin ) / buttonsNode.width );
+    buttonsNode.center = popup.center;
+    popup.addChild( buttonsNode );
 
-              return new Node( {
-                children: [ background, icon ],
-                inputListeners: [ listener ]
-              } );
-            } ),
-            spacing: buttonSpacing
-          } );
-        } ),
-        spacing: buttonSpacing
-      } );
-      var panelMargin = 20;
-      buttonsNode.scale( ( popup.width - 2 * panelMargin ) / buttonsNode.width );
-      buttonsNode.center = popup.center;
-      popup.addChild( buttonsNode );
-
-      var visibleProperty = new BooleanProperty( false );
-      popup.addInputListener( {
-        down: function( event ) {
-          event.handle();
+    var visibleProperty = new BooleanProperty( false );
+    popup.addInputListener( {
+      down: function( event ) {
+        event.handle();
+      }
+    } );
+    //TODO: input cleanup! Messy. Bad! Make Input Listeners Great Again!
+    var dismissListener = {
+      down: function( event ) {
+        if ( !event.trail.isExtensionOf( self.getUniqueTrail() ) ) {
+          visibleProperty.value = false;
         }
-      } );
-      //TODO: input cleanup! Messy. Bad! Make Input Listeners Great Again!
-      var dismissListener = {
-        down: function( event ) {
-          if ( !event.trail.isExtensionOf( self.getUniqueTrail() ) ) {
-            visibleProperty.value = false;
-          }
-        }
-      };
-      visibleProperty.lazyLink( function( visible ) {
-        if ( visible ) {
-          var matrix = self.getUniqueTrail().getMatrixTo( listParent.getUniqueTrail() );
-          popup.setScaleMagnitude( matrix.getScaleVector().x );
-          // TODO: handle scale sometime maybe?
-          popup.leftTop = matrix.timesVector2( rectangle.leftBottom );
-          listParent.addChild( popup );
+      }
+    };
+    visibleProperty.lazyLink( function( visible ) {
+      if ( visible ) {
+        var matrix = self.getUniqueTrail().getMatrixTo( listParent.getUniqueTrail() );
+        popup.setScaleMagnitude( matrix.getScaleVector().x );
+        // TODO: handle scale sometime maybe?
+        popup.leftTop = matrix.timesVector2( rectangle.leftBottom );
+        listParent.addChild( popup );
 
-          phet.joist.display.addInputListener( dismissListener );
-        }
-        else {
-          listParent.removeChild( popup );
+        phet.joist.display.addInputListener( dismissListener );
+      }
+      else {
+        listParent.removeChild( popup );
 
-          phet.joist.display.removeInputListener( dismissListener );
-        }
-      } );
+        phet.joist.display.removeInputListener( dismissListener );
+      }
+    } );
 
-      rectangle.addInputListener( {
-        down: function( event ) {
-          visibleProperty.toggle();
-        }
-      } );
-    }
+    rectangle.addInputListener( {
+      down: function( event ) {
+        visibleProperty.toggle();
+      }
+    } );
   }
 
   areaModelCommon.register( 'GenericLayoutSelectionNode', GenericLayoutSelectionNode );

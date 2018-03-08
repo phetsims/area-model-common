@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -62,7 +61,7 @@ define( function( require ) {
 
     // Coordinate that doesn't change.
     //TODO: simplify
-    labelNode[ orientation.opposite.coordinate ] = rangeOffset + ( AreaModelCommonQueryParameters.singleLine ? -7 : ( orientation === Orientation.HORIZONTAL ? -3 : -5 ) );
+    labelNode[ orientation.opposite.coordinate ] = rangeOffset + ( orientation === Orientation.HORIZONTAL ? -3 : -5 );
 
     // Update the layout
     tickLocationsProperty.link( function( tickLocations ) {

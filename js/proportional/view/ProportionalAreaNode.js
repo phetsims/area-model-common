@@ -12,7 +12,6 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
   var CountingAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/CountingAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -27,7 +26,6 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -265,31 +263,16 @@ define( function( require ) {
         }
         else {
           text.text = size.toRichString( false );
-          if ( AreaModelCommonQueryParameters.singleLine ) {
-            text.center = Vector2.ZERO;
-          }
-          else {
-            text[ partition.orientation.centerCoordinate ] = 0;
-          }
+          text[ partition.orientation.centerCoordinate ] = 0;
         }
       } );
 
       // Secondary coordinate
       if ( partition.orientation === Orientation.HORIZONTAL ) {
-        if ( AreaModelCommonQueryParameters.singleLine ) {
-          labelContainer.y = -15;
-        }
-        else {
-          labelContainer.top = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.y + 4;
-        }
+        labelContainer.top = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.y + 4;
       }
       else {
-        if ( AreaModelCommonQueryParameters.singleLine ) {
-          labelContainer.x = -20;
-        }
-        else {
-          labelContainer.left = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
-        }
+        labelContainer.left = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
       }
 
       Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {

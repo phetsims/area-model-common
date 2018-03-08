@@ -13,14 +13,7 @@ define( function( require ) {
 
   var AreaModelCommonQueryParameters = QueryStringMachine.getAll( {
     // When provided, generic screens will have terms set to make the calculation area as large as possible
-    maximumLayout1: { type: 'flag' },
-
-    // TODO: remove before deployment
-    // use a ComboBox for generic layout selection
-    combobox: { type: 'flag' },
-
-    // TODO: remove before deployment
-    singleLine: { type: 'flag' }
+    maximumLayout1: { type: 'flag' }
   } );
 
   areaModelCommon.register( 'AreaModelCommonQueryParameters', AreaModelCommonQueryParameters );
