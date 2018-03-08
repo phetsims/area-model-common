@@ -16,6 +16,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -42,7 +43,7 @@ define( function( require ) {
     var leftParenText = new Text( '(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
     var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
     var rightParenText = new Text( ')', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
-    var xText = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, { font: AreaModelCommonConstants.PROBLEM_X_FONT } );
+    var xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.PROBLEM_X_FONT } );
 
     //TODO: a better way of this workaround
     xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );

@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   // constants
@@ -37,7 +38,7 @@ define( function( require ) {
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
       return accumulatedKeys.map( function( key ) {
         if ( key === KeyID.PLUS_MINUS ) {
-          return AreaModelCommonConstants.NEGATIVE_STRING;
+          return MathSymbols.UNARY_MINUS;
         }
         else if ( key === KeyID.X ) {
           return AreaModelCommonConstants.X_VARIABLE_RICH_STRING;

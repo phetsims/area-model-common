@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
 
   /**
    * @constructor
@@ -104,15 +105,15 @@ define( function( require ) {
 
       if ( includeBinaryOperation ) {
         if ( this.coefficient < 0 ) {
-          string += ' ' + AreaModelCommonConstants.MINUS_STRING + ' ';
+          string += ' ' + MathSymbols.MINUS + ' ';
         }
         else {
-          string += ' ' + AreaModelCommonConstants.PLUS_STRING + ' ';
+          string += ' ' + MathSymbols.PLUS + ' ';
         }
       }
       else {
         if ( this.coefficient < 0 ) {
-          string += AreaModelCommonConstants.NEGATIVE_STRING;
+          string += MathSymbols.UNARY_MINUS;
         }
       }
 
@@ -132,10 +133,10 @@ define( function( require ) {
     getLongestGenericString: function( allowExponents, digitCount ) {
       var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
-        return AreaModelCommonConstants.MINUS_STRING + digits + 'x<sup>2</sup>';
+        return MathSymbols.MINUS + digits + 'x<sup>2</sup>';
       }
       else {
-        return AreaModelCommonConstants.MINUS_STRING + digits;
+        return MathSymbols.MINUS + digits;
       }
     }
   } );

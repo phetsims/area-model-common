@@ -16,6 +16,7 @@ define( function( require ) {
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Range = require( 'DOT/Range' );
@@ -34,7 +35,7 @@ define( function( require ) {
     HBox.call( this, {
       children: [
         this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
-        new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, { font: AreaModelCommonConstants.PROBLEM_X_FONT } ),
+        new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.PROBLEM_X_FONT } ),
         this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
       ],
       spacing: 10

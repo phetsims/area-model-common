@@ -15,6 +15,7 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -23,7 +24,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // TODO: reduce duplication with ProductNode -- different font though
-  var activeX = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
+  var activeX = new Text( MathSymbols.TIMES, {
     font: AreaModelCommonConstants.CALCULATION_X_FONT,
     fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
@@ -35,20 +36,20 @@ define( function( require ) {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
-  var activePlus = new Text( AreaModelCommonConstants.PLUS_STRING, {
+  var activePlus = new Text( MathSymbols.PLUS, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
-  var activeMinus = new Text( AreaModelCommonConstants.MINUS_STRING, {
+  var activeMinus = new Text( MathSymbols.MINUS, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
-  var activeDot = new Text( AreaModelCommonConstants.DOT_STRING, {
+  var activeDot = new Text( MathSymbols.DOT, {
     font: AreaModelCommonConstants.CALCULATION_DOT_FONT,
     fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
 
-  var inactiveX = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
+  var inactiveX = new Text( MathSymbols.TIMES, {
     font: AreaModelCommonConstants.CALCULATION_X_FONT,
     fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
@@ -60,15 +61,15 @@ define( function( require ) {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
-  var inactivePlus = new Text( AreaModelCommonConstants.PLUS_STRING, {
+  var inactivePlus = new Text( MathSymbols.PLUS, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
-  var inactiveMinus = new Text( AreaModelCommonConstants.MINUS_STRING, {
+  var inactiveMinus = new Text( MathSymbols.MINUS, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
     fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
-  var inactiveDot = new Text( AreaModelCommonConstants.DOT_STRING, {
+  var inactiveDot = new Text( MathSymbols.DOT, {
     font: AreaModelCommonConstants.CALCULATION_DOT_FONT,
     fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );

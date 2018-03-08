@@ -18,6 +18,7 @@ define( function( require ) {
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -111,7 +112,7 @@ define( function( require ) {
       return new HBox( {
         children: [
           new Node( { children: [ verticalNode ] } ),
-          new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
+          new Text( MathSymbols.TIMES, {
             font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
           new Node( { children: [ horizontalNode ] } )

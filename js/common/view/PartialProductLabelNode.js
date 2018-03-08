@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
@@ -110,7 +111,7 @@ define( function( require ) {
           box.spacing = 2;
           box.children = [
             verticalNode,
-            new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, textOptions ),
+            new Text( MathSymbols.TIMES, textOptions ),
             horizontalNode,
           ];
         }
