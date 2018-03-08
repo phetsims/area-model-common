@@ -18,6 +18,7 @@ define( function( require ) {
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
@@ -169,8 +170,8 @@ define( function( require ) {
 
     var xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
     var xSquaredText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
-    var plus1 = new Text( '+', { font: editFont } );
-    var plus2 = new Text( '+', { font: editFont } );
+    var plus1 = new Text( MathSymbols.PLUS, { font: editFont } );
+    var plus2 = new Text( MathSymbols.PLUS, { font: editFont } );
 
     var xSquaredChildren = [
       xSquaredPicker,
