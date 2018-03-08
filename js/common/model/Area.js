@@ -18,7 +18,6 @@ define( function( require ) {
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
   var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
 
   /**
@@ -36,16 +35,16 @@ define( function( require ) {
     // @public {OrientationPair.<Array.<Partition>>}
     this.partitions = partitions;
 
-    // @public {Array.<Partition>}
+    // @public {Array.<Partition>} - All partitions, regardless of orientation
     this.allPartitions = partitions.get( Orientation.HORIZONTAL ).concat( partitions.get( Orientation.VERTICAL ) );
 
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = colorProperties;
 
-    // @public {number}
+    // @public {number} - The maximum value that partition coordinate ranges may take.
     this.coordinateRangeMax = coordinateRangeMax;
 
-    // @public {Property.<number>}
+    // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
     this.calculationIndexProperty = new NumberProperty( 0 );
 
     // @public {Array.<PartitionedArea>}
@@ -74,10 +73,10 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<TermList|null>>} - Displayed term list for the product. Null if there is no defined total.
     this.displayProperties = allowExponents ? this.termListProperties : this.totalProperties;
 
-    // @public {OrientationPair.<Property.<Range|null>>} TODO: why no usages of this currently? what's wrong?
-    this.coordinateRangeProperties = OrientationPair.create( this.createCoordinateRangeProperty.bind( this ) );
-
-    // @public {OrientationPair.<Property.<Array.<number>>>} TODO doc
+    // @public {OrientationPair.<Property.<Array.<number>>>} - For each orientation, will contain a property with a list
+    // of unique boundary locations (the minimum or maximum coordinates of partitions). So if there are two partitions
+    // for an orientation, one from 1 to 5, and the other from 5 to 7, the value of the property will be [ 1, 5, 7 ].
+    // NOTE: Currently things are not guaranteed to be sorted. Looks like it should not be an issue.
     this.partitionBoundariesProperties = OrientationPair.create( this.createPartitionBoundariesProperty.bind( this ) );
   }
 
@@ -222,16 +221,23 @@ define( function( require ) {
       } );
     },
 
-    // TODO doc returns {Property.<Array.<number>>}
+    /**
+     * Returns a property that will contain an array of all unique partition boundaries (the minimum or maximum
+     * coordinate locations of a partition).
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @returns {Property.<Array.<number>>}
+     */
     createPartitionBoundariesProperty: function( orientation ) {
       var partitions = this.partitions.get( orientation );
 
-      // We need to listen to every partition's properties for the given orientation
-      var coordinateProperties = _.flatten( partitions.map( function( partition ) {
-        return [ partition.coordinateRangeProperty, partition.sizeProperty ];
+      // Property dependencies
+      var partitionProperties = _.flatten( partitions.map( function( partition ) {
+        return [ partition.coordinateRangeProperty, partition.visibleProperty ];
       } ) );
 
-      return new DerivedProperty( coordinateProperties, function() {
+      return new DerivedProperty( partitionProperties, function() {
         return _.uniq( _.flatten( partitions.map( function( partition ) {
           var range = partition.coordinateRangeProperty.value;
 
@@ -243,43 +249,6 @@ define( function( require ) {
             return [ range.min, range.max ];
           }
         } ) ) );
-      } );
-    },
-
-    /**
-     * Creates a property that holds the union of all coordinate ranges (for defined partitions) for the given orientation.
-     * @private
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<Range|null>}
-     */
-    createCoordinateRangeProperty: function( orientation ) {
-      var partitions = this.partitions.get( orientation );
-
-      // We need to listen to every partition's properties for the given orientation
-      var coordinateProperties = _.flatten( partitions.map( function( partition ) {
-        return [ partition.coordinateRangeProperty, partition.sizeProperty ];
-      } ) );
-
-      return new DerivedProperty( coordinateProperties, function() {
-        return _.reduce( partitions, function( totalRange, partition ) {
-          var range = partition.coordinateRangeProperty.value;
-
-          // Ignore null range or invisible
-          if ( range === null || !partition.visibleProperty.value ) {
-            return totalRange;
-          }
-
-          if ( totalRange === null ) {
-            return range;
-          }
-          else {
-            // Includes both ranges
-            return new Range( Math.min( totalRange.min, range.min ), Math.max( totalRange.max, range.max ) );
-          }
-        }, null );
-      }, {
-        useDeepEquality: true
       } );
     }
   } );
