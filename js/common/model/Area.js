@@ -51,7 +51,7 @@ define( function( require ) {
     // pair of partitions.
     this.partitionedAreas = _.flatten( partitions.horizontal.map( function( horizontalPartition ) {
       return partitions.vertical.map( function( verticalPartition ) {
-        return self.createPartitionedArea( horizontalPartition, verticalPartition );
+        return self.createPartitionedArea( new OrientationPair( horizontalPartition, verticalPartition ) );
       } );
     } ) );
 
@@ -93,15 +93,14 @@ define( function( require ) {
      * Creates a partitioned area given two partitions. Meant to be overridden where needed.
      * @protected
      *
-     * @param {Partition} horizontalPartition
-     * @param {Partition} verticalPartition
+     * @param {OrientationPair.<Partition>} partitions
      * @returns {PartitionedArea}
      */
-    createPartitionedArea: function( horizontalPartition, verticalPartition ) {
-      var partitionedArea = new PartitionedArea( horizontalPartition, verticalPartition );
+    createPartitionedArea: function( partitions ) {
+      var partitionedArea = new PartitionedArea( partitions );
 
       // By default, have the area linked to the partitions. This won't work for the game.
-      Property.multilink( [ horizontalPartition.sizeProperty, verticalPartition.sizeProperty ], function( horizontalSize, verticalSize ) {
+      Property.multilink( [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ], function( horizontalSize, verticalSize ) {
         if ( horizontalSize === null || verticalSize === null ) {
           partitionedArea.areaProperty.value = null;
         }

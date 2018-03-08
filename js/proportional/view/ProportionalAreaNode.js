@@ -130,8 +130,8 @@ define( function( require ) {
       var verticalPartitions = this.area.partitions.vertical;
 
       return _.find( this.productLabels, function( productLabel ) {
-        return productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
-               productLabel.partitionedArea.getPartition( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
+        return productLabel.partitionedArea.partitions.get( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
+               productLabel.partitionedArea.partitions.get( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
       } );
     },
 
@@ -159,8 +159,8 @@ define( function( require ) {
       //TODO: potential to dedup horiz/vert
       this.productLabels.forEach( function( productLabel ) {
         // {Partition}
-        var horizontalPartition = productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL );
-        var verticalPartition = productLabel.partitionedArea.getPartition( Orientation.VERTICAL );
+        var horizontalPartition = productLabel.partitionedArea.partitions.get( Orientation.HORIZONTAL );
+        var verticalPartition = productLabel.partitionedArea.partitions.get( Orientation.VERTICAL );
 
         // {Range|null}
         var horizontalRange = horizontalRanges[ _.indexOf( self.area.partitions.horizontal, horizontalPartition ) ];

@@ -12,23 +12,18 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
    * @extends {Object}
    *
-   * @param {Partition} horizontalPartition
-   * @param {Partition} verticalPartition
+   * @param {OrientationPair.<Partition>} partitions
    */
-  function PartitionedArea( horizontalPartition, verticalPartition ) {
+  function PartitionedArea( partitions ) {
 
-    // @public {Partition}
-    this.horizontalPartition = horizontalPartition;
-
-    // @public {Partition}
-    this.verticalPartition = verticalPartition;
+    // @public {OrientationPair.<Partition>}
+    this.partitions = partitions;
 
     // @public {Property.<Term|null>} - Area may not be defined if the size of a partition is not defined.
     // TODO: handle resets properly in the game here?
@@ -37,25 +32,15 @@ define( function( require ) {
     } );
 
     // @public {Property.<boolean>}
-    this.visibleProperty = DerivedProperty.and( [ horizontalPartition.visibleProperty, verticalPartition.visibleProperty ] );
+    this.visibleProperty = DerivedProperty.and( [
+      partitions.horizontal.visibleProperty,
+      partitions.vertical.visibleProperty
+    ] );
   }
 
   areaModelCommon.register( 'PartitionedArea', PartitionedArea );
 
   return inherit( Object, PartitionedArea, {
-    /**
-     * Returns the partition for the given orientation.
-     * @public
-     *
-     * @param {Orientation} orientation
-     * @returns {Partition}
-     */
-    getPartition: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.horizontalPartition : this.verticalPartition;
-    },
-
     /**
      * Cleans up references.
      * @public

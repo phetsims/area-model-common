@@ -66,7 +66,7 @@ define( function( require ) {
     } );
 
     // Text/alignment
-    Property.multilink( [ partitionedArea.horizontalPartition.sizeProperty, partitionedArea.verticalPartition.sizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
+    Property.multilink( [ partitionedArea.partitions.horizontal.sizeProperty, partitionedArea.partitions.vertical.sizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
       var textOptions = {
         font: ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
                                                             : AreaModelCommonConstants.PARTIAL_FACTOR_FONT

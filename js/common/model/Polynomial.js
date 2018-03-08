@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A polynomial as a sum of Terms with different powers.
+ * A polynomial as a sum of Terms with different powers. Collapses same-power terms, and orders by power.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -90,6 +90,7 @@ define( function( require ) {
     /**
      * Addition of polynomials.
      * @public
+     * @override
      *
      * @param {Polynomial} polynomial
      * @returns {Polynomial}
@@ -101,6 +102,7 @@ define( function( require ) {
     /**
      * Multiplication of polynomials.
      * @public
+     * @override
      *
      * @param {Polynomial} polynomial
      * @returns {Polynomial}

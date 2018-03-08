@@ -35,12 +35,11 @@ define( function( require ) {
      * @protected
      * @override
      *
-     * @param {Partition} horizontalPartition
-     * @param {Partition} verticalPartition
+     * @param {OrientationPair.<Partition>} partitions
      * @returns {PartitionedArea}
      */
-    createPartitionedArea: function( horizontalPartition, verticalPartition ) {
-      return new PartitionedArea( horizontalPartition, verticalPartition );
+    createPartitionedArea: function( partitions ) {
+      return new PartitionedArea( partitions );
     },
 
     /**

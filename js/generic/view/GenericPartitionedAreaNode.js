@@ -47,13 +47,14 @@ define( function( require ) {
     partitionedArea.visibleProperty.linkAttribute( this, 'visible' );
 
     // Bounds
-    partitionedArea.horizontalPartition.coordinateRangeProperty.link( function( horizontalRange ) {
+    // TODO: deduplicate?
+    partitionedArea.partitions.horizontal.coordinateRangeProperty.link( function( horizontalRange ) {
       if ( horizontalRange !== null ) {
         self.rectX = modelViewTransform.modelToViewX( horizontalRange.min );
         self.rectWidth = modelViewTransform.modelToViewX( horizontalRange.getLength() );
       }
     } );
-    partitionedArea.verticalPartition.coordinateRangeProperty.link( function( verticalRange ) {
+    partitionedArea.partitions.vertical.coordinateRangeProperty.link( function( verticalRange ) {
       if ( verticalRange !== null ) {
         self.rectY = modelViewTransform.modelToViewY( verticalRange.min );
         self.rectHeight = modelViewTransform.modelToViewY( verticalRange.getLength() );

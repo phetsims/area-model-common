@@ -118,7 +118,7 @@ define( function( require ) {
 
       this.productLabels.forEach( function( productLabel ) {
         Orientation.VALUES.forEach( function( orientation ) {
-          var range = productLabel.partitionedArea.getPartition( orientation ).coordinateRangeProperty.value;
+          var range = productLabel.partitionedArea.partitions.get( orientation ).coordinateRangeProperty.value;
           if ( range !== null ) {
             productLabel[ orientation.coordinate ] = orientation.modelToView( self.modelViewTransform, range.getCenter() );
           }

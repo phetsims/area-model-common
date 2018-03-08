@@ -29,26 +29,26 @@ define( function( require ) {
   return inherit( Object, TermList, {
 
     /**
-     * Addition of polynomials.
+     * Addition of term lists.
      * @public
      *
-     * @param {TermList} polynomial
+     * @param {TermList} termList
      * @returns {TermList}
      */
-    plus: function( polynomial ) {
-      return new TermList( this.terms.concat( polynomial.terms ) );
+    plus: function( termList ) {
+      return new TermList( this.terms.concat( termList.terms ) );
     },
 
     /**
-     * Multiplication of polynomials.
+     * Multiplication of term lists.
      * @public
      *
-     * @param {TermList} polynomial
+     * @param {TermList} termList
      * @returns {TermList}
      */
-    times: function( polynomial ) {
+    times: function( termList ) {
       return new TermList( _.flatten( this.terms.map( function( term ) {
-        return polynomial.terms.map( function( otherTerm ) {
+        return termList.terms.map( function( otherTerm ) {
           return term.times( otherTerm );
         } );
       } ) ) );
