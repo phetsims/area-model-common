@@ -45,6 +45,42 @@ define( function( require ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       return orientation === Orientation.HORIZONTAL ? this.horizontal : this.vertical;
+    },
+
+    /**
+     * Returns a new OrientationPair with mapped values.
+     * @public
+     *
+     * TODO: Check for good places to use this
+     *
+     * @param {Function} callback
+     * @returns {OrientationPair.<*>} - With the mapped values
+     */
+    map: function( callback ) {
+      return new OrientationPair( callback( this.horizontal ), callback( this.vertical ) );
+    },
+
+    /**
+     * Calls the callback on each item of the orientation pair.
+     * @public
+     *
+     * TODO: Check for good places to use this
+     *
+     * @param {Function} callback
+     */
+    forEach: function( callback ) {
+      callback( this.horizontal );
+      callback( this.vertical );
+    },
+
+    /**
+     * Calls reset() on each item in the orientation pair.
+     * @public
+     */
+    reset: function() {
+      this.forEach( function( value ) {
+        value.reset();
+      } );
     }
   }, {
     /**

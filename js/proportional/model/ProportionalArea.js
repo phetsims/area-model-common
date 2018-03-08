@@ -61,13 +61,6 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<number|null>>} - If there is an active partition line, its location
     this.partitionSplitProperties = new OrientationPair( new Property( options.initialHorizontalSplit ), new Property( options.initialVerticalSplit ) );
 
-    // TODO: Check on this property, doesn't seem to change with partitions
-    // @private {Property.<number|null>} - If there is an active partition line, its location.
-    this.horizontalPartitionSplitProperty = new Property( options.initialHorizontalSplit );
-
-    // @private {Property.<number|null>} - If there is an active partition line, its location.
-    this.verticalPartitionSplitProperty = new Property( options.initialVerticalSplit );
-
     // @public {number}
     this.maximumSize = options.maximumSize;
     this.minimumSize = options.minimumSize;
@@ -86,7 +79,8 @@ define( function( require ) {
     // @public {PartitionLineChoice}
     this.partitionLineChoice = options.partitionLineChoice;
 
-    // @public {OrientationPair.<BooleanProperty>}
+    // @public {OrientationPair.<BooleanProperty>} - Whether to display arrows next to each partition line that
+    // indicates it is draggable.
     this.hasHintArrows = new OrientationPair( new BooleanProperty( true ), new BooleanProperty( true ) );
 
     // @public {OrientationPair.<Property.<boolean>>} - Whether the partition line for each orientation is visible
@@ -159,15 +153,10 @@ define( function( require ) {
     reset: function() {
       Area.prototype.reset.call( this );
 
-      // TODO: make doing things like this easier
-      this.hasHintArrows.horizontal.reset();
-      this.hasHintArrows.vertical.reset();
-
-      this.partitionSplitProperties.horizontal.reset();
-      this.partitionSplitProperties.vertical.reset();
+      this.hasHintArrows.reset();
+      this.partitionSplitProperties.reset();
       this.visiblePartitionOrientationProperty.reset();
-      this.activeTotalProperties.get( Orientation.HORIZONTAL ).reset();
-      this.activeTotalProperties.get( Orientation.VERTICAL ).reset();
+      this.activeTotalProperties.reset();
     },
 
     /**
