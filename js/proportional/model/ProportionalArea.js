@@ -111,6 +111,11 @@ define( function( require ) {
       new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty )
     ];
 
+    // @public {OrientationPair.<ProportionalPartition>} - The primary (upper/left) and secondary (lower/right)
+    // partitions, separated out for easy access.
+    this.primaryPartitions = new OrientationPair( horizontalPartitions[ 0 ], verticalPartitions[ 0 ] );
+    this.secondaryPartitions = new OrientationPair( horizontalPartitions[ 1 ], verticalPartitions[ 1 ] );
+
     Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.proportionalColorProperties, this.maximumSize, false );
 
     // Keep partition sizes up-to-date
@@ -121,8 +126,8 @@ define( function( require ) {
           split = null;
         }
 
-        var primaryPartition = self.getPrimaryPartition( orientation );
-        var secondaryPartition = self.getSecondaryPartition( orientation );
+        var primaryPartition = self.primaryPartitions.get( orientation );
+        var secondaryPartition = self.secondaryPartitions.get( orientation );
 
         secondaryPartition.visibleProperty.value = split !== null;
 
@@ -169,30 +174,6 @@ define( function( require ) {
 
       this.activeTotalProperties.horizontal.value = this.eraseWidth;
       this.activeTotalProperties.vertical.value = this.eraseHeight;
-    },
-
-    /**
-     * Returns the partition that contains the entire active size when there is no partition line (in that orientation).
-     * @public
-     *
-     * TODO search for usages that should be replaced by this
-     *
-     * @returns {Partition}
-     */
-    getPrimaryPartition: function( orientation ) {
-      return this.partitions.get( orientation )[ 0 ];
-    },
-
-    /**
-     * Returns the partition that has zero size when there is no partition line (in that orientation).
-     * @public
-     *
-     * TODO search for usages that should be replaced by this
-     *
-     * @returns {Partition}
-     */
-    getSecondaryPartition: function( orientation ) {
-      return this.partitions.get( orientation )[ 1 ];
     }
   } );
 } );

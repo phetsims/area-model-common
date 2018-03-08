@@ -102,7 +102,7 @@ define( function( require ) {
     Orientation.VALUES.forEach( function( orientation ) {
       var partitions = area.partitions.get( orientation );
       var labels = partitions.map( function( partition, index ) {
-        var label = self.createPartitionLabel( partition, area.getSecondaryPartition( orientation ), index );
+        var label = self.createPartitionLabel( partition, area.secondaryPartitions.get( orientation ), index );
         self.labelLayer.addChild( label );
         return label;
       } );
@@ -218,9 +218,8 @@ define( function( require ) {
 
     // TODO doc
     positionPartitionLabels: function( orientation, labels ) {
-      var partitions = this.area.partitions.get( orientation );
-      var primaryRange = partitions[ 0 ].coordinateRangeProperty.value;
-      var secondaryRange = partitions[ 1 ].coordinateRangeProperty.value;
+      var primaryRange = this.area.primaryPartitions.get( orientation ).coordinateRangeProperty.value;
+      var secondaryRange = this.area.secondaryPartitions.get( orientation ).coordinateRangeProperty.value;
 
       // TODO: make this prettier? lots of cleanup
       var min = orientation.modelToView( this.modelViewTransform, primaryRange.min );
