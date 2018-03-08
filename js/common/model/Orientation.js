@@ -37,7 +37,15 @@ define( function( require ) {
       return modelViewTransform[ this.modelViewName ]( value );
     },
 
-    // TODO: doc
+    /**
+     * Creates a vector (primary,secondary) for horizontal orientations, and (secondary,primary) for vertical
+     * orientations.
+     * @public
+     *
+     * @param {number} primary
+     * @param {number} secondary
+     * @returns {Vector2}
+     */
     vector: function( primary, secondary ) {
       var vector = new Vector2();
       vector[ this.coordinate ] = primary;
@@ -57,6 +65,7 @@ define( function( require ) {
     }
   } );
 
+  // @public {Orientation}
   Orientation.HORIZONTAL = new Orientation( {
     coordinate: 'x',
     centerCoordinate: 'centerX',
@@ -65,6 +74,7 @@ define( function( require ) {
     maxSide: 'right'
   } );
 
+  // @public {Orientation}
   Orientation.VERTICAL = new Orientation( {
     coordinate: 'y',
     centerCoordinate: 'centerY',
