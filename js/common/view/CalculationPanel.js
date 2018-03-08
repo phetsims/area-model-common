@@ -23,6 +23,10 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
+  // constants
+  var MAX_LINE_WIDTH = 680; // may need to be updated if the panel size is changed.
+  var LINE_BY_LINE_EXPANSION = 25;
+
   /**
    * @constructor
    * @extends {Node}
@@ -158,10 +162,15 @@ define( function( require ) {
           calculationLines = adjacentCalculationLines;
         }
 
+        var availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
+
+        // Handle oversize lines by scaling everything down
         lineLayer.addChild( new VBox( {
           children: _.map( calculationLines, 'node' ),
-          spacing: 1
+          spacing: 1,
+          scale: maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1
         } ) );
+        maxLineWidth = Math.min( maxLineWidth, availableLineWidth );
 
         if ( isLineByLine ) {
           // TODO: this can cause a full refresh, and should be fixed. Also duplication with above
@@ -180,7 +189,7 @@ define( function( require ) {
 
         // Add some space for the next/previous buttonss
         if ( isLineByLine ) {
-          backgroundBounds.maxX += 25;
+          backgroundBounds.maxX += LINE_BY_LINE_EXPANSION;
         }
 
         // Minimum width of the area size

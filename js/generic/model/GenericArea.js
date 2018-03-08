@@ -10,15 +10,17 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/generic/model/GenericPartition' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   /**
    * @constructor
@@ -50,6 +52,16 @@ define( function( require ) {
     ].slice( 0, layout.size.height );
 
     Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.genericColorProperties, 1, allowExponents );
+
+    // TODO: remove before production
+    if ( AreaModelCommonQueryParameters.maximumLayout1 ) {
+      horizontalPartitions.forEach( function( partition, index ) {
+        partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
+      } );
+      verticalPartitions.forEach( function( partition, index ) {
+        partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
+      } );
+    }
 
     // @public {GenericLayout}
     this.layout = layout;
