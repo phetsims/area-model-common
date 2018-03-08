@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -49,8 +49,8 @@ define( function( require ) {
 
     // Background fill and stroke
     this.addChild( new Rectangle( 0, 0, AreaModelCommonConstants.AREA_SIZE, AreaModelCommonConstants.AREA_SIZE, {
-      fill: AreaModelColorProfile.areaBackgroundProperty,
-      stroke: AreaModelColorProfile.areaBorderProperty
+      fill: AreaModelCommonColorProfile.areaBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.areaBorderProperty
     } ) );
 
     Orientation.VALUES.forEach( function( orientation ) {
@@ -73,7 +73,7 @@ define( function( require ) {
       3: [ 0, firstOffset, secondOffset, fullOffset ]
     };
     Orientation.VALUES.forEach( function( orientation ) {
-      var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
+      var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
       var termListProperty = display.totalProperties.get( orientation );
       var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
         return tickVariations[ layout.getPartitionQuantity( orientation ) ];
@@ -118,7 +118,7 @@ define( function( require ) {
         var valuePropertyProperty = new DerivedProperty( [ display.partitionValuesProperties.get( orientation ) ], function( values ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
-        var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
+        var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
           if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
@@ -142,7 +142,7 @@ define( function( require ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
         } );
 
-        var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelColorProfile.dynamicPartialProductProperty ], function( editableProperty, color ) {
+        var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelCommonColorProfile.dynamicPartialProductProperty ], function( editableProperty, color ) {
           if ( editableProperty && editableProperty.field === Field.DYNAMIC ) {
             return color;
           }
@@ -217,7 +217,7 @@ define( function( require ) {
       var line = new Line( {
         p1: firstPoint,
         p2: secondPoint,
-        stroke: AreaModelColorProfile.partitionLineStrokeProperty
+        stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty
       } );
       visibilityProperty.linkAttribute( line, 'visible' );
       return line;

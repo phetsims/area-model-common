@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -32,8 +32,8 @@ define( function( require ) {
 
     Node.call( this );
 
-    var darkColorProperty = AreaModelColorProfile.calculationIconDarkProperty;
-    var lightColorProperty = AreaModelColorProfile.calculationIconLightProperty;
+    var darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
+    var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
     var radioItems = [
       {
@@ -58,8 +58,8 @@ define( function( require ) {
       touchAreaXDilation: 6,
       touchAreaYDilation: 6
     }, {
-      selectedStroke: AreaModelColorProfile.radioBorderProperty,
-      baseColor: AreaModelColorProfile.radioBackgroundProperty
+      selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
+      baseColor: AreaModelCommonColorProfile.radioBackgroundProperty
     } ) );
   }
 

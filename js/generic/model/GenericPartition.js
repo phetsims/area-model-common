@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -26,8 +26,8 @@ define( function( require ) {
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( typeof digitCount === 'number' );
 
-    Partition.call( this, orientation, orientation === Orientation.HORIZONTAL ? AreaModelColorProfile.genericWidthProperty
-                                                                              : AreaModelColorProfile.genericHeightProperty );
+    Partition.call( this, orientation, orientation === Orientation.HORIZONTAL ? AreaModelCommonColorProfile.genericWidthProperty
+                                                                              : AreaModelCommonColorProfile.genericHeightProperty );
 
     // @public {number} - How many digits to allow in the editor
     this.digitCount = digitCount;

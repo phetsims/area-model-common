@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -67,7 +67,7 @@ define( function( require ) {
       readoutText.center = Vector2.ZERO;
     } );
 
-    var textColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelColorProfile.errorHighlightProperty ], function( highlight, color, errorColor ) {
+    var textColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelCommonColorProfile.errorHighlightProperty ], function( highlight, color, errorColor ) {
       if ( highlight === Highlight.ERROR ) {
         return errorColor;
       }
@@ -75,7 +75,7 @@ define( function( require ) {
         return color;
       }
     } );
-    var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], function( highlight, color, errorColor, dirtyColor ) {
+    var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], function( highlight, color, errorColor, dirtyColor ) {
       if ( highlight === Highlight.NORMAL ) {
         return color;
       }

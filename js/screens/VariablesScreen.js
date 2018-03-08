@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaModel' );
   var GenericAreaScreenView = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaScreenView' );
@@ -26,7 +26,7 @@ define( function( require ) {
 
     var options = {
       name: screenVariablesString,
-      backgroundColorProperty: AreaModelColorProfile.backgroundProperty
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
     };
 
     Screen.call( this,

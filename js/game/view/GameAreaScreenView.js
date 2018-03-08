@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
@@ -142,6 +142,9 @@ define( function( require ) {
 
     // Status bar
     var gameStatusBar = new GameStatusBar( model.currentLevelProperty, function() {
+      // Reset the level on "Start Over", see https://github.com/phetsims/area-model-common/issues/87
+      model.currentLevelProperty.value.reset();
+      
       model.currentLevelProperty.value = null;
     } );
     this.challengeLayer.addChild( gameStatusBar );
@@ -271,7 +274,8 @@ define( function( require ) {
     };
     var checkButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( checkString, {
-        font: AreaModelCommonConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT,
+        maxWidth: 200
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -279,7 +283,7 @@ define( function( require ) {
         model.check();
       }
     }, {
-      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty,
+      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty,
       // TODO: potential input issues recreating the button? Let's find a better way.
       enabled: new DerivedProperty( [ model.hasNullProperty ], function( hasNull ) {
         return !hasNull;
@@ -289,7 +293,8 @@ define( function( require ) {
 
     var tryAgainButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( tryAgainString, {
-        font: AreaModelCommonConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT,
+        maxWidth: 200
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -297,13 +302,14 @@ define( function( require ) {
         model.tryAgain();
       }
     }, {
-      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty
     }, buttonLocationOptions );
     this.challengeLayer.addChild( tryAgainButton );
 
     var nextButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( nextString, {
-        font: AreaModelCommonConstants.BUTTON_FONT
+        font: AreaModelCommonConstants.BUTTON_FONT,
+        maxWidth: 200
       } ),
       touchAreaXDilation: 10,
       touchAreaYDilation: 10,
@@ -311,7 +317,7 @@ define( function( require ) {
         model.next();
       }
     }, {
-      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty
     }, buttonLocationOptions );
     this.challengeLayer.addChild( nextButton );
 
@@ -325,7 +331,7 @@ define( function( require ) {
         model.showSolution();
       }
     }, {
-      baseColor: AreaModelColorProfile.gameButtonBackgroundProperty
+      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty
     }, buttonLocationOptions );
     this.challengeLayer.addChild( showSolutionButton );
 
@@ -405,7 +411,7 @@ define( function( require ) {
     new StarNode()
   ], 100 );
   Orientation.VALUES.forEach( function( orientation ) {
-    var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
+    var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
     _.range( 1, 10 ).forEach( function( digit ) {
       [ -1, 1 ].forEach( function( sign ) {
@@ -452,8 +458,8 @@ define( function( require ) {
       return new Panel( panelContent, {
         xMargin: 15,
         yMargin: 10,
-        fill: AreaModelColorProfile.panelBackgroundProperty,
-        stroke: AreaModelColorProfile.panelBorderProperty,
+        fill: AreaModelCommonColorProfile.panelBackgroundProperty,
+        stroke: AreaModelCommonColorProfile.panelBorderProperty,
         cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
       } );
     },

@@ -55,7 +55,7 @@ define( function( require ) {
 
     MAIN_AREA_OFFSET: new Vector2( 180, 80 ),
     LARGE_AREA_OFFSET: new Vector2( 80, 80 ),
-    GAME_AREA_OFFSET: new Vector2( 180, 140 ),
+    GAME_AREA_OFFSET: new Vector2( 180, 200 ),
 
     PARTITION_HANDLE_OFFSET: 15,
     PARTITION_HANDLE_RADIUS: 10,

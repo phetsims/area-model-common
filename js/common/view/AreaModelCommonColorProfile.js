@@ -13,10 +13,11 @@ define( function( require ) {
   var Color = require( 'SCENERY/util/Color' );
   var ColorProfile = require( 'SCENERY_PHET/ColorProfile' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)
-  var AreaModelColorProfile = new ColorProfile( {
+  var AreaModelCommonColorProfile = new ColorProfile( {
     /*---------------------------------------------------------------------------*
     * Common colors
     *----------------------------------------------------------------------------*/
@@ -137,21 +138,23 @@ define( function( require ) {
     dirtyHighlight: { default: new Color( '#3B97BA' ) },
 
     // Readout colors for partial products
-    dynamicPartialProduct: { default: new Color( 128, 130, 133 ) }
+    dynamicPartialProduct: { default: new Color( 128, 130, 133 ) },
+
+    startOverButtonBaseColor: { default: PhetColorScheme.BUTTON_YELLOW }
 
   }, [ 'default' ] );
 
-  areaModelCommon.register( 'AreaModelColorProfile', AreaModelColorProfile );
+  areaModelCommon.register( 'AreaModelCommonColorProfile', AreaModelCommonColorProfile );
 
   // @public {OrientationPair.<Property.<Color>>}
-  AreaModelColorProfile.proportionalColorProperties = new OrientationPair( AreaModelColorProfile.proportionalWidthProperty, AreaModelColorProfile.proportionalHeightProperty );
-  AreaModelColorProfile.genericColorProperties = new OrientationPair( AreaModelColorProfile.genericWidthProperty, AreaModelColorProfile.genericHeightProperty );
+  AreaModelCommonColorProfile.proportionalColorProperties = new OrientationPair( AreaModelCommonColorProfile.proportionalWidthProperty, AreaModelCommonColorProfile.proportionalHeightProperty );
+  AreaModelCommonColorProfile.genericColorProperties = new OrientationPair( AreaModelCommonColorProfile.genericWidthProperty, AreaModelCommonColorProfile.genericHeightProperty );
 
   // @public {boolean} isProportional => {OrientationPair.<Property.<Color>>>}
-  AreaModelColorProfile.mainColorProperties = {
-    true: AreaModelColorProfile.proportionalColorProperties,
-    false: AreaModelColorProfile.genericColorProperties
+  AreaModelCommonColorProfile.mainColorProperties = {
+    true: AreaModelCommonColorProfile.proportionalColorProperties,
+    false: AreaModelCommonColorProfile.genericColorProperties
   };
 
-  return AreaModelColorProfile;
+  return AreaModelCommonColorProfile;
 } );

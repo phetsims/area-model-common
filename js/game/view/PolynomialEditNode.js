@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -158,13 +158,13 @@ define( function( require ) {
     }
 
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
-      color: new DerivedProperty( [ new DynamicProperty( constantPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
+      color: new DerivedProperty( [ new DynamicProperty( constantPropertyProperty, { derive: 'highlightProperty' } ), AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
     var xPicker = new NumberPicker( xProperty, rangeProperty, {
-      color: new DerivedProperty( [ new DynamicProperty( xPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
+      color: new DerivedProperty( [ new DynamicProperty( xPropertyProperty, { derive: 'highlightProperty' } ), AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
     var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
-      color: new DerivedProperty( [ new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ), AreaModelColorProfile.errorHighlightProperty, AreaModelColorProfile.dirtyHighlightProperty ], highlightFunction )
+      color: new DerivedProperty( [ new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ), AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], highlightFunction )
     } );
 
     var xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );

@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
@@ -68,8 +68,8 @@ define( function( require ) {
     } );
 
     var readoutBackground = new Rectangle( {
-      fill: AreaModelColorProfile.keypadReadoutBackgroundProperty,
-      stroke: AreaModelColorProfile.keypadReadoutBorderProperty,
+      fill: AreaModelCommonColorProfile.keypadReadoutBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.keypadReadoutBorderProperty,
       cornerRadius: 5
     } );
 
@@ -135,8 +135,8 @@ define( function( require ) {
       cornerRadius: 5,
       xMargin: 15,
       yMargin: 15,
-      fill: AreaModelColorProfile.keypadPanelBackgroundProperty,
-      stroke: AreaModelColorProfile.keypadPanelBorderProperty
+      fill: AreaModelCommonColorProfile.keypadPanelBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.keypadPanelBorderProperty
     } );
 
     this.mutate( nodeOptions );

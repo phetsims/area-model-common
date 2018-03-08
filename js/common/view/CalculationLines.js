@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -25,52 +25,52 @@ define( function( require ) {
   // TODO: reduce duplication with ProductNode -- different font though
   var activeX = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
     font: AreaModelCommonConstants.CALCULATION_X_FONT,
-    fill: AreaModelColorProfile.calculationActiveProperty
+    fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
   var activeLeftParen = new Text( '(', {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationActiveProperty
+    fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
   var activeRightParen = new Text( ')', {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationActiveProperty
+    fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
   var activePlus = new Text( AreaModelCommonConstants.PLUS_STRING, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationActiveProperty
+    fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
   var activeMinus = new Text( AreaModelCommonConstants.MINUS_STRING, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationActiveProperty
+    fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
   var activeDot = new Text( AreaModelCommonConstants.DOT_STRING, {
     font: AreaModelCommonConstants.CALCULATION_DOT_FONT,
-    fill: AreaModelColorProfile.calculationActiveProperty
+    fill: AreaModelCommonColorProfile.calculationActiveProperty
   } );
 
   var inactiveX = new Text( AreaModelCommonConstants.X_MULTIPLICATION_STRING, {
     font: AreaModelCommonConstants.CALCULATION_X_FONT,
-    fill: AreaModelColorProfile.calculationInactiveProperty
+    fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
   var inactiveLeftParen = new Text( '(', {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationInactiveProperty
+    fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
   var inactiveRightParen = new Text( ')', {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationInactiveProperty
+    fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
   var inactivePlus = new Text( AreaModelCommonConstants.PLUS_STRING, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationInactiveProperty
+    fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
   var inactiveMinus = new Text( AreaModelCommonConstants.MINUS_STRING, {
     font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-    fill: AreaModelColorProfile.calculationInactiveProperty
+    fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
   var inactiveDot = new Text( AreaModelCommonConstants.DOT_STRING, {
     font: AreaModelCommonConstants.CALCULATION_DOT_FONT,
-    fill: AreaModelColorProfile.calculationInactiveProperty
+    fill: AreaModelCommonColorProfile.calculationInactiveProperty
   } );
 
   var PAREN_PADDING = 0;
@@ -123,7 +123,7 @@ define( function( require ) {
           {
             node: new Text( '?', {
               font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
-              fill: AreaModelColorProfile.calculationActiveProperty
+              fill: AreaModelCommonColorProfile.calculationActiveProperty
             } ),
             index: 0,
             isActive: true
@@ -259,7 +259,7 @@ define( function( require ) {
       var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
       return new RichText( string, {
         font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
-        fill: isActive ? colorProperty : AreaModelColorProfile.calculationInactiveProperty
+        fill: isActive ? colorProperty : AreaModelCommonColorProfile.calculationInactiveProperty
       } );
     },
 
@@ -268,7 +268,7 @@ define( function( require ) {
       var string = excludeSign ? term.toNoSignRichString() : term.toRichString( includeBinaryOperation );
       return new RichText( string, {
         font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
-        fill: isActive ? AreaModelColorProfile.calculationActiveProperty : AreaModelColorProfile.calculationInactiveProperty
+        fill: isActive ? AreaModelCommonColorProfile.calculationActiveProperty : AreaModelCommonColorProfile.calculationInactiveProperty
       } );
     },
 

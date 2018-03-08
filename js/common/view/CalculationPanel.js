@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
@@ -42,15 +42,15 @@ define( function( require ) {
 
     var background = new Rectangle( 0, 0, 0, 0, {
       cornerRadius: 5,
-      fill: AreaModelColorProfile.panelBackgroundProperty,
-      stroke: AreaModelColorProfile.panelBorderProperty
+      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.panelBorderProperty
     } );
     this.addChild( background );
 
     var arrowSize = 18;
     var arrowTouchDilation = 8;
     var previousArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
-      fill: AreaModelColorProfile.calculationArrowUpProperty,
+      fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     previousArrow.mouseArea = previousArrow.localBounds;
@@ -69,12 +69,12 @@ define( function( require ) {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
       // TODO: improved coloring or naming
-      previousArrow.fill = enabled ? AreaModelColorProfile.calculationArrowUpProperty : AreaModelColorProfile.calculationArrowDisabledProperty;
+      previousArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     this.addChild( previousArrow );
     var nextArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, arrowSize * 0.8 ).close(), {
-      fill: AreaModelColorProfile.calculationArrowUpProperty,
+      fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     nextArrow.mouseArea = nextArrow.localBounds;
@@ -94,7 +94,7 @@ define( function( require ) {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
       // TODO: improved coloring or naming
-      nextArrow.fill = enabled ? AreaModelColorProfile.calculationArrowUpProperty : AreaModelColorProfile.calculationArrowDisabledProperty;
+      nextArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {

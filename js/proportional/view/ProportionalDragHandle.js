@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -47,7 +47,7 @@ define( function( require ) {
     var offsetProperty = new Property( new Vector2() );
 
     var line = new Line( {
-      stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty
+      stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
     } );
 
     var circle = new Circle( DRAG_RADIUS, {
@@ -55,8 +55,8 @@ define( function( require ) {
       focusable: true,
       touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
       focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ), // TODO deduplicate
-      fill: AreaModelColorProfile.proportionalDragHandleBackgroundProperty,
-      stroke: AreaModelColorProfile.proportionalDragHandleBorderProperty,
+      fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',
       inputListeners: [
         new DragListener( {

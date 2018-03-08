@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -83,7 +83,7 @@ define( function( require ) {
           // TODO: PERFORMANCE
           this.addChild( new Text( number, {
             font: AreaModelCommonConstants.COUNTING_FONT,
-            fill: AreaModelColorProfile.countingLabelProperty,
+            fill: AreaModelCommonColorProfile.countingLabelProperty,
             centerX: mapX( col + 0.5 ),
             centerY: mapY( row + 0.5 )
           } ) );

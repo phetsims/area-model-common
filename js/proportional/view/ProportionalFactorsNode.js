@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -83,7 +83,7 @@ define( function( require ) {
             return Util.toFixed( value, 1 );
           }
         },
-        color: AreaModelColorProfile.proportionalColorProperties.get( orientation )
+        color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation )
       } );
     }
   } );

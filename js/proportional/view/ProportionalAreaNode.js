@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
@@ -51,7 +51,7 @@ define( function( require ) {
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      fill: AreaModelColorProfile.areaBackgroundProperty,
+      fill: AreaModelCommonColorProfile.areaBackgroundProperty,
     } ) );
 
     // Grid lines
@@ -64,8 +64,8 @@ define( function( require ) {
 
     // Active area background
     var activeAreaBackground = new Rectangle( {
-      fill: useTileLikeBackground ? AreaModelColorProfile.semiTransparentSmallTileProperty : AreaModelColorProfile.proportionalActiveAreaBackgroundProperty,
-      stroke: AreaModelColorProfile.proportionalActiveAreaBorderProperty
+      fill: useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
     area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {
       activeAreaBackground.rectWidth = self.modelViewTransform.modelToViewX( totalWidth );
@@ -84,7 +84,7 @@ define( function( require ) {
 
     // Background stroke
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      stroke: AreaModelColorProfile.areaBorderProperty
+      stroke: AreaModelCommonColorProfile.areaBorderProperty
     } ) );
 
     // Counting / Numbering TODO: Do we call this numbering internally, or counting?

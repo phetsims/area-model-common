@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var GenericPartition = require( 'AREA_MODEL_COMMON/generic/model/GenericPartition' );
@@ -49,7 +49,7 @@ define( function( require ) {
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
     ].slice( 0, layout.size.height );
 
-    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelColorProfile.genericColorProperties, 1, allowExponents );
+    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.genericColorProperties, 1, allowExponents );
 
     // @public {Property.<GenericLayout>}
     this.layout = layout;

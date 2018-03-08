@@ -13,7 +13,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationSelectionNode' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
@@ -128,15 +128,15 @@ define( function( require ) {
     for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
       selectionContent.insertChild( i, new Line( {
         x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
-        stroke: AreaModelColorProfile.selectionSeparatorProperty
+        stroke: AreaModelCommonColorProfile.selectionSeparatorProperty
       } ) );
     }
 
     var selectionPanel = new Panel( selectionContent, {
       xMargin: 15,
       yMargin: 10,
-      fill: AreaModelColorProfile.panelBackgroundProperty,
-      stroke: AreaModelColorProfile.panelBorderProperty,
+      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.panelBorderProperty,
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
@@ -265,8 +265,8 @@ define( function( require ) {
         expandedProperty: expandedProperty,
         contentXMargin: 15,
         contentYMargin: 12,
-        fill: AreaModelColorProfile.panelBackgroundProperty,
-        stroke: AreaModelColorProfile.panelBorderProperty,
+        fill: AreaModelCommonColorProfile.panelBackgroundProperty,
+        stroke: AreaModelCommonColorProfile.panelBorderProperty,
         cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
         buttonTouchAreaXDilation: 5,
         buttonTouchAreaYDilation: 5,

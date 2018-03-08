@@ -12,7 +12,7 @@ define( function( require ) {
   var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -43,17 +43,17 @@ define( function( require ) {
     // TODO: remove level debug for production, or find a better way?
     if ( !isLevelDebug ) {
       GameAreaModel.call( this, [
-        new AreaLevel( 1, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables1Icon, [
+        new AreaLevel( 1, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables1Icon, [
           AreaChallengeDescription.LEVEL_1_VARIABLES_1,
           AreaChallengeDescription.LEVEL_1_VARIABLES_2,
           AreaChallengeDescription.LEVEL_1_VARIABLES_3,
           AreaChallengeDescription.LEVEL_1_VARIABLES_4
         ] ),
-        new AreaLevel( 2, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables2Icon, [
+        new AreaLevel( 2, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables2Icon, [
           AreaChallengeDescription.LEVEL_2_VARIABLES_1,
           AreaChallengeDescription.LEVEL_2_VARIABLES_2
         ] ),
-        new AreaLevel( 3, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables3Icon, [
+        new AreaLevel( 3, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables3Icon, [
           AreaChallengeDescription.LEVEL_3_VARIABLES_1,
           AreaChallengeDescription.LEVEL_3_VARIABLES_2,
           AreaChallengeDescription.LEVEL_3_VARIABLES_3,
@@ -61,15 +61,15 @@ define( function( require ) {
           AreaChallengeDescription.LEVEL_3_VARIABLES_5,
           AreaChallengeDescription.LEVEL_3_VARIABLES_6
         ] ),
-        new AreaLevel( 4, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables4Icon, [
+        new AreaLevel( 4, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables4Icon, [
           AreaChallengeDescription.LEVEL_4_VARIABLES_1,
           AreaChallengeDescription.LEVEL_4_VARIABLES_2
         ] ),
-        new AreaLevel( 5, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables5Icon, [
+        new AreaLevel( 5, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables5Icon, [
           AreaChallengeDescription.LEVEL_5_VARIABLES_1,
           AreaChallengeDescription.LEVEL_5_VARIABLES_2
         ] ),
-        new AreaLevel( 6, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, variables6Icon, [
+        new AreaLevel( 6, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables6Icon, [
           AreaChallengeDescription.LEVEL_6_VARIABLES_1
         ] )
       ] );
@@ -77,23 +77,23 @@ define( function( require ) {
     else {
       var count = 1;
       GameAreaModel.call( this, [
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '1-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_1 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '1-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_2 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '1-3', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_3 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '1-4', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_4 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '2-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_2_VARIABLES_1 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '2-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_2_VARIABLES_2 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_1 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_2 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3-3', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_3 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3-4', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_4 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3-5', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_5 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '3-6', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_6 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '4-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_4_VARIABLES_1 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '4-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_4_VARIABLES_2 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '5-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_5_VARIABLES_1 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '5-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_5_VARIABLES_2 ] ),
-        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelColorProfile.variablesIconBackgroundProperty, new Text( '6-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_6_VARIABLES_1 ] )
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '1-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_1 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '1-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_2 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '1-3', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_3 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '1-4', tmpOptions ), [ AreaChallengeDescription.LEVEL_1_VARIABLES_4 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '2-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_2_VARIABLES_1 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '2-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_2_VARIABLES_2 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '3-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_1 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '3-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_2 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '3-3', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_3 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '3-4', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_4 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '3-5', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_5 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '3-6', tmpOptions ), [ AreaChallengeDescription.LEVEL_3_VARIABLES_6 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '4-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_4_VARIABLES_1 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '4-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_4_VARIABLES_2 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '5-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_5_VARIABLES_1 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '5-2', tmpOptions ), [ AreaChallengeDescription.LEVEL_5_VARIABLES_2 ] ),
+        new AreaLevel( count++, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, new Text( '6-1', tmpOptions ), [ AreaChallengeDescription.LEVEL_6_VARIABLES_1 ] )
       ] );
     }
   }

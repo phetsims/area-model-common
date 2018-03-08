@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
@@ -90,7 +90,7 @@ define( function( require ) {
       mouseArea: Shape.bounds( handleMouseBounds ).shapeIntersection( handleClipShape ),
       touchArea: Shape.bounds( handleTouchBounds ).shapeIntersection( handleClipShape ),
       fill: area.colorProperties.get( orientation ),
-      stroke: AreaModelColorProfile.partitionLineBorderProperty,
+      stroke: AreaModelCommonColorProfile.partitionLineBorderProperty,
       cursor: 'pointer',
       children: [
         minHintArrow,
@@ -99,7 +99,7 @@ define( function( require ) {
     } );
 
     var line = new Line( 0, 0, 0, 0, {
-      stroke: AreaModelColorProfile.partitionLineStrokeProperty,
+      stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty,
       lineWidth: 2,
       cursor: 'pointer'
     } );

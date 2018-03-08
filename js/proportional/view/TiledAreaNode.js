@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -63,16 +63,16 @@ define( function( require ) {
 
     // @private {Path} - Background color paths for each section
     this.bigPath = new Path( null, {
-      fill: AreaModelColorProfile.bigTileProperty
+      fill: AreaModelCommonColorProfile.bigTileProperty
     } );
     this.horizontalPath = new Path( null, {
-      fill: AreaModelColorProfile.mediumTileProperty
+      fill: AreaModelCommonColorProfile.mediumTileProperty
     } );
     this.verticalPath = new Path( null, {
-      fill: AreaModelColorProfile.mediumTileProperty
+      fill: AreaModelCommonColorProfile.mediumTileProperty
     } );
     this.smallPath = new Path( null, {
-      fill: AreaModelColorProfile.smallTileProperty
+      fill: AreaModelCommonColorProfile.smallTileProperty
     } );
 
     // Grid line shapes
@@ -94,18 +94,18 @@ define( function( require ) {
 
     // @private {Path} - Grid line paths. We'll use clipping to control where they are visible
     this.smallGridPath = new Path( smallGridShape, {
-      stroke: AreaModelColorProfile.tileBorderProperty
+      stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
     this.horizontalGridPath = new Path( horizontalGridShape, {
-      stroke: AreaModelColorProfile.tileBorderProperty
+      stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
     this.verticalGridPath = new Path( verticalGridShape, {
-      stroke: AreaModelColorProfile.tileBorderProperty
+      stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
 
     // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
     this.extraLinesPath = new Path( null, {
-      stroke: AreaModelColorProfile.tileBorderProperty
+      stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
 
     Node.call( this, {

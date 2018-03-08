@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -54,8 +54,8 @@ define( function( require ) {
       touchAreaXDilation: 6,
       touchAreaYDilation: 6
     }, {
-      selectedStroke: AreaModelColorProfile.radioBorderProperty,
-      baseColor: AreaModelColorProfile.radioBackgroundProperty
+      selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
+      baseColor: AreaModelCommonColorProfile.radioBackgroundProperty
     } ) );
   }
 
@@ -76,8 +76,8 @@ define( function( require ) {
         y: 20 * 1.2
       };
       var background = new Rectangle( 0, 0, sizes.x, sizes.y, {
-        stroke: AreaModelColorProfile.partitionLineIconBorderProperty,
-        fill: AreaModelColorProfile.partitionLineIconBackgroundProperty
+        stroke: AreaModelCommonColorProfile.partitionLineIconBorderProperty,
+        fill: AreaModelCommonColorProfile.partitionLineIconBackgroundProperty
       } );
       background.localBounds = background.localBounds.dilated( 7 );
 
@@ -89,13 +89,13 @@ define( function( require ) {
       p2[ orientation.opposite.coordinate ] = sizes[ orientation.opposite.coordinate ] * 1.1;
 
       background.addChild( new Line( p1, p2, {
-        stroke: AreaModelColorProfile.partitionLineIconLineProperty
+        stroke: AreaModelCommonColorProfile.partitionLineIconLineProperty
       } ) );
 
       var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
 
       background.addChild( new Path( handleShape, {
-        fill: new DerivedProperty( [ currentAreaOrientationProperty, AreaModelColorProfile.proportionalColorProperties.get( orientation ) ], function( currentOrientation, widthColor ) {
+        fill: new DerivedProperty( [ currentAreaOrientationProperty, AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ) ], function( currentOrientation, widthColor ) {
           return currentOrientation === orientation ? widthColor : '#333';
         } ),
         scale: 0.5,

@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -112,16 +112,16 @@ define( function( require ) {
     } );
 
     var horizontalPartitions = [
-      new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty ),
-      new Partition( Orientation.HORIZONTAL, AreaModelColorProfile.proportionalWidthProperty )
+      new Partition( Orientation.HORIZONTAL, AreaModelCommonColorProfile.proportionalWidthProperty ),
+      new Partition( Orientation.HORIZONTAL, AreaModelCommonColorProfile.proportionalWidthProperty )
     ];
 
     var verticalPartitions = [
-      new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty ),
-      new Partition( Orientation.VERTICAL, AreaModelColorProfile.proportionalHeightProperty )
+      new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty ),
+      new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty )
     ];
 
-    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelColorProfile.proportionalColorProperties, this.maximumSize, false );
+    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.proportionalColorProperties, this.maximumSize, false );
 
     // Keep partition sizes up-to-date
     Orientation.VALUES.forEach( function( orientation ) {

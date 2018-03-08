@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
@@ -155,7 +155,7 @@ define( function( require ) {
                   visibleProperty.value = false; // hide
                 }
               } );
-              background.stroke = new DerivedProperty( [ genericLayoutProperty, AreaModelColorProfile.radioBorderProperty ], function( currentLayout, highlightColor ) {
+              background.stroke = new DerivedProperty( [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ], function( currentLayout, highlightColor ) {
                 if ( currentLayout === layout ) {
                   return highlightColor;
                 }
@@ -255,7 +255,7 @@ define( function( require ) {
     }
     return new Path( shape, {
       lineWidth: lineWidth,
-      stroke: AreaModelColorProfile.layoutGridProperty,
+      stroke: AreaModelCommonColorProfile.layoutGridProperty,
       fill: 'white' //TODO colorit
     } );
   }

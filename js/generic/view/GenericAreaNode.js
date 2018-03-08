@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
@@ -49,7 +49,7 @@ define( function( require ) {
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      fill: AreaModelColorProfile.areaBackgroundProperty,
+      fill: AreaModelCommonColorProfile.areaBackgroundProperty,
     } ) );
 
     // Sign-colored partition area backgrounds
@@ -59,7 +59,7 @@ define( function( require ) {
 
     // Background stroke
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      stroke: AreaModelColorProfile.areaBorderProperty
+      stroke: AreaModelCommonColorProfile.areaBorderProperty
     } ) );
 
     Orientation.VALUES.forEach( function( orientation ) {
@@ -145,7 +145,7 @@ define( function( require ) {
       return new Line( {
         p1: firstPoint,
         p2: secondPoint,
-        stroke: AreaModelColorProfile.partitionLineStrokeProperty
+        stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty
       } );
     }
   } );

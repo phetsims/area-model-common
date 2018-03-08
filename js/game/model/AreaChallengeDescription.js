@@ -17,6 +17,15 @@ define( function( require ) {
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Permutation = require( 'DOT/Permutation' );
 
+  // strings
+  var levelPromptOneProductOneLengthString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.oneLength' );
+  var levelPromptOneProductString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct' );
+  var levelPromptOneProductTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.totalArea' );
+  var levelPromptThreeLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.threeLengths' );
+  var levelPromptTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.totalArea' );
+  var levelPromptTwoLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoLengths' );
+  var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
+
   var EDITABLE = Field.EDITABLE;
   var DYNAMIC = Field.DYNAMIC;
   var GIVEN = Field.GIVEN;
@@ -70,7 +79,50 @@ define( function( require ) {
 
   areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
 
+  /**
+   * Returns a string key used for looking up the proper prompt in promptMap below.
+   * @private
+   *
+   * @param {boolean} hasAreaEntry
+   * @param {number} numProductEntries
+   * @param {number} numPartitionEntries
+   * @returns {string}
+   */
+  function getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) {
+    return hasAreaEntry + ',' + numProductEntries + ',' + numPartitionEntries;
+  }
+
+  var promptMap = {};
+  promptMap[ getPromptKey( true, 0, 0 ) ] = levelPromptTotalAreaString;
+  promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductString;
+  promptMap[ getPromptKey( false, 2, 0 ) ] = levelPromptTwoProductsString;
+  promptMap[ getPromptKey( true, 1, 0 ) ] = levelPromptOneProductTotalAreaString;
+  promptMap[ getPromptKey( false, 1, 1 ) ] = levelPromptOneProductOneLengthString;
+  promptMap[ getPromptKey( false, 0, 2 ) ] = levelPromptTwoLengthsString;
+  promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
+
   inherit( Object, AreaChallengeDescription, {
+    /**
+     * Returns the string representing the prompt for this challenge (what should be done to solve it).
+     * @public
+     *
+     * @returns {string}
+     */
+    getPromptString: function() {
+      var hasAreaEntry = this.totalField === Field.EDITABLE;
+      var numProductEntries = _.flatten( this.productFields ).filter( function( field ) {
+        return field === Field.EDITABLE; // TODO dedup
+      } ).length;
+      var numPartitionEntries = this.partitionFields.horizontal.concat( this.partitionFields.vertical ).filter( function( field ) {
+        return field === Field.EDITABLE;
+      } ).length;
+
+      var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
+      assert && assert( text );
+
+      return text;
+    },
+
     /**
      * Creates a permuted/transposed version of this description, where allowed.
      * @public

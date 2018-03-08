@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
@@ -85,14 +85,14 @@ define( function( require ) {
             editCallback();
           }
         }, {
-          baseColor: AreaModelColorProfile.editButtonBackgroundProperty
+          baseColor: AreaModelCommonColorProfile.editButtonBackgroundProperty
         } )
       ]
     } );
 
     isActiveProperty.link( function( isActive ) {
-      readoutBackground.fill = isActive ? AreaModelColorProfile.editActiveBackgroundProperty
-                                        : AreaModelColorProfile.editInactiveBackgroundProperty;
+      readoutBackground.fill = isActive ? AreaModelCommonColorProfile.editActiveBackgroundProperty
+                                        : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
 
     function layout() {

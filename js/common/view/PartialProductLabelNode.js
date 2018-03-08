@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -49,10 +49,10 @@ define( function( require ) {
 
     var background = new Rectangle( {
       cornerRadius: 3,
-      stroke: new DerivedProperty( [ partitionedArea.areaProperty, AreaModelColorProfile.partialProductBorderProperty ], function( area, color ) {
+      stroke: new DerivedProperty( [ partitionedArea.areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ], function( area, color ) {
         return ( area === null || area.coefficient === 0 ) ? 'transparent' : color;
       } ),
-      fill: AreaModelColorProfile.partialProductBackgroundProperty
+      fill: AreaModelCommonColorProfile.partialProductBackgroundProperty
     } );
     this.addChild( background );
 

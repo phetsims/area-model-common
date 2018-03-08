@@ -4,24 +4,22 @@
  * Status bar along the top of the game screen when in an active challenge. Shows the level #, description,
  * a back button, and the current score.
  *
- * TODO: Decide if something can be made common from this and make-a-ten
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
   'use strict';
 
   // modules
-  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var BackButton = require( 'SCENERY_PHET/buttons/BackButton' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
@@ -29,36 +27,33 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
 
   // strings
-  var challengeProgressPatternString = require( 'string!AREA_MODEL_COMMON/challengeProgressPattern' );
-  var levelPromptOneProductOneLengthString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.oneLength' );
-  var levelPromptOneProductString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct' );
-  var levelPromptOneProductTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.totalArea' );
-  var levelPromptThreeLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.threeLengths' );
-  var levelPromptTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.totalArea' );
-  var levelPromptTwoLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoLengths' );
-  var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
-  var numbersLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/numbersLevelNumberPattern' );
-  var variablesLevelNumberPatternString = require( 'string!AREA_MODEL_COMMON/variablesLevelNumberPattern' );
+  var labelLevelString = require( 'string!VEGAS/label.level' );
+  var pattern0Challenge1MaxString = require( 'string!VEGAS/pattern.0challenge.1max' );
+  var scorePrefixString = require( 'string!AREA_MODEL_COMMON/scorePrefix' );
+  var startOverString = require( 'string!VEGAS/startOver' );
 
   // constants
   //TODO: Colors in the color profile!
   var BAR_HEIGHT = 60;
-  var BAR_PADDING = 30;
+  var BAR_PADDING = 40;
+  var PROMPT_TOP_PADDING = 20;
   var TEXT_COLOR = 'black';
-  var LEVEL_NUMBER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  var LEVEL_DESCRIPTION_FONT = new PhetFont( 18 );
-  var OF_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var BOLD_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var NON_BOLD_FONT = new PhetFont( { size: 18 } );
+  var START_OVER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  var PROMPT_FONT = new PhetFont( { size: 30, weight: 'bold' } );
 
   /**
    * @constructor
    * @extends {Node}
    *
    * @param {Property.<AreaLevel>} currentLevelProperty
-   * @param {function} backCallback - Called with no args to go back to choose a level
+   * @param {function} startOverCallback - Called with no args to go back to choose a level (and reset the level)
    */
-  function GameStatusBar( currentLevelProperty, backCallback ) {
+  function GameStatusBar( currentLevelProperty, startOverCallback ) {
     Node.call( this );
 
     var self = this;
@@ -73,36 +68,32 @@ define( function( require ) {
     this.backgroundRectangle = new Rectangle( 0, 0, 100, BAR_HEIGHT, {
       fill: 'black',
       // Entire status bar should, when clicked, go "back", see https://github.com/phetsims/area-model-common/issues/80
-      inputListeners: [ new FireListener( { fire: backCallback } ) ],
+      inputListeners: [ new FireListener( { fire: startOverCallback } ) ],
       cursor: 'pointer'
     } );
     this.addChild( this.backgroundRectangle );
 
-    // @private {BackButton}
-    this.backButton = new BackButton( {
-      listener: backCallback,
+    // @private {TextPushButton}
+    // TODO: This can't support a baseColor Property? Yikes, let's fix that?
+    this.startOverButton = new MutableOptionsNode( TextPushButton, [ startOverString ], {
+      font: START_OVER_FONT,
+      listener: startOverCallback,
       touchAreaXDilation: 8,
-      touchAreaYDilation: 8
+      touchAreaYDilation: 8,
+      maxTextWidth: 180
+    }, {
+      baseColor: AreaModelCommonColorProfile.startOverButtonBaseColorProperty
     } );
-    this.addChild( this.backButton );
+    this.addChild( this.startOverButton );
 
     // @private {Text} - Text updated in updateLevelInfo
     this.levelNumberText = new Text( 'Level X', {
-      font: LEVEL_NUMBER_FONT,
+      font: BOLD_FONT,
       fill: TEXT_COLOR,
       pickable: false,
       maxWidth: 180
     } );
     this.addChild( this.levelNumberText );
-
-    // @private {Text}
-    // TODO: Really don't let this get to testing?
-    this.levelPromptText = new Text( 'Fill in the things with some stuff', {
-      font: LEVEL_DESCRIPTION_FONT,
-      fill: TEXT_COLOR,
-      pickable: false
-    } );
-    this.addChild( this.levelPromptText );
 
     var lastKnownLevel = null;
     var scoreProperty = new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
@@ -113,15 +104,22 @@ define( function( require ) {
       return level.scoreProperty;
     } ) );
 
-    // @private {ProgressIndicator}
-    this.scoreNode = new ProgressIndicator( AreaModelCommonConstants.NUM_CHALLENGES, scoreProperty, AreaModelCommonConstants.NUM_CHALLENGES * 2 );
-    this.scoreNode.pickable = false;
+    // @private {Node}
+    this.scoreNode = new HBox( {
+      children: [
+        new Text( scorePrefixString, { font: NON_BOLD_FONT, maxWidth: 120 } ),
+        new ProgressIndicator( AreaModelCommonConstants.NUM_CHALLENGES, scoreProperty, AreaModelCommonConstants.NUM_CHALLENGES * 2 )
+      ],
+      spacing: 10,
+      pickable: false
+    } );
     this.addChild( this.scoreNode );
 
     // @private {Text}
     this.challengeProgressNode = new Text( ' ', {
-      font: OF_FONT,
-      pickable: false
+      font: NON_BOLD_FONT,
+      pickable: false,
+      maxWidth: 180
     } );
     this.addChild( this.challengeProgressNode );
     //TODO: Use derive!!
@@ -129,44 +127,32 @@ define( function( require ) {
       return level ? level.challengeIndexProperty : new Property( null ); // TODO: reduce allocations
     } ) ).link( function( index ) {
       if ( index !== null ) {
-        self.challengeProgressNode.text = StringUtils.fillIn( challengeProgressPatternString, {
-          current: '' + ( index + 1 ),
-          total: '' + AreaModelCommonConstants.NUM_CHALLENGES
-        } );
+        self.challengeProgressNode.text = StringUtils.format( pattern0Challenge1MaxString, '' + ( index + 1 ), '' + AreaModelCommonConstants.NUM_CHALLENGES );
       }
     } );
 
     // Persistent, no need to worry about unlinking
     currentLevelProperty.link( this.updateLevelInfo.bind( this ) );
 
+    // @private {Text}
+    this.promptText = new Text( '', {
+      font: PROMPT_FONT,
+      pickable: false,
+      maxWidth: 600
+    } );
+    this.addChild( this.promptText );
     new DynamicProperty( currentLevelProperty, {
       derive: 'currentChallengeProperty'
-    } ).link( this.updateChallengeInfo.bind( this ) );
+    } ).link( function( challenge ) {
+      // Could be null
+      if ( challenge ) {
+        self.promptText.text = challenge.description.getPromptString();
+        self.layout();
+      }
+    } );
   }
 
   areaModelCommon.register( 'GameStatusBar', GameStatusBar );
-
-  /**
-   * Returns a string key used for looking up the proper prompt in promptMap below.
-   * @private
-   *
-   * @param {boolean} hasAreaEntry
-   * @param {number} numProductEntries
-   * @param {number} numPartitionEntries
-   * @returns {string}
-   */
-  function getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) {
-    return hasAreaEntry + ',' + numProductEntries + ',' + numPartitionEntries;
-  }
-
-  var promptMap = {};
-  promptMap[ getPromptKey( true, 0, 0 ) ] = levelPromptTotalAreaString;
-  promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductString;
-  promptMap[ getPromptKey( false, 2, 0 ) ] = levelPromptTwoProductsString;
-  promptMap[ getPromptKey( true, 1, 0 ) ] = levelPromptOneProductTotalAreaString;
-  promptMap[ getPromptKey( false, 1, 1 ) ] = levelPromptOneProductOneLengthString;
-  promptMap[ getPromptKey( false, 0, 2 ) ] = levelPromptTwoLengthsString;
-  promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
 
   return inherit( Node, GameStatusBar, {
     /**
@@ -182,35 +168,7 @@ define( function( require ) {
       }
 
       this.backgroundRectangle.fill = level.colorProperty;
-      var template = level.type === AreaChallengeType.NUMBERS ? numbersLevelNumberPatternString : variablesLevelNumberPatternString;
-      this.levelNumberText.text = StringUtils.fillIn( template, {
-        level: '' + level.number
-      } );
-
-      this.layout();
-    },
-
-    // TODO: doc
-    updateChallengeInfo: function( challenge ) {
-      // Don't update if there is no challenge, leave last appearance during the fade.
-      if ( challenge === null ) {
-        return;
-      }
-
-      var description = challenge.description;
-
-      var hasAreaEntry = description.totalField === Field.EDITABLE;
-      var numProductEntries = _.flatten( description.productFields ).filter( function( field ) {
-        return field === Field.EDITABLE; // TODO dedup
-      } ).length;
-      var numPartitionEntries = description.partitionFields.horizontal.concat( description.partitionFields.vertical ).filter( function( field ) {
-        return field === Field.EDITABLE;
-      } ).length;
-
-      var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
-      assert && assert( text );
-
-      this.levelPromptText.text = text;
+      this.levelNumberText.text = StringUtils.format( labelLevelString, '' + level.number );
 
       this.layout();
     },
@@ -236,22 +194,20 @@ define( function( require ) {
 
       var verticalCenter = this.backgroundRectangle.centerY;
 
-      this.backButton.left = this.backgroundRectangle.left + BAR_PADDING;
-      this.backButton.centerY = verticalCenter;
-
-      this.scoreNode.right = this.backgroundRectangle.right - BAR_PADDING;
-      this.scoreNode.centerY = verticalCenter;
-
-      this.challengeProgressNode.right = this.scoreNode.left - BAR_PADDING;
-      this.challengeProgressNode.centerY = verticalCenter;
-
-      this.levelNumberText.left = this.backButton.right + BAR_PADDING;
+      this.levelNumberText.left = this.backgroundRectangle.left + BAR_PADDING;
       this.levelNumberText.centerY = verticalCenter;
 
-      // TODO: Adjust maxWidth based on score
-      this.levelPromptText.maxWidth = ( this.challengeProgressNode.left - BAR_PADDING ) - ( this.levelNumberText.right + BAR_PADDING );
-      this.levelPromptText.left = this.levelNumberText.right + BAR_PADDING;
-      this.levelPromptText.centerY = verticalCenter;
+      this.challengeProgressNode.left = this.levelNumberText.right + BAR_PADDING;
+      this.challengeProgressNode.centerY = verticalCenter;
+
+      this.scoreNode.left = this.challengeProgressNode.right + BAR_PADDING;
+      this.scoreNode.centerY = verticalCenter;
+
+      this.startOverButton.right = this.backgroundRectangle.right - BAR_PADDING;
+      this.startOverButton.centerY = verticalCenter;
+
+      this.promptText.left = this.backgroundRectangle.left + BAR_PADDING;
+      this.promptText.top = this.backgroundRectangle.bottom + PROMPT_TOP_PADDING;
     }
   } );
 } );

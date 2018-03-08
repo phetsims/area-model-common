@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
@@ -178,7 +178,7 @@ define( function( require ) {
                                      .moveTo( 0, RADIO_ICON_SIZE * 3 / 4 )
                                      .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE * 3 / 4 );
       return new Path( gridIconShape, {
-        stroke: AreaModelColorProfile.gridIconProperty
+        stroke: AreaModelCommonColorProfile.gridIconProperty
       } );
     },
 
@@ -190,8 +190,8 @@ define( function( require ) {
      */
     createTileIconNode: function() {
       var tileIconOptions = {
-        fill: AreaModelColorProfile.smallTileProperty,
-        stroke: AreaModelColorProfile.tileIconStrokeProperty,
+        fill: AreaModelCommonColorProfile.smallTileProperty,
+        stroke: AreaModelCommonColorProfile.tileIconStrokeProperty,
         lineWidth: 0.5
       };
       var SMALL_TILE_ICON_SIZE = RADIO_ICON_SIZE / 10;

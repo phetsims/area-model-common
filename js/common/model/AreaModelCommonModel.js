@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -50,7 +50,7 @@ define( function( require ) {
     this.isProportional = options.isProportional;
 
     // @public {OrientationPair.<Property.<Color>>}
-    this.colorProperties = AreaModelColorProfile.mainColorProperties[ options.isProportional ];
+    this.colorProperties = AreaModelCommonColorProfile.mainColorProperties[ options.isProportional ];
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( defaultArea );

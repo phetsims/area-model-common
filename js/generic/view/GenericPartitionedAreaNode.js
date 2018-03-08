@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
@@ -36,10 +36,10 @@ define( function( require ) {
         self.fill = null;
       }
       else if ( area.coefficient > 0 ) {
-        self.fill = AreaModelColorProfile.genericPositiveBackgroundProperty;
+        self.fill = AreaModelCommonColorProfile.genericPositiveBackgroundProperty;
       }
       else {
-        self.fill = AreaModelColorProfile.genericNegativeBackgroundProperty;
+        self.fill = AreaModelCommonColorProfile.genericNegativeBackgroundProperty;
       }
     } );
 

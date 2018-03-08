@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -77,8 +77,8 @@ define( function( require ) {
       touchAreaXDilation: 6,
       touchAreaYDilation: 6
     }, {
-      selectedStroke: AreaModelColorProfile.radioBorderProperty,
-      baseColor: AreaModelColorProfile.radioBackgroundProperty
+      selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
+      baseColor: AreaModelCommonColorProfile.radioBackgroundProperty
     } ) );
   }
 

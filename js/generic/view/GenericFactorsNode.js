@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -93,7 +93,7 @@ define( function( require ) {
     createOrientationReadout: function( orientation, displayProperty ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      var colorProperty = AreaModelColorProfile.genericColorProperties.get( orientation );
+      var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
       var richText = new RichText( ' ', {
         // TODO: Why are we using this font? create our own named one?

@@ -53,14 +53,8 @@
   "areaEquals": {
     "value": "Area ="
   },
-  "numbersLevelNumberPattern": {
-    "value": "Numbers: Level {{level}}"
-  },
-  "variablesLevelNumberPattern": {
-    "value": "Variables: Level {{level}}"
-  },
-  "challengeProgressPattern": {
-    "value": "{{current}} of {{total}}"
+  "scorePrefix": {
+    "value": "Score:"
   },
   "levelPrompt.totalArea": {
     "value": "Find the total area."

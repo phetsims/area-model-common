@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -51,7 +51,7 @@ define( function( require ) {
           new Text( areaEqualsString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
-            fill: useTileLikeBackground ? AreaModelColorProfile.smallTileProperty : AreaModelColorProfile.proportionalActiveAreaBackgroundProperty
+            fill: useTileLikeBackground ? AreaModelCommonColorProfile.smallTileProperty : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
           } )
         ]
       } );
