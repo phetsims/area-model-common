@@ -270,7 +270,7 @@ define( function( require ) {
     //TODO: button deduplication
     var buttonLocationOptions = {
       centerX: panelBox.centerX,
-      top: panelBox.bottom + 80
+      top: panelBox.bottom + 50
     };
     var checkButton = new MutableOptionsNode( RectangularPushButton, [], {
       content: new Text( checkString, {
@@ -337,7 +337,7 @@ define( function( require ) {
 
     var faceNode = new FaceNode( 90, {
       centerX: showSolutionButton.centerX,
-      top: showSolutionButton.bottom + 50
+      top: showSolutionButton.bottom + 30
     } );
     this.challengeLayer.addChild( faceNode );
     var scoreIncreaseText = new Text( ' ', {
