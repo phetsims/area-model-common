@@ -28,7 +28,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: options object?
+   * TODO: options object? OMG yes
    *
    * @param {Property.<EditableProperty.<Term|TermList|null>>} valuePropertyProperty
    * @param {Property.<GameState>} gameStateProperty
@@ -39,7 +39,12 @@ define( function( require ) {
    * @param {boolean} canBePolynomial
    * @param {function} editCallback - Called when editing is triggered
    */
-  function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback ) {
+  function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback, options ) {
+
+    options = _.extend( {
+      font: AreaModelCommonConstants.GAME_VALUE_FONT
+    }, options );
+
     Node.call( this );
 
     var valueProperty = new DynamicProperty( valuePropertyProperty, {
@@ -53,12 +58,9 @@ define( function( require ) {
       return valueProperty === activeProperty;
     } );
 
-    // TODO: support font switching in different contexts?
-    var font = AreaModelCommonConstants.GAME_VALUE_FONT;
-
     var readoutText = new RichText( '?', {
       fill: colorProperty,
-      font: font
+      font: options.font
     } );
     this.addChild( readoutText );
 
