@@ -36,7 +36,7 @@ define( function( require ) {
     this.partitions = partitions;
 
     // @public {Array.<Partition>} - All partitions, regardless of orientation
-    this.allPartitions = partitions.get( Orientation.HORIZONTAL ).concat( partitions.get( Orientation.VERTICAL ) );
+    this.allPartitions = partitions.horizontal.concat( partitions.vertical );
 
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = colorProperties;
@@ -49,8 +49,8 @@ define( function( require ) {
 
     // @public {Array.<PartitionedArea>} - A 2-dimensional sections of area defined by a horizontal and vertical
     // pair of partitions.
-    this.partitionedAreas = _.flatten( partitions.get( Orientation.HORIZONTAL ).map( function( horizontalPartition ) {
-      return partitions.get( Orientation.VERTICAL ).map( function( verticalPartition ) {
+    this.partitionedAreas = _.flatten( partitions.horizontal.map( function( horizontalPartition ) {
+      return partitions.vertical.map( function( verticalPartition ) {
         return self.createPartitionedArea( horizontalPartition, verticalPartition );
       } );
     } ) );

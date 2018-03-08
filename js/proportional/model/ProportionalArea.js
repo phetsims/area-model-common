@@ -167,8 +167,8 @@ define( function( require ) {
     erase: function() {
       Area.prototype.erase.call( this );
 
-      this.activeTotalProperties.get( Orientation.HORIZONTAL ).value = this.eraseWidth;
-      this.activeTotalProperties.get( Orientation.VERTICAL ).value = this.eraseHeight;
+      this.activeTotalProperties.horizontal.value = this.eraseWidth;
+      this.activeTotalProperties.vertical.value = this.eraseHeight;
     },
 
     /**

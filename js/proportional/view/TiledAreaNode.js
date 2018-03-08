@@ -232,7 +232,7 @@ define( function( require ) {
 
       // Display extra lines, and clip it to fit the active area.
       this.extraLinesPath.shape = extraLinesShape;
-      this.extraLinesPath.clipArea = Shape.rect( 0, 0, mapX( area.activeTotalProperties.get( Orientation.HORIZONTAL ).value ), mapY( area.activeTotalProperties.get( Orientation.VERTICAL ).value ) );
+      this.extraLinesPath.clipArea = Shape.rect( 0, 0, mapX( area.activeTotalProperties.horizontal.value ), mapY( area.activeTotalProperties.vertical.value ) );
     }
   } );
 } );

@@ -14,7 +14,6 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
@@ -48,8 +47,8 @@ define( function( require ) {
       self.dirty = true;
     }
     countingVisibleProperty.link( invalidate );
-    area.activeTotalProperties.get( Orientation.HORIZONTAL ).link( invalidate );
-    area.activeTotalProperties.get( Orientation.VERTICAL ).link( invalidate );
+    area.activeTotalProperties.horizontal.link( invalidate );
+    area.activeTotalProperties.vertical.link( invalidate );
   }
 
   areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
@@ -74,8 +73,8 @@ define( function( require ) {
       var mapX = this.modelViewTransform.modelToViewX.bind( this.modelViewTransform );
       var mapY = this.modelViewTransform.modelToViewY.bind( this.modelViewTransform );
 
-      var width = this.area.activeTotalProperties.get( Orientation.HORIZONTAL ).value;
-      var height = this.area.activeTotalProperties.get( Orientation.VERTICAL ).value;
+      var width = this.area.activeTotalProperties.horizontal.value;
+      var height = this.area.activeTotalProperties.vertical.value;
 
       var number = 1;
       for ( var row = 0; row < height; row++ ) {

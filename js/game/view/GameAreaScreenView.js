@@ -203,8 +203,8 @@ define( function( require ) {
     var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
     // TODO: ensure sizing doesn't spill out? AreaModelCommonConstants.PANEL_INTERIOR_MAX
-    // TODO: make it accept a pair
-    var factorsNode = new GenericFactorsNode( this.display.totalProperties.get( Orientation.HORIZONTAL ), this.display.totalProperties.get( Orientation.VERTICAL ), this.display.allowExponentsProperty );
+    // TODO: make it accept a pair (yup)
+    var factorsNode = new GenericFactorsNode( this.display.totalProperties.horizontal, this.display.totalProperties.vertical, this.display.allowExponentsProperty );
     var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
     //TODO: remove this workaround

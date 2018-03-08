@@ -148,8 +148,8 @@ define( function( require ) {
       var horizontalTerms = horizontalTermList.terms;
       var verticalTerms = verticalTermList.terms;
 
-      var horizontalPolynomial = this.area.totalProperties.get( Orientation.HORIZONTAL ).value;
-      var verticalPolynomial = this.area.totalProperties.get( Orientation.VERTICAL ).value;
+      var horizontalPolynomial = this.area.totalProperties.horizontal.value;
+      var verticalPolynomial = this.area.totalProperties.vertical.value;
 
       var multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
@@ -392,8 +392,8 @@ define( function( require ) {
 
     // TODO: doc
     createTotalsLine: function( isActive ) {
-      var horizontalTotal = this.area.displayProperties.get( Orientation.HORIZONTAL ).value;
-      var verticalTotal = this.area.displayProperties.get( Orientation.VERTICAL ).value;
+      var horizontalTotal = this.area.displayProperties.horizontal.value;
+      var verticalTotal = this.area.displayProperties.vertical.value;
 
       var widthText = horizontalTotal ? this.createColoredRichText( horizontalTotal, Orientation.HORIZONTAL, isActive )
                                       : this.createColoredBox( Orientation.HORIZONTAL );

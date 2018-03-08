@@ -75,8 +75,8 @@ define( function( require ) {
             width = Util.clamp( width, area.minimumSize, area.maximumSize );
             height = Util.clamp( height, area.minimumSize, area.maximumSize );
 
-            area.activeTotalProperties.get( Orientation.HORIZONTAL ).value = width;
-            area.activeTotalProperties.get( Orientation.VERTICAL ).value = height;
+            area.activeTotalProperties.horizontal.value = width;
+            area.activeTotalProperties.vertical.value = height;
 
             offsetProperty.value = new Vector2(
               viewPoint.x - modelViewTransform.modelToViewX( width ),
@@ -96,15 +96,15 @@ define( function( require ) {
 
     var locationProperty = new Property( new Vector2() );
     function updateLocationProperty() {
-      locationProperty.value = new Vector2( area.activeTotalProperties.get( Orientation.HORIZONTAL ).value, area.activeTotalProperties.get( Orientation.VERTICAL ).value );
+      locationProperty.value = new Vector2( area.activeTotalProperties.horizontal.value, area.activeTotalProperties.vertical.value );
     }
     updateLocationProperty();
     locationProperty.lazyLink( function( location ) {
-      area.activeTotalProperties.get( Orientation.HORIZONTAL ).value = location.x;
-      area.activeTotalProperties.get( Orientation.VERTICAL ).value = location.y;
+      area.activeTotalProperties.horizontal.value = location.x;
+      area.activeTotalProperties.vertical.value = location.y;
     } );
-    area.activeTotalProperties.get( Orientation.HORIZONTAL ).lazyLink( updateLocationProperty );
-    area.activeTotalProperties.get( Orientation.VERTICAL ).lazyLink( updateLocationProperty );
+    area.activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
+    area.activeTotalProperties.vertical.lazyLink( updateLocationProperty );
 
     var keyboardListener = new KeyboardDragListener( {
       // TODO: generalize for explore screen
@@ -114,8 +114,8 @@ define( function( require ) {
       // locationProperty: locationProperty,
       drag: function( delta ) {
         // TODO: deduplicate width/height
-        var width = area.activeTotalProperties.get( Orientation.HORIZONTAL ).value;
-        var height = area.activeTotalProperties.get( Orientation.VERTICAL ).value;
+        var width = area.activeTotalProperties.horizontal.value;
+        var height = area.activeTotalProperties.vertical.value;
 
         width += delta.x;
         height += delta.y;
@@ -123,8 +123,8 @@ define( function( require ) {
         width = Util.roundSymmetric( Util.clamp( width, area.minimumSize, area.maximumSize ) );
         height = Util.roundSymmetric( Util.clamp( height, area.minimumSize, area.maximumSize ) );
 
-        area.activeTotalProperties.get( Orientation.HORIZONTAL ).value = width;
-        area.activeTotalProperties.get( Orientation.VERTICAL ).value = height;
+        area.activeTotalProperties.horizontal.value = width;
+        area.activeTotalProperties.vertical.value = height;
       },
       moveOnHoldDelay: 750,
       moveOnHoldInterval: 70

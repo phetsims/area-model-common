@@ -67,10 +67,10 @@ define( function( require ) {
       fill: useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
-    area.activeTotalProperties.get( Orientation.HORIZONTAL ).link( function( totalWidth ) {
+    area.activeTotalProperties.horizontal.link( function( totalWidth ) {
       activeAreaBackground.rectWidth = self.modelViewTransform.modelToViewX( totalWidth );
     } );
-    area.activeTotalProperties.get( Orientation.VERTICAL ).link( function( totalHeight ) {
+    area.activeTotalProperties.vertical.link( function( totalHeight ) {
       activeAreaBackground.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.areaLayer.addChild( activeAreaBackground );
@@ -128,8 +128,8 @@ define( function( require ) {
 
     //TODO: doc @private
     getProductLabel: function( horizontalIndex, verticalIndex ) {
-      var horizontalPartitions = this.area.partitions.get( Orientation.HORIZONTAL );
-      var verticalPartitions = this.area.partitions.get( Orientation.VERTICAL );
+      var horizontalPartitions = this.area.partitions.horizontal;
+      var verticalPartitions = this.area.partitions.vertical;
 
       return _.find( this.productLabels, function( productLabel ) {
         return productLabel.partitionedArea.getPartition( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
@@ -145,13 +145,13 @@ define( function( require ) {
       var self = this;
 
       // {Array.<Range|null>} - View coordinates - TODO: potential to dedup horiz/vert
-      var horizontalRanges = this.area.partitions.get( Orientation.HORIZONTAL ).map( function( partition ) {
+      var horizontalRanges = this.area.partitions.horizontal.map( function( partition ) {
         var range = partition.coordinateRangeProperty.value;
         if ( range === null ) { return null; }
         return new Range( self.modelViewTransform.modelToViewX( range.min ),
                           self.modelViewTransform.modelToViewX( range.max ) );
       } );
-      var verticalRanges = this.area.partitions.get( Orientation.VERTICAL ).map( function( partition ) {
+      var verticalRanges = this.area.partitions.vertical.map( function( partition ) {
         var range = partition.coordinateRangeProperty.value;
         if ( range === null ) { return null; }
         return new Range( self.modelViewTransform.modelToViewY( range.min ),
@@ -165,8 +165,8 @@ define( function( require ) {
         var verticalPartition = productLabel.partitionedArea.getPartition( Orientation.VERTICAL );
 
         // {Range|null}
-        var horizontalRange = horizontalRanges[ _.indexOf( self.area.partitions.get( Orientation.HORIZONTAL ), horizontalPartition ) ];
-        var verticalRange = verticalRanges[ _.indexOf( self.area.partitions.get( Orientation.VERTICAL ), verticalPartition ) ];
+        var horizontalRange = horizontalRanges[ _.indexOf( self.area.partitions.horizontal, horizontalPartition ) ];
+        var verticalRange = verticalRanges[ _.indexOf( self.area.partitions.vertical, verticalPartition ) ];
 
         // Ignore it if any parts are null
         if ( horizontalRange === null || verticalRange === null ) {

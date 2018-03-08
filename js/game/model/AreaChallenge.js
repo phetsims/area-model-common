@@ -72,8 +72,8 @@ define( function( require ) {
     } );
 
     // @public {Array.<Array.<Term|null>>}
-    this.partialProductSizes = this.partitionSizes.get( Orientation.VERTICAL ).map( function( verticalSize ) {
-      return self.partitionSizes.get( Orientation.HORIZONTAL ).map( function( horizontalSize ) {
+    this.partialProductSizes = this.partitionSizes.vertical.map( function( verticalSize ) {
+      return self.partitionSizes.horizontal.map( function( horizontalSize ) {
         return horizontalSize.times( verticalSize );
       } );
     } );
@@ -81,7 +81,7 @@ define( function( require ) {
     // TODO: doc
     this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
       return row.map( function( size, horizontalIndex ) {
-        var numbersDigits = description.partitionFields.get( Orientation.VERTICAL ).length + description.partitionFields.get( Orientation.HORIZONTAL ).length - verticalIndex - horizontalIndex;
+        var numbersDigits = description.partitionFields.vertical.length + description.partitionFields.horizontal.length - verticalIndex - horizontalIndex;
         var field = description.productFields[ verticalIndex ][ horizontalIndex ];
         var property = new EditableProperty( size, {
           field: field,
@@ -109,20 +109,20 @@ define( function( require ) {
       } );
     } );
 
-    var hasXSquaredTotal = ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) >= 4;
+    var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
-    this.totals = new OrientationPair( new Polynomial( this.partitionSizes.get( Orientation.HORIZONTAL ) ), new Polynomial( this.partitionSizes.get( Orientation.VERTICAL ) ) );
+    this.totals = new OrientationPair( new Polynomial( this.partitionSizes.horizontal ), new Polynomial( this.partitionSizes.vertical ) );
 
     // @public {OrientationPair.<Property.<Polynomial|null>>}
-    this.totalProperties = new OrientationPair( new Property( this.totals.get( Orientation.HORIZONTAL ) ), new Property( this.totals.get( Orientation.VERTICAL ) ) );
+    this.totalProperties = new OrientationPair( new Property( this.totals.horizontal ), new Property( this.totals.vertical ) );
 
     // @public {Polynomial}
-    this.total = this.totals.get( Orientation.HORIZONTAL ).times( this.totals.get( Orientation.VERTICAL ) );
+    this.total = this.totals.horizontal.times( this.totals.vertical );
 
     var totalOptions = {
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
-      digits: ( description.allowExponents ? 2 : ( this.partitionSizes.get( Orientation.HORIZONTAL ).length + this.partitionSizes.get( Orientation.VERTICAL ).length ) )
+      digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
     // @public {EditableProperty.<Term|null>}
     this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {
@@ -155,9 +155,9 @@ define( function( require ) {
     } );
 
     // Properties for all of the values
-    var availableProperties = this.partitionSizeProperties.get( Orientation.HORIZONTAL ).concat( this.partitionSizeProperties.get( Orientation.VERTICAL ) ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
-      this.totalProperties.get( Orientation.HORIZONTAL ),
-      this.totalProperties.get( Orientation.VERTICAL ),
+    var availableProperties = this.partitionSizeProperties.horizontal.concat( this.partitionSizeProperties.vertical ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
+      this.totalProperties.horizontal,
+      this.totalProperties.vertical,
       this.totalConstantProperty,
       this.totalXProperty,
       this.totalXSquaredProperty
@@ -233,19 +233,19 @@ define( function( require ) {
         }
         else {
           if ( !this.nonUniqueHorizontalMatches() ) {
-            incorrectProperties.push( this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ] );
+            incorrectProperties.push( this.partitionSizeProperties.horizontal[ 1 ] );
           }
           if ( !this.nonUniqueVerticalMatches() ) {
-            incorrectProperties.push( this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ] );
+            incorrectProperties.push( this.partitionSizeProperties.vertical[ 1 ] );
           }
         }
       }
       else {
-        this.partitionSizeProperties.get( Orientation.HORIZONTAL ).forEach( function( property, index ) {
-          compareProperty( property, self.partitionSizes.get( Orientation.HORIZONTAL )[ index ] );
+        this.partitionSizeProperties.horizontal.forEach( function( property, index ) {
+          compareProperty( property, self.partitionSizes.horizontal[ index ] );
         } );
-        this.partitionSizeProperties.get( Orientation.VERTICAL ).forEach( function( property, index ) {
-          compareProperty( property, self.partitionSizes.get( Orientation.VERTICAL )[ index ] );
+        this.partitionSizeProperties.vertical.forEach( function( property, index ) {
+          compareProperty( property, self.partitionSizes.vertical[ index ] );
         } );
         // TODO: look at common iteration patterns like this and abstract out more (and name it)
         this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
@@ -265,31 +265,31 @@ define( function( require ) {
 
     //TODO: doc
     nonUniqueHorizontalMatches: function() {
-      var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
-      var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
+      var expected1 = this.partitionSizes.horizontal[ 1 ];
+      var expected2 = this.partitionSizes.vertical[ 1 ];
 
-      var actual1 = this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ].value;
+      var actual1 = this.partitionSizeProperties.horizontal[ 1 ].value;
 
       return actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
     },
 
     //TODO: doc
     nonUniqueVerticalMatches: function() {
-      var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
-      var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
+      var expected1 = this.partitionSizes.horizontal[ 1 ];
+      var expected2 = this.partitionSizes.vertical[ 1 ];
 
-      var actual2 = this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ].value;
+      var actual2 = this.partitionSizeProperties.vertical[ 1 ].value;
 
       return actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
     },
 
     //TODO: doc
     hasNonUniqueMatch: function() {
-      var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
-      var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
+      var expected1 = this.partitionSizes.horizontal[ 1 ];
+      var expected2 = this.partitionSizes.vertical[ 1 ];
 
-      var actual1 = this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ].value;
-      var actual2 = this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ].value;
+      var actual1 = this.partitionSizeProperties.horizontal[ 1 ].value;
+      var actual2 = this.partitionSizeProperties.vertical[ 1 ].value;
 
       return actual1 !== null && actual2 !== null &&
              ( ( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) ||
@@ -307,8 +307,8 @@ define( function( require ) {
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
-          this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ].highlightProperty.value = Highlight.NORMAL;
-          this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ].highlightProperty.value = Highlight.NORMAL;
+          this.partitionSizeProperties.horizontal[ 1 ].highlightProperty.value = Highlight.NORMAL;
+          this.partitionSizeProperties.vertical[ 1 ].highlightProperty.value = Highlight.NORMAL;
         }
       }
     },
@@ -323,11 +323,11 @@ define( function( require ) {
         var reversed = false;
 
         // TODO: dedup with the editable property bit above
-        var expected1 = this.partitionSizes.get( Orientation.HORIZONTAL )[ 1 ];
-        var expected2 = this.partitionSizes.get( Orientation.VERTICAL )[ 1 ];
+        var expected1 = this.partitionSizes.horizontal[ 1 ];
+        var expected2 = this.partitionSizes.vertical[ 1 ];
 
-        var actual1Property = this.partitionSizeProperties.get( Orientation.HORIZONTAL )[ 1 ];
-        var actual2Property = this.partitionSizeProperties.get( Orientation.VERTICAL )[ 1 ];
+        var actual1Property = this.partitionSizeProperties.horizontal[ 1 ];
+        var actual2Property = this.partitionSizeProperties.vertical[ 1 ];
 
         var actual1 = actual1Property.value;
         var actual2 = actual2Property.value;
@@ -343,27 +343,27 @@ define( function( require ) {
         if ( reversed ) {
           actual1Property.value = expected2;
           actual2Property.value = expected1;
-          this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.VERTICAL );
-          this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.HORIZONTAL );
+          this.totalProperties.horizontal.value = this.totals.vertical;
+          this.totalProperties.vertical.value = this.totals.horizontal;
         }
         else {
           actual1Property.value = expected1;
           actual2Property.value = expected2;
-          this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.HORIZONTAL );
-          this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.VERTICAL );
+          this.totalProperties.horizontal.value = this.totals.horizontal;
+          this.totalProperties.vertical.value = this.totals.vertical;
         }
       }
       else {
         //TODO: dedup possible with incorrect bits above?
-        this.partitionSizeProperties.get( Orientation.HORIZONTAL ).forEach( function( property, index ) {
-          property.value = self.partitionSizes.get( Orientation.HORIZONTAL )[ index ];
+        this.partitionSizeProperties.horizontal.forEach( function( property, index ) {
+          property.value = self.partitionSizes.horizontal[ index ];
         } );
-        this.partitionSizeProperties.get( Orientation.VERTICAL ).forEach( function( property, index ) {
-          property.value = self.partitionSizes.get( Orientation.VERTICAL )[ index ];
+        this.partitionSizeProperties.vertical.forEach( function( property, index ) {
+          property.value = self.partitionSizes.vertical[ index ];
         } );
 
-        this.totalProperties.get( Orientation.HORIZONTAL ).value = this.totals.get( Orientation.HORIZONTAL );
-        this.totalProperties.get( Orientation.VERTICAL ).value = this.totals.get( Orientation.VERTICAL );
+        this.totalProperties.horizontal.value = this.totals.horizontal;
+        this.totalProperties.vertical.value = this.totals.vertical;
       }
 
       // TODO: look at common iteration patterns like this and abstract out more (and name it)
@@ -400,30 +400,30 @@ define( function( require ) {
       display.partialProductsProperty.value = this.partialProductSizeProperties;
 
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
-      if ( this.partitionSizeProperties.get( Orientation.HORIZONTAL ).length === 1 &&
-           this.description.partitionFields.get( Orientation.HORIZONTAL )[ 0 ] === Field.GIVEN ) {
-        display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = [ new EditableProperty( null ) ];
+      if ( this.partitionSizeProperties.horizontal.length === 1 &&
+           this.description.partitionFields.horizontal[ 0 ] === Field.GIVEN ) {
+        display.partitionValuesProperties.horizontal.value = [ new EditableProperty( null ) ];
       }
       else {
-        display.partitionValuesProperties.get( Orientation.HORIZONTAL ).value = this.partitionSizeProperties.get( Orientation.HORIZONTAL );
+        display.partitionValuesProperties.horizontal.value = this.partitionSizeProperties.horizontal;
       }
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
-      if ( this.partitionSizeProperties.get( Orientation.VERTICAL ).length === 1 &&
-           this.description.partitionFields.get( Orientation.VERTICAL )[ 0 ] === Field.GIVEN ) {
-        display.partitionValuesProperties.get( Orientation.VERTICAL ).value = [ new EditableProperty( null ) ];
+      if ( this.partitionSizeProperties.vertical.length === 1 &&
+           this.description.partitionFields.vertical[ 0 ] === Field.GIVEN ) {
+        display.partitionValuesProperties.vertical.value = [ new EditableProperty( null ) ];
       }
       else {
-        display.partitionValuesProperties.get( Orientation.VERTICAL ).value = this.partitionSizeProperties.get( Orientation.VERTICAL );
+        display.partitionValuesProperties.vertical.value = this.partitionSizeProperties.vertical;
       }
 
-      this.horizontalTotalListener = this.totalProperties.get( Orientation.HORIZONTAL ).linkAttribute( display.totalProperties.get( Orientation.HORIZONTAL ), 'value' );
-      this.verticalTotalListener = this.totalProperties.get( Orientation.VERTICAL ).linkAttribute( display.totalProperties.get( Orientation.VERTICAL ), 'value' );
+      this.horizontalTotalListener = this.totalProperties.horizontal.linkAttribute( display.totalProperties.horizontal, 'value' );
+      this.verticalTotalListener = this.totalProperties.vertical.linkAttribute( display.totalProperties.vertical, 'value' );
     },
 
     // TODO
     detachDisplay: function( display ) {
-      this.totalProperties.get( Orientation.HORIZONTAL ).unlink( this.horizontalTotalListener );
-      this.totalProperties.get( Orientation.VERTICAL ).unlink( this.verticalTotalListener );
+      this.totalProperties.horizontal.unlink( this.horizontalTotalListener );
+      this.totalProperties.vertical.unlink( this.verticalTotalListener );
     }
   }, {
 

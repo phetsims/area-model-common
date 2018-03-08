@@ -21,7 +21,6 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -39,13 +38,13 @@ define( function( require ) {
 
     var horizontalText = new Text( 'b', {
       font: AreaModelCommonConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( Orientation.HORIZONTAL ) ], function( value, widthColor ) {
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.horizontal ], function( value, widthColor ) {
         return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
       } )
     } );
     var verticalText = new Text( 'a', {
       font: AreaModelCommonConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( Orientation.VERTICAL ) ], function( value, heightColor ) {
+      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.vertical ], function( value, heightColor ) {
         return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
       } )
     } );
