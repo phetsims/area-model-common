@@ -13,10 +13,10 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationSelectionNode' );
-  var AreaModel = require( 'AREA_MODEL_COMMON/common/model/AreaModel' );
   var AreaModelColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
@@ -48,7 +48,7 @@ define( function( require ) {
    * @constructor
    * @extends {ScrenView}
    *
-   * @param {AreaModel} model
+   * @param {AreaModelCommonModel} model
    * @param {Object} [options]
    */
   function AreaScreenView( model, options ) {
@@ -63,7 +63,7 @@ define( function( require ) {
       useCalculationBox: false // {boolean} - If true, a simplified accordion box will be used for the calculation lines
     }, options );
 
-    assert && assert( model instanceof AreaModel );
+    assert && assert( model instanceof AreaModelCommonModel );
     assert && assert( typeof options.decimalPlaces === 'number' );
 
     var self = this;
@@ -294,7 +294,7 @@ define( function( require ) {
      * Creates the "factors" (dimensions) content for the accordion box.
      * @public
      *
-     * @param {AreaModel} model
+     * @param {AreaModelCommonModel} model
      * @param {number} decimalPlaces
      * @returns {Node}
      */
@@ -306,7 +306,7 @@ define( function( require ) {
      * Creates the "area" (product) content for the accordion box.
      * @public
      *
-     * @param {AreaModel} model
+     * @param {AreaModelCommonModel} model
      * @param {Area} area
      * @returns {AreaNode}
      */

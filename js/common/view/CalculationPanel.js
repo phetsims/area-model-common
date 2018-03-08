@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {AreaModel} model
+   * @param {AreaModelCommonModel} model
    * @param {Object} [nodeOptions]
    */
   function CalculationPanel( model, nodeOptions ) {

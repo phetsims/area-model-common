@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModel = require( 'AREA_MODEL_COMMON/common/model/AreaModel' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
   var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -20,7 +20,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {AreaModel}
+   * @extends {AreaModelCommonModel}
    *
    * @param {Object} [options]
    */
@@ -44,7 +44,7 @@ define( function( require ) {
       return area.layout === DEFAULT_LAYOUT;
     } );
 
-    AreaModel.call( this, areas, defaultArea, options );
+    AreaModelCommonModel.call( this, areas, defaultArea, options );
 
     // Adjust the current area based on the layout.
     this.genericLayoutProperty.link( function( layout ) {
@@ -56,14 +56,14 @@ define( function( require ) {
 
   areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );
 
-  return inherit( AreaModel, GenericAreaModel, {
+  return inherit( AreaModelCommonModel, GenericAreaModel, {
     /**
      * Returns the model to its initial state.
      * @public
      * @override
      */
     reset: function() {
-      AreaModel.prototype.reset.call( this );
+      AreaModelCommonModel.prototype.reset.call( this );
 
       this.genericLayoutProperty.reset();
     }

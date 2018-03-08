@@ -29,7 +29,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {AreaModel} model
+   * @param {AreaModelCommonModel} model
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   function PartialProductSelectionNode( model, selectionButtonAlignGroup ) {

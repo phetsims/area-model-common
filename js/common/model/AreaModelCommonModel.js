@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {Area} defaultArea - The initial area
    * @param {Object} [options]
    */
-  function AreaModel( areas, defaultArea, options ) {
+  function AreaModelCommonModel( areas, defaultArea, options ) {
 
     assert && assert( options === undefined || typeof options === 'object', 'If provided, options should be an object' );
 
@@ -77,9 +77,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'AreaModel', AreaModel );
+  areaModelCommon.register( 'AreaModelCommonModel', AreaModelCommonModel );
 
-  return inherit( Object, AreaModel, {
+  return inherit( Object, AreaModelCommonModel, {
     /**
      * Returns the model to its initial state.
      * @public

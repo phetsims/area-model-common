@@ -34,7 +34,7 @@ define( function( require ) {
    * @constructor
    * @extends {AreaScreenView}
    *
-   * @param {AreaModel} model
+   * @param {AreaModelCommonModel} model
    * @param {Object} options
    */
   function ProportionalAreaScreenView( model, options ) {
@@ -134,7 +134,7 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {AreaModel} model
+     * @param {AreaModelCommonModel} model
      * @param {Area} area
      * @returns {AreaNode}
      */
@@ -150,7 +150,7 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {AreaModel} model
+     * @param {AreaModelCommonModel} model
      * @param {number} decimalPlaces
      * @returns {Node}
      */

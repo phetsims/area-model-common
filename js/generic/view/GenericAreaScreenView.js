@@ -26,7 +26,7 @@ define( function( require ) {
    * @constructor
    * @extends {AreaScreenView}
    *
-   * @param {AreaModel} model
+   * @param {AreaModelCommonModel} model
    * @param {number} decimalPlaces TODO: to options?
    */
   function GenericAreaScreenView( model, decimalPlaces ) {
@@ -54,7 +54,7 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {AreaModel} model
+     * @param {AreaModelCommonModel} model
      * @param {Area} area
      * @returns {AreaNode}
      */
@@ -69,7 +69,7 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {AreaModel} model
+     * @param {AreaModelCommonModel} model
      * @param {number} decimalPlaces
      * @returns {Node}
      */
