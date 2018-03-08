@@ -49,15 +49,11 @@ define( function( require ) {
       largeTileSize: 10, // {number} - Size of the largest tile available (or for the thin tiles, the longer length)
       tilesAvailable: true, // {boolean} - Whether tiles can be shown on this area
       countingAvailable: false, // {boolean} - Whether numbers can be shown on each grid section
-      partitionLineChoice: PartitionLineChoice.BOTH
+      partitionLineChoice: PartitionLineChoice.BOTH // {PartitionLineChoice} - What partition lines are shown
     }, options );
 
-    // TODO: OrientationPair
-    // @private {Property.<number>} - Width of the contained area - Prefer getActiveTotalProperty
-    this.activeWidthProperty = new NumberProperty( options.initialWidth );
-
-    // @private {Property.<number>} - Height of the contained area - Prefer getActiveTotalProperty
-    this.activeHeightProperty = new NumberProperty( options.initialHeight );
+    // @public {OrientationPair.<Property.<number>>} - Width/height of the contained area.
+    this.activeTotalProperties = new OrientationPair( new NumberProperty( options.initialWidth ), new NumberProperty( options.initialHeight ) );
 
     // @public {Property.<Orientation>} - If PartitionLineChoice.ONE is active, which partition line is active
     this.visiblePartitionOrientationProperty = new Property( Orientation.HORIZONTAL );
@@ -95,7 +91,7 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<boolean>>} - Whether the partition line for each orientation is visible
     this.partitionSplitVisibleProperties = OrientationPair.create( function( orientation ) {
-      return new DerivedProperty( [ self.getActiveTotalProperty( orientation ), self.visiblePartitionOrientationProperty ], function( totalSize, visibleOrientation ) {
+      return new DerivedProperty( [ self.activeTotalProperties.get( orientation ), self.visiblePartitionOrientationProperty ], function( totalSize, visibleOrientation ) {
         if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
         if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
         return totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
@@ -104,7 +100,7 @@ define( function( require ) {
 
     // TODO: improve doc naming throughout here! Lots of confusingness
     // @public {OrientationPair.<Property.<number|null>>} - Like partitionSplitProperties, but null if the partition line is not visible
-    // TODO: find usages of partitionSplitVisibleProperties and getActiveTotalProperty
+    // TODO: find usages of partitionSplitVisibleProperties
     this.visiblePartitionLineSplitProperties = OrientationPair.create( function( orientation ) {
       return new DerivedProperty( [ self.partitionSplitProperties.get( orientation ), self.partitionSplitVisibleProperties.get( orientation ) ], function( partitionSplit, partitionVisible ) {
         return partitionVisible ? partitionSplit : null;
@@ -125,7 +121,7 @@ define( function( require ) {
 
     // Keep partition sizes up-to-date
     Orientation.VALUES.forEach( function( orientation ) {
-      Property.multilink( [ self.getActiveTotalProperty( orientation ), self.visiblePartitionLineSplitProperties.get( orientation ) ], function( size, split ) {
+      Property.multilink( [ self.activeTotalProperties.get( orientation ), self.visiblePartitionLineSplitProperties.get( orientation ) ], function( size, split ) {
         // Ignore splits at the boundary or outside our active area.
         if ( split <= 0 || split >= size ) {
           split = null;
@@ -170,8 +166,8 @@ define( function( require ) {
       this.partitionSplitProperties.horizontal.reset();
       this.partitionSplitProperties.vertical.reset();
       this.visiblePartitionOrientationProperty.reset();
-      this.activeWidthProperty.reset();
-      this.activeHeightProperty.reset();
+      this.activeTotalProperties.get( Orientation.HORIZONTAL ).reset();
+      this.activeTotalProperties.get( Orientation.VERTICAL ).reset();
     },
 
     /**
@@ -182,20 +178,8 @@ define( function( require ) {
     erase: function() {
       Area.prototype.erase.call( this );
 
-      this.activeWidthProperty.value = this.eraseWidth;
-      this.activeHeightProperty.value = this.eraseHeight;
-    },
-
-    /**
-     * Returns the property for the sum of all defined partitions for a particular orientation.
-     * @public
-     *
-     * @param {Property.<Polynomial|null>} - Null if there is no defined total sum.
-     */
-    getActiveTotalProperty: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
-
-      return orientation === Orientation.HORIZONTAL ? this.activeWidthProperty : this.activeHeightProperty;
+      this.activeTotalProperties.get( Orientation.HORIZONTAL ).value = this.eraseWidth;
+      this.activeTotalProperties.get( Orientation.VERTICAL ).value = this.eraseHeight;
     },
 
     /**

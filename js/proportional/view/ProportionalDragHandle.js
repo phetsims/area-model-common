@@ -75,8 +75,8 @@ define( function( require ) {
             width = Util.clamp( width, area.minimumSize, area.maximumSize );
             height = Util.clamp( height, area.minimumSize, area.maximumSize );
 
-            area.getActiveTotalProperty( Orientation.HORIZONTAL ).value = width;
-            area.getActiveTotalProperty( Orientation.VERTICAL ).value = height;
+            area.activeTotalProperties.get( Orientation.HORIZONTAL ).value = width;
+            area.activeTotalProperties.get( Orientation.VERTICAL ).value = height;
 
             offsetProperty.value = new Vector2(
               viewPoint.x - modelViewTransform.modelToViewX( width ),
@@ -96,15 +96,15 @@ define( function( require ) {
 
     var locationProperty = new Property( new Vector2() );
     function updateLocationProperty() {
-      locationProperty.value = new Vector2( area.getActiveTotalProperty( Orientation.HORIZONTAL ).value, area.getActiveTotalProperty( Orientation.VERTICAL ).value );
+      locationProperty.value = new Vector2( area.activeTotalProperties.get( Orientation.HORIZONTAL ).value, area.activeTotalProperties.get( Orientation.VERTICAL ).value );
     }
     updateLocationProperty();
     locationProperty.lazyLink( function( location ) {
-      area.getActiveTotalProperty( Orientation.HORIZONTAL ).value = location.x;
-      area.getActiveTotalProperty( Orientation.VERTICAL ).value = location.y;
+      area.activeTotalProperties.get( Orientation.HORIZONTAL ).value = location.x;
+      area.activeTotalProperties.get( Orientation.VERTICAL ).value = location.y;
     } );
-    area.getActiveTotalProperty( Orientation.HORIZONTAL ).lazyLink( updateLocationProperty );
-    area.getActiveTotalProperty( Orientation.VERTICAL ).lazyLink( updateLocationProperty );
+    area.activeTotalProperties.get( Orientation.HORIZONTAL ).lazyLink( updateLocationProperty );
+    area.activeTotalProperties.get( Orientation.VERTICAL ).lazyLink( updateLocationProperty );
 
     var keyboardListener = new KeyboardDragListener( {
       // TODO: generalize for explore screen
@@ -114,8 +114,8 @@ define( function( require ) {
       // locationProperty: locationProperty,
       drag: function( delta ) {
         // TODO: deduplicate width/height
-        var width = area.getActiveTotalProperty( Orientation.HORIZONTAL ).value;
-        var height = area.getActiveTotalProperty( Orientation.VERTICAL ).value;
+        var width = area.activeTotalProperties.get( Orientation.HORIZONTAL ).value;
+        var height = area.activeTotalProperties.get( Orientation.VERTICAL ).value;
 
         width += delta.x;
         height += delta.y;
@@ -123,8 +123,8 @@ define( function( require ) {
         width = Util.roundSymmetric( Util.clamp( width, area.minimumSize, area.maximumSize ) );
         height = Util.roundSymmetric( Util.clamp( height, area.minimumSize, area.maximumSize ) );
 
-        area.getActiveTotalProperty( Orientation.HORIZONTAL ).value = width;
-        area.getActiveTotalProperty( Orientation.VERTICAL ).value = height;
+        area.activeTotalProperties.get( Orientation.HORIZONTAL ).value = width;
+        area.activeTotalProperties.get( Orientation.VERTICAL ).value = height;
       },
       moveOnHoldDelay: 750,
       moveOnHoldInterval: 70
@@ -146,7 +146,7 @@ define( function( require ) {
 
     // Update the offset of the drag handle
     Orientation.VALUES.forEach( function( orientation ) {
-      area.getActiveTotalProperty( orientation ).link( function( value ) {
+      area.activeTotalProperties.get( orientation ).link( function( value ) {
         self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
       } );
     } );

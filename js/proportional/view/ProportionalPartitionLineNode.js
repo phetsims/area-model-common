@@ -113,8 +113,8 @@ define( function( require ) {
 
     // Relevant properties
     var partitionSplitProperty = area.partitionSplitProperties.get( orientation );
-    var oppositeActiveTotalProperty = area.getActiveTotalProperty( orientation.opposite );
-    var activeTotalProperty = area.getActiveTotalProperty( orientation );
+    var oppositeActiveTotalProperty = area.activeTotalProperties.get( orientation.opposite );
+    var activeTotalProperty = area.activeTotalProperties.get( orientation );
     var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty ], function( total ) {
       return new Range( 0, total - area.snapSize );
     } );

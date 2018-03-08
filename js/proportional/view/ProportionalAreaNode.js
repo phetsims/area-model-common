@@ -67,10 +67,10 @@ define( function( require ) {
       fill: useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
-    area.getActiveTotalProperty( Orientation.HORIZONTAL ).link( function( totalWidth ) {
+    area.activeTotalProperties.get( Orientation.HORIZONTAL ).link( function( totalWidth ) {
       activeAreaBackground.rectWidth = self.modelViewTransform.modelToViewX( totalWidth );
     } );
-    area.getActiveTotalProperty( Orientation.VERTICAL ).link( function( totalHeight ) {
+    area.activeTotalProperties.get( Orientation.VERTICAL ).link( function( totalHeight ) {
       activeAreaBackground.rectHeight = self.modelViewTransform.modelToViewY( totalHeight );
     } );
     this.areaLayer.addChild( activeAreaBackground );
