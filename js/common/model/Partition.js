@@ -31,7 +31,7 @@ define( function( require ) {
       useDeepEquality: true
     } );
 
-    // @public {boolean}
+    // @public {Orientation}
     this.orientation = orientation;
 
     // @public {Property.<Color>}

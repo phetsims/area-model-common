@@ -47,20 +47,25 @@ define( function( require ) {
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
     this.calculationIndexProperty = new NumberProperty( 0 );
 
-    // @public {Array.<PartitionedArea>}
+    // @public {Array.<PartitionedArea>} - A 2-dimensional sections of area defined by a horizontal and vertical
+    // pair of partitions.
     this.partitionedAreas = _.flatten( partitions.get( Orientation.HORIZONTAL ).map( function( horizontalPartition ) {
       return partitions.get( Orientation.VERTICAL ).map( function( verticalPartition ) {
         return self.createPartitionedArea( horizontalPartition, verticalPartition );
       } );
     } ) );
 
-    // @public {OrientationPair.<Property.<Polynomial|null>>} - Null if there is no defined total
+    // @public {OrientationPair.<Property.<Polynomial|null>>} - Null if there is no defined total. Otherwise it's the
+    // sum of the sizes of all (defined) partitions of the given orientation.
     this.totalProperties = OrientationPair.create( this.createTotalProperty.bind( this ) );
 
-    // @public {OrientationPair.<Property.<TermList|null>>} - Null if there is no defiend total
+    // @public {OrientationPair.<Property.<TermList|null>>} - Null if there is no defined partition. Otherwise it's a
+    // list of the sizes of all (defined) partitions of the given orientation. This does NOT combine terms with the
+    // same exponent, unlike this.totalProperties.
     this.termListProperties = OrientationPair.create( this.createTermListProperty.bind( this ) );
 
-    // @public {Property.<Polynomial|null>} - Null if there is no defined total
+    // @public {Property.<Polynomial|null>} - Null if there is no defined total, otherwise the total area (width of the
+    // "area" times its height).
     this.totalAreaProperty = new DerivedProperty( this.totalProperties.array, function( horizontalTotal, verticalTotal ) {
       if ( horizontalTotal === null || verticalTotal === null ) {
         return null;
@@ -70,7 +75,8 @@ define( function( require ) {
       useDeepEquality: true
     } );
 
-    // @public {OrientationPair.<Property.<TermList|null>>} - Displayed term list for the product. Null if there is no defined total.
+    // @public {OrientationPair.<Property.<TermList|null>>} - Displayed term list for the product. Null if there is no
+    // defined total.
     this.displayProperties = allowExponents ? this.termListProperties : this.totalProperties;
 
     // @public {OrientationPair.<Property.<Array.<number>>>} - For each orientation, will contain a property with a list
