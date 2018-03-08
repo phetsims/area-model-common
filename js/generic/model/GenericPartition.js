@@ -26,8 +26,7 @@ define( function( require ) {
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( typeof digitCount === 'number' );
 
-    Partition.call( this, orientation, orientation === Orientation.HORIZONTAL ? AreaModelCommonColorProfile.genericWidthProperty
-                                                                              : AreaModelCommonColorProfile.genericHeightProperty );
+    Partition.call( this, orientation, AreaModelCommonColorProfile.genericColorProperties.get( orientation ) );
 
     // @public {number} - How many digits to allow in the editor
     this.digitCount = digitCount;

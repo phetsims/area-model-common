@@ -51,7 +51,7 @@ define( function( require ) {
 
     Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.genericColorProperties, 1, allowExponents );
 
-    // @public {Property.<GenericLayout>}
+    // @public {GenericLayout}
     this.layout = layout;
 
     // Set up partition coordinate/size
@@ -108,7 +108,6 @@ define( function( require ) {
       this.allPartitions.forEach( function( partition ) {
         partition.sizeProperty.value = null;
       } );
-    },
-
+    }
   } );
 } );

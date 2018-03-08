@@ -92,9 +92,7 @@ define( function( require ) {
       } );
     } );
 
-    // TODO: improve doc naming throughout here! Lots of confusingness
     // @public {OrientationPair.<Property.<number|null>>} - Like partitionSplitProperties, but null if the partition line is not visible
-    // TODO: find usages of partitionSplitVisibleProperties
     this.visiblePartitionLineSplitProperties = OrientationPair.create( function( orientation ) {
       return new DerivedProperty( [ self.partitionSplitProperties.get( orientation ), self.partitionSplitVisibleProperties.get( orientation ) ], function( partitionSplit, partitionVisible ) {
         return partitionVisible ? partitionSplit : null;

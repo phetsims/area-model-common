@@ -33,7 +33,7 @@ define( function( require ) {
       allowExponents: false
     }, options );
 
-    // @public {Property.<GenericLayout>}
+    // @public {Property.<GenericLayout>} - The current layout that is visible/selected.
     this.genericLayoutProperty = new Property( DEFAULT_LAYOUT );
 
     var areas = GenericLayout.VALUES.map( function( layout ) {
