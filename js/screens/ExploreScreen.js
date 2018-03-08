@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * The "Explore" screen, used in "Area Model: Multiplication" and "Area Model: Algebra"
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

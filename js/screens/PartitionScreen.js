@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The main "Partition" screen of the "Introduction" sim.
+ * The "Partition" screen of "Area Model: Introduction"
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -31,36 +31,24 @@ define( function( require ) {
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
     };
 
+    var commonAreaOptions = {
+      minimumSize: 1,
+      initialWidth: 5,
+      initialHeight: 5,
+      initialVerticalSplit: 2,
+      initialHorizontalSplit: 2,
+      partitionLineChoice: PartitionLineChoice.ONE,
+      snapSize: 1,
+      gridSpacing: 1,
+      partitionSnapSize: 1,
+      tilesAvailable: false,
+      productsAvailable: false
+    };
+
     Screen.call( this,
       function() { return new ProportionalAreaModel( [
-        {
-          maximumSize: 10,
-          minimumSize: 1,
-          initialWidth: 5,
-          initialHeight: 5,
-          initialVerticalSplit: 2,
-          initialHorizontalSplit: 2,
-          partitionLineChoice: PartitionLineChoice.ONE,
-          snapSize: 1,
-          gridSpacing: 1,
-          partitionSnapSize: 1,
-          tilesAvailable: false,
-          productsAvailable: false
-        },
-        {
-          maximumSize: 12,
-          minimumSize: 1,
-          initialWidth: 5,
-          initialHeight: 5,
-          initialVerticalSplit: 2,
-          initialHorizontalSplit: 2,
-          partitionLineChoice: PartitionLineChoice.ONE,
-          snapSize: 1,
-          gridSpacing: 1,
-          partitionSnapSize: 1,
-          tilesAvailable: false,
-          productsAvailable: false
-        }
+        _.extend( { maximumSize: 10 }, commonAreaOptions ),
+        _.extend( { maximumSize: 12 }, commonAreaOptions )
       ], {
         initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES,
       } ); },

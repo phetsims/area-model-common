@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * The main screen of the "Area Model: Decimals" simulation.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -29,51 +29,41 @@ define( function( require ) {
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
     };
 
+    var commonAreaOptions = {
+      eraseWidth: 0.1,
+      eraseHeight: 0.1,
+      snapSize: 0.1,
+      gridSpacing: 0.1,
+      smallTileSize: 0.1,
+      largeTileSize: 1
+    };
+
     Screen.call( this,
       function() { return new ProportionalAreaModel( [
-        // TODO: clean up shared constants
-        {
+        _.extend( {
           maximumSize: 1,
           minimumSize: 0.1,
           initialWidth: 0.5,
           initialHeight: 0.5,
-          eraseWidth: 0.1,
-          eraseHeight: 0.1,
           initialVerticalSplit: 0.2,
-          snapSize: 0.1,
-          partitionSnapSize: 0.1,
-          gridSpacing: 0.1,
-          smallTileSize: 0.1,
-          largeTileSize: 1
-        },
-        {
+          partitionSnapSize: 0.1
+        }, commonAreaOptions ),
+        _.extend( {
           maximumSize: 2,
           minimumSize: 0.1,
           initialWidth: 1,
           initialHeight: 1,
-          eraseWidth: 0.1,
-          eraseHeight: 0.1,
           initialVerticalSplit: 0.5,
-          snapSize: 0.1,
-          partitionSnapSize: 0.1,
-          gridSpacing: 0.1,
-          smallTileSize: 0.1,
-          largeTileSize: 1
-        },
-        {
+          partitionSnapSize: 0.1
+        }, commonAreaOptions ),
+        _.extend( {
           maximumSize: 3,
           minimumSize: 0.1,
           initialWidth: 1,
           initialHeight: 1,
-          eraseWidth: 0.1,
-          eraseHeight: 0.1,
           initialVerticalSplit: 0.5,
-          snapSize: 0.1,
-          partitionSnapSize: 0.1,
-          gridSpacing: 0.1,
-          smallTileSize: 0.1,
-          largeTileSize: 1
-        }
+          partitionSnapSize: 0.1
+        }, commonAreaOptions )
       ] ); },
       function( model ) { return new ProportionalAreaScreenView( model, {
         decimalPlaces: 1

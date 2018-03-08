@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * The "Game" screen in "Area Model: Algebra"
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

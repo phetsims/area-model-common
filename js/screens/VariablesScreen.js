@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * The "Variables" screen of "Area Model: Algebra"
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

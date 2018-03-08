@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * The "Multiply" screen of the "Introduction" sim
+ * The "Multiply" screen of "Area Model: Introduction"
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -31,32 +31,22 @@ define( function( require ) {
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
     };
 
+    var commonAreaOptions = {
+      minimumSize: 1,
+      initialWidth: 1,
+      initialHeight: 1,
+      snapSize: 1,
+      gridSpacing: 1,
+      partitionLineChoice: PartitionLineChoice.NONE,
+      tilesAvailable: false,
+      productsAvailable: false,
+      countingAvailable: true
+    };
+
     Screen.call( this,
       function() { return new ProportionalAreaModel( [
-        {
-          maximumSize: 10,
-          minimumSize: 1,
-          initialWidth: 1,
-          initialHeight: 1,
-          snapSize: 1,
-          gridSpacing: 1,
-          partitionLineChoice: PartitionLineChoice.NONE,
-          tilesAvailable: false,
-          productsAvailable: false,
-          countingAvailable: true
-        },
-        {
-          maximumSize: 12,
-          minimumSize: 1,
-          initialWidth: 1,
-          initialHeight: 1,
-          snapSize: 1,
-          gridSpacing: 1,
-          partitionLineChoice: PartitionLineChoice.NONE,
-          tilesAvailable: false,
-          productsAvailable: false,
-          countingAvailable: true
-        }
+        _.extend( { maximumSize: 10 }, commonAreaOptions ),
+        _.extend( { maximumSize: 12 }, commonAreaOptions )
       ], {
         initialPartialProductsChoice: PartialProductsChoice.HIDDEN
       } ); },
