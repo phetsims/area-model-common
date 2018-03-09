@@ -13,7 +13,7 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
+  var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLines' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -132,9 +132,10 @@ define( function( require ) {
 
       lineLayer.removeAllChildren();
 
-      var activeIndex = isLineByLine ? model.currentAreaProperty.value.calculationIndexProperty.value : undefined;
+      // TODO: don't do this
+      var activeIndexProperty = isLineByLine ? model.currentAreaProperty.value.calculationIndexProperty : new Property( null );
 
-      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowExponents, model.isProportional ).createLines( activeIndex );
+      var calculationLines = CalculationLines.createLines( model.currentAreaProperty.value, activeIndexProperty, model.allowExponents, model.isProportional );
       if ( calculationLines.length ) {
         var maxLineWidth = _.reduce( calculationLines, function( max, line ) {
           return Math.max( max, line.node.width );

@@ -56,8 +56,8 @@ define( function( require ) {
      * @param {Function} callback
      * @returns {OrientationPair.<*>} - With the mapped values
      */
-    map: function( callback ) {
-      return new OrientationPair( callback( this.horizontal ), callback( this.vertical ) );
+    map: function( callback, orientation ) {
+      return new OrientationPair( callback( this.horizontal, Orientation.HORIZONTAL ), callback( this.vertical, Orientation.VERTICAL ) );
     },
 
     /**

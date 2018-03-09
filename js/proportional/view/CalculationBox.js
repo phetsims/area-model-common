@@ -16,7 +16,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/CalculationLines' );
+  var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );

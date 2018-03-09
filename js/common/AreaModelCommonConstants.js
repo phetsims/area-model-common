@@ -76,6 +76,24 @@ define( function( require ) {
     X_VARIABLE_RICH_STRING: '<font face="' + new MathSymbolFont( 10 ).family.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' ) + '"><i>x</i></font>',
 
     // {number} - Number of challenges per level
-    NUM_CHALLENGES: 6
+    NUM_CHALLENGES: 6,
+
+    // {number} - Padding in-between content and surrounding parentheses in the calculation area
+    CALCULATION_PAREN_PADDING: 0,
+
+    // {number} - Padding in-between an end parenthesis and start parenthese, e.g. between )(
+    CALCULATION_PAREN_PAREN_PADDING: 0,
+
+    // {number} - Padding around an x (used for multiplication)
+    CALCULATION_X_PADDING: 3,
+
+    // {number} - Padding around a dot (used for multiplication)
+    CALCULATION_DOT_PADDING: 3,
+
+    // {number} - Padding around most (binary) operations in the calculation
+    CALCULATION_OP_PADDING: 5,
+
+    // {number} - Padding between a term and an adjacent parenthesis, e.g. "x(" or ")x"
+    CALCULATION_TERM_PAREN_PADDING: 1
   } );
 } );
