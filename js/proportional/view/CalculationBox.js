@@ -19,7 +19,6 @@ define( function( require ) {
   var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLines' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   var calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
@@ -36,13 +35,15 @@ define( function( require ) {
 
     var self = this;
 
+    // @private {ProportionalAreaModel}
+    this.model = model;
+
+    // @private {CalculationLines}
+    this.calculationLines = new CalculationLines( model );
+
     var margin = 8;
 
-    var lineContainer = new VBox( {
-      spacing: 1
-    } );
-
-    var alignBox = new AlignBox( lineContainer, {
+    var alignBox = new AlignBox( this.calculationLines, {
       // Since our AccorionBox expands by our margin, we need to set content bounds without that
       // TODO: This is an initial "guess". We still need to resize later :(
       alignBounds: bounds.eroded( margin ),
@@ -81,48 +82,6 @@ define( function( require ) {
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
     } );
 
-    var dirty = true;
-
-    function makeDirty() {
-      dirty = true;
-    }
-
-    function update() {
-      if ( model.areaCalculationChoiceProperty.value === AreaCalculationChoice.HIDDEN || !dirty ) {
-        return;
-      }
-
-      dirty = false;
-
-      var calculationLines = new CalculationLines( model.currentAreaProperty.value, model.allowExponents, model.isProportional ).createLines( undefined );
-
-      lineContainer.children = _.map( calculationLines, 'node' );
-    }
-
-    model.areaCalculationChoiceProperty.lazyLink( makeDirty );
-
-    // TODO: can we deduplicate this with CalculationPanel?
-    model.currentAreaProperty.link( function( newArea, oldArea ) {
-      if ( oldArea ) {
-        oldArea.allPartitions.forEach( function( partition ) {
-          partition.sizeProperty.unlink( makeDirty );
-          partition.visibleProperty.unlink( makeDirty );
-        } );
-        oldArea.calculationIndexProperty.unlink( makeDirty );
-      }
-
-      newArea.allPartitions.forEach( function( partition ) {
-        partition.sizeProperty.lazyLink( makeDirty );
-        partition.visibleProperty.lazyLink( makeDirty );
-      } );
-      newArea.calculationIndexProperty.link( makeDirty );
-
-      update();
-    } );
-
-    //TODO: better
-    this.update = update;
-
     // Resize things so our AccordionBox is the correct size (we can't get bounds correct intially, because of the expand button shifting content)
     alignBox.alignBounds = new Bounds2( 0, 0, alignBox.alignBounds.width - ( this.width - bounds.width ), alignBox.alignBounds.height - ( this.height - bounds.height ) );
 
@@ -131,5 +90,13 @@ define( function( require ) {
 
   areaModelCommon.register( 'CalculationBox', CalculationBox );
 
-  return inherit( AccordionBox, CalculationBox );
+  return inherit( AccordionBox, CalculationBox, {
+    /**
+     * Updates the content of the calculation box (if needed).
+     * @public
+     */
+    update: function() {
+      this.calculationLines.update();
+    }
+  } );
 } );

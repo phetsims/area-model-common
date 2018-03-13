@@ -18,10 +18,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
 
   // constants
   var MAX_LINE_WIDTH = 680; // may need to be updated if the panel size is changed.
@@ -40,9 +38,8 @@ define( function( require ) {
 
     Node.call( this );
 
-    // {number|null} - If non-null, contains the line index directly above/below the active index.
-    var previousIndexProperty = new Property( null );
-    var nextIndexProperty = new Property( null );
+    // @private {CalculationLines}
+    this.calculationLines = new CalculationLines( model );
 
     var background = new Rectangle( 0, 0, 0, 0, {
       cornerRadius: 5,
@@ -61,18 +58,13 @@ define( function( require ) {
     previousArrow.touchArea = previousArrow.localBounds.dilated( arrowTouchDilation );
     var previousListener = new FireListener( {
       fire: function() {
-        if ( previousIndexProperty.value !== null ) {
-          model.currentAreaProperty.value.calculationIndexProperty.value = previousIndexProperty.value;
-        }
+        self.calculationLines.moveToPreviousLine();
       }
     } );
     previousArrow.addInputListener( previousListener );
-    previousIndexProperty.link( function( index ) {
-      var enabled = index !== null;
-
+    this.calculationLines.previousEnabledProperty.link( function( enabled ) {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
-      // TODO: improved coloring or naming
       previousArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
@@ -86,18 +78,13 @@ define( function( require ) {
     this.addChild( nextArrow );
     var nextListener = new FireListener( {
       fire: function() {
-        if ( nextIndexProperty.value !== null ) {
-          model.currentAreaProperty.value.calculationIndexProperty.value = nextIndexProperty.value;
-        }
+        self.calculationLines.moveToNextLine();
       }
     } );
     nextArrow.addInputListener( nextListener );
-    nextIndexProperty.link( function( index ) {
-      var enabled = index !== null;
-
+    this.calculationLines.nextEnabledProperty.link( function( enabled ) {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
-      // TODO: improved coloring or naming
       nextArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
@@ -107,143 +94,81 @@ define( function( require ) {
 
     this.mutate( nodeOptions );
 
-
-    var lineLayer = new Node();
-    this.addChild( lineLayer );
+    this.addChild( this.calculationLines );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
     } );
 
-    var dirty = true;
-
-    function makeDirty() {
-      dirty = true;
-    }
-
     function update() {
-      if ( model.areaCalculationChoiceProperty.value === AreaCalculationChoice.HIDDEN || !dirty ) {
+      // TODO: When does this happen?
+      if ( !self.calculationLines.calculationLinesProperty.value.length ) {
         return;
       }
 
-      dirty = false;
-
       var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
 
-      lineLayer.removeAllChildren();
+      // TODO: move to a CalculationLines method?
+      var maxLineWidth = _.reduce( self.calculationLines.calculationLinesProperty.value, function( max, line ) {
+        return Math.max( max, line.node.width );
+      }, 0 );
 
-      // TODO: don't do this
-      var activeIndexProperty = isLineByLine ? model.currentAreaProperty.value.calculationIndexProperty : new Property( null );
+      var availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
 
-      var calculationLines = CalculationLines.createLines( model.currentAreaProperty.value, activeIndexProperty, model.allowExponents, model.isProportional );
-      if ( calculationLines.length ) {
-        var maxLineWidth = _.reduce( calculationLines, function( max, line ) {
-          return Math.max( max, line.node.width );
-        }, 0 );
+      self.calculationLines.setScaleMagnitude( maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1 );
+      maxLineWidth = Math.min( maxLineWidth, availableLineWidth );
 
-        if ( isLineByLine ) {
-          // TODO: cleanup
-          var relativeIndex = _.findIndex( calculationLines, function( line ) { return line.isActive; } );
-          var adjacentCalculationLines = [];
-          if ( calculationLines[ relativeIndex - 1 ] ) {
-            adjacentCalculationLines.push( calculationLines[ relativeIndex - 1 ] );
-            previousIndexProperty.value = calculationLines[ relativeIndex - 1 ].index;
-          }
-          else {
-            previousIndexProperty.value = null;
-          }
-          adjacentCalculationLines.push( calculationLines[ relativeIndex ] );
-          if ( calculationLines[ relativeIndex + 1 ] ) {
-            adjacentCalculationLines.push( calculationLines[ relativeIndex + 1 ] );
-            nextIndexProperty.value = calculationLines[ relativeIndex + 1 ].index;
-          }
-          else {
-            nextIndexProperty.value = null;
-          }
-          calculationLines = adjacentCalculationLines;
-        }
+      var backgroundBounds = self.calculationLines.bounds;
 
-        var availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
-
-        // Handle oversize lines by scaling everything down
-        lineLayer.addChild( new VBox( {
-          children: _.map( calculationLines, 'node' ),
-          spacing: 1,
-          scale: maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1
-        } ) );
-        maxLineWidth = Math.min( maxLineWidth, availableLineWidth );
-
-        if ( isLineByLine ) {
-          // TODO: this can cause a full refresh, and should be fixed. Also duplication with above
-          model.currentAreaProperty.value.calculationIndexProperty.value = _.find( calculationLines, function( line ) { return line.isActive; } ).index;
-        }
-
-        var backgroundBounds = lineLayer.bounds;
-
-        // If we removed lines for the "line-by-line", make sure we take up enough room to not change size.
-        if ( backgroundBounds.width < maxLineWidth ) {
-          backgroundBounds = backgroundBounds.dilatedX( ( maxLineWidth - backgroundBounds.width ) / 2 );
-        }
-
-        // Add some space around the lines
-        backgroundBounds = backgroundBounds.dilated( 5 );
-
-        // Add some space for the next/previous buttonss
-        if ( isLineByLine ) {
-          backgroundBounds.maxX += LINE_BY_LINE_EXPANSION;
-        }
-
-        // Minimum width of the area size
-        if ( backgroundBounds.width < AreaModelCommonConstants.AREA_SIZE ) {
-          backgroundBounds = backgroundBounds.dilatedX( ( AreaModelCommonConstants.AREA_SIZE - backgroundBounds.width ) / 2 );
-        }
-
-        // Minimum height
-        if ( backgroundBounds.height < 120 ) {
-          backgroundBounds = backgroundBounds.dilatedY( ( 120 - backgroundBounds.height ) / 2 );
-        }
-
-        background.rectBounds = backgroundBounds;
-        previousArrow.rightTop = backgroundBounds.eroded( 5 ).rightTop;
-        nextArrow.rightBottom = backgroundBounds.eroded( 5 ).rightBottom;
-
-        // TODO: don't hardcode layoutBounds!
-        self.centerY = 618 - AreaModelCommonConstants.PANEL_MARGIN - 75;
-        self.centerX = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
-        if ( self.left < AreaModelCommonConstants.PANEL_MARGIN ) {
-          self.left = AreaModelCommonConstants.PANEL_MARGIN;
-        }
+      // If we removed lines for the "line-by-line", make sure we take up enough room to not change size.
+      if ( backgroundBounds.width < maxLineWidth ) {
+        backgroundBounds = backgroundBounds.dilatedX( ( maxLineWidth - backgroundBounds.width ) / 2 );
       }
 
+      // Add some space around the lines
+      backgroundBounds = backgroundBounds.dilated( 5 );
+
+      // Add some space for the next/previous buttonss
+      if ( isLineByLine ) {
+        backgroundBounds.maxX += LINE_BY_LINE_EXPANSION;
+      }
+
+      // Minimum width of the area size
+      if ( backgroundBounds.width < AreaModelCommonConstants.AREA_SIZE ) {
+        backgroundBounds = backgroundBounds.dilatedX( ( AreaModelCommonConstants.AREA_SIZE - backgroundBounds.width ) / 2 );
+      }
+
+      // Minimum height
+      if ( backgroundBounds.height < 120 ) {
+        backgroundBounds = backgroundBounds.dilatedY( ( 120 - backgroundBounds.height ) / 2 );
+      }
+
+      background.rectBounds = backgroundBounds;
+      previousArrow.rightTop = backgroundBounds.eroded( 5 ).rightTop;
+      nextArrow.rightBottom = backgroundBounds.eroded( 5 ).rightBottom;
+
+      // TODO: don't hardcode layoutBounds!
+      self.centerY = 618 - AreaModelCommonConstants.PANEL_MARGIN - 75;
+      self.centerX = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
+      if ( self.left < AreaModelCommonConstants.PANEL_MARGIN ) {
+        self.left = AreaModelCommonConstants.PANEL_MARGIN;
+      }
     }
 
-    model.areaCalculationChoiceProperty.lazyLink( makeDirty );
+    this.calculationLines.displayUpdatedEmitter.addListener( update );
+    update();
 
-    model.currentAreaProperty.link( function( newArea, oldArea ) {
-      if ( oldArea ) {
-        oldArea.allPartitions.forEach( function( partition ) {
-          partition.sizeProperty.unlink( makeDirty );
-          partition.visibleProperty.unlink( makeDirty );
-        } );
-        oldArea.calculationIndexProperty.unlink( makeDirty );
-      }
-
-      newArea.allPartitions.forEach( function( partition ) {
-        partition.sizeProperty.lazyLink( makeDirty );
-        partition.visibleProperty.lazyLink( makeDirty );
-      } );
-      newArea.calculationIndexProperty.link( makeDirty );
-
-      update();
-    } );
-
-    //TODO: better
-    this.update = update;
   }
 
   areaModelCommon.register( 'CalculationPanel', CalculationPanel );
 
   return inherit( Node, CalculationPanel, {
-
+    /**
+     * Updates the calculation lines.
+     * @public
+     */
+    update: function() {
+      this.calculationLines.update();
+    }
   } );
 } );

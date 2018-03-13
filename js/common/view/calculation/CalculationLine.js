@@ -46,6 +46,9 @@ define( function( require ) {
     // @public {number}
     this.index = index;
 
+    // @public {CalculationLine|null} - Linked-list support for easy traversal through lines
+    this.previousLine = null;
+    this.nextLine = null;
 
     // @private {Area}
     this.area = area;
@@ -267,10 +270,10 @@ define( function( require ) {
     dispose: function() {
       this.node.clean();
 
-      this.isActiveProperty.dispose();
-      this.baseColorProperty.dispose();
       this.orientedColorProperties.horizontal.dispose();
       this.orientedColorProperties.vertical.dispose();
+      this.baseColorProperty.dispose();
+      this.isActiveProperty.dispose();
     }
   } );
 } );
