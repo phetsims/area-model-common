@@ -280,22 +280,29 @@ define( function( require ) {
 
       // Add the actual lines
       var lines = [];
+      // e.g. ( -x + x^2 )( x^2 - x ) <--- example used for everything except the ExpansionLine
       lines.push( new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) );
       if ( needsExpansion ) {
+        // e.g. ( -5 + 2 )( 7 + 3 ) <---- if we have a proportional one where Totals Line is e.g. -3 * 10
         lines.push( new ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );
       }
       if ( needsDistribution ) {
+        // e.g. (-x)(x^2) + (-x)(-x) + (x^2)(x^2) + (x^2)(-x)
         lines.push( new DistributionLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );
       }
       if ( needsMultiplied ) {
+        // e.g. (-x^3) + x^2 + x^4 + (-x^3)
         lines.push( new MultipliedLine( multipliedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
       }
       if ( needsOrdered ) {
+        // e.g. x^4 + (-x^3) + (-x^3) + x^2
         lines.push( new OrderedLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
       }
       if ( needsMinuses ) {
+        // e.g. x^4 - x^3 - x^3 + x^2
         lines.push( new MinusesLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
       }
+      // e.g. x^4 - 2x^3 + x^2
       lines.push( new SumLine( area, activeIndexProperty, allowExponents, isProportional ) );
 
       // Link the lines together, so it is easy to traverse
