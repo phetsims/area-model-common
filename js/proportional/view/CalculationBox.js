@@ -16,7 +16,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
-  var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLines' );
+  var CalculationLinesNode = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLinesNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -38,12 +38,12 @@ define( function( require ) {
     // @private {ProportionalAreaModel}
     this.model = model;
 
-    // @private {CalculationLines}
-    this.calculationLines = new CalculationLines( model );
+    // @private {CalculationLinesNode}
+    this.calculationLinesNode = new CalculationLinesNode( model );
 
     var margin = 8;
 
-    var alignBox = new AlignBox( this.calculationLines, {
+    var alignBox = new AlignBox( this.calculationLinesNode, {
       // Since our AccorionBox expands by our margin, we need to set content bounds without that
       // TODO: This is an initial "guess". We still need to resize later :(
       alignBounds: bounds.eroded( margin ),
@@ -96,7 +96,7 @@ define( function( require ) {
      * @public
      */
     update: function() {
-      this.calculationLines.update();
+      this.calculationLinesNode.update();
     }
   } );
 } );

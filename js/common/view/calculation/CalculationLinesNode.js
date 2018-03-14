@@ -35,7 +35,7 @@ define( function( require ) {
    *
    * @param {AreaModelCommonModel} model
    */
-  function CalculationLines( model ) {
+  function CalculationLinesNode( model ) {
     var self = this;
 
     VBox.call( this, {
@@ -46,7 +46,7 @@ define( function( require ) {
     this.previousEnabledProperty = new BooleanProperty( false );
     this.nextEnabledProperty = new BooleanProperty( false );
 
-    // @public {Property.<Array.<CalculationLine>>}
+    // @public {Property.<Array.<CalculationLine>>} - All of our "current" lines
     this.calculationLinesProperty = new Property( [] );
 
     // @public {Emitter}
@@ -55,7 +55,7 @@ define( function( require ) {
     // @private {AreaModelCommonModel}
     this.model = model;
 
-    // @private {boolean} - Whether the actual CalculationLines need updating.
+    // @private {boolean} - Whether the actual CalculationLinesNode need updating.
     this.linesDirty = true;
 
     // @private {boolean} - Whether the display of the lines (index/visibility change) needs updating.
@@ -99,9 +99,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'CalculationLines', CalculationLines );
+  areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
 
-  return inherit( VBox, CalculationLines, {
+  return inherit( VBox, CalculationLinesNode, {
     /**
      * Called whenever the calculation may need an update.
      * @public
@@ -156,7 +156,7 @@ define( function( require ) {
       } );
 
       // Create new lines
-      this.calculationLinesProperty.value = CalculationLines.createLines( this.model.currentAreaProperty.value, this.effectiveIndexProperty, this.model.allowExponents, this.model.isProportional );
+      this.calculationLinesProperty.value = CalculationLinesNode.createLines( this.model.currentAreaProperty.value, this.effectiveIndexProperty, this.model.allowExponents, this.model.isProportional );
 
       this.linesDirty = false;
       this.displayDirty = true;

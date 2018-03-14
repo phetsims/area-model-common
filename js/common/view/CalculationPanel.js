@@ -13,7 +13,7 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var CalculationLines = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLines' );
+  var CalculationLinesNode = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLinesNode' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -38,8 +38,8 @@ define( function( require ) {
 
     Node.call( this );
 
-    // @private {CalculationLines}
-    this.calculationLines = new CalculationLines( model );
+    // @private {CalculationLinesNode}
+    this.calculationLinesNode = new CalculationLinesNode( model );
 
     var background = new Rectangle( 0, 0, 0, 0, {
       cornerRadius: 5,
@@ -58,11 +58,11 @@ define( function( require ) {
     previousArrow.touchArea = previousArrow.localBounds.dilated( arrowTouchDilation );
     var previousListener = new FireListener( {
       fire: function() {
-        self.calculationLines.moveToPreviousLine();
+        self.calculationLinesNode.moveToPreviousLine();
       }
     } );
     previousArrow.addInputListener( previousListener );
-    this.calculationLines.previousEnabledProperty.link( function( enabled ) {
+    this.calculationLinesNode.previousEnabledProperty.link( function( enabled ) {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
       previousArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
@@ -78,11 +78,11 @@ define( function( require ) {
     this.addChild( nextArrow );
     var nextListener = new FireListener( {
       fire: function() {
-        self.calculationLines.moveToNextLine();
+        self.calculationLinesNode.moveToNextLine();
       }
     } );
     nextArrow.addInputListener( nextListener );
-    this.calculationLines.nextEnabledProperty.link( function( enabled ) {
+    this.calculationLinesNode.nextEnabledProperty.link( function( enabled ) {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
       nextArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
@@ -94,7 +94,7 @@ define( function( require ) {
 
     this.mutate( nodeOptions );
 
-    this.addChild( this.calculationLines );
+    this.addChild( this.calculationLinesNode );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
@@ -102,23 +102,23 @@ define( function( require ) {
 
     function update() {
       // TODO: When does this happen?
-      if ( !self.calculationLines.calculationLinesProperty.value.length ) {
+      if ( !self.calculationLinesNode.calculationLinesProperty.value.length ) {
         return;
       }
 
       var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
 
-      // TODO: move to a CalculationLines method?
-      var maxLineWidth = _.reduce( self.calculationLines.calculationLinesProperty.value, function( max, line ) {
+      // TODO: move to a CalculationLinesNode method?
+      var maxLineWidth = _.reduce( self.calculationLinesNode.calculationLinesProperty.value, function( max, line ) {
         return Math.max( max, line.node.width );
       }, 0 );
 
       var availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
 
-      self.calculationLines.setScaleMagnitude( maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1 );
+      self.calculationLinesNode.setScaleMagnitude( maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1 );
       maxLineWidth = Math.min( maxLineWidth, availableLineWidth );
 
-      var backgroundBounds = self.calculationLines.bounds;
+      var backgroundBounds = self.calculationLinesNode.bounds;
 
       // If we removed lines for the "line-by-line", make sure we take up enough room to not change size.
       if ( backgroundBounds.width < maxLineWidth ) {
@@ -155,7 +155,7 @@ define( function( require ) {
       }
     }
 
-    this.calculationLines.displayUpdatedEmitter.addListener( update );
+    this.calculationLinesNode.displayUpdatedEmitter.addListener( update );
     update();
 
   }
@@ -168,7 +168,7 @@ define( function( require ) {
      * @public
      */
     update: function() {
-      this.calculationLines.update();
+      this.calculationLinesNode.update();
     }
   } );
 } );
