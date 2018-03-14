@@ -29,9 +29,9 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Polynomial|null} totalAreaProperty
+   * @param {Property.<Polynomial|null>} totalAreaProperty
    * @param {boolean} isProportional
-   * @param {string} maximumWidthString
+   * @param {string} maximumWidthString - If proportional
    * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */
   function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
@@ -41,11 +41,10 @@ define( function( require ) {
       font: AreaModelCommonConstants.TOTAL_AREA_VALUE_FONT
     } );
 
-    var areaContainer;
-    // TODO: cleanup
+    var areaNode;
     if ( isProportional ) {
       areaText.text = maximumWidthString;
-      areaContainer = new HBox( {
+      areaNode = new HBox( {
         spacing: 4,
         children: [
           new Text( areaEqualsString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
@@ -59,26 +58,20 @@ define( function( require ) {
     else {
       areaText.maxWidth = AreaModelCommonConstants.PANEL_INTERIOR_MAX;
       // AlignBox it so that it is always centered and keeps the same bounds
-      areaContainer = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
+      areaNode = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
     }
-
-    // Wrap with a centered container, so that when maxWidth kicks in, the AccordionBox centers this vertically.
-    var centeredContainer = new Node( {
-      children: [
-        areaContainer
-      ],
-      centerY: 0
-    } );
 
     // Update the text.
     totalAreaProperty.link( function( polynomial ) {
       areaText.text = polynomial === null ? '?' : polynomial.toRichString();
-      centeredContainer.centerX = 0;
+      
+      // TODO: Remove if the accordionbox gets resize:true?
+      areaNode.centerX = 0;
     } );
 
     Node.call( this, {
       children: [
-        centeredContainer
+        areaNode
       ],
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
