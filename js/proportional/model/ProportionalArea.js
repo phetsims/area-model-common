@@ -40,8 +40,8 @@ define( function( require ) {
       initialHeight: 1, // {number} - Initial height
       eraseWidth: 1, // {number} - The width that will be set with the erase button
       eraseHeight: 1, // {number} - The height that will be set with the erase button
-      initialHorizontalSplit: null, // {number|null} - Initial location (if any) of a horizontal partition split
-      initialVerticalSplit: null, // {number|null} - Initial location (if any) of a vertical partition split
+      initialHorizontalSplit: 0, // {number} - Initial location (if any) of a horizontal partition split
+      initialVerticalSplit: 0, // {number} - Initial location (if any) of a vertical partition split
       snapSize: 1, // {number} - Smallest unit size (that is snapped to)
       partitionSnapSize: 10, // {number} - Smallest left/top partition size
       gridSpacing: 1, // {number} - Space between grid lines
@@ -58,8 +58,8 @@ define( function( require ) {
     // @public {Property.<Orientation>} - If PartitionLineChoice.ONE is active, which partition line is active
     this.visiblePartitionOrientationProperty = new Property( Orientation.HORIZONTAL );
 
-    // @public {OrientationPair.<Property.<number|null>>} - If there is an active partition line, its location
-    this.partitionSplitProperties = new OrientationPair( new Property( options.initialHorizontalSplit ), new Property( options.initialVerticalSplit ) );
+    // @public {OrientationPair.<Property.<number>>} - Location of the partition lines
+    this.partitionSplitProperties = new OrientationPair( new NumberProperty( options.initialHorizontalSplit ), new NumberProperty( options.initialVerticalSplit ) );
 
     // @public {number}
     this.maximumSize = options.maximumSize;

@@ -16,6 +16,7 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var DragListener = require( 'SCENERY/listeners/DragListener' );
   var FocusHighlightPath = require( 'SCENERY/accessibility/FocusHighlightPath' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -26,6 +27,7 @@ define( function( require ) {
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
+  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
@@ -115,12 +117,21 @@ define( function( require ) {
     var partitionSplitProperty = area.partitionSplitProperties.get( orientation );
     var oppositeActiveTotalProperty = area.activeTotalProperties.get( orientation.opposite );
     var activeTotalProperty = area.activeTotalProperties.get( orientation );
+
+    // We need to reverse the accessible property for the vertical case.
+    // See https://github.com/phetsims/area-model-introduction/issues/2
+    var accessibleProperty = orientation === Orientation.HORIZONTAL ? partitionSplitProperty : new DynamicProperty( new Property( partitionSplitProperty ), {
+      bidirectional: true,
+      map: function( v ) { return -v; },
+      inverseMap: function( v ) {  return -v; }
+    } );
     var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty ], function( total ) {
-      return new Range( 0, total - area.snapSize );
+      var size = total - area.snapSize;
+      return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
     } );
 
     // TODO: Only pass in a Property.<number>, NEVER something that can be null. One of these ... starts as null?
-    this.initializeAccessibleSlider( partitionSplitProperty, accessibleRangeProperty, new BooleanProperty( true ), {
+    this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
       constrainValue: function( value ) {
         return Util.roundSymmetric( value );
       },
@@ -135,7 +146,7 @@ define( function( require ) {
 
     // Main coordinate (when dragging)
     partitionSplitProperty.link( function( split ) {
-      self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, split === null ? 0 : split );
+      self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, split );
     } );
 
     // Opposite coordinate (how wide the area is in the other direction)
@@ -169,7 +180,7 @@ define( function( require ) {
 
       end: function( event, listener ) {
         if ( partitionSplitProperty.value === activeTotalProperty.value ) {
-          partitionSplitProperty.value = null;
+          partitionSplitProperty.value = 0;
         }
       }
     } );
@@ -178,7 +189,7 @@ define( function( require ) {
     // Remove splits that are at or past the current boundary.
     activeTotalProperty.link( function( total ) {
       if ( partitionSplitProperty.value >= activeTotalProperty.value ) {
-        partitionSplitProperty.value = dragHandler.isPressedProperty.value ? activeTotalProperty.value : null;
+        partitionSplitProperty.value = dragHandler.isPressedProperty.value ? activeTotalProperty.value : 0;
       }
     } );
   }
