@@ -42,7 +42,8 @@ define( function( require ) {
   function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback, options ) {
 
     options = _.extend( {
-      font: AreaModelCommonConstants.GAME_VALUE_FONT
+      labelFont: AreaModelCommonConstants.GAME_MAIN_LABEL_FONT,
+      editFont: AreaModelCommonConstants.GAME_MAIN_EDIT_FONT
     }, options );
 
     Node.call( this );
@@ -60,7 +61,7 @@ define( function( require ) {
 
     var readoutText = new RichText( '?', {
       fill: colorProperty,
-      font: options.font
+      font: options.labelFont
     } );
     this.addChild( readoutText );
 
@@ -94,7 +95,8 @@ define( function( require ) {
       isActiveProperty: isActiveProperty,
       digitCountProperty: digitsProperty,
       allowExponentsProperty: allowExponentsProperty,
-      editCallback: editCallback
+      editCallback: editCallback,
+      font: options.editFont
     } );
     this.addChild( termEditNode );
 

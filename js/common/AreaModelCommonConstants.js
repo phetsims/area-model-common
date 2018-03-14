@@ -16,6 +16,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   var PANEL_CORNER_RADIUS = 5;
+  var LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;
+  var NORMAL_EDIT_FONT_SIZE = 18;
 
   // TODO: doc
   return areaModelCommon.register( 'AreaModelCommonConstants', {
@@ -29,13 +31,20 @@ define( function( require ) {
     TOTAL_AREA_LABEL_FONT: new PhetFont( 30 ),
     TOTAL_AREA_VALUE_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
     SYMBOL_FONT: new PhetFont( 20 ),
-    PARTIAL_PRODUCT_FONT: new PhetFont( 19 ),
+    PARTIAL_PRODUCT_FONT: new PhetFont( LARGE_PARTIAL_PRODUCT_FONT_SIZE ),
     PARTIAL_FACTOR_FONT: new PhetFont( 14 ),
-    EDIT_READOUT_FONT: new PhetFont( 18 ), // TODO: rename to be about terms?
-    POLYNOMIAL_EDIT_READOUT_FONT: new PhetFont( 18 ),
-    PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
-    GAME_VALUE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
-    GAME_TOTAL_VALUE_FONT: new PhetFont( { size: 18, weight: 'bold' } ), // TODO: see https://github.com/phetsims/area-model-common/issues/87
+    EDIT_READOUT_FONT: new PhetFont( NORMAL_EDIT_FONT_SIZE ), // TODO: rename to be about terms?
+    POLYNOMIAL_EDIT_READOUT_FONT: new PhetFont( NORMAL_EDIT_FONT_SIZE ),
+    PROPORTIONAL_PARTITION_READOUT_FONT: new PhetFont( { size: NORMAL_EDIT_FONT_SIZE, weight: 'bold' } ),
+
+    GAME_MAIN_LABEL_FONT: new PhetFont( { size: NORMAL_EDIT_FONT_SIZE, weight: 'bold' } ),
+    GAME_MAIN_EDIT_FONT: new PhetFont( NORMAL_EDIT_FONT_SIZE ),
+
+    GAME_PARTIAL_PRODUCT_LABEL_FONT: new PhetFont( { size: LARGE_PARTIAL_PRODUCT_FONT_SIZE, weight: 'bold' } ),
+    GAME_PARTIAL_PRODUCT_EDIT_FONT: new PhetFont( LARGE_PARTIAL_PRODUCT_FONT_SIZE ),
+
+    GAME_TOTAL_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
+
     GAME_POLYNOMIAL_EDIT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),
     TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),

@@ -217,7 +217,8 @@ define( function( require ) {
       }
       model.activeEditableProperty.value = totalTermPropertyProperty.value;
     }, {
-      font: AreaModelCommonConstants.GAME_TOTAL_VALUE_FONT
+      labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
+      editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );
     var totalProperty = new DynamicProperty( this.display.totalPropertyProperty );
     var polynomialEditNode = new PolynomialEditNode( totalProperty, this.display.totalPropertiesProperty, function() {

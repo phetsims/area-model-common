@@ -156,6 +156,9 @@ define( function( require ) {
             gameStateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
           }
           activeEditableProperty.value = valuePropertyProperty.value;
+        }, {
+          labelFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_LABEL_FONT,
+          editFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_EDIT_FONT
         } );
         self.addChild( label );
 
