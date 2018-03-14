@@ -139,7 +139,13 @@ define( function( require ) {
      * @returns {AreaNode}
      */
     createAreaNode: function( model, area ) {
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countingVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, this.useLargeArea, {
+      return new ProportionalAreaNode( area, model.partialProductsChoiceProperty, {
+        gridLinesVisibleProperty: model.gridLinesVisibleProperty,
+        tilesVisibleProperty: model.tilesVisibleProperty,
+        countingVisibleProperty: model.countingVisibleProperty,
+        useTileLikeBackground: this.useTileLikeBackground,
+        useLargeArea: this.useLargeArea
+      }, {
         translation: this.getAreaTranslation()
       } );
     },

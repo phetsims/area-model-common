@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaNode = require( 'AREA_MODEL_COMMON/common/view/AreaNode' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var CountingAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/CountingAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -31,24 +32,29 @@ define( function( require ) {
    * @constructor
    * @extends {AreaNode}
    *
-   * TODO: more options-like?
    * @param {ProportionalArea} area
-   * @param {Property.<boolean>} gridLinesVisibleProperty
-   * @param {Property.<boolean>} tilesVisibleProperty
-   * @param {Property.<boolean>} countingVisibleProperty
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
-   * @param {boolean} useTileLikeBackground
-   * @param {boolean} useLargeArea
+   * @param {Object} [options]
    * @param {Object} [nodeOptions]
    */
-  function ProportionalAreaNode( area, gridLinesVisibleProperty, tilesVisibleProperty, countingVisibleProperty, partialProductsChoiceProperty, useTileLikeBackground, useLargeArea, nodeOptions ) {
+  function ProportionalAreaNode( area, partialProductsChoiceProperty, options, nodeOptions ) {
     assert && assert( area instanceof ProportionalArea );
+
+    options = _.extend( {
+      // Meant to be overridden
+      gridLinesVisibleProperty: new BooleanProperty( false ),
+      tilesVisibleProperty: new BooleanProperty( false ),
+      countingVisibleProperty: new BooleanProperty( false ),
+      useTileLikeBackground: false,
+      useLargeArea: false,
+
+      // Specified for supertype
+      isProportional: true
+    }, options );
+
     var self = this;
 
-    AreaNode.call( this, area, partialProductsChoiceProperty, {
-      isProportional: true,
-      useLargeArea: useLargeArea
-    } );
+    AreaNode.call( this, area, partialProductsChoiceProperty, options );
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
@@ -58,14 +64,15 @@ define( function( require ) {
     // Grid lines
     var gridLinesNode = new ProportionalAreaGridLinesNode( area, this.modelViewTransform );
     this.areaLayer.addChild( gridLinesNode );
-    gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
+    options.gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
     // Active area drag handle
     this.areaLayer.addChild( new ProportionalDragHandle( area, this.modelViewTransform ) );
 
     // Active area background
     var activeAreaBackground = new Rectangle( {
-      fill: useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
+      fill: options.useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
+                                          : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
     area.activeTotalProperties.horizontal.link( function( totalWidth ) {
@@ -79,7 +86,7 @@ define( function( require ) {
     // @private {TiledAreaNode|null} - Tiles (optionally enabled)
     this.tiledAreaNode = null;
     if ( area.tilesAvailable ) {
-      this.tiledAreaNode = new TiledAreaNode( area, this.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
+      this.tiledAreaNode = new TiledAreaNode( area, this.modelViewTransform, options.tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
       this.areaLayer.addChild( this.tiledAreaNode );
     }
 
@@ -91,7 +98,7 @@ define( function( require ) {
     // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
     this.countingAreaNode = null;
     if ( area.countingAvailable ) {
-      this.countingAreaNode = new CountingAreaNode( area, this.modelViewTransform, countingVisibleProperty );
+      this.countingAreaNode = new CountingAreaNode( area, this.modelViewTransform, options.countingVisibleProperty );
       this.areaLayer.addChild( this.countingAreaNode );
     }
 
