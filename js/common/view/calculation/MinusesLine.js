@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * Calculation line that is essentially the "ordered" line, but where negative terms use a binary 'minus' in front
+ * where possible, instead of a unary minus.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

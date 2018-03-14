@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Shows only the total sum.
+ * Calculation line that shows only the final sim of the total width times the total height.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -25,7 +25,7 @@ define( function( require ) {
   function SumLine( area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, 6, area, activeIndexProperty, allowExponents, isProportional );
 
-    this.node = this.baseTermText( area.totalAreaProperty.value );
+    this.node = this.baseTermText( area.totalAreaProperty.value, false );
   }
 
   areaModelCommon.register( 'SumLine', SumLine );

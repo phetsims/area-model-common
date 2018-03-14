@@ -24,15 +24,14 @@ define( function( require ) {
    *
    * @param {TermList|Term} term
    * @param {Property.<Color>} colorProperty
-   * @param {boolean} [includeBinaryOperation]
-   * @param {boolean} [excludeSign]
+   * @param {boolean} excludeSign
    */
-  function TermText( term, colorProperty, includeBinaryOperation, excludeSign ) {
+  function TermText( term, colorProperty, excludeSign ) {
     RichText.call( this, ' ', {
       font: AreaModelCommonConstants.CALCULATION_TERM_FONT
     } );
 
-    this.initialize( term, colorProperty, includeBinaryOperation, excludeSign );
+    this.initialize( term, colorProperty, excludeSign );
   }
 
   areaModelCommon.register( 'TermText', TermText );
@@ -44,17 +43,15 @@ define( function( require ) {
      *
      * @param {TermList|Term} term
      * @param {Property.<Color>} colorProperty
-     * @param {boolean} [includeBinaryOperation]
-     * @param {boolean} [excludeSign]
+     * @param {boolean} excludeSign
      * @returns {TermText}
      */
-    initialize: function( term, colorProperty, includeBinaryOperation, excludeSign ) {
+    initialize: function( term, colorProperty, excludeSign ) {
       assert && assert( term instanceof Term || term instanceof TermList );
       assert && assert( colorProperty instanceof Property );
-      assert && assert( typeof includeBinaryOperation === 'boolean' || includeBinaryOperation === undefined );
       assert && assert( typeof excludeSign === 'boolean' || excludeSign === undefined );
 
-      this.text = excludeSign ? term.toNoSignRichString() : term.toRichString( !!includeBinaryOperation );
+      this.text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
       this.fill = colorProperty;
 
       return this;
@@ -73,12 +70,12 @@ define( function( require ) {
   // Standard boilerplate for pooling :(
   Poolable.mixInto( TermText, {
     constructorDuplicateFactory: function( pool ) {
-      return function( term, colorProperty, includeBinaryOperation, excludeSign ) {
+      return function( term, colorProperty, excludeSign ) {
         if ( pool.length ) {
-          return pool.pop().initialize( term, colorProperty, includeBinaryOperation, excludeSign );
+          return pool.pop().initialize( term, colorProperty, excludeSign );
         }
         else {
-          return new TermText( term, colorProperty, includeBinaryOperation, excludeSign );
+          return new TermText( term, colorProperty, excludeSign );
         }
       };
     }

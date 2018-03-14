@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * Calculation line below the 'expanded' line, where things are "multiplied out" and distributed.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -33,8 +33,8 @@ define( function( require ) {
 
     this.node = this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
       return horizontalTerms.map( function( horizontalTerm ) {
-        var horizontalText = self.orientedTermText( Orientation.HORIZONTAL, horizontalTerm, false );
-        var verticalText = self.orientedTermText( Orientation.VERTICAL, verticalTerm, false );
+        var horizontalText = self.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
+        var verticalText = self.orientedTermText( Orientation.VERTICAL, verticalTerm );
 
         // Proportional uses X-multiplication, see https://github.com/phetsims/area-model-common/issues/71
         if ( isProportional ) {

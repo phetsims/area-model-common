@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * A potential line below the totals line, where each total (vertical and horizontal) is separated out into its
+ * different values (for each partition).
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -36,7 +37,6 @@ define( function( require ) {
     var verticalNode = this.sumOrientedTerms( verticalTerms, Orientation.VERTICAL );
 
     if ( !horizontalSingle || allowExponents ) {
-      // TODO: add assertion checks for all types in this file
       horizontalNode = this.parentheses( horizontalNode );
     }
     if ( !verticalSingle || allowExponents ) {

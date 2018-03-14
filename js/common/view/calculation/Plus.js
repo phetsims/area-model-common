@@ -3,8 +3,6 @@
 /**
  * A plus symbol
  *
- * TODO: reduce duplication with these types
- *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

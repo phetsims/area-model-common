@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * TODO: doc
+ * Calculation line below the 'multiplied' line, where all of the products from distribution are sorted by exponent.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

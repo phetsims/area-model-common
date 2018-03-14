@@ -92,34 +92,33 @@ define( function( require ) {
   return inherit( Object, CalculationLine, {
     /**
      * Creates a TermText with the baseColor.
-     * @private
+     * @public
      *
      * @param {TermList|Term} term
-     * @param {boolean} [includeBinaryOperation]
-     * @param {boolean} [excludeSign]
+     * @param {boolean} excludeSign
      * @returns {TermText}
      */
-    baseTermText: function( term, includeBinaryOperation, excludeSign ) {
-      return TermText.createFromPool( term, this.baseColorProperty, includeBinaryOperation, excludeSign );
+    baseTermText: function( term, excludeSign ) {
+      assert && assert( typeof excludeSign === 'boolean' );
+
+      return TermText.createFromPool( term, this.baseColorProperty, excludeSign );
     },
 
     /**
      * Creates a TermText with the color of a specific orientation.
-     * @private
+     * @public
      *
      * @param {Orientation} orientation
      * @param {TermList|Term} term
-     * @param {boolean} [includeBinaryOperation]
-     * @param {boolean} [excludeSign]
      * @returns {TermText}
      */
-    orientedTermText: function( orientation, term, includeBinaryOperation, excludeSign ) {
-      return TermText.createFromPool( term, this.orientedColorProperties.get( orientation ), includeBinaryOperation, excludeSign );
+    orientedTermText: function( orientation, term ) {
+      return TermText.createFromPool( term, this.orientedColorProperties.get( orientation ), false );
     },
 
     /**
      * Creates a PlaceholderBox with the baseColor.
-     * @private
+     * @public
      *
      * @returns {PlaceholderBox}
      */
@@ -129,7 +128,7 @@ define( function( require ) {
 
     /**
      * Creates a PlaceholderBox with the color of a specific orientation.
-     * @private
+     * @public
      *
      * @param {Orientation} orientation
      * @returns {PlaceholderBox}
@@ -140,7 +139,7 @@ define( function( require ) {
 
     /**
      * Creates a MultiplyX with the specified content.
-     * @private
+     * @public
      *
      * @param {Node} leftContent
      * @param {Node} rightContent
@@ -152,7 +151,7 @@ define( function( require ) {
 
     /**
      * Creates a MultiplyX with the specified content.
-     * @private
+     * @public
      *
      * @param {Node} leftContent
      * @param {Node} rightContent
@@ -164,7 +163,7 @@ define( function( require ) {
 
     /**
      * Creates a Parentheses with the specified content.
-     * @private
+     * @public
      *
      * @param {Node} content
      * @returns {Parentheses}
@@ -175,7 +174,7 @@ define( function( require ) {
 
     /**
      * Creates a QuestionMark
-     * @private
+     * @public
      *
      * @returns {QuestionMark}
      */
@@ -185,7 +184,7 @@ define( function( require ) {
 
     /**
      * Creates a Plus
-     * @private
+     * @public
      *
      * @returns {Plus}
      */
@@ -195,7 +194,7 @@ define( function( require ) {
 
     /**
      * Creates a Minus
-     * @private
+     * @public
      *
      * @returns {Minus}
      */
@@ -205,7 +204,7 @@ define( function( require ) {
 
     /**
      * Creates a calculation group.
-     * @private
+     * @public
      *
      * @param {Array.<Node>} nodes
      * @param {number} spacing
@@ -215,7 +214,13 @@ define( function( require ) {
       return CalculationGroup.createFromPool( nodes, spacing );
     },
 
-    // TODO: doc, rename
+    /**
+     * Returns the grouping of all nodes provided, with plusses in-between each node.
+     * @public
+     *
+     * @param {Array.<Node>} nodes
+     * @returns {Node}
+     */
     sumGroup: function( nodes ) {
       var self = this;
 
@@ -224,16 +229,29 @@ define( function( require ) {
       } ) ), AreaModelCommonConstants.CALCULATION_OP_PADDING );
     },
 
-    // TODO: doc, rename
+    /**
+     * Returns a grouping of all (oriented) terms provided, with plusses in-between each term.
+     * @public
+     *
+     * @param {Array.<Term>} terms
+     * @param {Orientation} orientation
+     * @returns {Node}
+     */
     sumOrientedTerms: function( terms, orientation ) {
       var self = this;
 
       return this.sumGroup( terms.map( function( term ) {
-        return self.orientedTermText( orientation, term, false );
+        return self.orientedTermText( orientation, term );
       } ) );
     },
 
-    // TODO: doc
+    /**
+     * Returns a grouping of all (non-oriented) terms, with plusses/minuses in-between each term (depending on the sign)
+     * @public
+     *
+     * @param {Array.<Term>} terms
+     * @returns {Node}
+     */
     sumOrDifferenceOfTerms: function( terms ) {
       var self = this;
 
@@ -244,18 +262,25 @@ define( function( require ) {
           result.push( term.coefficient >= 0 ? self.plus() : self.minus() );
         }
 
-        result.push( self.baseTermText( term, false, index > 0 ) );
+        result.push( self.baseTermText( term, true ) );
 
         return result;
       } ) ), AreaModelCommonConstants.CALCULATION_OP_PADDING );
     },
 
-    // TODO: doc
+    /**
+     * Returns a grouping of all (oriented) terms provided, with plusses in-between each term (negative grouped in
+     * parentheses).
+     * @public
+     *
+     * @param {Array.<Term>} terms
+     * @returns {Node}
+     */
     sumWithNegativeParens: function( terms ) {
       var self = this;
 
       return this.sumGroup( terms.map( function( term ) {
-        var text = self.baseTermText( term, false, false );
+        var text = self.baseTermText( term, false );
         if ( term.coefficient < 0 ) {
           text = self.parentheses( text );
         }
