@@ -19,12 +19,8 @@ define( function( require ) {
 
   // TODO: doc
   return areaModelCommon.register( 'AreaModelCommonConstants', {
-    // Terms/numbers in the factors box
-    FACTORS_TERM_FONT: new PhetFont( 36 ),
-
-    // Parentheses in the factors box
-    FACTORS_PAREN_FONT: new PhetFont( 40 ),
-    
+    FACTORS_TERM_FONT: new PhetFont( 36 ), // Terms/numbers in the factors box
+    FACTORS_PAREN_FONT: new PhetFont( 40 ), // Parentheses in the factors box
     CALCULATION_X_FONT: new PhetFont( 16 ),
     CALCULATION_PAREN_FONT: new PhetFont( 16 ),
     CALCULATION_DOT_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
