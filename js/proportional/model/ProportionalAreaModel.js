@@ -42,7 +42,7 @@ define( function( require ) {
     this.tilesVisibleProperty = new BooleanProperty( false );
 
     // @public {BooleanProperty}
-    this.countsVisibleProperty = new BooleanProperty( true );
+    this.countingVisibleProperty = new BooleanProperty( true );
 
     // @public {BooleanProperty}
     this.calculationBoxVisibleProperty = new BooleanProperty( false );
@@ -61,7 +61,7 @@ define( function( require ) {
 
       this.gridLinesVisibleProperty.reset();
       this.tilesVisibleProperty.reset();
-      this.countsVisibleProperty.reset();
+      this.countingVisibleProperty.reset();
       this.calculationBoxVisibleProperty.reset();
     }
   } );

@@ -56,7 +56,7 @@ define( function( require ) {
     // Checkboxes
     var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
     var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty );
-    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countsVisibleProperty );
+    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty );
 
     var checkboxContainer = new VBox( {
       children: [ gridCheckbox, countingCheckbox, tileCheckbox ],
@@ -139,8 +139,7 @@ define( function( require ) {
      * @returns {AreaNode}
      */
     createAreaNode: function( model, area ) {
-      //TODO: countsVisibleProperty or countingVisibleProperty? decide!
-      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countsVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, this.useLargeArea, {
+      return new ProportionalAreaNode( area, model.gridLinesVisibleProperty, model.tilesVisibleProperty, model.countingVisibleProperty, model.partialProductsChoiceProperty, this.useTileLikeBackground, this.useLargeArea, {
         translation: this.getAreaTranslation()
       } );
     },
