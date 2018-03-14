@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Wraps a Node with parentheses.
+ * Wraps a Node with parentheses (poolable).
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

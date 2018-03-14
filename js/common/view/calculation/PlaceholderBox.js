@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A rectangle meant as a placeholder in the calculation lines.
+ * A rectangle meant as a placeholder in the calculation lines (poolable).
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

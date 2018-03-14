@@ -49,7 +49,7 @@ define( function( require ) {
     // @public {Property.<Array.<CalculationLine>>} - All of our "current" lines
     this.calculationLinesProperty = new Property( [] );
 
-    // @public {Emitter}
+    // @public {Emitter} - Fired whenever the displayed appearance has updated.
     this.displayUpdatedEmitter = new Emitter();
 
     // @private {AreaModelCommonModel}
@@ -180,14 +180,7 @@ define( function( require ) {
       if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE ) {
 
         var activeLine = this.getActiveLine();
-
-        displayedLines = [ activeLine ];
-        if ( activeLine.previousLine ) {
-          displayedLines = [ activeLine.previousLine ].concat( displayedLines );
-        }
-        if ( activeLine.nextLine ) {
-          displayedLines = displayedLines.concat( [ activeLine.nextLine ] );
-        }
+        displayedLines = activeLine.getAdjacentLines();
 
         this.previousEnabledProperty.value = !!activeLine.previousLine;
         this.nextEnabledProperty.value = !!activeLine.nextLine;
@@ -198,9 +191,7 @@ define( function( require ) {
       }
 
       this.children = _.map( displayedLines, 'node' );
-
       this.displayDirty = false;
-
       this.displayUpdatedEmitter.emit();
     },
 
@@ -244,11 +235,9 @@ define( function( require ) {
      * @returns {Array.<CalculationLine>}
      */
     createLines: function( area, activeIndexProperty, allowExponents, isProportional ) {
-      var horizontalPartitions = area.getDefinedPartitions( Orientation.HORIZONTAL );
-      var verticalPartitions = area.getDefinedPartitions( Orientation.VERTICAL );
-
-      var horizontalEmpty = horizontalPartitions.length === 0;
-      var verticalEmpty = verticalPartitions.length === 0;
+      // Whether there are ANY shown partitions for a given orientation
+      var horizontalEmpty = area.getDefinedPartitions( Orientation.HORIZONTAL ).length === 0;
+      var verticalEmpty = area.getDefinedPartitions( Orientation.VERTICAL ).length === 0;
 
       // If both are empty, show a question mark
       if ( horizontalEmpty && verticalEmpty ) {
@@ -265,28 +254,32 @@ define( function( require ) {
       var horizontalTerms = horizontalTermList.terms;
       var verticalTerms = verticalTermList.terms;
 
+      // The total/sum for each orientation
       var horizontalPolynomial = area.totalProperties.horizontal.value;
       var verticalPolynomial = area.totalProperties.vertical.value;
 
+      // E.g. for ( 2 ) * ( 3 + x ), the result will be the terms 6 and 2x.
       var multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
           return horizontalTerm.times( verticalTerm );
         } );
       } ) ) );
-
       var orderedTermList = multipliedTermList.orderedByExponent();
-
       var totalPolynomial = area.totalAreaProperty.value;
 
-      var needsExpansion = !allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) || !verticalTermList.equals( verticalPolynomial ) );
+      // Logic for what calculation lines are needed
+      var needsExpansion = !allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) ||
+                                                !verticalTermList.equals( verticalPolynomial ) );
       var needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
       var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
       var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
-                         !( orderedTermList.equals( totalPolynomial ) && ( !allowExponents || !orderedTermList.hasNegativeTerm() ) );
-      var needsMinuses = needsMultiplied && allowExponents && orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
+                         !( orderedTermList.equals( totalPolynomial ) &&
+                            ( !allowExponents || !orderedTermList.hasNegativeTerm() ) );
+      var needsMinuses = needsMultiplied && allowExponents &&
+                         orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
 
+      // Add the actual lines
       var lines = [];
-
       lines.push( new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) );
       if ( needsExpansion ) {
         lines.push( new ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );

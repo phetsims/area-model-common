@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A plus symbol
+ * A poolable plus symbol
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

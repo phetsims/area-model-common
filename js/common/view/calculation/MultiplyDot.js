@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Combines two nodes with a dot for multiplication in the middle
+ * Combines two nodes with a dot for multiplication in the middle (poolable)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

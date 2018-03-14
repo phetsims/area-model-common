@@ -289,6 +289,23 @@ define( function( require ) {
     },
 
     /**
+     * Returns an array with this lines (and any previous/next lines) in the correct order (up to 3 lines).
+     * @public
+     *
+     * @returns {Array.<CalculationLine>}
+     */
+    getAdjacentLines: function() {
+      var result = [ this ];
+      if ( this.previousLine ) {
+        result = [ this.previousLine ].concat( result );
+      }
+      if ( this.nextLine ) {
+        result = result.concat( [ this.nextLine ] );
+      }
+      return result;
+    },
+
+    /**
      * Removes external references.
      * @public
      */

@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A question-mark symbol
+ * A poolable question-mark symbol
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

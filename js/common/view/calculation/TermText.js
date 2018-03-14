@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A RichText for a Term with a colorProperty fill.
+ * A pooable RichText for a Term with a colorProperty fill.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
