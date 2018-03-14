@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Shows the product or factors for a partitioned area.
+ * Shows the product or factors for a partitioned area over a rounded background.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -29,13 +29,11 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: generalize? don't rely on the partitionedArea?
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {PartitionedArea} partitionedArea
    * @param {boolean} allowExponents
    */
   function PartialProductLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
-    //TODO: rename to 'product' singular instead of plural
     assert && assert( partialProductsChoiceProperty instanceof Property );
     assert && assert( partitionedArea instanceof PartitionedArea );
     assert && assert( typeof allowExponents === 'boolean' );
@@ -44,8 +42,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    // TODO: pull this reference, check where it is used
-    // @public {PartitionedArea}
+    // @public {PartitionedArea} - Exposed for improved positioning capability
     this.partitionedArea = partitionedArea;
 
     var background = new Rectangle( {
