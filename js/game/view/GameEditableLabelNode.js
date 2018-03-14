@@ -88,7 +88,14 @@ define( function( require ) {
         return errorColor;
       }
     } );
-    var termEditNode = new TermEditNode( orientation, valueProperty, textColorProperty, borderColorProperty, isActiveProperty, digitsProperty, allowExponentsProperty, editCallback );
+    var termEditNode = new TermEditNode( orientation, valueProperty, {
+      textColorProperty: textColorProperty,
+      borderColorProperty: borderColorProperty,
+      isActiveProperty: isActiveProperty,
+      digitCountProperty: digitsProperty,
+      allowExponentsProperty: allowExponentsProperty,
+      editCallback: editCallback
+    } );
     this.addChild( termEditNode );
 
     function centerTermEditNode() {

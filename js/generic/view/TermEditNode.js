@@ -12,11 +12,14 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Color = require( 'SCENERY/util/Color' );
   var FireListener = require( 'SCENERY/listeners/FireListener' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -28,37 +31,48 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: options object!
-   *
    * @param {Orientation} orientation
    * @param {Property.<Term|null>} termProperty
-   * @param {Property.<Color>} textColorProperty
-   * @param {Property.<Color>} borderColorProperty
-   * @param {Property.<boolean>} isActiveProperty
-   * @param {Property.<number>} digitCountProperty
-   * @param {Property.<boolean>} allowExponentsProperty
-   * @param {function} editCallback - Called when editing is triggered
+   * @param {Object} [options]
    */
-  function TermEditNode( orientation, termProperty, textColorProperty, borderColorProperty, isActiveProperty, digitCountProperty, allowExponentsProperty, editCallback ) {
+  function TermEditNode( orientation, termProperty, options ) {
     assert && assert( Orientation.isOrientation( orientation ) );
     assert && assert( termProperty instanceof Property );
-    assert && assert( textColorProperty instanceof Property );
-    assert && assert( borderColorProperty instanceof Property );
-    assert && assert( isActiveProperty instanceof Property );
-    assert && assert( digitCountProperty instanceof Property );
-    assert && assert( allowExponentsProperty instanceof Property );
+
+    options = _.extend( {
+      // {Property.<Color>} - The color of the readout text
+      textColorProperty: new Property( Color.BLACK ),
+
+      // {Property.<Color>} - The color of the border around the readout
+      borderColorProperty: new Property( Color.BLACK ),
+
+      // {Property.<boolean>} - Whether this term is the one being edited right now
+      isActiveProperty: new BooleanProperty( false ),
+
+      // {Property.<number>} - How many digits are allowed to be used for this term
+      digitCountProperty: new NumberProperty( 1 ),
+
+      // {Property.<boolean>} - Whether exponents are allowed for this term
+      allowExponentsProperty: new BooleanProperty( false ),
+
+      // {function} - Called with no arguments when this term should start being edited
+      editCallback: _.noop,
+
+      // {Font}
+      font: AreaModelCommonConstants.EDIT_READOUT_FONT
+    }, options );
 
     var self = this;
 
     var hexColor = '#c0vfefe'; // Placeholder value, replaced below. It's not even a hex color. Or is it.....?
 
     var readoutText = new RichText( hexColor, {
-      fill: textColorProperty,
-      font: AreaModelCommonConstants.EDIT_READOUT_FONT
+      fill: options.textColorProperty,
+      font: options.font
     } );
 
     var readoutBackground = new Rectangle( {
-      stroke: borderColorProperty,
+      stroke: options.borderColorProperty,
       cornerRadius: 4,
       children: [
         readoutText
@@ -67,7 +81,7 @@ define( function( require ) {
       cursor: 'pointer',
       inputListeners: [
         new FireListener( {
-          fire: editCallback
+          fire: options.editCallback
         } )
       ]
     } );
@@ -84,7 +98,7 @@ define( function( require ) {
             yMargin: 4
           } ),
           listener: function() {
-            editCallback();
+            options.editCallback();
           }
         }, {
           baseColor: AreaModelCommonColorProfile.editButtonBackgroundProperty
@@ -92,7 +106,7 @@ define( function( require ) {
       ]
     } );
 
-    isActiveProperty.link( function( isActive ) {
+    options.isActiveProperty.link( function( isActive ) {
       readoutBackground.fill = isActive ? AreaModelCommonColorProfile.editActiveBackgroundProperty
                                         : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
@@ -113,15 +127,15 @@ define( function( require ) {
     }
 
     function updateDigits() {
-      readoutText.text = Term.getLongestGenericString( allowExponentsProperty.value, digitCountProperty.value );
+      readoutText.text = Term.getLongestGenericString( options.allowExponentsProperty.value, options.digitCountProperty.value );
       readoutBackground.rectWidth = readoutText.width + 5;
       readoutBackground.rectHeight = readoutText.height + 5;
       updateText();
     }
 
     termProperty.lazyLink( updateText );
-    digitCountProperty.lazyLink( updateDigits );
-    allowExponentsProperty.lazyLink( updateDigits );
+    options.digitCountProperty.lazyLink( updateDigits );
+    options.allowExponentsProperty.lazyLink( updateDigits );
 
     updateDigits();
   }

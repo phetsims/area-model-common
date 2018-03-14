@@ -20,8 +20,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: Generalize parameters (like others) and add an options object. Don't rely in actual Partition reference
-   * @param {GenericArea} area TODO type doc needs updating?
+   * @param {GenericArea} area
    * @param {GenericPartition} partition
    * @param {ModelViewTransform2} modelViewTransform
    * @param {boolean} allowExponents
@@ -31,24 +30,18 @@ define( function( require ) {
 
     //TODO: abstract out to be like how the game is edited?
 
-    // TODO: isErrorState handling for the color?
-    // TODO: options object
-    TermEditNode.call( this,
-      partition.orientation, // orientation
-      partition.sizeProperty, // termProperty
-      partition.colorProperty, // textColorProperty
-      partition.colorProperty, // borderColorProperty TODO pass in
-      // isActiveProperty
-      new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
+    TermEditNode.call( this, partition.orientation, partition.sizeProperty, {
+      textColorProperty: partition.colorProperty,
+      borderColorProperty: partition.colorProperty,
+      isActiveProperty: new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
         return activePartition === partition;
       } ),
-      new Property( partition.digitCount ), // digitCountProperty
-      new Property( allowExponents ), // allowExponentsProperty
-      // editCallback
-      function() {
+      digitCountProperty: new Property( partition.digitCount ),
+      allowExponentsProperty: new Property( allowExponents ),
+      editCallback: function() {
         area.activePartitionProperty.value = partition;
       }
-    );
+    } );
 
     // Primary orientation (location of range center)
     partition.coordinateRangeProperty.link( function( range ) {
