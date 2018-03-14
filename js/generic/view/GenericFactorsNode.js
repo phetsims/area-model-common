@@ -40,10 +40,10 @@ define( function( require ) {
       return self.createOrientationReadout( orientation, displayProperty );
     } );
 
-    var leftParenText = new Text( '(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
-    var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
-    var rightParenText = new Text( ')', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
-    var xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.PROBLEM_X_FONT } );
+    var leftParenText = new Text( '(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    var rightParenText = new Text( ')', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    var xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } );
 
     // Have the X take up at least the same vertical bounds as the parentheses
     xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );
@@ -72,7 +72,7 @@ define( function( require ) {
 
     // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
     allowExponentsProperty.link( function( allowExponents ) {
-      var maxTextHeight = new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelCommonConstants.PROBLEM_X_FONT } ).height;
+      var maxTextHeight = new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ).height;
       var maxHeight = Math.max( middleParenText.height, BOX_SIZE, maxTextHeight );
 
       self.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxHeight );
@@ -96,8 +96,7 @@ define( function( require ) {
       var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
       var richText = new RichText( ' ', {
-        // TODO: Why are we using this font? create our own named one?
-        font: AreaModelCommonConstants.PROBLEM_X_FONT,
+        font: AreaModelCommonConstants.FACTORS_TERM_FONT,
         fill: colorProperty
       } );
 
