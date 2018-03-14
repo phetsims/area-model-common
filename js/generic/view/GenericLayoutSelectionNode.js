@@ -43,8 +43,7 @@ define( function( require ) {
 
     var scale = 0.7;
 
-    //TODO: refactor so this may not be needed if we ditch the ComboBox
-    var items = GenericLayout.VALUES.map( function( layout ) {
+    var comboBoxItems = GenericLayout.VALUES.map( function( layout ) {
       return {
         node: new HBox( {
           children: [
@@ -59,7 +58,7 @@ define( function( require ) {
       };
     } );
 
-    var maxItemHeight = Math.max.apply( Math, _.map( _.map( items, 'node' ), 'height' ) );
+    var maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'node' ), 'height' ) );
     var itemMargin = 6;
     var arrowMargin = 8;
 
@@ -100,7 +99,7 @@ define( function( require ) {
     } );
     genericLayoutProperty.link( function( layout ) {
       currentLabel.children = [
-        _.find( items, function( item ) {
+        _.find( comboBoxItems, function( item ) {
           return item.value === layout;
         } ).node
       ];
@@ -175,7 +174,8 @@ define( function( require ) {
         event.handle();
       }
     } );
-    //TODO: input cleanup! Messy. Bad! Make Input Listeners Great Again!
+
+    // Handle dismissing the selection if the user clicks outside
     var dismissListener = {
       down: function( event ) {
         if ( !event.trail.isExtensionOf( self.getUniqueTrail() ) ) {
@@ -187,7 +187,6 @@ define( function( require ) {
       if ( visible ) {
         var matrix = self.getUniqueTrail().getMatrixTo( listParent.getUniqueTrail() );
         popup.setScaleMagnitude( matrix.getScaleVector().x );
-        // TODO: handle scale sometime maybe?
         popup.leftTop = matrix.timesVector2( rectangle.leftBottom );
         listParent.addChild( popup );
 
