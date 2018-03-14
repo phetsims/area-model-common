@@ -28,7 +28,7 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: options object?
+   * TODO: options object!
    *
    * @param {Orientation} orientation
    * @param {Property.<Term|null>} termProperty
@@ -50,7 +50,9 @@ define( function( require ) {
 
     var self = this;
 
-    var readoutText = new RichText( '#covfefe', {
+    var hexColor = '#c0vfefe'; // Placeholder value, replaced below. It's not even a hex color. Or is it.....?
+
+    var readoutText = new RichText( hexColor, {
       fill: textColorProperty,
       font: AreaModelCommonConstants.EDIT_READOUT_FONT
     } );

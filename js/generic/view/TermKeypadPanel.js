@@ -53,11 +53,12 @@ define( function( require ) {
    *
    * @param {Property.<number>} digitCountProperty
    * @param {boolean} allowExponents
+   * @param {boolean} allowNegative
    * @param {function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
    * @param {Object} [options]
    */
   function TermKeypadPanel( digitCountProperty, allowExponents, allowNegative, enterCallback, nodeOptions ) {
-    assert && assert( allowNegative || !allowExponents );
+    assert && assert( allowNegative || !allowExponents, 'We have no non-negative exponent keyboard layout' );
 
     // Handles logic for keypresses and conversion to strings/Terms.
     var termAccumulator = new TermAccumulator( digitCountProperty );

@@ -29,7 +29,7 @@ define( function( require ) {
    * @param {Property.<number>} digitCountProperty
    */
   function TermAccumulator( digitCountProperty ) {
-    // @private
+    // @private {Property.<number>}
     this.digitCountProperty = digitCountProperty;
 
     AbstractKeyAccumulator.call( this );
