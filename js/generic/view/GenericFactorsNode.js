@@ -48,8 +48,7 @@ define( function( require ) {
     //TODO: a better way of this workaround
     xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );
 
-    // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the
-    // AccordionBox.
+    // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
     var box = new HBox( {
       spacing: 10,
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX

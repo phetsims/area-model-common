@@ -13,6 +13,7 @@ define( function( require ) {
 
   var AreaModelCommonQueryParameters = QueryStringMachine.getAll( {
     // When provided, generic screens will have terms set to make the calculation area as large as possible
+    // TODO: remove before production?
     maximumLayout1: { type: 'flag' }
   } );
 

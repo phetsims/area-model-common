@@ -257,27 +257,15 @@ define( function( require ) {
      */
     createAccordionBox: function( titleString, expandedProperty, content ) {
       //TODO: We can resize these now, so set resizable? TotalAreaNode should support it
-      return new AccordionBox( content, {
+      return new AccordionBox( content, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
         titleNode: new Text( titleString, {
           font: AreaModelCommonConstants.TITLE_FONT,
           maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
         } ),
         expandedProperty: expandedProperty,
         contentXMargin: 15,
-        contentYMargin: 12,
-        fill: AreaModelCommonColorProfile.panelBackgroundProperty,
-        stroke: AreaModelCommonColorProfile.panelBorderProperty,
-        cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
-        buttonTouchAreaXDilation: 5,
-        buttonTouchAreaYDilation: 5,
-        titleAlignX: 'left',
-
-        // TODO: deduplicate AccordionBox options
-        titleXSpacing: 8,
-        buttonLength: 20,
-        buttonXMargin: 10,
-        buttonYMargin: 8
-      } );
+        contentYMargin: 12
+      } ) );
     },
 
     /**

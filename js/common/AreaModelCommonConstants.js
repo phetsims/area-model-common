@@ -10,9 +10,12 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
+
+  var PANEL_CORNER_RADIUS = 5;
 
   // TODO: doc
   return areaModelCommon.register( 'AreaModelCommonConstants', {
@@ -51,7 +54,7 @@ define( function( require ) {
 
     PANEL_MARGIN: 10,
     PANEL_SPACING: 10,
-    PANEL_CORNER_RADIUS: 5,
+    PANEL_CORNER_RADIUS: PANEL_CORNER_RADIUS,
 
     MAIN_AREA_OFFSET: new Vector2( 180, 80 ),
     LARGE_AREA_OFFSET: new Vector2( 80, 80 ),
@@ -94,6 +97,19 @@ define( function( require ) {
     CALCULATION_OP_PADDING: 5,
 
     // {number} - Padding between a term and an adjacent parenthesis, e.g. "x(" or ")x"
-    CALCULATION_TERM_PAREN_PADDING: 1
+    CALCULATION_TERM_PAREN_PADDING: 1,
+
+    ACCORDION_BOX_OPTIONS: {
+      cornerRadius: PANEL_CORNER_RADIUS,
+      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
+      stroke: AreaModelCommonColorProfile.panelBorderProperty,
+      buttonTouchAreaXDilation: 5,
+      buttonTouchAreaYDilation: 5,
+      titleAlignX: 'left',
+      titleXSpacing: 8,
+      buttonLength: 20,
+      buttonXMargin: 10,
+      buttonYMargin: 8
+    }
   } );
 } );

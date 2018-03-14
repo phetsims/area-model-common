@@ -12,7 +12,6 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -45,37 +44,21 @@ define( function( require ) {
 
     var alignBox = new AlignBox( this.calculationLinesNode, {
       // Since our AccorionBox expands by our margin, we need to set content bounds without that
-      // TODO: This is an initial "guess". We still need to resize later :(
       alignBounds: bounds.eroded( margin ),
-
-      // TODO: remove need to make this unpickable
       pickable: false
     } );
 
-    AccordionBox.call( this, alignBox, {
-      resize: true,
-      cornerRadius: 5,
-      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.panelBorderProperty,
-      contentXMargin: margin,
-      contentYMargin: margin,
-      contentXSpacing: -10,
+    AccordionBox.call( this, alignBox, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
       titleNode: new Text( calculationString, {
         font: AreaModelCommonConstants.TITLE_FONT,
         maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
       } ),
+      resize: true,
       expandedProperty: model.calculationBoxVisibleProperty,
-      titleAlignX: 'left',
-      cursor: 'pointer',
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
-
-      // TODO: deduplicate AccordionBox options
-      titleXSpacing: 8,
-      buttonLength: 20,
-      buttonXMargin: 10,
-      buttonYMargin: 8
-    } );
+      contentXMargin: margin,
+      contentYMargin: margin,
+      contentXSpacing: -10
+    } ) );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
       assert && assert( choice !== AreaCalculationChoice.LINE_BY_LINE, 'Should be HIDDEN or SHOW_ALL_LINES' );
