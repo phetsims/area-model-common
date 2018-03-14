@@ -23,22 +23,22 @@ define( function( require ) {
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Text = require( 'SCENERY/nodes/Text' );
 
+  // constants
   var BOX_SIZE = 30;
 
   /**
    * @constructor
    * @extends {HBox}
    *
-   * TODO: accept orientation pair
-   * @param {Property.<TermList|null>} horizontalDisplayProperty
-   * @param {Property.<TermList|null>} verticalDisplayProperty
+   * @param {OrientationPair.<Property.<TermList|null>>} - The term lists to be displayed
    * @param {Property.<boolean>} allowExponentsProperty
    */
-  function GenericFactorsNode( horizontalDisplayProperty, verticalDisplayProperty, allowExponentsProperty ) {
+  function GenericFactorsNode( displayProperties, allowExponentsProperty ) {
     var self = this;
 
-    var horizontalNode = this.createOrientationReadout( Orientation.HORIZONTAL, horizontalDisplayProperty );
-    var verticalNode = this.createOrientationReadout( Orientation.VERTICAL, verticalDisplayProperty );
+    var readouts = displayProperties.map( function( displayProperty, orientation ) {
+      return self.createOrientationReadout( orientation, displayProperty );
+    } );
 
     var leftParenText = new Text( '(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
     var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
@@ -57,14 +57,14 @@ define( function( require ) {
     allowExponentsProperty.link( function( allowExponents ) {
       box.children = allowExponents ? [
         leftParenText,
-        verticalNode,
+        readouts.vertical,
         middleParenText,
-        horizontalNode,
+        readouts.horizontal,
         rightParenText
       ] : [
-        verticalNode,
+        readouts.vertical,
         xText,
-        horizontalNode
+        readouts.horizontal
       ];
     } );
 

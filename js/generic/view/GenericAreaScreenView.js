@@ -79,7 +79,7 @@ define( function( require ) {
           return area.displayProperties.get( orientation );
         } ) );
       } );
-      return new GenericFactorsNode( dynamicProperties.horizontal, dynamicProperties.vertical, new Property( model.allowExponents ) );
+      return new GenericFactorsNode( dynamicProperties, new Property( model.allowExponents ) );
     },
 
     // TODO: doc/improve

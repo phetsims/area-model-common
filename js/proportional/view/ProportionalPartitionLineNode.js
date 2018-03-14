@@ -53,7 +53,6 @@ define( function( require ) {
 
     var minHintArrow;
     var maxHintArrow;
-    //TODO: dedup
     var hintOffset = 15;
     var hintLength = 20;
     var arrowOptions = {
@@ -74,6 +73,7 @@ define( function( require ) {
     var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
     var handleMouseBounds = handleShape.bounds;
     var handleTouchBounds = handleMouseBounds.dilated( 5 );
+
     // We need to cut off the corners that would overlap between the two partition line handles, so we create a clipping
     // area and intersect with that. See https://github.com/phetsims/area-model-common/issues/80.
     var handleClipShape = new Shape().moveToPoint( handleTouchBounds.leftTop )
@@ -98,7 +98,7 @@ define( function( require ) {
       ]
     } );
 
-    var line = new Line( 0, 0, 0, 0, {
+    var line = new Line( {
       stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty,
       lineWidth: 2,
       cursor: 'pointer'
@@ -119,8 +119,7 @@ define( function( require ) {
       return new Range( 0, total - area.snapSize );
     } );
 
-    // TODO: factor out range (import if necessary), and use for clamping below
-    // TODO: Only pass in a Property.<number>, NEVER something that can be null
+    // TODO: Only pass in a Property.<number>, NEVER something that can be null. One of these ... starts as null?
     this.initializeAccessibleSlider( partitionSplitProperty, accessibleRangeProperty, new BooleanProperty( true ), {
       constrainValue: function( value ) {
         return Util.roundSymmetric( value );

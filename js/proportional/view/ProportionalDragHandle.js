@@ -31,7 +31,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {AreaNode}
+   * @extends {Node}
    *
    * @param {ProportionalArea} area
    * @param {ModelViewTransform2} modelViewTransform
@@ -54,7 +54,7 @@ define( function( require ) {
       tagName: 'div',
       focusable: true,
       touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
-      focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ), // TODO deduplicate
+      focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
       fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',
@@ -63,8 +63,10 @@ define( function( require ) {
           targetNode: this,
           applyOffset: false,
           isPressedProperty: draggedProperty,
-          // TODO: key into starting drag point? See https://github.com/phetsims/area-model-common/issues/17
           drag: function( event, listener ) {
+            // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
+            // actually is (and we want it to be efficient).
+
             var pointerViewPoint = listener.parentPoint;
             var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
             var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
@@ -107,13 +109,10 @@ define( function( require ) {
     area.activeTotalProperties.vertical.lazyLink( updateLocationProperty );
 
     var keyboardListener = new KeyboardDragListener( {
-      // TODO: generalize for explore screen
       positionDelta: modelViewTransform.modelToViewDeltaX( 1 ),
       shiftPositionDelta: modelViewTransform.modelToViewDeltaX( 1 ),
       transform: modelViewTransform,
-      // locationProperty: locationProperty,
       drag: function( delta ) {
-        // TODO: deduplicate width/height
         var width = area.activeTotalProperties.horizontal.value;
         var height = area.activeTotalProperties.vertical.value;
 

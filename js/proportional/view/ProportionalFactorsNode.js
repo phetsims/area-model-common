@@ -31,7 +31,6 @@ define( function( require ) {
    * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
    */
   function ProportionalFactorsNode( currentAreaProperty, decimalPlaces ) {
-
     HBox.call( this, {
       children: [
         this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
