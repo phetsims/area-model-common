@@ -143,7 +143,7 @@ define( function( require ) {
       }
     } );
 
-    var rangeProperty = new Property( new Range( -99, 99 ) ); // TODO: See https://github.com/phetsims/area-model-common/issues/94
+    var rangeProperty = new Property( new Range( -81, 81 ) );
 
     // TODO: change for each
     function highlightFunction( highlight, errorColor, dirtyColor ) {
