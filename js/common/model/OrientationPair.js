@@ -53,7 +53,7 @@ define( function( require ) {
      *
      * TODO: Check for good places to use this
      *
-     * @param {Function} callback
+     * @param {Function} callback - TODO: doc
      * @returns {OrientationPair.<*>} - With the mapped values
      */
     map: function( callback, orientation ) {
@@ -66,11 +66,11 @@ define( function( require ) {
      *
      * TODO: Check for good places to use this
      *
-     * @param {Function} callback
+     * @param {Function} callback - TODO: doc
      */
     forEach: function( callback ) {
-      callback( this.horizontal );
-      callback( this.vertical );
+      callback( this.horizontal, Orientation.HORIZONTAL );
+      callback( this.vertical, Orientation.VERTICAL );
     },
 
     /**

@@ -71,7 +71,9 @@ define( function( require ) {
     centerCoordinate: 'centerX',
     modelViewName: 'modelToViewX',
     minSide: 'left',
-    maxSide: 'right'
+    maxSide: 'right',
+    rectCoordinate: 'rectX',
+    rectSize: 'rectWidth'
   } );
 
   // @public {Orientation}
@@ -80,7 +82,9 @@ define( function( require ) {
     centerCoordinate: 'centerY',
     modelViewName: 'modelToViewY',
     minSide: 'top',
-    maxSide: 'bottom'
+    maxSide: 'bottom',
+    rectCoordinate: 'rectY',
+    rectSize: 'rectHeight'
   } );
 
   // Set up opposites as object references (circular)

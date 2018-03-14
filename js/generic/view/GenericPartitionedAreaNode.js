@@ -47,18 +47,13 @@ define( function( require ) {
     partitionedArea.visibleProperty.linkAttribute( this, 'visible' );
 
     // Bounds
-    // TODO: deduplicate?
-    partitionedArea.partitions.horizontal.coordinateRangeProperty.link( function( horizontalRange ) {
-      if ( horizontalRange !== null ) {
-        self.rectX = modelViewTransform.modelToViewX( horizontalRange.min );
-        self.rectWidth = modelViewTransform.modelToViewX( horizontalRange.getLength() );
-      }
-    } );
-    partitionedArea.partitions.vertical.coordinateRangeProperty.link( function( verticalRange ) {
-      if ( verticalRange !== null ) {
-        self.rectY = modelViewTransform.modelToViewY( verticalRange.min );
-        self.rectHeight = modelViewTransform.modelToViewY( verticalRange.getLength() );
-      }
+    partitionedArea.partitions.forEach( function( partition, orientation ) {
+      partition.coordinateRangeProperty.link( function( range ) {
+        if ( range !== null ) {
+          self[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
+          self[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
+        }
+      } );
     } );
   }
 
