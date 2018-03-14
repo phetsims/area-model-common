@@ -339,7 +339,7 @@ define( function( require ) {
 
     var faceNode = new FaceNode( 90, {
       centerX: showSolutionButton.centerX,
-      top: showSolutionButton.bottom + 15
+      top: showSolutionButton.bottom + 10
     } );
     this.challengeLayer.addChild( faceNode );
     var scoreIncreaseText = new Text( ' ', {
