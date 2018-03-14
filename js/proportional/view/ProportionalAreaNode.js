@@ -73,9 +73,9 @@ define( function( require ) {
     } );
     this.areaLayer.addChild( activeAreaBackground );
 
-    // Tiles
+    // @private {TiledAreaNode|null} - Tiles (optionally enabled)
+    this.tiledAreaNode = null;
     if ( area.tilesAvailable ) {
-      // TODO: visibility!
       this.tiledAreaNode = new TiledAreaNode( area, this.modelViewTransform, tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
       this.areaLayer.addChild( this.tiledAreaNode );
     }
@@ -85,9 +85,9 @@ define( function( require ) {
       stroke: AreaModelCommonColorProfile.areaBorderProperty
     } ) );
 
-    // Counting / Numbering TODO: Do we call this numbering internally, or counting?
+    // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
+    this.countingAreaNode = null;
     if ( area.countingAvailable ) {
-      // TODO: visibility!
       this.countingAreaNode = new CountingAreaNode( area, this.modelViewTransform, countingVisibleProperty );
       this.areaLayer.addChild( this.countingAreaNode );
     }
