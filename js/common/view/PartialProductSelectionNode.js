@@ -11,20 +11,18 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
@@ -68,19 +66,7 @@ define( function( require ) {
       }
     ];
 
-    // RadioButtonGroup doesn't support {Color} for baseColor/selectedStroke, so we need to wrap it.
-    // TODO: This is a pattern used a few times now, with the... same color? Factor out into a common place!
-    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ model.partialProductsChoiceProperty, radioItems ], {
-      orientation: 'horizontal',
-      buttonContentXMargin: 10,
-      buttonContentYMargin: 10,
-      selectedLineWidth: 2,
-      touchAreaXDilation: 6,
-      touchAreaYDilation: 6
-    }, {
-      selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
-      baseColor: AreaModelCommonColorProfile.radioBackgroundProperty
-    } ) );
+    this.addChild( new AreaModelCommonRadioButtonGroup( model.partialProductsChoiceProperty, radioItems ) );
   }
 
   areaModelCommon.register( 'PartialProductSelectionNode', PartialProductSelectionNode );

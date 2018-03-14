@@ -12,12 +12,11 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  var AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -30,12 +29,13 @@ define( function( require ) {
    */
   function AreaCalculationSelectionNode( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
+    //TODO: Can we just inherit the button group here?
     Node.call( this );
 
     var darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
     var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
-    var radioItems = [
+    this.addChild( new AreaModelCommonRadioButtonGroup( areaCalculationChoiceProperty, [
       {
         value: AreaCalculationChoice.HIDDEN,
         node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
@@ -48,20 +48,7 @@ define( function( require ) {
         value: AreaCalculationChoice.SHOW_ALL_LINES,
         node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
       }
-    ];
-
-    // RadioButtonGroup doesn't support {Color} for baseColor/selectedStroke, so we need to wrap it.
-    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ areaCalculationChoiceProperty, radioItems ], {
-      orientation: 'horizontal',
-      buttonContentXMargin: 10,
-      buttonContentYMargin: 10,
-      selectedLineWidth: 2,
-      touchAreaXDilation: 6,
-      touchAreaYDilation: 6
-    }, {
-      selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
-      baseColor: AreaModelCommonColorProfile.radioBackgroundProperty
-    } ) );
+    ] ) );
   }
 
   areaModelCommon.register( 'AreaCalculationSelectionNode', AreaCalculationSelectionNode );

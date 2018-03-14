@@ -10,17 +10,16 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  var AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalPartitionLineNode' );
-  var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -46,17 +45,10 @@ define( function( require ) {
       }
     ];
 
-    // RadioButtonGroup doesn't support {Color} for baseColor/selectedStroke, so we need to wrap it.
-    this.addChild( new MutableOptionsNode( RadioButtonGroup, [ currentAreaOrientationProperty, radioItems ], {
-      orientation: 'horizontal',
+    this.addChild( new AreaModelCommonRadioButtonGroup( currentAreaOrientationProperty, radioItems, {
+      // Less margin than others desired here
       buttonContentXMargin: 7,
-      buttonContentYMargin: 7,
-      selectedLineWidth: 2,
-      touchAreaXDilation: 6,
-      touchAreaYDilation: 6
-    }, {
-      selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
-      baseColor: AreaModelCommonColorProfile.radioBackgroundProperty
+      buttonContentYMargin: 7
     } ) );
   }
 
