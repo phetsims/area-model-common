@@ -62,6 +62,7 @@ define( function( require ) {
     }
   } );
 
+  // Standard boilerplate for pooling :(
   Poolable.mixInto( Plus, {
     constructorDuplicateFactory: function( pool ) {
       return function( baseColorProperty ) {

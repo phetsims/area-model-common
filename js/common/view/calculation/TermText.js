@@ -70,6 +70,7 @@ define( function( require ) {
     }
   } );
 
+  // Standard boilerplate for pooling :(
   Poolable.mixInto( TermText, {
     constructorDuplicateFactory: function( pool ) {
       return function( term, colorProperty, includeBinaryOperation, excludeSign ) {

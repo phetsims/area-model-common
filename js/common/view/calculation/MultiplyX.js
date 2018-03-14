@@ -97,6 +97,7 @@ define( function( require ) {
     }
   } );
 
+  // Standard boilerplate for pooling :(
   Poolable.mixInto( MultiplyX, {
     constructorDuplicateFactory: function( pool ) {
       return function( leftContent, rightContent, baseColorProperty ) {

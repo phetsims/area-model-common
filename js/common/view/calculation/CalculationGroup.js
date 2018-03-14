@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Combines a list of calculation items in an hbox
+ * A poolable HBox for grouping calculation items with a specified spacing.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -72,6 +72,7 @@ define( function( require ) {
     }
   } );
 
+  // Standard boilerplate for pooling :(
   Poolable.mixInto( CalculationGroup, {
     constructorDuplicateFactory: function( pool ) {
       return function( nodes, spacing ) {

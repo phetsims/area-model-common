@@ -61,6 +61,7 @@ define( function( require ) {
     }
   } );
 
+  // Standard boilerplate for pooling :(
   Poolable.mixInto( PlaceholderBox, {
     constructorDuplicateFactory: function( pool ) {
       return function( colorProperty, allowExponents ) {

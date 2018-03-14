@@ -59,6 +59,7 @@ define( function( require ) {
     }
   } );
 
+  // Standard boilerplate for pooling :(
   Poolable.mixInto( QuestionMark, {
     constructorDuplicateFactory: function( pool ) {
       return function( baseColorProperty ) {
