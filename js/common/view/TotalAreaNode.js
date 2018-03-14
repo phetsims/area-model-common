@@ -64,9 +64,6 @@ define( function( require ) {
     // Update the text.
     totalAreaProperty.link( function( polynomial ) {
       areaText.text = polynomial === null ? '?' : polynomial.toRichString();
-      
-      // TODO: Remove if the accordionbox gets resize:true?
-      areaNode.centerX = 0;
     } );
 
     Node.call( this, {

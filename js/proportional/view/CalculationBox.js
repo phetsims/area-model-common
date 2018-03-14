@@ -53,7 +53,6 @@ define( function( require ) {
         font: AreaModelCommonConstants.TITLE_FONT,
         maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
       } ),
-      resize: true,
       expandedProperty: model.calculationBoxVisibleProperty,
       contentXMargin: margin,
       contentYMargin: margin,

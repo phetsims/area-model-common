@@ -100,6 +100,7 @@ define( function( require ) {
     CALCULATION_TERM_PAREN_PADDING: 1,
 
     ACCORDION_BOX_OPTIONS: {
+      resize: true,
       cornerRadius: PANEL_CORNER_RADIUS,
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
       stroke: AreaModelCommonColorProfile.panelBorderProperty,

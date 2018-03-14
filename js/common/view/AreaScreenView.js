@@ -256,7 +256,6 @@ define( function( require ) {
      * @param {Node} content
      */
     createAccordionBox: function( titleString, expandedProperty, content ) {
-      //TODO: We can resize these now, so set resizable? TotalAreaNode should support it
       return new AccordionBox( content, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
         titleNode: new Text( titleString, {
           font: AreaModelCommonConstants.TITLE_FONT,
