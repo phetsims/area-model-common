@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Displays tiles for a partitioned area.
+ * Displays numbers for each square of a unit size.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -15,6 +15,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Vector2 = require( 'DOT/Vector2' );
+
+  var scratchVector = new Vector2();
 
   /**
    * @constructor
@@ -39,6 +42,10 @@ define( function( require ) {
     // @private {Property.<boolean>}
     this.countingVisibleProperty = countingVisibleProperty;
 
+    // @private {Array.<Text>} - We reuse these to avoid GC/performance issues
+    this.textNodes = [];
+    // TODO: test if we should preallocate a number of these?
+
     // @private {boolean} - Whether we should be redrawn
     this.dirty = true;
 
@@ -49,11 +56,30 @@ define( function( require ) {
     countingVisibleProperty.link( invalidate );
     area.activeTotalProperties.horizontal.link( invalidate );
     area.activeTotalProperties.vertical.link( invalidate );
+
+    countingVisibleProperty.linkAttribute( this, 'visible' );
   }
 
   areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
 
   return inherit( Node, CountingAreaNode, {
+    /**
+     * Creates a reusable text node with a given number.
+     * @private
+     *
+     * @param {number} number
+     * @returns {Text}
+     */
+    createTextNode: function( number ) {
+      var text = new Text( number, {
+        font: AreaModelCommonConstants.COUNTING_FONT,
+        fill: AreaModelCommonColorProfile.countingLabelProperty,
+      } );
+      this.textNodes.push( text );
+      this.addChild( text );
+      return text;
+    },
+
     /**
      * Updates the view for tiled areas (since it is somewhat expensive to re-draw, and we don't want it being done
      * multiple times per frame.
@@ -64,8 +90,6 @@ define( function( require ) {
       // Ignore updates if we are not dirty
       if ( !this.dirty ) { return; }
       this.dirty = false;
-
-      this.removeAllChildren();
 
       if ( !this.countingVisibleProperty.value ) { return; }
 
@@ -78,18 +102,26 @@ define( function( require ) {
 
       var number = 1;
       for ( var row = 0; row < height; row++ ) {
+        var rowCenter = mapY( row + 0.5 );
+
         for ( var col = 0; col < width; col++ ) {
-          // TODO: Don't GC churn this, they can be shared EASILY
-          // TODO: PERFORMANCE
-          this.addChild( new Text( number, {
-            font: AreaModelCommonConstants.COUNTING_FONT,
-            fill: AreaModelCommonColorProfile.countingLabelProperty,
-            centerX: mapX( col + 0.5 ),
-            centerY: mapY( row + 0.5 )
-          } ) );
+          var colCenter = mapX( col + 0.5 );
+
+          var text = this.textNodes[ number - 1 ];
+          // lazy creation (in case)
+          if ( !text ) {
+            text = this.createTextNode( number );
+          }
+          text.center = scratchVector.setXY( colCenter, rowCenter );
+          text.visible = true;
 
           number++;
         }
+      }
+
+      // Hide the rest of the text nodes (that should NOT show up)
+      for ( ; number - 1 < this.textNodes.length; number++ ) {
+        this.textNodes[ number - 1 ].visible = false;
       }
     }
   } );
