@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    * @extends {AreaModelCommonRadioButtonGroup}
    *
-   * @param {Property.<AreaCalculationChoice} currentAreaOrientationProperty
+   * @param {Property.<AreaCalculationChoice>} currentAreaOrientationProperty
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   function PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) {
@@ -83,7 +83,7 @@ define( function( require ) {
           translation: p2
         } )
       ];
-      
+
       return background;
     }
   } );
