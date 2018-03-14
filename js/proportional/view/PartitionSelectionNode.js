@@ -46,6 +46,7 @@ define( function( require ) {
       }
     ];
 
+    // RadioButtonGroup doesn't support {Color} for baseColor/selectedStroke, so we need to wrap it.
     this.addChild( new MutableOptionsNode( RadioButtonGroup, [ currentAreaOrientationProperty, radioItems ], {
       orientation: 'horizontal',
       buttonContentXMargin: 7,

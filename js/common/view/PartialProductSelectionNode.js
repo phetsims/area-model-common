@@ -21,6 +21,8 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -37,23 +39,19 @@ define( function( require ) {
     Node.call( this );
 
     // hardcoded strings since they shouldn't be translatable
-    var horizontalText = new Text( 'b', {
-      font: AreaModelCommonConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.horizontal ], function( value, widthColor ) {
-        return value === PartialProductsChoice.FACTORS ? widthColor : 'black';
-      } )
-    } );
-    var verticalText = new Text( 'a', {
-      font: AreaModelCommonConstants.SYMBOL_FONT,
-      fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.vertical ], function( value, heightColor ) {
-        return value === PartialProductsChoice.FACTORS ? heightColor : 'black';
-      } )
+    var templateLabels = OrientationPair.create( function( orientation ) {
+      return new Text( orientation === Orientation.HORIZONTAL ? 'b' : 'a', {
+        font: AreaModelCommonConstants.SYMBOL_FONT,
+        fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( orientation ) ], function( value, color ) {
+          return value === PartialProductsChoice.FACTORS ? color : 'black';
+        } )
+      } );
     } );
 
-    //TODO: don't require both to be built
+    // Both are built here so it is a consistent size across screens.
     var iconGroup = new AlignGroup();
-    var exponentsIcon = new AlignBox( this.createExponentIcon( horizontalText, verticalText ), { group: iconGroup } );
-    var noExponentsIcon = new AlignBox( this.createNonExponentIcon( horizontalText, verticalText ), { group: iconGroup } );
+    var exponentsIcon = new AlignBox( this.createExponentIcon( templateLabels ), { group: iconGroup } );
+    var noExponentsIcon = new AlignBox( this.createNonExponentIcon( templateLabels ), { group: iconGroup } );
 
     var radioItems = [
       {
@@ -70,6 +68,8 @@ define( function( require ) {
       }
     ];
 
+    // RadioButtonGroup doesn't support {Color} for baseColor/selectedStroke, so we need to wrap it.
+    // TODO: This is a pattern used a few times now, with the... same color? Factor out into a common place!
     this.addChild( new MutableOptionsNode( RadioButtonGroup, [ model.partialProductsChoiceProperty, radioItems ], {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
@@ -86,18 +86,24 @@ define( function( require ) {
   areaModelCommon.register( 'PartialProductSelectionNode', PartialProductSelectionNode );
 
   return inherit( Node, PartialProductSelectionNode, {
-    // TODO: doc
-    createExponentIcon: function( horizontalNode, verticalNode ) {
+    /**
+     * Creates an 'exponents-allowed' icon based on a pair of nodes.
+     * @private
+     *
+     * @param {OrientationPair.<Node>} nodes
+     * @returns {Node}
+     */
+    createExponentIcon: function( nodes ) {
       return new HBox( {
         children: [
           new Text( '(', {
             font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
-          new Node( { children: [ verticalNode ] } ),
+          new Node( { children: [ nodes.vertical ] } ),
           new Text( ')(', {
             font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
-          new Node( { children: [ horizontalNode ] } ),
+          new Node( { children: [ nodes.horizontal ] } ),
           new Text( ')', {
             font: AreaModelCommonConstants.SYMBOL_FONT
           } )
@@ -107,15 +113,21 @@ define( function( require ) {
       } );
     },
 
-    // TODO: doc
-    createNonExponentIcon: function( horizontalNode, verticalNode ) {
+    /**
+     * Creates an 'no-exponents' icon based on a pair of nodes.
+     * @private
+     *
+     * @param {OrientationPair.<Node>} nodes
+     * @returns {Node}
+     */
+    createNonExponentIcon: function( nodes ) {
       return new HBox( {
         children: [
-          new Node( { children: [ verticalNode ] } ),
+          new Node( { children: [ nodes.vertical ] } ),
           new Text( MathSymbols.TIMES, {
             font: AreaModelCommonConstants.SYMBOL_FONT
           } ),
-          new Node( { children: [ horizontalNode ] } )
+          new Node( { children: [ nodes.horizontal ] } )
         ],
         spacing: 5
       } );
