@@ -93,6 +93,8 @@ define( function( require ) {
         partition.visibleProperty.lazyLink( setLinesDirty );
       } );
 
+      setLinesDirty();
+
       self.update();
     } );
   }
