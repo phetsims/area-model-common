@@ -1,7 +1,8 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * A range label that displays a specific TermList.
+ * A range label that displays a specific TermList along a line covering the range (with start/end ticks for every
+ * partition)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -12,35 +13,42 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var RangeNode = require( 'AREA_MODEL_COMMON/common/view/RangeNode' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // constants
+  var TICK_LENGTH = 10; // How long the tick marks are for the range labels
+
   /**
    * @constructor
-   * @extends {RangeLabel}
+   * @extends {Node}
    *
    * @param {Property.<TermList|null>} termListProperty
    * @param {Orientation} orientation
    * @param {Property.<Array.<number>>} tickLocationsProperty - In view coordinates
    * @param {Property.<Color>} colorProperty
+   * @param {boolean} isProportional
    */
   function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) {
+
+    var self = this;
+
+    Node.call( this );
+
+    var rangeOffset = ( isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
     var text = new RichText( '', {
       font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
       fill: colorProperty
     } );
 
-    // Wrap our text in a label, so that we can handle positioning independent of bounds checks
-    var label = new Node( {
-      children: [ text ]
-    } );
-
+    // Constrain width on the left side (don't let it go out of the layout bounds)
     if ( orientation === Orientation.VERTICAL ) {
-      text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + ( isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET ).x - AreaModelCommonConstants.PANEL_MARGIN;
+      var verticalRangeOffset = ( isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET );
+      text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.PANEL_MARGIN;
     }
 
     // Update the label text
@@ -50,6 +58,8 @@ define( function( require ) {
       text.visible = hasTerms;
       if ( hasTerms ) {
         text.text = termList.toRichString();
+
+        // Relative positioning
         if ( orientation === Orientation.HORIZONTAL ) {
           text.centerBottom = Vector2.ZERO;
         }
@@ -59,10 +69,67 @@ define( function( require ) {
       }
     } );
 
-    RangeNode.call( this, label, orientation, tickLocationsProperty, colorProperty, isProportional );
+    // Wrap our text in a label, so that we can handle positioning independent of bounds checks
+    var textContainer = new Node( {
+      children: [ text ]
+    } );
+    this.addChild( textContainer );
+
+    // Coordinate that doesn't change. Customized offsets added
+    textContainer[ orientation.opposite.coordinate ] = rangeOffset + ( orientation === Orientation.HORIZONTAL ? -3 : -5 );
+
+    // Our main line, that the tick marks will be off of
+    var line = new Line( {
+      stroke: colorProperty
+    } );
+    this.addChild( line );
+
+    var ticks = [];
+
+    // Update the layout
+    tickLocationsProperty.link( function( tickLocations ) {
+      assert && assert( tickLocations.length === 0 || tickLocations.length >= 2 );
+
+      if ( tickLocations.length === 0 ) {
+        ticks.forEach( function( tick ) {
+          tick.visible = false;
+        } );
+      }
+      else {
+        // Add any ticks that we need
+        while ( ticks.length < tickLocations.length ) {
+          var tick = new Line( {
+            y1: 0,
+            y2: TICK_LENGTH / 2,
+            stroke: colorProperty,
+            rotation: orientation === Orientation.HORIZONTAL ? 0 : -Math.PI / 2
+          } );
+          ticks.push( tick );
+          self.addChild( tick );
+        }
+
+        ticks.forEach( function( tick, index ) {
+          if ( index < tickLocations.length ) {
+            tick.visible = true;
+            tick.translation = orientation.vector( tickLocations[ index ], rangeOffset );
+            tick.y1 = ( index === 0 || index === tickLocations.length - 1 ) ? -TICK_LENGTH / 2 : 0;
+          }
+          else {
+            tick.visible = false;
+          }
+        } );
+
+        var minLocation = tickLocations[ 0 ];
+        var maxLocation = tickLocations[ tickLocations.length - 1 ];
+
+        line.p1 = orientation.vector( minLocation, rangeOffset );
+        line.p2 = orientation.vector( maxLocation, rangeOffset );
+        textContainer[ orientation.coordinate ] = ( maxLocation + minLocation ) / 2; // centered
+      }
+    } );
   }
 
   areaModelCommon.register( 'RangeLabelNode', RangeLabelNode );
 
-  return inherit( RangeNode, RangeLabelNode );
+  return inherit( Node, RangeLabelNode );
 } );
