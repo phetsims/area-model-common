@@ -36,6 +36,7 @@ define( function( require ) {
 
     Node.call( this );
 
+    // hardcoded strings since they shouldn't be translatable
     var horizontalText = new Text( 'b', {
       font: AreaModelCommonConstants.SYMBOL_FONT,
       fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.horizontal ], function( value, widthColor ) {

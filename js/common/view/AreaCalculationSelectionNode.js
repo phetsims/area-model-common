@@ -50,6 +50,7 @@ define( function( require ) {
       }
     ];
 
+    // RadioButtonGroup doesn't support {Color} for baseColor/selectedStroke, so we need to wrap it.
     this.addChild( new MutableOptionsNode( RadioButtonGroup, [ areaCalculationChoiceProperty, radioItems ], {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
@@ -71,6 +72,7 @@ define( function( require ) {
    *
    * @param {Property.<Color>} topColorProperty
    * @param {Property.<Color>} bottomColorProperty
+   * @returns {Node}
    */
   function createCalculationIcon( topColorProperty, bottomColorProperty ) {
     var height = 5;
