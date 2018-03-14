@@ -15,38 +15,31 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
    * @constructor
-   * @extends {Node}
+   * @extends {AreaModelCommonRadioButtonGroup}
    *
    * @param {ProportionalAreaModel} model
    * @param {Object} [nodeOptions]
    */
   function SceneSelectionNode( model, nodeOptions ) {
+    var group = new AlignGroup(); // have all the buttons the same size
 
-    Node.call( this );
-
-    //TODO: inline things and just extend the button group?
-    var group = new AlignGroup();
-
-    var radioItems = model.areas.map( function( area ) {
+    AreaModelCommonRadioButtonGroup.call( this, model.currentAreaProperty, model.areas.map( function( area ) {
       return {
         value: area,
         node: new AlignBox( new Text( area.maximumSize + 'x' + area.maximumSize, {
           font: AreaModelCommonConstants.SYMBOL_FONT
         } ), { group: group } )
       };
-    } );
-
-    this.addChild( new AreaModelCommonRadioButtonGroup( model.currentAreaProperty, radioItems ) );
+    } ) );
 
     this.mutate( nodeOptions );
   }
 
   areaModelCommon.register( 'SceneSelectionNode', SceneSelectionNode );
 
-  return inherit( Node, SceneSelectionNode );
+  return inherit( AreaModelCommonRadioButtonGroup, SceneSelectionNode );
 } );

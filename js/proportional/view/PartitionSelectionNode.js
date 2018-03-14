@@ -16,7 +16,6 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalPartitionLineNode' );
@@ -25,36 +24,28 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {Node}
+   * @extends {AreaModelCommonRadioButtonGroup}
    *
    * @param {Property.<AreaCalculationChoice} currentAreaOrientationProperty
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   function PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) {
-
-    Node.call( this );
-
-    var radioItems = [
-      {
-        value: Orientation.HORIZONTAL,
-        node: new AlignBox( PartitionSelectionNode.createPartitionOrientationIcon( Orientation.HORIZONTAL, currentAreaOrientationProperty ), { group: selectionButtonAlignGroup } )
-      },
-      {
-        value: Orientation.VERTICAL,
-        node: new AlignBox( PartitionSelectionNode.createPartitionOrientationIcon( Orientation.VERTICAL, currentAreaOrientationProperty ), { group: selectionButtonAlignGroup } )
-      }
-    ];
-
-    this.addChild( new AreaModelCommonRadioButtonGroup( currentAreaOrientationProperty, radioItems, {
+    AreaModelCommonRadioButtonGroup.call( this, currentAreaOrientationProperty, Orientation.VALUES.map( function( orientation ) {
+      var icon = PartitionSelectionNode.createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
+      return {
+        value: orientation,
+        node: new AlignBox( icon, { group: selectionButtonAlignGroup } )
+      };
+    } ), {
       // Less margin than others desired here
       buttonContentXMargin: 7,
       buttonContentYMargin: 7
-    } ) );
+    } );
   }
 
   areaModelCommon.register( 'PartitionSelectionNode', PartitionSelectionNode );
 
-  return inherit( Node, PartitionSelectionNode, {}, {
+  return inherit( AreaModelCommonRadioButtonGroup, PartitionSelectionNode, {}, {
     /**
      * Creates an icon showing a switch to partition lines of a given orientation.
      * @private

@@ -27,14 +27,12 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {Node}
+   * @extends {AreaModelCommonRadioButtonGroup}
    *
    * @param {AreaModelCommonModel} model
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   function PartialProductSelectionNode( model, selectionButtonAlignGroup ) {
-
-    Node.call( this );
 
     // hardcoded strings since they shouldn't be translatable
     var templateLabels = OrientationPair.create( function( orientation ) {
@@ -48,10 +46,10 @@ define( function( require ) {
 
     // Both are built here so it is a consistent size across screens.
     var iconGroup = new AlignGroup();
-    var exponentsIcon = new AlignBox( this.createExponentIcon( templateLabels ), { group: iconGroup } );
-    var noExponentsIcon = new AlignBox( this.createNonExponentIcon( templateLabels ), { group: iconGroup } );
+    var exponentsIcon = new AlignBox( PartialProductSelectionNode.createExponentIcon( templateLabels ), { group: iconGroup } );
+    var noExponentsIcon = new AlignBox( PartialProductSelectionNode.createNonExponentIcon( templateLabels ), { group: iconGroup } );
 
-    var radioItems = [
+    AreaModelCommonRadioButtonGroup.call( this, model.partialProductsChoiceProperty, [
       {
         value: PartialProductsChoice.HIDDEN,
         node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
@@ -64,14 +62,12 @@ define( function( require ) {
         value: PartialProductsChoice.FACTORS,
         node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } )
       }
-    ];
-
-    this.addChild( new AreaModelCommonRadioButtonGroup( model.partialProductsChoiceProperty, radioItems ) );
+    ] );
   }
 
   areaModelCommon.register( 'PartialProductSelectionNode', PartialProductSelectionNode );
 
-  return inherit( Node, PartialProductSelectionNode, {
+  return inherit( AreaModelCommonRadioButtonGroup, PartialProductSelectionNode, {}, {
     /**
      * Creates an 'exponents-allowed' icon based on a pair of nodes.
      * @private

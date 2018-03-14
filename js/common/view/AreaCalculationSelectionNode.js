@@ -16,26 +16,22 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor
-   * @extends {Node}
+   * @extends {AreaModelCommonRadioButtonGroup}
    *
    * @param {Property.<AreaCalculationChoice} areaCalculationChoiceProperty
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   function AreaCalculationSelectionNode( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
-    //TODO: Can we just inherit the button group here?
-    Node.call( this );
-
     var darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
     var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
-    this.addChild( new AreaModelCommonRadioButtonGroup( areaCalculationChoiceProperty, [
+    AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [
       {
         value: AreaCalculationChoice.HIDDEN,
         node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
@@ -48,7 +44,7 @@ define( function( require ) {
         value: AreaCalculationChoice.SHOW_ALL_LINES,
         node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
       }
-    ] ) );
+    ] );
   }
 
   areaModelCommon.register( 'AreaCalculationSelectionNode', AreaCalculationSelectionNode );
@@ -77,5 +73,5 @@ define( function( require ) {
     } );
   }
 
-  return inherit( Node, AreaCalculationSelectionNode );
+  return inherit( AreaModelCommonRadioButtonGroup, AreaCalculationSelectionNode );
 } );
