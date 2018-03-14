@@ -45,7 +45,7 @@ define( function( require ) {
     var rightParenText = new Text( ')', { font: AreaModelCommonConstants.PROBLEM_PAREN_FONT } );
     var xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.PROBLEM_X_FONT } );
 
-    //TODO: a better way of this workaround
+    // Have the X take up at least the same vertical bounds as the parentheses
     xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
