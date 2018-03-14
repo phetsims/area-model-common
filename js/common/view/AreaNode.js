@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -27,18 +26,16 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: Options?
    * @param {Area} area
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
-   * @param {boolean} allowExponents
-   * @param {boolean} isProportional
-   * @param {boolean} useLargeArea
+   * @param {Object} [options]
    */
-  function AreaNode( area, partialProductsChoiceProperty, allowExponents, isProportional, useLargeArea ) {
-    assert && assert( area instanceof Area );
-    assert && assert( typeof allowExponents === 'boolean' );
-    assert && assert( typeof isProportional === 'boolean' );
-    assert && assert( typeof useLargeArea === 'boolean' );
+  function AreaNode( area, partialProductsChoiceProperty, options ) {
+    options = _.extend( {
+      allowExponents: false,
+      isProportional: false,
+      useLargeArea: false
+    }, options );    
 
     var self = this;
 
@@ -55,20 +52,20 @@ define( function( require ) {
     this.addChild( this.labelLayer );
 
     // @public {number}
-    this.viewSize = useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
+    this.viewSize = options.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
 
     // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = self.area.colorProperties.get( orientation );
-      var termListProperty = allowExponents ? self.area.termListProperties.get( orientation )
-                                            : self.area.totalProperties.get( orientation );
+      var termListProperty = options.allowExponents ? self.area.termListProperties.get( orientation )
+                                                    : self.area.totalProperties.get( orientation );
       var tickLocationsProperty = new DerivedProperty( [ area.partitionBoundariesProperties.get( orientation ) ], function( partitionBoundaries ) {
         return partitionBoundaries.map( function( boundary ) {
           return self.mapCoordinate( boundary );
         } );
       } );
       //TODO: reduce duplication with the game?
-      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) );
+      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, options.isProportional ) );
     } );
 
     var modelBounds = new Bounds2( 0, 0, area.coordinateRangeMax, area.coordinateRangeMax );
@@ -79,7 +76,7 @@ define( function( require ) {
 
     // @protected {Array.<PartialProductLabelNode>}
     this.productLabels = area.partitionedAreas.map( function( partitionedArea ) {
-      var productLabel = new PartialProductLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents );
+      var productLabel = new PartialProductLabelNode( partialProductsChoiceProperty, partitionedArea, options.allowExponents );
       self.labelLayer.addChild( productLabel );
       return productLabel;
     } );
@@ -96,7 +93,7 @@ define( function( require ) {
       listener: function() {
         area.erase();
       },
-      center: isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
+      center: options.isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
       touchAreaXDilation: 8,
       touchAreaYDilation: 8
     } );
