@@ -25,6 +25,7 @@ define( function( require ) {
 
   // constants
   var BOX_SIZE = 30;
+  var PAREN_BOUNDS = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT, boundsMethod: 'accurate' } ).bounds;
 
   /**
    * @constructor
@@ -51,7 +52,7 @@ define( function( require ) {
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
     var box = new HBox( {
       spacing: 10,
-      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
+      align: 'origin'
     } );
 
     allowExponentsProperty.link( function( allowExponents ) {
@@ -68,14 +69,21 @@ define( function( require ) {
       ];
     } );
 
-    AlignBox.call( this, box );
+    var spacer = new Node();
+
+    AlignBox.call( this, new Node( {
+      children: [ box, spacer ],
+      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
+    } ) );
 
     // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
     allowExponentsProperty.link( function( allowExponents ) {
-      var maxTextHeight = new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ).height;
-      var maxHeight = Math.max( middleParenText.height, BOX_SIZE, maxTextHeight );
+      var maxBounds = Bounds2.NOTHING.copy();
+      maxBounds.includeBounds( new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ).bounds );
+      maxBounds.includeBounds( PAREN_BOUNDS );
 
-      self.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxHeight );
+      self.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxBounds.height );
+      spacer.localBounds = new Bounds2( 0, maxBounds.minY, 0, maxBounds.maxY );
     } );
   }
 
@@ -100,7 +108,10 @@ define( function( require ) {
         fill: colorProperty
       } );
 
-      var box = new Rectangle( 0, 0, BOX_SIZE, BOX_SIZE, { stroke: colorProperty } );
+      var box = new Rectangle( 0, 0, BOX_SIZE, BOX_SIZE, {
+        stroke: colorProperty,
+        centerY: PAREN_BOUNDS.centerY // So that it is perfectly vertically aligned
+      } );
 
       var node = new Node();
       displayProperty.link( function( termList ) {

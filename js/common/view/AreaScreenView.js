@@ -141,8 +141,10 @@ define( function( require ) {
     } );
 
     // Create accordion boxes after all group-aligned content is created.
-    // TODO: FML. product => factors, area => product.
-    this.factorsBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.factorsBoxExpanded, factorsBoxContent );
+    this.factorsBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.factorsBoxExpanded, factorsBoxContent, {
+      // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
+      contentYSpacing: model.allowExponents ? 5 : 8
+    } );
     this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.areaBoxExpanded, areaBoxContent );
 
     // TODO: sizing
@@ -254,8 +256,9 @@ define( function( require ) {
      * @param {string} titleString
      * @param {Property.<boolean>} expandedProperty
      * @param {Node} content
+     * @param {Object} [options]
      */
-    createAccordionBox: function( titleString, expandedProperty, content ) {
+    createAccordionBox: function( titleString, expandedProperty, content, options ) {
       return new AccordionBox( content, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
         titleNode: new Text( titleString, {
           font: AreaModelCommonConstants.TITLE_FONT,
@@ -264,7 +267,7 @@ define( function( require ) {
         expandedProperty: expandedProperty,
         contentXMargin: 15,
         contentYMargin: 12
-      } ) );
+      }, options ) );
     },
 
     /**
