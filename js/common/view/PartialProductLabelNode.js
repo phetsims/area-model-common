@@ -54,7 +54,9 @@ define( function( require ) {
     } );
     this.addChild( background );
 
-    var box = new HBox();
+    var box = new HBox( {
+      align: 'origin'
+    } );
     this.addChild( box );
 
     // Visibility
@@ -83,8 +85,10 @@ define( function( require ) {
       // Factors
       else {
         var rectangleSize = allowExponents ? 12 : 14;
-        var horizontalRectangle = new Rectangle( 0, 0, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
-        var verticalRectangle = new Rectangle( 0, 0, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
+        var magicConstant = allowExponents ? 1.3 : 0; // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
+        var rectangleCenterY = new Text( ' ', textOptions ).centerY - rectangleSize / 2 + magicConstant;
+        var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
+        var verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
         if ( allowExponents ) {
           var exponentPadding = 2;
           horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
