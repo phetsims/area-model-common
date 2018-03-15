@@ -338,8 +338,8 @@ define( function( require ) {
     this.challengeLayer.addChild( showSolutionButton );
 
     var faceNode = new FaceNode( 90, {
-      centerX: showSolutionButton.centerX,
-      top: showSolutionButton.bottom + 10
+      right: showSolutionButton.left - 70,
+      top: showSolutionButton.top
     } );
     this.challengeLayer.addChild( faceNode );
     var scoreIncreaseText = new Text( ' ', {
