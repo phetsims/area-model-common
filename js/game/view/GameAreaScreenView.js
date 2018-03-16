@@ -227,7 +227,7 @@ define( function( require ) {
       }
     } );
     var polynomialReadoutText = new RichText( '?', {
-      font: AreaModelCommonConstants.TOTAL_AREA_FONT,
+      font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT,
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
     totalProperty.link( function( total ) {

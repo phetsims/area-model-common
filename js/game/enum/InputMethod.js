@@ -21,7 +21,7 @@ define( function( require ) {
   areaModelCommon.register( 'InputMethod', InputMethod );
 
   /**
-   * Whether an entry needs polynomal or term input.
+   * Whether an entry needs polynomial or term input.
    * @public
    *
    * @param {InputMethod} inputMethod

@@ -52,6 +52,7 @@ define( function( require ) {
      * @private
      *
      * @param {Orientation} orientation
+     * @param {Property.<AreaCalculationChoice>} currentAreaOrientationProperty
      * @returns {Node}
      */
     createPartitionOrientationIcon: function( orientation, currentAreaOrientationProperty ) {

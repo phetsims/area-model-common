@@ -80,6 +80,7 @@ define( function( require ) {
       self.labelLayer.addChild( productLabel );
       return productLabel;
     } );
+    // TODO: Proper "abstract" method for this
     var productLabelListener = this.positionProductLabels.bind( this );
     //TODO: Note this needs to be linked after the product labels are created, so the order dependency works
     area.allPartitions.forEach( function( partition ) {
@@ -120,15 +121,6 @@ define( function( require ) {
     //TODO: doc
     mapRange: function( range ) {
       return new Range( this.mapCoordinate( range.min ), this.mapCoordinate( range.max ) );
-    },
-
-    // TODO doc {Property.<Range|null>} in and out
-    toViewRangeProperty: function( rangeProperty ) {
-      var self = this;
-
-      return new DerivedProperty( [ rangeProperty ], function( range ) {
-        return range ? self.mapRange( range ) : null;
-      } );
     }
   } );
 } );

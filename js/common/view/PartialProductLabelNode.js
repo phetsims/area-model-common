@@ -113,7 +113,7 @@ define( function( require ) {
           box.children = [
             verticalNode,
             new Text( MathSymbols.TIMES, textOptions ),
-            horizontalNode,
+            horizontalNode
           ];
         }
       }

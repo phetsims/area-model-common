@@ -46,7 +46,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {ScrenView}
+   * @extends {ScreenView}
    *
    * @param {AreaModelCommonModel} model
    * @param {Object} [options]
@@ -150,7 +150,7 @@ define( function( require ) {
     // TODO: sizing
     var layoutNode = this.createLayoutNode && this.createLayoutNode( model, this.factorsBox.width ); // TODO: better way
 
-    // @protected {VBox} - Available for suptype positioning relative to this.
+    // @protected {VBox} - Available for subtype positioning relative to this.
     this.panelContainer = new VBox( {
       children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
         this.factorsBox,

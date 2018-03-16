@@ -43,7 +43,7 @@ define( function( require ) {
     var margin = 8;
 
     var alignBox = new AlignBox( this.calculationLinesNode, {
-      // Since our AccorionBox expands by our margin, we need to set content bounds without that
+      // Since our AccordionBox expands by our margin, we need to set content bounds without that
       alignBounds: bounds.eroded( margin ),
       pickable: false
     } );
@@ -64,7 +64,7 @@ define( function( require ) {
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
     } );
 
-    // Resize things so our AccordionBox is the correct size (we can't get bounds correct intially, because of the expand button shifting content)
+    // Resize things so our AccordionBox is the correct size (we can't get bounds correct initially, because of the expand button shifting content)
     alignBox.alignBounds = new Bounds2( 0, 0, alignBox.alignBounds.width - ( this.width - bounds.width ), alignBox.alignBounds.height - ( this.height - bounds.height ) );
 
     this.mutate( nodeOptions );

@@ -41,7 +41,7 @@ define( function( require ) {
     // @private {CalculationLinesNode}
     this.calculationLinesNode = new CalculationLinesNode( model );
 
-    var background = new Rectangle( 0, 0, 0, 0, {
+    var background = new Rectangle( {
       cornerRadius: 5,
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
       stroke: AreaModelCommonColorProfile.panelBorderProperty
@@ -129,7 +129,7 @@ define( function( require ) {
       // Add some space around the lines
       backgroundBounds = backgroundBounds.dilated( 5 );
 
-      // Add some space for the next/previous buttonss
+      // Add some space for the next/previous buttons
       if ( isLineByLine ) {
         backgroundBounds.maxX += LINE_BY_LINE_EXPANSION;
       }

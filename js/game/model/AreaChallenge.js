@@ -420,7 +420,7 @@ define( function( require ) {
       this.verticalTotalListener = this.totalProperties.vertical.linkAttribute( display.totalProperties.vertical, 'value' );
     },
 
-    // TODO
+    // TODO - why is it unused?
     detachDisplay: function( display ) {
       this.totalProperties.horizontal.unlink( this.horizontalTotalListener );
       this.totalProperties.vertical.unlink( this.verticalTotalListener );

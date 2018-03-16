@@ -75,28 +75,15 @@ define( function( require ) {
     },
 
     /**
-     * Returns a new Polynomial with a specific term's coefficient replaced.
-     * @public
-     *
-     * @param {number} coefficient
-     * @param {number} power
-     * @returns {Polynomial}
-     */
-    withCoefficient: function( coefficient, power ) {
-      var currentCoefficient = this.getCoefficient( power );
-      return new Polynomial( this.terms.concat( [ new Term( coefficient - currentCoefficient, power ) ] ) );
-    },
-
-    /**
      * Addition of polynomials.
      * @public
      * @override
      *
-     * @param {Polynomial} polynomial
+     * @param {TermList} termList
      * @returns {Polynomial}
      */
-    plus: function( polynomial ) {
-      return new Polynomial( this.terms.concat( polynomial.terms ) );
+    plus: function( termList ) {
+      return new Polynomial( this.terms.concat( termList.terms ) );
     },
 
     /**
@@ -104,12 +91,12 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {Polynomial} polynomial
+     * @param {TermList} termList
      * @returns {Polynomial}
      */
-    times: function( polynomial ) {
+    times: function( termList ) {
       return new Polynomial( _.flatten( this.terms.map( function( term ) {
-        return polynomial.terms.map( function( otherTerm ) {
+        return termList.terms.map( function( otherTerm ) {
           return term.times( otherTerm );
         } );
       } ) ) );

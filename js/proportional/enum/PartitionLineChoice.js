@@ -23,7 +23,7 @@ define( function( require ) {
   PartitionLineChoice.VALUES = [
     PartitionLineChoice.NONE,
     PartitionLineChoice.ONE,
-    PartitionLineChoice.BOTH,
+    PartitionLineChoice.BOTH
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code

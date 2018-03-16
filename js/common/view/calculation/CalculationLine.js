@@ -16,7 +16,6 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Minus = require( 'AREA_MODEL_COMMON/common/view/calculation/Minus' );
-  var MultiplyDot = require( 'AREA_MODEL_COMMON/common/view/calculation/MultiplyDot' );
   var MultiplyX = require( 'AREA_MODEL_COMMON/common/view/calculation/MultiplyX' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Parentheses = require( 'AREA_MODEL_COMMON/common/view/calculation/Parentheses' );
@@ -117,16 +116,6 @@ define( function( require ) {
     },
 
     /**
-     * Creates a PlaceholderBox with the baseColor.
-     * @public
-     *
-     * @returns {PlaceholderBox}
-     */
-    basePlaceholderBox: function() {
-      return PlaceholderBox.createFromPool( this.baseColorProperty, this.allowExponents );
-    },
-
-    /**
      * Creates a PlaceholderBox with the color of a specific orientation.
      * @public
      *
@@ -147,18 +136,6 @@ define( function( require ) {
      */
     multiplyX: function( leftContent, rightContent ) {
       return MultiplyX.createFromPool( leftContent, rightContent, this.baseColorProperty );
-    },
-
-    /**
-     * Creates a MultiplyX with the specified content.
-     * @public
-     *
-     * @param {Node} leftContent
-     * @param {Node} rightContent
-     * @returns {MultiplyDot}
-     */
-    multiplyDot: function( leftContent, rightContent ) {
-      return MultiplyDot.createFromPool( leftContent, rightContent, this.baseColorProperty );
     },
 
     /**

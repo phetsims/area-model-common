@@ -58,7 +58,7 @@ define( function( require ) {
 
     // Background fill
     this.areaLayer.addChild( new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      fill: AreaModelCommonColorProfile.areaBackgroundProperty,
+      fill: AreaModelCommonColorProfile.areaBackgroundProperty
     } ) );
 
     // Grid lines

@@ -23,7 +23,7 @@ define( function( require ) {
   PartialProductsChoice.VALUES = [
     PartialProductsChoice.HIDDEN, // e.g. nothing shown
     PartialProductsChoice.PRODUCTS, // e.g. '52'
-    PartialProductsChoice.FACTORS, // e.g. '26 x 2'
+    PartialProductsChoice.FACTORS // e.g. '26 x 2'
   ];
 
   // verify that enum is immutable, without the runtime penalty in production code

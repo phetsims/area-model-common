@@ -33,8 +33,8 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {GameAreaDisplay} display
-   * @param {Property.<EditableProperty.<Term|TermList|null>|null} activeEditableProperty
-   * @param {Property.<GameState>}
+   * @param {Property.<EditableProperty.<Term|TermList|null>|null>} activeEditableProperty
+   * @param {Property.<GameState>} gameStateProperty
    * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */
   function GameAreaNode( display, activeEditableProperty, gameStateProperty, setActiveTerm ) {
@@ -206,7 +206,7 @@ define( function( require ) {
      *
      * @param {Orientation} orientation
      * @param {number} offset
-     * @param
+     * @param {Property.<boolean>} visibilityProperty
      */
     createPartitionLine: function( orientation, offset, visibilityProperty ) {
       var firstPoint = new Vector2();

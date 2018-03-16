@@ -55,7 +55,7 @@ define( function( require ) {
    * @param {boolean} allowExponents
    * @param {boolean} allowNegative
    * @param {function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
-   * @param {Object} [options]
+   * @param {Object} [nodeOptions]
    */
   function TermKeypadPanel( digitCountProperty, allowExponents, allowNegative, enterCallback, nodeOptions ) {
     assert && assert( allowNegative || !allowExponents, 'We have no non-negative exponent keyboard layout' );
@@ -95,8 +95,7 @@ define( function( require ) {
     // When the active partition changes, resize the background to fit to the largest size.
     digitCountProperty.link( function( digitCount ) {
       // Temporarily use a different string
-      var longestString = Term.getLongestGenericString( allowExponents, digitCount );
-      readoutText.text = longestString;
+      readoutText.text = Term.getLongestGenericString( allowExponents, digitCount );
 
       // Update the background
       readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 1 ) );

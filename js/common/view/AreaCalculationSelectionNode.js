@@ -23,7 +23,7 @@ define( function( require ) {
    * @constructor
    * @extends {AreaModelCommonRadioButtonGroup}
    *
-   * @param {Property.<AreaCalculationChoice} areaCalculationChoiceProperty
+   * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   function AreaCalculationSelectionNode( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
