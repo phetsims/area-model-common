@@ -109,8 +109,8 @@ define( function( require ) {
     area.activeTotalProperties.vertical.lazyLink( updateLocationProperty );
 
     var keyboardListener = new KeyboardDragListener( {
-      positionDelta: modelViewTransform.modelToViewDeltaX( 1 ),
-      shiftPositionDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+      downDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+      shiftDownDelta: modelViewTransform.modelToViewDeltaX( 1 ),
       transform: modelViewTransform,
       drag: function( delta ) {
         var width = area.activeTotalProperties.horizontal.value;
