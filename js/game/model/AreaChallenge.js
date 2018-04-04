@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
@@ -78,34 +79,35 @@ define( function( require ) {
     } );
 
     // @public {Array.<Array.<EditableProperty>>}
-    this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
-      return row.map( function( size, horizontalIndex ) {
-        var numbersDigits = description.partitionFields.vertical.length + description.partitionFields.horizontal.length - verticalIndex - horizontalIndex;
-        var field = description.productFields[ verticalIndex ][ horizontalIndex ];
-        var property = new EditableProperty( size, {
-          field: field,
-          displayType: Field.toDisplayType( field ),
-          inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
-          // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
-          digits: description.numberOrVariable( numbersDigits, 2 ) + 1
-        } );
-        // Link up if dynamic
-        if ( field === Field.DYNAMIC ) {
-          var properties = [
-            self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
-            self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
-          ];
-          Property.multilink( properties, function( horizontal, vertical ) {
-            if ( horizontal === null || vertical === null ) {
-              property.value = null;
-            }
-            else {
-              property.value = horizontal.times( vertical );
-            }
-          } );
-        }
-        return property;
+    this.partialProductSizeProperties = AreaModelCommonConstants.dimensionMap( 2, this.partialProductSizes, function( size, indices ) {
+      var verticalIndex = indices[ 0 ];
+      var horizontalIndex = indices[ 1 ];
+
+      var numbersDigits = description.partitionFields.vertical.length + description.partitionFields.horizontal.length - verticalIndex - horizontalIndex;
+      var field = description.productFields[ verticalIndex ][ horizontalIndex ];
+      var property = new EditableProperty( size, {
+        field: field,
+        displayType: Field.toDisplayType( field ),
+        inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
+        // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
+        digits: description.numberOrVariable( numbersDigits, 2 ) + 1
       } );
+      // Link up if dynamic
+      if ( field === Field.DYNAMIC ) {
+        var properties = [
+          self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
+          self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
+        ];
+        Property.multilink( properties, function( horizontal, vertical ) {
+          if ( horizontal === null || vertical === null ) {
+            property.value = null;
+          }
+          else {
+            property.value = horizontal.times( vertical );
+          }
+        } );
+      }
+      return property;
     } );
 
     var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
@@ -243,11 +245,8 @@ define( function( require ) {
         this.partitionSizeProperties.vertical.forEach( function( property, index ) {
           compareProperty( property, self.partitionSizes.vertical[ index ] );
         } );
-        // TODO: look at common iteration patterns like this and abstract out more (and name it)
-        this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
-          row.forEach( function( property, horizontalIndex ) {
-            compareProperty( property, self.partialProductSizes[ verticalIndex ][ horizontalIndex ] );
-          } );
+        AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeProperties, function( property, indices ) {
+          compareProperty( property, self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ] );
         } );
         compareProperty( this.totalConstantProperty, this.total.getTerm( 0 ) );
         compareProperty( this.totalXProperty, this.total.getTerm( 1 ) );
@@ -389,10 +388,8 @@ define( function( require ) {
       }
 
       // TODO: look at common iteration patterns like this and abstract out more (and name it)
-      this.partialProductSizeProperties.forEach( function( row, verticalIndex ) {
-        row.forEach( function( property, horizontalIndex ) {
-          property.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
-        } );
+      AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeProperties, function( property, indices ) {
+        property.value = self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ];
       } );
 
       this.totalConstantProperty.value = this.total.getTerm( 0 );

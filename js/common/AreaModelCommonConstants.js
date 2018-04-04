@@ -120,6 +120,56 @@ define( function( require ) {
       buttonLength: 20,
       buttonXMargin: 10,
       buttonYMargin: 8
+    },
+
+    /**
+     * @typedef {Array.<MultidimensionalArray.<*>|*>} MultidimensionalArray.<*>
+     */
+
+    /**
+     * Map for multidimensional arrays.
+     * @public
+     *
+     * @param {number} dimension
+     * @param {MultidimensionalArray.<*>} array - A multidimensional array of the specified dimension
+     * @param {function} map - function( element {*} ): {*}
+     */
+    dimensionMap: function( dimension, array, map ) {
+      var indices = [];
+      function recur( dim, arr ) {
+        return arr.map( function( element, index ) {
+          indices.push( index );
+          var result = dim === 1 ? map( element, indices ) : recur( dim - 1, element );
+          indices.pop();
+          return result;
+        } );
+      }
+      return recur( dimension, array );
+    },
+
+    /**
+     * Foreach for multidimensional arrays.
+     * @public
+     *
+     * @param {number} dimension
+     * @param {MultidimensionalArray.<*>} array - A multidimensional array of the specified dimension
+     * @param {function} forEach - function( element {*} ): {*}
+     */
+    dimensionForEach: function( dimension, array, forEach ) {
+      var indices = [];
+      function recur( dim, arr ) {
+        return arr.forEach( function( element, index ) {
+          indices.push( index );
+          if ( dim === 1 ) {
+            forEach( element, indices );
+          }
+          else {
+            recur( dim - 1, element );
+          }
+          indices.pop();
+        } );
+      }
+      return recur( dimension, array );
     }
   } );
 } );
