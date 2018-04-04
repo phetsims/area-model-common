@@ -215,24 +215,12 @@ define( function( require ) {
       var incorrectProperties = [];
 
       function compareProperty( property, expectedValue ) {
-        //TODO: maybe put this in EditableProperty?
-        var value = property.value;
-        if ( value === null ) {
+        if ( property.value === null || !property.value.equals( expectedValue ) ) {
           incorrectProperties.push( property );
-        }
-        else if ( typeof value === 'number' ) {
-          if ( value !== expectedValue ) {
-            incorrectProperties.push( property );
-          }
-        }
-        else {
-          if ( !value.equals( expectedValue ) ) {
-            incorrectProperties.push( property );
-          }
         }
       }
 
-      // TODO: improve! This just checks for variables 6-1, which has multiple solutions
+      // NOTE: Since the only non-unique case is variables 6-1, we just check our secondary properties.
       if ( !this.description.unique ) {
         // Logic described by https://github.com/phetsims/area-model-common/issues/39
         // Addendum to logic in https://github.com/phetsims/area-model-common/issues/42
