@@ -47,13 +47,14 @@ define( function( require ) {
 
     Property.call( this, value, options );
 
-    // @public {Field}
+    // @public {Field} - Whether we are dynamic/editable/given.
     this.field = options.field;
 
-    // @public {DisplayType}
+    // @public {DisplayType} - Whether we are a readout or editable/hidden
     this.displayType = options.displayType;
 
-    // @public {InputMethod}
+    // @public {InputMethod} - What format should be used if we are edited? (Need different keypads or a polynomial
+    // input)
     this.inputMethod = options.inputMethod;
 
     // @public {number}
