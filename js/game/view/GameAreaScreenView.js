@@ -380,7 +380,7 @@ define( function( require ) {
         levelCompleteContainer.children = [
           //TODO: recommend time gets put to options
           new LevelCompletedNode( level.number - 1, level.scoreProperty.value, AreaModelCommonConstants.NUM_CHALLENGES * 2, AreaModelCommonConstants.NUM_CHALLENGES, false, 0, 0, 0, function() {
-            model.continueFromComplete();
+            model.moveToLevelSelection();
           }, {
             cornerRadius: 8,
             center: self.layoutBounds.center,

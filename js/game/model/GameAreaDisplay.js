@@ -39,16 +39,18 @@ define( function( require ) {
       new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] )
     );
 
-    // @public {Property.<Array.<Array.<EditableProperty>>} TODO doc
+    // @public {Property.<Array.<Array.<EditableProperty>>} - Reference to a 2D array for the grid of partial products.
+    // First index is vertical (for the row), second is horizontal (for the column)
     this.partialProductsProperty = new Property( [
       [ new EditableProperty( null ), new EditableProperty( null ) ],
       [ new EditableProperty( null ), new EditableProperty( null ) ]
     ] );
 
-    // @public {Property.<Array.<EditableProperty>>}
+    // @public {Property.<Array.<EditableProperty>>} - Reference to an array of editable properties for the total area.
+    // Uses just one for an editable "constant" value, and multiple properties for polynomial entry (one per term).
     this.totalPropertiesProperty = new Property( [ new EditableProperty( null ) ] );
 
-    // @public {Property.<Property.<TermList|null>>} TODO doc
+    // @public {Property.<Property.<TermList|null>>} - The "total area" property reference
     this.totalPropertyProperty = new Property( new Property( null ) );
   }
 

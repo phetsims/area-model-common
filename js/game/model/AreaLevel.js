@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var NumberProperty = require( 'AXON/NumberProperty' );
 
@@ -107,6 +108,20 @@ define( function( require ) {
      */
     finish: function() {
       this.finished = true;
+    },
+
+    /**
+     * Move to the next challenge.
+     * @public
+     */
+    next: function() {
+      if ( this.challengeIndexProperty.value === AreaModelCommonConstants.NUM_CHALLENGES - 1 ) {
+        this.finish();
+        this.currentChallengeProperty.value.stateProperty.value = GameState.LEVEL_COMPLETE;
+      }
+      else {
+        this.challengeIndexProperty.value += 1;
+      }
     },
 
     /**

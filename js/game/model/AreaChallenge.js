@@ -430,7 +430,15 @@ define( function( require ) {
 
       return scoreIncrease;
     },
-    
+
+    /**
+     * Move to try another time.
+     * @public
+     */
+    tryAgain: function() {
+      this.stateProperty.value = GameState.SECOND_ATTEMPT;
+    },
+
     /**
      * Modifies the given display so that it will be connected to this challenge.
      * @public

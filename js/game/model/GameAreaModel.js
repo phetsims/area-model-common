@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
@@ -102,35 +101,38 @@ define( function( require ) {
       }
     },
 
-    // TODO: doc, cleanup.. move to challenge?
+    /**
+     * Move to try another time.
+     * @public
+     */
     tryAgain: function() {
       if ( this.currentChallengeProperty.value ) {
-        this.currentChallengeProperty.value.stateProperty.value = GameState.SECOND_ATTEMPT;
+        this.currentChallengeProperty.value.tryAgain();
       }
     },
 
-    // TODO: doc
+    /**
+     * Move to the next challenge.
+     * @public
+     */
     next: function() {
-      // TODO: simplify, move to challenge
       if ( this.currentLevelProperty.value ) {
-        var level = this.currentLevelProperty.value;
-
-        if ( level.challengeIndexProperty.value === AreaModelCommonConstants.NUM_CHALLENGES - 1 ) {
-          this.currentLevelProperty.value.finish();
-          this.currentChallengeProperty.value.stateProperty.value = GameState.LEVEL_COMPLETE;
-        }
-        else {
-          level.challengeIndexProperty.value += 1;
-        }
+        this.currentLevelProperty.value.next();
       }
     },
 
-    //TODO: use this
-    continueFromComplete: function() {
+    /**
+     * Goes to the level selection.
+     * @public
+     */
+    moveToLevelSelection: function() {
       this.currentLevelProperty.value = null; // move to no level
     },
 
-    // TODO: DOC
+    /**
+     * Shows the solution.
+     * @public
+     */
     showSolution: function() {
       if ( this.currentChallengeProperty.value ) {
         this.currentChallengeProperty.value.showAnswers();
