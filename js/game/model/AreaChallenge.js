@@ -77,7 +77,7 @@ define( function( require ) {
       } );
     } );
 
-    // TODO: doc
+    // @public {Array.<Array.<EditableProperty>>}
     this.partialProductSizeProperties = this.partialProductSizes.map( function( row, verticalIndex ) {
       return row.map( function( size, horizontalIndex ) {
         var numbersDigits = description.partitionFields.vertical.length + description.partitionFields.horizontal.length - verticalIndex - horizontalIndex;
@@ -111,10 +111,14 @@ define( function( require ) {
     var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
-    this.totals = new OrientationPair( new Polynomial( this.partitionSizes.horizontal ), new Polynomial( this.partitionSizes.vertical ) );
+    this.totals = OrientationPair.create( function( orientation ) {
+      return new Polynomial( self.partitionSizes.get( orientation ) );
+    } );
 
     // @public {OrientationPair.<Property.<Polynomial|null>>}
-    this.totalProperties = new OrientationPair( new Property( this.totals.horizontal ), new Property( this.totals.vertical ) );
+    this.totalProperties = OrientationPair.create( function( orientation ) {
+      return new Property( self.totals.get( orientation ) );
+    } );
 
     // @public {Polynomial}
     this.total = this.totals.horizontal.times( this.totals.vertical );
@@ -199,7 +203,12 @@ define( function( require ) {
   areaModelCommon.register( 'AreaChallenge', AreaChallenge );
 
   return inherit( Object, AreaChallenge, {
-    // TODO: doc
+    /**
+     * Returns a list of all of the editable properties that are incorrect.
+     * @public
+     *
+     * @returns {Array.<EditableProperty>}
+     */
     getIncorrectEditableProperties: function() {
       var self = this;
 
@@ -262,7 +271,12 @@ define( function( require ) {
       } );
     },
 
-    //TODO: doc
+    /**
+     * Returns whether our horizontal (secondary) partition size equals one of the expected (secondary) partition sizes.
+     * @private
+     *
+     * @returns {boolean}
+     */
     nonUniqueHorizontalMatches: function() {
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
@@ -272,7 +286,12 @@ define( function( require ) {
       return actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
     },
 
-    //TODO: doc
+    /**
+     * Returns whether our vertical (secondary) partition size equals one of the expected (secondary) partition sizes.
+     * @private
+     *
+     * @returns {boolean}
+     */
     nonUniqueVerticalMatches: function() {
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
@@ -282,7 +301,13 @@ define( function( require ) {
       return actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
     },
 
-    //TODO: doc
+    /**
+     * Returns whether a permutation of our secondary partition sizes matches the expected sizes. Helpful for the case
+     * where values can be swapped between locations.
+     * @private
+     *
+     * @returns {boolean}
+     */
     hasNonUniqueMatch: function() {
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
@@ -295,14 +320,21 @@ define( function( require ) {
                ( actual1.equals( expected2 ) && actual2.equals( expected1 ) ) );
     },
 
-    //TODO: doc
+    /**
+     * Returns whether both properties match one answer but not the other.
+     * @private
+     *
+     * @returns {boolean}
+     */
     hasNonUniqueBadMatch: function() {
       // Check for a case where both properties match one answer but not the other
       return this.nonUniqueHorizontalMatches() && this.nonUniqueVerticalMatches() && !this.hasNonUniqueMatch();
     },
 
-    //TODO: doc
-    // Highlighting for https://github.com/phetsims/area-model-common/issues/42
+    /**
+     * Remove highlights for non-unique changes, see https://github.com/phetsims/area-model-common/issues/42
+     * @private
+     */
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
@@ -312,7 +344,10 @@ define( function( require ) {
       }
     },
 
-    // TODO: doc
+    /**
+     * Shows the answers to the challenge.
+     * @public
+     */
     showAnswers: function() {
       var self = this;
 
@@ -416,7 +451,10 @@ define( function( require ) {
       this.verticalTotalListener = this.totalProperties.vertical.linkAttribute( display.totalProperties.vertical, 'value' );
     },
 
-    // TODO - why is it unused?
+    /**
+     * Releases listeners that were watching the display.
+     * @public
+     */
     detachDisplay: function( display ) {
       this.totalProperties.horizontal.unlink( this.horizontalTotalListener );
       this.totalProperties.vertical.unlink( this.verticalTotalListener );
