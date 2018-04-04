@@ -191,7 +191,6 @@ define( function( require ) {
 
       noExponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.inputMethod === InputMethod.CONSTANT;
       exponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.inputMethod === InputMethod.TERM;
-      // TODO: entry for polynomials
     } );
   }
 

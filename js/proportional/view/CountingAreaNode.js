@@ -23,21 +23,21 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {ProportionalArea} area
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {OrientationPair.<Property.<number>>} activeTotalProperties
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    * @param {Property.<boolean>} countingVisibleProperty
    */
-  function CountingAreaNode( area, modelViewTransform, countingVisibleProperty ) {
+  function CountingAreaNode( activeTotalProperties, modelViewTransformProperty, countingVisibleProperty ) {
 
     Node.call( this );
 
     var self = this;
 
-    // @private {ProportionalArea}
-    this.area = area;
+    // @private {OrientationPair.<Property.<number>>}
+    this.activeTotalProperties = activeTotalProperties;
 
-    // @private {ModelViewTransform}
-    this.modelViewTransform = modelViewTransform;
+    // @private {Property.<ModelViewTransform2>}
+    this.modelViewTransformProperty = modelViewTransformProperty;
 
     // @private {Property.<boolean>}
     this.countingVisibleProperty = countingVisibleProperty;
@@ -54,8 +54,8 @@ define( function( require ) {
       self.dirty = true;
     }
     countingVisibleProperty.link( invalidate );
-    area.activeTotalProperties.horizontal.link( invalidate );
-    area.activeTotalProperties.vertical.link( invalidate );
+    activeTotalProperties.horizontal.link( invalidate );
+    activeTotalProperties.vertical.link( invalidate );
 
     countingVisibleProperty.linkAttribute( this, 'visible' );
   }
@@ -86,6 +86,7 @@ define( function( require ) {
      * @private
      */
     update: function() {
+      var mvt = this.modelViewTransformProperty.value;
 
       // Ignore updates if we are not dirty
       if ( !this.dirty ) { return; }
@@ -94,11 +95,11 @@ define( function( require ) {
       if ( !this.countingVisibleProperty.value ) { return; }
 
       // Coordinate mapping into the view
-      var mapX = this.modelViewTransform.modelToViewX.bind( this.modelViewTransform );
-      var mapY = this.modelViewTransform.modelToViewY.bind( this.modelViewTransform );
+      var mapX = mvt.modelToViewX.bind( mvt );
+      var mapY = mvt.modelToViewY.bind( mvt );
 
-      var width = this.area.activeTotalProperties.horizontal.value;
-      var height = this.area.activeTotalProperties.vertical.value;
+      var width = this.activeTotalProperties.horizontal.value;
+      var height = this.activeTotalProperties.vertical.value;
 
       var number = 1;
       for ( var row = 0; row < height; row++ ) {

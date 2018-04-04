@@ -98,7 +98,7 @@ define( function( require ) {
     // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
     this.countingAreaNode = null;
     if ( area.countingAvailable ) {
-      this.countingAreaNode = new CountingAreaNode( area, this.modelViewTransform, options.countingVisibleProperty );
+      this.countingAreaNode = new CountingAreaNode( area.activeTotalProperties, new Property( this.modelViewTransform ), options.countingVisibleProperty );
       this.areaLayer.addChild( this.countingAreaNode );
     }
 
