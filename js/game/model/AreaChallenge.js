@@ -393,6 +393,45 @@ define( function( require ) {
     },
 
     /**
+     * Checks the user's input against the known answer.
+     * @public
+     *
+     * @returns {number} - The amount of score gained
+     */
+    check: function() {
+      var scoreIncrease = 0;
+
+      var badProperties = this.getIncorrectEditableProperties();
+      var isCorrect = badProperties.length === 0;
+
+      var currentState = this.stateProperty.value;
+
+      if ( !isCorrect ) {
+        badProperties.forEach( function( property ) {
+          property.highlightProperty.value = Highlight.ERROR;
+        } );
+      }
+
+      if ( currentState === GameState.FIRST_ATTEMPT ) {
+        if ( isCorrect ) {
+          scoreIncrease = 2;
+        }
+        this.stateProperty.value = isCorrect ? GameState.CORRECT_ANSWER : GameState.WRONG_FIRST_ANSWER;
+      }
+      else if ( currentState === GameState.SECOND_ATTEMPT ) {
+        if ( isCorrect ) {
+          scoreIncrease = 1;
+        }
+        this.stateProperty.value = isCorrect ? GameState.CORRECT_ANSWER : GameState.WRONG_SECOND_ANSWER;
+      }
+      else {
+        throw new Error( 'How is check possible here?' );
+      }
+
+      return scoreIncrease;
+    },
+    
+    /**
      * Modifies the given display so that it will be connected to this challenge.
      * @public
      *

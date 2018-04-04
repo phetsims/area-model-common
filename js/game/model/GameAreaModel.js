@@ -44,7 +44,7 @@ define( function( require ) {
     } );
     this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
 
-    // @public {Property.<GameState|null>} - TODO: Check why bidirectional is required, null default feels weird
+    // @public {Property.<GameState|null>}
     this.stateProperty = new DynamicProperty( this.currentChallengeProperty, {
       derive: 'stateProperty',
       bidirectional: true
@@ -60,15 +60,24 @@ define( function( require ) {
   areaModelCommon.register( 'GameAreaModel', GameAreaModel );
 
   return inherit( Object, GameAreaModel, {
-    //TODO: doc
+    /**
+     * Selects a given level, making it the current level.
+     * @public
+     *
+     * @param {AreaLevel} level
+     */
     selectLevel: function( level ) {
       level.select();
       this.currentLevelProperty.value = level;
     },
 
-    // TODO: doc
+    /**
+     * Sets the value of the current editable property to that of the provided term.
+     * @public
+     *
+     * @param {Term} term
+     */
     setActiveTerm: function( term ) {
-      //TODO: cleanup
       // Highlighting for https://github.com/phetsims/area-model-common/issues/42
       this.currentChallengeProperty.value.checkNonUniqueChanges();
 
@@ -77,42 +86,19 @@ define( function( require ) {
       this.activeEditableProperty.value = null;
     },
 
-    // TODO: doc... move to challenge?
+    /**
+     * Checks the user's input against the known answer.
+     * @public
+     */
     check: function() {
       // Close any keypads, see https://github.com/phetsims/area-model-common/issues/66
       this.activeEditableProperty.value = null;
 
-      // TODO: consider putting this in the challenge?
       var challenge = this.currentChallengeProperty.value;
 
-      // Sanity check (multitouch?)
-      if ( challenge === null ) { return; }
-
-      var badProperties = challenge.getIncorrectEditableProperties();
-      var isCorrect = badProperties.length === 0;
-
-      var currentState = challenge.stateProperty.value;
-
-      if ( !isCorrect ) {
-        badProperties.forEach( function( property ) {
-          property.highlightProperty.value = Highlight.ERROR;
-        } );
-      }
-
-      if ( currentState === GameState.FIRST_ATTEMPT ) {
-        if ( isCorrect ) {
-          this.currentLevelProperty.value.scoreProperty.value += 2;
-        }
-        challenge.stateProperty.value = isCorrect ? GameState.CORRECT_ANSWER : GameState.WRONG_FIRST_ANSWER;
-      }
-      else if ( currentState === GameState.SECOND_ATTEMPT ) {
-        if ( isCorrect ) {
-          this.currentLevelProperty.value.scoreProperty.value += 1;
-        }
-        challenge.stateProperty.value = isCorrect ? GameState.CORRECT_ANSWER : GameState.WRONG_SECOND_ANSWER;
-      }
-      else {
-        throw new Error( 'How is check possible here?' );
+      // Sanity check for multitouch
+      if ( challenge ) {
+        this.currentLevelProperty.value.scoreProperty.value += challenge.check();
       }
     },
 
