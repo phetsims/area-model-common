@@ -36,11 +36,9 @@ define( function( require ) {
   var startOverString = require( 'string!VEGAS/startOver' );
 
   // constants
-  //TODO: Colors in the color profile!
   var BAR_HEIGHT = 60;
   var BAR_PADDING = 40;
   var PROMPT_TOP_PADDING = 20;
-  var TEXT_COLOR = 'black';
   var BOLD_FONT = new PhetFont( { size: 18, weight: 'bold' } );
   var NON_BOLD_FONT = new PhetFont( { size: 18 } );
   var START_OVER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
@@ -74,7 +72,6 @@ define( function( require ) {
     this.addChild( this.backgroundRectangle );
 
     // @private {TextPushButton}
-    // TODO: This can't support a baseColor Property? Yikes, let's fix that?
     this.startOverButton = new MutableOptionsNode( TextPushButton, [ startOverString ], {
       font: START_OVER_FONT,
       listener: startOverCallback,
@@ -89,7 +86,6 @@ define( function( require ) {
     // @private {Text} - Text updated in updateLevelInfo
     this.levelNumberText = new Text( 'Level X', {
       font: BOLD_FONT,
-      fill: TEXT_COLOR,
       pickable: false,
       maxWidth: 180
     } );
@@ -122,9 +118,8 @@ define( function( require ) {
       maxWidth: 180
     } );
     this.addChild( this.challengeProgressNode );
-    //TODO: Use derive!!
     new DynamicProperty( new DerivedProperty( [ currentLevelProperty ], function( level ) {
-      return level ? level.challengeIndexProperty : new Property( null ); // TODO: reduce allocations
+      return level ? level.challengeIndexProperty : new Property( null );
     } ) ).link( function( index ) {
       if ( index !== null ) {
         self.challengeProgressNode.text = StringUtils.format( pattern0Challenge1MaxString, '' + ( index + 1 ), '' + AreaModelCommonConstants.NUM_CHALLENGES );

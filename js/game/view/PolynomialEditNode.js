@@ -39,9 +39,6 @@ define( function( require ) {
    * @param {function} editedCallback - Called with no arguments when something is edited
    */
   function PolynomialEditNode( polynomialProperty, totalPropertiesProperty, editedCallback ) {
-    // TODO: consider only showing relative terms?
-    // TODO: check to make sure a polynomial isn't out of range?
-
     var longestString = new Polynomial( [
       new Term( -9, 2 ),
       new Term( -9, 1 ),
@@ -53,7 +50,7 @@ define( function( require ) {
     } );
     var readoutBackground = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
       cornerRadius: 3,
-      stroke: 'black', // TODO color profile
+      stroke: 'black',
       fill: 'white'
     } );
     readoutText.centerY = readoutBackground.centerY; // Don't reposition vertically with exponents
@@ -120,32 +117,21 @@ define( function( require ) {
       } );
     }
 
-    // TODO: dedup
-    constantProperty.link( function( value ) {
-      if ( constantProperty.isExternallyChanging ) {
-        editedCallback();
-        makeNotDirty();
-        constantPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
-      }
-    } );
-    xProperty.link( function( value ) {
-      if ( xProperty.isExternallyChanging ) {
-        editedCallback();
-        makeNotDirty();
-        xPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
-      }
-    } );
-    xSquaredProperty.link( function( value ) {
-      if ( xSquaredProperty.isExternallyChanging ) {
-        editedCallback();
-        makeNotDirty();
-        xSquaredPropertyProperty.value.highlightProperty.value = Highlight.NORMAL;
-      }
-    } );
+    function linkProperty( property, propertyProperty ) {
+      property.link( function( value ) {
+        if ( property.isExternallyChanging ) {
+          editedCallback();
+          makeNotDirty();
+          propertyProperty.value.highlightProperty.value = Highlight.NORMAL;
+        }
+      } );
+    }
+    linkProperty( constantProperty, constantPropertyProperty );
+    linkProperty( xProperty, xPropertyProperty );
+    linkProperty( xSquaredProperty, xSquaredPropertyProperty );
 
     var rangeProperty = new Property( new Range( -81, 81 ) );
 
-    // TODO: change for each
     function highlightFunction( highlight, errorColor, dirtyColor ) {
       if ( highlight === Highlight.NORMAL ) {
         return 'black';
@@ -195,7 +181,6 @@ define( function( require ) {
       pickerContainer.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
     } );
 
-    // TODO: See if HBox can have align option of "don't screw with it, handle manually"
     xSquaredChildren.forEach( function( node, index ) {
       if ( index > 0 ) {
         node.left = xSquaredChildren[ index - 1 ].right + 5;
