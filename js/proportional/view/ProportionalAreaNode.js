@@ -67,7 +67,7 @@ define( function( require ) {
     options.gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
     // Active area drag handle
-    this.areaLayer.addChild( new ProportionalDragHandle( area, this.modelViewTransform ) );
+    this.areaLayer.addChild( new ProportionalDragHandle( new Property( area ), area.activeTotalProperties, new Property( this.modelViewTransform ) ) );
 
     // Active area background
     var activeAreaBackground = new Rectangle( {

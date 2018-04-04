@@ -33,10 +33,11 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {ProportionalArea} area
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<ProportionalArea>} areaProperty
+   * @param {OrientationPair.<Property.<number>>} activeTotalProperties
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    */
-  function ProportionalDragHandle( area, modelViewTransform ) {
+  function ProportionalDragHandle( areaProperty, activeTotalProperties, modelViewTransformProperty ) {
 
     var self = this;
 
@@ -57,37 +58,43 @@ define( function( require ) {
       focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
       fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
-      cursor: 'pointer',
-      inputListeners: [
-        new DragListener( {
-          targetNode: this,
-          applyOffset: false,
-          isPressedProperty: draggedProperty,
-          drag: function( event, listener ) {
-            // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
-            // actually is (and we want it to be efficient).
-
-            var pointerViewPoint = listener.parentPoint;
-            var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
-            var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
-
-            var width = Math.round( modelPoint.x / area.snapSize ) * area.snapSize;
-            var height = Math.round( modelPoint.y / area.snapSize ) * area.snapSize;
-
-            width = Util.clamp( width, area.minimumSize, area.maximumSize );
-            height = Util.clamp( height, area.minimumSize, area.maximumSize );
-
-            area.activeTotalProperties.horizontal.value = width;
-            area.activeTotalProperties.vertical.value = height;
-
-            offsetProperty.value = new Vector2(
-              viewPoint.x - modelViewTransform.modelToViewX( width ),
-              viewPoint.y - modelViewTransform.modelToViewY( height )
-            );
-          }
-        } )
-      ]
+      cursor: 'pointer'
     } );
+
+    var dragListener = new DragListener( {
+      targetNode: this,
+      applyOffset: false,
+      isPressedProperty: draggedProperty,
+      drag: function( event, listener ) {
+        var area = areaProperty.value;
+        var modelViewTransform = modelViewTransformProperty.value;
+
+        // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
+        // actually is (and we want it to be efficient).
+
+        var pointerViewPoint = listener.parentPoint;
+        var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
+        var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
+
+        var width = Math.round( modelPoint.x / area.snapSize ) * area.snapSize;
+        var height = Math.round( modelPoint.y / area.snapSize ) * area.snapSize;
+
+        width = Util.clamp( width, area.minimumSize, area.maximumSize );
+        height = Util.clamp( height, area.minimumSize, area.maximumSize );
+
+        activeTotalProperties.horizontal.value = width;
+        activeTotalProperties.vertical.value = height;
+
+        offsetProperty.value = new Vector2(
+          viewPoint.x - modelViewTransform.modelToViewX( width ),
+          viewPoint.y - modelViewTransform.modelToViewY( height )
+        );
+      }
+    } );
+    // Interrupt the drag when one of our parameters changes
+    areaProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
+    modelViewTransformProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
+    circle.addInputListener( dragListener );
 
     Node.call( this, {
       children: [
@@ -98,38 +105,44 @@ define( function( require ) {
 
     var locationProperty = new Property( new Vector2() );
     function updateLocationProperty() {
-      locationProperty.value = new Vector2( area.activeTotalProperties.horizontal.value, area.activeTotalProperties.vertical.value );
+      locationProperty.value = new Vector2( activeTotalProperties.horizontal.value, activeTotalProperties.vertical.value );
     }
     updateLocationProperty();
     locationProperty.lazyLink( function( location ) {
-      area.activeTotalProperties.horizontal.value = location.x;
-      area.activeTotalProperties.vertical.value = location.y;
+      activeTotalProperties.horizontal.value = location.x;
+      activeTotalProperties.vertical.value = location.y;
     } );
-    area.activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
-    area.activeTotalProperties.vertical.lazyLink( updateLocationProperty );
+    activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
+    activeTotalProperties.vertical.lazyLink( updateLocationProperty );
 
-    var keyboardListener = new KeyboardDragListener( {
-      downDelta: modelViewTransform.modelToViewDeltaX( 1 ),
-      shiftDownDelta: modelViewTransform.modelToViewDeltaX( 1 ),
-      transform: modelViewTransform,
-      drag: function( delta ) {
-        var width = area.activeTotalProperties.horizontal.value;
-        var height = area.activeTotalProperties.vertical.value;
+    var keyboardListener;
+    Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
+      if ( keyboardListener ) {
+        circle.removeAccessibleInputListener( keyboardListener );
+        keyboardListener.dispose();
+      }
+      keyboardListener = new KeyboardDragListener( {
+        downDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+        shiftDownDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+        transform: modelViewTransform,
+        drag: function( delta ) {
+          var width = activeTotalProperties.horizontal.value;
+          var height = activeTotalProperties.vertical.value;
 
-        width += delta.x;
-        height += delta.y;
+          width += delta.x;
+          height += delta.y;
 
-        width = Util.roundSymmetric( Util.clamp( width, area.minimumSize, area.maximumSize ) );
-        height = Util.roundSymmetric( Util.clamp( height, area.minimumSize, area.maximumSize ) );
+          width = Util.roundSymmetric( Util.clamp( width, area.minimumSize, area.maximumSize ) );
+          height = Util.roundSymmetric( Util.clamp( height, area.minimumSize, area.maximumSize ) );
 
-        area.activeTotalProperties.horizontal.value = width;
-        area.activeTotalProperties.vertical.value = height;
-      },
-      moveOnHoldDelay: 750,
-      moveOnHoldInterval: 70
+          activeTotalProperties.horizontal.value = width;
+          activeTotalProperties.vertical.value = height;
+        },
+        moveOnHoldDelay: 750,
+        moveOnHoldInterval: 70
+      } );
+      circle.addAccessibleInputListener( keyboardListener );
     } );
-
-    circle.addAccessibleInputListener( keyboardListener );
 
     // Apply offsets while dragging for a smoother experience.
     // See https://github.com/phetsims/area-model-common/issues/3
@@ -145,7 +158,7 @@ define( function( require ) {
 
     // Update the offset of the drag handle
     Orientation.VALUES.forEach( function( orientation ) {
-      area.activeTotalProperties.get( orientation ).link( function( value ) {
+      Property.multilink( [ activeTotalProperties.get( orientation ), modelViewTransformProperty ], function( value, modelViewTransform ) {
         self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
       } );
     } );
