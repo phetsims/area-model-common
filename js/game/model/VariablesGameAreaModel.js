@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
-  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
+  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/enum/AreaChallengeType' );
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );

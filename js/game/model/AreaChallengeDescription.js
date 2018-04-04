@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
+  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/enum/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
