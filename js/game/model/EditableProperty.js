@@ -41,14 +41,11 @@ define( function( require ) {
     }, options );
 
     // Always start off by editing null, and it should be the default value.
-    //TODO: do this elsewhere?
     if ( options.displayType === DisplayType.EDITABLE ) {
       value = null;
     }
 
     Property.call( this, value, options );
-
-    //TODO: cleanup which of these are necessary once game is done
 
     // @public {Field}
     this.field = options.field;
@@ -65,7 +62,7 @@ define( function( require ) {
     // @public {Term|null}
     this.correctValue = options.correctValue;
 
-    // @public {Property.<Highlight>} - TODO doc
+    // @public {Property.<Highlight>}
     this.highlightProperty = new Property( Highlight.DIRTY );
 
     // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight

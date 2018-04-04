@@ -20,8 +20,6 @@ define( function( require ) {
   /**
    * @constructor
    * @extends {Object}
-   *
-   * TODO: Extend so this can be used in all generic displays
    */
   function GameAreaDisplay() {
 

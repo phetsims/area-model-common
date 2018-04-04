@@ -59,7 +59,7 @@ define( function( require ) {
       return self.challenges[ index ];
     } );
 
-    // TODO doc
+    // @public {boolean} - Whether the level is finished
     this.finished = false;
   }
 
@@ -90,7 +90,10 @@ define( function( require ) {
       } );
     },
 
-    // TODO: doc
+    /**
+     * Selects the level (resetting progress and generates a new challenge).
+     * @public
+     */
     select: function() {
       if ( this.finished ) {
         this.finished = false;
@@ -98,7 +101,10 @@ define( function( require ) {
       }
     },
 
-    // TODO doc
+    /**
+     * Marks the level as finished.
+     * @public
+     */
     finish: function() {
       this.finished = true;
     },
@@ -113,7 +119,6 @@ define( function( require ) {
       this.scoreProperty.reset();
       this.challengeIndexProperty.reset();
 
-      // TODO: better way. done because we change the challenges that it indexes
       this.challengeIndexProperty.notifyListenersStatic();
     }
   } );
