@@ -138,6 +138,17 @@ define( function( require ) {
       else {
         return MathSymbols.MINUS + digits;
       }
+    },
+
+    /**
+     * Returns whether the parameter is a Term (or is null)
+     * @public
+     *
+     * @param {*} thing
+     * @returns {boolean}
+     */
+    isNullableTerm: function( thing ) {
+      return thing === null || thing instanceof Term;
     }
   } );
 } );

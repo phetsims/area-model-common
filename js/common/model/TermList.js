@@ -110,5 +110,16 @@ define( function( require ) {
 
       return true;
     }
+  }, {
+    /**
+     * Returns whether the parameter is a TermList (or is null)
+     * @public
+     *
+     * @param {*} thing
+     * @returns {boolean}
+     */
+    isNullableTermList: function( thing ) {
+      return thing === null || thing instanceof TermList;
+    }
   } );
 } );

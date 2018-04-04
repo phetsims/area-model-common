@@ -124,7 +124,7 @@ define( function( require ) {
       inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
       digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
-    // @public {EditableProperty.<Term|null>}
+    // @public {EditableProperty}
     this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {
       correctValue: this.total.getTerm( 0 ),
       field: description.totalField,
@@ -141,7 +141,7 @@ define( function( require ) {
       displayType: ( description.type !== AreaChallengeType.VARIABLES ) ? DisplayType.READOUT : Field.toDisplayType( description.totalField )
     }, totalOptions ) );
 
-    // @public {EditableProperty.<Polynomial|null>}
+    // @public {Property.<Polynomial|null>}
     this.totalProperty = new DerivedProperty( [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ], function( constant, x, xSquared ) {
       var terms = [ constant, x, xSquared ].filter( function( term ) {
         return term !== null;

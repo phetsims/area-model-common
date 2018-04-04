@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Area = require( 'AREA_MODEL_COMMON/common/model/Area' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
@@ -53,7 +54,9 @@ define( function( require ) {
     this.colorProperties = AreaModelCommonColorProfile.mainColorProperties[ options.isProportional ];
 
     // @public {Property.<Area>} - The current area
-    this.currentAreaProperty = new Property( defaultArea );
+    this.currentAreaProperty = new Property( defaultArea, {
+      valueType: Area
+    } );
 
     // @public {Property.<boolean>}
     this.factorsBoxExpanded = new BooleanProperty( true );
@@ -62,10 +65,14 @@ define( function( require ) {
     this.areaBoxExpanded = new BooleanProperty( options.initialAreaBoxExpanded );
 
     // @public {Property.<AreaCalculationChoice}
-    this.areaCalculationChoiceProperty = new Property( options.initialAreaCalculationChoice );
+    this.areaCalculationChoiceProperty = new Property( options.initialAreaCalculationChoice, {
+      validValues: AreaCalculationChoice.VALUES
+    } );
 
     // @public {Property.<PartialProductsChoice}
-    this.partialProductsChoiceProperty = new Property( options.initialPartialProductsChoice );
+    this.partialProductsChoiceProperty = new Property( options.initialPartialProductsChoice, {
+      validValues: PartialProductsChoice.VALUES
+    } );
 
     var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
 

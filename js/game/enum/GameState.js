@@ -12,8 +12,6 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var GameState = {
-    // TODO: how much of this can we replace with AreaChallenge logic?
-
     // "check" button, editable
     FIRST_ATTEMPT: 'FIRST_ATTEMPT',
     SECOND_ATTEMPT: 'SECOND_ATTEMPT',

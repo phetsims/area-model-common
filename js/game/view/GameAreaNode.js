@@ -33,7 +33,7 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {GameAreaDisplay} display
-   * @param {Property.<EditableProperty.<Term|TermList|null>|null>} activeEditableProperty
+   * @param {Property.<EditableProperty|null>} activeEditableProperty
    * @param {Property.<GameState>} gameStateProperty
    * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */

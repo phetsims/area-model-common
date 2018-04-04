@@ -35,7 +35,7 @@ define( function( require ) {
     // @public {Property.<AreaLevel|null>} - The current level
     this.currentLevelProperty = new Property( null );
 
-    // @public {Property.<EditableProperty.<Term|TermList|null>|null}
+    // @public {Property.<EditableProperty|null}
     this.activeEditableProperty = new Property( null );
 
     // @public {Property.<AreaChallenge|null>}

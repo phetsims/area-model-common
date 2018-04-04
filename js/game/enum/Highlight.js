@@ -13,8 +13,8 @@ define( function( require ) {
 
   var Highlight = {
     NORMAL: 'NORMAL',
-    DIRTY: 'DIRTY',
-    ERROR: 'ERROR'
+    DIRTY: 'DIRTY', // needs to be interacted with before submitting
+    ERROR: 'ERROR' // was wrong after submission
   };
 
   areaModelCommon.register( 'Highlight', Highlight );

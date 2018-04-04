@@ -30,9 +30,9 @@ define( function( require ) {
    *
    * TODO: options object? OMG yes
    *
-   * @param {Property.<EditableProperty.<Term|TermList|null>>} valuePropertyProperty
+   * @param {Property.<EditableProperty>} valuePropertyProperty
    * @param {Property.<GameState>} gameStateProperty
-   * @param {Property.<EditableProperty.<Term|TermList|null>>} activeEditableProperty
+   * @param {Property.<EditableProperty>} activeEditableProperty
    * @param {Property.<Color>} colorProperty
    * @param {Property.<boolean>} allowExponentsProperty
    * @param {Orientation} orientation

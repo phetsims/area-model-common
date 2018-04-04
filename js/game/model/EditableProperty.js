@@ -17,18 +17,20 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Property = require( 'AXON/Property' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   /**
    * @constructor
    * @extends {Property}
    *
-   * @param {Term|number|null} value - The initial value of the property
+   * @param {Term|null} value - The initial value of the property
    * @param {Object} [options] - Options passed to the Property
    */
   function EditableProperty( value, options ) {
     options = _.extend( {
-      // Property option
+      // Property options
       useDeepEquality: true,
+      isValidValue: Term.isNullableTerm,
 
       // Our options
       field: Field.GIVEN,
@@ -60,13 +62,13 @@ define( function( require ) {
     // @public {number}
     this.digits = options.digits;
 
-    // @public {Term|number|null}
+    // @public {Term|null}
     this.correctValue = options.correctValue;
 
     // @public {Property.<Highlight>} - TODO doc
     this.highlightProperty = new Property( Highlight.DIRTY );
 
-    // @public {Property.<Term|number|null>} - Our value, except for null if there is an error highlight
+    // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight
     this.nonErrorValueProperty = new DerivedProperty( [ this, this.highlightProperty ], function( value, highlight ) {
       return ( highlight === Highlight.ERROR ) ? null : value;
     } );

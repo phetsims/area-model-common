@@ -26,6 +26,7 @@ define( function( require ) {
   var levelPromptTwoLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoLengths' );
   var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
 
+  // shortcuts
   var EDITABLE = Field.EDITABLE;
   var DYNAMIC = Field.DYNAMIC;
   var GIVEN = Field.GIVEN;
@@ -42,7 +43,14 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Object} options - See constructor for the option types and descriptions.
+   * @param {Object} options - Has the following fields:
+   * @param {Array.<Field>} options.horizontal
+   * @param {Array.<Field>} options.vertical
+   * @param {Array.<Array.<Field>>} options.products
+   * @param {Field} options.total
+   * @param {Field} options.horizontalTotal
+   * @param {Field} options.verticalTotal
+   * @param {AreaChallengeType} options.type
    */
   function AreaChallengeDescription( options ) {
 
@@ -101,6 +109,10 @@ define( function( require ) {
   promptMap[ getPromptKey( false, 0, 2 ) ] = levelPromptTwoLengthsString;
   promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
 
+  function isEditable( field ) {
+    return field === Field.EDITABLE;
+  }
+
   inherit( Object, AreaChallengeDescription, {
     /**
      * Returns the string representing the prompt for this challenge (what should be done to solve it).
@@ -109,13 +121,9 @@ define( function( require ) {
      * @returns {string}
      */
     getPromptString: function() {
-      var hasAreaEntry = this.totalField === Field.EDITABLE;
-      var numProductEntries = _.flatten( this.productFields ).filter( function( field ) {
-        return field === Field.EDITABLE; // TODO dedup
-      } ).length;
-      var numPartitionEntries = this.partitionFields.horizontal.concat( this.partitionFields.vertical ).filter( function( field ) {
-        return field === Field.EDITABLE;
-      } ).length;
+      var hasAreaEntry = isEditable( this.totalField );
+      var numProductEntries = _.flatten( this.productFields ).filter( isEditable ).length;
+      var numPartitionEntries = this.partitionFields.horizontal.concat( this.partitionFields.vertical ).filter( isEditable ).length;
 
       var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
       assert && assert( text );

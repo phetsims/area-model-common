@@ -25,8 +25,6 @@ define( function( require ) {
    */
   function GameAreaDisplay() {
 
-    //TODO: fix type documentation in this file!!!!!!!!!!!!!!!!!!
-
     // @public {Property.<GenericLayout>}
     this.layoutProperty = new Property( GenericLayout.TWO_BY_TWO );
 
@@ -36,23 +34,23 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
     this.totalProperties = new OrientationPair( new Property( null ), new Property( null ) );
 
-    // @public {OrientationPair.<Property.<Array.<Term|null>>>} - Values for the partition sizes. Inner values may be
-    //                                                            changed by the view client.
+    // @public {OrientationPair.<Property.<Array.<EditableProperty>>>}
+    // Values for the partition sizes. Inner values may be changed by the view client.
     this.partitionValuesProperties = new OrientationPair(
       new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] ),
       new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] )
     );
 
-    // @public {Property.<Array.<Array.<EditableProperty.<Term|null>>>} TODO doc
+    // @public {Property.<Array.<Array.<EditableProperty>>} TODO doc
     this.partialProductsProperty = new Property( [
       [ new EditableProperty( null ), new EditableProperty( null ) ],
       [ new EditableProperty( null ), new EditableProperty( null ) ]
     ] );
 
-    // @public {Property.<Array.<EditableProperty.<Term|null>>>}
+    // @public {Property.<Array.<EditableProperty>>}
     this.totalPropertiesProperty = new Property( [ new EditableProperty( null ) ] );
 
-    // @public {Property.<EditableProperty.<TermList|null>>} TODO doc
+    // @public {Property.<Property.<TermList|null>>} TODO doc
     this.totalPropertyProperty = new Property( new Property( null ) );
   }
 

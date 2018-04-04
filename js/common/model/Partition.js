@@ -14,6 +14,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
+  var Range = require( 'DOT/Range' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   /**
    * @constructor
@@ -28,7 +30,8 @@ define( function( require ) {
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( null, {
-      useDeepEquality: true
+      useDeepEquality: true,
+      isValidValue: Term.isNullableTerm
     } );
 
     // @public {Orientation}
@@ -44,7 +47,10 @@ define( function( require ) {
     // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
     // will be from 0 to its maximum size.
     this.coordinateRangeProperty = new Property( null, {
-      useDeepEquality: true
+      useDeepEquality: true,
+      isValidValue: function( value ) {
+        return value === null || value instanceof Range;
+      }
     } );
   }
 

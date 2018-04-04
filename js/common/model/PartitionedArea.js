@@ -13,6 +13,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   /**
    * @constructor
@@ -28,7 +29,8 @@ define( function( require ) {
     // @public {Property.<Term|null>} - Area may not be defined if the size of a partition is not defined.
     // TODO: handle resets properly in the game here?
     this.areaProperty = new Property( null, {
-      useDeepEquality: true
+      useDeepEquality: true,
+      isValidValue: Term.isNullableTerm
     } );
 
     // @public {Property.<boolean>}

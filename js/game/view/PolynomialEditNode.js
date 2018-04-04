@@ -35,7 +35,7 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<Polynomial|null>} polynomialProperty
-   * @param {Property.<Array.<EditableProperty.<Term|null>>>} totalPropertiesProperty
+   * @param {Property.<Array.<EditableProperty>>} totalPropertiesProperty
    * @param {function} editedCallback - Called with no arguments when something is edited
    */
   function PolynomialEditNode( polynomialProperty, totalPropertiesProperty, editedCallback ) {
