@@ -24,7 +24,6 @@ define( function( require ) {
   function GameAudio( model ) {
     var audioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
 
-    //TODO: Can we clean up certain states, or expand the number of states?
     model.stateProperty.link( function( state, oldState ) {
       // If we just moved to/from level section (outside of a level), don't fire sounds.
       if ( state === null || oldState === null ) { return; }
