@@ -338,12 +338,10 @@ define( function( require ) {
     showAnswers: function() {
       var self = this;
 
-      //TODO: improve 6-1 variables hack
       // Match solutions for 6-1 variables, see https://github.com/phetsims/area-model-common/issues/42
       if ( !this.description.unique ) {
         var reversed = false;
 
-        // TODO: dedup with the editable property bit above
         var expected1 = this.partitionSizes.horizontal[ 1 ];
         var expected2 = this.partitionSizes.vertical[ 1 ];
 
@@ -353,9 +351,8 @@ define( function( require ) {
         var actual1 = actual1Property.value;
         var actual2 = actual2Property.value;
 
-        // TODO: null checks not needed, right?
-        var matches1 = actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
-        var matches2 = actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
+        var matches1 = actual1.equals( expected1 ) || actual1.equals( expected2 );
+        var matches2 = actual2.equals( expected1 ) || actual2.equals( expected2 );
 
         if ( matches1 !== matches2 && ( actual1.equals( expected2 ) || actual2.equals( expected1 ) ) ) {
           reversed = true;
@@ -375,7 +372,6 @@ define( function( require ) {
         }
       }
       else {
-        //TODO: dedup possible with incorrect bits above?
         this.partitionSizeProperties.horizontal.forEach( function( property, index ) {
           property.value = self.partitionSizes.horizontal[ index ];
         } );
@@ -387,7 +383,6 @@ define( function( require ) {
         this.totalProperties.vertical.value = this.totals.vertical;
       }
 
-      // TODO: look at common iteration patterns like this and abstract out more (and name it)
       AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeProperties, function( property, indices ) {
         property.value = self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ];
       } );
@@ -404,33 +399,26 @@ define( function( require ) {
      * @param {GameAreaDisplay} display
      */
     attachDisplay: function( display ) {
+      var self = this;
 
       display.layoutProperty.value = this.description.layout;
       display.allowExponentsProperty.value = this.description.allowExponents;
       display.totalPropertyProperty.value = this.totalProperty;
-      //TODO: refactor to coefficient properties?
       display.totalPropertiesProperty.value = this.description.numberOrVariable(
         [ this.totalConstantProperty ],
         [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ]
       );
       display.partialProductsProperty.value = this.partialProductSizeProperties;
 
-      // TODO: cleanup and dedup. Cleaner way to accomplish this?
-      if ( this.partitionSizeProperties.horizontal.length === 1 &&
-           this.description.partitionFields.horizontal[ 0 ] === Field.GIVEN ) {
-        display.partitionValuesProperties.horizontal.value = [ new EditableProperty( null ) ];
-      }
-      else {
-        display.partitionValuesProperties.horizontal.value = this.partitionSizeProperties.horizontal;
-      }
-      // TODO: cleanup and dedup. Cleaner way to accomplish this?
-      if ( this.partitionSizeProperties.vertical.length === 1 &&
-           this.description.partitionFields.vertical[ 0 ] === Field.GIVEN ) {
-        display.partitionValuesProperties.vertical.value = [ new EditableProperty( null ) ];
-      }
-      else {
-        display.partitionValuesProperties.vertical.value = this.partitionSizeProperties.vertical;
-      }
+      Orientation.VALUES.forEach( function( orientation ) {
+        if ( self.partitionSizeProperties.get( orientation ).length === 1 &&
+             self.description.partitionFields.get( orientation )[ 0 ] === Field.GIVEN ) {
+          display.partitionValuesProperties.get( orientation ).value = [ new EditableProperty( null ) ];
+        }
+        else {
+          display.partitionValuesProperties.get( orientation ).value = self.partitionSizeProperties.get( orientation );
+        }
+      } );
 
       this.horizontalTotalListener = this.totalProperties.horizontal.linkAttribute( display.totalProperties.horizontal, 'value' );
       this.verticalTotalListener = this.totalProperties.vertical.linkAttribute( display.totalProperties.vertical, 'value' );
