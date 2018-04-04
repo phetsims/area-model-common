@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
@@ -58,8 +57,8 @@ define( function( require ) {
         return new EditableProperty( size, {
           field: description.partitionFields.get( orientation )[ index ],
           displayType: Field.toDisplayType( description.partitionFields.get( orientation )[ index ] ),
-          inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
-          digits: ( ( description.type === AreaChallengeType.VARIABLES ) ? 1 : description.partitionFields.get( orientation ).length - index )
+          inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
+          digits: description.numberOrVariable( description.partitionFields.get( orientation ).length - index, 1 )
         } );
       } );
     } );
@@ -86,9 +85,9 @@ define( function( require ) {
         var property = new EditableProperty( size, {
           field: field,
           displayType: Field.toDisplayType( field ),
-          inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? InputMethod.TERM : InputMethod.CONSTANT,
+          inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
           // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
-          digits: ( ( description.type === AreaChallengeType.VARIABLES ) ? 2 : numbersDigits ) + 1
+          digits: description.numberOrVariable( numbersDigits, 2 ) + 1
         } );
         // Link up if dynamic
         if ( field === Field.DYNAMIC ) {
@@ -121,7 +120,7 @@ define( function( require ) {
     this.total = this.totals.horizontal.times( this.totals.vertical );
 
     var totalOptions = {
-      inputMethod: ( description.type === AreaChallengeType.VARIABLES ) ? ( hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ) : InputMethod.CONSTANT,
+      inputMethod: description.numberOrVariable( InputMethod.CONSTANT, hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ),
       digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
     // @public {EditableProperty}
@@ -132,13 +131,13 @@ define( function( require ) {
     }, totalOptions ) );
     this.totalXProperty = new EditableProperty( this.total.getTerm( 1 ), _.extend( {
       correctValue: this.total.getTerm( 1 ),
-      field: ( description.type !== AreaChallengeType.VARIABLES ) ? Field.GIVEN : description.totalField,
-      displayType: ( description.type !== AreaChallengeType.VARIABLES ) ? DisplayType.READOUT : Field.toDisplayType( description.totalField )
+      field: description.numberOrVariable( Field.GIVEN, description.totalField ),
+      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) ),
     }, totalOptions ) );
     this.totalXSquaredProperty = new EditableProperty( this.total.getTerm( 2 ), _.extend( {
       correctValue: this.total.getTerm( 2 ),
-      field: ( description.type !== AreaChallengeType.VARIABLES ) ? Field.GIVEN : description.totalField,
-      displayType: ( description.type !== AreaChallengeType.VARIABLES ) ? DisplayType.READOUT : Field.toDisplayType( description.totalField )
+      field: description.numberOrVariable( Field.GIVEN, description.totalField ),
+      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) ),
     }, totalOptions ) );
 
     // @public {Property.<Polynomial|null>}
@@ -390,13 +389,10 @@ define( function( require ) {
       display.allowExponentsProperty.value = this.description.allowExponents;
       display.totalPropertyProperty.value = this.totalProperty;
       //TODO: refactor to coefficient properties?
-      display.totalPropertiesProperty.value = ( this.description.type === AreaChallengeType.VARIABLES ) ? [
-        this.totalConstantProperty,
-        this.totalXProperty,
-        this.totalXSquaredProperty
-      ] : [
-        this.totalConstantProperty
-      ];
+      display.totalPropertiesProperty.value = this.description.numberOrVariable(
+        [ this.totalConstantProperty ],
+        [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ]
+      );
       display.partialProductsProperty.value = this.partialProductSizeProperties;
 
       // TODO: cleanup and dedup. Cleaner way to accomplish this?
@@ -427,7 +423,14 @@ define( function( require ) {
     }
   }, {
 
-    // TODO: doc
+    /**
+     * Generates a series of (semi) random terms for partition sizes for a particular orientation.
+     * @private
+     *
+     * @param {number} quantity
+     * @param {boolean} allowExponents
+     * @returns {Array.<Term>}
+     */
     generatePartitionTerms: function( quantity, allowExponents ) {
       var maxPower = quantity - 1;
       return _.range( maxPower, -1 ).map( function( power ) {

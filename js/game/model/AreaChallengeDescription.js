@@ -181,6 +181,18 @@ define( function( require ) {
       }
 
       return new AreaChallengeDescription( options );
+    },
+
+    /**
+     * Returns a conditional value (like a ternary) based on whether this is a number or variable challenge.
+     * @public
+     *
+     * @param {*} numberTypeValue
+     * @param {*} variableTypeValue
+     * @returns {*}
+     */
+    numberOrVariable: function( numberTypeValue, variableTypeValue ) {
+      return this.type === AreaChallengeType.VARIABLES ? variableTypeValue : numberTypeValue;
     }
   } );
 
