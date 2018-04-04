@@ -62,7 +62,7 @@ define( function( require ) {
     } ) );
 
     // Grid lines
-    var gridLinesNode = new ProportionalAreaGridLinesNode( area, this.modelViewTransform );
+    var gridLinesNode = new ProportionalAreaGridLinesNode( new Property( area ), new Property( this.modelViewTransform ) );
     this.areaLayer.addChild( gridLinesNode );
     options.gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
