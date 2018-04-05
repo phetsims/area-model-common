@@ -16,6 +16,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var CountingAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/CountingAreaNode' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -104,17 +105,32 @@ define( function( require ) {
     this.areaLayer.addChild( new ProportionalPartitionLineNode( areaDisplay, this.modelViewTransformProperty, Orientation.VERTICAL ) );
 
     // Partition labels
-    // Orientation.VALUES.forEach( function( orientation ) {
-    //   var partitions = area.partitions.get( orientation );
-    //   var labels = partitions.map( function( partition, index ) {
-    //     var label = self.createPartitionLabel( partition, area.secondaryPartitions.get( orientation ), index );
-    //     self.labelLayer.addChild( label );
-    //     return label;
-    //   } );
-    //   partitions.forEach( function( partition ) {
-    //     partition.coordinateRangeProperty.link( self.positionPartitionLabels.bind( self, orientation, labels ) );
-    //   } );
-    // } );
+    Orientation.VALUES.forEach( function( orientation ) {
+      var partitionsProperties = areaDisplay.partitionsProperties.get( orientation );
+
+      // because we will have at most 2
+      var labels = [ 0, 1 ].map( function( index ) {
+        var partitionProperty = new DerivedProperty( [ partitionsProperties ], function( partitions ) {
+          return partitions[ index ];
+        } );
+        var label = self.createPartitionLabel( partitionProperty, areaDisplay.secondaryPartitionsProperty.get( orientation ), index, orientation );
+        self.labelLayer.addChild( label );
+        return label;
+      } );
+
+      var labelListener = self.positionPartitionLabels.bind( self, orientation, labels );
+      partitionsProperties.link( function( partitions, oldPartitions ) {
+        oldPartitions && oldPartitions.forEach( function( partition ) {
+          partition.coordinateRangeProperty.unlink( labelListener );
+        } );
+        partitions.forEach( function( partition ) {
+          partition.coordinateRangeProperty.link( labelListener );
+        } );
+        labelListener();
+      } );
+      areaDisplay.primaryPartitionsProperty.get( orientation ).link( labelListener );
+      areaDisplay.secondaryPartitionsProperty.get( orientation ).link( labelListener );
+    } );
 
     this.mutate( nodeOptions );
   }
@@ -231,8 +247,8 @@ define( function( require ) {
 
     // TODO doc
     positionPartitionLabels: function( orientation, labels ) {
-      var primaryRange = this.areaDisplay.primaryPartitionsProperty.value.get( orientation ).coordinateRangeProperty.value;
-      var secondaryRange = this.areaDisplay.secondaryPartitionsProperty.value.get( orientation ).coordinateRangeProperty.value;
+      var primaryRange = this.areaDisplay.primaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
+      var secondaryRange = this.areaDisplay.secondaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
 
       // TODO: make this prettier? lots of cleanup
       var min = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.min );
@@ -256,15 +272,16 @@ define( function( require ) {
      * Creates a partition label for the given orientation.
      * @private
      *
-     * @param {Partition} partition
-     * @param {Partition} secondaryPartition - The partition that is empty if there is only one
+     * @param {Property.<Partition>} partitionProperty
+     * @param {Property.<Partition>} secondaryPartitionProperty - The partition that is empty if there is only one
      * @param {number} index - The index of the partition
+     * @param {Orientation} orientation
      * @returns {Node}
      */
-    createPartitionLabel: function( partition, secondaryPartition, index ) {
+    createPartitionLabel: function( partitionProperty, secondaryPartitionProperty, index, orientation ) {
       var text = new Text( '', {
         font: AreaModelCommonConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
-        fill: partition.colorProperty
+        fill: new DynamicProperty( partitionProperty, { derive: 'colorProperty' } )
       } );
 
       var labelContainer = new Node( {
@@ -272,25 +289,30 @@ define( function( require ) {
       } );
 
       // Text label
-      partition.sizeProperty.link( function( size ) {
+      new DynamicProperty( partitionProperty, {
+        derive: 'sizeProperty'
+      } ).link( function( size ) {
         if ( size === null ) {
           text.text = '';
         }
         else {
           text.text = size.toRichString( false );
-          text[ partition.orientation.centerCoordinate ] = 0;
+          text[ orientation.centerCoordinate ] = 0;
         }
       } );
 
       // Secondary coordinate
-      if ( partition.orientation === Orientation.HORIZONTAL ) {
+      if ( orientation === Orientation.HORIZONTAL ) {
         labelContainer.top = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.y + 4;
       }
       else {
         labelContainer.left = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
       }
 
-      Property.multilink( [ partition.visibleProperty, secondaryPartition.sizeProperty ], function( visible, secondarySize ) {
+      var partitionVisibleProperty = new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } );
+      var secondaryPartitionSizeProperty = new DynamicProperty( secondaryPartitionProperty, { derive: 'sizeProperty' } );
+
+      Property.multilink( [ partitionVisibleProperty, secondaryPartitionSizeProperty ], function( visible, secondarySize ) {
         labelContainer.visible = visible && secondarySize !== null;
       } );
 
