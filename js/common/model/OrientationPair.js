@@ -51,8 +51,6 @@ define( function( require ) {
      * Returns a new OrientationPair with mapped values.
      * @public
      *
-     * TODO: Check for good places to use this
-     *
      * @param {Function} callback - TODO: doc
      * @returns {OrientationPair.<*>} - With the mapped values
      */
@@ -63,8 +61,6 @@ define( function( require ) {
     /**
      * Calls the callback on each item of the orientation pair.
      * @public
-     *
-     * TODO: Check for good places to use this
      *
      * @param {Function} callback - TODO: doc
      */
