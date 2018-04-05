@@ -51,7 +51,7 @@ define( function( require ) {
      * Returns a new OrientationPair with mapped values.
      * @public
      *
-     * @param {Function} callback - TODO: doc
+     * @param {Function} callback - function( {*}, {Orientation} ): {*}
      * @returns {OrientationPair.<*>} - With the mapped values
      */
     map: function( callback ) {
@@ -62,7 +62,7 @@ define( function( require ) {
      * Calls the callback on each item of the orientation pair.
      * @public
      *
-     * @param {Function} callback - TODO: doc
+     * @param {Function} callback - function( {*}, {Orientation} )
      */
     forEach: function( callback ) {
       callback( this.horizontal, Orientation.HORIZONTAL );

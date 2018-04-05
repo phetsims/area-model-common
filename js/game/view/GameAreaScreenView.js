@@ -205,7 +205,7 @@ define( function( require ) {
     var factorsNode = new GenericFactorsNode( this.display.totalProperties, this.display.allowExponentsProperty );
     var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
-    //TODO: remove this workaround
+    // If we have a polynomial, don't use this editable property (use the polynomial editor component instead)
     var totalTermPropertyProperty = new DerivedProperty( [ this.display.totalPropertiesProperty ], function( totalProperties ) {
       return totalProperties.length === 1 ? totalProperties[ 0 ] : new EditableProperty( null );
     } );
