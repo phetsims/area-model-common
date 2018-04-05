@@ -13,8 +13,8 @@ define( function( require ) {
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
+  var GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaModel' );
-  var GenericAreaNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaNode' );
   var GenericLayoutSelectionNode = require( 'AREA_MODEL_COMMON/generic/view/GenericLayoutSelectionNode' );
   var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -26,7 +26,7 @@ define( function( require ) {
    * @constructor
    * @extends {AreaScreenView}
    *
-   * @param {AreaModelCommonModel} model
+   * @param {GenericAreaModel} model
    * @param {number} decimalPlaces TODO: to options?
    */
   function GenericAreaScreenView( model, decimalPlaces ) {
@@ -50,16 +50,16 @@ define( function( require ) {
 
   return inherit( AreaScreenView, GenericAreaScreenView, {
     /**
-     * Creates the "area" (product) content for the accordion box.
+     * Creates the main area display view for the screen.
      * @public
      * @override
      *
-     * @param {AreaModelCommonModel} model
-     * @param {Area} area
-     * @returns {AreaNode}
+     * @param {GenericAreaModel} model
+     * @param {GenericAreaDisplay} areaDisplay
+     * @returns {GenericAreaDisplayNode}
      */
-    createAreaNode: function( model, area ) {
-      return new GenericAreaNode( area, model.allowExponents, model.partialProductsChoiceProperty, {
+    createAreaDisplayNode: function( model ) {
+      return new GenericAreaDisplayNode( model.areaDisplay, model.allowExponents, model.partialProductsChoiceProperty, {
         translation: this.getAreaTranslation()
       } );
     },
@@ -69,7 +69,7 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {AreaModelCommonModel} model
+     * @param {GenericAreaModel} model
      * @param {number} decimalPlaces
      * @returns {Node}
      */

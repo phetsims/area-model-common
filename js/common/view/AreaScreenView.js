@@ -66,8 +66,6 @@ define( function( require ) {
     assert && assert( model instanceof AreaModelCommonModel );
     assert && assert( typeof options.decimalPlaces === 'number' );
 
-    var self = this;
-
     ScreenView.call( this );
 
     // @protected {boolean}
@@ -192,19 +190,9 @@ define( function( require ) {
     } );
     this.addChild( this.resetAllButton );
 
-    // @protected {Array.<AreaNode>}
-    this.areaNodes = model.areas.map( this.createAreaNode.bind( this, model ) );
-
-    this.areaNodes.forEach( function( areaNode ) {
-      self.addChild( areaNode );
-    } );
-
-    // Only show the current area
-    model.currentAreaProperty.link( function( currentArea ) {
-      self.areaNodes.forEach( function( areaNode ) {
-        areaNode.visible = areaNode.area === currentArea;
-      } );
-    } );
+    // @protected {AreaDisplayNode}
+    this.areaDisplayNode = this.createAreaDisplayNode( model );
+    this.addChild( this.areaDisplayNode );
   }
 
   areaModelCommon.register( 'AreaScreenView', AreaScreenView );
@@ -293,14 +281,13 @@ define( function( require ) {
     },
 
     /**
-     * Creates the "area" (product) content for the accordion box.
+     * Creates the main area display view for the screen.
      * @public
      *
      * @param {AreaModelCommonModel} model
-     * @param {Area} area
-     * @returns {AreaNode}
+     * @returns {AreaDisplayNode}
      */
-    createAreaNode: function( model, area ) {
+    createAreaDisplayNode: function( model ) {
       throw new Error( 'abstract method, should be implemented by subtype' );
     }
   } );

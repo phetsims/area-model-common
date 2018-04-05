@@ -148,6 +148,7 @@ define( function( require ) {
     /**
      * Positions all of the partial products labels.
      * @protected
+     * @override
      */
     positionProductLabels: function() {
       var self = this;

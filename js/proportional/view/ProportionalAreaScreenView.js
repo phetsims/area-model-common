@@ -18,7 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  var ProportionalAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaNode' );
+  var ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
   var ProportionalFactorsNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalFactorsNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SceneSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/SceneSelectionNode' );
@@ -34,7 +34,7 @@ define( function( require ) {
    * @constructor
    * @extends {AreaScreenView}
    *
-   * @param {AreaModelCommonModel} model
+   * @param {ProportionalAreaModel} model
    * @param {Object} options
    */
   function ProportionalAreaScreenView( model, options ) {
@@ -87,12 +87,8 @@ define( function( require ) {
     this.addChild( checkboxContainer );
 
     var accessibleOrder = [];
-    this.areaNodes.forEach( function( areaNode ) {
-      accessibleOrder.push( areaNode.areaLayer );
-    } );
-    this.areaNodes.forEach( function( areaNode ) {
-      accessibleOrder.push( areaNode.eraseButton );
-    } );
+    accessibleOrder.push( this.areaDisplayNode.areaLayer );
+    accessibleOrder.push( this.areaDisplayNode.eraseButton );
     accessibleOrder.push( this.factorsBox );
     accessibleOrder.push( this.areaBox );
     accessibleOrder.push( this.productsSelectionPanel );
@@ -122,24 +118,19 @@ define( function( require ) {
     step: function( dt ) {
       AreaScreenView.prototype.step.call( this, dt );
 
-      this.areaNodes.forEach( function( areaNode ) {
-        if ( areaNode.visible ) {
-          areaNode.update();
-        }
-      } );
+      this.areaDisplayNode.update();
     },
 
     /**
-     * Creates the "area" (product) content for the accordion box.
+     * Creates the main area display view for the screen.
      * @public
      * @override
      *
-     * @param {AreaModelCommonModel} model
-     * @param {Area} area
-     * @returns {AreaNode}
+     * @param {ProportionalAreaModel} model
+     * @returns {ProportionalAreaDisplayNode}
      */
-    createAreaNode: function( model, area ) {
-      return new ProportionalAreaNode( area, model.partialProductsChoiceProperty, {
+    createAreaDisplayNode: function( model ) {
+      return new ProportionalAreaDisplayNode( model.areaDisplay, model.partialProductsChoiceProperty, {
         gridLinesVisibleProperty: model.gridLinesVisibleProperty,
         tilesVisibleProperty: model.tilesVisibleProperty,
         countingVisibleProperty: model.countingVisibleProperty,
@@ -155,7 +146,7 @@ define( function( require ) {
      * @public
      * @override
      *
-     * @param {AreaModelCommonModel} model
+     * @param {ProportionalAreaModel} model
      * @param {number} decimalPlaces
      * @returns {Node}
      */

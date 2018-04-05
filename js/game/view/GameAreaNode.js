@@ -201,7 +201,7 @@ define( function( require ) {
      * Creates a partition line (view only)
      * @private
      *
-     * TODO: dedup with GenericAreaNode
+     * TODO: dedup with GenericAreaDisplayNode
      *
      * @param {Orientation} orientation
      * @param {number} offset

@@ -84,6 +84,8 @@ define( function( require ) {
     // @protected {Array.<PartialProductLabelNode>}
     this.productLabels = [];
 
+    var productLabelListener = this.positionProductLabels.bind( this );
+
     // Handle pooling of product labels
     var productLabelLayer = new Node();
     this.labelLayer.addChild( productLabelLayer );    
@@ -108,10 +110,10 @@ define( function( require ) {
         }
         self.productLabels.push( productLabel );
       } );
-    } );
 
-    // TODO: Proper "abstract" method for this
-    var productLabelListener = this.positionProductLabels.bind( this );
+      productLabelListener();
+    } );
+    
     //TODO: Note this needs to be linked after the product labels are created, so the order dependency works
     areaDisplay.allPartitionsProperty.link( function( newAllPartitions, oldAllPartitions ) {
       oldAllPartitions && oldAllPartitions.forEach( function( partition ) {
