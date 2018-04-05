@@ -140,8 +140,8 @@ define( function( require ) {
       var verticalPartitions = this.area.partitions.vertical;
 
       return _.find( this.productLabels, function( productLabel ) {
-        return productLabel.partitionedArea.partitions.get( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
-               productLabel.partitionedArea.partitions.get( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
+        return productLabel.partitionedAreaProperty.value.partitions.get( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
+               productLabel.partitionedAreaProperty.value.partitions.get( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
       } );
     },
 
@@ -169,8 +169,8 @@ define( function( require ) {
       //TODO: potential to dedup horiz/vert
       this.productLabels.forEach( function( productLabel ) {
         // {Partition}
-        var horizontalPartition = productLabel.partitionedArea.partitions.get( Orientation.HORIZONTAL );
-        var verticalPartition = productLabel.partitionedArea.partitions.get( Orientation.VERTICAL );
+        var horizontalPartition = productLabel.partitionedAreaProperty.value.partitions.get( Orientation.HORIZONTAL );
+        var verticalPartition = productLabel.partitionedAreaProperty.value.partitions.get( Orientation.VERTICAL );
 
         // {Range|null}
         var horizontalRange = horizontalRanges[ _.indexOf( self.area.partitions.horizontal, horizontalPartition ) ];
@@ -194,7 +194,7 @@ define( function( require ) {
 
         var leftLabel = self.getProductLabel( 0, verticalIndex );
         var rightLabel = self.getProductLabel( 1, verticalIndex );
-        var hasTwo = rightLabel.partitionedArea.visibleProperty.value;
+        var hasTwo = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
 
         var leftOverlapBump = 22;
         var labelOverlapBump = 10;

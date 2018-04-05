@@ -19,6 +19,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var PartialProductLabelNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductLabelNode' );
+  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
 
@@ -76,7 +77,7 @@ define( function( require ) {
 
     // @protected {Array.<PartialProductLabelNode>}
     this.productLabels = area.partitionedAreas.map( function( partitionedArea ) {
-      var productLabel = new PartialProductLabelNode( partialProductsChoiceProperty, partitionedArea, options.allowExponents );
+      var productLabel = new PartialProductLabelNode( partialProductsChoiceProperty, new Property( partitionedArea ), options.allowExponents );
       self.labelLayer.addChild( productLabel );
       return productLabel;
     } );

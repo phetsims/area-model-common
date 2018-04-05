@@ -13,12 +13,12 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
-  var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RichText = require( 'SCENERY/nodes/RichText' );
@@ -30,24 +30,37 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
-   * @param {PartitionedArea} partitionedArea
+   * @param {Property.<PartitionedArea|null>} partitionedAreaProperty
    * @param {boolean} allowExponents
    */
-  function PartialProductLabelNode( partialProductsChoiceProperty, partitionedArea, allowExponents ) {
+  function PartialProductLabelNode( partialProductsChoiceProperty, partitionedAreaProperty, allowExponents ) {
     assert && assert( partialProductsChoiceProperty instanceof Property );
-    assert && assert( partitionedArea instanceof PartitionedArea );
     assert && assert( typeof allowExponents === 'boolean' );
 
     var self = this;
 
     Node.call( this );
 
-    // @public {PartitionedArea} - Exposed for improved positioning capability
-    this.partitionedArea = partitionedArea;
+    // @public {Property.<PartitionedArea|null>} - Exposed for improved positioning capability
+    this.partitionedAreaProperty = partitionedAreaProperty;
+
+    var areaProperty = new DynamicProperty( partitionedAreaProperty, {
+      derive: 'areaProperty'
+    } );
+    var visibleProperty = new DynamicProperty( partitionedAreaProperty, {
+      derive: 'visibleProperty',
+      defaultValue: false
+    } );
+    var horizontalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
+      derive: 'partitions.horizontal.sizeProperty'
+    } );
+    var verticalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
+      derive: 'partitions.vertical.sizeProperty'
+    } );
 
     var background = new Rectangle( {
       cornerRadius: 3,
-      stroke: new DerivedProperty( [ partitionedArea.areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ], function( area, color ) {
+      stroke: new DerivedProperty( [ areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ], function( area, color ) {
         return ( area === null || area.coefficient === 0 ) ? 'transparent' : color;
       } ),
       fill: AreaModelCommonColorProfile.partialProductBackgroundProperty
@@ -60,12 +73,12 @@ define( function( require ) {
     this.addChild( box );
 
     // Visibility
-    Property.multilink( [ partialProductsChoiceProperty, partitionedArea.visibleProperty ], function( choice, areaVisible ) {
+    Property.multilink( [ partialProductsChoiceProperty, visibleProperty ], function( choice, areaVisible ) {
       self.visible = areaVisible && ( choice !== PartialProductsChoice.HIDDEN );
     } );
 
     // Text/alignment
-    Property.multilink( [ partitionedArea.partitions.horizontal.sizeProperty, partitionedArea.partitions.vertical.sizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
+    Property.multilink( [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
       var textOptions = {
         font: ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
                                                             : AreaModelCommonConstants.PARTIAL_FACTOR_FONT
