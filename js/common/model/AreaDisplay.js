@@ -50,7 +50,7 @@ define( function( require ) {
       return area.calculationIndexProperty;
     } );
 
-    // @public {Array.<PartitionedArea>}
+    // @public {Property.<Array.<PartitionedArea>>}
     this.partitionedAreasProperty = this.wrapObject( function( area ) {
       return area.partitionedAreas;
     } );

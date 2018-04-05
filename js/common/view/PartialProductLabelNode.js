@@ -41,7 +41,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    // @public {Property.<PartitionedArea|null>} - Exposed for improved positioning capability
+    // @public {Property.<PartitionedArea|null>} - Exposed for improved positioning capability AND setting with pool
     this.partitionedAreaProperty = partitionedAreaProperty;
 
     var areaProperty = new DynamicProperty( partitionedAreaProperty, {
