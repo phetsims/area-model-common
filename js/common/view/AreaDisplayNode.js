@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -21,6 +22,7 @@ define( function( require ) {
   var PartialProductLabelNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductLabelNode' );
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
+  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
    * @constructor
@@ -131,12 +133,30 @@ define( function( require ) {
       touchAreaXDilation: 8,
       touchAreaYDilation: 8
     } );
-    this.labelLayer.addChild( this.eraseButton );
+
+    // @protected {Node}
+    this.backgroundNode = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
+      fill: AreaModelCommonColorProfile.areaBackgroundProperty
+    } );
+
+    // @protected {Node}
+    this.borderNode = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
+      stroke: AreaModelCommonColorProfile.areaBorderProperty
+    } );
+
   }
 
   areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
 
   return inherit( Node, AreaDisplayNode, {
+    /**
+     * Positions all of the partial products labels.
+     * @protected
+     */
+    positionProductLabels: function() {
+      throw new Error( 'abstract method' );
+    },
+
     /**
      * Maps a coordinate range (from 0 to area.coordinateRangeMax) to view coordinates relative to the AreaDisplayNode's
      * origin.

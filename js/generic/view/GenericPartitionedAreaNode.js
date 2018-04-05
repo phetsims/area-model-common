@@ -11,27 +11,31 @@ define( function( require ) {
   // modules
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
    * @constructor
    * @extends {Node}
    *
-   * @param {PartitionedArea} partitionedArea
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<PartitionedArea>} partitionedAreaProperty
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    */
-  function GenericPartitionedAreaNode( partitionedArea, modelViewTransform ) {
-    assert && assert( partitionedArea instanceof PartitionedArea );
-
+  function GenericPartitionedAreaNode( partitionedAreaProperty, modelViewTransformProperty ) {
     var self = this;
 
     // We'll set the fill/size/etc. below.
     Rectangle.call( this, {} );
 
+    // @public {Property.<PartitionedArea>} - Exposed so it can be set later
+    this.partitionedAreaProperty = partitionedAreaProperty;
+
     // Fill
-    partitionedArea.areaProperty.link( function( area ) {
+    new DynamicProperty( partitionedAreaProperty, {
+      derive: 'areaProperty'
+    } ).link( function( area ) {
       if ( area === null || area.coefficient === 0 ) {
         self.fill = null;
       }
@@ -44,16 +48,29 @@ define( function( require ) {
     } );
 
     // Visibility
-    partitionedArea.visibleProperty.linkAttribute( this, 'visible' );
+    new DynamicProperty( partitionedAreaProperty, {
+      derive: 'visibleProperty',
+      defaultValue: false
+    } ).linkAttribute( this, 'visible' );
 
     // Bounds
-    partitionedArea.partitions.forEach( function( partition, orientation ) {
-      partition.coordinateRangeProperty.link( function( range ) {
-        if ( range !== null ) {
-          self[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
-          self[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
-        }
+    var rangeMultilinks = null; // {OrientationPair.<Multilink>|null}
+    partitionedAreaProperty.link( function( partitionedArea ) {
+      // Release any previous references
+      rangeMultilinks && rangeMultilinks.forEach( function( rangeMultilink ) {
+        rangeMultilink.dispose();
       } );
+      rangeMultilinks = null;
+      if ( partitionedArea ) {
+        rangeMultilinks = partitionedArea.partitions.map( function( partition, orientation ) {
+          return Property.multilink( [ partition.coordinateRangeProperty, modelViewTransformProperty ], function( range, modelViewTransform ) {
+            if ( range !== null ) {
+              self[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
+              self[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
+            }
+          } );
+        } );
+      }
     } );
   }
 

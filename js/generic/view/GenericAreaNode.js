@@ -57,7 +57,7 @@ define( function( require ) {
 
     // Sign-colored partition area backgrounds
     area.partitionedAreas.forEach( function( partitionedArea ) {
-      self.areaLayer.addChild( new GenericPartitionedAreaNode( partitionedArea, self.modelViewTransform ) );
+      self.areaLayer.addChild( new GenericPartitionedAreaNode( new Property( partitionedArea ), new Property( self.modelViewTransform ) ) );
     } );
 
     // Background stroke
