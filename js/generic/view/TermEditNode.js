@@ -20,7 +20,6 @@ define( function( require ) {
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var NumberProperty = require( 'AXON/NumberProperty' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
@@ -31,12 +30,12 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Orientation} orientation
+   * @param {Property.<Orientation>} orientationProperty
    * @param {Property.<Term|null>} termProperty
    * @param {Object} [options]
    */
-  function TermEditNode( orientation, termProperty, options ) {
-    assert && assert( Orientation.isOrientation( orientation ) );
+  function TermEditNode( orientationProperty, termProperty, options ) {
+    assert && assert( orientationProperty instanceof Property );
     assert && assert( termProperty instanceof Property );
 
     options = _.extend( {
@@ -87,7 +86,7 @@ define( function( require ) {
     } );
 
     LayoutBox.call( this, {
-      orientation: orientation === Orientation.HORIZONTAL ? 'horizontal' : 'vertical',
+      orientation: orientationProperty.value.layoutBoxOrientation,
       spacing: 4,
       children: [
         readoutBackground,
@@ -104,6 +103,9 @@ define( function( require ) {
           baseColor: AreaModelCommonColorProfile.editButtonBackgroundProperty
         } )
       ]
+    } );
+    orientationProperty.link( function( orientation ) {
+      self.orientation = orientation.layoutBoxOrientation;
     } );
 
     options.isActiveProperty.link( function( isActive ) {

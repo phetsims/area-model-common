@@ -89,7 +89,7 @@ define( function( require ) {
         return errorColor;
       }
     } );
-    var termEditNode = new TermEditNode( orientation, valueProperty, {
+    var termEditNode = new TermEditNode( new Property( orientation ), valueProperty, {
       textColorProperty: textColorProperty,
       borderColorProperty: borderColorProperty,
       isActiveProperty: isActiveProperty,

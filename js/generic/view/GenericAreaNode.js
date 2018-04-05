@@ -79,7 +79,7 @@ define( function( require ) {
 
     // Edit readouts/buttons
     area.allPartitions.forEach( function( partition ) {
-      self.labelLayer.addChild( new PartitionSizeEditNode( area, partition, self.modelViewTransform, allowExponents ) );
+      self.labelLayer.addChild( new PartitionSizeEditNode( area.activePartitionProperty, new Property( partition ), new Property( self.modelViewTransform ), allowExponents ) );
     } );
 
     //TODO: Move the keypad to the screen view

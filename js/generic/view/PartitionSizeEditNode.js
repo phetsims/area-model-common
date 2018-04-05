@@ -10,7 +10,9 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var Color = require( 'SCENERY/util/Color' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
@@ -20,31 +22,41 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {GenericArea} area
-   * @param {GenericPartition} partition
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<Partition|null>} activePartitionProperty
+   * @param {Property.<GenericPartition|null>} partitionProperty
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    * @param {boolean} allowExponents
    */
-  function PartitionSizeEditNode( area, partition, modelViewTransform, allowExponents ) {
+  function PartitionSizeEditNode( activePartitionProperty, partitionProperty, modelViewTransformProperty, allowExponents ) {
     var self = this;
 
-    //TODO: abstract out to be like how the game is edited?
+    var orientationProperty = new DerivedProperty( [ partitionProperty ], function( partition ) {
+      return partition ? partition.orientation : Orientation.HORIZONTAL; // Default if we have none
+    } );
+    var sizeProperty = new DynamicProperty( partitionProperty, { derive: 'sizeProperty' } );
+    var colorProperty = new DynamicProperty( partitionProperty, {
+      derive: 'colorProperty',
+      defaultValue: Color.MAGENTA // Should not see this, but need a valid color
+    } );
 
-    TermEditNode.call( this, partition.orientation, partition.sizeProperty, {
-      textColorProperty: partition.colorProperty,
-      borderColorProperty: partition.colorProperty,
-      isActiveProperty: new DerivedProperty( [ area.activePartitionProperty ], function( activePartition ) {
+    TermEditNode.call( this, orientationProperty, sizeProperty, {
+      textColorProperty: colorProperty,
+      borderColorProperty: colorProperty,
+      isActiveProperty: new DerivedProperty( [ activePartitionProperty, partitionProperty ], function( activePartition, partition ) {
         return activePartition === partition;
       } ),
-      digitCountProperty: new Property( partition.digitCount ),
+      digitCountProperty: new DerivedProperty( [ partitionProperty ], function( partition ) {
+        return partition ? partition.digitCount : 1; // Default if we have none
+      } ),
       allowExponentsProperty: new Property( allowExponents ),
       editCallback: function() {
-        area.activePartitionProperty.value = partition;
+        activePartitionProperty.value = partitionProperty.value;
       }
     } );
 
     // Primary orientation (location of range center)
-    partition.coordinateRangeProperty.link( function( range ) {
+    var coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
+    Property.multilink( [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ], function( partition, range, modelViewTransform ) {
       if ( range ) {
         self[ partition.orientation.centerCoordinate ] = partition.orientation.modelToView( modelViewTransform, range.getCenter() );
       }
@@ -52,14 +64,16 @@ define( function( require ) {
 
     //TODO: factor out offsets with game view?
     // Secondary (offsets)
-    if ( partition.orientation === Orientation.HORIZONTAL ) {
-      this.centerY = -20;
-    }
-    else {
-      this.centerX = -30;
-    }
+    partitionProperty.link( function( partition ) {
+      if ( partition.orientation === Orientation.HORIZONTAL ) {
+        self.centerY = -20;
+      }
+      else {
+        self.centerX = -30;
+      }
+    } );
 
-    partition.visibleProperty.linkAttribute( this, 'visible' );
+    new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } ).linkAttribute( this, 'visible' );
   }
 
   areaModelCommon.register( 'PartitionSizeEditNode', PartitionSizeEditNode );

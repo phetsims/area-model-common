@@ -73,7 +73,8 @@ define( function( require ) {
     minSide: 'left',
     maxSide: 'right',
     rectCoordinate: 'rectX',
-    rectSize: 'rectWidth'
+    rectSize: 'rectWidth',
+    layoutBoxOrientation: 'horizontal'
   } );
 
   // @public {Orientation}
@@ -84,7 +85,8 @@ define( function( require ) {
     minSide: 'top',
     maxSide: 'bottom',
     rectCoordinate: 'rectY',
-    rectSize: 'rectHeight'
+    rectSize: 'rectHeight',
+    layoutBoxOrientation: 'vertical'
   } );
 
   // Set up opposites as object references (circular)
