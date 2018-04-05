@@ -25,6 +25,8 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<number>>}
     this.activeTotalProperties = this.wrapOrientationPairProperty( function( area ) {
       return area.activeTotalProperties;
+    }, {
+      bidirectional: true
     } );
 
     // @public {Property.<Orientation>}
@@ -36,6 +38,8 @@ define( function( require ) {
     this.partitionSplitProperties = this.wrapOrientationPairProperty( function( area ) {
       return area.partitionSplitProperties;
     } );
+
+    // TODO: check for what is actually used
 
     // @public {Property.<number>}
     this.maximumSizeProperty = this.wrapObject( function( area ) { return area.maximumSize; } );
