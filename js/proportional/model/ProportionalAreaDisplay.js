@@ -15,7 +15,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {Object}
+   * @extends {AreaDisplay}
    *
    * @param {Property.<ProportionalArea>} areaProperty
    */
