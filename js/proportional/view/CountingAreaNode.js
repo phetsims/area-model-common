@@ -56,6 +56,7 @@ define( function( require ) {
     countingVisibleProperty.link( invalidate );
     activeTotalProperties.horizontal.link( invalidate );
     activeTotalProperties.vertical.link( invalidate );
+    modelViewTransformProperty.link( invalidate );
 
     countingVisibleProperty.linkAttribute( this, 'visible' );
   }
