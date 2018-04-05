@@ -260,6 +260,7 @@ define( function( require ) {
 
     /**
      * Returns the ideal translation for instances of AreaNode on the main view.
+     * TODO: doc update, possible rename
      * @protected
      *
      * @returns {Vector2}

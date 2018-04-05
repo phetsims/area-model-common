@@ -33,7 +33,7 @@ define( function( require ) {
     panelBorder: { default: new Color( 0x3, 0x3, 0x3 ) },
     panelBackground: { default: Color.WHITE },
 
-    // Main "AreaNode" appearance
+    // Main appearance
     areaBackground: { default: Color.WHITE },
     areaBorder: { default: Color.BLACK },
 

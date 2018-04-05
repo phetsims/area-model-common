@@ -167,6 +167,7 @@ define( function( require ) {
       }
       dragHandler = new DragListener( {
         transform: modelViewTransform,
+        isUserControlledProperty: areaDisplay.partitionSplitUserControlledProperties.get( orientation ),
         drag: function( event, listener ) {
           var value = listener.modelPoint[ orientation.coordinate ];
 
@@ -189,13 +190,6 @@ define( function( require ) {
         }
       } );
       self.addInputListener( dragHandler );
-    } );
-
-    // Remove splits that are at or past the current boundary.
-    activeTotalProperty.link( function( total ) {
-      if ( partitionSplitProperty.value >= activeTotalProperty.value ) {
-        partitionSplitProperty.value = dragHandler.isPressedProperty.value ? activeTotalProperty.value : 0;
-      }
     } );
   }
 

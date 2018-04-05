@@ -61,6 +61,9 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<number>>} - Location of the partition lines
     this.partitionSplitProperties = new OrientationPair( new NumberProperty( options.initialHorizontalSplit ), new NumberProperty( options.initialVerticalSplit ) );
 
+    // @public {OrientationPair.<Property.<boolean>>}
+    this.partitionSplitUserControlledProperties = new OrientationPair( new BooleanProperty( false ), new BooleanProperty( false ) );
+
     // @public {number}
     this.maximumSize = options.maximumSize;
     this.minimumSize = options.minimumSize;
@@ -140,6 +143,14 @@ define( function( require ) {
           secondaryPartition.sizeProperty.value = null;
           primaryPartition.coordinateRangeProperty.value = new Range( 0, size );
           secondaryPartition.coordinateRangeProperty.value = null;
+        }
+      } );
+
+      // Remove splits that are at or past the current boundary.
+      self.activeTotalProperties.get( orientation ).link( function( total ) {
+        // TODO: ??
+        if ( self.partitionSplitProperties.get( orientation ).value >= total ) {
+          self.partitionSplitProperties.get( orientation ).value = self.partitionSplitUserControlledProperties.get( orientation ).value ? total : 0;
         }
       } );
     } );

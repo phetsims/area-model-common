@@ -41,6 +41,13 @@ define( function( require ) {
       bidirectional: true
     } );
 
+    // @public {OrientationPair.<Property.<boolean>>}
+    this.partitionSplitUserControlledProperties = this.wrapOrientationPairProperty( function( area ) {
+      return area.partitionSplitUserControlledProperties;
+    }, {
+      bidirectional: true
+    } );
+
     // TODO: check for what is actually used
 
     // @public {Property.<number>}
