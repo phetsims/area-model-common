@@ -14,6 +14,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
+  var ProportionalAreaDisplay = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaDisplay' );
 
   /**
    * @constructor
@@ -52,6 +53,17 @@ define( function( require ) {
   areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );
 
   return inherit( AreaModelCommonModel, ProportionalAreaModel, {
+    /**
+     * Returns a concrete AreaDisplay subtype
+     * @protected
+     *
+     * @param {Property.<Area>} areaProperty
+     * @returns {ProportionalAreaDisplay}
+     */
+    createAreaDisplay: function( areaProperty ) {
+      return new ProportionalAreaDisplay( areaProperty );
+    },
+
     /**
      * Returns the model to its initial state.
      * @public

@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
   var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
+  var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
@@ -57,6 +58,17 @@ define( function( require ) {
   areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );
 
   return inherit( AreaModelCommonModel, GenericAreaModel, {
+    /**
+     * Returns a concrete AreaDisplay subtype
+     * @protected
+     *
+     * @param {Property.<Area>} areaProperty
+     * @returns {GenericAreaDisplay}
+     */
+    createAreaDisplay: function( areaProperty ) {
+      return new GenericAreaDisplay( areaProperty );
+    },
+
     /**
      * Returns the model to its initial state.
      * @public

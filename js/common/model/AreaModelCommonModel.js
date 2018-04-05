@@ -58,6 +58,9 @@ define( function( require ) {
       valueType: Area
     } );
 
+    // @public {AreaDisplay}
+    this.areaDisplay = this.createAreaDisplay( this.currentAreaProperty );
+
     // @public {Property.<boolean>}
     this.factorsBoxExpanded = new BooleanProperty( true );
 
@@ -87,6 +90,17 @@ define( function( require ) {
   areaModelCommon.register( 'AreaModelCommonModel', AreaModelCommonModel );
 
   return inherit( Object, AreaModelCommonModel, {
+    /**
+     * Abstract, returns an AreaDisplay concrete type.
+     * @protected
+     *
+     * @param {Property.<Area>} areaProperty
+     * @returns {AreaDisplay}
+     */
+    createAreaDisplay: function( areaProperty ) {
+      throw new Error( 'abstract method' );
+    },
+
     /**
      * Returns the model to its initial state.
      * @public
