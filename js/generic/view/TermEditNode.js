@@ -58,7 +58,7 @@ define( function( require ) {
       editCallback: _.noop,
 
       // {Font}
-      font: AreaModelCommonConstants.EDIT_READOUT_FONT
+      font: AreaModelCommonConstants.TERM_EDIT_READOUT_FONT
     }, options );
 
     var self = this;

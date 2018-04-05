@@ -35,7 +35,6 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
@@ -419,7 +418,7 @@ define( function( require ) {
       [ -1, 1 ].forEach( function( sign ) {
         [ 0, 1, 2 ].forEach( function( power ) {
           rewardNodes.push( new RichText( new Term( sign * digit, power ).toRichString( false ), {
-            font: new PhetFont( { size: 35, weight: 'bold' } ), // TODO: move to common
+            font: AreaModelCommonConstants.REWARD_NODE_FONT,
             fill: colorProperty
           } ) );
         } );

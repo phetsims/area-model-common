@@ -21,7 +21,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -39,10 +38,6 @@ define( function( require ) {
   var BAR_HEIGHT = 60;
   var BAR_PADDING = 40;
   var PROMPT_TOP_PADDING = 20;
-  var BOLD_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  var NON_BOLD_FONT = new PhetFont( { size: 18 } );
-  var START_OVER_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  var PROMPT_FONT = new PhetFont( { size: 30, weight: 'bold' } );
 
   /**
    * @constructor
@@ -73,7 +68,7 @@ define( function( require ) {
 
     // @private {TextPushButton}
     this.startOverButton = new MutableOptionsNode( TextPushButton, [ startOverString ], {
-      font: START_OVER_FONT,
+      font: AreaModelCommonConstants.GAME_STATUS_BAR_START_OVER_FONT,
       listener: startOverCallback,
       touchAreaXDilation: 8,
       touchAreaYDilation: 8,
@@ -85,7 +80,7 @@ define( function( require ) {
 
     // @private {Text} - Text updated in updateLevelInfo
     this.levelNumberText = new Text( 'Level X', {
-      font: BOLD_FONT,
+      font: AreaModelCommonConstants.GAME_STATUS_BAR_BOLD_FONT,
       pickable: false,
       maxWidth: 180
     } );
@@ -103,7 +98,7 @@ define( function( require ) {
     // @private {Node}
     this.scoreNode = new HBox( {
       children: [
-        new Text( scorePrefixString, { font: NON_BOLD_FONT, maxWidth: 120 } ),
+        new Text( scorePrefixString, { font: AreaModelCommonConstants.GAME_STATUS_BAR_NON_BOLD_FONT, maxWidth: 120 } ),
         new ProgressIndicator( AreaModelCommonConstants.NUM_CHALLENGES, scoreProperty, AreaModelCommonConstants.NUM_CHALLENGES * 2 )
       ],
       spacing: 10,
@@ -113,7 +108,7 @@ define( function( require ) {
 
     // @private {Text}
     this.challengeProgressNode = new Text( ' ', {
-      font: NON_BOLD_FONT,
+      font: AreaModelCommonConstants.GAME_STATUS_BAR_NON_BOLD_FONT,
       pickable: false,
       maxWidth: 180
     } );
@@ -131,7 +126,7 @@ define( function( require ) {
 
     // @private {Text}
     this.promptText = new Text( '', {
-      font: PROMPT_FONT,
+      font: AreaModelCommonConstants.GAME_STATUS_BAR_PROMPT_FONT,
       pickable: false,
       maxWidth: 600
     } );
