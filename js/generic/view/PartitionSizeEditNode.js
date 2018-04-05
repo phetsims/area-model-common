@@ -30,6 +30,9 @@ define( function( require ) {
   function PartitionSizeEditNode( activePartitionProperty, partitionProperty, modelViewTransformProperty, allowExponents ) {
     var self = this;
 
+    // @public {Property.<Partition|null>} - Exposed so it can be changed after creation in pooling.
+    this.partitionProperty = partitionProperty;
+
     var orientationProperty = new DerivedProperty( [ partitionProperty ], function( partition ) {
       return partition ? partition.orientation : Orientation.HORIZONTAL; // Default if we have none
     } );
@@ -57,7 +60,7 @@ define( function( require ) {
     // Primary orientation (location of range center)
     var coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
     Property.multilink( [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ], function( partition, range, modelViewTransform ) {
-      if ( range ) {
+      if ( range && partition ) {
         self[ partition.orientation.centerCoordinate ] = partition.orientation.modelToView( modelViewTransform, range.getCenter() );
       }
     } );
@@ -65,15 +68,20 @@ define( function( require ) {
     //TODO: factor out offsets with game view?
     // Secondary (offsets)
     partitionProperty.link( function( partition ) {
-      if ( partition.orientation === Orientation.HORIZONTAL ) {
-        self.centerY = -20;
-      }
-      else {
-        self.centerX = -30;
+      if ( partition ) {
+        if ( partition.orientation === Orientation.HORIZONTAL ) {
+          self.centerY = -20;
+        }
+        else {
+          self.centerX = -30;
+        }
       }
     } );
 
-    new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } ).linkAttribute( this, 'visible' );
+    new DynamicProperty( partitionProperty, {
+      derive: 'visibleProperty',
+      defaultValue: false
+    } ).linkAttribute( this, 'visible' );
   }
 
   areaModelCommon.register( 'PartitionSizeEditNode', PartitionSizeEditNode );

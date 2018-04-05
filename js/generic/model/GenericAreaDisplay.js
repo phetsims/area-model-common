@@ -30,6 +30,8 @@ define( function( require ) {
     // @public {Property.<Partition|null>}
     this.activePartitionProperty = this.wrapProperty( function( area ) {
       return area.activePartitionProperty;
+    }, {
+      bidirectional: true
     } );
   }
 
