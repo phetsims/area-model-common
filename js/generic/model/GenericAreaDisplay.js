@@ -17,7 +17,7 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Property.<Area>} areaProperty
+   * @param {Property.<GenericArea>} areaProperty
    */
   function GenericAreaDisplay( areaProperty ) {
     AreaDisplay.call( this, areaProperty );
