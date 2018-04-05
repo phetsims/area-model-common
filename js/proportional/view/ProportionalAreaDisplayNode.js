@@ -82,21 +82,20 @@ define( function( require ) {
     } );
     this.areaLayer.addChild( activeAreaBackground );
 
+    var tilesVisibleProperty = new DerivedProperty( [ areaDisplay.tilesAvailableProperty, options.tilesVisibleProperty ], function( tilesAvailable, tilesVisible ) {
+      return tilesAvailable && tilesVisible;
+    } );
     // @private {TiledAreaNode|null} - Tiles (optionally enabled)
-    this.tiledAreaNode = null;
-    // if ( area.tilesAvailable ) {
-    //   this.tiledAreaNode = new TiledAreaNode( area, this.modelViewTransform, options.tilesVisibleProperty, area.smallTileSize, area.largeTileSize );
-    //   this.areaLayer.addChild( this.tiledAreaNode );
-    // }
+    this.tiledAreaNode = new TiledAreaNode( areaDisplay, this.modelViewTransformProperty, options.tilesVisibleProperty );
+    this.areaLayer.addChild( this.tiledAreaNode );
 
     // Background stroke
     this.areaLayer.addChild( this.borderNode );
 
-    // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
-    this.countingAreaNode = null;
     var countingVisibleProperty = new DerivedProperty( [ areaDisplay.countingAvailableProperty, options.countingVisibleProperty ], function( countingAvailable, countingVisible ) {
       return countingAvailable && countingVisible;
     } );
+    // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
     this.countingAreaNode = new CountingAreaNode( areaDisplay.activeTotalProperties, this.modelViewTransformProperty, countingVisibleProperty );
     this.areaLayer.addChild( this.countingAreaNode );
 
@@ -128,8 +127,8 @@ define( function( require ) {
      * @public
      */
     update: function() {
-      this.tiledAreaNode && this.tiledAreaNode.update();
-      this.countingAreaNode && this.countingAreaNode.update();
+      this.tiledAreaNode.update();
+      this.countingAreaNode.update();
     },
 
     //TODO: doc @private

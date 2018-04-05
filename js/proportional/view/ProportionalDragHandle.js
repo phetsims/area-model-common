@@ -121,7 +121,6 @@ define( function( require ) {
         // Can't remove the listeners right now, see https://github.com/phetsims/scenery/issues/764. Yikes, temp workaround
         // TODO: Fix this
         // circle.removeAccessibleInputListener( keyboardListener );
-        console.log( 'removed' );
         keyboardListener.dispose();
       }
       // TODO: Shouldn't have to recreate these. Make an issue
@@ -146,7 +145,6 @@ define( function( require ) {
         moveOnHoldInterval: 70
       } );
       circle.addAccessibleInputListener( keyboardListener );
-      console.log( 'added' );
     } );
 
     // Apply offsets while dragging for a smoother experience.

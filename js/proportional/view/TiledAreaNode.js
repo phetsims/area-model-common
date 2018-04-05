@@ -15,6 +15,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
 
   function thousandRound( value ) {
@@ -25,28 +26,27 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {ProportionalArea} area
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {ProportionalAreaDisplay} areaDisplay
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    * @param {Property.<boolean>} tilesVisibleProperty
-   * @param {number} smallTileSize
-   * @param {number} largeTileSize
    */
-  function TiledAreaNode( area, modelViewTransform, tilesVisibleProperty, smallTileSize, largeTileSize ) {
+  function TiledAreaNode( areaDisplay, modelViewTransformProperty, tilesVisibleProperty ) {
 
     var self = this;
 
-    // @private {ProportionalArea}
-    this.area = area;
+    // @private {Property.<ProportionalArea>}
+    this.areaDisplay = areaDisplay; // TODO: Do we need this?
 
-    // @private {ModelViewTransform}
-    this.modelViewTransform = modelViewTransform;
+    // @private {Property.<ModelViewTransform>}
+    this.modelViewTransformProperty = modelViewTransformProperty;
 
     // @private {Property.<boolean>}
     this.tilesVisibleProperty = tilesVisibleProperty;
 
-    // @private {number}
-    this.smallTileSize = smallTileSize;
-    this.largeTileSize = largeTileSize;
+    // @private {Property.<number>}
+    this.smallTileSizeProperty = areaDisplay.smallTileSizeProperty;
+    this.largeTileSizeProperty = areaDisplay.largeTileSizeProperty;
+    this.maximumSizeProperty = areaDisplay.maximumSizeProperty;
 
     // @private {boolean} - Whether we should be redrawn
     this.dirty = true;
@@ -56,9 +56,19 @@ define( function( require ) {
       self.dirty = true;
     }
     tilesVisibleProperty.link( invalidate );
-    area.allPartitions.forEach( function( partition ) {
-      partition.visibleProperty.link( invalidate );
-      partition.coordinateRangeProperty.link( invalidate );
+    modelViewTransformProperty.link( invalidate );
+    this.smallTileSizeProperty.link( invalidate );
+    this.largeTileSizeProperty.link( invalidate );
+    areaDisplay.allPartitionsProperty.link( function( partitions, oldPartitions ) {
+      oldPartitions && oldPartitions.forEach( function( partition ) {
+        partition.visibleProperty.unlink( invalidate );
+        partition.coordinateRangeProperty.unlink( invalidate );
+      } );
+      partitions.forEach( function( partition ) {
+        partition.visibleProperty.link( invalidate );
+        partition.coordinateRangeProperty.link( invalidate );
+      } );
+      invalidate();
     } );
 
     // @private {Path} - Background color paths for each section
@@ -75,32 +85,39 @@ define( function( require ) {
       fill: AreaModelCommonColorProfile.smallTileProperty
     } );
 
-    // Grid line shapes
-    var smallGridShape = new Shape();
-    var horizontalGridShape = new Shape();
-    var verticalGridShape = new Shape();
-    var maxX = modelViewTransform.modelToViewX( area.maximumSize );
-    var maxY = modelViewTransform.modelToViewY( area.maximumSize );
-    for ( var i = -1; i < area.maximumSize / smallTileSize + 1; i++ ) {
-      var x = modelViewTransform.modelToViewX( i * smallTileSize );
-      var y = modelViewTransform.modelToViewY( i * smallTileSize );
-
-      smallGridShape.moveTo( x, 0 ).lineTo( x, maxY );
-      smallGridShape.moveTo( 0, y ).lineTo( maxX, y );
-
-      verticalGridShape.moveTo( x, 0 ).lineTo( x, maxY );
-      horizontalGridShape.moveTo( 0, y ).lineTo( maxX, y );
-    }
-
     // @private {Path} - Grid line paths. We'll use clipping to control where they are visible
-    this.smallGridPath = new Path( smallGridShape, {
+    this.smallGridPath = new Path( null, {
       stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
-    this.horizontalGridPath = new Path( horizontalGridShape, {
+    this.horizontalGridPath = new Path( null, {
       stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
-    this.verticalGridPath = new Path( verticalGridShape, {
+    this.verticalGridPath = new Path( null, {
       stroke: AreaModelCommonColorProfile.tileBorderProperty
+    } );
+
+    Property.multilink( [ modelViewTransformProperty, this.maximumSizeProperty, this.smallTileSizeProperty ], function( modelViewTransform, maximumSize, smallTileSize ) {
+      // Grid line shapes
+      var smallGridShape = new Shape();
+      var horizontalGridShape = new Shape();
+      var verticalGridShape = new Shape();
+      var maxX = modelViewTransform.modelToViewX( maximumSize );
+      var maxY = modelViewTransform.modelToViewY( maximumSize );
+      for ( var i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
+        var x = modelViewTransform.modelToViewX( i * smallTileSize );
+        var y = modelViewTransform.modelToViewY( i * smallTileSize );
+
+        smallGridShape.moveTo( x, 0 ).lineTo( x, maxY );
+        smallGridShape.moveTo( 0, y ).lineTo( maxX, y );
+
+        verticalGridShape.moveTo( x, 0 ).lineTo( x, maxY );
+        horizontalGridShape.moveTo( 0, y ).lineTo( maxX, y );
+      }
+
+      // Made immutable for potential performance gains
+      self.smallGridPath.shape = smallGridShape.makeImmutable();
+      self.horizontalGridPath.shape = horizontalGridShape.makeImmutable();
+      self.verticalGridPath.shape = verticalGridShape.makeImmutable();
     } );
 
     // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
@@ -135,7 +152,7 @@ define( function( require ) {
     forPartitions: function( orientation, callback ) {
       var self = this;
 
-      this.area.partitions.get( orientation ).forEach( function( partition ) {
+      this.areaDisplay.partitionsProperties.get( orientation ).value.forEach( function( partition ) {
         var range = partition.coordinateRangeProperty.value;
 
         // Ignore partitions without a visible well-defined range.
@@ -144,11 +161,11 @@ define( function( require ) {
         }
 
         var size = range.getLength();
-        var largeCount = Math.floor( thousandRound( size / self.largeTileSize ) );
-        var smallCount = Math.round( ( size - self.largeTileSize * largeCount ) / self.smallTileSize );
-        var min = orientation.modelToView( self.modelViewTransform, range.min );
-        var border = orientation.modelToView( self.modelViewTransform, range.min + largeCount * self.largeTileSize );
-        var max = orientation.modelToView( self.modelViewTransform, range.max );
+        var largeCount = Math.floor( thousandRound( size / self.largeTileSizeProperty.value ) );
+        var smallCount = Math.round( ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value );
+        var min = orientation.modelToView( self.modelViewTransformProperty.value, range.min );
+        var border = orientation.modelToView( self.modelViewTransformProperty.value, range.min + largeCount * self.largeTileSizeProperty.value );
+        var max = orientation.modelToView( self.modelViewTransformProperty.value, range.max );
 
         callback( largeCount, smallCount, min, border, max );
       } );
@@ -167,12 +184,11 @@ define( function( require ) {
       this.dirty = false;
 
       // Coordinate mapping into the view
-      var mapX = this.modelViewTransform.modelToViewX.bind( this.modelViewTransform );
-      var mapY = this.modelViewTransform.modelToViewY.bind( this.modelViewTransform );
+      var mapX = this.modelViewTransformProperty.value.modelToViewX.bind( this.modelViewTransformProperty.value );
+      var mapY = this.modelViewTransformProperty.value.modelToViewY.bind( this.modelViewTransformProperty.value );
 
-      // Constructor parameters
-      var area = this.area;
-      var largeTileSize = this.largeTileSize;
+      var largeTileSize = this.largeTileSizeProperty.value;
+      var maximumSize = this.maximumSizeProperty.value;
 
       this.visible = this.tilesVisibleProperty.value;
 
@@ -189,11 +205,11 @@ define( function( require ) {
           var i;
           for ( i = 0; i < horizontalLargeCount; i++ ) {
             var x = xMin + mapX( ( i + 1 ) * largeTileSize );
-            extraLinesShape.moveTo( x, 0 ).lineTo( x, mapY( area.maximumSize ) );
+            extraLinesShape.moveTo( x, 0 ).lineTo( x, mapY( maximumSize ) );
           }
           for ( i = 0; i < verticalLargeCount; i++ ) {
             var y = yMin + mapY( ( i + 1 ) * largeTileSize );
-            extraLinesShape.moveTo( 0, y ).lineTo( mapX( area.maximumSize ), y );
+            extraLinesShape.moveTo( 0, y ).lineTo( mapX( maximumSize ), y );
           }
 
           // Add sections to the relevant shapes.
@@ -232,7 +248,7 @@ define( function( require ) {
 
       // Display extra lines, and clip it to fit the active area.
       this.extraLinesPath.shape = extraLinesShape;
-      this.extraLinesPath.clipArea = Shape.rect( 0, 0, mapX( area.activeTotalProperties.horizontal.value ), mapY( area.activeTotalProperties.vertical.value ) );
+      this.extraLinesPath.clipArea = Shape.rect( 0, 0, mapX( this.areaDisplay.activeTotalProperties.horizontal.value ), mapY( this.areaDisplay.activeTotalProperties.vertical.value ) );
     }
   } );
 } );
