@@ -86,7 +86,7 @@ define( function( require ) {
       return tilesAvailable && tilesVisible;
     } );
     // @private {TiledAreaNode|null} - Tiles (optionally enabled)
-    this.tiledAreaNode = new TiledAreaNode( areaDisplay, this.modelViewTransformProperty, options.tilesVisibleProperty );
+    this.tiledAreaNode = new TiledAreaNode( areaDisplay, this.modelViewTransformProperty, tilesVisibleProperty );
     this.areaLayer.addChild( this.tiledAreaNode );
 
     // Background stroke
@@ -100,8 +100,8 @@ define( function( require ) {
     this.areaLayer.addChild( this.countingAreaNode );
 
     // Partition lines
-    // this.areaLayer.addChild( new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.HORIZONTAL ) );
-    // this.areaLayer.addChild( new ProportionalPartitionLineNode( area, this.modelViewTransform, Orientation.VERTICAL ) );
+    this.areaLayer.addChild( new ProportionalPartitionLineNode( areaDisplay, this.modelViewTransformProperty, Orientation.HORIZONTAL ) );
+    this.areaLayer.addChild( new ProportionalPartitionLineNode( areaDisplay, this.modelViewTransformProperty, Orientation.VERTICAL ) );
 
     // Partition labels
     // Orientation.VALUES.forEach( function( orientation ) {

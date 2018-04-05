@@ -37,6 +37,8 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<number>>}
     this.partitionSplitProperties = this.wrapOrientationPairProperty( function( area ) {
       return area.partitionSplitProperties;
+    }, {
+      bidirectional: true
     } );
 
     // TODO: check for what is actually used
@@ -62,6 +64,8 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<boolean>>}
     this.hasHintArrows = this.wrapOrientationPairProperty( function( area ) {
       return area.hasHintArrows;
+    }, {
+      bidirectional: true
     } );
 
     // @public {OrientationPair.<Property.<boolean>>}

@@ -26,7 +26,6 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Shape = require( 'KITE/Shape' );
@@ -36,22 +35,21 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {ProportionalArea} area
-   * @param {ModelViewTransform2} modelViewTransform
+   * @param {ProportionalAreaDisplay} areaDisplay
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    * @param {Orientation} orientation
    */
-  function ProportionalPartitionLineNode( area, modelViewTransform, orientation ) {
-    assert && assert( area instanceof ProportionalArea );
+  function ProportionalPartitionLineNode( areaDisplay, modelViewTransformProperty, orientation ) {
     assert && assert( Orientation.isOrientation( orientation ) );
 
     var self = this;
 
     Node.call( this );
 
-    // @public {ProportionalArea}
-    this.area = area;
+    // @private {ProportionalAreaDisplay}
+    this.areaDisplay = areaDisplay;
 
-    var showHintArrowsProperty = area.hasHintArrows.get( orientation );
+    var showHintArrowsProperty = areaDisplay.hasHintArrows.get( orientation );
 
     var minHintArrow;
     var maxHintArrow;
@@ -91,7 +89,7 @@ define( function( require ) {
     var handle = new Path( handleShape, {
       mouseArea: Shape.bounds( handleMouseBounds ).shapeIntersection( handleClipShape ),
       touchArea: Shape.bounds( handleTouchBounds ).shapeIntersection( handleClipShape ),
-      fill: area.colorProperties.get( orientation ),
+      fill: areaDisplay.colorProperties.get( orientation ),
       stroke: AreaModelCommonColorProfile.partitionLineBorderProperty,
       cursor: 'pointer',
       children: [
@@ -114,9 +112,9 @@ define( function( require ) {
     } );
 
     // Relevant properties
-    var partitionSplitProperty = area.partitionSplitProperties.get( orientation );
-    var oppositeActiveTotalProperty = area.activeTotalProperties.get( orientation.opposite );
-    var activeTotalProperty = area.activeTotalProperties.get( orientation );
+    var partitionSplitProperty = areaDisplay.partitionSplitProperties.get( orientation );
+    var oppositeActiveTotalProperty = areaDisplay.activeTotalProperties.get( orientation.opposite );
+    var activeTotalProperty = areaDisplay.activeTotalProperties.get( orientation );
 
     // We need to reverse the accessible property for the vertical case.
     // See https://github.com/phetsims/area-model-introduction/issues/2
@@ -125,8 +123,8 @@ define( function( require ) {
       map: function( v ) { return -v; },
       inverseMap: function( v ) {  return -v; }
     } );
-    var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty ], function( total ) {
-      var size = total - area.snapSize;
+    var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty, areaDisplay.snapSizeProperty ], function( total, snapSize ) {
+      var size = total - snapSize;
       return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
     } );
 
@@ -145,12 +143,12 @@ define( function( require ) {
     this.focusHighlightLayerable = true;
 
     // Main coordinate (when dragging)
-    partitionSplitProperty.link( function( split ) {
+    Property.multilink( [ partitionSplitProperty, modelViewTransformProperty ], function( split, modelViewTransform ) {
       self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, split );
     } );
 
     // Opposite coordinate (how wide the area is in the other direction)
-    oppositeActiveTotalProperty.link( function( oppositeTotal ) {
+    Property.multilink( [ oppositeActiveTotalProperty, modelViewTransformProperty ], function( oppositeTotal, modelViewTransform ) {
       var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) + AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
       handle[ orientation.opposite.coordinate ] = offsetValue;
       line[ orientation.opposite.coordinate + '2' ] = offsetValue;
@@ -159,32 +157,39 @@ define( function( require ) {
     } );
 
     // Visibility
-    area.partitionSplitVisibleProperties.get( orientation ).linkAttribute( self, 'visible' );
+    areaDisplay.partitionSplitVisibleProperties.get( orientation ).linkAttribute( self, 'visible' );
 
-    var dragHandler = new DragListener( {
-      transform: modelViewTransform,
-      drag: function( event, listener ) {
-        var value = listener.modelPoint[ orientation.coordinate ];
-
-        value = Math.round( value / area.partitionSnapSize ) * area.partitionSnapSize;
-        value = Util.clamp( value, 0, activeTotalProperty.value );
-
-        // Hint arrows disappear when the actual split changes during a drag, see https://github.com/phetsims/area-model-common/issues/68
-        var currentSplitValue = partitionSplitProperty.value;
-        if ( value !== currentSplitValue && value !== 0 ) {
-          showHintArrowsProperty.value = false;
-        }
-
-        partitionSplitProperty.value = value;
-      },
-
-      end: function( event, listener ) {
-        if ( partitionSplitProperty.value === activeTotalProperty.value ) {
-          partitionSplitProperty.value = 0;
-        }
+    var dragHandler;
+    modelViewTransformProperty.link( function( modelViewTransform ) {
+      if ( dragHandler ) {
+        self.removeInputListener( dragHandler );
+        dragHandler.dispose();
       }
+      dragHandler = new DragListener( {
+        transform: modelViewTransform,
+        drag: function( event, listener ) {
+          var value = listener.modelPoint[ orientation.coordinate ];
+
+          value = Math.round( value / areaDisplay.partitionSnapSizeProperty.value ) * areaDisplay.partitionSnapSizeProperty.value;
+          value = Util.clamp( value, 0, activeTotalProperty.value );
+
+          // Hint arrows disappear when the actual split changes during a drag, see https://github.com/phetsims/area-model-common/issues/68
+          var currentSplitValue = partitionSplitProperty.value;
+          if ( value !== currentSplitValue && value !== 0 ) {
+            showHintArrowsProperty.value = false;
+          }
+
+          partitionSplitProperty.value = value;
+        },
+
+        end: function( event, listener ) {
+          if ( partitionSplitProperty.value === activeTotalProperty.value ) {
+            partitionSplitProperty.value = 0;
+          }
+        }
+      } );
+      self.addInputListener( dragHandler );
     } );
-    this.addInputListener( dragHandler );
 
     // Remove splits that are at or past the current boundary.
     activeTotalProperty.link( function( total ) {
