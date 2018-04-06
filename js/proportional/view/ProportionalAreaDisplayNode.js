@@ -166,43 +166,30 @@ define( function( require ) {
     positionProductLabels: function() {
       var self = this;
 
-      // {Array.<Range|null>} - View coordinates - TODO: potential to dedup horiz/vert
-      var horizontalRanges = this.areaDisplay.partitionsProperties.horizontal.value.map( function( partition ) {
-        var range = partition.coordinateRangeProperty.value;
-        if ( range === null ) { return null; }
-        return new Range( self.modelViewTransformProperty.value.modelToViewX( range.min ),
-                          self.modelViewTransformProperty.value.modelToViewX( range.max ) );
-      } );
-      var verticalRanges = this.areaDisplay.partitionsProperties.vertical.value.map( function( partition ) {
-        var range = partition.coordinateRangeProperty.value;
-        if ( range === null ) { return null; }
-        return new Range( self.modelViewTransformProperty.value.modelToViewY( range.min ),
-                          self.modelViewTransformProperty.value.modelToViewY( range.max ) );
+      // {OrientationPair.<Array.<Range|null>>} - Current view ranges (if non-null) for each orientation
+      var rangesPair = this.areaDisplay.partitionsProperties.map( function( partitionsProperties, orientation ) {
+        return partitionsProperties.value.map( function( partition ) {
+          var range = partition.coordinateRangeProperty.value;
+          if ( range === null ) { return null; }
+          return new Range( orientation.modelToView( self.modelViewTransformProperty.value, range.min ),
+                            orientation.modelToView( self.modelViewTransformProperty.value, range.max ) );
+        } );
       } );
 
-      //TODO: potential to dedup horiz/vert
+      // First, center the labels (if they have defined ranges)
       this.productLabels.forEach( function( productLabel ) {
-        // {Partition}
-        var horizontalPartition = productLabel.partitionedAreaProperty.value.partitions.get( Orientation.HORIZONTAL );
-        var verticalPartition = productLabel.partitionedAreaProperty.value.partitions.get( Orientation.VERTICAL );
-
-        // {Range|null}
-        var horizontalRange = horizontalRanges[ _.indexOf( self.areaDisplay.partitionsProperties.horizontal.value, horizontalPartition ) ];
-        var verticalRange = verticalRanges[ _.indexOf( self.areaDisplay.partitionsProperties.vertical.value, verticalPartition ) ];
-
-        // Ignore it if any parts are null or undefined (can be undefined if we switched over the partition properties
-        // and it hasn't transferred yet to the other bits)
-        if ( horizontalRange === null || verticalRange === null || horizontalRange === undefined || verticalRange === undefined ) {
-          return true;
-        }
-
-        productLabel.x = horizontalRange.getCenter();
-        productLabel.y = verticalRange.getCenter();
+        rangesPair.forEach( function( ranges, orientation ) {
+          var partition = productLabel.partitionedAreaProperty.value.partitions.get( orientation );
+          var range = ranges[ _.indexOf( self.areaDisplay.partitionsProperties.get( orientation ).value, partition ) ];
+          if ( range ) {
+            productLabel[ orientation.coordinate ] = range.getCenter();
+          }
+        } );
       } );
 
       // Handle each row separately
       [ 0, 1 ].forEach( function( verticalIndex ) {
-        var verticalRange = verticalRanges[ verticalIndex ];
+        var verticalRange = rangesPair.vertical[ verticalIndex ];
 
         // Bail if this row isn't shown at all.
         if ( verticalRange === null ) { return; }
@@ -219,7 +206,7 @@ define( function( require ) {
           var leftOverlapBump = 22;
           var labelOverlapBump = 10;
 
-          var hasLeftOverlap = verticalRanges[ 1 ] !== null && leftLabel.left < -5;
+          var hasLeftOverlap = rangesPair.vertical[ 1 ] !== null && leftLabel.left < -5;
           var canAvoidLeftOverlap = leftLabel.top - leftOverlapBump >= verticalRange.min - 5;
           var hasLabelOverlap = hasTwo && leftLabel.right > rightLabel.left;
           var canAvoidLabelOverlap = leftLabel.top - labelOverlapBump >= verticalRange.min - 3;
