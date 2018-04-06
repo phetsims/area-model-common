@@ -35,7 +35,7 @@ define( function( require ) {
     var self = this;
 
     // @private {Property.<ProportionalArea>}
-    this.areaDisplay = areaDisplay; // TODO: Do we need this?
+    this.areaDisplay = areaDisplay;
 
     // @private {Property.<ModelViewTransform>}
     this.modelViewTransformProperty = modelViewTransformProperty;

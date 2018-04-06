@@ -37,7 +37,7 @@ define( function( require ) {
    * @param {Property.<GameState>} gameStateProperty
    * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */
-  function GameAreaNode( display, activeEditableProperty, gameStateProperty, setActiveTerm ) {
+  function GameAreaDisplayNode( display, activeEditableProperty, gameStateProperty, setActiveTerm ) {
     var self = this;
 
     Node.call( this );
@@ -194,9 +194,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'GameAreaNode', GameAreaNode );
+  areaModelCommon.register( 'GameAreaDisplayNode', GameAreaDisplayNode );
 
-  return inherit( Node, GameAreaNode, {
+  return inherit( Node, GameAreaDisplayNode, {
     /**
      * Creates a partition line (view only)
      * @private

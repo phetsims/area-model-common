@@ -122,13 +122,14 @@ define( function( require ) {
       bidirectional: true,
       map: function( v ) { return -v; },
       inverseMap: function( v ) {  return -v; }
+    }, {
+      valueType: 'number' // AccessibleSlider doesn't want anything besides a number
     } );
     var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty, areaDisplay.snapSizeProperty ], function( total, snapSize ) {
       var size = total - snapSize;
       return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
     } );
 
-    // TODO: Only pass in a Property.<number>, NEVER something that can be null. One of these ... starts as null?
     this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
       constrainValue: function( value ) {
         return Util.roundSymmetric( value );

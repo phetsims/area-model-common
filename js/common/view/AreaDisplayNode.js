@@ -164,8 +164,6 @@ define( function( require ) {
      * origin.
      * @private
      *
-     * TODO: check usage to see if we can use mapRange instead
-     *
      * @param {number} value
      * @returns {number}
      */

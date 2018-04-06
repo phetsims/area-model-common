@@ -21,8 +21,8 @@ define( function( require ) {
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
+  var GameAreaDisplayNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaDisplayNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
-  var GameAreaNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaNode' );
   var GameAudio = require( 'AREA_MODEL_COMMON/game/view/GameAudio' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
@@ -189,7 +189,7 @@ define( function( require ) {
       newChallenge.attachDisplay( self.display );
     } );
 
-    var gameAreaNode = new GameAreaNode( this.display, model.activeEditableProperty, model.stateProperty, function( term ) {
+    var gameAreaNode = new GameAreaDisplayNode( this.display, model.activeEditableProperty, model.stateProperty, function( term ) {
       model.setActiveTerm( term );
     } );
     this.challengeLayer.addChild( gameAreaNode );
