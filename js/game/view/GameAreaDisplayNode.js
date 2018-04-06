@@ -109,7 +109,7 @@ define( function( require ) {
 
         var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false );
 
-        label[ orientation.opposite.coordinate ] = orientation === Orientation.HORIZONTAL ? -20 : -30;
+        label[ orientation.opposite.coordinate ] = AreaModelCommonConstants.PARTITION_OFFSET.get( orientation );
         self.addChild( label );
 
         centerProperties[ orientation === Orientation.HORIZONTAL ][ partitionIndex ].link( function( location ) {

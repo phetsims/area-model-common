@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Color = require( 'SCENERY/util/Color' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
@@ -65,16 +66,10 @@ define( function( require ) {
       }
     } );
 
-    //TODO: factor out offsets with game view?
     // Secondary (offsets)
     partitionProperty.link( function( partition ) {
       if ( partition ) {
-        if ( partition.orientation === Orientation.HORIZONTAL ) {
-          self.centerY = -20;
-        }
-        else {
-          self.centerX = -30;
-        }
+        self[ partition.orientation.opposite.centerCoordinate ] = AreaModelCommonConstants.PARTITION_OFFSET.get( partition.orientation );
       }
     } );
 

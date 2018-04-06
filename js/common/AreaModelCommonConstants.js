@@ -12,6 +12,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -131,6 +132,10 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 8
     },
+
+    // {OrientationPair.<number>} - The opposite-orientation offset to use for term edit nodes, e.g.
+    // node[ orientaation.opposite.coordinate ] = PARTITION_OFFSET.get( orientation )
+    PARTITION_OFFSET: new OrientationPair( -20, -30 ),
 
     /**
      * @typedef {Array.<MultidimensionalArray.<*>|*>} MultidimensionalArray.<*>
