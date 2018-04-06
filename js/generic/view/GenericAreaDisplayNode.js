@@ -44,10 +44,6 @@ define( function( require ) {
       isProportional: false // just here to be explicit
     } );
 
-    var singleOffset = this.viewSize * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
-    var firstOffset = this.viewSize * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
-    var secondOffset = this.viewSize * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
-
     this.labelLayer.addChild( this.eraseButton );
 
     this.areaLayer.addChild( this.backgroundNode );
@@ -80,20 +76,7 @@ define( function( require ) {
     this.areaLayer.addChild( this.borderNode );
 
     // Partition lines
-    Orientation.VALUES.forEach( function( orientation ) {
-      var singleLine = self.createPartitionLine( orientation, singleOffset );
-      var firstLine = self.createPartitionLine( orientation, firstOffset );
-      var secondLine = self.createPartitionLine( orientation, secondOffset );
-      self.areaLayer.addChild( singleLine );
-      self.areaLayer.addChild( firstLine );
-      self.areaLayer.addChild( secondLine );
-
-      areaDisplay.layoutProperty.link( function( layout ) {
-        var quantity = layout.getPartitionQuantity( orientation );
-        singleLine.visible = quantity === 2;
-        firstLine.visible = secondLine.visible = quantity === 3;
-      } );
-    } );
+    this.areaLayer.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, this.viewSize ) );
 
     // Edit readouts/buttons
     var editNodes = [];
@@ -165,29 +148,67 @@ define( function( require ) {
           }
         } );
       } );
-    },
-
+    }
+  }, {
     /**
      * Creates a partition line (view only)
      * @private
      *
      * @param {Orientation} orientation
      * @param {number} offset
+     * @param {number} viewSize - In view units, the size of the main area
+     * @param {Property.<boolean>} visibilityProperty
      */
-    createPartitionLine: function( orientation, offset ) {
+    createPartitionLine: function( orientation, offset, viewSize, visibilityProperty ) {
       var firstPoint = new Vector2();
       var secondPoint = new Vector2();
 
       firstPoint[ orientation.coordinate ] = offset;
       secondPoint[ orientation.coordinate ] = offset;
-      firstPoint[ orientation.opposite.coordinate ] = this.viewSize;
+      firstPoint[ orientation.opposite.coordinate ] = viewSize;
       secondPoint[ orientation.opposite.coordinate ] = 0;
 
-      return new Line( {
+      var line = new Line( {
         p1: firstPoint,
         p2: secondPoint,
         stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty
       } );
+      visibilityProperty.linkAttribute( line, 'visible' );
+      return line;
+    },
+
+    /**
+     * Creates a set of generic partition lines.
+     * @public
+     *
+     * @param {Property.<GenericLayout>} layoutProperty
+     * @param {number} viewSize
+     * @returns {Node}
+     */
+    createPartitionLines: function( layoutProperty, viewSize ) {
+      var singleOffset = viewSize * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
+      var firstOffset = viewSize * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
+      var secondOffset = viewSize * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
+
+      var resultNode = new Node();
+
+      Orientation.VALUES.forEach( function( orientation ) {
+        var hasTwoProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
+          return layout.getPartitionQuantity( orientation ) === 2;
+        } );
+        var hasThreeProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
+          return layout.getPartitionQuantity( orientation ) === 3;
+        } );
+
+        var singleLine = GenericAreaDisplayNode.createPartitionLine( orientation, singleOffset, viewSize, hasTwoProperty );
+        var firstLine = GenericAreaDisplayNode.createPartitionLine( orientation, firstOffset, viewSize, hasThreeProperty );
+        var secondLine = GenericAreaDisplayNode.createPartitionLine( orientation, secondOffset, viewSize, hasThreeProperty );
+        resultNode.addChild( singleLine );
+        resultNode.addChild( firstLine );
+        resultNode.addChild( secondLine );
+      } );
+
+      return resultNode;
     }
   } );
 } );

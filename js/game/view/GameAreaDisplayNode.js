@@ -16,16 +16,15 @@ define( function( require ) {
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
+  var GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
-  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor
@@ -52,18 +51,7 @@ define( function( require ) {
       stroke: AreaModelCommonColorProfile.areaBorderProperty
     } ) );
 
-    Orientation.VALUES.forEach( function( orientation ) {
-      var hasTwoProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
-        return layout.getPartitionQuantity( orientation ) === 2;
-      } );
-      var hasThreeProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
-        return layout.getPartitionQuantity( orientation ) === 3;
-      } );
-
-      self.addChild( self.createPartitionLine( orientation, singleOffset, hasTwoProperty ) );
-      self.addChild( self.createPartitionLine( orientation, firstOffset, hasThreeProperty ) );
-      self.addChild( self.createPartitionLine( orientation, secondOffset, hasThreeProperty ) );
-    } );
+    this.addChild( GenericAreaDisplayNode.createPartitionLines( display.layoutProperty, AreaModelCommonConstants.AREA_SIZE ) );
 
     // Range views
     var tickVariations = {
@@ -185,33 +173,5 @@ define( function( require ) {
 
   areaModelCommon.register( 'GameAreaDisplayNode', GameAreaDisplayNode );
 
-  return inherit( Node, GameAreaDisplayNode, {
-    /**
-     * Creates a partition line (view only)
-     * @private
-     *
-     * TODO: dedup with GenericAreaDisplayNode
-     *
-     * @param {Orientation} orientation
-     * @param {number} offset
-     * @param {Property.<boolean>} visibilityProperty
-     */
-    createPartitionLine: function( orientation, offset, visibilityProperty ) {
-      var firstPoint = new Vector2();
-      var secondPoint = new Vector2();
-
-      firstPoint[ orientation.coordinate ] = offset;
-      secondPoint[ orientation.coordinate ] = offset;
-      firstPoint[ orientation.opposite.coordinate ] = AreaModelCommonConstants.AREA_SIZE;
-      secondPoint[ orientation.opposite.coordinate ] = 0;
-
-      var line = new Line( {
-        p1: firstPoint,
-        p2: secondPoint,
-        stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty
-      } );
-      visibilityProperty.linkAttribute( line, 'visible' );
-      return line;
-    }
-  } );
+  return inherit( Node, GameAreaDisplayNode );
 } );
