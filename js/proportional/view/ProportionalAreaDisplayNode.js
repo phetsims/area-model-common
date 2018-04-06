@@ -245,7 +245,7 @@ define( function( require ) {
       labels[ 0 ][ orientation.coordinate ] = ( min + middle ) / 2;
       labels[ 1 ][ orientation.coordinate ] = ( middle + max ) / 2;
 
-      var pad = orientation === Orientation.HORIZONTAL ? 2 : 0; // TODO: consider different value for vertical
+      var pad = orientation === Orientation.HORIZONTAL ? 2 : 0;
 
       if ( secondaryRange && labels[ 0 ][ orientation.maxSide ] > labels[ 1 ][ orientation.minSide ] - pad * 2 ) {
         var center = ( labels[ 0 ][ orientation.maxSide ] + labels[ 1 ][ orientation.minSide ] ) / 2;
