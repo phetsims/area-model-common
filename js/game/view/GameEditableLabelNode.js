@@ -37,9 +37,9 @@ define( function( require ) {
    * @param {Property.<boolean>} allowExponentsProperty
    * @param {Orientation} orientation
    * @param {boolean} canBePolynomial
-   * @param {function} editCallback - Called when editing is triggered
+   * @param {Object} options
    */
-  function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, editCallback, options ) {
+  function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, options ) {
 
     options = _.extend( {
       labelFont: AreaModelCommonConstants.GAME_MAIN_LABEL_FONT,
@@ -95,7 +95,12 @@ define( function( require ) {
       isActiveProperty: isActiveProperty,
       digitCountProperty: digitsProperty,
       allowExponentsProperty: allowExponentsProperty,
-      editCallback: editCallback,
+      editCallback: function() {
+        if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
+          gameStateProperty.value = GameState.SECOND_ATTEMPT;
+        }
+        activeEditableProperty.value = valuePropertyProperty.value;
+      },
       font: options.editFont
     } );
     this.addChild( termEditNode );

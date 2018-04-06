@@ -210,12 +210,7 @@ define( function( require ) {
       return totalProperties.length === 1 ? totalProperties[ 0 ] : new EditableProperty( null );
     } );
 
-    var totalNode = new GameEditableLabelNode( totalTermPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, function() {
-      if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
-        model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
-      }
-      model.activeEditableProperty.value = totalTermPropertyProperty.value;
-    }, {
+    var totalNode = new GameEditableLabelNode( totalTermPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, {
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );

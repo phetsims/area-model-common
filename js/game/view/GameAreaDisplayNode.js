@@ -16,7 +16,6 @@ define( function( require ) {
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -120,12 +119,7 @@ define( function( require ) {
         } );
         var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false, function() {
-          if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
-            gameStateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
-          }
-          activeEditableProperty.value = valuePropertyProperty.value;
-        } );
+        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false );
 
         label[ orientation.opposite.coordinate ] = orientation === Orientation.HORIZONTAL ? -20 : -30;
         self.addChild( label );
@@ -151,12 +145,7 @@ define( function( require ) {
           }
         } );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, function() {
-          if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
-            gameStateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
-          }
-          activeEditableProperty.value = valuePropertyProperty.value;
-        }, {
+        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, {
           labelFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_LABEL_FONT,
           editFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_EDIT_FONT
         } );
