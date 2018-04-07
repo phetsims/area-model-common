@@ -48,25 +48,16 @@ define( function( require ) {
       bidirectional: true
     } );
 
-    // TODO: check for what is actually used
-
     // @public {Property.<number>}
     this.maximumSizeProperty = this.wrapObject( function( area ) { return area.maximumSize; } );
-    this.minimumSizeProperty = this.wrapObject( function( area ) { return area.minimumSize; } );
-    this.eraseWidthProperty = this.wrapObject( function( area ) { return area.eraseWidth; } );
-    this.eraseHeightProperty = this.wrapObject( function( area ) { return area.eraseHeight; } );
     this.snapSizeProperty = this.wrapObject( function( area ) { return area.snapSize; } );
     this.partitionSnapSizeProperty = this.wrapObject( function( area ) { return area.partitionSnapSize; } );
-    this.gridSpacingProperty = this.wrapObject( function( area ) { return area.gridSpacing; } );
     this.smallTileSizeProperty = this.wrapObject( function( area ) { return area.smallTileSize; } );
     this.largeTileSizeProperty = this.wrapObject( function( area ) { return area.largeTileSize; } );
 
     // @public {Property.<boolean>}
     this.tilesAvailableProperty = this.wrapObject( function( area ) { return area.tilesAvailable; } );
     this.countingAvailableProperty = this.wrapObject( function( area ) { return area.countingAvailable; } );
-
-    // @public {Property.<PartitionLineChoice>}
-    this.partitionLineChoiceProperty = this.wrapObject( function( area ) { return area.partitionLineChoice; } );
 
     // @public {OrientationPair.<Property.<boolean>>}
     this.hasHintArrows = this.wrapOrientationPairProperty( function( area ) {
@@ -92,7 +83,6 @@ define( function( require ) {
     this.secondaryPartitionsProperty = this.wrapOrientationPair( function( area ) {
       return area.secondaryPartitions;
     } );
-
   }
 
   areaModelCommon.register( 'ProportionalAreaDisplay', ProportionalAreaDisplay );

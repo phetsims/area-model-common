@@ -27,7 +27,7 @@ define( function( require ) {
    * @extends {AccordionBox}
    *
    * @param {ProportionalAreaModel} model
-   * @param {Bounds2} bounds - Where to lay out the box in view space TODO: Pass Dimension2 instead, we don't use x/y really
+   * @param {Bounds2} bounds - Where to lay out the box in view space
    * @param {Object} [nodeOptions]
    */
   function CalculationBox( model, bounds, nodeOptions ) {

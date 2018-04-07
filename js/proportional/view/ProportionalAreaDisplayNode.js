@@ -147,7 +147,14 @@ define( function( require ) {
       this.countingAreaNode.update();
     },
 
-    //TODO: doc @private
+    /**
+     * Returns the partial product note at the given horizontal/vertical indices.
+     * @private
+     *
+     * @param {number} horizontalIndex
+     * @param {number} verticalIndex
+     * @returns {PartialProductLabelNode}
+     */
     getProductLabel: function( horizontalIndex, verticalIndex ) {
       var horizontalPartitions = this.areaDisplay.partitionsProperties.horizontal.value;
       var verticalPartitions = this.areaDisplay.partitionsProperties.vertical.value;
@@ -199,7 +206,7 @@ define( function( require ) {
 
         // We may not be able to access labels if we are in a partial state (some properties have changed, but others
         // have not).
-        // TODO: Just have the labels get updated at end of frame? Should make things faster too.
+        // PERFORMANCE CHECK TODO: Just have the labels get updated at end of frame? Should make things faster too.
         if ( leftLabel && rightLabel ) {
           var hasTwo = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
 
@@ -232,12 +239,17 @@ define( function( require ) {
       } );
     },
 
-    // TODO doc
+    /**
+     * Position the partition labels (along the top/side).
+     * @private
+     *
+     * @param {Orientation} orientation
+     * @param {Node} labels
+     */
     positionPartitionLabels: function( orientation, labels ) {
       var primaryRange = this.areaDisplay.primaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
       var secondaryRange = this.areaDisplay.secondaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
 
-      // TODO: make this prettier? lots of cleanup
       var min = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.min );
       var middle = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.max );
       var max = secondaryRange ? orientation.modelToView( this.modelViewTransformProperty.value, secondaryRange.max ) : 0;
