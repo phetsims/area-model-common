@@ -1,7 +1,7 @@
 // Copyright 2017, University of Colorado Boulder
 
 /**
- * Supertype for area-model models.
+ * Model for the game screens
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

@@ -13,6 +13,7 @@ define( function( require ) {
   var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -70,8 +71,9 @@ define( function( require ) {
     this.totalPropertiesProperty = new Property( [ new EditableProperty( null ) ] );
 
     // @public {Property.<Property.<TermList|null>>} - The "total area" property reference
-    ///////// Uses the totalProperty of the challenge. Also dynamic-property it here
-    this.totalPropertyProperty = new Property( new Property( null ) );
+    this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
+      derive: 'totalProperty'
+    } );
   }
 
   areaModelCommon.register( 'GameAreaDisplay', GameAreaDisplay );

@@ -17,7 +17,6 @@ define( function( require ) {
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
@@ -214,8 +213,7 @@ define( function( require ) {
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );
-    var totalProperty = new DynamicProperty( this.display.totalPropertyProperty );
-    var polynomialEditNode = new PolynomialEditNode( totalProperty, this.display.totalPropertiesProperty, function() {
+    var polynomialEditNode = new PolynomialEditNode( this.display.totalProperty, this.display.totalPropertiesProperty, function() {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
       }
@@ -224,7 +222,7 @@ define( function( require ) {
       font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT,
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
-    totalProperty.link( function( total ) {
+    this.display.totalProperty.link( function( total ) {
       if ( total ) {
         polynomialReadoutText.text = total.toRichString( false );
       }
