@@ -15,6 +15,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
@@ -247,77 +248,47 @@ define( function( require ) {
       rightMargin: AreaModelCommonConstants.PANEL_MARGIN
     } ) );
 
-    //TODO: button deduplication
-    var buttonLocationOptions = {
-      centerX: panelBox.centerX,
-      top: panelBox.bottom + 80
-    };
-    var checkButton = new MutableOptionsNode( RectangularPushButton, [], {
-      content: new Text( checkString, {
-        font: AreaModelCommonConstants.BUTTON_FONT,
-        maxWidth: 200
-      } ),
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      listener: function() {
-        model.check();
-      }
-    }, {
-      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty,
-      // TODO: potential input issues recreating the button? Let's find a better way.
-      enabled: new DerivedProperty( [ model.hasNullProperty ], function( hasNull ) {
-        return !hasNull;
-      } )
-    }, buttonLocationOptions );
-    this.challengeLayer.addChild( checkButton );
+    function createGameButton( string, listener, enabledProperty ) {
+      var button = new MutableOptionsNode( RectangularPushButton, [], {
+        content: new Text( string, {
+          font: AreaModelCommonConstants.BUTTON_FONT,
+          maxWidth: 200
+        } ),
+        touchAreaXDilation: 10,
+        touchAreaYDilation: 10,
+        listener: listener
+      }, {
+        baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty,
+        enabled: enabledProperty
+      }, {
+        centerX: panelBox.centerX,
+        top: panelBox.bottom + 80
+      } );
+      self.challengeLayer.addChild( button );
+      return button;
+    }
 
-    var tryAgainButton = new MutableOptionsNode( RectangularPushButton, [], {
-      content: new Text( tryAgainString, {
-        font: AreaModelCommonConstants.BUTTON_FONT,
-        maxWidth: 200
-      } ),
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      listener: function() {
-        model.tryAgain();
-      }
-    }, {
-      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty
-    }, buttonLocationOptions );
-    this.challengeLayer.addChild( tryAgainButton );
+    var checkButton = createGameButton( checkString, function() {
+      model.check();
+    }, new DerivedProperty( [ model.hasNullProperty ], function( hasNull ) {
+      return !hasNull;
+    } ) );
 
-    var nextButton = new MutableOptionsNode( RectangularPushButton, [], {
-      content: new Text( nextString, {
-        font: AreaModelCommonConstants.BUTTON_FONT,
-        maxWidth: 200
-      } ),
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      listener: function() {
-        model.next();
-      }
-    }, {
-      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty
-    }, buttonLocationOptions );
-    this.challengeLayer.addChild( nextButton );
+    var tryAgainButton = createGameButton( tryAgainString, function() {
+      model.tryAgain();
+    }, new BooleanProperty( true ) );
 
-    var showSolutionButton = new MutableOptionsNode( RectangularPushButton, [], {
-      content: new Text( showAnswerString, { // TODO: show solution or answer
-        font: AreaModelCommonConstants.BUTTON_FONT
-      } ),
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      listener: function() {
-        model.showSolution();
-      }
-    }, {
-      baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty
-    }, buttonLocationOptions );
-    this.challengeLayer.addChild( showSolutionButton );
+    var nextButton = createGameButton( nextString, function() {
+      model.next();
+    }, new BooleanProperty( true ) );
+
+    var showAnswerButton = createGameButton( showAnswerString, function() {
+      model.showAnswer();
+    }, new BooleanProperty( true ) );
 
     var faceNode = new FaceNode( 90, {
-      right: showSolutionButton.left - 70,
-      top: showSolutionButton.top
+      right: showAnswerButton.left - 70,
+      top: showAnswerButton.top
     } );
     this.challengeLayer.addChild( faceNode );
     var scoreIncreaseText = new Text( ' ', {
@@ -339,7 +310,7 @@ define( function( require ) {
         checkButton.visible = state === GameState.FIRST_ATTEMPT || state === GameState.SECOND_ATTEMPT;
         tryAgainButton.visible = state === GameState.WRONG_FIRST_ANSWER;
         nextButton.visible = state === GameState.CORRECT_ANSWER || state === GameState.SHOW_SOLUTION;
-        showSolutionButton.visible = state === GameState.WRONG_SECOND_ANSWER;
+        showAnswerButton.visible = state === GameState.WRONG_SECOND_ANSWER;
         faceNode.visible = state === GameState.CORRECT_ANSWER || state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER;
         scoreIncreaseText.visible = state === GameState.CORRECT_ANSWER;
       }

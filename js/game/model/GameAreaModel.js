@@ -142,10 +142,10 @@ define( function( require ) {
     },
 
     /**
-     * Shows the solution.
+     * Shows the answer.
      * @public
      */
-    showSolution: function() {
+    showAnswer: function() {
       if ( this.currentChallengeProperty.value ) {
         this.currentChallengeProperty.value.showAnswers();
         this.currentChallengeProperty.value.stateProperty.value = GameState.SHOW_SOLUTION;
