@@ -90,7 +90,7 @@ define( function( require ) {
       }
     }
 
-    // Update the text whem the accumulator's string output changes
+    // Update the text when the accumulator's string output changes
     termAccumulator.richStringProperty.link( updateText );
 
     // When the active partition changes, resize the background to fit to the largest size.

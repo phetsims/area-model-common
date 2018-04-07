@@ -67,7 +67,6 @@ define( function( require ) {
      * @override
      *
      * @param {GenericAreaModel} model
-     * @param {GenericAreaDisplay} areaDisplay
      * @returns {GenericAreaDisplayNode}
      */
     createAreaDisplayNode: function( model ) {

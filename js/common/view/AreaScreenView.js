@@ -212,7 +212,7 @@ define( function( require ) {
     /**
      * Creates a panel interior with the title left-aligned, and the content somewhat offset from the left with a
      * guaranteed margin.
-     * @private
+     * @protected
      *
      * @param {string} titleString
      * @param {AlignGroup} panelAlignGroup

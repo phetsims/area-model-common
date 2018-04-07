@@ -74,7 +74,7 @@ define( function( require ) {
     createTextNode: function( number ) {
       var text = new Text( number, {
         font: AreaModelCommonConstants.COUNTING_FONT,
-        fill: AreaModelCommonColorProfile.countingLabelProperty,
+        fill: AreaModelCommonColorProfile.countingLabelProperty
       } );
       this.textNodes.push( text );
       this.addChild( text );
