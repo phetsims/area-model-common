@@ -77,65 +77,100 @@ define( function( require ) {
       self.visible = areaVisible && ( choice !== PartialProductsChoice.HIDDEN );
     } );
 
+    // Make sure this is understood?
+    var placeholderString = 'base64: aG9wZSB0aGUgY29kZSByZXZpZXcgaXMgZ29pbmcgd2VsbA==';
+
+    // RichTexts (we reuse the same instances to prevent GC and cpu cost)
+    var productRichText = new RichText( placeholderString, {
+      font: AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
+    } );
+    var factorsTextOptions = {
+      font: AreaModelCommonConstants.PARTIAL_FACTOR_FONT
+    };
+    var horizontalRichText = new RichText( placeholderString, factorsTextOptions );
+    var verticalRichText = new RichText( placeholderString, factorsTextOptions );
+
+    var rectangleSize = allowExponents ? 12 : 14;
+    var magicConstant = allowExponents ? 1.3 : 0; // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
+    var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + magicConstant;
+    var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
+      stroke: 'black',
+      lineWidth: 0.7
+    } );
+    var verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
+      stroke: 'black',
+      lineWidth: 0.7
+    } );
+    if ( allowExponents ) {
+      var exponentPadding = 2;
+      horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
+      verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
+    }
+
+    // Persistent text nodes (for performance)
+    var leftParenNode = new Text( '(', factorsTextOptions );
+    var middleParensNode = new Text( ')(', factorsTextOptions );
+    var rightParenNode = new Text( ')', factorsTextOptions );
+    var timesNode = new Text( MathSymbols.TIMES, factorsTextOptions );
+
     // Text/alignment
     Property.multilink( [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
-      var textOptions = {
-        font: ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
-          : AreaModelCommonConstants.PARTIAL_FACTOR_FONT
-      };
+      var children;
 
       // Hidden
       if ( choice === PartialProductsChoice.HIDDEN ) {
-        box.children = [];
+        children = [];
       }
       // Product
       else if ( choice === PartialProductsChoice.PRODUCTS ) {
-        var labelString = ( horizontalSize === null || verticalSize === null ) ? '?' : horizontalSize.times( verticalSize ).toRichString( false );
-        box.children = [
-          new RichText( labelString, textOptions )
-        ];
+        productRichText.text = ( horizontalSize === null || verticalSize === null ) ? '?' : horizontalSize.times( verticalSize ).toRichString( false );
+        children = [ productRichText ];
       }
       // Factors
       else {
-        var rectangleSize = allowExponents ? 12 : 14;
-        var magicConstant = allowExponents ? 1.3 : 0; // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
-        var rectangleCenterY = new Text( ' ', textOptions ).centerY - rectangleSize / 2 + magicConstant;
-        var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
-          stroke: 'black',
-          lineWidth: 0.7
-        } );
-        var verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
-          stroke: 'black',
-          lineWidth: 0.7
-        } );
-        if ( allowExponents ) {
-          var exponentPadding = 2;
-          horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
-          verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
-        }
 
-        var horizontalNode = horizontalSize ? new RichText( horizontalSize.toRichString( false ), textOptions ) : horizontalRectangle;
-        var verticalNode = verticalSize ? new RichText( verticalSize.toRichString( false ), textOptions ) : verticalRectangle;
+        var horizontalNode = horizontalSize ? horizontalRichText.setText( horizontalSize.toRichString( false ) ) : horizontalRectangle;
+        var verticalNode = verticalSize ? verticalRichText.setText( verticalSize.toRichString( false ) ) : verticalRectangle;
 
         if ( allowExponents ) {
           box.spacing = 0;
-          box.children = [
-            new Text( '(', textOptions ),
+          children = [
+            leftParenNode,
             verticalNode,
-            new Text( ')(', textOptions ),
+            middleParensNode,
             horizontalNode,
-            new Text( ')', textOptions )
+            rightParenNode
           ];
         }
         else {
           box.spacing = 2;
-          box.children = [
+          children = [
             verticalNode,
-            new Text( MathSymbols.TIMES, textOptions ),
+            timesNode,
             horizontalNode
           ];
         }
       }
+
+      // So, due to performance, we REALLY don't want to remove and then add these back in. Scenery was burning a chunk
+      // of CPU on some of this, and having the RichTexts not pool has been annoying enough.
+      var currentChildren = box.children;
+      var needsUpdate = false;
+      if ( currentChildren.length !== children.length ) {
+        needsUpdate = true;
+      }
+      else {
+        for ( var i = 0; i < children.length; i++ ) {
+          if ( currentChildren[ i ] !== children[ i ] ) {
+            needsUpdate = true;
+            break;
+          }
+        }
+      }
+      if ( needsUpdate ) {
+        box.children = children;
+      }
+
       if ( isFinite( box.width ) ) {
         box.center = Vector2.ZERO;
         background.rectBounds = box.bounds.dilatedXY( 4, 2 );
