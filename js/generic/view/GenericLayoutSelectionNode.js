@@ -190,7 +190,8 @@ define( function( require ) {
       if ( visible ) {
         var matrix = self.getUniqueTrail().getMatrixTo( listParent.getUniqueTrail() );
         popup.setScaleMagnitude( matrix.getScaleVector().x );
-        popup.leftTop = matrix.timesVector2( rectangle.leftBottom );
+        // We subtract 1 off so that the strokes line up, and we don't get a "double-stroked" effect.
+        popup.leftTop = matrix.timesVector2( rectangle.leftBottom.plusXY( 0, -1 ) );
         listParent.addChild( popup );
 
         phet.joist.display.addInputListener( dismissListener );
