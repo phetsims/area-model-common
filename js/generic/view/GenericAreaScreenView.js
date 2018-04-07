@@ -27,7 +27,7 @@ define( function( require ) {
    * @extends {AreaScreenView}
    *
    * @param {GenericAreaModel} model
-   * @param {number} decimalPlaces TODO: to options?
+   * @param {number} decimalPlaces
    */
   function GenericAreaScreenView( model, decimalPlaces ) {
     assert && assert( model instanceof GenericAreaModel );
@@ -35,7 +35,7 @@ define( function( require ) {
 
     // @private {Node}
     this.popupLayer = new Node( {
-      scale: 0.7 // TODO: factor out the scale
+      scale: GenericLayoutSelectionNode.POPUP_SCALE
     } );
 
     // @private {Node|null} - Will be filled in with getRightSideNodes (we need lazy creation here unfortunately).

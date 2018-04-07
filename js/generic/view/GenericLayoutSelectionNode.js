@@ -28,7 +28,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {ComboBox}
+   * @extends {Node}
    *
    * @param {Property.<GenericLayout>} genericLayoutProperty
    * @param {Node} listParent
@@ -39,9 +39,10 @@ define( function( require ) {
 
     var self = this;
 
-    width -= 1; //TODO: don't have to subtract off the double half stroke width here!
+    // Our rectangles will be stroked, so we need to subtract 1 due to the lineWidth
+    width -= 1;
 
-    var scale = 0.7;
+    var scale = GenericLayoutSelectionNode.POPUP_SCALE;
 
     var comboBoxItems = GenericLayout.VALUES.map( function( layout ) {
       return {
@@ -123,7 +124,7 @@ define( function( require ) {
         return new HBox( {
           children: [ 1, 2, 3 ].map( function( numHorizontal ) {
             var layout = GenericLayout.fromValues( numHorizontal, numVertical );
-            var icon = createLayoutIcon( layout.size, 0.7 );
+            var icon = createLayoutIcon( layout.size, scale );
             icon.pickable = false; // TODO: annoying that we have to specify this?
             var cornerRadius = 3;
             var background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
@@ -236,9 +237,12 @@ define( function( require ) {
     return new Path( shape, {
       lineWidth: lineWidth,
       stroke: AreaModelCommonColorProfile.layoutGridProperty,
-      fill: 'white' //TODO colorit
+      fill: AreaModelCommonColorProfile.layoutIconFillProperty
     } );
   }
 
-  return inherit( Node, GenericLayoutSelectionNode );
+  return inherit( Node, GenericLayoutSelectionNode, {}, {
+    // @public {number}
+    POPUP_SCALE: 0.7
+  } );
 } );

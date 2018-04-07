@@ -123,6 +123,7 @@ define( function( require ) {
 
     // Layout grid icon color
     layoutGrid: { default: Color.BLACK },
+    layoutIconFill: { default: Color.WHITE },
 
     /*---------------------------------------------------------------------------*
     * Game colors
