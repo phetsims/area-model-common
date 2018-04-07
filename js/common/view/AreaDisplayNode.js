@@ -120,7 +120,7 @@ define( function( require ) {
       newAllPartitions.forEach( function( partition ) {
         partition.coordinateRangeProperty.lazyLink( productLabelListener );
       } );
-      // TODO: This listener may be called excessively? Can we delay things until a frame rendering? Or do other caching?
+      // PERFORMANCE TODO: This listener may be called excessively? Can we delay things until a frame rendering? Or do other caching?
       productLabelListener();
     } );
 

@@ -65,6 +65,26 @@ define( function( require ) {
     },
 
     /**
+     * Returns a string that should be the longest string possible for our given areas.
+     * @public
+     *
+     * @returns {string}
+     */
+    getMaximumAreaString: function() {
+      var hasNoDecimals = _.every( this.areas, function( area ) { return area.snapSize >= 1; } );
+      if ( hasNoDecimals ) {
+        // Figure out the actual maximum area, and return it as a string.
+        return '' + _.max( _.map( this.areas, function( area ) {
+          return area.maximumSize * area.maximumSize;
+        } ) );
+      }
+      else {
+        // Should be guaranteed to only have 1 digit in front
+        return '7.89';
+      }
+    },
+
+    /**
      * Returns the model to its initial state.
      * @public
      * @override
