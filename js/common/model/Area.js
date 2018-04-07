@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {OrientationPair.<Array.<Partition>>} partitions
    * @param {OrientationPair.<Property.<Color>>} colorProperties
    * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take.
-   * @param {boolean} allowExponents
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
     var self = this;
@@ -44,7 +44,7 @@ define( function( require ) {
     // @public {number} - The maximum value that partition coordinate ranges may take.
     this.coordinateRangeMax = coordinateRangeMax;
 
-    // @public {boolean}
+    // @public {boolean} - Whether exponents (powers of x) are allowed for this area
     this.allowExponents = allowExponents;
 
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).

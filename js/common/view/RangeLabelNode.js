@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {Orientation} orientation
    * @param {Property.<Array.<number>>} tickLocationsProperty - In view coordinates
    * @param {Property.<Color>} colorProperty
-   * @param {boolean} isProportional
+   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) {
 

@@ -31,7 +31,7 @@ define( function( require ) {
    *
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
    * @param {Property.<PartitionedArea|null>} partitionedAreaProperty
-   * @param {boolean} allowExponents
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    */
   function PartialProductLabelNode( partialProductsChoiceProperty, partitionedAreaProperty, allowExponents ) {
     assert && assert( partialProductsChoiceProperty instanceof Property );

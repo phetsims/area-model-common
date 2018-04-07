@@ -30,7 +30,7 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<Polynomial|null>} totalAreaProperty
-   * @param {boolean} isProportional
+   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    * @param {string} maximumWidthString - If proportional
    * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */

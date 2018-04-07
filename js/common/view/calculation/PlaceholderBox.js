@@ -20,7 +20,7 @@ define( function( require ) {
    * @extends {Rectangle}
    *
    * @param {Property.<Color>} colorProperty
-   * @param {boolean} allowExponents
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    */
   function PlaceholderBox( colorProperty, allowExponents ) {
     Rectangle.call( this, 0, 0, 16, 16, {
@@ -38,7 +38,7 @@ define( function( require ) {
      * @public
      *
      * @param {Property.<Color>} colorProperty
-     * @param {boolean} allowExponents
+     * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
      * @returns {PlaceholderBox}
      */
     initialize: function( colorProperty, allowExponents ) {

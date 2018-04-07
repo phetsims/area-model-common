@@ -35,7 +35,7 @@ define( function( require ) {
    * @extends {HBox}
    *
    * @param {OrientationPair.<Property.<TermList|null>>} displayProperties - The term lists to be displayed
-   * @param {Property.<boolean>} allowExponentsProperty
+   * @param {Property.<boolean>} allowExponentsProperty - Whether exponents (powers of x) are allowed
    */
   function GenericFactorsNode( displayProperties, allowExponentsProperty ) {
     var self = this;

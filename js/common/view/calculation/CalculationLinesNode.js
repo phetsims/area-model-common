@@ -230,8 +230,8 @@ define( function( require ) {
      *
      * @param {Area} area
      * @param {Property.<number|null>} activeIndexProperty - null when all lines should be active
-     * @param {boolean} allowExponents
-     * @param {boolean} isProportional
+     * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+     * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
      * @returns {Array.<CalculationLine>}
      */
     createLines: function( area, activeIndexProperty, allowExponents, isProportional ) {

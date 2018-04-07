@@ -101,16 +101,5 @@ define( function( require ) {
         } );
       } ) ) );
     }
-  }, {
-    /**
-     * Returns whether the parameter is a Polynomial (or is null)
-     * @public
-     *
-     * @param {*} thing
-     * @returns {boolean}
-     */
-    isNullablePolynomial: function( thing ) {
-      return thing === null || thing instanceof Polynomial;
-    }
   } );
 } );

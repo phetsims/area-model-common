@@ -21,8 +21,8 @@ define( function( require ) {
    * @param {TermList} orderedTermList
    * @param {Area} area
    * @param {Property.<number|null>} activeIndexProperty
-   * @param {boolean} allowExponents
-   * @param {boolean} isProportional
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function MinusesLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, 5, area, activeIndexProperty, allowExponents, isProportional );

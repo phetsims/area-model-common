@@ -31,8 +31,8 @@ define( function( require ) {
    * @param {number} index
    * @param {Area} area
    * @param {Property.<number|null>} activeIndexProperty
-   * @param {boolean} allowExponents
-   * @param {boolean} isProportional
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function CalculationLine( index, area, activeIndexProperty, allowExponents, isProportional ) {
     assert && assert( typeof index === 'number' );

@@ -41,13 +41,13 @@ define( function( require ) {
 
     var self = this;
 
-    // @public {Array.<Area>}
+    // @public {Array.<Area>} - All areas that can be switched between
     this.areas = areas;
 
-    // @public {boolean}
+    // @public {boolean} - Whether exponents (powers of x) are allowed
     this.allowExponents = options.allowExponents;
 
-    // @public {boolean}
+    // @public {boolean} - Whether the area is proportional (or generic)
     this.isProportional = options.isProportional;
 
     // @public {OrientationPair.<Property.<Color>>}

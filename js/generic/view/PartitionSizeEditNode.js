@@ -26,7 +26,7 @@ define( function( require ) {
    * @param {Property.<Partition|null>} activePartitionProperty
    * @param {Property.<GenericPartition|null>} partitionProperty
    * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
-   * @param {boolean} allowExponents
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    */
   function PartitionSizeEditNode( activePartitionProperty, partitionProperty, modelViewTransformProperty, allowExponents ) {
     var self = this;

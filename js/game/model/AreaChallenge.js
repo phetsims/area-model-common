@@ -441,7 +441,7 @@ define( function( require ) {
      * @private
      *
      * @param {number} quantity
-     * @param {boolean} allowExponents
+     * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
      * @returns {Array.<Term>}
      */
     generatePartitionTerms: function( quantity, allowExponents ) {
@@ -458,7 +458,7 @@ define( function( require ) {
      * @param {number} power - Power of 'x' or '10' that the single digit is multiplied times
      * @param {number} maxPower - Maximum power for all terms of this orientation.
      * @param {number} quantity - Quantity of terms generated total
-     * @param {boolean} allowExponents
+     * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
      * @returns {Term}
      */
     generateTerm: function( power, maxPower, quantity, allowExponents ) {

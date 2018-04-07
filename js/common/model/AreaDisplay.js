@@ -96,7 +96,7 @@ define( function( require ) {
      * @public
      *
      * @param {function} map - function( {Area} ): {OrientationPair.<*>}
-     * @param {Object} options
+     * @param {Object} [options]
      * @returns {OrientationPair.<Property.<*>>}
      */
     wrapOrientationPair: function( map, options ) {
@@ -114,7 +114,7 @@ define( function( require ) {
      * @public
      *
      * @param {function} map - function( {Area} ): {OrientationPair.<Property.<*>>}
-     * @param {Object} options
+     * @param {Object} [options]
      * @returns {OrientationPair.<Property.<*>>}
      */
     wrapOrientationPairProperty: function( map, options ) {
@@ -132,7 +132,7 @@ define( function( require ) {
      * @public
      *
      * @param {function} map - function( {Area} ): {Property.<*>}
-     * @param {Object} options
+     * @param {Object} [options]
      * @returns {Property.<*>}
      */
     wrapProperty: function( map, options ) {
@@ -148,7 +148,7 @@ define( function( require ) {
      * @public
      *
      * @param {function} map - function( {Area} ): {*}
-     * @param {Object} options
+     * @param {Object} [options]
      * @returns {Property.<*>}
      */
     wrapObject: function( map, options ) {

@@ -53,7 +53,7 @@ define( function( require ) {
    * @extends {Panel}
    *
    * @param {Property.<number>} digitCountProperty
-   * @param {boolean} allowExponents
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    * @param {boolean} allowNegative
    * @param {function} enterCallback - function( {Term|null} ) - The entered term, or null if there is no valid term entered.
    * @param {Object} [nodeOptions]
