@@ -69,8 +69,9 @@ define( function( require ) {
       self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
     } );
 
-    // TODO: This seems like it duplicates logic with coordinateRangeProperty.
     // {OrientationPair.<Array.<Property.<number>>>} - The visual centers of all of the partitions.
+    // This duplicates some logic from GenericArea's coordinateRangeProperty handling, but here we need the full-length
+    // array every time.
     var centerProperties = OrientationPair.create( function( orientation ) {
       return [
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
