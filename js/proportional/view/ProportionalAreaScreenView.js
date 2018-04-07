@@ -94,6 +94,7 @@ define( function( require ) {
       }
     } );
 
+    // Our keyboard-accessible order
     var accessibleOrder = [];
     accessibleOrder.push( this.areaDisplayNode.areaLayer );
     accessibleOrder.push( this.areaDisplayNode.eraseButton );
