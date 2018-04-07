@@ -123,6 +123,8 @@ define( function( require ) {
             font: AreaModelCommonConstants.KEYPAD_FONT,
             maxWidth: 100
           } ),
+          touchAreaXDilation: 5,
+          touchAreaYDilation: 5,
           baseColor: 'white', // Not separated out, matches keypad.
           xMargin: 15,
           yMargin: 5,
