@@ -94,6 +94,9 @@ define( function( require ) {
     PROPORTIONAL_RANGE_OFFSET: new Vector2( -35, -28 ),
     GENERIC_RANGE_OFFSET: new Vector2( -60, -40 ),
 
+    // {number} - Space between the area and the keypad
+    KEYPAD_LEFT_PADDING: 25,
+
     // {number} - Number of challenges per level
     NUM_CHALLENGES: 6,
 

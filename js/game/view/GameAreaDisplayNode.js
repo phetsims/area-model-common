@@ -21,6 +21,7 @@ define( function( require ) {
   var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -68,9 +69,9 @@ define( function( require ) {
       self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
     } );
 
-    var centerProperties = {}; // TODO: doc key/value
-    Orientation.VALUES.forEach( function( orientation ) {
-      centerProperties[ orientation === Orientation.HORIZONTAL ] = [
+    // {OrientationPair.<Array.<Property.<number>>>} - The visual centers of all of the partitions.
+    var centerProperties = OrientationPair.create( function( orientation ) {
+      return [
         new DerivedProperty( [ display.layoutProperty ], function( layout ) {
           var quantity = layout.getPartitionQuantity( orientation );
           if ( quantity === 1 ) {
@@ -92,7 +93,7 @@ define( function( require ) {
             return ( secondOffset + firstOffset ) / 2;
           }
           else {
-            return 0; // no need to position here?
+            return 0; // no need to position here
           }
         } ),
         new Property( ( fullOffset + secondOffset ) / 2 )
@@ -112,7 +113,7 @@ define( function( require ) {
         label[ orientation.opposite.coordinate ] = AreaModelCommonConstants.PARTITION_OFFSET.get( orientation );
         self.addChild( label );
 
-        centerProperties[ orientation === Orientation.HORIZONTAL ][ partitionIndex ].link( function( location ) {
+        centerProperties.get( orientation )[ partitionIndex ].link( function( location ) {
           label[ orientation.coordinate ] = location;
         } );
       } );
@@ -139,8 +140,8 @@ define( function( require ) {
         } );
         self.addChild( label );
 
-        centerProperties.true[ horizontalIndex ].linkAttribute( label, 'x' );
-        centerProperties.false[ verticalIndex ].linkAttribute( label, 'y' );
+        centerProperties.horizontal[ horizontalIndex ].linkAttribute( label, 'x' );
+        centerProperties.vertical[ verticalIndex ].linkAttribute( label, 'y' );
       } );
     } );
 
@@ -149,8 +150,8 @@ define( function( require ) {
     } );
 
     var keypadOptions = {
-      // TODO: dedup with other keypad?
-      x: AreaModelCommonConstants.AREA_SIZE + 25, // padding constant allows it to fit between the area and the other panels
+       // padding constant allows it to fit between the area and the other panels
+      x: AreaModelCommonConstants.AREA_SIZE + AreaModelCommonConstants.KEYPAD_LEFT_PADDING,
       top: 0
     };
     var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, false, setActiveTerm, keypadOptions );

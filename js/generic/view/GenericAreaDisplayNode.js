@@ -102,8 +102,6 @@ define( function( require ) {
       }
     } );
 
-    //TODO: Move the keypad to the screen view
-    //TODO: switching scenes drops keypad
     // Keypad
     var digitCountProperty = new DerivedProperty( [ areaDisplay.activePartitionProperty ], function( activePartition ) {
       return activePartition === null ? 1 : activePartition.digitCount;
@@ -115,7 +113,7 @@ define( function( require ) {
       // Hide the keypad.
       areaDisplay.activePartitionProperty.value = null;
     }, {
-      x: this.viewSize + 25, // padding constant allows it to fit between the area and the other panels
+      x: this.viewSize + AreaModelCommonConstants.KEYPAD_LEFT_PADDING,
       centerY: this.viewSize / 2
     } );
     this.labelLayer.addChild( termKeypadPanel );
