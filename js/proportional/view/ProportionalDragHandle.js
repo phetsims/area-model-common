@@ -119,11 +119,11 @@ define( function( require ) {
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
       if ( keyboardListener ) {
         // Can't remove the listeners right now, see https://github.com/phetsims/scenery/issues/764. Yikes, temp workaround
-        // TODO: Fix this
+        // BLOCKED TODO: Fix this (https://github.com/phetsims/scenery/issues/764)
         // circle.removeAccessibleInputListener( keyboardListener );
         keyboardListener.dispose();
       }
-      // TODO: Shouldn't have to recreate these. Make an issue
+      // BLOCKED TODO: Shouldn't have to recreate these. https://github.com/phetsims/scenery-phet/issues/367
       keyboardListener = new KeyboardDragListener( {
         downDelta: modelViewTransform.modelToViewDeltaX( 1 ),
         shiftDownDelta: modelViewTransform.modelToViewDeltaX( 1 ),
@@ -145,6 +145,7 @@ define( function( require ) {
         moveOnHoldInterval: 70
       } );
       circle.addAccessibleInputListener( keyboardListener );
+      // BLOCKED TODO: Interruption of the keybaord listener when things change (when we don't have to recreate), https://github.com/phetsims/scenery-phet/issues/368
     } );
 
     // Apply offsets while dragging for a smoother experience.

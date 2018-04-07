@@ -66,7 +66,6 @@ define( function( require ) {
           return self.mapCoordinate( boundary );
         } );
       } );
-      //TODO: reduce duplication with the game?
       self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, options.isProportional ) );
     } );
 
@@ -113,7 +112,7 @@ define( function( require ) {
       productLabelListener();
     } );
     
-    //TODO: Note this needs to be linked after the product labels are created, so the order dependency works
+    // Note this needs to be linked after the product labels are created, so the order dependency works
     areaDisplay.allPartitionsProperty.link( function( newAllPartitions, oldAllPartitions ) {
       oldAllPartitions && oldAllPartitions.forEach( function( partition ) {
         partition.coordinateRangeProperty.unlink( productLabelListener );

@@ -137,7 +137,7 @@ define( function( require ) {
         useTileLikeBackground: this.useTileLikeBackground,
         useLargeArea: this.useLargeArea
       }, {
-        translation: this.getAreaTranslation()
+        translation: this.getDisplayTranslation()
       } );
     },
 

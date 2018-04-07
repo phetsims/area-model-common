@@ -60,7 +60,7 @@ define( function( require ) {
      */
     createAreaDisplayNode: function( model ) {
       return new GenericAreaDisplayNode( model.areaDisplay, model.allowExponents, model.partialProductsChoiceProperty, {
-        translation: this.getAreaTranslation()
+        translation: this.getDisplayTranslation()
       } );
     },
 

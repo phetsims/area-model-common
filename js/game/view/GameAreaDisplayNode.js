@@ -127,12 +127,12 @@ define( function( require ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
         } );
 
-        var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelCommonColorProfile.dynamicPartialProductProperty ], function( editableProperty, color ) {
+        var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelCommonColorProfile.dynamicPartialProductProperty, AreaModelCommonColorProfile.fixedPartialProductProperty ], function( editableProperty, dynamicColor, fixedColor ) {
           if ( editableProperty && editableProperty.field === Field.DYNAMIC ) {
-            return color;
+            return dynamicColor;
           }
           else {
-            return 'black'; // TODO: color profile it?
+            return fixedColor;
           }
         } );
 

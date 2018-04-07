@@ -259,13 +259,12 @@ define( function( require ) {
     },
 
     /**
-     * Returns the ideal translation for instances of AreaNode on the main view.
-     * TODO: doc update, possible rename
+     * Returns the ideal translation for instances of AreaDisplayNode on the main view.
      * @protected
      *
      * @returns {Vector2}
      */
-    getAreaTranslation: function() {
+    getDisplayTranslation: function() {
       return this.layoutBounds.leftTop.plus( this.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_OFFSET : AreaModelCommonConstants.MAIN_AREA_OFFSET );
     },
 

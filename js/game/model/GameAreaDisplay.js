@@ -76,7 +76,6 @@ define( function( require ) {
       return areaChallenge.partialProductSizeProperties;
     } );
 
-    // TODO: clear up naming (check for conflicts)
     // @public {Property.<Array.<EditableProperty>>} - Reference to an array of editable properties for the total area.
     // Uses just one for an editable "constant" value, and multiple properties for polynomial entry (one per term).
     this.totalPropertiesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {

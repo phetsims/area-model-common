@@ -25,7 +25,7 @@ define( function( require ) {
    */
   function VariablesGameAreaModel() {
 
-    // TODO: replace with actual icons? TODO: DO it in the view. https://github.com/phetsims/area-model-common/issues/98
+    // BLOCKED TODO: replace with actual icons? TODO: DO it in the view. https://github.com/phetsims/area-model-common/issues/98
     var tmpFont = new PhetFont( 30 );
     var tmpOptions = { font: tmpFont };
     var variables1Icon = new Text( '1', tmpOptions );
