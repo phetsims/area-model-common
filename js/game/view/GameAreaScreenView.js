@@ -300,6 +300,9 @@ define( function( require ) {
     var levelCompleteContainer = new Node();
     this.challengeLayer.addChild( levelCompleteContainer );
 
+    // @private {RewardNode|null} - We need to step it when there is one
+    this.rewardNode = null;
+
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
@@ -325,9 +328,7 @@ define( function( require ) {
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
         var level = model.currentLevelProperty.value;
-        //TODO: cleanup
         levelCompleteContainer.children = [
-          //TODO: recommend time gets put to options
           new LevelCompletedNode( level.number - 1, level.scoreProperty.value, AreaModelCommonConstants.NUM_CHALLENGES * 2, AreaModelCommonConstants.NUM_CHALLENGES, false, 0, 0, 0, function() {
             model.moveToLevelSelection();
           }, {
@@ -338,7 +339,6 @@ define( function( require ) {
         ];
 
         if ( level.scoreProperty.value === AreaModelCommonConstants.NUM_CHALLENGES * 2 ) {
-          //TODO: cleanup
           self.rewardNode = new RewardNode( {
             nodes: rewardNodes
           } );
@@ -382,8 +382,6 @@ define( function( require ) {
      * guaranteed margin.
      * @private
      *
-     * TODO: deduplicate with AreaScreenView
-     *
      * @param {string} titleString
      * @param {AlignGroup} panelAlignGroup
      * @param {Node} content
@@ -401,7 +399,6 @@ define( function( require ) {
           new AlignBox( content, {
             group: panelAlignGroup,
             xAlign: 'center'
-            //TODO: note there IS NO MARGIN HERE because.... yeah.
           } )
         ],
         spacing: 10

@@ -68,20 +68,18 @@ define( function( require ) {
     } );
 
     model.currentAreaProperty.link( function( area ) {
-      // TODO: some cleanup?
-      var children = [];
+      checkboxContainer.removeAllChildren();
 
       // Don't show the grid/tiles checkboxes if counting is enabled
       if ( !area.countingAvailable ) {
-        children.push( gridCheckbox );
+        checkboxContainer.addChild( gridCheckbox );
         if ( area.tilesAvailable ) {
-          children.push( tileCheckbox );
+          checkboxContainer.addChild( tileCheckbox );
         }
       }
       else {
-        children.push( countingCheckbox );
+        checkboxContainer.addChild( countingCheckbox );
       }
-      checkboxContainer.children = children;
     } );
 
     this.addChild( checkboxContainer );
