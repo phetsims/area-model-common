@@ -69,6 +69,7 @@ define( function( require ) {
       self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
     } );
 
+    // TODO: This seems like it duplicates logic with coordinateRangeProperty.
     // {OrientationPair.<Array.<Property.<number>>>} - The visual centers of all of the partitions.
     var centerProperties = OrientationPair.create( function( orientation ) {
       return [
