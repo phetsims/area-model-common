@@ -147,9 +147,9 @@ define( function( require ) {
                 return 'transparent';
               }
             } );
-            background.fill = new DerivedProperty( [ listener.isHoveringProperty ], function( isHovering ) {
+            background.fill = new DerivedProperty( [ listener.isHoveringProperty, AreaModelCommonColorProfile.layoutHoverProperty ], function( isHovering, hoverColor ) {
               if ( isHovering ) {
-                return 'rgb(240,240,240)'; // TODO: extract
+                return hoverColor;
               }
               else {
                 return 'transparent';
