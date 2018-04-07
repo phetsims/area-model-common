@@ -34,9 +34,7 @@ define( function( require ) {
     assert && assert( typeof decimalPlaces === 'number' );
 
     // @private {Node}
-    this.popupLayer = new Node( {
-      scale: GenericLayoutSelectionNode.POPUP_SCALE
-    } );
+    this.popupLayer = new Node();
 
     // @private {Node|null} - Will be filled in with getRightSideNodes (we need lazy creation here unfortunately).
     this.layoutSelectionNode = null;

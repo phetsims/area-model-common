@@ -42,18 +42,16 @@ define( function( require ) {
     // Our rectangles will be stroked, so we need to subtract 1 due to the lineWidth
     width -= 1;
 
-    var scale = GenericLayoutSelectionNode.POPUP_SCALE;
-
     var comboBoxItems = GenericLayout.VALUES.map( function( layout ) {
       return {
         node: new HBox( {
           children: [
-            createLayoutIcon( layout.size, 1 ),
+            createLayoutIcon( layout.size, 0.7 ),
             new Text( layout.size.height + 'x' + layout.size.width, {
               font: AreaModelCommonConstants.LAYOUT_FONT
             } )
           ],
-          spacing: 20
+          spacing: 14
         } ),
         value: layout
       };
@@ -63,10 +61,10 @@ define( function( require ) {
     var itemMargin = 6;
     var arrowMargin = 8;
 
-    var rectHeight = maxItemHeight * scale + 2 * itemMargin;
+    var rectHeight = maxItemHeight + 2 * itemMargin;
     var rectangle = new Rectangle( {
       rectWidth: width,
-      rectHeight: maxItemHeight * scale + 2 * itemMargin,
+      rectHeight: maxItemHeight + 2 * itemMargin,
       fill: 'white',
       stroke: 'black',
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
@@ -95,7 +93,6 @@ define( function( require ) {
     } ) );
 
     var currentLabel = new Node( {
-      scale: scale, // TODO: get rid of scale when we don't need it for the ComboBox
       pickable: false
     } );
     genericLayoutProperty.link( function( layout ) {
@@ -124,8 +121,13 @@ define( function( require ) {
         return new HBox( {
           children: [ 1, 2, 3 ].map( function( numHorizontal ) {
             var layout = GenericLayout.fromValues( numHorizontal, numVertical );
-            var icon = createLayoutIcon( layout.size, scale );
-            icon.pickable = false; // TODO: annoying that we have to specify this?
+            // NOTE: Yes, it's weird this constant is here. We used to scale most things down by this amount. Now we
+            // want the same appearance (but without the scaling, because it was bad practice), so to get the icon to
+            // have the same appearance, a scale factor is needed.
+            var oldScale = 0.7;
+            var icon = createLayoutIcon( layout.size, oldScale * oldScale );
+            icon.scale( 1 / oldScale );
+            icon.pickable = false;
             var cornerRadius = 3;
             var background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
               cursor: 'pointer'
@@ -218,7 +220,7 @@ define( function( require ) {
    * @returns {Node}
    */
   function createLayoutIcon( size, lineWidth ) {
-    var length = 30;
+    var length = 21;
     var shape = new Shape().rect( 0, 0, length, length );
     if ( size.width === 2 ) {
       shape.moveTo( length * AreaModelCommonConstants.GENERIC_ICON_SINGLE_OFFSET, 0 ).verticalLineTo( length );
@@ -241,8 +243,5 @@ define( function( require ) {
     } );
   }
 
-  return inherit( Node, GenericLayoutSelectionNode, {}, {
-    // @public {number}
-    POPUP_SCALE: 0.7
-  } );
+  return inherit( Node, GenericLayoutSelectionNode );
 } );

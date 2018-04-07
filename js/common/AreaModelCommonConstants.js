@@ -40,7 +40,7 @@ define( function( require ) {
     TOTAL_SIZE_READOUT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),
     KEYPAD_FONT: new PhetFont( 20 ),
     KEYPAD_READOUT_FONT: new PhetFont( 20 ),
-    LAYOUT_FONT: new PhetFont( 22 ),
+    LAYOUT_FONT: new PhetFont( 16 ),
     BUTTON_FONT: new PhetFont( 20 ),
     SCORE_INCREASE_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     COUNTING_ICON_FONT: new PhetFont( 22 ),
