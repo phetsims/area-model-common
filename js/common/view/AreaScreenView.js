@@ -21,6 +21,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -52,6 +53,7 @@ define( function( require ) {
    * @param {Object} [options]
    */
   function AreaScreenView( model, options ) {
+    var self = this;
 
     options = _.extend( {
       decimalPlaces: 0,
@@ -106,25 +108,30 @@ define( function( require ) {
     var selectionContent = new VBox( {
       spacing: 15
     } );
-    var contentChildren = [];
-    if ( options.showProductsSelection ) {
-      contentChildren.push( this.productsSelectionPanel );
-    }
-    if ( options.showCalculationSelection ) {
-      contentChildren.push( this.calculationSelectionPanel );
-    }
-    // TODO: vary this based on the current area!
-    if ( model.currentAreaProperty.value.partitionLineChoice === PartitionLineChoice.ONE ) {
-      contentChildren.push( this.partitionSelectionPanel );
-    }
-    selectionContent.children = contentChildren;
-    // Add separators between items
-    for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
-      selectionContent.insertChild( i, new Line( {
-        x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
-        stroke: AreaModelCommonColorProfile.selectionSeparatorProperty
-      } ) );
-    }
+    // Use a Property here so we don't recreate when we don't have to (just on area changes)
+    var hasPartitionSelectionProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
+      return area.partitionLineChoice === PartitionLineChoice.ONE;
+    } );
+    hasPartitionSelectionProperty.link( function( hasPartitionSelection ) {
+      var contentChildren = [];
+      if ( options.showProductsSelection ) {
+        contentChildren.push( self.productsSelectionPanel );
+      }
+      if ( options.showCalculationSelection ) {
+        contentChildren.push( self.calculationSelectionPanel );
+      }
+      if ( hasPartitionSelection ) {
+        contentChildren.push( self.partitionSelectionPanel );
+      }
+      selectionContent.children = contentChildren;
+      // Add separators between items
+      for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
+        selectionContent.insertChild( i, new Line( {
+          x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
+          stroke: AreaModelCommonColorProfile.selectionSeparatorProperty
+        } ) );
+      }
+    } );
 
     var selectionPanel = new Panel( selectionContent, {
       xMargin: 15,
