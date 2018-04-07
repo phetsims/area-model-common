@@ -448,11 +448,6 @@ define( function( require ) {
     attachDisplay: function( display ) {
       var self = this;
 
-      display.totalPropertiesProperty.value = this.description.numberOrVariable(
-        [ this.totalConstantProperty ],
-        [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ]
-      );
-
       Orientation.VALUES.forEach( function( orientation ) {
         if ( self.partitionSizeProperties.get( orientation ).length === 1 &&
              self.description.partitionFields.get( orientation )[ 0 ] === Field.GIVEN ) {

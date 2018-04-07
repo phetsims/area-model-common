@@ -65,8 +65,12 @@ define( function( require ) {
     // TODO: clear up naming (check for conflicts)
     // @public {Property.<Array.<EditableProperty>>} - Reference to an array of editable properties for the total area.
     // Uses just one for an editable "constant" value, and multiple properties for polynomial entry (one per term).
-    //////// NO conflict
-    this.totalPropertiesProperty = new Property( [ new EditableProperty( null ) ] );
+    this.totalPropertiesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
+      return areaChallenge.description.numberOrVariable(
+        [ areaChallenge.totalConstantProperty ],
+        [ areaChallenge.totalConstantProperty, areaChallenge.totalXProperty, areaChallenge.totalXSquaredProperty ]
+      );
+    } );
 
     // @public {Property.<Property.<TermList|null>>} - The "total area" property reference
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
