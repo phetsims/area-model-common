@@ -133,7 +133,6 @@ define( function( require ) {
           spacing: buttonSpacing
         } );
       } ),
-      maxHeight: 400, // TODO: remove when isLevelDebug goes away
       spacing: buttonSpacing,
       center: this.layoutBounds.center
     } ) );
@@ -203,7 +202,7 @@ define( function( require ) {
     } );
     var polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalPropertiesProperty, function() {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
-        model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
+        model.stateProperty.value = GameState.SECOND_ATTEMPT;
       }
     } );
     var polynomialReadoutText = new RichText( '?', {
@@ -217,7 +216,6 @@ define( function( require ) {
     } );
 
     var totalContainer = new Node();
-    //TODO: simplify
     Property.multilink( [ this.areaDisplay.totalPropertiesProperty, model.stateProperty ], function( totalProperties, gameState ) {
       if ( totalProperties.length > 1 ) {
         if ( totalProperties[ 0 ].displayType === DisplayType.EDITABLE && gameState !== GameState.CORRECT_ANSWER && gameState !== GameState.SHOW_SOLUTION ) {
