@@ -125,6 +125,19 @@ define( function( require ) {
     },
 
     /**
+     * When we start over, we want to reset the score, but not immediately change the challenges yet (we'll wait until
+     * we re-select this level).
+     * @public
+     *
+     * See https://github.com/phetsims/area-model-common/issues/87 and
+     * https://github.com/phetsims/area-model-common/issues/96.
+     */
+    startOver: function() {
+      this.scoreProperty.reset();
+      this.finish();
+    },
+
+    /**
      * Returns the model to its initial state.
      * @public
      */

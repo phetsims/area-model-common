@@ -141,7 +141,7 @@ define( function( require ) {
     // Status bar
     var gameStatusBar = new GameStatusBar( model.currentLevelProperty, function() {
       // Reset the level on "Start Over", see https://github.com/phetsims/area-model-common/issues/87
-      model.currentLevelProperty.value.reset();
+      model.currentLevelProperty.value.startOver();
       
       model.currentLevelProperty.value = null;
     } );
