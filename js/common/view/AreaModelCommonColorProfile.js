@@ -137,10 +137,9 @@ define( function( require ) {
     errorHighlight: { default: Color.RED },
     dirtyHighlight: { default: new Color( '#3B97BA' ) },
 
-    // Readout colors for partial products
     dynamicPartialProduct: { default: new Color( 128, 130, 133 ) },
-
     fixedPartialProduct: { default: Color.BLACK },
+    totalEditable: { default: Color.BLACK },
 
     startOverButtonBaseColor: { default: PhetColorScheme.BUTTON_YELLOW }
 

@@ -110,7 +110,14 @@ define( function( require ) {
         } );
         var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, areaDisplay.allowExponentsProperty, orientation, false );
+        var label = new GameEditableLabelNode( {
+          valuePropertyProperty: valuePropertyProperty,
+          gameStateProperty: gameStateProperty,
+          activeEditableProperty: activeEditableProperty,
+          colorProperty: colorProperty,
+          allowExponentsProperty: areaDisplay.allowExponentsProperty,
+          orientation: orientation
+        } );
 
         label[ orientation.opposite.coordinate ] = AreaModelCommonConstants.PARTITION_OFFSET.get( orientation );
         self.addChild( label );
@@ -136,7 +143,13 @@ define( function( require ) {
           }
         } );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, areaDisplay.allowExponentsProperty, Orientation.VERTICAL, false, {
+        var label = new GameEditableLabelNode( {
+          valuePropertyProperty: valuePropertyProperty,
+          gameStateProperty: gameStateProperty,
+          activeEditableProperty: activeEditableProperty,
+          colorProperty: colorProperty,
+          allowExponentsProperty: areaDisplay.allowExponentsProperty,
+          orientation: Orientation.VERTICAL,
           labelFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_LABEL_FONT,
           editFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_EDIT_FONT
         } );

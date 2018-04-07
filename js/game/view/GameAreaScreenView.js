@@ -188,7 +188,6 @@ define( function( require ) {
 
     var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
-    // TODO: ensure sizing doesn't spill out? AreaModelCommonConstants.PANEL_INTERIOR_MAX
     var factorsNode = new GenericFactorsNode( this.areaDisplay.totalProperties, this.areaDisplay.allowExponentsProperty );
     var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
@@ -197,7 +196,13 @@ define( function( require ) {
       return totalProperties.length === 1 ? totalProperties[ 0 ] : new EditableProperty( null );
     } );
 
-    var totalNode = new GameEditableLabelNode( totalTermPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.areaDisplay.allowExponentsProperty, Orientation.HORIZONTAL, true, {
+    var totalNode = new GameEditableLabelNode( {
+      valuePropertyProperty: totalTermPropertyProperty,
+      gameStateProperty: model.stateProperty,
+      activeEditableProperty: model.activeEditableProperty,
+      colorProperty: AreaModelCommonColorProfile.totalEditableProperty,
+      allowExponentsProperty: this.areaDisplay.allowExponentsProperty,
+      orientation: Orientation.HORIZONTAL,
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );

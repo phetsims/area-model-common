@@ -28,25 +28,33 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * TODO: options object? OMG yes
-   *
-   * @param {Property.<EditableProperty>} valuePropertyProperty
-   * @param {Property.<GameState>} gameStateProperty
-   * @param {Property.<EditableProperty>} activeEditableProperty
-   * @param {Property.<Color>} colorProperty
-   * @param {Property.<boolean>} allowExponentsProperty
-   * @param {Orientation} orientation
-   * @param {boolean} canBePolynomial
-   * @param {Object} options
+   * @param {Object} options - See constructor
    */
-  function GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, allowExponentsProperty, orientation, canBePolynomial, options ) {
+  function GameEditableLabelNode( options ) {
 
     options = _.extend( {
+      // REQUIRED options (yes, I know it's an oxymoron, and I'd like to have a better name for this options)
+      // They are marked as null for now
+      valuePropertyProperty: null, // {Property.<EditableProperty>}
+      gameStateProperty: null, // {Property.<GameState>}
+      activeEditableProperty: null, // {Property.<EditableProperty>}
+      colorProperty: null, // {Property.<Color>}
+      allowExponentsProperty: null, // {Property.<boolean>}
+      orientation: null, // {Orientation}
+
       labelFont: AreaModelCommonConstants.GAME_MAIN_LABEL_FONT,
       editFont: AreaModelCommonConstants.GAME_MAIN_EDIT_FONT
     }, options );
 
     Node.call( this );
+
+    // Helpful to break out some options
+    var valuePropertyProperty = options.valuePropertyProperty;
+    var gameStateProperty = options.gameStateProperty;
+    var activeEditableProperty = options.activeEditableProperty;
+    var colorProperty = options.colorProperty;
+    var allowExponentsProperty = options.allowExponentsProperty;
+    var orientation = options.orientation;
 
     var valueProperty = new DynamicProperty( valuePropertyProperty, {
       bidirectional: true
@@ -111,7 +119,6 @@ define( function( require ) {
     digitsProperty.link( centerTermEditNode );
     allowExponentsProperty.link( centerTermEditNode );
 
-    // TODO: Handle editable polynomial?
     Property.multilink( [ valuePropertyProperty, gameStateProperty ], function( valueProperty, gameState ) {
       var isReadoutOverride = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
       readoutText.visible = valueProperty.displayType === DisplayType.READOUT ||
