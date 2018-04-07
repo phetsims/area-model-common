@@ -104,7 +104,7 @@ define( function( require ) {
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
       _.range( 0, 3 ).forEach( function( partitionIndex ) {
-        var valuePropertyProperty = new DerivedProperty( [ display.partitionValuesProperties.get( orientation ) ], function( values ) {
+        var valuePropertyProperty = new DerivedProperty( [ display.partitionSizeProperties.get( orientation ) ], function( values ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
         var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );

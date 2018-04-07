@@ -460,10 +460,10 @@ define( function( require ) {
       Orientation.VALUES.forEach( function( orientation ) {
         if ( self.partitionSizeProperties.get( orientation ).length === 1 &&
              self.description.partitionFields.get( orientation )[ 0 ] === Field.GIVEN ) {
-          display.partitionValuesProperties.get( orientation ).value = [ new EditableProperty( null ) ];
+          display.partitionSizeProperties.get( orientation ).value = [ new EditableProperty( null ) ];
         }
         else {
-          display.partitionValuesProperties.get( orientation ).value = self.partitionSizeProperties.get( orientation );
+          display.partitionSizeProperties.get( orientation ).value = self.partitionSizeProperties.get( orientation );
         }
       } );
 
