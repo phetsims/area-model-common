@@ -32,17 +32,20 @@ define( function( require ) {
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
     var self = this;
 
-    // @public {OrientationPair.<Array.<Partition>>}
+    // @public {OrientationPair.<Array.<Partition>>} - Partitions for each orientation
     this.partitions = partitions;
 
     // @public {Array.<Partition>} - All partitions, regardless of orientation
     this.allPartitions = partitions.horizontal.concat( partitions.vertical );
 
-    // @public {OrientationPair.<Property.<Color>>}
+    // @public {OrientationPair.<Property.<Color>>} - Colors for each orientation
     this.colorProperties = colorProperties;
 
     // @public {number} - The maximum value that partition coordinate ranges may take.
     this.coordinateRangeMax = coordinateRangeMax;
+
+    // @public {boolean}
+    this.allowExponents = allowExponents;
 
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
     this.calculationIndexProperty = new NumberProperty( 0 );
@@ -66,11 +69,8 @@ define( function( require ) {
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total, otherwise the total area (width of the
     // "area" times its height).
-    this.totalAreaProperty = new DerivedProperty( this.totalProperties.array, function( horizontalTotal, verticalTotal ) {
-      if ( horizontalTotal === null || verticalTotal === null ) {
-        return null;
-      }
-      return horizontalTotal.times( verticalTotal );
+    this.totalAreaProperty = new DerivedProperty( this.totalProperties.values, function( horizontalTotal, verticalTotal ) {
+      return horizontalTotal && verticalTotal && horizontalTotal.times( verticalTotal );
     }, {
       useDeepEquality: true
     } );

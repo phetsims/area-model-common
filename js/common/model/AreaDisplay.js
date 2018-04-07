@@ -45,6 +45,11 @@ define( function( require ) {
       return area.coordinateRangeMax;
     } );
 
+    // @public {Property.<boolean>}
+    this.allowExponentsProperty = this.wrapObject( function( area ) {
+      return area.allowExponents;
+    } );
+
     // @public {Property.<number>}
     this.calculationIndexProperty = this.wrapProperty( function( area ) {
       return area.calculationIndexProperty;

@@ -24,9 +24,11 @@ define( function( require ) {
   function GameAreaDisplay() {
 
     // @public {Property.<GenericLayout>}
+    ///////// Provided by GenericAreaDisplay
     this.layoutProperty = new Property( GenericLayout.TWO_BY_TWO );
 
     // @public {Property.<boolean>}
+    ////////// Provided by AreaDisplay
     this.allowExponentsProperty = new BooleanProperty( false );
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
