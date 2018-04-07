@@ -47,7 +47,13 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
     // NOTE: Overridden from the AreaDisplay version.
-    this.totalProperties = new OrientationPair( new Property( null ), new Property( null ) );
+    this.totalProperties = OrientationPair.create( function( orientation ) {
+      return new DynamicProperty( self.areaChallengeProperty, {
+        derive: function( areaChallenge ) {
+          return areaChallenge.totalProperties.get( orientation );
+        }
+      } );
+    } );
 
     // @public {OrientationPair.<Property.<Array.<EditableProperty>>>}
     // Partition sizes. Inner values may be changed by the view client.

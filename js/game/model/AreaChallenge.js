@@ -193,10 +193,6 @@ define( function( require ) {
       }
     } );
 
-    // @private {function} - Listeners to remove
-    this.horizontalTotalListener = null;
-    this.verticalTotalListener = null;
-
     // @private {boolean} - Pick an arbitrary side to be wrong in particular variables 6-1 cases, see
     // https://github.com/phetsims/area-model-common/issues/42
     this.arbitraryNonUniqueWrongOrientation = phet.joist.random.nextBoolean() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
@@ -437,26 +433,6 @@ define( function( require ) {
      */
     tryAgain: function() {
       this.stateProperty.value = GameState.SECOND_ATTEMPT;
-    },
-
-    /**
-     * Modifies the given display so that it will be connected to this challenge.
-     * @public
-     *
-     * @param {GameAreaDisplay} display
-     */
-    attachDisplay: function( display ) {
-      this.horizontalTotalListener = this.totalProperties.horizontal.linkAttribute( display.totalProperties.horizontal, 'value' );
-      this.verticalTotalListener = this.totalProperties.vertical.linkAttribute( display.totalProperties.vertical, 'value' );
-    },
-
-    /**
-     * Releases listeners that were watching the display.
-     * @public
-     */
-    detachDisplay: function( display ) {
-      this.totalProperties.horizontal.unlink( this.horizontalTotalListener );
-      this.totalProperties.vertical.unlink( this.verticalTotalListener );
     }
   }, {
 

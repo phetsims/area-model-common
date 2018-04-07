@@ -175,18 +175,6 @@ define( function( require ) {
 
     // Display
     this.display = new GameAreaDisplay( model.currentChallengeProperty );
-    model.currentChallengeProperty.link( function( newChallenge, oldChallenge ) {
-      if ( oldChallenge ) {
-        oldChallenge.detachDisplay( self.display );
-      }
-
-      // Make no immediate changes if the challenge turns null.
-      if ( newChallenge === null ) {
-        return;
-      }
-
-      newChallenge.attachDisplay( self.display );
-    } );
 
     var gameAreaNode = new GameAreaDisplayNode( this.display, model.activeEditableProperty, model.stateProperty, function( term ) {
       model.setActiveTerm( term );
