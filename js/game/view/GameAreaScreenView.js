@@ -173,10 +173,10 @@ define( function( require ) {
     * Area display
     *----------------------------------------------------------------------------*/
 
-    // Display
-    this.display = new GameAreaDisplay( model.currentChallengeProperty );
+    // @private {GameAreaDisplay}
+    this.areaDisplay = new GameAreaDisplay( model.currentChallengeProperty );
 
-    var gameAreaNode = new GameAreaDisplayNode( this.display, model.activeEditableProperty, model.stateProperty, function( term ) {
+    var gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEditableProperty, model.stateProperty, function( term ) {
       model.setActiveTerm( term );
     } );
     this.challengeLayer.addChild( gameAreaNode );
@@ -189,19 +189,19 @@ define( function( require ) {
     var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
     // TODO: ensure sizing doesn't spill out? AreaModelCommonConstants.PANEL_INTERIOR_MAX
-    var factorsNode = new GenericFactorsNode( this.display.totalProperties, this.display.allowExponentsProperty );
+    var factorsNode = new GenericFactorsNode( this.areaDisplay.totalProperties, this.areaDisplay.allowExponentsProperty );
     var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
     // If we have a polynomial, don't use this editable property (use the polynomial editor component instead)
-    var totalTermPropertyProperty = new DerivedProperty( [ this.display.totalPropertiesProperty ], function( totalProperties ) {
+    var totalTermPropertyProperty = new DerivedProperty( [ this.areaDisplay.totalPropertiesProperty ], function( totalProperties ) {
       return totalProperties.length === 1 ? totalProperties[ 0 ] : new EditableProperty( null );
     } );
 
-    var totalNode = new GameEditableLabelNode( totalTermPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.display.allowExponentsProperty, Orientation.HORIZONTAL, true, {
+    var totalNode = new GameEditableLabelNode( totalTermPropertyProperty, model.stateProperty, model.activeEditableProperty, new Property( 'black' ), this.areaDisplay.allowExponentsProperty, Orientation.HORIZONTAL, true, {
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );
-    var polynomialEditNode = new PolynomialEditNode( this.display.totalProperty, this.display.totalPropertiesProperty, function() {
+    var polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalPropertiesProperty, function() {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT; // TODO: dedup with others that do this
       }
@@ -210,7 +210,7 @@ define( function( require ) {
       font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT,
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
-    this.display.totalProperty.link( function( total ) {
+    this.areaDisplay.totalProperty.link( function( total ) {
       if ( total ) {
         polynomialReadoutText.text = total.toRichString( false );
       }
@@ -218,7 +218,7 @@ define( function( require ) {
 
     var totalContainer = new Node();
     //TODO: simplify
-    Property.multilink( [ this.display.totalPropertiesProperty, model.stateProperty ], function( totalProperties, gameState ) {
+    Property.multilink( [ this.areaDisplay.totalPropertiesProperty, model.stateProperty ], function( totalProperties, gameState ) {
       if ( totalProperties.length > 1 ) {
         if ( totalProperties[ 0 ].displayType === DisplayType.EDITABLE && gameState !== GameState.CORRECT_ANSWER && gameState !== GameState.SHOW_SOLUTION ) {
           totalContainer.children = [ polynomialEditNode ];

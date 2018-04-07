@@ -31,12 +31,12 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {GameAreaDisplay} display
+   * @param {GameAreaDisplay} areaDisplay
    * @param {Property.<EditableProperty|null>} activeEditableProperty
    * @param {Property.<GameState>} gameStateProperty
    * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */
-  function GameAreaDisplayNode( display, activeEditableProperty, gameStateProperty, setActiveTerm ) {
+  function GameAreaDisplayNode( areaDisplay, activeEditableProperty, gameStateProperty, setActiveTerm ) {
     var self = this;
 
     Node.call( this );
@@ -52,7 +52,7 @@ define( function( require ) {
       stroke: AreaModelCommonColorProfile.areaBorderProperty
     } ) );
 
-    this.addChild( GenericAreaDisplayNode.createPartitionLines( display.layoutProperty, AreaModelCommonConstants.AREA_SIZE ) );
+    this.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, AreaModelCommonConstants.AREA_SIZE ) );
 
     // Range views
     var tickVariations = {
@@ -62,8 +62,8 @@ define( function( require ) {
     };
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
-      var termListProperty = display.totalProperties.get( orientation );
-      var tickLocationsProperty = new DerivedProperty( [ display.layoutProperty ], function( layout ) {
+      var termListProperty = areaDisplay.totalProperties.get( orientation );
+      var tickLocationsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
         return tickVariations[ layout.getPartitionQuantity( orientation ) ];
       } );
       self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
@@ -73,7 +73,7 @@ define( function( require ) {
     // {OrientationPair.<Array.<Property.<number>>>} - The visual centers of all of the partitions.
     var centerProperties = OrientationPair.create( function( orientation ) {
       return [
-        new DerivedProperty( [ display.layoutProperty ], function( layout ) {
+        new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
           var quantity = layout.getPartitionQuantity( orientation );
           if ( quantity === 1 ) {
             return fullOffset / 2;
@@ -85,7 +85,7 @@ define( function( require ) {
             return firstOffset / 2;
           }
         } ),
-        new DerivedProperty( [ display.layoutProperty ], function( layout ) {
+        new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
           var quantity = layout.getPartitionQuantity( orientation );
           if ( quantity === 2 ) {
             return ( fullOffset + singleOffset ) / 2;
@@ -104,12 +104,12 @@ define( function( require ) {
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
       _.range( 0, 3 ).forEach( function( partitionIndex ) {
-        var valuePropertyProperty = new DerivedProperty( [ display.partitionSizeProperties.get( orientation ) ], function( values ) {
+        var valuePropertyProperty = new DerivedProperty( [ areaDisplay.partitionSizeProperties.get( orientation ) ], function( values ) {
           return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
         } );
         var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, orientation, false );
+        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, areaDisplay.allowExponentsProperty, orientation, false );
 
         label[ orientation.opposite.coordinate ] = AreaModelCommonConstants.PARTITION_OFFSET.get( orientation );
         self.addChild( label );
@@ -122,7 +122,7 @@ define( function( require ) {
 
     _.range( 0, 3 ).forEach( function( horizontalIndex ) {
       _.range( 0, 3 ).forEach( function( verticalIndex ) {
-        var valuePropertyProperty = new DerivedProperty( [ display.partialProductsProperty ], function( values ) {
+        var valuePropertyProperty = new DerivedProperty( [ areaDisplay.partialProductsProperty ], function( values ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
         } );
 
@@ -135,7 +135,7 @@ define( function( require ) {
           }
         } );
 
-        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, display.allowExponentsProperty, Orientation.VERTICAL, false, {
+        var label = new GameEditableLabelNode( valuePropertyProperty, gameStateProperty, activeEditableProperty, colorProperty, areaDisplay.allowExponentsProperty, Orientation.VERTICAL, false, {
           labelFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_LABEL_FONT,
           editFont: AreaModelCommonConstants.GAME_PARTIAL_PRODUCT_EDIT_FONT
         } );
