@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
@@ -59,8 +60,11 @@ define( function( require ) {
       bidirectional: true
     } );
 
+    // Should have its own align group, so we don't modify other sizes
+    var partitionSelectionAlignGroup = new AlignGroup();
+
     // @private {Node} - Allows controlling which partition is currently visible (if we only show one)
-    this.partitionSelectionPanel = this.createPanelContent( partitionString, AreaModelCommonGlobals.panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
+    this.partitionSelectionPanel = this.createPanelContent( partitionString, AreaModelCommonGlobals.panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, partitionSelectionAlignGroup ) );
 
     AreaScreenView.call( this, model, options );
 
