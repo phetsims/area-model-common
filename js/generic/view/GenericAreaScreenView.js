@@ -15,8 +15,8 @@ define( function( require ) {
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaModel' );
-  var GenericLayoutSelectionNode = require( 'AREA_MODEL_COMMON/generic/view/GenericLayoutSelectionNode' );
   var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
+  var GenericLayoutSelectionNode = require( 'AREA_MODEL_COMMON/generic/view/GenericLayoutSelectionNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );

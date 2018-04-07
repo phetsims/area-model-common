@@ -10,8 +10,8 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var HBox = require( 'SCENERY/nodes/HBox' );

@@ -9,16 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaDisplayNode = require( 'AREA_MODEL_COMMON/common/view/AreaDisplayNode' );
+  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var GenericPartitionedAreaNode = require( 'AREA_MODEL_COMMON/generic/view/GenericPartitionedAreaNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var PartitionSizeEditNode = require( 'AREA_MODEL_COMMON/generic/view/PartitionSizeEditNode' );
   var PoolableLayerNode = require( 'AREA_MODEL_COMMON/common/view/PoolableLayerNode' );
   var Property = require( 'AXON/Property' );
