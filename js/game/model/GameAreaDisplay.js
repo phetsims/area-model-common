@@ -9,30 +9,42 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaChallenge = require( 'AREA_MODEL_COMMON/game/model/AreaChallenge' );
+  var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
+  var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   var inherit = require( 'PHET_CORE/inherit' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Property = require( 'AXON/Property' );
 
   /**
    * @constructor
-   * @extends {Object}
+   * @extends {GenericAreaDisplay}
+   *
+   * @param {Property.<AreaChallenge|null>} areaChallengeProperty
    */
   function GameAreaDisplay( areaChallengeProperty ) {
+    var self = this;
 
-    // @public {Property.<GenericLayout>}
-    ///////// Provided by GenericAreaDisplay
-    this.layoutProperty = new Property( GenericLayout.TWO_BY_TWO );
+    var placeholderChallenge = new AreaChallenge( AreaChallengeDescription.LEVEL_1_NUMBERS_1 );
 
-    // @public {Property.<boolean>}
-    ////////// Provided by AreaDisplay
-    this.allowExponentsProperty = new BooleanProperty( false );
+    // @public {Property.<AreaChallenge>} - Always has an AreaChallenge, unlike the passed-in nullable variety. This is
+    // because we want to show the view of the last challenge as we animate back to the level-selection screen.
+    this.areaChallengeProperty = new Property( placeholderChallenge );
+    areaChallengeProperty.link( function( areaChallenge ) {
+      if ( areaChallenge ) {
+        self.areaChallengeProperty.value = areaChallenge;
+      }
+    } );
+
+    GenericAreaDisplay.call( this, new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
+      return areaChallenge.area;
+    } ) );
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
-    /**********************/// THIS HAS A conflict 
+    // NOTE: Overridden from the AreaDisplay version.
     this.totalProperties = new OrientationPair( new Property( null ), new Property( null ) );
 
     // @public {OrientationPair.<Property.<Array.<EditableProperty>>>}
@@ -64,5 +76,5 @@ define( function( require ) {
 
   areaModelCommon.register( 'GameAreaDisplay', GameAreaDisplay );
 
-  return inherit( Object, GameAreaDisplay );
+  return inherit( GenericAreaDisplay, GameAreaDisplay );
 } );

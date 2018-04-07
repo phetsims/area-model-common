@@ -175,7 +175,7 @@ define( function( require ) {
     *----------------------------------------------------------------------------*/
 
     // Display
-    this.display = new GameAreaDisplay();
+    this.display = new GameAreaDisplay( model.currentChallengeProperty );
     model.currentChallengeProperty.link( function( newChallenge, oldChallenge ) {
       if ( oldChallenge ) {
         oldChallenge.detachDisplay( self.display );

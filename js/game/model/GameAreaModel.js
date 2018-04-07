@@ -9,9 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
+  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
   var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -32,10 +34,18 @@ define( function( require ) {
     this.soundEnabledProperty = new BooleanProperty( true );
 
     // @public {Property.<AreaLevel|null>} - The current level
-    this.currentLevelProperty = new Property( null );
+    this.currentLevelProperty = new Property( null, {
+      isValidValue: function( value ) {
+        return value === null || value instanceof AreaLevel;
+      }
+    } );
 
     // @public {Property.<EditableProperty|null}
-    this.activeEditableProperty = new Property( null );
+    this.activeEditableProperty = new Property( null, {
+      isValidValue: function( value ) {
+        return value === null || value instanceof EditableProperty;
+      }
+    } );
 
     // @public {Property.<AreaChallenge|null>}
     this.currentChallengeProperty = new DynamicProperty( this.currentLevelProperty, {
@@ -47,6 +57,8 @@ define( function( require ) {
     this.stateProperty = new DynamicProperty( this.currentChallengeProperty, {
       derive: 'stateProperty',
       bidirectional: true
+    }, {
+      validValues: GameState.VALUES.concat( [ null ] )
     } );
 
     // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)

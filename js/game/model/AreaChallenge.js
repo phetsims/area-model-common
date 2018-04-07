@@ -448,8 +448,6 @@ define( function( require ) {
     attachDisplay: function( display ) {
       var self = this;
 
-      display.layoutProperty.value = this.description.layout;
-      display.allowExponentsProperty.value = this.description.allowExponents;
       display.totalPropertyProperty.value = this.totalProperty;
       display.totalPropertiesProperty.value = this.description.numberOrVariable(
         [ this.totalConstantProperty ],
