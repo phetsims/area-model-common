@@ -25,7 +25,10 @@ define( function( require ) {
 
   // constants
   var BOX_SIZE = 30;
-  var PAREN_BOUNDS = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT, boundsMethod: 'accurate' } ).bounds;
+  var PAREN_BOUNDS = new Text( ')(', {
+    font: AreaModelCommonConstants.FACTORS_PAREN_FONT,
+    boundsMethod: 'accurate'
+  } ).bounds;
 
   /**
    * @constructor

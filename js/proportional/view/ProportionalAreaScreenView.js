@@ -201,17 +201,17 @@ define( function( require ) {
      */
     createGridIconNode: function() {
       var gridIconShape = new Shape().moveTo( RADIO_ICON_SIZE / 4, 0 )
-                                     .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
-                                     .moveTo( RADIO_ICON_SIZE / 2, 0 )
-                                     .lineTo( RADIO_ICON_SIZE / 2, RADIO_ICON_SIZE )
-                                     .moveTo( RADIO_ICON_SIZE * 3 / 4, 0 )
-                                     .lineTo( RADIO_ICON_SIZE * 3 / 4, RADIO_ICON_SIZE )
-                                     .moveTo( 0, RADIO_ICON_SIZE / 4 )
-                                     .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 4 )
-                                     .moveTo( 0, RADIO_ICON_SIZE / 2 )
-                                     .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 2 )
-                                     .moveTo( 0, RADIO_ICON_SIZE * 3 / 4 )
-                                     .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE * 3 / 4 );
+        .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
+        .moveTo( RADIO_ICON_SIZE / 2, 0 )
+        .lineTo( RADIO_ICON_SIZE / 2, RADIO_ICON_SIZE )
+        .moveTo( RADIO_ICON_SIZE * 3 / 4, 0 )
+        .lineTo( RADIO_ICON_SIZE * 3 / 4, RADIO_ICON_SIZE )
+        .moveTo( 0, RADIO_ICON_SIZE / 4 )
+        .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 4 )
+        .moveTo( 0, RADIO_ICON_SIZE / 2 )
+        .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE / 2 )
+        .moveTo( 0, RADIO_ICON_SIZE * 3 / 4 )
+        .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE * 3 / 4 );
       return new Path( gridIconShape, {
         stroke: AreaModelCommonColorProfile.gridIconProperty
       } );

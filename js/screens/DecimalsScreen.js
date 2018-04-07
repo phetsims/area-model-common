@@ -39,35 +39,39 @@ define( function( require ) {
     };
 
     Screen.call( this,
-      function() { return new ProportionalAreaModel( [
-        _.extend( {
-          maximumSize: 1,
-          minimumSize: 0.1,
-          initialWidth: 0.5,
-          initialHeight: 0.5,
-          initialVerticalSplit: 0.2,
-          partitionSnapSize: 0.1
-        }, commonAreaOptions ),
-        _.extend( {
-          maximumSize: 2,
-          minimumSize: 0.1,
-          initialWidth: 1,
-          initialHeight: 1,
-          initialVerticalSplit: 0.5,
-          partitionSnapSize: 0.1
-        }, commonAreaOptions ),
-        _.extend( {
-          maximumSize: 3,
-          minimumSize: 0.1,
-          initialWidth: 1,
-          initialHeight: 1,
-          initialVerticalSplit: 0.5,
-          partitionSnapSize: 0.1
-        }, commonAreaOptions )
-      ] ); },
-      function( model ) { return new ProportionalAreaScreenView( model, {
-        decimalPlaces: 1
-      } ); },
+      function() {
+        return new ProportionalAreaModel( [
+          _.extend( {
+            maximumSize: 1,
+            minimumSize: 0.1,
+            initialWidth: 0.5,
+            initialHeight: 0.5,
+            initialVerticalSplit: 0.2,
+            partitionSnapSize: 0.1
+          }, commonAreaOptions ),
+          _.extend( {
+            maximumSize: 2,
+            minimumSize: 0.1,
+            initialWidth: 1,
+            initialHeight: 1,
+            initialVerticalSplit: 0.5,
+            partitionSnapSize: 0.1
+          }, commonAreaOptions ),
+          _.extend( {
+            maximumSize: 3,
+            minimumSize: 0.1,
+            initialWidth: 1,
+            initialHeight: 1,
+            initialVerticalSplit: 0.5,
+            partitionSnapSize: 0.1
+          }, commonAreaOptions )
+        ] );
+      },
+      function( model ) {
+        return new ProportionalAreaScreenView( model, {
+          decimalPlaces: 1
+        } );
+      },
       options
     );
   }

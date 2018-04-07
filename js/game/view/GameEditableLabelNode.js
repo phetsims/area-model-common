@@ -116,6 +116,7 @@ define( function( require ) {
     function centerTermEditNode() {
       termEditNode.center = Vector2.ZERO;
     }
+
     digitsProperty.link( centerTermEditNode );
     allowExponentsProperty.link( centerTermEditNode );
 

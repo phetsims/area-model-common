@@ -73,9 +73,9 @@ define( function( require ) {
 
     // @protected {Node} - Exposed for a11y selection
     this.productsSelectionPanel = this.createPanelContent( partialProductsString, AreaModelCommonGlobals.panelAlignGroup,
-                                                           new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
+      new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
     this.calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, AreaModelCommonGlobals.panelAlignGroup,
-                                                              new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
+      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
     var selectionContent = new VBox( {
       spacing: 15
     } );

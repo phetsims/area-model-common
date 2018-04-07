@@ -28,7 +28,7 @@ define( function( require ) {
    */
   function DistributionLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) {
     var self = this;
-    
+
     CalculationLine.call( this, 2, area, activeIndexProperty, allowExponents, isProportional );
 
     this.node = this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {

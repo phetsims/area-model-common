@@ -46,18 +46,22 @@ define( function( require ) {
     };
 
     Screen.call( this,
-      function() { return new ProportionalAreaModel( [
-        _.extend( { maximumSize: 10 }, commonAreaOptions ),
-        _.extend( { maximumSize: 12 }, commonAreaOptions )
-      ], {
-        initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES,
-      } ); },
-      function( model ) { return new ProportionalAreaScreenView( model, {
-        showCalculationSelection: false,
-        useTileLikeBackground: true,
-        useSimplifiedNames: true,
-        useCalculationBox: true
-      } ); },
+      function() {
+        return new ProportionalAreaModel( [
+          _.extend( { maximumSize: 10 }, commonAreaOptions ),
+          _.extend( { maximumSize: 12 }, commonAreaOptions )
+        ], {
+          initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES,
+        } );
+      },
+      function( model ) {
+        return new ProportionalAreaScreenView( model, {
+          showCalculationSelection: false,
+          useTileLikeBackground: true,
+          useSimplifiedNames: true,
+          useCalculationBox: true
+        } );
+      },
       options
     );
   }

@@ -55,6 +55,7 @@ define( function( require ) {
     function invalidate() {
       self.dirty = true;
     }
+
     tilesVisibleProperty.link( invalidate );
     modelViewTransformProperty.link( invalidate );
     this.smallTileSizeProperty.link( invalidate );

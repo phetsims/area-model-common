@@ -165,7 +165,7 @@ define( function( require ) {
     } );
 
     var keypadOptions = {
-       // padding constant allows it to fit between the area and the other panels
+      // padding constant allows it to fit between the area and the other panels
       x: AreaModelCommonConstants.AREA_SIZE + AreaModelCommonConstants.KEYPAD_LEFT_PADDING,
       top: 0
     };

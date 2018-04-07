@@ -104,9 +104,11 @@ define( function( require ) {
     } );
 
     var locationProperty = new Property( new Vector2() );
+
     function updateLocationProperty() {
       locationProperty.value = new Vector2( activeTotalProperties.horizontal.value, activeTotalProperties.vertical.value );
     }
+
     updateLocationProperty();
     locationProperty.lazyLink( function( location ) {
       activeTotalProperties.horizontal.value = location.x;

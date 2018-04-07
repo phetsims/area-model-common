@@ -126,6 +126,7 @@ define( function( require ) {
         }
       } );
     }
+
     linkProperty( constantProperty, constantPropertyProperty );
     linkProperty( xProperty, xPropertyProperty );
     linkProperty( xSquaredProperty, xSquaredPropertyProperty );

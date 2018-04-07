@@ -154,6 +154,7 @@ define( function( require ) {
      */
     dimensionMap: function( dimension, array, map ) {
       var indices = [];
+
       function recur( dim, arr ) {
         return arr.map( function( element, index ) {
           indices.push( index );
@@ -162,6 +163,7 @@ define( function( require ) {
           return result;
         } );
       }
+
       return recur( dimension, array );
     },
 
@@ -175,6 +177,7 @@ define( function( require ) {
      */
     dimensionForEach: function( dimension, array, forEach ) {
       var indices = [];
+
       function recur( dim, arr ) {
         return arr.forEach( function( element, index ) {
           indices.push( index );
@@ -187,6 +190,7 @@ define( function( require ) {
           indices.pop();
         } );
       }
+
       return recur( dimension, array );
     }
   } );

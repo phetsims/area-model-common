@@ -44,19 +44,23 @@ define( function( require ) {
     };
 
     Screen.call( this,
-      function() { return new ProportionalAreaModel( [
-        _.extend( { maximumSize: 10 }, commonAreaOptions ),
-        _.extend( { maximumSize: 12 }, commonAreaOptions )
-      ], {
-        initialPartialProductsChoice: PartialProductsChoice.HIDDEN
-      } ); },
-      function( model ) { return new ProportionalAreaScreenView( model, {
-        showProductsSelection: false,
-        showCalculationSelection: false,
-        useTileLikeBackground: true,
-        useSimplifiedNames: true,
-        useLargeArea: true
-      } ); },
+      function() {
+        return new ProportionalAreaModel( [
+          _.extend( { maximumSize: 10 }, commonAreaOptions ),
+          _.extend( { maximumSize: 12 }, commonAreaOptions )
+        ], {
+          initialPartialProductsChoice: PartialProductsChoice.HIDDEN
+        } );
+      },
+      function( model ) {
+        return new ProportionalAreaScreenView( model, {
+          showProductsSelection: false,
+          showCalculationSelection: false,
+          useTileLikeBackground: true,
+          useSimplifiedNames: true,
+          useLargeArea: true
+        } );
+      },
       options
     );
   }

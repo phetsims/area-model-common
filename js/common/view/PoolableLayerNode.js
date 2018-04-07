@@ -70,7 +70,7 @@ define( function( require ) {
           itemNode = options.createNode( item );
           self.addChild( itemNode );
         }
-        
+
         usedArray.push( itemNode );
       } );
 

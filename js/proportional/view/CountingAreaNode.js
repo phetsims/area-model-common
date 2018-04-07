@@ -53,6 +53,7 @@ define( function( require ) {
     function invalidate() {
       self.dirty = true;
     }
+
     countingVisibleProperty.link( invalidate );
     activeTotalProperties.horizontal.link( invalidate );
     activeTotalProperties.vertical.link( invalidate );

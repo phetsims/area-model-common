@@ -77,11 +77,11 @@ define( function( require ) {
     // We need to cut off the corners that would overlap between the two partition line handles, so we create a clipping
     // area and intersect with that. See https://github.com/phetsims/area-model-common/issues/80.
     var handleClipShape = new Shape().moveToPoint( handleTouchBounds.leftTop )
-                                     .lineToPoint( handleTouchBounds.leftBottom )
-                                     .lineToPoint( handleTouchBounds.rightBottom )
-                                     .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.rightBottom, 0.4 ) )
-                                     .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.leftTop, 0.4 ) )
-                                     .close();
+      .lineToPoint( handleTouchBounds.leftBottom )
+      .lineToPoint( handleTouchBounds.rightBottom )
+      .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.rightBottom, 0.4 ) )
+      .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.leftTop, 0.4 ) )
+      .close();
     if ( orientation === Orientation.VERTICAL ) {
       handleClipShape = handleClipShape.transformed( Matrix3.rotation2( Math.PI ) );
     }
@@ -121,7 +121,7 @@ define( function( require ) {
     var accessibleProperty = orientation === Orientation.HORIZONTAL ? partitionSplitProperty : new DynamicProperty( new Property( partitionSplitProperty ), {
       bidirectional: true,
       map: function( v ) { return -v; },
-      inverseMap: function( v ) {  return -v; }
+      inverseMap: function( v ) { return -v; }
     }, {
       valueType: 'number' // AccessibleSlider doesn't want anything besides a number
     } );

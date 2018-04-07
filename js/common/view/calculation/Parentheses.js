@@ -61,7 +61,7 @@ define( function( require ) {
     initialize: function( content, baseColorProperty ) {
       assert && assert( content instanceof Node );
       assert && assert( baseColorProperty instanceof Property );
-      
+
       assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
 
       this.content = content;

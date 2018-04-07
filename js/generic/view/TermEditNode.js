@@ -110,7 +110,7 @@ define( function( require ) {
 
     options.isActiveProperty.link( function( isActive ) {
       readoutBackground.fill = isActive ? AreaModelCommonColorProfile.editActiveBackgroundProperty
-                                        : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
+        : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
 
     function layout() {

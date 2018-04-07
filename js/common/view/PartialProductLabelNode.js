@@ -81,7 +81,7 @@ define( function( require ) {
     Property.multilink( [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
       var textOptions = {
         font: ( choice === PartialProductsChoice.PRODUCTS ) ? AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
-                                                            : AreaModelCommonConstants.PARTIAL_FACTOR_FONT
+          : AreaModelCommonConstants.PARTIAL_FACTOR_FONT
       };
 
       // Hidden
@@ -100,8 +100,14 @@ define( function( require ) {
         var rectangleSize = allowExponents ? 12 : 14;
         var magicConstant = allowExponents ? 1.3 : 0; // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
         var rectangleCenterY = new Text( ' ', textOptions ).centerY - rectangleSize / 2 + magicConstant;
-        var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
-        var verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, { stroke: 'black', lineWidth: 0.7 } );
+        var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
+          stroke: 'black',
+          lineWidth: 0.7
+        } );
+        var verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
+          stroke: 'black',
+          lineWidth: 0.7
+        } );
         if ( allowExponents ) {
           var exponentPadding = 2;
           horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );

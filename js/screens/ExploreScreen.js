@@ -30,32 +30,34 @@ define( function( require ) {
     };
 
     Screen.call( this,
-      function() { return new ProportionalAreaModel( [
-        {
-          maximumSize: 20,
-          minimumSize: 1,
-          initialWidth: 10,
-          initialHeight: 10,
-          initialVerticalSplit: 5,
-          snapSize: 1,
-          partitionSnapSize: 1,
-          gridSpacing: 1,
-          smallTileSize: 1,
-          largeTileSize: 10
-        },
-        {
-          maximumSize: 100,
-          minimumSize: 1,
-          initialWidth: 50,
-          initialHeight: 50,
-          eraseWidth: 10,
-          eraseHeight: 10,
-          initialVerticalSplit: 30,
-          snapSize: 1,
-          gridSpacing: 10,
-          tilesAvailable: false
-        }
-      ] ); },
+      function() {
+        return new ProportionalAreaModel( [
+          {
+            maximumSize: 20,
+            minimumSize: 1,
+            initialWidth: 10,
+            initialHeight: 10,
+            initialVerticalSplit: 5,
+            snapSize: 1,
+            partitionSnapSize: 1,
+            gridSpacing: 1,
+            smallTileSize: 1,
+            largeTileSize: 10
+          },
+          {
+            maximumSize: 100,
+            minimumSize: 1,
+            initialWidth: 50,
+            initialHeight: 50,
+            eraseWidth: 10,
+            eraseHeight: 10,
+            initialVerticalSplit: 30,
+            snapSize: 1,
+            gridSpacing: 10,
+            tilesAvailable: false
+          }
+        ] );
+      },
       function( model ) { return new ProportionalAreaScreenView( model ); },
       options
     );

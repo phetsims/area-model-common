@@ -274,7 +274,7 @@ define( function( require ) {
       var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
       var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
                          !( orderedTermList.equals( totalPolynomial ) &&
-                            ( !allowExponents || !orderedTermList.hasNegativeTerm() ) );
+                         ( !allowExponents || !orderedTermList.hasNegativeTerm() ) );
       var needsMinuses = needsMultiplied && allowExponents &&
                          orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
 

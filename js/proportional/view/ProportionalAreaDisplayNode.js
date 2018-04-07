@@ -72,7 +72,7 @@ define( function( require ) {
     // Active area background
     var activeAreaBackground = new Rectangle( {
       fill: options.useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
-                                          : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
+        : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
     Property.multilink( [ areaDisplay.activeTotalProperties.horizontal, this.modelViewTransformProperty ], function( totalWidth, modelViewTransform ) {
@@ -179,7 +179,7 @@ define( function( require ) {
           var range = partition.coordinateRangeProperty.value;
           if ( range === null ) { return null; }
           return new Range( orientation.modelToView( self.modelViewTransformProperty.value, range.min ),
-                            orientation.modelToView( self.modelViewTransformProperty.value, range.max ) );
+            orientation.modelToView( self.modelViewTransformProperty.value, range.max ) );
         } );
       } );
 
