@@ -20,6 +20,7 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PartitionSizeEditNode = require( 'AREA_MODEL_COMMON/generic/view/PartitionSizeEditNode' );
+  var PoolableLayerNode = require( 'AREA_MODEL_COMMON/common/view/PoolableLayerNode' );
   var Property = require( 'AXON/Property' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -49,29 +50,15 @@ define( function( require ) {
     this.areaLayer.addChild( this.backgroundNode );
 
     // Sign-colored partition area backgrounds (effectively pooled)
-    // TODO: Come up with a general pattern for this?
-    var partitionedAreaNodes = []; // {Array.<GenericPartitionedAreaNode>}
-    var partitionedAreaLayer = new Node();
-    this.areaLayer.addChild( partitionedAreaLayer );
-    areaDisplay.partitionedAreasProperty.link( function( partitionedAreas ) {
-      // Unset values for any existing ones
-      partitionedAreaNodes.forEach( function( partitionedAreaNode ) {
-        partitionedAreaNode.partitionedAreaProperty.value = null;
-      } );
-
-      for ( var i = 0; i < partitionedAreas.length; i++ ) {
-        var partitionedArea = partitionedAreas[ i ];
-
-        if ( partitionedAreaNodes[ i ] ) {
-          partitionedAreaNodes[ i ].partitionedAreaProperty.value = partitionedArea;
-        }
-        else {
-          var partitionedAreaNode = new GenericPartitionedAreaNode( new Property( partitionedArea ), self.modelViewTransformProperty );
-          partitionedAreaLayer.addChild( partitionedAreaNode );
-          partitionedAreaNodes.push( partitionedAreaNode );
-        }
+    this.areaLayer.addChild( new PoolableLayerNode( {
+      arrayProperty: areaDisplay.partitionedAreasProperty,
+      createNode: function( partitionedArea ) {
+        return new GenericPartitionedAreaNode( new Property( partitionedArea ), self.modelViewTransformProperty );
+      },
+      getItemProperty: function( partitionedAreaNode ) {
+        return partitionedAreaNode.partitionedAreaProperty;
       }
-    } );
+    } ) );
 
     this.areaLayer.addChild( this.borderNode );
 
@@ -79,28 +66,15 @@ define( function( require ) {
     this.areaLayer.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, this.viewSize ) );
 
     // Edit readouts/buttons
-    var editNodes = [];
-    var editNodeLayer = new Node();
-    this.labelLayer.addChild( editNodeLayer );
-    areaDisplay.allPartitionsProperty.link( function( partitions ) {
-      // Unset values for any existing ones
-      editNodes.forEach( function( editNode ) {
-        editNode.partitionProperty.value = null;
-      } );
-
-      for ( var i = 0; i < partitions.length; i++ ) {
-        var partition = partitions[ i ];
-
-        if ( editNodes[ i ] ) {
-          editNodes[ i ].partitionProperty.value = partition;
-        }
-        else {
-          var editNode = new PartitionSizeEditNode( areaDisplay.activePartitionProperty, new Property( partition ), self.modelViewTransformProperty, allowExponents );
-          editNodeLayer.addChild( editNode );
-          editNodes.push( editNode );
-        }
+    this.labelLayer.addChild( new PoolableLayerNode( {
+      arrayProperty: areaDisplay.allPartitionsProperty,
+      createNode: function( partition ) {
+        return new PartitionSizeEditNode( areaDisplay.activePartitionProperty, new Property( partition ), self.modelViewTransformProperty, allowExponents );
+      },
+      getItemProperty: function( editNode ) {
+        return editNode.partitionProperty;
       }
-    } );
+    } ) );
 
     // Keypad
     var digitCountProperty = new DerivedProperty( [ areaDisplay.activePartitionProperty ], function( activePartition ) {

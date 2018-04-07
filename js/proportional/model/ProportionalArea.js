@@ -148,7 +148,6 @@ define( function( require ) {
 
       // Remove splits that are at or past the current boundary.
       self.activeTotalProperties.get( orientation ).link( function( total ) {
-        // TODO: ??
         if ( self.partitionSplitProperties.get( orientation ).value >= total ) {
           self.partitionSplitProperties.get( orientation ).value = self.partitionSplitUserControlledProperties.get( orientation ).value ? total : 0;
         }

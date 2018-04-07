@@ -20,6 +20,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var PartialProductLabelNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductLabelNode' );
+  var PoolableLayerNode = require( 'AREA_MODEL_COMMON/common/view/PoolableLayerNode' );
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -79,38 +80,23 @@ define( function( require ) {
       return ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
     } );
 
+    var productLabelListener = this.positionProductLabels.bind( this );
+
     // @protected {Array.<PartialProductLabelNode>}
     this.productLabels = [];
 
-    var productLabelListener = this.positionProductLabels.bind( this );
-
-    // Handle pooling of product labels
-    var productLabelLayer = new Node();
-    this.labelLayer.addChild( productLabelLayer );    
-    var unusedProductLabels = [];
-    areaDisplay.partitionedAreasProperty.link( function( partitionedAreas ) {
-      // Unuse all labels
-      while ( self.productLabels.length ) {
-        var oldProductLabel = self.productLabels.pop();
-        oldProductLabel.partitionedAreaProperty.value = null; // Effectively hides it (probably faster to leave it)
-        unusedProductLabels.push( oldProductLabel );
+    // Create pooled partial product labels
+    this.labelLayer.addChild( new PoolableLayerNode( {
+      usedArray: this.productLabels,
+      updatedCallback: productLabelListener,
+      arrayProperty: areaDisplay.partitionedAreasProperty,
+      createNode: function( partitionedArea ) {
+        return new PartialProductLabelNode( partialProductsChoiceProperty, new Property( partitionedArea ), options.allowExponents );
+      },
+      getItemProperty: function( productLabel ) {
+        return productLabel.partitionedAreaProperty;
       }
-
-      partitionedAreas.forEach( function( partitionedArea ) {
-        var productLabel;
-        if ( unusedProductLabels.length ) {
-          productLabel = unusedProductLabels.pop();
-          productLabel.partitionedAreaProperty.value = partitionedArea;
-        }
-        else {
-          productLabel = new PartialProductLabelNode( partialProductsChoiceProperty, new Property( partitionedArea ), options.allowExponents );
-          productLabelLayer.addChild( productLabel );
-        }
-        self.productLabels.push( productLabel );
-      } );
-
-      productLabelListener();
-    } );
+    } ) );
     
     // Note this needs to be linked after the product labels are created, so the order dependency works
     areaDisplay.allPartitionsProperty.link( function( newAllPartitions, oldAllPartitions ) {
