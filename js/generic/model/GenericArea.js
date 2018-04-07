@@ -53,7 +53,8 @@ define( function( require ) {
 
     Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.genericColorProperties, 1, allowExponents );
 
-    // TODO: remove before production
+    // NOTE: Leaving here because the query parameter may be helpful in the future. If it complicates things, please
+    // just remove it.
     if ( AreaModelCommonQueryParameters.maximumLayout1 ) {
       horizontalPartitions.forEach( function( partition, index ) {
         partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
