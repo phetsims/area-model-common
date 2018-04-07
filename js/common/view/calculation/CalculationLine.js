@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * A single calculation line (for the display of the calculation panel/box)

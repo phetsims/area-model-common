@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2017-2018, University of Colorado Boulder
 
 /**
  * A polynomial as a sum of Terms with different powers. Collapses same-power terms, and orders by power.

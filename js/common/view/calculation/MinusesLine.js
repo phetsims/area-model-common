@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Calculation line that is essentially the "ordered" line, but where negative terms use a binary 'minus' in front

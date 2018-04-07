@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * A pooable RichText for a Term with a colorProperty fill.

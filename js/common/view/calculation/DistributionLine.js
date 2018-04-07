@@ -1,4 +1,4 @@
-// Copyright 2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Calculation line below the 'expanded' line, where things are "multiplied out" and distributed.
