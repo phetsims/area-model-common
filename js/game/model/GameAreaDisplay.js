@@ -15,6 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   var inherit = require( 'PHET_CORE/inherit' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
@@ -50,11 +51,18 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<Array.<EditableProperty>>>}
     // Partition sizes. Inner values may be changed by the view client.
-    ///// NO conflict
-    this.partitionSizeProperties = new OrientationPair(
-      new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] ),
-      new Property( [ new EditableProperty( null ), new EditableProperty( null ) ] )
-    );
+    this.partitionSizeProperties = OrientationPair.create( function( orientation ) {
+      return new DerivedProperty( [ self.areaChallengeProperty ], function( areaChallenge ) {
+        // If there's only one value on a side (and it's a given), there is no use showing a size here.
+        if ( areaChallenge.partitionSizeProperties.get( orientation ).length === 1 &&
+             areaChallenge.description.partitionFields.get( orientation )[ 0 ] === Field.GIVEN ) {
+          return [ new EditableProperty( null ) ];
+        }
+        else {
+          return areaChallenge.partitionSizeProperties.get( orientation );
+        }
+      } );
+    } );
 
     // @public {Property.<Array.<Array.<EditableProperty>>} - Reference to a 2D array for the grid of partial products.
     // First index is vertical (for the row), second is horizontal (for the column)

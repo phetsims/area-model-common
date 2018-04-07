@@ -446,18 +446,6 @@ define( function( require ) {
      * @param {GameAreaDisplay} display
      */
     attachDisplay: function( display ) {
-      var self = this;
-
-      Orientation.VALUES.forEach( function( orientation ) {
-        if ( self.partitionSizeProperties.get( orientation ).length === 1 &&
-             self.description.partitionFields.get( orientation )[ 0 ] === Field.GIVEN ) {
-          display.partitionSizeProperties.get( orientation ).value = [ new EditableProperty( null ) ];
-        }
-        else {
-          display.partitionSizeProperties.get( orientation ).value = self.partitionSizeProperties.get( orientation );
-        }
-      } );
-
       this.horizontalTotalListener = this.totalProperties.horizontal.linkAttribute( display.totalProperties.horizontal, 'value' );
       this.verticalTotalListener = this.totalProperties.vertical.linkAttribute( display.totalProperties.vertical, 'value' );
     },
