@@ -12,10 +12,15 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var Checkbox = require( 'SUN/Checkbox' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
+  var PartitionSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/PartitionSelectionNode' );
   var Path = require( 'SCENERY/nodes/Path' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
@@ -26,7 +31,9 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
+  // strings
   var countingToggleString = require( 'string!AREA_MODEL_COMMON/countingToggle' );
+  var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
 
   var RADIO_ICON_SIZE = 30;
 
@@ -46,6 +53,14 @@ define( function( require ) {
 
     // @private {Node} - Scene selection, created before super call since it will be added in it.
     this.sceneSelectionNode = new SceneSelectionNode( model );
+
+    var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
+      derive: 'visiblePartitionOrientationProperty',
+      bidirectional: true
+    } );
+
+    // @private {Node} - Allows controlling which partition is currently visible (if we only show one)
+    this.partitionSelectionPanel = this.createPanelContent( partitionString, AreaModelCommonGlobals.panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
 
     AreaScreenView.call( this, model, options );
 
@@ -122,6 +137,26 @@ define( function( require ) {
      */
     getRightSideNodes: function() {
       return AreaScreenView.prototype.getRightSideNodes.call( this ).concat( [ this.sceneSelectionNode ] );
+    },
+
+    /**
+     * @protected
+     * @override
+     *
+     * @returns {Property.<Array.<Node>>}
+     */
+    getSelectionNodesProperty: function() {
+      var self = this;
+
+      // Use a Property here so we don't recreate when we don't have to (just on area changes)
+      var hasPartitionSelectionProperty = new DerivedProperty( [ this.model.currentAreaProperty ], function( area ) {
+        return area.partitionLineChoice === PartitionLineChoice.ONE;
+      } );
+
+      // Conditionally include our partition selection on top of what else is included
+      return new DerivedProperty( [ AreaScreenView.prototype.getSelectionNodesProperty.call( this ), hasPartitionSelectionProperty ], function( selectionNodes, hasPartitionSelection ) {
+        return hasPartitionSelection ? selectionNodes.concat( [ self.partitionSelectionPanel ] ) : selectionNodes;
+      } );
     },
 
     /**

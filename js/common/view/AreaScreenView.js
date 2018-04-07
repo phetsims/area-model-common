@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationSelectionNode' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
@@ -21,15 +20,11 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
   var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Panel = require( 'SUN/Panel' );
   var PartialProductSelectionNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductSelectionNode' );
-  var PartitionSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/PartitionSelectionNode' );
-  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
-  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
+  var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -41,7 +36,6 @@ define( function( require ) {
   var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
   var factorsString = require( 'string!AREA_MODEL_COMMON/factors' );
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
-  var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
   var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
@@ -53,8 +47,6 @@ define( function( require ) {
    * @param {Object} [options]
    */
   function AreaScreenView( model, options ) {
-    var self = this;
-
     options = _.extend( {
       decimalPlaces: 0, // {number} - How many decimal places should be shown
       showProductsSelection: true, // {boolean} - Whether we show options that let the user select the partial product style
@@ -79,45 +71,16 @@ define( function( require ) {
     this.showProductsSelection = options.showProductsSelection;
     this.showCalculationSelection = options.showCalculationSelection;
 
-    var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
-
-    var selectionButtonAlignGroup = new AlignGroup();
-
-    // TODO: don't require this ordering of creation just for sizing. creating the "bigger" one first
-    // @public {Node} - Exposed for a11y selection
-    this.productsSelectionPanel = this.createPanelContent( partialProductsString, panelAlignGroup,
-                                                           new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
-    this.calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, panelAlignGroup,
-                                                              new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, selectionButtonAlignGroup ) );
-    // TODO: cleanup, let subtypes add bits
-    // @public {Node|null}
-    this.partitionSelectionPanel = null;
-    if ( model instanceof ProportionalAreaModel ) {
-      var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
-        derive: 'visiblePartitionOrientationProperty',
-        bidirectional: true
-      } );
-      this.partitionSelectionPanel = this.createPanelContent( partitionString, panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) );
-    }
+    // @protected {Node} - Exposed for a11y selection
+    this.productsSelectionPanel = this.createPanelContent( partialProductsString, AreaModelCommonGlobals.panelAlignGroup,
+                                                           new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
+    this.calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, AreaModelCommonGlobals.panelAlignGroup,
+                                                              new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
     var selectionContent = new VBox( {
       spacing: 15
     } );
-    // Use a Property here so we don't recreate when we don't have to (just on area changes)
-    var hasPartitionSelectionProperty = new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-      return area.partitionLineChoice === PartitionLineChoice.ONE;
-    } );
-    hasPartitionSelectionProperty.link( function( hasPartitionSelection ) {
-      var contentChildren = [];
-      if ( options.showProductsSelection ) {
-        contentChildren.push( self.productsSelectionPanel );
-      }
-      if ( options.showCalculationSelection ) {
-        contentChildren.push( self.calculationSelectionPanel );
-      }
-      if ( hasPartitionSelection ) {
-        contentChildren.push( self.partitionSelectionPanel );
-      }
-      selectionContent.children = contentChildren;
+    this.getSelectionNodesProperty().link( function( selectionNodes ) {
+      selectionContent.children = selectionNodes;
       // Add separators between items
       for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
         selectionContent.insertChild( i, new Line( {
@@ -137,7 +100,7 @@ define( function( require ) {
     } );
 
     var factorsBoxContent = new AlignBox( this.createFactorsNode( model, options.decimalPlaces ), {
-      group: panelAlignGroup,
+      group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
     // @protected {Node} - Exposed for a11y order
@@ -147,7 +110,7 @@ define( function( require ) {
     } );
 
     var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, model.isProportional ? model.getMaximumAreaString() : '', this.useTileLikeBackground ), {
-      group: panelAlignGroup,
+      group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
     // @protected {Node} - Exposed for a11y order
@@ -224,6 +187,25 @@ define( function( require ) {
         children.push( this.selectionPanel );
       }
       return children;
+    },
+
+    /**
+     * The content embedded in the selection panel varies depending on the subtype, so we provide overriding here.
+     * @protected
+     *
+     * NOTE: We need to support the fact that this can change, so it's a Property
+     *
+     * @returns {Property.<Array.<Node>>}
+     */
+    getSelectionNodesProperty: function() {
+      var selectionNodes = [];
+      if ( this.showProductsSelection ) {
+        selectionNodes.push( this.productsSelectionPanel );
+      }
+      if ( this.showCalculationSelection ) {
+        selectionNodes.push( this.calculationSelectionPanel );
+      }
+      return new Property( selectionNodes );
     },
 
     /**
