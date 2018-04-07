@@ -44,11 +44,10 @@ define( function( require ) {
       isProportional: true
     }, options );
 
-    AreaScreenView.call( this, model, options );
+    // @private {Node} - Scene selection, created before super call since it will be added in it.
+    this.sceneSelectionNode = new SceneSelectionNode( model );
 
-    // Scene selection
-    var sceneSelectionNode = new SceneSelectionNode( model );
-    this.rightPanelContainer.addChild( sceneSelectionNode );
+    AreaScreenView.call( this, model, options );
 
     // Checkboxes
     var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
@@ -64,7 +63,7 @@ define( function( require ) {
       left: 600
     } );
     this.addChild( checkboxContainer );
-    
+
     model.currentAreaProperty.link( function( area ) {
       checkboxContainer.removeAllChildren();
 
@@ -94,7 +93,7 @@ define( function( require ) {
     accessibleOrder.push( gridCheckbox );
     accessibleOrder.push( tileCheckbox );
     accessibleOrder.push( countingCheckbox );
-    accessibleOrder.push( sceneSelectionNode );
+    accessibleOrder.push( this.sceneSelectionNode );
     accessibleOrder.push( this.resetAllButton );
     this.accessibleOrder = accessibleOrder;
   }
@@ -113,6 +112,16 @@ define( function( require ) {
       AreaScreenView.prototype.step.call( this, dt );
 
       this.areaDisplayNode.update();
+    },
+
+    /**
+     * @protected
+     * @override
+     *
+     * @returns {Array.<Node>}
+     */
+    getRightSideNodes: function() {
+      return AreaScreenView.prototype.getRightSideNodes.call( this ).concat( [ this.sceneSelectionNode ] );
     },
 
     /**

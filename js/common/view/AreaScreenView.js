@@ -70,9 +70,14 @@ define( function( require ) {
 
     ScreenView.call( this );
 
+    // @protected {AreaModelCommonModel}
+    this.model = model;
+
     // @protected {boolean}
     this.useTileLikeBackground = options.useTileLikeBackground;
     this.useLargeArea = options.useLargeArea;
+    this.showProductsSelection = options.showProductsSelection;
+    this.showCalculationSelection = options.showCalculationSelection;
 
     var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
@@ -148,15 +153,9 @@ define( function( require ) {
     // @protected {Node} - Exposed for a11y order
     this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.areaBoxExpanded, areaBoxContent );
 
-    // TODO: sizing
-    var layoutNode = this.createLayoutNode && this.createLayoutNode( model, this.factorsBox.width ); // TODO: better way
-
     // @protected {VBox} - Available for subtype positioning relative to this.
     this.rightPanelContainer = new VBox( {
-      children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
-        this.factorsBox,
-        this.areaBox,
-      ].concat( options.showCalculationSelection || options.showProductsSelection ? [ this.selectionPanel ] : [] ) ),
+      children: this.getRightSideNodes(),
       spacing: AreaModelCommonConstants.PANEL_SPACING
     } );
     this.addChild( new AlignBox( this.rightPanelContainer, {
@@ -208,6 +207,23 @@ define( function( require ) {
      */
     step: function( dt ) {
       this.calculationNode.update();
+    },
+
+    /**
+     * The content on the right side varies depending on the subtype, so we provide overriding here.
+     * @protected
+     *
+     * @returns {Array.<Node>}
+     */
+    getRightSideNodes: function() {
+      var children = [
+        this.factorsBox,
+        this.areaBox
+      ];
+      if ( this.showCalculationSelection || this.showProductsSelection ) {
+        children.push( this.selectionPanel );
+      }
+      return children;
     },
 
     /**

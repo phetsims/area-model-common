@@ -38,6 +38,9 @@ define( function( require ) {
       scale: 0.7 // TODO: factor out the scale
     } );
 
+    // @private {Node|null} - Will be filled in with getRightSideNodes (we need lazy creation here unfortunately).
+    this.layoutSelectionNode = null;
+
     AreaScreenView.call( this, model, {
       isProportional: false,
       decimalPlaces: decimalPlaces
@@ -49,6 +52,17 @@ define( function( require ) {
   areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );
 
   return inherit( AreaScreenView, GenericAreaScreenView, {
+    /**
+     * @protected
+     * @override
+     *
+     * @returns {Array.<Node>}
+     */
+    getRightSideNodes: function() {
+      this.layoutSelectionNode = new GenericLayoutSelectionNode( this.model.genericLayoutProperty, this.popupLayer, this.factorsBox.width );
+      return [ this.layoutSelectionNode ].concat( AreaScreenView.prototype.getRightSideNodes.call( this ) );
+    },
+
     /**
      * Creates the main area display view for the screen.
      * @public
@@ -80,11 +94,6 @@ define( function( require ) {
         } ) );
       } );
       return new GenericFactorsNode( dynamicProperties, new Property( model.allowExponents ) );
-    },
-
-    // TODO: doc/improve
-    createLayoutNode: function( model, width ) {
-      return new GenericLayoutSelectionNode( model.genericLayoutProperty, this.popupLayer, width );
     }
   } );
 } );
