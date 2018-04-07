@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Supertype screenview for generic/proportional screens.
+ * Supertype screenview for generic/proportional screens (NOT the game screens)
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -170,6 +170,7 @@ define( function( require ) {
      */
     step: function( dt ) {
       this.calculationNode.update();
+      this.areaDisplayNode.update();
     },
 
     /**

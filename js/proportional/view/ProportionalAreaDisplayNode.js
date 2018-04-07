@@ -143,6 +143,8 @@ define( function( require ) {
      * @public
      */
     update: function() {
+      AreaDisplayNode.prototype.update.call( this );
+
       this.tiledAreaNode.update();
       this.countingAreaNode.update();
     },
@@ -206,7 +208,6 @@ define( function( require ) {
 
         // We may not be able to access labels if we are in a partial state (some properties have changed, but others
         // have not).
-        // PERFORMANCE CHECK TODO: Just have the labels get updated at end of frame? Should make things faster too.
         if ( leftLabel && rightLabel ) {
           var hasTwo = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
 

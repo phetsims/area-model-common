@@ -80,7 +80,11 @@ define( function( require ) {
       return ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
     } );
 
-    var productLabelListener = this.positionProductLabels.bind( this );
+    // @private {boolean} - Whether we need to update the labels. It's expensive, so we only do it at most once a frame.
+    this.productPositionLabelsDirty = true;
+    var invalidateProductLabels = function() {
+      self.productPositionLabelsDirty = true;
+    };
 
     // @protected {Array.<PartialProductLabelNode>}
     this.productLabels = [];
@@ -88,7 +92,7 @@ define( function( require ) {
     // Create pooled partial product labels
     this.labelLayer.addChild( new PoolableLayerNode( {
       usedArray: this.productLabels,
-      updatedCallback: productLabelListener,
+      updatedCallback: invalidateProductLabels,
       arrayProperty: areaDisplay.partitionedAreasProperty,
       createNode: function( partitionedArea ) {
         return new PartialProductLabelNode( partialProductsChoiceProperty, new Property( partitionedArea ), options.allowExponents );
@@ -101,14 +105,17 @@ define( function( require ) {
     // Note this needs to be linked after the product labels are created, so the order dependency works
     areaDisplay.allPartitionsProperty.link( function( newAllPartitions, oldAllPartitions ) {
       oldAllPartitions && oldAllPartitions.forEach( function( partition ) {
-        partition.coordinateRangeProperty.unlink( productLabelListener );
+        partition.coordinateRangeProperty.unlink( invalidateProductLabels );
       } );
       newAllPartitions.forEach( function( partition ) {
-        partition.coordinateRangeProperty.lazyLink( productLabelListener );
+        partition.coordinateRangeProperty.lazyLink( invalidateProductLabels );
       } );
-      // PERFORMANCE TODO: This listener may be called excessively? Can we delay things until a frame rendering? Or do other caching?
-      productLabelListener();
+      
+      invalidateProductLabels();
     } );
+
+    // Do it once initially for proper layout at the start
+    this.positionProductLabels();
 
     // @public {Node} - Exposed publicly for a11y
     this.eraseButton = new EraserButton( {
@@ -135,6 +142,17 @@ define( function( require ) {
   areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
 
   return inherit( Node, AreaDisplayNode, {
+    /**
+     * Updates expensive-to-update things only once a frame (for performance).
+     * @public
+     */
+    update: function() {
+      if ( !this.productPositionLabelsDirty ) { return; }
+      this.productPositionLabelsDirty = false;
+
+      this.positionProductLabels();
+    },
+
     /**
      * Positions all of the partial products labels.
      * @protected

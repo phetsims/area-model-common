@@ -43,7 +43,6 @@ define( function( require ) {
     this.countingVisibleProperty = countingVisibleProperty;
 
     // @private {Array.<Text>} - We reuse these to avoid GC/performance issues
-    // PERFORMANCE TODO: test if we should preallocate a number of these?
     this.textNodes = [];
 
     // @private {boolean} - Whether we should be redrawn
