@@ -452,7 +452,6 @@ define( function( require ) {
         [ this.totalConstantProperty ],
         [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ]
       );
-      display.partialProductsProperty.value = this.partialProductSizeProperties;
 
       Orientation.VALUES.forEach( function( orientation ) {
         if ( self.partitionSizeProperties.get( orientation ).length === 1 &&

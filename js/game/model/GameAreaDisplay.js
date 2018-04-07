@@ -58,11 +58,9 @@ define( function( require ) {
 
     // @public {Property.<Array.<Array.<EditableProperty>>} - Reference to a 2D array for the grid of partial products.
     // First index is vertical (for the row), second is horizontal (for the column)
-    ////// NO conflict
-    this.partialProductsProperty = new Property( [
-      [ new EditableProperty( null ), new EditableProperty( null ) ],
-      [ new EditableProperty( null ), new EditableProperty( null ) ]
-    ] );
+    this.partialProductsProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
+      return areaChallenge.partialProductSizeProperties;
+    } );
 
     // TODO: clear up naming (check for conflicts)
     // @public {Property.<Array.<EditableProperty>>} - Reference to an array of editable properties for the total area.
