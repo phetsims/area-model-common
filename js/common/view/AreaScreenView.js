@@ -56,9 +56,9 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
-      decimalPlaces: 0,
-      showProductsSelection: true,
-      showCalculationSelection: true,
+      decimalPlaces: 0, // {number} - How many decimal places should be shown
+      showProductsSelection: true, // {boolean} - Whether we show options that let the user select the partial product style
+      showCalculationSelection: true, // {boolean} - Whether we show options that let the user select the calculation style
       useTileLikeBackground: false, // {boolean} - Selected area background and products box use a light-tile-colored background
       useSimplifiedNames: false, // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
       useLargeArea: false, // {boolean} - If true, changes the location/size of the area to take up more space
@@ -76,21 +76,10 @@ define( function( require ) {
 
     var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
-    // Create all group-aligned content first (Panels are OK), since AccordionBoxes don't handle resizing
-    var factorsBoxContent = new AlignBox( this.createFactorsNode( model, options.decimalPlaces ), {
-      group: panelAlignGroup,
-      xAlign: 'center'
-    } );
-    var maximumProportionalString = model.isProportional ? model.getMaximumAreaString() : '';
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, maximumProportionalString, this.useTileLikeBackground ), {
-      group: panelAlignGroup,
-      xAlign: 'center'
-    } );
-
     var selectionButtonAlignGroup = new AlignGroup();
 
     // TODO: don't require this ordering of creation just for sizing. creating the "bigger" one first
-    // @public {Node}
+    // @public {Node} - Exposed for a11y selection
     this.productsSelectionPanel = this.createPanelContent( partialProductsString, panelAlignGroup,
                                                            new PartialProductSelectionNode( model, selectionButtonAlignGroup ) );
     this.calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, panelAlignGroup,
@@ -133,7 +122,8 @@ define( function( require ) {
       }
     } );
 
-    var selectionPanel = new Panel( selectionContent, {
+    // @protected {Node} - Shows radio button groups to select partial product / calculation / partition line options.
+    this.selectionPanel = new Panel( selectionContent, {
       xMargin: 15,
       yMargin: 10,
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
@@ -141,48 +131,57 @@ define( function( require ) {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
-    // Create accordion boxes after all group-aligned content is created.
+    var factorsBoxContent = new AlignBox( this.createFactorsNode( model, options.decimalPlaces ), {
+      group: panelAlignGroup,
+      xAlign: 'center'
+    } );
+    // @protected {Node} - Exposed for a11y order
     this.factorsBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.factorsBoxExpanded, factorsBoxContent, {
       // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
       contentYSpacing: model.allowExponents ? 5 : 8
     } );
+
+    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, model.isProportional ? model.getMaximumAreaString() : '', this.useTileLikeBackground ), {
+      group: panelAlignGroup,
+      xAlign: 'center'
+    } );
+    // @protected {Node} - Exposed for a11y order
     this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.areaBoxExpanded, areaBoxContent );
 
     // TODO: sizing
     var layoutNode = this.createLayoutNode && this.createLayoutNode( model, this.factorsBox.width ); // TODO: better way
 
     // @protected {VBox} - Available for subtype positioning relative to this.
-    this.panelContainer = new VBox( {
+    this.rightPanelContainer = new VBox( {
       children: ( layoutNode ? [ layoutNode ] : [] ).concat( [
         this.factorsBox,
         this.areaBox,
-      ].concat( options.showCalculationSelection || options.showProductsSelection ? [ selectionPanel ] : [] ) ),
+      ].concat( options.showCalculationSelection || options.showProductsSelection ? [ this.selectionPanel ] : [] ) ),
       spacing: AreaModelCommonConstants.PANEL_SPACING
     } );
-    this.addChild( new AlignBox( this.panelContainer, {
+    this.addChild( new AlignBox( this.rightPanelContainer, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'top',
       margin: AreaModelCommonConstants.PANEL_MARGIN
     } ) );
 
-
-    // @protected {Node}
+    // @protected {Node|null} - The calculation panel/box near the bottom of the screen
+    this.calculationNode = null;
     if ( options.useCalculationBox ) {
       var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y + AreaModelCommonConstants.AREA_SIZE + AreaModelCommonConstants.PANEL_MARGIN + 30;
       var calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN;
-      this.calculationDisplayPanel = new CalculationBox( model, new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop ), {
+      this.calculationNode = new CalculationBox( model, new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop ), {
         x: AreaModelCommonConstants.MAIN_AREA_OFFSET.x,
         y: calculationTop
       } );
-      // TODO: positioning
     }
     else {
-      this.calculationDisplayPanel = new CalculationPanel( model );
+      this.calculationNode = new CalculationPanel( model );
     }
-    this.addChild( this.calculationDisplayPanel );
+    this.addChild( this.calculationNode );
 
-    // @public {Node}
+    // @protected {Node} - Reset all button
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
@@ -208,7 +207,7 @@ define( function( require ) {
      * @param {number} dt
      */
     step: function( dt ) {
-      this.calculationDisplayPanel.update();
+      this.calculationNode.update();
     },
 
     /**

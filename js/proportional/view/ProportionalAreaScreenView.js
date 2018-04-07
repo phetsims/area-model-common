@@ -47,11 +47,8 @@ define( function( require ) {
     AreaScreenView.call( this, model, options );
 
     // Scene selection
-    var sceneSelectionNode = new SceneSelectionNode( model, {
-      top: this.panelContainer.bottom + AreaModelCommonConstants.PANEL_SPACING,
-      centerX: this.panelContainer.centerX
-    } );
-    this.addChild( sceneSelectionNode );
+    var sceneSelectionNode = new SceneSelectionNode( model );
+    this.rightPanelContainer.addChild( sceneSelectionNode );
 
     // Checkboxes
     var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
@@ -66,7 +63,8 @@ define( function( require ) {
       top: 50,
       left: 600
     } );
-
+    this.addChild( checkboxContainer );
+    
     model.currentAreaProperty.link( function( area ) {
       checkboxContainer.removeAllChildren();
 
@@ -82,8 +80,6 @@ define( function( require ) {
       }
     } );
 
-    this.addChild( checkboxContainer );
-
     var accessibleOrder = [];
     accessibleOrder.push( this.areaDisplayNode.areaLayer );
     accessibleOrder.push( this.areaDisplayNode.eraseButton );
@@ -94,7 +90,7 @@ define( function( require ) {
     if ( this.partitionSelectionPanel ) {
       accessibleOrder.push( this.partitionSelectionPanel );
     }
-    accessibleOrder.push( this.calculationDisplayPanel );
+    accessibleOrder.push( this.calculationNode );
     accessibleOrder.push( gridCheckbox );
     accessibleOrder.push( tileCheckbox );
     accessibleOrder.push( countingCheckbox );
