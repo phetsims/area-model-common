@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Screenview for game screens
+ * ScreenView for game screens
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
@@ -62,7 +62,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {ScrenView}
+   * @extends {ScreenView}
    *
    * @param {GameAreaModel} model
    */
