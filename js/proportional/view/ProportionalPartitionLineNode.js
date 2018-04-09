@@ -195,7 +195,7 @@ define( function( require ) {
           partitionSplitProperty.value = value;
         },
 
-        end: function( event, listener ) {
+        end: function() {
           if ( partitionSplitProperty.value === activeTotalProperty.value ) {
             partitionSplitProperty.value = 0;
           }
