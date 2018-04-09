@@ -95,7 +95,7 @@ define( function( require ) {
      * @public
      *
      * @param {boolean} includeBinaryOperation - If true, assumes we are in a sum and not the first term so includes
-     *                                           an intial plus or minus. If false, only a unary minus would be included.
+     *                                           an initial plus or minus. If false, only a unary minus would be included.
      * @returns {string}
      */
     toRichString: function( includeBinaryOperation ) {
