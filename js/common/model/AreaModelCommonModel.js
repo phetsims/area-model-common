@@ -77,7 +77,9 @@ define( function( require ) {
       validValues: PartialProductsChoice.VALUES
     } );
 
-    var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) { return area.totalAreaProperty; } ) );
+    var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) {
+      return area.totalAreaProperty;
+    } ) );
 
     // @public {Property.<Polynomial>}
     this.totalAreaProperty = new DerivedProperty( totalAreaProperties, function() {

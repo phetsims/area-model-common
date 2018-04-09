@@ -35,19 +35,53 @@ define( function( require ) {
 
   // layout constants
   var noExponentLayout = [
-    [ new Key( '7', KeyID.SEVEN ), new Key( '8', KeyID.EIGHT ), new Key( '9', KeyID.NINE ) ],
-    [ new Key( '4', KeyID.FOUR ), new Key( '5', KeyID.FIVE ), new Key( '6', KeyID.SIX ) ],
-    [ new Key( '1', KeyID.ONE ), new Key( '2', KeyID.TWO ), new Key( '3', KeyID.THREE ) ],
-    [ new Key( MathSymbols.PLUS + '/' + MathSymbols.MINUS, KeyID.PLUS_MINUS ), new Key( '0', KeyID.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE ) ]
+    [
+      new Key( '7', KeyID.SEVEN ),
+      new Key( '8', KeyID.EIGHT ),
+      new Key( '9', KeyID.NINE )
+    ],
+    [
+      new Key( '4', KeyID.FOUR ),
+      new Key( '5', KeyID.FIVE ),
+      new Key( '6', KeyID.SIX )
+    ],
+    [
+      new Key( '1', KeyID.ONE ),
+      new Key( '2', KeyID.TWO ),
+      new Key( '3', KeyID.THREE )
+    ],
+    [
+      new Key( MathSymbols.PLUS + '/' + MathSymbols.MINUS, KeyID.PLUS_MINUS ),
+      new Key( '0', KeyID.ZERO ),
+      new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE )
+    ]
   ];
   var noNegativeLayout = [
-    [ new Key( '7', KeyID.SEVEN ), new Key( '8', KeyID.EIGHT ), new Key( '9', KeyID.NINE ) ],
-    [ new Key( '4', KeyID.FOUR ), new Key( '5', KeyID.FIVE ), new Key( '6', KeyID.SIX ) ],
-    [ new Key( '1', KeyID.ONE ), new Key( '2', KeyID.TWO ), new Key( '3', KeyID.THREE ) ],
-    [ null, new Key( '0', KeyID.ZERO ), new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE ) ]
+    [
+      new Key( '7', KeyID.SEVEN ),
+      new Key( '8', KeyID.EIGHT ),
+      new Key( '9', KeyID.NINE )
+    ],
+    [
+      new Key( '4', KeyID.FOUR ),
+      new Key( '5', KeyID.FIVE ),
+      new Key( '6', KeyID.SIX )
+    ],
+    [
+      new Key( '1', KeyID.ONE ),
+      new Key( '2', KeyID.TWO ),
+      new Key( '3', KeyID.THREE )
+    ],
+    [
+      null, new Key( '0', KeyID.ZERO ),
+      new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE )
+    ]
   ];
   var exponentLayout = noExponentLayout.concat( [
-    [ null, new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ), new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X ) ],
+    [
+      null,
+      new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ),
+      new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X ) ]
   ] );
 
   /**
@@ -63,7 +97,7 @@ define( function( require ) {
   function TermKeypadPanel( digitCountProperty, allowExponents, allowNegative, enterCallback, nodeOptions ) {
     assert && assert( allowNegative || !allowExponents, 'We have no non-negative exponent keyboard layout' );
 
-    // Handles logic for keypresses and conversion to strings/Terms.
+    // Handles logic for key-presses and conversion to strings/Terms.
     var termAccumulator = new TermAccumulator( digitCountProperty );
 
     // @private {Keypad}

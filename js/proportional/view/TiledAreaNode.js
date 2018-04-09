@@ -99,29 +99,31 @@ define( function( require ) {
       stroke: AreaModelCommonColorProfile.tileBorderProperty
     } );
 
-    Property.multilink( [ modelViewTransformProperty, this.maximumSizeProperty, this.smallTileSizeProperty ], function( modelViewTransform, maximumSize, smallTileSize ) {
-      // Grid line shapes
-      var smallGridShape = new Shape();
-      var horizontalGridShape = new Shape();
-      var verticalGridShape = new Shape();
-      var maxX = modelViewTransform.modelToViewX( maximumSize );
-      var maxY = modelViewTransform.modelToViewY( maximumSize );
-      for ( var i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
-        var x = modelViewTransform.modelToViewX( i * smallTileSize );
-        var y = modelViewTransform.modelToViewY( i * smallTileSize );
+    Property.multilink(
+      [ modelViewTransformProperty, this.maximumSizeProperty, this.smallTileSizeProperty ],
+      function( modelViewTransform, maximumSize, smallTileSize ) {
+        // Grid line shapes
+        var smallGridShape = new Shape();
+        var horizontalGridShape = new Shape();
+        var verticalGridShape = new Shape();
+        var maxX = modelViewTransform.modelToViewX( maximumSize );
+        var maxY = modelViewTransform.modelToViewY( maximumSize );
+        for ( var i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
+          var x = modelViewTransform.modelToViewX( i * smallTileSize );
+          var y = modelViewTransform.modelToViewY( i * smallTileSize );
 
-        smallGridShape.moveTo( x, 0 ).lineTo( x, maxY );
-        smallGridShape.moveTo( 0, y ).lineTo( maxX, y );
+          smallGridShape.moveTo( x, 0 ).lineTo( x, maxY );
+          smallGridShape.moveTo( 0, y ).lineTo( maxX, y );
 
-        verticalGridShape.moveTo( x, 0 ).lineTo( x, maxY );
-        horizontalGridShape.moveTo( 0, y ).lineTo( maxX, y );
-      }
+          verticalGridShape.moveTo( x, 0 ).lineTo( x, maxY );
+          horizontalGridShape.moveTo( 0, y ).lineTo( maxX, y );
+        }
 
-      // Made immutable for potential performance gains
-      self.smallGridPath.shape = smallGridShape.makeImmutable();
-      self.horizontalGridPath.shape = horizontalGridShape.makeImmutable();
-      self.verticalGridPath.shape = verticalGridShape.makeImmutable();
-    } );
+        // Made immutable for potential performance gains
+        self.smallGridPath.shape = smallGridShape.makeImmutable();
+        self.horizontalGridPath.shape = horizontalGridShape.makeImmutable();
+        self.verticalGridPath.shape = verticalGridShape.makeImmutable();
+      } );
 
     // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
     this.extraLinesPath = new Path( null, {
@@ -146,7 +148,8 @@ define( function( require ) {
 
   return inherit( Node, TiledAreaNode, {
     /**
-     * For each partition of a particular orientation, fires the callback with range information already in view coordinates.
+     * For each partition of a particular orientation, fires the callback with range information already in view
+     * coordinates.
      * @private
      *
      * @param {Orientation} orientation
@@ -165,9 +168,13 @@ define( function( require ) {
 
         var size = range.getLength();
         var largeCount = Math.floor( thousandRound( size / self.largeTileSizeProperty.value ) );
-        var smallCount = Math.round( ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value );
+        var smallCount = Math.round(
+          ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value
+        );
         var min = orientation.modelToView( self.modelViewTransformProperty.value, range.min );
-        var border = orientation.modelToView( self.modelViewTransformProperty.value, range.min + largeCount * self.largeTileSizeProperty.value );
+        var border = orientation.modelToView(
+          self.modelViewTransformProperty.value, range.min + largeCount * self.largeTileSizeProperty.value
+        );
         var max = orientation.modelToView( self.modelViewTransformProperty.value, range.max );
 
         callback( largeCount, smallCount, min, border, max );
@@ -251,7 +258,12 @@ define( function( require ) {
 
       // Display extra lines, and clip it to fit the active area.
       this.extraLinesPath.shape = extraLinesShape;
-      this.extraLinesPath.clipArea = Shape.rect( 0, 0, mapX( this.areaDisplay.activeTotalProperties.horizontal.value ), mapY( this.areaDisplay.activeTotalProperties.vertical.value ) );
+      this.extraLinesPath.clipArea = Shape.rect(
+        0,
+        0,
+        mapX( this.areaDisplay.activeTotalProperties.horizontal.value ),
+        mapY( this.areaDisplay.activeTotalProperties.vertical.value )
+      );
     }
   } );
 } );

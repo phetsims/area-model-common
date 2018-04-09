@@ -65,12 +65,14 @@ define( function( require ) {
       rangeMultilinks = null;
       if ( partitionedArea ) {
         rangeMultilinks = partitionedArea.partitions.map( function( partition, orientation ) {
-          return Property.multilink( [ partition.coordinateRangeProperty, modelViewTransformProperty ], function( range, modelViewTransform ) {
-            if ( range !== null ) {
-              self[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
-              self[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
-            }
-          } );
+          return Property.multilink(
+            [ partition.coordinateRangeProperty, modelViewTransformProperty ],
+            function( range, modelViewTransform ) {
+              if ( range !== null ) {
+                self[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
+                self[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
+              }
+            } );
         } );
       }
     } );

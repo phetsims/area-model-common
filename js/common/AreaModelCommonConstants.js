@@ -58,7 +58,10 @@ define( function( require ) {
     GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
     // {string} - The string to be provided to RichText for a mathematical-looking x
-    X_VARIABLE_RICH_STRING: '<font face="' + new MathSymbolFont( 10 ).family.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' ) + '"><i>x</i></font>',
+    X_VARIABLE_RICH_STRING: '<font face="'
+                            + new MathSymbolFont( 10 ).family
+                              .replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' )
+                            + '"><i>x</i></font>',
 
     // {number} Two different area sizes (they are square), one needed for the intro sim
     AREA_SIZE: 350,
@@ -137,7 +140,7 @@ define( function( require ) {
     },
 
     // {OrientationPair.<number>} - The opposite-orientation offset to use for term edit nodes, e.g.
-    // node[ orientaation.opposite.coordinate ] = PARTITION_OFFSET.get( orientation )
+    // node[ orientation.opposite.coordinate ] = PARTITION_OFFSET.get( orientation )
     PARTITION_OFFSET: new OrientationPair( -20, -30 ),
 
     /**

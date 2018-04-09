@@ -31,7 +31,8 @@ define( function( require ) {
 
   return inherit( GenericArea, GameArea, {
     /**
-     * Creates a partitioned area given two partitions. Overridden so that we don't hook up automatic computation of this value.
+     * Creates a partitioned area given two partitions. Overridden so that we don't hook up automatic computation of
+     * this value.
      * @protected
      * @override
      *

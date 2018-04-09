@@ -66,8 +66,14 @@ define( function( require ) {
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
     } );
 
-    // Resize things so our AccordionBox is the correct size (we can't get bounds correct initially, because of the expand button shifting content)
-    alignBox.alignBounds = new Bounds2( 0, 0, alignBox.alignBounds.width - ( this.width - bounds.width ), alignBox.alignBounds.height - ( this.height - bounds.height ) );
+    // Resize things so our AccordionBox is the correct size (we can't get bounds correct initially, because of the
+    // expand button shifting content)
+    alignBox.alignBounds = new Bounds2(
+      0,
+      0,
+      alignBox.alignBounds.width - ( this.width - bounds.width ),
+      alignBox.alignBounds.height - ( this.height - bounds.height )
+    );
 
     this.mutate( nodeOptions );
   }

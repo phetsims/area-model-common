@@ -69,11 +69,13 @@ define( function( require ) {
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total, otherwise the total area (width of the
     // "area" times its height).
-    this.totalAreaProperty = new DerivedProperty( this.totalProperties.values, function( horizontalTotal, verticalTotal ) {
-      return horizontalTotal && verticalTotal && horizontalTotal.times( verticalTotal );
-    }, {
-      useDeepEquality: true
-    } );
+    this.totalAreaProperty = new DerivedProperty(
+      this.totalProperties.values,
+      function( horizontalTotal, verticalTotal ) {
+        return horizontalTotal && verticalTotal && horizontalTotal.times( verticalTotal );
+      }, {
+        useDeepEquality: true
+      } );
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Displayed term list for the product. Null if there is no
     // defined total.
@@ -100,14 +102,16 @@ define( function( require ) {
       var partitionedArea = new PartitionedArea( partitions );
 
       // By default, have the area linked to the partitions. This won't work for the game.
-      Property.multilink( [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ], function( horizontalSize, verticalSize ) {
-        if ( horizontalSize === null || verticalSize === null ) {
-          partitionedArea.areaProperty.value = null;
-        }
-        else {
-          partitionedArea.areaProperty.value = horizontalSize.times( verticalSize );
-        }
-      } );
+      Property.multilink(
+        [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ],
+        function( horizontalSize, verticalSize ) {
+          if ( horizontalSize === null || verticalSize === null ) {
+            partitionedArea.areaProperty.value = null;
+          }
+          else {
+            partitionedArea.areaProperty.value = horizontalSize.times( verticalSize );
+          }
+        } );
 
       return partitionedArea;
     },

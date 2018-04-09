@@ -79,9 +79,11 @@ define( function( require ) {
           stroke: AreaModelCommonColorProfile.partitionLineIconLineProperty
         } ),
         new Path( ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation ), {
-          fill: new DerivedProperty( [ currentAreaOrientationProperty, AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ) ], function( currentOrientation, widthColor ) {
-            return currentOrientation === orientation ? widthColor : '#333';
-          } ),
+          fill: new DerivedProperty(
+            [ currentAreaOrientationProperty, AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ) ],
+            function( currentOrientation, widthColor ) {
+              return currentOrientation === orientation ? widthColor : '#333';
+            } ),
           scale: 0.5,
           translation: p2
         } )

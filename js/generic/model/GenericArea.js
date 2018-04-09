@@ -51,7 +51,13 @@ define( function( require ) {
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
     ].slice( 0, layout.size.height );
 
-    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.genericColorProperties, 1, allowExponents );
+    Area.call(
+      this,
+      new OrientationPair( horizontalPartitions, verticalPartitions ),
+      AreaModelCommonColorProfile.genericColorProperties,
+      1,
+      allowExponents
+    );
 
     // NOTE: Leaving here because the query parameter may be helpful in the future. If it complicates things, please
     // just remove it.

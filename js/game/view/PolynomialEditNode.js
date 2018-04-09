@@ -148,13 +148,25 @@ define( function( require ) {
     }
 
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
-      color: new DerivedProperty( [ new DynamicProperty( constantPropertyProperty, { derive: 'highlightProperty' } ), AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], highlightFunction )
+      color: new DerivedProperty( [
+        new DynamicProperty( constantPropertyProperty, { derive: 'highlightProperty' } ),
+        AreaModelCommonColorProfile.errorHighlightProperty,
+        AreaModelCommonColorProfile.dirtyHighlightProperty
+      ], highlightFunction )
     } );
     var xPicker = new NumberPicker( xProperty, rangeProperty, {
-      color: new DerivedProperty( [ new DynamicProperty( xPropertyProperty, { derive: 'highlightProperty' } ), AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], highlightFunction )
+      color: new DerivedProperty( [
+        new DynamicProperty( xPropertyProperty, { derive: 'highlightProperty' } ),
+        AreaModelCommonColorProfile.errorHighlightProperty,
+        AreaModelCommonColorProfile.dirtyHighlightProperty
+      ], highlightFunction )
     } );
     var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
-      color: new DerivedProperty( [ new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ), AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], highlightFunction )
+      color: new DerivedProperty( [
+        new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ),
+        AreaModelCommonColorProfile.errorHighlightProperty,
+        AreaModelCommonColorProfile.dirtyHighlightProperty
+      ], highlightFunction )
     } );
 
     var xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
@@ -181,7 +193,9 @@ define( function( require ) {
     var pickerContainer = new Node();
     // Hide the x^2 term if we won't use it
     constantPropertyProperty.link( function( polynomialProperty ) {
-      pickerContainer.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2 ? xSquaredChildren : xChildren;
+      pickerContainer.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2
+        ? xSquaredChildren
+        : xChildren;
     } );
 
     xSquaredChildren.forEach( function( node, index ) {

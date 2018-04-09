@@ -49,7 +49,10 @@ define( function( require ) {
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
     this.partitionSizes = OrientationPair.create( function( orientation ) {
-      return AreaChallenge.generatePartitionTerms( description.partitionFields.get( orientation ).length, description.allowExponents );
+      return AreaChallenge.generatePartitionTerms(
+        description.partitionFields.get( orientation ).length,
+        description.allowExponents
+      );
     } );
 
     // @public {OrientationPair.<Array.<EditableProperty>>}
@@ -138,35 +141,40 @@ define( function( require ) {
     this.totalXProperty = new EditableProperty( this.total.getTerm( 1 ), _.extend( {
       correctValue: this.total.getTerm( 1 ),
       field: description.numberOrVariable( Field.GIVEN, description.totalField ),
-      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) ),
+      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) )
     }, totalOptions ) );
     this.totalXSquaredProperty = new EditableProperty( this.total.getTerm( 2 ), _.extend( {
       correctValue: this.total.getTerm( 2 ),
       field: description.numberOrVariable( Field.GIVEN, description.totalField ),
-      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) ),
+      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) )
     }, totalOptions ) );
 
     // @public {Property.<Polynomial|null>}
-    this.totalProperty = new DerivedProperty( [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ], function( constant, x, xSquared ) {
-      var terms = [ constant, x, xSquared ].filter( function( term ) {
-        return term !== null;
+    this.totalProperty = new DerivedProperty(
+      [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ],
+      function( constant, x, xSquared ) {
+        var terms = [ constant, x, xSquared ].filter( function( term ) {
+          return term !== null;
+        } );
+        if ( terms.length ) {
+          return new Polynomial( terms );
+        }
+        else {
+          return null;
+        }
       } );
-      if ( terms.length ) {
-        return new Polynomial( terms );
-      }
-      else {
-        return null;
-      }
-    } );
 
     // Properties for all of the values
-    var availableProperties = this.partitionSizeProperties.horizontal.concat( this.partitionSizeProperties.vertical ).concat( _.flatten( this.partialProductSizeProperties ) ).concat( [
-      this.totalProperties.horizontal,
-      this.totalProperties.vertical,
-      this.totalConstantProperty,
-      this.totalXProperty,
-      this.totalXSquaredProperty
-    ] );
+    var availableProperties = this.partitionSizeProperties.horizontal
+      .concat( this.partitionSizeProperties.vertical )
+      .concat( _.flatten( this.partialProductSizeProperties ) )
+      .concat( [
+        this.totalProperties.horizontal,
+        this.totalProperties.vertical,
+        this.totalConstantProperty,
+        this.totalXProperty,
+        this.totalXSquaredProperty
+      ] );
 
     // @public {Property.<boolean>}
     this.hasNullProperty = new DerivedProperty( availableProperties, function() {

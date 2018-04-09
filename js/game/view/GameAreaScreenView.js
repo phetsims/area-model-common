@@ -224,19 +224,23 @@ define( function( require ) {
     } );
 
     var totalContainer = new Node();
-    Property.multilink( [ this.areaDisplay.totalPropertiesProperty, model.stateProperty ], function( totalProperties, gameState ) {
-      if ( totalProperties.length > 1 ) {
-        if ( totalProperties[ 0 ].displayType === DisplayType.EDITABLE && gameState !== GameState.CORRECT_ANSWER && gameState !== GameState.SHOW_SOLUTION ) {
-          totalContainer.children = [ polynomialEditNode ];
+    Property.multilink(
+      [ this.areaDisplay.totalPropertiesProperty, model.stateProperty ],
+      function( totalProperties, gameState ) {
+        if ( totalProperties.length > 1 ) {
+          if ( totalProperties[ 0 ].displayType === DisplayType.EDITABLE &&
+               gameState !== GameState.CORRECT_ANSWER &&
+               gameState !== GameState.SHOW_SOLUTION ) {
+            totalContainer.children = [ polynomialEditNode ];
+          }
+          else {
+            totalContainer.children = [ polynomialReadoutText ];
+          }
         }
         else {
-          totalContainer.children = [ polynomialReadoutText ];
+          totalContainer.children = [ totalNode ];
         }
-      }
-      else {
-        totalContainer.children = [ totalNode ];
-      }
-    } );
+      } );
 
     var productContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
 
@@ -317,11 +321,15 @@ define( function( require ) {
         panelBox.visible = state !== GameState.LEVEL_COMPLETE;
         gameStatusBar.visible = state !== GameState.LEVEL_COMPLETE;
         levelCompleteContainer.visible = state === GameState.LEVEL_COMPLETE;
-        checkButton.visible = state === GameState.FIRST_ATTEMPT || state === GameState.SECOND_ATTEMPT;
+        checkButton.visible = state === GameState.FIRST_ATTEMPT ||
+                              state === GameState.SECOND_ATTEMPT;
         tryAgainButton.visible = state === GameState.WRONG_FIRST_ANSWER;
-        nextButton.visible = state === GameState.CORRECT_ANSWER || state === GameState.SHOW_SOLUTION;
+        nextButton.visible = state === GameState.CORRECT_ANSWER ||
+                             state === GameState.SHOW_SOLUTION;
         showAnswerButton.visible = state === GameState.WRONG_SECOND_ANSWER;
-        faceNode.visible = state === GameState.CORRECT_ANSWER || state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER;
+        faceNode.visible = state === GameState.CORRECT_ANSWER ||
+                           state === GameState.WRONG_FIRST_ANSWER ||
+                           state === GameState.WRONG_SECOND_ANSWER;
         scoreIncreaseText.visible = state === GameState.CORRECT_ANSWER;
       }
       if ( state === GameState.CORRECT_ANSWER ) {
@@ -336,13 +344,19 @@ define( function( require ) {
       if ( state === GameState.LEVEL_COMPLETE ) {
         var level = model.currentLevelProperty.value;
         levelCompleteContainer.children = [
-          new LevelCompletedNode( level.number - 1, level.scoreProperty.value, AreaModelCommonConstants.NUM_CHALLENGES * 2, AreaModelCommonConstants.NUM_CHALLENGES, false, 0, 0, 0, function() {
-            model.moveToLevelSelection();
-          }, {
-            cornerRadius: 8,
-            center: self.layoutBounds.center,
-            fill: level.colorProperty
-          } )
+          new LevelCompletedNode(
+            level.number - 1,
+            level.scoreProperty.value,
+            AreaModelCommonConstants.NUM_CHALLENGES * 2,
+            AreaModelCommonConstants.NUM_CHALLENGES,
+            false, 0, 0, 0,
+            function() {
+              model.moveToLevelSelection();
+            }, {
+              cornerRadius: 8,
+              center: self.layoutBounds.center,
+              fill: level.colorProperty
+            } )
         ];
 
         if ( level.scoreProperty.value === AreaModelCommonConstants.NUM_CHALLENGES * 2 ) {

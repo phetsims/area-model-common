@@ -50,13 +50,26 @@ define( function( require ) {
    */
   function AreaScreenView( model, options ) {
     options = _.extend( {
-      decimalPlaces: 0, // {number} - How many decimal places should be shown
-      showProductsSelection: true, // {boolean} - Whether we show options that let the user select the partial product style
-      showCalculationSelection: true, // {boolean} - Whether we show options that let the user select the calculation style
-      useTileLikeBackground: false, // {boolean} - Selected area background and products box use a light-tile-colored background
-      useSimplifiedNames: false, // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
-      useLargeArea: false, // {boolean} - If true, changes the location/size of the area to take up more space
-      useCalculationBox: false // {boolean} - If true, a simplified accordion box will be used for the calculation lines
+      // {number} - How many decimal places should be shown
+      decimalPlaces: 0,
+
+      // {boolean} - Whether we show options that let the user select the partial product style
+      showProductsSelection: true, 
+
+      // {boolean} - Whether we show options that let the user select the calculation style
+      showCalculationSelection: true, 
+
+      // {boolean} - Selected area background and products box use a light-tile-colored background
+      useTileLikeBackground: false, 
+
+      // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
+      useSimplifiedNames: false, 
+
+      // {boolean} - If true, changes the location/size of the area to take up more space
+      useLargeArea: false, 
+
+      // {boolean} - If true, a simplified accordion box will be used for the calculation lines
+      useCalculationBox: false 
     }, options );
 
     assert && assert( model instanceof AreaModelCommonModel );
@@ -74,10 +87,16 @@ define( function( require ) {
     this.showCalculationSelection = options.showCalculationSelection;
 
     // @protected {Node} - Exposed for a11y selection
-    this.productsSelectionPanel = this.createPanelContent( partialProductsString, AreaModelCommonGlobals.panelAlignGroup,
-      new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
-    this.calculationSelectionPanel = this.createPanelContent( areaModelCalculationString, AreaModelCommonGlobals.panelAlignGroup,
-      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup ) );
+    this.productsSelectionPanel = this.createPanelContent(
+      partialProductsString,
+      AreaModelCommonGlobals.panelAlignGroup,
+      new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
+    );
+    this.calculationSelectionPanel = this.createPanelContent(
+      areaModelCalculationString,
+      AreaModelCommonGlobals.panelAlignGroup,
+      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup )
+    );
     var selectionContent = new VBox( {
       spacing: 15
     } );
@@ -106,17 +125,29 @@ define( function( require ) {
       xAlign: 'center'
     } );
     // @protected {Node} - Exposed for a11y order
-    this.factorsBox = this.createAccordionBox( options.useSimplifiedNames ? factorsString : dimensionsString, model.factorsBoxExpanded, factorsBoxContent, {
+    this.factorsBox = this.createAccordionBox(
+      options.useSimplifiedNames ? factorsString : dimensionsString,
+      model.factorsBoxExpanded,
+      factorsBoxContent,
+    {
       // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
       contentYSpacing: model.allowExponents ? 5 : 8
     } );
 
-    var areaBoxContent = new AlignBox( new TotalAreaNode( model.totalAreaProperty, model.isProportional, model.isProportional ? model.getMaximumAreaString() : '', this.useTileLikeBackground ), {
+    var areaBoxContent = new AlignBox( new TotalAreaNode(
+      model.totalAreaProperty,
+      model.isProportional,
+      model.isProportional ? model.getMaximumAreaString() : '', this.useTileLikeBackground
+    ), {
       group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
     // @protected {Node} - Exposed for a11y order
-    this.areaBox = this.createAccordionBox( options.useSimplifiedNames ? productString : totalAreaOfModelString, model.areaBoxExpanded, areaBoxContent );
+    this.areaBox = this.createAccordionBox(
+      options.useSimplifiedNames ? productString : totalAreaOfModelString,
+      model.areaBoxExpanded,
+      areaBoxContent
+    );
 
     // @protected {VBox} - Available for subtype positioning relative to this.
     this.rightPanelContainer = new VBox( {
@@ -133,9 +164,12 @@ define( function( require ) {
     // @protected {Node|null} - The calculation panel/box near the bottom of the screen
     this.calculationNode = null;
     if ( options.useCalculationBox ) {
-      var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y + AreaModelCommonConstants.AREA_SIZE + AreaModelCommonConstants.PANEL_MARGIN + 30;
+      var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y +
+                           AreaModelCommonConstants.AREA_SIZE +
+                           AreaModelCommonConstants.PANEL_MARGIN + 30;
       var calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN;
-      this.calculationNode = new CalculationBox( model, new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop ), {
+      var calculationBounds = new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop );
+      this.calculationNode = new CalculationBox( model, calculationBounds, {
         x: AreaModelCommonConstants.MAIN_AREA_OFFSET.x,
         y: calculationTop
       } );
@@ -268,7 +302,9 @@ define( function( require ) {
      * @returns {Vector2}
      */
     getDisplayTranslation: function() {
-      return this.layoutBounds.leftTop.plus( this.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_OFFSET : AreaModelCommonConstants.MAIN_AREA_OFFSET );
+      return this.layoutBounds.leftTop.plus(
+        this.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_OFFSET : AreaModelCommonConstants.MAIN_AREA_OFFSET
+      );
     },
 
     /**

@@ -52,7 +52,9 @@ define( function( require ) {
     var xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } );
 
     // Have the X take up at least the same vertical bounds as the parentheses
-    xText.localBounds = xText.localBounds.union( new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY ) );
+    xText.localBounds = xText.localBounds.union(
+      new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY )
+    );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
     var box = new HBox( {
@@ -84,7 +86,9 @@ define( function( require ) {
     // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
     allowExponentsProperty.link( function( allowExponents ) {
       var maxBounds = Bounds2.NOTHING.copy();
-      maxBounds.includeBounds( new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ).bounds );
+      maxBounds.includeBounds( new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', {
+        font: AreaModelCommonConstants.FACTORS_TERM_FONT
+      } ).bounds );
       maxBounds.includeBounds( PAREN_BOUNDS );
 
       self.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxBounds.height );

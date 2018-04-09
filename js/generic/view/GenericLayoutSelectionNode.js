@@ -141,22 +141,26 @@ define( function( require ) {
                 visibleProperty.value = false; // hide
               }
             } );
-            background.stroke = new DerivedProperty( [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ], function( currentLayout, highlightColor ) {
-              if ( currentLayout === layout ) {
-                return highlightColor;
-              }
-              else {
-                return 'transparent';
-              }
-            } );
-            background.fill = new DerivedProperty( [ listener.isHoveringProperty, AreaModelCommonColorProfile.layoutHoverProperty ], function( isHovering, hoverColor ) {
-              if ( isHovering ) {
-                return hoverColor;
-              }
-              else {
-                return 'transparent';
-              }
-            } );
+            background.stroke = new DerivedProperty(
+              [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ],
+              function( currentLayout, highlightColor ) {
+                if ( currentLayout === layout ) {
+                  return highlightColor;
+                }
+                else {
+                  return 'transparent';
+                }
+              } );
+            background.fill = new DerivedProperty(
+              [ listener.isHoveringProperty, AreaModelCommonColorProfile.layoutHoverProperty ],
+                function( isHovering, hoverColor ) {
+                if ( isHovering ) {
+                  return hoverColor;
+                }
+                else {
+                  return 'transparent';
+                }
+              } );
 
             return new Node( {
               children: [ background, icon ],

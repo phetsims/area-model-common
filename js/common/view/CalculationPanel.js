@@ -52,7 +52,11 @@ define( function( require ) {
 
     var arrowSize = 18;
     var arrowTouchDilation = 8;
-    var previousArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
+    var previousShape = new Shape().moveTo( 0, 0 )
+      .lineTo( arrowSize, 0 )
+      .lineTo( arrowSize / 2, -arrowSize * 0.8 )
+      .close();
+    var previousArrow = new Path( previousShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
@@ -67,11 +71,17 @@ define( function( require ) {
     this.calculationLinesNode.previousEnabledProperty.link( function( enabled ) {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
-      previousArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
+      previousArrow.fill = enabled
+        ? AreaModelCommonColorProfile.calculationArrowUpProperty
+        : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     this.addChild( previousArrow );
-    var nextArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, arrowSize * 0.8 ).close(), {
+    var nextShape = new Shape().moveTo( 0, 0 )
+      .lineTo( arrowSize, 0 )
+      .lineTo( arrowSize / 2, arrowSize * 0.8 )
+      .close();
+    var nextArrow = new Path( nextShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
@@ -87,7 +97,9 @@ define( function( require ) {
     this.calculationLinesNode.nextEnabledProperty.link( function( enabled ) {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
-      nextArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
+      nextArrow.fill = enabled
+        ? AreaModelCommonColorProfile.calculationArrowUpProperty
+        : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {

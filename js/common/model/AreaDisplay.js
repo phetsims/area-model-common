@@ -31,9 +31,11 @@ define( function( require ) {
     } );
 
     // @public {Property.<Array.<Partition>>}
-    this.allPartitionsProperty = new DerivedProperty( [ this.partitionsProperties.horizontal, this.partitionsProperties.vertical ], function( horizontalPartitions, verticalPartitions ) {
-      return horizontalPartitions.concat( verticalPartitions );
-    } );
+    this.allPartitionsProperty = new DerivedProperty(
+      [ this.partitionsProperties.horizontal, this.partitionsProperties.vertical ],
+      function( horizontalPartitions, verticalPartitions ) {
+        return horizontalPartitions.concat( verticalPartitions );
+      } );
 
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = this.wrapOrientationPairProperty( function( area ) {

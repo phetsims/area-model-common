@@ -107,9 +107,11 @@ define( function( require ) {
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
       _.range( 0, 3 ).forEach( function( partitionIndex ) {
-        var valuePropertyProperty = new DerivedProperty( [ areaDisplay.partitionSizeProperties.get( orientation ) ], function( values ) {
-          return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
-        } );
+        var valuePropertyProperty = new DerivedProperty(
+          [ areaDisplay.partitionSizeProperties.get( orientation ) ],
+          function( values ) {
+            return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
+          } );
         var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
         var label = new GameEditableLabelNode( {
@@ -133,10 +135,16 @@ define( function( require ) {
     _.range( 0, 3 ).forEach( function( horizontalIndex ) {
       _.range( 0, 3 ).forEach( function( verticalIndex ) {
         var valuePropertyProperty = new DerivedProperty( [ areaDisplay.partialProductsProperty ], function( values ) {
-          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] ) ? values[ verticalIndex ][ horizontalIndex ] : new EditableProperty( null );
+          return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] )
+            ? values[ verticalIndex ][ horizontalIndex ]
+            : new EditableProperty( null );
         } );
 
-        var colorProperty = new DerivedProperty( [ valuePropertyProperty, AreaModelCommonColorProfile.dynamicPartialProductProperty, AreaModelCommonColorProfile.fixedPartialProductProperty ], function( editableProperty, dynamicColor, fixedColor ) {
+        var colorProperty = new DerivedProperty( [
+          valuePropertyProperty,
+          AreaModelCommonColorProfile.dynamicPartialProductProperty,
+          AreaModelCommonColorProfile.fixedPartialProductProperty
+        ], function( editableProperty, dynamicColor, fixedColor ) {
           if ( editableProperty && editableProperty.field === Field.DYNAMIC ) {
             return dynamicColor;
           }
