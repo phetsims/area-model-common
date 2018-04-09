@@ -1,8 +1,13 @@
 
 ## Screen types
 
+**Proportional** screens are based on to-scale coordinates with movable partition lines, resizable area, and usually starts with a grid enabled:
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-proportional.PNG)
+
+**Generic** screens are not-to-scale, where the partition lines are fixed visually, and the partition sizes can be edited directly:
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-generic.PNG)
+
+**Game** screens visually use the generic view, with differences where many different fields can be editable:
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-game.PNG)
 
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-calculation-choices.PNG)
