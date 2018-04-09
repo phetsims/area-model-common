@@ -3,6 +3,8 @@
 /**
  * Screenview for game screens
  *
+ * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

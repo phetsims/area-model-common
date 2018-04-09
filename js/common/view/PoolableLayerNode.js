@@ -3,6 +3,8 @@
 /**
  * Common logic for where we have a variable number of nodes that need to be used.
  *
+ * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

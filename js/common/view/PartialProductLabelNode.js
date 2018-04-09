@@ -3,6 +3,8 @@
 /**
  * Shows the product or factors for a partitioned area over a rounded background.
  *
+ * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

@@ -4,6 +4,8 @@
  * Status bar along the top of the game screen when in an active challenge. Shows the level #, description,
  * a back button, and the current score.
  *
+ * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

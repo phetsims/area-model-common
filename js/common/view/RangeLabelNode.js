@@ -4,6 +4,8 @@
  * A range label that displays a specific TermList along a line covering the range (with start/end ticks for every
  * partition)
  *
+ * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
