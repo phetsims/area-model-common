@@ -179,3 +179,17 @@ And when a solution is checked, if they are incorrect, they will be flagged:
 There is also an editable field that shows up for polynomial editing:
 
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-game-polynomial.PNG)
+
+# Code
+
+## General
+
+Since we need to handle powers of x, most values that are used (such as the size of a partition) are a `Term` (a coefficient and a power of x). Arrays of these are usually handled as a `TermList`, and a `Polynomial` is one that combines by power of x and is sorted.
+
+There is a lot of code that would be duplicated for horizontal/vertical cases (the `Orientation` enumeration). To reduce that, there is an `OrientationPair` type, which holds a value for each orientation, and provides helper methods. A good understanding of `OrientationPair` is critical to understanding a lot of the code.
+
+We need to switch between showing different areas a lot (scenes and the game), and memory usage precluded switching between one node subtree for each area. Instead, we have `AreaDisplay` (and subtypes `ProportionalAreaDisplay`, `GenericAreaDisplay` and `GameAreaDisplay`) which allows swapping out different areas (and in `GameAreaDisplay`'s case, entire challenges). It wraps most of the values of the area types into Properties (where necessary), so it is a representation of what should be displayed on the screen. We then have `AreaDisplayNode` and others to actually display this.
+
+Our model-view transforms vary a bit. For proportional screens, they map the actual coordinate into view space, but for generic screens the "model" space in each orientation is from 0 to 1 (so that gets mapped over).
+
+Since almost every feature is shared between multiple area-model sims, almost all the code is in this common repository. This includes the screens (since some are shared), so those are under js/screens/ (and each sim references the screens that it uses).
