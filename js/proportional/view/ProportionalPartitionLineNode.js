@@ -120,17 +120,21 @@ define( function( require ) {
 
     // We need to reverse the accessible property for the vertical case.
     // See https://github.com/phetsims/area-model-introduction/issues/2
-    var accessibleProperty = orientation === Orientation.HORIZONTAL ? partitionSplitProperty : new DynamicProperty( new Property( partitionSplitProperty ), {
-      bidirectional: true,
-      map: function( v ) { return -v; },
-      inverseMap: function( v ) { return -v; }
-    }, {
-      valueType: 'number' // AccessibleSlider doesn't want anything besides a number
-    } );
-    var accessibleRangeProperty = new DerivedProperty( [ activeTotalProperty, areaDisplay.snapSizeProperty ], function( total, snapSize ) {
-      var size = total - snapSize;
-      return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
-    } );
+    var accessibleProperty = orientation === Orientation.HORIZONTAL
+      ? partitionSplitProperty
+      : new DynamicProperty( new Property( partitionSplitProperty ), {
+        bidirectional: true,
+        map: function( v ) { return -v; },
+        inverseMap: function( v ) { return -v; }
+      }, {
+        valueType: 'number' // AccessibleSlider doesn't want anything besides a number
+      } );
+    var accessibleRangeProperty = new DerivedProperty(
+      [ activeTotalProperty, areaDisplay.snapSizeProperty ],
+      function( total, snapSize ) {
+        var size = total - snapSize;
+        return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
+      } );
 
     this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
       constrainValue: function( value ) {
@@ -151,13 +155,16 @@ define( function( require ) {
     } );
 
     // Opposite coordinate (how wide the area is in the other direction)
-    Property.multilink( [ oppositeActiveTotalProperty, modelViewTransformProperty ], function( oppositeTotal, modelViewTransform ) {
-      var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) + AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
-      handle[ orientation.opposite.coordinate ] = offsetValue;
-      line[ orientation.opposite.coordinate + '2' ] = offsetValue;
-      line.mouseArea = line.localBounds.dilated( 4 );
-      line.touchArea = line.localBounds.dilated( 8 );
-    } );
+    Property.multilink(
+      [ oppositeActiveTotalProperty, modelViewTransformProperty ],
+      function( oppositeTotal, modelViewTransform ) {
+        var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) +
+                          AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
+        handle[ orientation.opposite.coordinate ] = offsetValue;
+        line[ orientation.opposite.coordinate + '2' ] = offsetValue;
+        line.mouseArea = line.localBounds.dilated( 4 );
+        line.touchArea = line.localBounds.dilated( 8 );
+      } );
 
     // Visibility
     areaDisplay.partitionSplitVisibleProperties.get( orientation ).linkAttribute( self, 'visible' );
@@ -174,10 +181,12 @@ define( function( require ) {
         drag: function( event, listener ) {
           var value = listener.modelPoint[ orientation.coordinate ];
 
-          value = Math.round( value / areaDisplay.partitionSnapSizeProperty.value ) * areaDisplay.partitionSnapSizeProperty.value;
+          value = Math.round( value / areaDisplay.partitionSnapSizeProperty.value ) *
+                  areaDisplay.partitionSnapSizeProperty.value;
           value = Util.clamp( value, 0, activeTotalProperty.value );
 
-          // Hint arrows disappear when the actual split changes during a drag, see https://github.com/phetsims/area-model-common/issues/68
+          // Hint arrows disappear when the actual split changes during a drag, see
+          // https://github.com/phetsims/area-model-common/issues/68
           var currentSplitValue = partitionSplitProperty.value;
           if ( value !== currentSplitValue && value !== 0 ) {
             showHintArrowsProperty.value = false;
@@ -186,7 +195,7 @@ define( function( require ) {
           partitionSplitProperty.value = value;
         },
 
-        end: function( event, listener ) {
+        end: function() {
           if ( partitionSplitProperty.value === activeTotalProperty.value ) {
             partitionSplitProperty.value = 0;
           }
@@ -201,7 +210,11 @@ define( function( require ) {
   // Handle arrows
   var arrowHalfLength = 10;
   var arrowHalfWidth = 10;
-  var verticalArrowShape = new Shape().moveTo( -arrowHalfLength, 0 ).lineTo( arrowHalfLength, arrowHalfWidth ).lineTo( arrowHalfLength, -arrowHalfWidth ).close();
+  var verticalArrowShape = new Shape()
+    .moveTo( -arrowHalfLength, 0 )
+    .lineTo( arrowHalfLength, arrowHalfWidth )
+    .lineTo( arrowHalfLength, -arrowHalfWidth )
+    .close();
   var horizontalArrowShape = verticalArrowShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
 
   inherit( Node, ProportionalPartitionLineNode, {}, {

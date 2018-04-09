@@ -46,7 +46,8 @@ define( function( require ) {
     // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
     var draggedProperty = new BooleanProperty( false );
 
-    // {Property.<Vector2>} - The current view "offset" from where the pointer is compared to the point it is controlling
+    // {Property.<Vector2>} - The current view "offset" from where the pointer is compared to the point it is
+    // controlling
     var offsetProperty = new Property( new Vector2() );
 
     var line = new Line( {
@@ -108,7 +109,10 @@ define( function( require ) {
     var locationProperty = new Property( new Vector2() );
 
     function updateLocationProperty() {
-      locationProperty.value = new Vector2( activeTotalProperties.horizontal.value, activeTotalProperties.vertical.value );
+      locationProperty.value = new Vector2(
+        activeTotalProperties.horizontal.value,
+        activeTotalProperties.vertical.value
+      );
     }
 
     updateLocationProperty();
@@ -122,7 +126,8 @@ define( function( require ) {
     var keyboardListener;
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
       if ( keyboardListener ) {
-        // Can't remove the listeners right now, see https://github.com/phetsims/scenery/issues/764. Yikes, temp workaround
+        // Can't remove the listeners right now, see https://github.com/phetsims/scenery/issues/764. Yikes,
+        // temp workaround
         // BLOCKED TODO: Fix this (https://github.com/phetsims/scenery/issues/764)
         // circle.removeAccessibleInputListener( keyboardListener );
         keyboardListener.dispose();
@@ -149,7 +154,8 @@ define( function( require ) {
         moveOnHoldInterval: 70
       } );
       circle.addAccessibleInputListener( keyboardListener );
-      // BLOCKED TODO: Interruption of the keybaord listener when things change (when we don't have to recreate), https://github.com/phetsims/scenery-phet/issues/368
+      // BLOCKED TODO: Interruption of the keybaord listener when things change (when we don't have to recreate),
+      // https://github.com/phetsims/scenery-phet/issues/368
     } );
 
     // Apply offsets while dragging for a smoother experience.
@@ -166,9 +172,11 @@ define( function( require ) {
 
     // Update the offset of the drag handle
     Orientation.VALUES.forEach( function( orientation ) {
-      Property.multilink( [ activeTotalProperties.get( orientation ), modelViewTransformProperty ], function( value, modelViewTransform ) {
-        self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
-      } );
+      Property.multilink(
+        [ activeTotalProperties.get( orientation ), modelViewTransformProperty ],
+        function( value, modelViewTransform ) {
+          self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
+        } );
     } );
   }
 

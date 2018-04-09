@@ -52,7 +52,9 @@ define( function( require ) {
           new Text( areaEqualsString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
-            fill: useTileLikeBackground ? AreaModelCommonColorProfile.smallTileProperty : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
+            fill: useTileLikeBackground
+              ? AreaModelCommonColorProfile.smallTileProperty
+              : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
           } )
         ]
       } );

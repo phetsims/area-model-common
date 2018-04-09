@@ -59,7 +59,11 @@ define( function( require ) {
      * @returns {Array.<Node>}
      */
     getRightSideNodes: function() {
-      this.layoutSelectionNode = new GenericLayoutSelectionNode( this.model.genericLayoutProperty, this.popupLayer, this.factorsBox.width );
+      this.layoutSelectionNode = new GenericLayoutSelectionNode(
+        this.model.genericLayoutProperty,
+        this.popupLayer,
+        this.factorsBox.width
+      );
       return [ this.layoutSelectionNode ].concat( AreaScreenView.prototype.getRightSideNodes.call( this ) );
     },
 

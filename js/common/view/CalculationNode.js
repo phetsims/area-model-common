@@ -1,7 +1,8 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Shows the calculation of total area from each of the partitions' sizes.
+ * Shows the calculation of total area from each of the partitions' sizes. Allows line-by-line, and is meant to go in
+ * the panel (not for the "Partition" screen)
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
@@ -34,7 +35,7 @@ define( function( require ) {
    * @param {AreaModelCommonModel} model
    * @param {Object} [nodeOptions]
    */
-  function CalculationPanel( model, nodeOptions ) {
+  function CalculationNode( model, nodeOptions ) {
 
     var self = this;
 
@@ -52,7 +53,11 @@ define( function( require ) {
 
     var arrowSize = 18;
     var arrowTouchDilation = 8;
-    var previousArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, -arrowSize * 0.8 ).close(), {
+    var previousShape = new Shape().moveTo( 0, 0 )
+      .lineTo( arrowSize, 0 )
+      .lineTo( arrowSize / 2, -arrowSize * 0.8 )
+      .close();
+    var previousArrow = new Path( previousShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
@@ -67,11 +72,17 @@ define( function( require ) {
     this.calculationLinesNode.previousEnabledProperty.link( function( enabled ) {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
-      previousArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
+      previousArrow.fill = enabled
+        ? AreaModelCommonColorProfile.calculationArrowUpProperty
+        : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     this.addChild( previousArrow );
-    var nextArrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize / 2, arrowSize * 0.8 ).close(), {
+    var nextShape = new Shape().moveTo( 0, 0 )
+      .lineTo( arrowSize, 0 )
+      .lineTo( arrowSize / 2, arrowSize * 0.8 )
+      .close();
+    var nextArrow = new Path( nextShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
@@ -87,7 +98,9 @@ define( function( require ) {
     this.calculationLinesNode.nextEnabledProperty.link( function( enabled ) {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
-      nextArrow.fill = enabled ? AreaModelCommonColorProfile.calculationArrowUpProperty : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
+      nextArrow.fill = enabled
+        ? AreaModelCommonColorProfile.calculationArrowUpProperty
+        : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
@@ -166,9 +179,9 @@ define( function( require ) {
     update();
   }
 
-  areaModelCommon.register( 'CalculationPanel', CalculationPanel );
+  areaModelCommon.register( 'CalculationNode', CalculationNode );
 
-  return inherit( Node, CalculationPanel, {
+  return inherit( Node, CalculationNode, {
     /**
      * Updates the calculation lines.
      * @public

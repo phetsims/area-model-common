@@ -45,7 +45,8 @@ define( function( require ) {
       return areaChallenge.area;
     } ) );
 
-    // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is hidden.
+    // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is
+    // hidden.
     // NOTE: Overridden from the AreaDisplay version.
     this.totalProperties = OrientationPair.create( function( orientation ) {
       return new DynamicProperty( self.areaChallengeProperty, {

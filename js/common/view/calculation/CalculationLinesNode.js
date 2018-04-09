@@ -68,9 +68,11 @@ define( function( require ) {
     } );
 
     // @private {Property.<number|null>} - The effective current index (for whatever area) that we will use for display
-    this.effectiveIndexProperty = new DerivedProperty( [ this.areaIndexProperty, model.areaCalculationChoiceProperty ], function( index, choice ) {
-      return choice === AreaCalculationChoice.LINE_BY_LINE ? index : null;
-    } );
+    this.effectiveIndexProperty = new DerivedProperty(
+      [ this.areaIndexProperty, model.areaCalculationChoiceProperty ],
+      function( index, choice ) {
+        return choice === AreaCalculationChoice.LINE_BY_LINE ? index : null;
+      } );
 
     var setLinesDirty = function() { self.linesDirty = true; };
     var setDisplayDirty = function() { self.displayDirty = true; };
@@ -156,7 +158,12 @@ define( function( require ) {
       } );
 
       // Create new lines
-      this.calculationLinesProperty.value = CalculationLinesNode.createLines( this.model.currentAreaProperty.value, this.effectiveIndexProperty, this.model.allowExponents, this.model.isProportional );
+      this.calculationLinesProperty.value = CalculationLinesNode.createLines(
+        this.model.currentAreaProperty.value,
+        this.effectiveIndexProperty,
+        this.model.allowExponents,
+        this.model.isProportional
+      );
 
       this.linesDirty = false;
       this.displayDirty = true;

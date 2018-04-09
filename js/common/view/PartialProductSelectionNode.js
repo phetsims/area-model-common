@@ -40,16 +40,22 @@ define( function( require ) {
     var templateLabels = OrientationPair.create( function( orientation ) {
       return new Text( orientation === Orientation.HORIZONTAL ? 'b' : 'a', {
         font: AreaModelCommonConstants.SYMBOL_FONT,
-        fill: new DerivedProperty( [ model.partialProductsChoiceProperty, model.colorProperties.get( orientation ) ], function( value, color ) {
-          return value === PartialProductsChoice.FACTORS ? color : 'black';
-        } )
+        fill: new DerivedProperty(
+          [ model.partialProductsChoiceProperty, model.colorProperties.get( orientation ) ],
+          function( value, color ) {
+            return value === PartialProductsChoice.FACTORS ? color : 'black';
+          } )
       } );
     } );
 
     // Both are built here so it is a consistent size across screens.
     var iconGroup = new AlignGroup();
-    var exponentsIcon = new AlignBox( PartialProductSelectionNode.createExponentIcon( templateLabels ), { group: iconGroup } );
-    var noExponentsIcon = new AlignBox( PartialProductSelectionNode.createNonExponentIcon( templateLabels ), { group: iconGroup } );
+    var exponentsIcon = new AlignBox( PartialProductSelectionNode.createExponentIcon( templateLabels ), {
+      group: iconGroup
+    } );
+    var noExponentsIcon = new AlignBox( PartialProductSelectionNode.createNonExponentIcon( templateLabels ), {
+      group: iconGroup
+    } );
 
     AreaModelCommonRadioButtonGroup.call( this, model.partialProductsChoiceProperty, [
       {

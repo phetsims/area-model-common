@@ -119,7 +119,10 @@ define( function( require ) {
       return level ? level.challengeIndexProperty : new Property( null );
     } ) ).link( function( index ) {
       if ( index !== null ) {
-        self.challengeProgressNode.text = StringUtils.format( pattern0Challenge1MaxString, '' + ( index + 1 ), '' + AreaModelCommonConstants.NUM_CHALLENGES );
+        self.challengeProgressNode.text = StringUtils.format(
+          pattern0Challenge1MaxString,
+          '' + ( index + 1 ), '' + AreaModelCommonConstants.NUM_CHALLENGES
+        );
       }
     } );
 

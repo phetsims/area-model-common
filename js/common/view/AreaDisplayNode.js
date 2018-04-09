@@ -64,12 +64,20 @@ define( function( require ) {
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = self.areaDisplay.colorProperties.get( orientation );
       var termListProperty = self.areaDisplay.displayProperties.get( orientation );
-      var tickLocationsProperty = new DerivedProperty( [ areaDisplay.partitionBoundariesProperties.get( orientation ) ], function( partitionBoundaries ) {
-        return partitionBoundaries.map( function( boundary ) {
-          return self.mapCoordinate( boundary );
+      var tickLocationsProperty = new DerivedProperty(
+        [ areaDisplay.partitionBoundariesProperties.get( orientation ) ],
+        function( partitionBoundaries ) {
+          return partitionBoundaries.map( function( boundary ) {
+            return self.mapCoordinate( boundary );
+          } );
         } );
-      } );
-      self.labelLayer.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, options.isProportional ) );
+      self.labelLayer.addChild( new RangeLabelNode(
+        termListProperty,
+        orientation,
+        tickLocationsProperty,
+        colorProperty,
+        options.isProportional
+      ) );
     } );
 
     var modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
@@ -97,7 +105,11 @@ define( function( require ) {
       updatedCallback: invalidateProductLabels,
       arrayProperty: areaDisplay.partitionedAreasProperty,
       createNode: function( partitionedArea ) {
-        return new PartialProductLabelNode( partialProductsChoiceProperty, new Property( partitionedArea ), options.allowExponents );
+        return new PartialProductLabelNode(
+          partialProductsChoiceProperty,
+          new Property( partitionedArea ),
+          options.allowExponents
+        );
       },
       getItemProperty: function( productLabel ) {
         return productLabel.partitionedAreaProperty;
@@ -112,7 +124,7 @@ define( function( require ) {
       newAllPartitions.forEach( function( partition ) {
         partition.coordinateRangeProperty.lazyLink( invalidateProductLabels );
       } );
-      
+
       invalidateProductLabels();
     } );
 
@@ -124,7 +136,9 @@ define( function( require ) {
       listener: function() {
         areaDisplay.areaProperty.value.erase();
       },
-      center: options.isProportional ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
+      center: options.isProportional
+        ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
+        : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
       touchAreaXDilation: 8,
       touchAreaYDilation: 8
     } );

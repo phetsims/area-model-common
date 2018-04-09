@@ -48,9 +48,11 @@ define( function( require ) {
     TermEditNode.call( this, orientationProperty, sizeProperty, {
       textColorProperty: colorProperty,
       borderColorProperty: colorProperty,
-      isActiveProperty: new DerivedProperty( [ activePartitionProperty, partitionProperty ], function( activePartition, partition ) {
-        return activePartition === partition;
-      } ),
+      isActiveProperty: new DerivedProperty(
+        [ activePartitionProperty, partitionProperty ],
+        function( activePartition, partition ) {
+          return activePartition === partition;
+        } ),
       digitCountProperty: new DerivedProperty( [ partitionProperty ], function( partition ) {
         return partition ? partition.digitCount : 1; // Default if we have none
       } ),
@@ -62,11 +64,13 @@ define( function( require ) {
 
     // Primary orientation (location of range center)
     var coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
-    Property.multilink( [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ], function( partition, range, modelViewTransform ) {
-      if ( range && partition ) {
-        self[ partition.orientation.centerCoordinate ] = partition.orientation.modelToView( modelViewTransform, range.getCenter() );
-      }
-    } );
+    Property.multilink(
+      [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ],
+      function( partition, range, modelViewTransform ) {
+        if ( range && partition ) {
+          self[ partition.orientation.centerCoordinate ] = partition.orientation.modelToView( modelViewTransform, range.getCenter() );
+        }
+      } );
 
     // Secondary (offsets)
     partitionProperty.link( function( partition ) {

@@ -150,8 +150,14 @@ define( function( require ) {
   areaModelCommon.register( 'AreaModelCommonColorProfile', AreaModelCommonColorProfile );
 
   // @public {OrientationPair.<Property.<Color>>}
-  AreaModelCommonColorProfile.proportionalColorProperties = new OrientationPair( AreaModelCommonColorProfile.proportionalWidthProperty, AreaModelCommonColorProfile.proportionalHeightProperty );
-  AreaModelCommonColorProfile.genericColorProperties = new OrientationPair( AreaModelCommonColorProfile.genericWidthProperty, AreaModelCommonColorProfile.genericHeightProperty );
+  AreaModelCommonColorProfile.proportionalColorProperties = new OrientationPair(
+    AreaModelCommonColorProfile.proportionalWidthProperty,
+    AreaModelCommonColorProfile.proportionalHeightProperty
+  );
+  AreaModelCommonColorProfile.genericColorProperties = new OrientationPair(
+    AreaModelCommonColorProfile.genericWidthProperty,
+    AreaModelCommonColorProfile.genericHeightProperty
+  );
 
   // @public {boolean} isProportional => {OrientationPair.<Property.<Color>>>}
   AreaModelCommonColorProfile.mainColorProperties = {

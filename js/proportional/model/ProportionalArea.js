@@ -53,16 +53,25 @@ define( function( require ) {
     }, options );
 
     // @public {OrientationPair.<Property.<number>>} - Width/height of the contained area.
-    this.activeTotalProperties = new OrientationPair( new NumberProperty( options.initialWidth ), new NumberProperty( options.initialHeight ) );
+    this.activeTotalProperties = new OrientationPair(
+      new NumberProperty( options.initialWidth ),
+      new NumberProperty( options.initialHeight )
+    );
 
     // @public {Property.<Orientation>} - If PartitionLineChoice.ONE is active, which partition line is active
     this.visiblePartitionOrientationProperty = new Property( Orientation.HORIZONTAL );
 
     // @public {OrientationPair.<Property.<number>>} - Location of the partition lines
-    this.partitionSplitProperties = new OrientationPair( new NumberProperty( options.initialHorizontalSplit ), new NumberProperty( options.initialVerticalSplit ) );
+    this.partitionSplitProperties = new OrientationPair(
+      new NumberProperty( options.initialHorizontalSplit ),
+      new NumberProperty( options.initialVerticalSplit )
+    );
 
     // @public {OrientationPair.<Property.<boolean>>}
-    this.partitionSplitUserControlledProperties = new OrientationPair( new BooleanProperty( false ), new BooleanProperty( false ) );
+    this.partitionSplitUserControlledProperties = new OrientationPair(
+      new BooleanProperty( false ),
+      new BooleanProperty( false )
+    );
 
     // @public {number}
     this.maximumSize = options.maximumSize;
@@ -88,18 +97,22 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<boolean>>} - Whether the partition line for each orientation is visible
     this.partitionSplitVisibleProperties = OrientationPair.create( function( orientation ) {
-      return new DerivedProperty( [ self.activeTotalProperties.get( orientation ), self.visiblePartitionOrientationProperty ], function( totalSize, visibleOrientation ) {
-        if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
-        if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
-        return totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
-      } );
+      return new DerivedProperty(
+        [ self.activeTotalProperties.get( orientation ), self.visiblePartitionOrientationProperty ],
+        function( totalSize, visibleOrientation ) {
+          if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
+          if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
+          return totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
+        } );
     } );
 
     // @public {OrientationPair.<Property.<number|null>>} - Like partitionSplitProperties, but null if the partition line is not visible
     this.visiblePartitionLineSplitProperties = OrientationPair.create( function( orientation ) {
-      return new DerivedProperty( [ self.partitionSplitProperties.get( orientation ), self.partitionSplitVisibleProperties.get( orientation ) ], function( partitionSplit, partitionVisible ) {
-        return partitionVisible ? partitionSplit : null;
-      } );
+      return new DerivedProperty(
+        [ self.partitionSplitProperties.get( orientation ), self.partitionSplitVisibleProperties.get( orientation ) ],
+        function( partitionSplit, partitionVisible ) {
+          return partitionVisible ? partitionSplit : null;
+        } );
     } );
 
     var horizontalPartitions = [
@@ -117,34 +130,42 @@ define( function( require ) {
     this.primaryPartitions = new OrientationPair( horizontalPartitions[ 0 ], verticalPartitions[ 0 ] );
     this.secondaryPartitions = new OrientationPair( horizontalPartitions[ 1 ], verticalPartitions[ 1 ] );
 
-    Area.call( this, new OrientationPair( horizontalPartitions, verticalPartitions ), AreaModelCommonColorProfile.proportionalColorProperties, this.maximumSize, false );
+    Area.call(
+      this,
+      new OrientationPair( horizontalPartitions, verticalPartitions ),
+      AreaModelCommonColorProfile.proportionalColorProperties,
+      this.maximumSize,
+      false
+    );
 
     // Keep partition sizes up-to-date
     Orientation.VALUES.forEach( function( orientation ) {
-      Property.multilink( [ self.activeTotalProperties.get( orientation ), self.visiblePartitionLineSplitProperties.get( orientation ) ], function( size, split ) {
-        // Ignore splits at the boundary or outside our active area.
-        if ( split <= 0 || split >= size ) {
-          split = null;
-        }
+      Property.multilink(
+        [ self.activeTotalProperties.get( orientation ), self.visiblePartitionLineSplitProperties.get( orientation ) ],
+        function( size, split ) {
+          // Ignore splits at the boundary or outside our active area.
+          if ( split <= 0 || split >= size ) {
+            split = null;
+          }
 
-        var primaryPartition = self.primaryPartitions.get( orientation );
-        var secondaryPartition = self.secondaryPartitions.get( orientation );
+          var primaryPartition = self.primaryPartitions.get( orientation );
+          var secondaryPartition = self.secondaryPartitions.get( orientation );
 
-        secondaryPartition.visibleProperty.value = split !== null;
+          secondaryPartition.visibleProperty.value = split !== null;
 
-        if ( split ) {
-          primaryPartition.sizeProperty.value = new Term( split );
-          secondaryPartition.sizeProperty.value = new Term( size - split );
-          primaryPartition.coordinateRangeProperty.value = new Range( 0, split );
-          secondaryPartition.coordinateRangeProperty.value = new Range( split, size );
-        }
-        else {
-          primaryPartition.sizeProperty.value = new Term( size );
-          secondaryPartition.sizeProperty.value = null;
-          primaryPartition.coordinateRangeProperty.value = new Range( 0, size );
-          secondaryPartition.coordinateRangeProperty.value = null;
-        }
-      } );
+          if ( split ) {
+            primaryPartition.sizeProperty.value = new Term( split );
+            secondaryPartition.sizeProperty.value = new Term( size - split );
+            primaryPartition.coordinateRangeProperty.value = new Range( 0, split );
+            secondaryPartition.coordinateRangeProperty.value = new Range( split, size );
+          }
+          else {
+            primaryPartition.sizeProperty.value = new Term( size );
+            secondaryPartition.sizeProperty.value = null;
+            primaryPartition.coordinateRangeProperty.value = new Range( 0, size );
+            secondaryPartition.coordinateRangeProperty.value = null;
+          }
+        } );
 
       // Remove splits that are at or past the current boundary.
       self.activeTotalProperties.get( orientation ).link( function( total ) {

@@ -69,25 +69,36 @@ define( function( require ) {
     options.gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
     // Active area drag handle
-    this.areaLayer.addChild( new ProportionalDragHandle( areaDisplay.areaProperty, areaDisplay.activeTotalProperties, this.modelViewTransformProperty ) );
+    this.areaLayer.addChild( new ProportionalDragHandle(
+      areaDisplay.areaProperty,
+      areaDisplay.activeTotalProperties,
+      this.modelViewTransformProperty
+    ) );
 
     // Active area background
     var activeAreaBackground = new Rectangle( {
-      fill: options.useTileLikeBackground ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
+      fill: options.useTileLikeBackground
+        ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
         : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
-    Property.multilink( [ areaDisplay.activeTotalProperties.horizontal, this.modelViewTransformProperty ], function( totalWidth, modelViewTransform ) {
-      activeAreaBackground.rectWidth = modelViewTransform.modelToViewX( totalWidth );
-    } );
-    Property.multilink( [ areaDisplay.activeTotalProperties.vertical, this.modelViewTransformProperty ], function( totalHeight, modelViewTransform ) {
-      activeAreaBackground.rectHeight = modelViewTransform.modelToViewY( totalHeight );
-    } );
+    Property.multilink(
+      [ areaDisplay.activeTotalProperties.horizontal, this.modelViewTransformProperty ],
+      function( totalWidth, modelViewTransform ) {
+        activeAreaBackground.rectWidth = modelViewTransform.modelToViewX( totalWidth );
+      } );
+    Property.multilink(
+      [ areaDisplay.activeTotalProperties.vertical, this.modelViewTransformProperty ],
+      function( totalHeight, modelViewTransform ) {
+        activeAreaBackground.rectHeight = modelViewTransform.modelToViewY( totalHeight );
+      } );
     this.areaLayer.addChild( activeAreaBackground );
 
-    var tilesVisibleProperty = new DerivedProperty( [ areaDisplay.tilesAvailableProperty, options.tilesVisibleProperty ], function( tilesAvailable, tilesVisible ) {
-      return tilesAvailable && tilesVisible;
-    } );
+    var tilesVisibleProperty = new DerivedProperty(
+      [ areaDisplay.tilesAvailableProperty, options.tilesVisibleProperty ],
+      function( tilesAvailable, tilesVisible ) {
+        return tilesAvailable && tilesVisible;
+      } );
     // @private {TiledAreaNode|null} - Tiles (optionally enabled)
     this.tiledAreaNode = new TiledAreaNode( areaDisplay, this.modelViewTransformProperty, tilesVisibleProperty );
     this.areaLayer.addChild( this.tiledAreaNode );
@@ -95,16 +106,27 @@ define( function( require ) {
     // Background stroke
     this.areaLayer.addChild( this.borderNode );
 
-    var countingVisibleProperty = new DerivedProperty( [ areaDisplay.countingAvailableProperty, options.countingVisibleProperty ], function( countingAvailable, countingVisible ) {
-      return countingAvailable && countingVisible;
-    } );
+    var countingVisibleProperty = new DerivedProperty(
+      [ areaDisplay.countingAvailableProperty, options.countingVisibleProperty ],
+      function( countingAvailable, countingVisible ) {
+        return countingAvailable && countingVisible;
+      } );
     // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
-    this.countingAreaNode = new CountingAreaNode( areaDisplay.activeTotalProperties, this.modelViewTransformProperty, countingVisibleProperty );
+    this.countingAreaNode = new CountingAreaNode(
+      areaDisplay.activeTotalProperties,
+      this.modelViewTransformProperty,
+      countingVisibleProperty
+    );
     this.areaLayer.addChild( this.countingAreaNode );
 
     // Partition lines
-    this.areaLayer.addChild( new ProportionalPartitionLineNode( areaDisplay, this.modelViewTransformProperty, Orientation.HORIZONTAL ) );
-    this.areaLayer.addChild( new ProportionalPartitionLineNode( areaDisplay, this.modelViewTransformProperty, Orientation.VERTICAL ) );
+    Orientation.VALUES.forEach( function( orientation ) {
+      self.areaLayer.addChild( new ProportionalPartitionLineNode(
+        areaDisplay,
+        self.modelViewTransformProperty,
+        orientation )
+      );
+    } );
 
     // Partition labels
     Orientation.VALUES.forEach( function( orientation ) {
@@ -115,7 +137,12 @@ define( function( require ) {
         var partitionProperty = new DerivedProperty( [ partitionsProperties ], function( partitions ) {
           return partitions[ index ];
         } );
-        var label = self.createPartitionLabel( partitionProperty, areaDisplay.secondaryPartitionsProperty.get( orientation ), index, orientation );
+        var label = self.createPartitionLabel(
+          partitionProperty,
+          areaDisplay.secondaryPartitionsProperty.get( orientation ),
+          index,
+          orientation
+        );
         self.labelLayer.addChild( label );
         return label;
       } );
@@ -164,8 +191,9 @@ define( function( require ) {
       var verticalPartitions = this.areaDisplay.partitionsProperties.vertical.value;
 
       return _.find( this.productLabels, function( productLabel ) {
-        return productLabel.partitionedAreaProperty.value.partitions.get( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
-               productLabel.partitionedAreaProperty.value.partitions.get( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
+        var partitions = productLabel.partitionedAreaProperty.value.partitions;
+        return partitions.get( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
+               partitions.get( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
       } );
     },
 
@@ -232,6 +260,7 @@ define( function( require ) {
             rightOffset = labelOverlapOffset;
           }
 
+          // Ignore Intellij inspections, we know what we are doing.
           if ( leftOffset ) {
             leftLabel.y -= leftOffset;
           }
@@ -314,9 +343,11 @@ define( function( require ) {
       var partitionVisibleProperty = new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } );
       var secondaryPartitionSizeProperty = new DynamicProperty( secondaryPartitionProperty, { derive: 'sizeProperty' } );
 
-      Property.multilink( [ partitionVisibleProperty, secondaryPartitionSizeProperty ], function( visible, secondarySize ) {
-        labelContainer.visible = visible && secondarySize !== null;
-      } );
+      Property.multilink(
+        [ partitionVisibleProperty, secondaryPartitionSizeProperty ],
+        function( visible, secondarySize ) {
+          labelContainer.visible = visible && secondarySize !== null;
+        } );
 
       return labelContainer;
     }

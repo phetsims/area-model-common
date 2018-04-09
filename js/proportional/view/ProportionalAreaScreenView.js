@@ -66,7 +66,11 @@ define( function( require ) {
     var partitionSelectionAlignGroup = new AlignGroup();
 
     // @private {Node} - Allows controlling which partition is currently visible (if we only show one)
-    this.partitionSelectionPanel = this.createPanelContent( partitionString, AreaModelCommonGlobals.panelAlignGroup, new PartitionSelectionNode( currentAreaOrientationProperty, partitionSelectionAlignGroup ) );
+    this.partitionSelectionPanel = this.createPanelContent(
+      partitionString,
+      AreaModelCommonGlobals.panelAlignGroup,
+      new PartitionSelectionNode( currentAreaOrientationProperty, partitionSelectionAlignGroup )
+    );
 
     AreaScreenView.call( this, model, options );
 
@@ -148,9 +152,11 @@ define( function( require ) {
       } );
 
       // Conditionally include our partition selection on top of what else is included
-      return new DerivedProperty( [ AreaScreenView.prototype.getSelectionNodesProperty.call( this ), hasPartitionSelectionProperty ], function( selectionNodes, hasPartitionSelection ) {
-        return hasPartitionSelection ? selectionNodes.concat( [ self.partitionSelectionPanel ] ) : selectionNodes;
-      } );
+      return new DerivedProperty(
+        [ AreaScreenView.prototype.getSelectionNodesProperty.call( this ), hasPartitionSelectionProperty ],
+        function( selectionNodes, hasPartitionSelection ) {
+          return hasPartitionSelection ? selectionNodes.concat( [ self.partitionSelectionPanel ] ) : selectionNodes;
+        } );
     },
 
     /**

@@ -71,7 +71,12 @@ define( function( require ) {
     this.labelLayer.addChild( new PoolableLayerNode( {
       arrayProperty: areaDisplay.allPartitionsProperty,
       createNode: function( partition ) {
-        return new PartitionSizeEditNode( areaDisplay.activePartitionProperty, new Property( partition ), self.modelViewTransformProperty, allowExponents );
+        return new PartitionSizeEditNode(
+          areaDisplay.activePartitionProperty,
+          new Property( partition ),
+          self.modelViewTransformProperty,
+          allowExponents
+        );
       },
       getItemProperty: function( editNode ) {
         return editNode.partitionProperty;

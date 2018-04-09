@@ -62,9 +62,11 @@ define( function( require ) {
 
     var background = new Rectangle( {
       cornerRadius: 3,
-      stroke: new DerivedProperty( [ areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ], function( area, color ) {
-        return ( area === null || area.coefficient === 0 ) ? 'transparent' : color;
-      } ),
+      stroke: new DerivedProperty(
+        [ areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ],
+        function( area, color ) {
+          return ( area === null || area.coefficient === 0 ) ? 'transparent' : color;
+        } ),
       fill: AreaModelCommonColorProfile.partialProductBackgroundProperty
     } );
     this.addChild( background );
@@ -93,7 +95,8 @@ define( function( require ) {
     var verticalRichText = new RichText( placeholderString, factorsTextOptions );
 
     var rectangleSize = allowExponents ? 12 : 14;
-    var magicConstant = allowExponents ? 1.3 : 0; // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
+    // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
+    var magicConstant = allowExponents ? 1.3 : 0;
     var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + magicConstant;
     var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
       stroke: 'black',
@@ -116,68 +119,76 @@ define( function( require ) {
     var timesNode = new Text( MathSymbols.TIMES, factorsTextOptions );
 
     // Text/alignment
-    Property.multilink( [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ], function( horizontalSize, verticalSize, choice ) {
-      var children;
+    Property.multilink(
+      [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ],
+      function( horizontalSize, verticalSize, choice ) {
+        var children;
 
-      // Hidden
-      if ( choice === PartialProductsChoice.HIDDEN ) {
-        children = [];
-      }
-      // Product
-      else if ( choice === PartialProductsChoice.PRODUCTS ) {
-        productRichText.text = ( horizontalSize === null || verticalSize === null ) ? '?' : horizontalSize.times( verticalSize ).toRichString( false );
-        children = [ productRichText ];
-      }
-      // Factors
-      else {
-
-        var horizontalNode = horizontalSize ? horizontalRichText.setText( horizontalSize.toRichString( false ) ) : horizontalRectangle;
-        var verticalNode = verticalSize ? verticalRichText.setText( verticalSize.toRichString( false ) ) : verticalRectangle;
-
-        if ( allowExponents ) {
-          box.spacing = 0;
-          children = [
-            leftParenNode,
-            verticalNode,
-            middleParensNode,
-            horizontalNode,
-            rightParenNode
-          ];
+        // Hidden
+        if ( choice === PartialProductsChoice.HIDDEN ) {
+          children = [];
         }
+        // Product
+        else if ( choice === PartialProductsChoice.PRODUCTS ) {
+          productRichText.text = ( horizontalSize === null || verticalSize === null )
+            ? '?'
+            : horizontalSize.times( verticalSize ).toRichString( false );
+          children = [ productRichText ];
+        }
+        // Factors
         else {
-          box.spacing = 2;
-          children = [
-            verticalNode,
-            timesNode,
-            horizontalNode
-          ];
-        }
-      }
 
-      // So, due to performance, we REALLY don't want to remove and then add these back in. Scenery was burning a chunk
-      // of CPU on some of this, and having the RichTexts not pool has been annoying enough.
-      var currentChildren = box.children;
-      var needsUpdate = false;
-      if ( currentChildren.length !== children.length ) {
-        needsUpdate = true;
-      }
-      else {
-        for ( var i = 0; i < children.length; i++ ) {
-          if ( currentChildren[ i ] !== children[ i ] ) {
-            needsUpdate = true;
-            break;
+          var horizontalNode = horizontalSize
+            ? horizontalRichText.setText( horizontalSize.toRichString( false ) )
+            : horizontalRectangle;
+          var verticalNode = verticalSize
+            ? verticalRichText.setText( verticalSize.toRichString( false ) )
+            : verticalRectangle;
+
+          if ( allowExponents ) {
+            box.spacing = 0;
+            children = [
+              leftParenNode,
+              verticalNode,
+              middleParensNode,
+              horizontalNode,
+              rightParenNode
+            ];
+          }
+          else {
+            box.spacing = 2;
+            children = [
+              verticalNode,
+              timesNode,
+              horizontalNode
+            ];
           }
         }
-      }
-      if ( needsUpdate ) {
-        box.children = children;
-      }
 
-      if ( isFinite( box.width ) ) {
-        box.center = Vector2.ZERO;
-        background.rectBounds = box.bounds.dilatedXY( 4, 2 );
-      }
-    } );
+        // So, due to performance, we REALLY don't want to remove and then add these back in. Scenery was burning a
+        // chunk of CPU on some of this, and having the RichTexts not pool has been annoying enough.
+        var currentChildren = box.children;
+        var needsUpdate = false;
+        if ( currentChildren.length !== children.length ) {
+          needsUpdate = true;
+        }
+        else {
+          for ( var i = 0; i < children.length; i++ ) {
+            if ( currentChildren[ i ] !== children[ i ] ) {
+              needsUpdate = true;
+              break;
+            }
+          }
+        }
+        if ( needsUpdate ) {
+          box.children = children;
+        }
+
+        if ( isFinite( box.width ) ) {
+          box.center = Vector2.ZERO;
+          background.rectBounds = box.bounds.dilatedXY( 4, 2 );
+        }
+      } );
   }
 
   areaModelCommon.register( 'PartialProductLabelNode', PartialProductLabelNode );

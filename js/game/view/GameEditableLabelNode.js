@@ -65,9 +65,11 @@ define( function( require ) {
     var highlightProperty = new DynamicProperty( valuePropertyProperty, {
       derive: 'highlightProperty'
     } );
-    var isActiveProperty = new DerivedProperty( [ valuePropertyProperty, activeEditableProperty ], function( valueProperty, activeProperty ) {
-      return valueProperty === activeProperty;
-    } );
+    var isActiveProperty = new DerivedProperty(
+      [ valuePropertyProperty, activeEditableProperty ],
+      function( valueProperty, activeProperty ) {
+        return valueProperty === activeProperty;
+      } );
 
     var readoutText = new RichText( '?', {
       fill: colorProperty,
@@ -80,15 +82,22 @@ define( function( require ) {
       readoutText.center = Vector2.ZERO;
     } );
 
-    var textColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelCommonColorProfile.errorHighlightProperty ], function( highlight, color, errorColor ) {
-      if ( highlight === Highlight.ERROR ) {
-        return errorColor;
-      }
-      else {
-        return color;
-      }
-    } );
-    var borderColorProperty = new DerivedProperty( [ highlightProperty, colorProperty, AreaModelCommonColorProfile.errorHighlightProperty, AreaModelCommonColorProfile.dirtyHighlightProperty ], function( highlight, color, errorColor, dirtyColor ) {
+    var textColorProperty = new DerivedProperty(
+      [ highlightProperty, colorProperty, AreaModelCommonColorProfile.errorHighlightProperty ],
+      function( highlight, color, errorColor ) {
+        if ( highlight === Highlight.ERROR ) {
+          return errorColor;
+        }
+        else {
+          return color;
+        }
+      } );
+    var borderColorProperty = new DerivedProperty( [
+      highlightProperty,
+      colorProperty,
+      AreaModelCommonColorProfile.errorHighlightProperty,
+      AreaModelCommonColorProfile.dirtyHighlightProperty
+    ], function( highlight, color, errorColor, dirtyColor ) {
       if ( highlight === Highlight.NORMAL ) {
         return color;
       }
