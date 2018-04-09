@@ -54,22 +54,22 @@ define( function( require ) {
       decimalPlaces: 0,
 
       // {boolean} - Whether we show options that let the user select the partial product style
-      showProductsSelection: true, 
+      showProductsSelection: true,
 
       // {boolean} - Whether we show options that let the user select the calculation style
-      showCalculationSelection: true, 
+      showCalculationSelection: true,
 
       // {boolean} - Selected area background and products box use a light-tile-colored background
-      useTileLikeBackground: false, 
+      useTileLikeBackground: false,
 
       // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
-      useSimplifiedNames: false, 
+      useSimplifiedNames: false,
 
       // {boolean} - If true, changes the location/size of the area to take up more space
-      useLargeArea: false, 
+      useLargeArea: false,
 
       // {boolean} - If true, a simplified accordion box will be used for the calculation lines
-      useCalculationBox: false 
+      useCalculationBox: false
     }, options );
 
     assert && assert( model instanceof AreaModelCommonModel );
@@ -129,10 +129,10 @@ define( function( require ) {
       options.useSimplifiedNames ? factorsString : dimensionsString,
       model.factorsBoxExpanded,
       factorsBoxContent,
-    {
-      // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
-      contentYSpacing: model.allowExponents ? 5 : 8
-    } );
+      {
+        // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
+        contentYSpacing: model.allowExponents ? 5 : 8
+      } );
 
     var areaBoxContent = new AlignBox( new TotalAreaNode(
       model.totalAreaProperty,

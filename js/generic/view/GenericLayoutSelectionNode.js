@@ -153,7 +153,7 @@ define( function( require ) {
               } );
             background.fill = new DerivedProperty(
               [ listener.isHoveringProperty, AreaModelCommonColorProfile.layoutHoverProperty ],
-                function( isHovering, hoverColor ) {
+              function( isHovering, hoverColor ) {
                 if ( isHovering ) {
                   return hoverColor;
                 }

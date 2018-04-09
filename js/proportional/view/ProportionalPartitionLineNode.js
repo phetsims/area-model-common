@@ -123,12 +123,12 @@ define( function( require ) {
     var accessibleProperty = orientation === Orientation.HORIZONTAL
       ? partitionSplitProperty
       : new DynamicProperty( new Property( partitionSplitProperty ), {
-      bidirectional: true,
-      map: function( v ) { return -v; },
-      inverseMap: function( v ) { return -v; }
-    }, {
-      valueType: 'number' // AccessibleSlider doesn't want anything besides a number
-    } );
+        bidirectional: true,
+        map: function( v ) { return -v; },
+        inverseMap: function( v ) { return -v; }
+      }, {
+        valueType: 'number' // AccessibleSlider doesn't want anything besides a number
+      } );
     var accessibleRangeProperty = new DerivedProperty(
       [ activeTotalProperty, areaDisplay.snapSizeProperty ],
       function( total, snapSize ) {
