@@ -1,7 +1,8 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Shows the calculation of total area from each of the partitions' sizes.
+ * Shows the calculation of total area from each of the partitions' sizes. Allows line-by-line, and is meant to go in
+ * the panel (not for the "Partition" screen)
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
@@ -34,7 +35,7 @@ define( function( require ) {
    * @param {AreaModelCommonModel} model
    * @param {Object} [nodeOptions]
    */
-  function CalculationPanel( model, nodeOptions ) {
+  function CalculationNode( model, nodeOptions ) {
 
     var self = this;
 
@@ -178,9 +179,9 @@ define( function( require ) {
     update();
   }
 
-  areaModelCommon.register( 'CalculationPanel', CalculationPanel );
+  areaModelCommon.register( 'CalculationNode', CalculationNode );
 
-  return inherit( Node, CalculationPanel, {
+  return inherit( Node, CalculationNode, {
     /**
      * Updates the calculation lines.
      * @public

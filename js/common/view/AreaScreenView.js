@@ -21,7 +21,7 @@ define( function( require ) {
   var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
-  var CalculationPanel = require( 'AREA_MODEL_COMMON/common/view/CalculationPanel' );
+  var CalculationNode = require( 'AREA_MODEL_COMMON/common/view/CalculationNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Panel = require( 'SUN/Panel' );
@@ -175,7 +175,7 @@ define( function( require ) {
       } );
     }
     else {
-      this.calculationNode = new CalculationPanel( model );
+      this.calculationNode = new CalculationNode( model );
     }
     this.addChild( this.calculationNode );
 
