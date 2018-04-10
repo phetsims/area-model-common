@@ -140,7 +140,7 @@ There are usually labels on the top and left that label the "total size" of all 
 
 ### Tiles
 
-Proportional screens can sometime be shown with tiles (which shows things grouped horizontally/vertically by groups of 10, or 1 on decimals screens):
+Proportional screens can sometime be shown with tiles (which shows things grouped horizontally/vertically by groups of 100, 10, or 1):
 
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-proportional-tiles.PNG)
 
