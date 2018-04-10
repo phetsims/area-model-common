@@ -89,7 +89,7 @@ Most things are related to either a **horizontal** or **vertical** value (and ho
 
 - Horizontal values on proportional screens are coloed Red
 - Vertical values on proportional screens are colored Blue
-- Horizontal values on generic screens are coloed Green
+- Horizontal values on generic screens are colored Green
 - Vertical values on generic screens are colored Purple
 
 ### Partitions
