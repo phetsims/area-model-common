@@ -98,11 +98,11 @@ Each **partition** is either a vertical or horizontal "slice" of the area, usual
 
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-proportional-partition.PNG)
 
-Note that the horizontal partitions are defined by the horizontal space being partitioned:
+Note that the vertical partitions are defined by the vertical space being partitioned:
 
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-generic-horizontal-partition.PNG)
 
-and the vertical partitions are the opposite:
+and the horizontal partitions are the opposite:
 
 ![alt text](https://raw.githubusercontent.com/phetsims/area-model-common/master/doc/images/area-glossary-generic-vertical-partition.PNG)
 
