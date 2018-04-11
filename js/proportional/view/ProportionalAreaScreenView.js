@@ -254,6 +254,7 @@ define( function( require ) {
      * @returns {Node}
      */
     createCountingIconNode: function() {
+      // REVIEW: Should this have a max width for i18n. StringTest=long seems to overlap other panels.
       return new Text( countingToggleString, {
         font: AreaModelCommonConstants.COUNTING_ICON_FONT
       } );
