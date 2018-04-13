@@ -23,6 +23,54 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
+  "generic-game-screen-icon.png": {
+    "text": [
+      "Copyright 2018 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
+  },
+  "generic-game-screen-navbar.png": {
+    "text": [
+      "Copyright 2018 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
+  },
+  "multiply-screen-icon.png": {
+    "text": [
+      "Copyright 2018 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
+  },
+  "multiply-screen-navbar.png": {
+    "text": [
+      "Copyright 2018 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
+  },
+  "partition-screen-icon.png": {
+    "text": [
+      "Copyright 2018 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
+  },
+  "partition-screen-navbar.png": {
+    "text": [
+      "Copyright 2018 University of Colorado Boulder"
+    ],
+    "projectURL": "http://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
+  },
   "variables-game-screen-icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"

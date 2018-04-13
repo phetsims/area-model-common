@@ -11,12 +11,17 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/enum/PartialProductsChoice' );
   var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   var Screen = require( 'JOIST/Screen' );
+
+  // images
+  var multiplyScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/multiply-screen-icon.png' );
+  var multiplyScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/multiply-screen-navbar.png' );
 
   // strings
   var screenMultiplyString = require( 'string!AREA_MODEL_COMMON/screen.multiply' );
@@ -28,7 +33,9 @@ define( function( require ) {
 
     var options = {
       name: screenMultiplyString,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new Image( multiplyScreenIconImage ),
+      navigationBarIcon: new Image( multiplyScreenNavbarImage )
     };
 
     var commonAreaOptions = {

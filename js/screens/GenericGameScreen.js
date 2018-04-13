@@ -13,8 +13,13 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var GameAreaScreenView = require( 'AREA_MODEL_COMMON/game/view/GameAreaScreenView' );
   var GenericGameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GenericGameAreaModel' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
+
+  // images
+  var genericGameScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-icon.png' );
+  var genericGameScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-navbar.png' );
 
   // strings
   var screenGenericGameString = require( 'string!AREA_MODEL_COMMON/screen.genericGame' );
@@ -26,7 +31,9 @@ define( function( require ) {
 
     var options = {
       name: screenGenericGameString,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new Image( genericGameScreenIconImage ),
+      navigationBarIcon: new Image( genericGameScreenNavbarImage )
     };
 
     Screen.call( this,

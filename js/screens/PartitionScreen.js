@@ -12,11 +12,16 @@ define( function( require ) {
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/enum/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   var Screen = require( 'JOIST/Screen' );
+
+  // images
+  var partitionScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-icon.png' );
+  var partitionScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-navbar.png' );
 
   // strings
   var screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
@@ -28,7 +33,9 @@ define( function( require ) {
 
     var options = {
       name: screenPartitionString,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new Image( partitionScreenIconImage ),
+      navigationBarIcon: new Image( partitionScreenNavbarImage )
     };
 
     var commonAreaOptions = {
