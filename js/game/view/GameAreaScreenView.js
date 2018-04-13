@@ -45,7 +45,7 @@ define( function( require ) {
   var RewardNode = require( 'VEGAS/RewardNode' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SlidingScreen = require( 'SUN/SlidingScreen' );
+  var SlidingScreen = require( 'TWIXT/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
