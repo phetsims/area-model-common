@@ -26,6 +26,7 @@ define( function( require ) {
   areaModelCommon.register( 'Orientation', Orientation );
 
   inherit( Object, Orientation, {
+    // REVIEW: Doc return type
     /**
      * Returns the single coordinate transformed by the appropriate dimension.
      * @public
@@ -65,6 +66,8 @@ define( function( require ) {
     }
   } );
 
+  // REVIEW: Are we declaring statics outside of the inherit callback.
+  // REVIEW: I'm referencing from inherit.js. function inherit( supertype, subtype, prototypeProperties, staticProperties )
   // @public {Orientation}
   Orientation.HORIZONTAL = new Orientation( {
     coordinate: 'x',
@@ -77,6 +80,8 @@ define( function( require ) {
     layoutBoxOrientation: 'horizontal'
   } );
 
+  // REVIEW: Are we declaring statics outside of the inherit callback.
+  // REVIEW: I'm referencing from inherit.js. function inherit( supertype, subtype, prototypeProperties, staticProperties )
   // @public {Orientation}
   Orientation.VERTICAL = new Orientation( {
     coordinate: 'y',
@@ -89,6 +94,7 @@ define( function( require ) {
     layoutBoxOrientation: 'vertical'
   } );
 
+  // REVIEW: Doc type and visibility
   // Set up opposites as object references (circular)
   Orientation.HORIZONTAL.opposite = Orientation.VERTICAL;
   Orientation.VERTICAL.opposite = Orientation.HORIZONTAL;
