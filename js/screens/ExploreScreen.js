@@ -11,10 +11,15 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   var Screen = require( 'JOIST/Screen' );
+
+  // images
+  var exploreScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/explore-screen-icon.png' );
+  var exploreScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/explore-screen-navbar.png' );
 
   // strings
   var screenExploreString = require( 'string!AREA_MODEL_COMMON/screen.explore' );
@@ -26,7 +31,9 @@ define( function( require ) {
 
     var options = {
       name: screenExploreString,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new Image( exploreScreenIconImage ),
+      navigationBarIcon: new Image( exploreScreenNavbarImage )
     };
 
     Screen.call( this,

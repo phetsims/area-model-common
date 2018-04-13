@@ -13,8 +13,12 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var GenericAreaModel = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaModel' );
   var GenericAreaScreenView = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaScreenView' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
+
+  // images
+  var genericScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/generic-screen-icon.png' );
 
   // strings
   var screenGenericString = require( 'string!AREA_MODEL_COMMON/screen.generic' );
@@ -26,7 +30,8 @@ define( function( require ) {
 
     var options = {
       name: screenGenericString,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new Image( genericScreenIconImage )
     };
 
     Screen.call( this,
