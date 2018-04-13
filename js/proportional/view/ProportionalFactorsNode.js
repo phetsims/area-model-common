@@ -79,9 +79,13 @@ define( function( require ) {
         scale: 1.5,
         formatValue: function( value ) {
           if ( Math.abs( value - Math.round( value ) ) < 1e-6 ) {
+
+            //REIVEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 0 );
           }
           else {
+
+            //REIVEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 1 );
           }
         },
