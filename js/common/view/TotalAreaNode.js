@@ -25,6 +25,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
+  // REVIEW: Can we use MathSymbols.EQUAL_TO instead of having a single string 'Area ='
   var areaEqualsString = require( 'string!AREA_MODEL_COMMON/areaEquals' );
 
   /**
