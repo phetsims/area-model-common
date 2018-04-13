@@ -19,6 +19,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // REVIEW: Doc? Does this need to be declared outside of the constructor?
   var scratchVector = new Vector2();
 
   /**

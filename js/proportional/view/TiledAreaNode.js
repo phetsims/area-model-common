@@ -20,6 +20,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
 
+  // REVIEW: Doc param? Return type? Visibility?
   function thousandRound( value ) {
     return Math.round( 1000 * value ) / 1000;
   }

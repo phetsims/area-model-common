@@ -38,6 +38,7 @@ define( function( require ) {
   var countingToggleString = require( 'string!AREA_MODEL_COMMON/countingToggle' );
   var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
 
+  // constants
   var RADIO_ICON_SIZE = 30;
 
   /**
