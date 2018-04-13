@@ -78,6 +78,8 @@ define( function( require ) {
       var string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
+
+        // REVIEW: Use dot.Util.roundSymmetric?
         string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
       }
       if ( this.power > 0 ) {

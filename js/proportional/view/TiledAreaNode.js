@@ -22,6 +22,8 @@ define( function( require ) {
 
   // REVIEW: Doc param? Return type? Visibility?
   function thousandRound( value ) {
+
+    // REVIEW: Use dot.Util.roundSymmetric?
     return Math.round( 1000 * value ) / 1000;
   }
 
@@ -169,6 +171,8 @@ define( function( require ) {
 
         var size = range.getLength();
         var largeCount = Math.floor( thousandRound( size / self.largeTileSizeProperty.value ) );
+
+        // REVIEW: Use dot.Util.roundSymmetric?
         var smallCount = Math.round(
           ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value
         );

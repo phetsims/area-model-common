@@ -79,7 +79,10 @@ define( function( require ) {
         var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
         var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
 
+        // REVIEW: Use dot.Util.roundSymmetric?
         var width = Math.round( modelPoint.x / area.snapSize ) * area.snapSize;
+
+        // REVIEW: Use dot.Util.roundSymmetric?
         var height = Math.round( modelPoint.y / area.snapSize ) * area.snapSize;
 
         width = Util.clamp( width, area.minimumSize, area.maximumSize );
