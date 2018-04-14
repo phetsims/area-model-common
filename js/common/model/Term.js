@@ -13,6 +13,7 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  var Util = require( 'DOT/Util' );
 
   /**
    * @constructor
@@ -78,9 +79,7 @@ define( function( require ) {
       var string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
-
-        // REVIEW: Use dot.Util.roundSymmetric?
-        string += Math.round( Math.abs( this.coefficient ) * 100 ) / 100;
+        string += Util.roundSymmetric( Math.abs( this.coefficient ) * 100 ) / 100;
       }
       if ( this.power > 0 ) {
         string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;

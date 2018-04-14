@@ -78,7 +78,7 @@ define( function( require ) {
         decimalPlaces: decimalPlaces,
         scale: 1.5,
         formatValue: function( value ) {
-          if ( Math.abs( value - Math.round( value ) ) < 1e-6 ) {
+          if ( Math.abs( value - Util.roundSymmetric( value ) ) < 1e-6 ) {
 
             //REIVEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 0 );

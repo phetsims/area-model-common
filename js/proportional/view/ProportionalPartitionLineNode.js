@@ -181,8 +181,7 @@ define( function( require ) {
         drag: function( event, listener ) {
           var value = listener.modelPoint[ orientation.coordinate ];
 
-          // REVIEW: Use dot.Util.roundSymmetric?
-          value = Math.round( value / areaDisplay.partitionSnapSizeProperty.value ) *
+          value = Util.roundSymmetric( value / areaDisplay.partitionSnapSizeProperty.value ) *
                   areaDisplay.partitionSnapSizeProperty.value;
           value = Util.clamp( value, 0, activeTotalProperty.value );
 
