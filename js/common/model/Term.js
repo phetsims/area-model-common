@@ -66,6 +66,8 @@ define( function( require ) {
      * @returns {boolean}
      */
     equals: function( term ) {
+
+      // REVIEW: Can you please explain/document why an equality check for the coefficients?
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 
