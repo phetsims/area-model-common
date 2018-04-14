@@ -50,8 +50,8 @@
   "enter": {
     "value": "Enter"
   },
-  "areaEquals": {
-    "value": "Area ="
+  "area": {
+    "value": "Area"
   },
   "scorePrefix": {
     "value": "Score:"

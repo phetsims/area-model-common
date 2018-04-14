@@ -63,9 +63,8 @@ define( function( require ) {
         node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
       },
       {
-        // REVIEW: Suggested doc.
-        // REVIEW: hardcoded strings since they shouldn't be translatable
         value: PartialProductsChoice.PRODUCTS,
+        // Hardcoded 'A' string since we don't want it to be translatable
         node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } )
       },
       {

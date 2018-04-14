@@ -18,6 +18,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var RichText = require( 'SCENERY/nodes/RichText' );
@@ -25,8 +26,7 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  // REVIEW: Can we use MathSymbols.EQUAL_TO instead of having a single string 'Area ='
-  var areaEqualsString = require( 'string!AREA_MODEL_COMMON/areaEquals' );
+  var areaString = require( 'string!AREA_MODEL_COMMON/area' );
 
   /**
    * @constructor
@@ -48,9 +48,10 @@ define( function( require ) {
     if ( isProportional ) {
       areaText.text = maximumWidthString;
       areaNode = new HBox( {
-        spacing: 4,
+        spacing: 8,
         children: [
-          new Text( areaEqualsString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
+          new Text( areaString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
+          new Text( MathSymbols.EQUAL_TO, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
             fill: useTileLikeBackground
