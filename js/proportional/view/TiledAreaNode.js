@@ -19,12 +19,18 @@ define( function( require ) {
   var Path = require( 'SCENERY/nodes/Path' );
   var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
+  var Util = require( 'DOT/Util' );
 
   // REVIEW: Doc param? Return type? Visibility?
+  // REVIEW*: JO: I don't think this needs visibility, as it is not externally exposed.
+  /**
+   * Rounds a numeric value to the nearest thousandth (0.001).
+   * 
+   * @param {number} value
+   * @returns {number}
+   */
   function thousandRound( value ) {
-
-    // REVIEW: Use dot.Util.roundSymmetric?
-    return Math.round( 1000 * value ) / 1000;
+    return Util.roundSymmetric( 1000 * value ) / 1000;
   }
 
   /**
@@ -172,8 +178,7 @@ define( function( require ) {
         var size = range.getLength();
         var largeCount = Math.floor( thousandRound( size / self.largeTileSizeProperty.value ) );
 
-        // REVIEW: Use dot.Util.roundSymmetric?
-        var smallCount = Math.round(
+        var smallCount = Util.roundSymmetric(
           ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value
         );
         var min = orientation.modelToView( self.modelViewTransformProperty.value, range.min );
