@@ -127,12 +127,10 @@ define( function( require ) {
     activeTotalProperties.vertical.lazyLink( updateLocationProperty );
 
     var keyboardListener;
+    var keyboardListenerReference = null;
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
       if ( keyboardListener ) {
-        // Can't remove the listeners right now, see https://github.com/phetsims/scenery/issues/764. Yikes,
-        // temp workaround
-        // BLOCKED TODO: Fix this (https://github.com/phetsims/scenery/issues/764)
-        // circle.removeAccessibleInputListener( keyboardListener );
+        circle.removeAccessibleInputListener( keyboardListenerReference );
         keyboardListener.dispose();
       }
       // BLOCKED TODO: Shouldn't have to recreate these. https://github.com/phetsims/scenery-phet/issues/367
@@ -156,7 +154,16 @@ define( function( require ) {
         moveOnHoldDelay: 750,
         moveOnHoldInterval: 70
       } );
-      circle.addAccessibleInputListener( keyboardListener );
+
+      var potentialListenerReference = circle.addAccessibleInputListener( keyboardListener );
+      // BLOCKED TODO: Remove this when https://github.com/phetsims/scenery/issues/764 is fixed.
+      if ( circle.accessibleInputListeners.includes( potentialListenerReference ) ) {
+        keyboardListenerReference = potentialListenerReference;
+      }
+      else {
+        keyboardListenerReference = keyboardListener;
+      }
+
       // BLOCKED TODO: Interruption of the keybaord listener when things change (when we don't have to recreate),
       // https://github.com/phetsims/scenery-phet/issues/368
     } );
