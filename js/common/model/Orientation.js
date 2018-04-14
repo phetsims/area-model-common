@@ -21,18 +21,21 @@ define( function( require ) {
    */
   function Orientation( options ) {
     _.extend( this, options );
+
+    // @public {Orientation|null} - Will be filled in after construction.
+    this.opposite = null;
   }
 
   areaModelCommon.register( 'Orientation', Orientation );
 
   inherit( Object, Orientation, {
-    // REVIEW: Doc return type
     /**
      * Returns the single coordinate transformed by the appropriate dimension.
      * @public
      *
      * @param {ModelViewTransform2} modelViewTransform
      * @param {number} value
+     * @returns {number}
      */
     modelToView: function( modelViewTransform, value ) {
       return modelViewTransform[ this.modelViewName ]( value );
@@ -68,6 +71,8 @@ define( function( require ) {
 
   // REVIEW: Are we declaring statics outside of the inherit callback.
   // REVIEW: I'm referencing from inherit.js. function inherit( supertype, subtype, prototypeProperties, staticProperties )
+  // REVIEW*: Yup. If I put it in the static part of inherit, it gets created before the prototype is set up, and the
+  // REVIEW*: object won't work (since it's creating an instance of the thing being defined).
   // @public {Orientation}
   Orientation.HORIZONTAL = new Orientation( {
     coordinate: 'x',
@@ -82,6 +87,7 @@ define( function( require ) {
 
   // REVIEW: Are we declaring statics outside of the inherit callback.
   // REVIEW: I'm referencing from inherit.js. function inherit( supertype, subtype, prototypeProperties, staticProperties )
+  // REVIEW*: See note above
   // @public {Orientation}
   Orientation.VERTICAL = new Orientation( {
     coordinate: 'y',
@@ -95,6 +101,7 @@ define( function( require ) {
   } );
 
   // REVIEW: Doc type and visibility
+  // REVIEW*: I added this in the constructor, so that it's something Orientations have. Does that work?
   // Set up opposites as object references (circular)
   Orientation.HORIZONTAL.opposite = Orientation.VERTICAL;
   Orientation.VERTICAL.opposite = Orientation.HORIZONTAL;
