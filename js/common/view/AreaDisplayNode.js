@@ -128,6 +128,10 @@ define( function( require ) {
       invalidateProductLabels();
     } );
 
+    // Also invalidate our label positions when the label type changes.
+    // See https://github.com/phetsims/area-model-common/issues/109
+    partialProductsChoiceProperty.lazyLink( invalidateProductLabels );
+
     // Do it once initially for proper layout at the start
     this.positionProductLabels();
 
