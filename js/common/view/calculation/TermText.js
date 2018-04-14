@@ -2,6 +2,9 @@
 
 /**
  * A poolable RichText for a Term with a colorProperty fill.
+ * // REVIEW: for poolable types, it would be nice to describe why pooling is valuable.  Are these created lots of times?
+ * // REVIEW: does performance suffer on iPad if not pooled, etc?  Generally, pooling adds complexity so it would be good
+ * // REVIEW: to document why that complexity is warranted.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -43,7 +46,7 @@ define( function( require ) {
      *
      * @param {TermList|Term} term
      * @param {Property.<Color>} colorProperty
-     * @param {boolean} excludeSign
+     * @param {boolean} excludeSign // REVIEW: please explain why some Terms are sometimes shown without their sign
      * @returns {TermText}
      */
     initialize: function( term, colorProperty, excludeSign ) {

@@ -25,7 +25,12 @@ define( function( require ) {
     var combinedTerms = [];
 
     // Sum common powers, in decreasing order (for display ease)
+    // REVIEW: this seems to assume that powers never exceed 4.  If so, that should be a factored-out constant and terms
+    // REVIEW: should assert that the power <= MAX_POWER
     for ( var power = 4; power >= 0; power-- ) {
+
+      // REVIEW: the second arg of the filter call (the array) is unfamiliar to the reviewers.  Can you please clarify
+      // how it works?
       var sum = _.sum( _.map( _.filter( terms, [ 'power', power ] ), 'coefficient' ) );
       if ( sum !== 0 ) {
         combinedTerms.push( new Term( sum, power ) );
