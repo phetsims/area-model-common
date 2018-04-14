@@ -257,7 +257,8 @@ define( function( require ) {
     createCountingIconNode: function() {
       // REVIEW: Should this have a max width for i18n. StringTest=long seems to overlap other panels.
       return new Text( countingToggleString, {
-        font: AreaModelCommonConstants.COUNTING_ICON_FONT
+        font: AreaModelCommonConstants.COUNTING_ICON_FONT,
+        maxWidth: 60
       } );
     }
   } );
