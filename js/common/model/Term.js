@@ -28,7 +28,7 @@ define( function( require ) {
       power = 0;
     }
 
-    // Allow only specifying one argument to the function (the coefficient).
+    // The power argument is optional--if not supplied, the power defaults to 0.
     power = ( power === undefined ? 0 : power );
 
     assert && assert( typeof coefficient === 'number' && isFinite( coefficient ),
