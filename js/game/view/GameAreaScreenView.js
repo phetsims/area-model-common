@@ -33,17 +33,18 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
+  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Panel = require( 'SUN/Panel' );
   var PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
-  var ProgressIndicator = require( 'VEGAS/ProgressIndicator' );
   var Property = require( 'AXON/Property' );
   var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RewardNode = require( 'VEGAS/RewardNode' );
   var RichText = require( 'SCENERY/nodes/RichText' );
+  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'TWIXT/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
@@ -103,29 +104,20 @@ define( function( require ) {
 
     var buttonSpacing = 15;
     var levelButtons = model.levels.map( function( level, index ) {
-      var scoreNode = new ProgressIndicator( AreaModelCommonConstants.NUM_CHALLENGES, level.scoreProperty, AreaModelCommonConstants.NUM_CHALLENGES * 2, {
-        scale: 0.8
-      } );
-      return new MutableOptionsNode( RectangularPushButton, [], {
-        // static
-        content: new VBox( {
-          children: [
-            levelIcons[ index ],
-            new Panel( scoreNode )
-          ],
-          spacing: 10
-        } ),
-        xMargin: 10,
-        yMargin: 10,
-        touchAreaXDilation: buttonSpacing / 2,
-        touchAreaYDilation: 13,
-        cornerRadius: 10,
+      // Doesn't support a color property as the baseColor, so we need to wrap it.
+      return new MutableOptionsNode( LevelSelectionButton.ScoreDisplayCreator, [ levelIcons[ index ], level.scoreProperty ], {
+        buttonWidth: 120,
+        scoreDisplayConstructor: ScoreDisplayStars,
+        scoreDisplayOptions: {
+          numStars: AreaModelCommonConstants.NUM_CHALLENGES,
+          perfectScore: AreaModelCommonConstants.NUM_CHALLENGES * 2
+        },
         listener: function() {
           model.selectLevel( level );
         }
       }, {
         // dynamic
-        baseColor: level.colorProperty,
+        baseColor: level.colorProperty
       } );
     } );
 
