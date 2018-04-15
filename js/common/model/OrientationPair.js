@@ -86,7 +86,7 @@ define( function( require ) {
      * Creates an orientation pair based on a factory method.
      * @public
      *
-     * @param {function} factory - Called factory( {Orientation} ) : {*}, called once for each orietation to determine
+     * @param {function} factory - Called factory( {Orientation} ) : {*}, called once for each orientation to determine
      *                             the value.
      */
     create: function( factory ) {

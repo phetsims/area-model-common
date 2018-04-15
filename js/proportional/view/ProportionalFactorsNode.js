@@ -80,12 +80,12 @@ define( function( require ) {
         formatValue: function( value ) {
           if ( Math.abs( value - Util.roundSymmetric( value ) ) < 1e-6 ) {
 
-            //REIVEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
+            //REVIEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 0 );
           }
           else {
 
-            //REIVEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
+            //REVIEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 1 );
           }
         },

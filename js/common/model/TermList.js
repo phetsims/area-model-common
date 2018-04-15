@@ -92,7 +92,7 @@ define( function( require ) {
 
     /**
      * Equality for just whether the terms are the same (so a TermList can be compared to a Polynomial and be equal
-     * depite being different types.
+     * despite being different types.
      * @public
      *
      * @param {TermList} termList

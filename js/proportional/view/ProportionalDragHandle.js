@@ -161,7 +161,7 @@ define( function( require ) {
         keyboardListenerReference = keyboardListener;
       }
 
-      // BLOCKED TODO: Interruption of the keybaord listener when things change (when we don't have to recreate),
+      // BLOCKED TODO: Interruption of the keyboard listener when things change (when we don't have to recreate),
       // https://github.com/phetsims/scenery-phet/issues/368
     } );
 

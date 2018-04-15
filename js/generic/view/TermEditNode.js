@@ -65,6 +65,7 @@ define( function( require ) {
 
     var self = this;
 
+    // REVIEW: Does the length of this string matter?  If not, perhaps '' would be less distracting?
     var hexColor = '#c0vfefe'; // Placeholder value, replaced below. It's not even a hex color. Or is it.....?
 
     var readoutText = new RichText( hexColor, {
