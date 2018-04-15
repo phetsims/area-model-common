@@ -26,7 +26,7 @@ define( function( require ) {
    *
    * @param {OrientationPair.<Array.<Partition>>} partitions
    * @param {OrientationPair.<Property.<Color>>} colorProperties
-   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take.
+   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. // REVIEW: I noticed that when placing the triangle partition at the max, it jumps back to 0.  Is this max inclusive or exclusive?
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
