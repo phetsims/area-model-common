@@ -347,8 +347,8 @@ define( function( require ) {
     }, new BooleanProperty( true ) );
 
     var faceNode = new FaceNode( 90, {
-      right: showAnswerButton.left - 70,
-      top: showAnswerButton.top
+      centerX: showAnswerButton.centerX,
+      top: showAnswerButton.bottom + 10
     } );
     this.challengeLayer.addChild( faceNode );
     var scoreIncreaseText = new Text( ' ', {
