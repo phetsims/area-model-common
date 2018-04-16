@@ -19,11 +19,6 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // REVIEW: Doc? Does this need to be declared outside of the constructor?
-  // REVIEW*: We usually declare these at this scope, so you don't get one per object (in this case, one per
-  // REVIEW*: CountingAreaNode). Since we have so little of these, I'd be fine making it a property of the type
-  // REVIEW*: (this.scratchVector). Does that sound better?
-  
   // constants
   var scratchVector = new Vector2(); // Created so we can minimize object creation and garbage collection
 
