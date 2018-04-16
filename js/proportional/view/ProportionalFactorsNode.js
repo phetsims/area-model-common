@@ -72,9 +72,19 @@ define( function( require ) {
         return new Range( area.minimumSize, area.maximumSize );
       } );
 
+      function roundToPlaces( n ) {
+        // Need to add in additional rounding, see https://github.com/phetsims/area-model-decimals/issues/2
+        var multiplier = Math.pow( 10, decimalPlaces );
+        return Util.roundSymmetric( n * multiplier ) / multiplier;
+      }
+
       return new NumberPicker( bidirectionalProperty, rangeProperty, {
-        upFunction: function( value ) { return value + currentAreaProperty.value.snapSize; },
-        downFunction: function( value ) { return value - currentAreaProperty.value.snapSize; },
+        upFunction: function( value ) {
+          return roundToPlaces( value + currentAreaProperty.value.snapSize );
+        },
+        downFunction: function( value ) {
+          return roundToPlaces( value - currentAreaProperty.value.snapSize );
+        },
         decimalPlaces: decimalPlaces,
         scale: 1.5,
         formatValue: function( value ) {
