@@ -19,16 +19,17 @@ define( function( require ) {
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var DynamicProperty = require( 'AXON/DynamicProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
   var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
   var GameAreaDisplayNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaDisplayNode' );
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAudio = require( 'AREA_MODEL_COMMON/game/view/GameAudio' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var GameStatusBar = require( 'AREA_MODEL_COMMON/game/view/GameStatusBar' );
   var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -36,6 +37,7 @@ define( function( require ) {
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
   var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Panel = require( 'SUN/Panel' );
   var PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
@@ -44,6 +46,7 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var RewardNode = require( 'VEGAS/RewardNode' );
   var RichText = require( 'SCENERY/nodes/RichText' );
+  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
   var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SlidingScreen = require( 'TWIXT/SlidingScreen' );
@@ -110,7 +113,7 @@ define( function( require ) {
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
           numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
-          perfectScore: AreaModelCommonConstants.NUM_CHALLENGES * 2
+          perfectScore: AreaModelCommonConstants.PERFECT_SCORE
         },
         listener: function() {
           model.selectLevel( level );
@@ -133,15 +136,69 @@ define( function( require ) {
     } ) );
 
     // Status bar
-    var gameStatusBar = new GameStatusBar( model.currentLevelProperty, function() {
-      // Reset the level on "Start Over", see https://github.com/phetsims/area-model-common/issues/87
-      model.currentLevelProperty.value.startOver();
-
-      model.currentLevelProperty.value = null;
+    var lastKnownLevel = null;
+    // Create a property that holds the "last known" level, so that we don't change the view when we are switching
+    // away from the current level back to the level selection.
+    var lastLevelProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
+      level = level || lastKnownLevel;
+      lastKnownLevel = level;
+      return level;
     } );
-    this.challengeLayer.addChild( gameStatusBar );
-    this.visibleBoundsProperty.link( function( visibleBounds ) {
-      gameStatusBar.layout( visibleBounds );
+    var scoreProperty = new DynamicProperty( lastLevelProperty, {
+      derive: 'scoreProperty'
+    } );
+    var statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
+      challengeIndexProperty: new DynamicProperty( lastLevelProperty, {
+        derive: 'challengeIndexProperty',
+        defaultValue: 1
+      } ),
+      numberOfChallengesProperty: new NumberProperty( AreaModelCommonConstants.NUM_CHALLENGES ),
+      levelProperty: new DerivedProperty( [ lastLevelProperty ], function( level ) {
+        return level ? level.number - 1 : 0;
+      } ),
+      scoreDisplayConstructor: ScoreDisplayLabeledStars,
+      scoreDisplayOptions: {
+        numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
+        perfectScore: AreaModelCommonConstants.PERFECT_SCORE
+      },
+      startOverButtonOptions: {
+        listener: function() {
+          // Reset the level on "Start Over", see https://github.com/phetsims/area-model-common/issues/87
+          model.currentLevelProperty.value.startOver();
+          model.currentLevelProperty.value = null;
+        }
+      },
+      font: AreaModelCommonConstants.GAME_STATUS_BAR_NON_BOLD_FONT,
+      levelTextOptions: {
+        font: AreaModelCommonConstants.GAME_STATUS_BAR_BOLD_FONT
+      },
+      floatToTop: true,
+      barFill: new DynamicProperty( lastLevelProperty, {
+        derive: 'colorProperty',
+        defaultValue: 'black'
+      } )
+    } );
+    this.challengeLayer.addChild( statusBar );
+
+    // Prompt
+    var promptText = new Text( ' ', {
+      font: AreaModelCommonConstants.GAME_STATUS_BAR_PROMPT_FONT,
+      pickable: false,
+      maxWidth: 600,
+      top: this.layoutBounds.top + statusBar.height + 20
+    } );
+    this.challengeLayer.addChild( promptText );
+    new DynamicProperty( model.currentLevelProperty, {
+      derive: 'currentChallengeProperty'
+    } ).link( function( challenge ) {
+      // Could be null
+      if ( challenge ) {
+        promptText.text = challenge.description.getPromptString();
+        // Center around the area's center.
+        promptText.centerX = self.layoutBounds.left + AreaModelCommonConstants.GAME_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
+        // Don't let it go off the left side of the screen
+        promptText.left = Math.max( promptText.left, self.layoutBounds.left + 20 );
+      }
     } );
 
     // "Spimd tpgg;e" was apparently what I typed. "Sound toggle" is probably more accurate.
@@ -311,7 +368,7 @@ define( function( require ) {
       if ( state !== null ) {
         gameAreaNode.visible = state !== GameState.LEVEL_COMPLETE;
         panelBox.visible = state !== GameState.LEVEL_COMPLETE;
-        gameStatusBar.visible = state !== GameState.LEVEL_COMPLETE;
+        statusBar.visible = state !== GameState.LEVEL_COMPLETE;
         levelCompleteContainer.visible = state === GameState.LEVEL_COMPLETE;
         checkButton.visible = state === GameState.FIRST_ATTEMPT ||
                               state === GameState.SECOND_ATTEMPT;
@@ -339,7 +396,7 @@ define( function( require ) {
           new LevelCompletedNode(
             level.number - 1,
             level.scoreProperty.value,
-            AreaModelCommonConstants.NUM_CHALLENGES * 2,
+            AreaModelCommonConstants.PERFECT_SCORE,
             AreaModelCommonConstants.NUM_CHALLENGES,
             false, 0, 0, 0,
             function() {
@@ -351,7 +408,7 @@ define( function( require ) {
             } )
         ];
 
-        if ( level.scoreProperty.value === AreaModelCommonConstants.NUM_CHALLENGES * 2 ) {
+        if ( level.scoreProperty.value === AreaModelCommonConstants.PERFECT_SCORE ) {
           self.rewardNode = new RewardNode( {
             nodes: rewardNodes
           } );

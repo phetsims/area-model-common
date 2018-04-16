@@ -36,7 +36,7 @@ define( function( require ) {
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
         var score = model.currentLevelProperty.value.scoreProperty.value;
-        if ( score === AreaModelCommonConstants.NUM_CHALLENGES * 2 ) {
+        if ( score === AreaModelCommonConstants.PERFECT_SCORE ) {
           audioPlayer.gameOverPerfectScore();
         }
         else if ( score === 0 ) {

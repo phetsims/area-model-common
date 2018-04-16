@@ -55,7 +55,6 @@ define( function( require ) {
     GAME_POLYNOMIAL_EDIT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),
     GAME_STATUS_BAR_BOLD_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     GAME_STATUS_BAR_NON_BOLD_FONT: new PhetFont( { size: 18 } ),
-    GAME_STATUS_BAR_START_OVER_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
     GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
     // {string} - The string to be provided to RichText for a mathematical-looking x
@@ -103,6 +102,9 @@ define( function( require ) {
 
     // {number} - Number of challenges per level
     NUM_CHALLENGES: 6,
+
+    // {number} - The perfect score for a level
+    PERFECT_SCORE: 12,
 
     // {number} - Padding in-between content and surrounding parentheses in the calculation area
     CALCULATION_PAREN_PADDING: 0,

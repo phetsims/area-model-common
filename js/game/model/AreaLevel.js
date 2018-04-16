@@ -45,7 +45,7 @@ define( function( require ) {
     // @public {Array.<AreaChallengeDescription>} - Descriptions for each type of level
     this.challengeDescriptions = challengeDescriptions;
 
-    // @public {Property.<number>} - Ranges from 0 to AreaModelCommonConstants.NUM_CHALLENGES * 2
+    // @public {Property.<number>} - Ranges from 0 to AreaModelCommonConstants.PERFECT_SCORE
     //                               (since 2 points are rewarded for first attempt correct)
     this.scoreProperty = new NumberProperty( 0 );
 
