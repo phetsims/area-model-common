@@ -334,7 +334,6 @@ define( function( require ) {
      */
     // REVIEW: Is this being used? Can we remove?
     createAreaDisplayNode: function( model ) {
-      debugger;
       throw new Error( 'abstract method, should be implemented by subtype' );
     }
   } );
