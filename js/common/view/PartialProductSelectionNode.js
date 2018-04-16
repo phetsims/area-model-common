@@ -64,6 +64,7 @@ define( function( require ) {
       },
       {
         value: PartialProductsChoice.PRODUCTS,
+
         // Hardcoded 'A' string since we don't want it to be translatable
         node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } )
       },

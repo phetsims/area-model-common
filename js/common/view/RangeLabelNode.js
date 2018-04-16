@@ -102,6 +102,7 @@ define( function( require ) {
         } );
       }
       else {
+
         // Add any ticks that we need
         while ( ticks.length < tickLocations.length ) {
           var tick = new Line( {

@@ -45,6 +45,7 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
       // Meant to be overridden
       gridLinesVisibleProperty: new BooleanProperty( false ),
       tilesVisibleProperty: new BooleanProperty( false ),
@@ -99,6 +100,7 @@ define( function( require ) {
       function( tilesAvailable, tilesVisible ) {
         return tilesAvailable && tilesVisible;
       } );
+
     // @private {TiledAreaNode|null} - Tiles (optionally enabled)
     this.tiledAreaNode = new TiledAreaNode( areaDisplay, this.modelViewTransformProperty, tilesVisibleProperty );
     this.areaLayer.addChild( this.tiledAreaNode );
@@ -111,6 +113,7 @@ define( function( require ) {
       function( countingAvailable, countingVisible ) {
         return countingAvailable && countingVisible;
       } );
+
     // @private {CountingAreaNode|null} - Counts of numbers for squares (optionally enabled)
     this.countingAreaNode = new CountingAreaNode(
       areaDisplay.activeTotalProperties,

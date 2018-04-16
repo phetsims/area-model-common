@@ -37,6 +37,7 @@ define( function( require ) {
    */
   function AreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options ) {
     options = _.extend( {
+
       // These do not change for a given AreaDisplayNode
       allowExponents: false,
       isProportional: false,

@@ -33,6 +33,8 @@ define( function( require ) {
     var self = this;
 
     options = _.extend( {
+
+      // REVIEW: Are we still in search of a better name?
       // REQUIRED options (again, if you think of a better name...)
       arrayProperty: null, // {Property.<Array.<*>>} - Property that has an array of items
       createNode: null, // {function} - function( {*} item ): {Node} - Create a node from an item
@@ -52,6 +54,7 @@ define( function( require ) {
     var unusedArray = options.unusedArray;
 
     options.arrayProperty.link( function( items ) {
+
       // Unuse all of the item nodes (set their property to null, hiding them, and put them in the unused array)
       while ( usedArray.length ) {
         var oldItemNode = usedArray.pop();
@@ -67,6 +70,7 @@ define( function( require ) {
           itemNode = unusedArray.pop();
           options.getItemProperty( itemNode ).value = item;
         }
+
         // Or create a new one
         else {
           itemNode = options.createNode( item );

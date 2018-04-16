@@ -28,6 +28,7 @@ define( function( require ) {
    */
   function EditableProperty( value, options ) {
     options = _.extend( {
+
       // Property options
       useDeepEquality: true,
       isValidValue: Term.isNullableTerm,

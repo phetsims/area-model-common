@@ -92,6 +92,7 @@ define( function( require ) {
         field: field,
         displayType: Field.toDisplayType( field ),
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
+
         // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
         digits: description.numberOrVariable( numbersDigits, 2 ) + 1
       } );
@@ -132,6 +133,7 @@ define( function( require ) {
       inputMethod: description.numberOrVariable( InputMethod.CONSTANT, hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ),
       digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
+
     // @public {EditableProperty}
     this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {
       correctValue: this.total.getTerm( 0 ),
@@ -471,6 +473,7 @@ define( function( require ) {
      */
     generateTerm: function( power, maxPower, quantity, allowExponents ) {
       if ( allowExponents ) {
+
         // Don't let leading x or x^2 have a coefficient.
         if ( power === maxPower && power > 0 ) {
           return new Term( 1, power );
@@ -484,6 +487,7 @@ define( function( require ) {
         }
       }
       else {
+
         // Exclude a 1 if our length is 1
         return new Term( phet.joist.random.nextIntBetween( quantity === 1 ? 2 : 1, 9 ) * Math.pow( 10, power ) );
       }

@@ -21,6 +21,7 @@ define( function( require ) {
   var NORMAL_EDIT_FONT_SIZE = 18;
 
   return areaModelCommon.register( 'AreaModelCommonConstants', {
+
     // {PhetFont} All fonts
     FACTORS_TERM_FONT: new PhetFont( 36 ), // Terms/numbers in the factors box
     FACTORS_PAREN_FONT: new PhetFont( 40 ), // Parentheses in the factors box

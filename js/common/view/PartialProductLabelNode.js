@@ -96,6 +96,7 @@ define( function( require ) {
     var verticalRichText = new RichText( placeholderString, factorsTextOptions );
 
     var rectangleSize = allowExponents ? 12 : 14;
+
     // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
     var magicConstant = allowExponents ? 1.3 : 0;
     var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + magicConstant;
@@ -129,6 +130,7 @@ define( function( require ) {
         if ( choice === PartialProductsChoice.HIDDEN ) {
           children = [];
         }
+
         // Product
         else if ( choice === PartialProductsChoice.PRODUCTS ) {
           productRichText.text = ( horizontalSize === null || verticalSize === null )
@@ -136,6 +138,7 @@ define( function( require ) {
             : horizontalSize.times( verticalSize ).toRichString( false );
           children = [ productRichText ];
         }
+
         // Factors
         else {
 

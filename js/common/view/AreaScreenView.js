@@ -92,6 +92,8 @@ define( function( require ) {
       AreaModelCommonGlobals.panelAlignGroup,
       new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
+
+    // REVIEW: Type doc, visibility?
     this.calculationSelectionPanel = this.createPanelContent(
       areaModelCalculationString,
       AreaModelCommonGlobals.panelAlignGroup,
@@ -124,6 +126,7 @@ define( function( require ) {
       group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
+
     // @protected {Node} - Exposed for a11y order
     this.factorsBox = this.createAccordionBox(
       options.useSimplifiedNames ? factorsString : dimensionsString,
@@ -142,6 +145,7 @@ define( function( require ) {
       group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
+
     // @protected {Node} - Exposed for a11y order
     this.areaBox = this.createAccordionBox(
       options.useSimplifiedNames ? productString : totalAreaOfModelString,
@@ -204,6 +208,7 @@ define( function( require ) {
      *
      * @param {number} dt
      */
+    // REVIEW: Unused param. Remove?
     step: function( dt ) {
       this.calculationNode.update();
       this.areaDisplayNode.update();
@@ -315,6 +320,7 @@ define( function( require ) {
      * @param {number} decimalPlaces
      * @returns {Node}
      */
+    // REVIEW: Is this being used? Can we remove?
     createFactorsNode: function( model, decimalPlaces ) {
       throw new Error( 'abstract method, should be implemented by subtype' );
     },
@@ -326,7 +332,9 @@ define( function( require ) {
      * @param {AreaModelCommonModel} model
      * @returns {AreaDisplayNode}
      */
+    // REVIEW: Is this being used? Can we remove?
     createAreaDisplayNode: function( model ) {
+      debugger;
       throw new Error( 'abstract method, should be implemented by subtype' );
     }
   } );

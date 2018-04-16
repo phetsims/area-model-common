@@ -72,7 +72,7 @@ define( function( require ) {
     }
   } );
 
-  // Standard boilerplate for pooling :(
+  // Standard boilerplate for pooling
   Poolable.mixInto( CalculationGroup, {
     constructorDuplicateFactory: function( pool ) {
       return function( nodes, spacing ) {

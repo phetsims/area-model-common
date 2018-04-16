@@ -170,6 +170,7 @@ define( function( require ) {
       // First try to center
       self.centerX = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
       if ( self.left < AreaModelCommonConstants.PANEL_MARGIN ) {
+
         // If that doesn't work, don't let it go out of bounds left-side.
         self.left = AreaModelCommonConstants.PANEL_MARGIN;
       }

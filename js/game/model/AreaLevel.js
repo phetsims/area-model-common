@@ -74,6 +74,7 @@ define( function( require ) {
      * @returns {Array.<AreaChallenge>}
      */
     generateChallenges: function() {
+
       // Always include the first description as the first challenge
       var descriptions = [ this.challengeDescriptions[ 0 ] ];
 

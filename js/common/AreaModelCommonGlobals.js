@@ -13,6 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   return areaModelCommon.register( 'AreaModelCommonGlobals', {
+
     // @public {AlignGroup} - Used to properly horizontally align all of the panels/accordions/etc. across screens.
     panelAlignGroup: new AlignGroup( {
       matchVertical: false

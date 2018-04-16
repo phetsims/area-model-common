@@ -63,6 +63,7 @@ define( function( require ) {
     }
     else {
       areaText.maxWidth = AreaModelCommonConstants.PANEL_INTERIOR_MAX;
+
       // AlignBox it so that it is always centered and keeps the same bounds
       areaNode = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
     }
