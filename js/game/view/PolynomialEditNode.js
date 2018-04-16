@@ -121,6 +121,7 @@ define( function( require ) {
 
     function linkProperty( property, propertyProperty ) {
       property.link( function( value ) {
+        // Only flag the values as edited when the user makes a change (not when we set it as part of a challengeb)
         if ( property.isExternallyChanging ) {
           editedCallback();
           makeNotDirty();
