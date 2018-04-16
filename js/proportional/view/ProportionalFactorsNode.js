@@ -79,13 +79,9 @@ define( function( require ) {
         scale: 1.5,
         formatValue: function( value ) {
           if ( Math.abs( value - Util.roundSymmetric( value ) ) < 1e-6 ) {
-
-            //REVIEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 0 );
           }
           else {
-
-            //REVIEW: Use DOT/Util.toFixed or DOT/Util.toFixedNumber?
             return Util.toFixed( value, 1 );
           }
         },
