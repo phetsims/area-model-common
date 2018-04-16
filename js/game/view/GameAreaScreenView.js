@@ -105,7 +105,7 @@ define( function( require ) {
     var buttonSpacing = 15;
     var levelButtons = model.levels.map( function( level, index ) {
       // Doesn't support a color property as the baseColor, so we need to wrap it.
-      return new MutableOptionsNode( LevelSelectionButton.ScoreDisplayCreator, [ levelIcons[ index ], level.scoreProperty ], {
+      return new MutableOptionsNode( LevelSelectionButton, [ levelIcons[ index ], level.scoreProperty ], {
         buttonWidth: 120,
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
