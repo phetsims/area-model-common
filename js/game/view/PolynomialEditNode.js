@@ -120,6 +120,7 @@ define( function( require ) {
     }
 
     function linkProperty( property, propertyProperty ) {
+      // REVIEW: Unused variable 'value'? Can we remove?
       property.link( function( value ) {
         if ( property.isExternallyChanging ) {
           editedCallback();
