@@ -99,6 +99,7 @@ define( function( require ) {
      * @param {Property.<Area>} areaProperty
      * @returns {AreaDisplay}
      */
+    // REVIEW: Is this being used?
     createAreaDisplay: function( areaProperty ) {
       throw new Error( 'abstract method' );
     },
