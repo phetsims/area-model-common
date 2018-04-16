@@ -50,8 +50,8 @@ define( function( require ) {
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
     this.calculationIndexProperty = new NumberProperty( 0 );
 
-    // @public {Array.<PartitionedArea>} - A 2-dimensional sections of area defined by a horizontal and vertical
-    // pair of partitions.
+    // @public {Array.<PartitionedArea>} - An array of 2-dimensional sections of area defined by a horizontal and
+    // vertical pair of partitions.
     this.partitionedAreas = _.flatten( partitions.horizontal.map( function( horizontalPartition ) {
       return partitions.vertical.map( function( verticalPartition ) {
         return self.createPartitionedArea( new OrientationPair( horizontalPartition, verticalPartition ) );
@@ -102,6 +102,7 @@ define( function( require ) {
       var partitionedArea = new PartitionedArea( partitions );
 
       // By default, have the area linked to the partitions. This won't work for the game.
+      // REVIEW: Does this multilink need a corresponding unlink?  If not, why not?
       Property.multilink(
         [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ],
         function( horizontalSize, verticalSize ) {
@@ -219,6 +220,8 @@ define( function( require ) {
 
       return new DerivedProperty( properties, function() {
         var terms = self.getTerms( orientation );
+
+        // REVIEW: Would it be clearer to use a termList of length 0 instead of null?  Why or why not?
         if ( terms.length ) {
           return new TermList( terms );
         }
