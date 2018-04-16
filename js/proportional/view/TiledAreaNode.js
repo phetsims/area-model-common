@@ -25,7 +25,7 @@ define( function( require ) {
   // REVIEW*: JO: I don't think this needs visibility, as it is not externally exposed.
   /**
    * Rounds a numeric value to the nearest thousandth (0.001).
-   * 
+   *
    * @param {number} value
    * @returns {number}
    */
