@@ -20,7 +20,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
@@ -29,7 +29,7 @@ define( function( require ) {
   var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
   var GameAudio = require( 'AREA_MODEL_COMMON/game/view/GameAudio' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
+  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );

@@ -15,10 +15,10 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
+  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );

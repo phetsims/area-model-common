@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
 
   var Field = {
     EDITABLE: 'EDITABLE',

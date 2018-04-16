@@ -9,9 +9,9 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/enum/AreaChallengeType' );
+  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
+  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );

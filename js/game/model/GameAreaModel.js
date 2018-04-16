@@ -14,8 +14,8 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/enum/GameState' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
+  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 

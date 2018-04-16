@@ -11,11 +11,11 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/enum/DisplayType' );
-  var Field = require( 'AREA_MODEL_COMMON/game/enum/Field' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
+  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
+  var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var Property = require( 'AXON/Property' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 

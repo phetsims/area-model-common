@@ -17,9 +17,9 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/enum/Highlight' );
+  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/enum/InputMethod' );
+  var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );

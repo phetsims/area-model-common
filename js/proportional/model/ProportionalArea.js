@@ -19,7 +19,7 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
-  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/enum/PartitionLineChoice' );
+  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
   var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
