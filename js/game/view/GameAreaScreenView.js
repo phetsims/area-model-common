@@ -109,7 +109,7 @@ define( function( require ) {
         buttonWidth: 120,
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
-          numStars: AreaModelCommonConstants.NUM_CHALLENGES,
+          numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
           perfectScore: AreaModelCommonConstants.NUM_CHALLENGES * 2
         },
         listener: function() {
