@@ -389,6 +389,7 @@ define( function( require ) {
         gameAreaNode.visible = state !== GameState.LEVEL_COMPLETE;
         panelBox.visible = state !== GameState.LEVEL_COMPLETE;
         statusBar.visible = state !== GameState.LEVEL_COMPLETE;
+        promptText.visible = state !== GameState.LEVEL_COMPLETE;
         levelCompleteContainer.visible = state === GameState.LEVEL_COMPLETE;
         checkButton.visible = state === GameState.FIRST_ATTEMPT ||
                               state === GameState.SECOND_ATTEMPT;
