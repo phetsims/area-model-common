@@ -65,7 +65,7 @@ define( function( require ) {
       new AreaLevel( 6, AreaChallengeType.VARIABLES, AreaModelCommonColorProfile.variablesIconBackgroundProperty, variables6Icon, [
         AreaChallengeDescription.LEVEL_6_VARIABLES_1
       ] )
-    ] );
+    ], true );
   }
 
   areaModelCommon.register( 'VariablesGameAreaModel', VariablesGameAreaModel );

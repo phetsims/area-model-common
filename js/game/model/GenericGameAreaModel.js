@@ -73,7 +73,7 @@ define( function( require ) {
       new AreaLevel( 6, AreaChallengeType.NUMBERS, AreaModelCommonColorProfile.numbersIconBackgroundProperty, numbers6Icon, [
         AreaChallengeDescription.LEVEL_6_NUMBERS_1
       ] )
-    ] );
+    ], false );
   }
 
   areaModelCommon.register( 'GenericGameAreaModel', GenericGameAreaModel );

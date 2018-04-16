@@ -363,6 +363,26 @@ define( function( require ) {
     // @private {RewardNode|null} - We need to step it when there is one
     this.rewardNode = null;
 
+    var rewardNodes = RewardNode.createRandomNodes( [
+      new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
+      new StarNode()
+    ], 100 );
+    Orientation.VALUES.forEach( function( orientation ) {
+      var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+
+      _.range( 1, 10 ).forEach( function( digit ) {
+        [ -1, 1 ].forEach( function( sign ) {
+          var powers = model.hasExponents ? [ 0, 1, 2 ] : [ 0, 0, 0 ];
+          powers.forEach( function( power ) {
+            rewardNodes.push( new RichText( new Term( sign * digit, power ).toRichString( false ), {
+              font: AreaModelCommonConstants.REWARD_NODE_FONT,
+              fill: colorProperty
+            } ) );
+          } );
+        } );
+      } );
+    } );
+
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
@@ -426,25 +446,6 @@ define( function( require ) {
   }
 
   areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
-
-  var rewardNodes = RewardNode.createRandomNodes( [
-    new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
-    new StarNode()
-  ], 100 );
-  Orientation.VALUES.forEach( function( orientation ) {
-    var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
-
-    _.range( 1, 10 ).forEach( function( digit ) {
-      [ -1, 1 ].forEach( function( sign ) {
-        [ 0, 1, 2 ].forEach( function( power ) {
-          rewardNodes.push( new RichText( new Term( sign * digit, power ).toRichString( false ), {
-            font: AreaModelCommonConstants.REWARD_NODE_FONT,
-            fill: colorProperty
-          } ) );
-        } );
-      } );
-    } );
-  } );
 
   return inherit( ScreenView, GameAreaScreenView, {
     /**

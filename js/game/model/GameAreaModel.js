@@ -24,11 +24,15 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Array.<AreaLevel>} levels
+   * @param {boolean} hasExponents
    */
-  function GameAreaModel( levels ) {
+  function GameAreaModel( levels, hasExponents ) {
 
     // @public {Array.<AreaLevel>}
     this.levels = levels;
+
+    // @public {boolean}
+    this.hasExponents = hasExponents;
 
     // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.
     this.soundEnabledProperty = new BooleanProperty( true );
