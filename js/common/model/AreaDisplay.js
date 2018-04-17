@@ -3,6 +3,9 @@
 /**
  * Base type for something that displays Areas.
  *
+ * // REVIEW: Can you please provide documentation about why this problem warrants using the "wrap*" strategy?
+ * // REVIEW: (i.e., what is special about the setup of AreaDisplay that leads to using wrap* when other places don't need wrap*?)
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

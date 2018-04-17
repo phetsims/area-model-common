@@ -51,6 +51,7 @@ define( function( require ) {
     this.isProportional = options.isProportional;
 
     // @public {OrientationPair.<Property.<Color>>}
+    // REVIEW: it seems sketchy to use boolean values to key into an object that uses string keys 'true' and 'false'
     this.colorProperties = AreaModelCommonColorProfile.mainColorProperties[ options.isProportional ];
 
     // @public {Property.<Area>} - The current area
