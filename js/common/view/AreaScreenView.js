@@ -106,7 +106,7 @@ define( function( require ) {
     this.getSelectionNodesProperty().link( function( selectionNodes ) {
 
       // REVIEW: This implementation seems odd, would it be clearer if we iterate through the selectionNodes and add
-      // REVIEW: them + separators into a new array instead of using insertChild and i+=2
+      // REVIEW: the nodes and separators into a new array instead of using insertChild and i+=2
       // REVIEW: Especially since (but not only because) we are adding te selectionContent while iterating over it.
       selectionContent.children = selectionNodes;
       // Add separators between items
