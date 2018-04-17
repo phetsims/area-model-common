@@ -4,6 +4,7 @@
  * Shows radio buttons that allow selecting between different ways of showing area computations (or none).
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * REVIEW: Please rename to AreaCalculationRadioButtonGroup for clarity.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -53,6 +54,7 @@ define( function( require ) {
 
   /**
    * Creates a calculation icon with two fills (one for the top line only).
+   * REVIEW: What does (one for the top line only) mean?
    * @private
    *
    * @param {Property.<Color>} topColorProperty

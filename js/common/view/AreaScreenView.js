@@ -69,6 +69,7 @@ define( function( require ) {
       useLargeArea: false,
 
       // {boolean} - If true, a simplified accordion box will be used for the calculation lines
+      // REVIEW: If false, it adds a CalculationNode instead, please comment here on what that means
       useCalculationBox: false
     }, options );
 
@@ -103,6 +104,10 @@ define( function( require ) {
       spacing: 15
     } );
     this.getSelectionNodesProperty().link( function( selectionNodes ) {
+
+      // REVIEW: This implementation seems odd, would it be clearer if we iterate through the selectionNodes and add
+      // REVIEW: them + separators into a new array instead of using insertChild and i+=2
+      // REVIEW: Especially since (but not only because) we are adding te selectionContent while iterating over it.
       selectionContent.children = selectionNodes;
       // Add separators between items
       for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
@@ -128,6 +133,7 @@ define( function( require ) {
     } );
 
     // @protected {Node} - Exposed for a11y order
+    // REVIEW Use @protected (a11y) or is it @public (a11y) ?  In other places as well.
     this.factorsBox = this.createAccordionBox(
       options.useSimplifiedNames ? factorsString : dimensionsString,
       model.factorsBoxExpanded,
@@ -140,7 +146,8 @@ define( function( require ) {
     var areaBoxContent = new AlignBox( new TotalAreaNode(
       model.totalAreaProperty,
       model.isProportional,
-      model.isProportional ? model.getMaximumAreaString() : '', this.useTileLikeBackground
+      model.isProportional ? model.getMaximumAreaString() : '',
+      this.useTileLikeBackground
     ), {
       group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
@@ -210,6 +217,9 @@ define( function( require ) {
      */
     // REVIEW: Unused param. Remove?
     step: function( dt ) {
+
+      // REVIEW: Comment that no animation is happening in the view, and that this code is for batching updates to happen
+      // no more than once per frame.
       this.calculationNode.update();
       this.areaDisplayNode.update();
     },
@@ -220,6 +230,8 @@ define( function( require ) {
      *
      * @returns {Array.<Node>}
      */
+    // REVIEW: Perhaps a more specific name, since this omits the reset all button.  Perhaps getRightSidePanels or getRightSideBoxes or something like that?
+    // REVIEW: Or maybe getRightSideNodesForAlignment?
     getRightSideNodes: function() {
       var children = [
         this.factorsBox,
@@ -288,6 +300,7 @@ define( function( require ) {
      * @param {Node} content
      * @param {Object} [options]
      */
+    // REVIEW: Move this to AreaModelCommonAccordionBox.js
     createAccordionBox: function( titleString, expandedProperty, content, options ) {
       return new AccordionBox( content, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
         titleNode: new Text( titleString, {

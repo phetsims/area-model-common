@@ -73,7 +73,7 @@ define( function( require ) {
     GAME_AREA_OFFSET: new Vector2( 180, 200 ),
 
     // {number} - Panel options
-    PANEL_MARGIN: 10,
+    PANEL_MARGIN: 10, // REVIEW: these margins are also used for things that aren't panels, so come up with a more general name
     PANEL_SPACING: 10,
     PANEL_CORNER_RADIUS: PANEL_CORNER_RADIUS,
     PANEL_INTERIOR_MAX: 230, // Maximum width of the content inside the panels

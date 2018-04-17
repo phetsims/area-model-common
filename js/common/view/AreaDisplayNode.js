@@ -52,6 +52,7 @@ define( function( require ) {
     this.areaDisplay = areaDisplay;
 
     // @public {Node} - Layers (public for a11y)
+    // REVIEW: Should be annotated @public (a11y) {Node} - Layers
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
@@ -142,8 +143,8 @@ define( function( require ) {
         areaDisplay.areaProperty.value.erase();
       },
       center: options.isProportional
-        ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
-        : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
+              ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
+              : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
       touchAreaXDilation: 8,
       touchAreaYDilation: 8
     } );
@@ -158,6 +159,7 @@ define( function( require ) {
       stroke: AreaModelCommonColorProfile.areaBorderProperty
     } );
 
+    // REVIEW: comment where the addChild calls are made, and why they are not made here
   }
 
   areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
