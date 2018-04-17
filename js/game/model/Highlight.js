@@ -4,7 +4,7 @@
  * Enumeration for the different ways an editable field can be highlighted
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
- * REVIEW: This would be better to name HighlightType since it is the type of highlight, not a highlight node
+ * REVIEW: This would be better to name EntryStatus since it is the status of entry, not a highlight node
  */
 define( function( require ) {
   'use strict';
