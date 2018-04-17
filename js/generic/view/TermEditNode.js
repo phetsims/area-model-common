@@ -123,7 +123,7 @@ define( function( require ) {
 
     function updateText() {
       if ( termProperty.value === null ) {
-        readoutText.text = '-';
+        readoutText.text = '\u00a0'; // TODO: handle https://github.com/phetsims/scenery/issues/769
       }
       else {
         readoutText.text = termProperty.value.toRichString( false );
