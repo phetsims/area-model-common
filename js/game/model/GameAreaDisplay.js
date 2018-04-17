@@ -15,7 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   var inherit = require( 'PHET_CORE/inherit' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
@@ -62,7 +62,7 @@ define( function( require ) {
       return new DerivedProperty( [ self.areaChallengeProperty ], function( areaChallenge ) {
         // If there's only one value on a side (and it's a given), there is no use showing a size here.
         if ( areaChallenge.partitionSizeProperties.get( orientation ).length === 1 &&
-             areaChallenge.description.partitionFields.get( orientation )[ 0 ] === Field.GIVEN ) {
+             areaChallenge.description.partitionTypes.get( orientation )[ 0 ] === EntryType.GIVEN ) {
           return [ new EditableProperty( null ) ];
         }
         else {

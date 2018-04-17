@@ -1,0 +1,52 @@
+// Copyright 2017-2018, University of Colorado Boulder
+
+/**
+ * Enumeration for the type of entries in the game that may be editable, calculated dynamically, or given.
+ *
+ * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ */
+define( function( require ) {
+  'use strict';
+
+  // modules
+  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
+
+  var EntryType = {
+    EDITABLE: 'EDITABLE',
+    DYNAMIC: 'DYNAMIC',
+    GIVEN: 'GIVEN'
+  };
+
+  areaModelCommon.register( 'EntryType', EntryType );
+
+  // @public {Array.<EntryType>} - All values the enumeration can take.
+  EntryType.VALUES = [
+    EntryType.EDITABLE, // the user inputs this value
+    EntryType.DYNAMIC, // this value can change (be computed) based on the user's input
+    EntryType.GIVEN // this value is fixed for a given challenge
+  ];
+
+  var gameToDisplayMap = {};
+  gameToDisplayMap[ EntryType.EDITABLE ] = DisplayType.EDITABLE;
+  gameToDisplayMap[ EntryType.DYNAMIC ] = DisplayType.READOUT;
+  gameToDisplayMap[ EntryType.GIVEN ] = DisplayType.READOUT;
+
+  /**
+   * Returns the preferred display type for a given game value.
+   * @public
+   *
+   * @param {EntryType} type
+   * @returns {boolean}
+   */
+  EntryType.toDisplayType = function( type ) {
+    assert && assert( _.includes( EntryType.VALUES, type ) );
+
+    return gameToDisplayMap[ type ];
+  };
+
+  // verify that enumeration is immutable, without the runtime penalty in production code
+  if ( assert ) { Object.freeze( EntryType ); }
+
+  return EntryType;
+} );

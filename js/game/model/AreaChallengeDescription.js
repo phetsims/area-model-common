@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   var inherit = require( 'PHET_CORE/inherit' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
@@ -27,9 +27,9 @@ define( function( require ) {
   var levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
 
   // shortcuts
-  var EDITABLE = Field.EDITABLE;
-  var DYNAMIC = Field.DYNAMIC;
-  var GIVEN = Field.GIVEN;
+  var EDITABLE = EntryType.EDITABLE;
+  var DYNAMIC = EntryType.DYNAMIC;
+  var GIVEN = EntryType.GIVEN;
 
   // We need the ability to generate random permutations for different numbers of elements. It's simplest if we
   // enumerate the possibilities here.
@@ -44,29 +44,29 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {Object} options - Has the following fields:
-   * @param {Array.<Field>} options.horizontal
-   * @param {Array.<Field>} options.vertical
-   * @param {Array.<Array.<Field>>} options.products
-   * @param {Field} options.total
-   * @param {Field} options.horizontalTotal
-   * @param {Field} options.verticalTotal
+   * @param {Array.<EntryType>} options.horizontal
+   * @param {Array.<EntryType>} options.vertical
+   * @param {Array.<Array.<EntryType>>} options.products
+   * @param {EntryType} options.total
+   * @param {EntryType} options.horizontalTotal
+   * @param {EntryType} options.verticalTotal
    * @param {AreaChallengeType} options.type
    */
   // REVIEW: This is unconventional and potentially incorrect way to document options.
   // REVIEW: @zepumph said he normally solves this problem with a jsdoc typedef
   function AreaChallengeDescription( options ) {
 
-    // @public {OrientationPair.<Array.<Field>>} - Field types for partition sizes
-    this.partitionFields = new OrientationPair( options.horizontal, options.vertical );
+    // @public {OrientationPair.<Array.<EntryType>>} - Entry types for partition sizes
+    this.partitionTypes = new OrientationPair( options.horizontal, options.vertical );
 
-    // @public {Array.<Array.<Field>>} - Field types for partitioned areas
-    this.productFields = options.products;
+    // @public {Array.<Array.<EntryType>>} - Entry types for partitioned areas
+    this.productTypes = options.products;
 
-    // @public {OrientationPair.<Field>} - Field types for horizontal and vertical dimension totals
-    this.dimensionFields = new OrientationPair( options.horizontalTotal, options.verticalTotal );
+    // @public {OrientationPair.<EntryType>} - Entry types for horizontal and vertical dimension totals
+    this.dimensionTypes = new OrientationPair( options.horizontalTotal, options.verticalTotal );
 
-    // @public {Field} - Field type for the total area
-    this.totalField = options.total;
+    // @public {EntryType} - Entry type for the total area
+    this.totalType = options.total;
 
     // @public {AreaChallengeType} - The type of challenge
     this.type = options.type;
@@ -111,8 +111,8 @@ define( function( require ) {
   promptMap[ getPromptKey( false, 0, 2 ) ] = levelPromptTwoLengthsString;
   promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
 
-  function isEditable( field ) {
-    return field === Field.EDITABLE;
+  function isEditable( type ) {
+    return type === EntryType.EDITABLE;
   }
 
   inherit( Object, AreaChallengeDescription, {
@@ -123,9 +123,9 @@ define( function( require ) {
      * @returns {string}
      */
     getPromptString: function() {
-      var hasAreaEntry = isEditable( this.totalField );
-      var numProductEntries = _.flatten( this.productFields ).filter( isEditable ).length;
-      var numPartitionEntries = this.partitionFields.horizontal.concat( this.partitionFields.vertical ).filter( isEditable ).length;
+      var hasAreaEntry = isEditable( this.totalType );
+      var numProductEntries = _.flatten( this.productTypes ).filter( isEditable ).length;
+      var numPartitionEntries = this.partitionTypes.horizontal.concat( this.partitionTypes.vertical ).filter( isEditable ).length;
 
       var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
       assert && assert( text );
@@ -141,12 +141,12 @@ define( function( require ) {
      */
     getPermutedDescription: function() {
       var options = {
-        horizontal: this.partitionFields.horizontal,
-        vertical: this.partitionFields.vertical,
-        products: this.productFields,
-        total: this.totalField,
-        horizontalTotal: this.dimensionFields.horizontal,
-        verticalTotal: this.dimensionFields.vertical,
+        horizontal: this.partitionTypes.horizontal,
+        vertical: this.partitionTypes.vertical,
+        products: this.productTypes,
+        total: this.totalType,
+        horizontalTotal: this.dimensionTypes.horizontal,
+        verticalTotal: this.dimensionTypes.vertical,
         type: this.type,
         transposable: this.transposable,
         unique: this.unique

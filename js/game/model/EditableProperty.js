@@ -15,7 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var Property = require( 'AXON/Property' );
@@ -36,7 +36,7 @@ define( function( require ) {
       isValidValue: Term.isNullableTerm,
 
       // Our options
-      field: Field.GIVEN,
+      type: EntryType.GIVEN,
       displayType: DisplayType.HIDDEN,
       inputMethod: InputMethod.CONSTANT,
       digits: 0,
@@ -50,8 +50,8 @@ define( function( require ) {
 
     Property.call( this, value, options );
 
-    // @public {Field} - Whether we are dynamic/editable/given.
-    this.field = options.field;
+    // @public {EntryType} - Whether we are dynamic/editable/given.
+    this.type = options.type;
 
     // @public {DisplayType} - Whether we are a readout or editable/hidden
     this.displayType = options.displayType;

@@ -15,7 +15,7 @@ define( function( require ) {
   var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -50,7 +50,7 @@ define( function( require ) {
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
     this.partitionSizes = OrientationPair.create( function( orientation ) {
       return AreaChallenge.generatePartitionTerms(
-        description.partitionFields.get( orientation ).length,
+        description.partitionTypes.get( orientation ).length,
         description.allowExponents
       );
     } );
@@ -59,10 +59,10 @@ define( function( require ) {
     this.partitionSizeProperties = OrientationPair.create( function( orientation ) {
       return self.partitionSizes.get( orientation ).map( function( size, index ) {
         return new EditableProperty( size, {
-          field: description.partitionFields.get( orientation )[ index ],
-          displayType: Field.toDisplayType( description.partitionFields.get( orientation )[ index ] ),
+          type: description.partitionTypes.get( orientation )[ index ],
+          displayType: EntryType.toDisplayType( description.partitionTypes.get( orientation )[ index ] ),
           inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
-          digits: description.numberOrVariable( description.partitionFields.get( orientation ).length - index, 1 )
+          digits: description.numberOrVariable( description.partitionTypes.get( orientation ).length - index, 1 )
         } );
       } );
     } );
@@ -86,18 +86,18 @@ define( function( require ) {
       var verticalIndex = indices[ 0 ];
       var horizontalIndex = indices[ 1 ];
 
-      var numbersDigits = description.partitionFields.vertical.length + description.partitionFields.horizontal.length - verticalIndex - horizontalIndex;
-      var field = description.productFields[ verticalIndex ][ horizontalIndex ];
+      var numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
+      var type = description.productTypes[ verticalIndex ][ horizontalIndex ];
       var property = new EditableProperty( size, {
-        field: field,
-        displayType: Field.toDisplayType( field ),
+        type: type,
+        displayType: EntryType.toDisplayType( type ),
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
 
         // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
         digits: description.numberOrVariable( numbersDigits, 2 ) + 1
       } );
       // Link up if dynamic
-      if ( field === Field.DYNAMIC ) {
+      if ( type === EntryType.DYNAMIC ) {
         var properties = [
           self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
           self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
@@ -137,18 +137,18 @@ define( function( require ) {
     // @public {EditableProperty}
     this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {
       correctValue: this.total.getTerm( 0 ),
-      field: description.totalField,
-      displayType: Field.toDisplayType( description.totalField )
+      type: description.totalType,
+      displayType: EntryType.toDisplayType( description.totalType )
     }, totalOptions ) );
     this.totalXProperty = new EditableProperty( this.total.getTerm( 1 ), _.extend( {
       correctValue: this.total.getTerm( 1 ),
-      field: description.numberOrVariable( Field.GIVEN, description.totalField ),
-      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) )
+      type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
+      displayType: description.numberOrVariable( DisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
     this.totalXSquaredProperty = new EditableProperty( this.total.getTerm( 2 ), _.extend( {
       correctValue: this.total.getTerm( 2 ),
-      field: description.numberOrVariable( Field.GIVEN, description.totalField ),
-      displayType: description.numberOrVariable( DisplayType.READOUT, Field.toDisplayType( description.totalField ) )
+      type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
+      displayType: description.numberOrVariable( DisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
 
     // @public {Property.<Polynomial|null>}
@@ -181,7 +181,7 @@ define( function( require ) {
     // @public {Property.<boolean>}
     this.hasNullProperty = new DerivedProperty( availableProperties, function() {
       return _.some( availableProperties, function( property ) {
-        return property.value === null && property.field === Field.EDITABLE;
+        return property.value === null && property.type === EntryType.EDITABLE;
       } );
     } );
 
@@ -191,7 +191,7 @@ define( function( require ) {
 
     // Now hook up dynamic parts, setting their values to null
     Orientation.VALUES.forEach( function( orientation ) {
-      if ( description.dimensionFields.get( orientation ) === Field.DYNAMIC ) {
+      if ( description.dimensionTypes.get( orientation ) === EntryType.DYNAMIC ) {
         var nonErrorProperties = self.nonErrorPartitionSizeProperties.get( orientation );
         Property.multilink( nonErrorProperties, function() {
           var terms = _.map( nonErrorProperties, 'value' ).filter( function( term ) {

@@ -16,7 +16,7 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
+  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -145,7 +145,7 @@ define( function( require ) {
           AreaModelCommonColorProfile.dynamicPartialProductProperty,
           AreaModelCommonColorProfile.fixedPartialProductProperty
         ], function( editableProperty, dynamicColor, fixedColor ) {
-          if ( editableProperty && editableProperty.field === Field.DYNAMIC ) {
+          if ( editableProperty && editableProperty.type === EntryType.DYNAMIC ) {
             return dynamicColor;
           }
           else {
