@@ -87,6 +87,7 @@ define( function( require ) {
     } );
 
     // @public {Property.<Property.<TermList|null>>} - The "total area" property reference
+    // REVIEW: several of the documented types in this file don't match the instantiated types
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );

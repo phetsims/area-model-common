@@ -2,6 +2,8 @@
 
 /**
  * A property whose value can be edited, and may be displayed in different ways.
+ * // REVIEW: Please comment why it is appropriate to extend Property in this case, and why subtyping is more appropriate
+ * // REVIEW: than using composition for this problem.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

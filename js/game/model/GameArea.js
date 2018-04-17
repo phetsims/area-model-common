@@ -33,6 +33,9 @@ define( function( require ) {
     /**
      * Creates a partitioned area given two partitions. Overridden so that we don't hook up automatic computation of
      * this value.
+     * // REVIEW: Can you please elaborate what would go wrong if we did hook up automatic computation, as in the
+     * // REVIEW: parent implementation?  Would it make it update when it shouldn't?  Would it create a memory leak/force
+     * // REVIEW: us to implement dispose where one wasn't needed before?  Something else?
      * @protected
      * @override
      *
@@ -48,6 +51,7 @@ define( function( require ) {
      * @public
      * @override
      */
+    //REVIEW: this override should be removed
     reset: function() {
       GenericArea.prototype.reset.call( this );
     }

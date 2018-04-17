@@ -4,6 +4,8 @@
  * Enumeration for all states that the game can be in.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * // REVIEW: These states and corresponding logic are duplicated across many games.  Do we have the potential to factor
+ * // something out?
  */
 define( function( require ) {
   'use strict';

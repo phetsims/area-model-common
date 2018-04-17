@@ -94,6 +94,7 @@ define( function( require ) {
      */
     setActiveTerm: function( term ) {
       // Highlighting for https://github.com/phetsims/area-model-common/issues/42
+      // REVIEW: Please summarize the main points of the issue as it pertains to this implementation
       this.currentChallengeProperty.value.checkNonUniqueChanges();
 
       this.activeEditableProperty.value.value = term;

@@ -52,6 +52,8 @@ define( function( require ) {
    * @param {Field} options.verticalTotal
    * @param {AreaChallengeType} options.type
    */
+  // REVIEW: This is unconventional and potentially incorrect way to document options.
+  // REVIEW: @zepumph said he normally solves this problem with a jsdoc typedef
   function AreaChallengeDescription( options ) {
 
     // @public {OrientationPair.<Array.<Field>>} - Field types for partition sizes
