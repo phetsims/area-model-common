@@ -15,7 +15,10 @@ define( function( require ) {
 
     // When provided, generic screens will have terms set to make the calculation area as large as possible
     // NOTE: Leaving the flag here, since it may be helpful in the future
-    maximumLayout1: { type: 'flag' }
+    maximumLayout1: { type: 'flag' },
+
+    // Shows a button that fills in the answers when clicked.
+    showAnswers: { type: 'flag' }
   } );
 
   areaModelCommon.register( 'AreaModelCommonQueryParameters', AreaModelCommonQueryParameters );
