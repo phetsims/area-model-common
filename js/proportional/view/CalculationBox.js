@@ -61,6 +61,7 @@ define( function( require ) {
       contentXSpacing: -10
     } ) );
 
+    // REVIEW: Please document in AreaCalculationChoice.js where LINE_BY_LINE is used.  If not here, then where?
     model.areaCalculationChoiceProperty.link( function( choice ) {
       assert && assert( choice !== AreaCalculationChoice.LINE_BY_LINE, 'Should be HIDDEN or SHOW_ALL_LINES' );
       self.visible = choice !== AreaCalculationChoice.HIDDEN;
