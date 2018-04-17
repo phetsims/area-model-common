@@ -61,6 +61,9 @@ define( function( require ) {
 
     // NOTE: Leaving here because the query parameter may be helpful in the future. If it complicates things, please
     // just remove it.
+    // REVIEW: Consult with the design team to gauge the probability this will be useful in the next year.  If less than 20%
+    // REVIEW: likely to be used in the next year, then delete it, leave a code comment about what it was
+    // REVIEW: and how it can be seen in the commit history
     if ( AreaModelCommonQueryParameters.maximumLayout1 ) {
       horizontalPartitions.forEach( function( partition, index ) {
         partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );

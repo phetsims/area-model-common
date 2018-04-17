@@ -17,6 +17,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
+  // constants
   var DEFAULT_LAYOUT = GenericLayout.TWO_BY_TWO;
 
   /**
