@@ -14,8 +14,8 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Property = require( 'AXON/Property' );
 
@@ -93,12 +93,12 @@ define( function( require ) {
      * @param {Term} term
      */
     setActiveTerm: function( term ) {
-      // Highlighting for https://github.com/phetsims/area-model-common/issues/42
+      // Appearance change for https://github.com/phetsims/area-model-common/issues/42
       // REVIEW: Please summarize the main points of the issue as it pertains to this implementation
       this.currentChallengeProperty.value.checkNonUniqueChanges();
 
       this.activeEditableProperty.value.value = term;
-      this.activeEditableProperty.value.highlightProperty.value = Highlight.NORMAL;
+      this.activeEditableProperty.value.statusProperty.value = EntryStatus.NORMAL;
       this.activeEditableProperty.value = null;
     },
 

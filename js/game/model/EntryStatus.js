@@ -1,10 +1,9 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Enumeration for the different ways an editable field can be highlighted
+ * Enumeration for the different status types for an editable entry.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
- * REVIEW: This would be better to name EntryStatus since it is the status of entry, not a highlight node
  */
 define( function( require ) {
   'use strict';
@@ -12,23 +11,23 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var Highlight = {
+  var EntryStatus = {
     NORMAL: 'NORMAL',
     DIRTY: 'DIRTY', // needs to be interacted with before submitting
     ERROR: 'ERROR' // was wrong after submission
   };
 
-  areaModelCommon.register( 'Highlight', Highlight );
+  areaModelCommon.register( 'EntryStatus', EntryStatus );
 
-  // @public {Array.<Highlight>} - All values the enumeration can take.
-  Highlight.VALUES = [
-    Highlight.NORMAL,
-    Highlight.DIRTY,
-    Highlight.ERROR
+  // @public {Array.<EntryStatus>} - All values the enumeration can take.
+  EntryStatus.VALUES = [
+    EntryStatus.NORMAL,
+    EntryStatus.DIRTY,
+    EntryStatus.ERROR
   ];
 
   // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( Highlight ); }
+  if ( assert ) { Object.freeze( EntryStatus ); }
 
-  return Highlight;
+  return EntryStatus;
 } );

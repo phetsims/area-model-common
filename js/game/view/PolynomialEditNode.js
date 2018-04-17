@@ -17,7 +17,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
+  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
@@ -126,7 +126,7 @@ define( function( require ) {
         if ( property.isExternallyChanging ) {
           editedCallback();
           makeNotDirty();
-          propertyProperty.value.highlightProperty.value = Highlight.NORMAL;
+          propertyProperty.value.statusProperty.value = EntryStatus.NORMAL;
         }
       } );
     }
@@ -138,10 +138,10 @@ define( function( require ) {
     var rangeProperty = new Property( new Range( -81, 81 ) );
 
     function highlightFunction( highlight, errorColor, dirtyColor ) {
-      if ( highlight === Highlight.NORMAL ) {
+      if ( highlight === EntryStatus.NORMAL ) {
         return 'black';
       }
-      else if ( highlight === Highlight.DIRTY ) {
+      else if ( highlight === EntryStatus.DIRTY ) {
         return dirtyColor;
       }
       else {
@@ -151,23 +151,23 @@ define( function( require ) {
 
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
       color: new DerivedProperty( [
-        new DynamicProperty( constantPropertyProperty, { derive: 'highlightProperty' } ),
-        AreaModelCommonColorProfile.errorHighlightProperty,
-        AreaModelCommonColorProfile.dirtyHighlightProperty
+        new DynamicProperty( constantPropertyProperty, { derive: 'statusProperty' } ),
+        AreaModelCommonColorProfile.errorStatusProperty,
+        AreaModelCommonColorProfile.dirtyStatusProperty
       ], highlightFunction )
     } );
     var xPicker = new NumberPicker( xProperty, rangeProperty, {
       color: new DerivedProperty( [
-        new DynamicProperty( xPropertyProperty, { derive: 'highlightProperty' } ),
-        AreaModelCommonColorProfile.errorHighlightProperty,
-        AreaModelCommonColorProfile.dirtyHighlightProperty
+        new DynamicProperty( xPropertyProperty, { derive: 'statusProperty' } ),
+        AreaModelCommonColorProfile.errorStatusProperty,
+        AreaModelCommonColorProfile.dirtyStatusProperty
       ], highlightFunction )
     } );
     var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
       color: new DerivedProperty( [
-        new DynamicProperty( xSquaredPropertyProperty, { derive: 'highlightProperty' } ),
-        AreaModelCommonColorProfile.errorHighlightProperty,
-        AreaModelCommonColorProfile.dirtyHighlightProperty
+        new DynamicProperty( xSquaredPropertyProperty, { derive: 'statusProperty' } ),
+        AreaModelCommonColorProfile.errorStatusProperty,
+        AreaModelCommonColorProfile.dirtyStatusProperty
       ], highlightFunction )
     } );
 

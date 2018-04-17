@@ -14,8 +14,8 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
+  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var Property = require( 'AXON/Property' );
@@ -66,12 +66,12 @@ define( function( require ) {
     // @public {Term|null}
     this.correctValue = options.correctValue;
 
-    // @public {Property.<Highlight>}
-    this.highlightProperty = new Property( Highlight.DIRTY );
+    // @public {Property.<EntryStatus>}
+    this.statusProperty = new Property( EntryStatus.DIRTY );
 
     // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight
-    this.nonErrorValueProperty = new DerivedProperty( [ this, this.highlightProperty ], function( value, highlight ) {
-      return ( highlight === Highlight.ERROR ) ? null : value;
+    this.nonErrorValueProperty = new DerivedProperty( [ this, this.statusProperty ], function( value, highlight ) {
+      return ( highlight === EntryStatus.ERROR ) ? null : value;
     } );
   }
 

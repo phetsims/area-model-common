@@ -14,10 +14,10 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var Field = require( 'AREA_MODEL_COMMON/game/model/Field' );
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -331,8 +331,8 @@ define( function( require ) {
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
-          this.partitionSizeProperties.horizontal[ 1 ].highlightProperty.value = Highlight.NORMAL;
-          this.partitionSizeProperties.vertical[ 1 ].highlightProperty.value = Highlight.NORMAL;
+          this.partitionSizeProperties.horizontal[ 1 ].statusProperty.value = EntryStatus.NORMAL;
+          this.partitionSizeProperties.vertical[ 1 ].statusProperty.value = EntryStatus.NORMAL;
         }
       }
     },
@@ -416,7 +416,7 @@ define( function( require ) {
 
       if ( !isCorrect ) {
         badProperties.forEach( function( property ) {
-          property.highlightProperty.value = Highlight.ERROR;
+          property.statusProperty.value = EntryStatus.ERROR;
         } );
       }
 

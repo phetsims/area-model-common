@@ -17,8 +17,8 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
+  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var Highlight = require( 'AREA_MODEL_COMMON/game/model/Highlight' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
@@ -62,8 +62,8 @@ define( function( require ) {
       bidirectional: true
     } );
     var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], _.property( 'digits' ) );
-    var highlightProperty = new DynamicProperty( valuePropertyProperty, {
-      derive: 'highlightProperty'
+    var statusProperty = new DynamicProperty( valuePropertyProperty, {
+      derive: 'statusProperty'
     } );
     var isActiveProperty = new DerivedProperty(
       [ valuePropertyProperty, activeEditableProperty ],
@@ -83,9 +83,9 @@ define( function( require ) {
     } );
 
     var textColorProperty = new DerivedProperty(
-      [ highlightProperty, colorProperty, AreaModelCommonColorProfile.errorHighlightProperty ],
+      [ statusProperty, colorProperty, AreaModelCommonColorProfile.errorStatusProperty ],
       function( highlight, color, errorColor ) {
-        if ( highlight === Highlight.ERROR ) {
+        if ( highlight === EntryStatus.ERROR ) {
           return errorColor;
         }
         else {
@@ -93,15 +93,15 @@ define( function( require ) {
         }
       } );
     var borderColorProperty = new DerivedProperty( [
-      highlightProperty,
+      statusProperty,
       colorProperty,
-      AreaModelCommonColorProfile.errorHighlightProperty,
-      AreaModelCommonColorProfile.dirtyHighlightProperty
+      AreaModelCommonColorProfile.errorStatusProperty,
+      AreaModelCommonColorProfile.dirtyStatusProperty
     ], function( highlight, color, errorColor, dirtyColor ) {
-      if ( highlight === Highlight.NORMAL ) {
+      if ( highlight === EntryStatus.NORMAL ) {
         return color;
       }
-      else if ( highlight === Highlight.DIRTY ) {
+      else if ( highlight === EntryStatus.DIRTY ) {
         return dirtyColor;
       }
       else {

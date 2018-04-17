@@ -136,8 +136,8 @@ define( function( require ) {
     gameButtonBackground: { default: new Color( 241, 232, 0 ) },
 
     // border/text highlights for editable values
-    errorHighlight: { default: Color.RED },
-    dirtyHighlight: { default: new Color( '#3B97BA' ) },
+    errorStatus: { default: Color.RED },
+    dirtyStatus: { default: new Color( '#3B97BA' ) },
 
     dynamicPartialProduct: { default: new Color( 128, 130, 133 ) },
     fixedPartialProduct: { default: Color.BLACK },
