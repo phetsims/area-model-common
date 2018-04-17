@@ -23,14 +23,10 @@ define( function( require ) {
     AreaDisplay.call( this, areaProperty );
 
     // @public {Property.<GenericLayout>}
-    this.layoutProperty = this.wrapObject( function( area ) {
-      return area.layout;
-    } );
+    this.layoutProperty = this.wrapObject( _.property( 'layout' ) );
 
     // @public {Property.<Partition|null>}
-    this.activePartitionProperty = this.wrapProperty( function( area ) {
-      return area.activePartitionProperty;
-    }, {
+    this.activePartitionProperty = this.wrapProperty( _.property( 'activePartitionProperty' ), {
       bidirectional: true
     } );
   }

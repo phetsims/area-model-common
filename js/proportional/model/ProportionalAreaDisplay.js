@@ -23,66 +23,48 @@ define( function( require ) {
     AreaDisplay.call( this, areaProperty );
 
     // @public {OrientationPair.<Property.<number>>}
-    this.activeTotalProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.activeTotalProperties;
-    }, {
+    this.activeTotalProperties = this.wrapOrientationPairProperty( _.property( 'activeTotalProperties' ), {
       bidirectional: true
     } );
 
     // @public {Property.<Orientation>}
-    this.visiblePartitionOrientationProperty = this.wrapProperty( function( area ) {
-      return area.visiblePartitionOrientationProperty;
-    } );
+    this.visiblePartitionOrientationProperty = this.wrapProperty( _.property( 'visiblePartitionOrientationProperty' ) );
 
     // @public {OrientationPair.<Property.<number>>}
-    this.partitionSplitProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.partitionSplitProperties;
-    }, {
+    this.partitionSplitProperties = this.wrapOrientationPairProperty( _.property( 'partitionSplitProperties' ), {
       bidirectional: true
     } );
 
     // @public {OrientationPair.<Property.<boolean>>}
-    this.partitionSplitUserControlledProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.partitionSplitUserControlledProperties;
-    }, {
+    this.partitionSplitUserControlledProperties = this.wrapOrientationPairProperty( _.property( 'partitionSplitUserControlledProperties' ), {
       bidirectional: true
     } );
 
     // @public {Property.<number>}
-    this.maximumSizeProperty = this.wrapObject( function( area ) { return area.maximumSize; } );
-    this.snapSizeProperty = this.wrapObject( function( area ) { return area.snapSize; } );
-    this.partitionSnapSizeProperty = this.wrapObject( function( area ) { return area.partitionSnapSize; } );
-    this.smallTileSizeProperty = this.wrapObject( function( area ) { return area.smallTileSize; } );
-    this.largeTileSizeProperty = this.wrapObject( function( area ) { return area.largeTileSize; } );
+    this.maximumSizeProperty = this.wrapObject( _.property( 'maximumSize' ) );
+    this.snapSizeProperty = this.wrapObject( _.property( 'snapSize' ) );
+    this.partitionSnapSizeProperty = this.wrapObject( _.property( 'partitionSnapSize' ) );
+    this.smallTileSizeProperty = this.wrapObject( _.property( 'smallTileSize' ) );
+    this.largeTileSizeProperty = this.wrapObject( _.property( 'largeTileSize' ) );
 
     // @public {Property.<boolean>}
-    this.tilesAvailableProperty = this.wrapObject( function( area ) { return area.tilesAvailable; } );
-    this.countingAvailableProperty = this.wrapObject( function( area ) { return area.countingAvailable; } );
+    this.tilesAvailableProperty = this.wrapObject( _.property( 'tilesAvailable' ) );
+    this.countingAvailableProperty = this.wrapObject( _.property( 'countingAvailable' ) );
 
     // @public {OrientationPair.<Property.<boolean>>}
-    this.hasHintArrows = this.wrapOrientationPairProperty( function( area ) {
-      return area.hasHintArrows;
-    }, {
+    this.hasHintArrows = this.wrapOrientationPairProperty( _.property( 'hasHintArrows' ), {
       bidirectional: true
     } );
 
     // @public {OrientationPair.<Property.<boolean>>}
-    this.partitionSplitVisibleProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.partitionSplitVisibleProperties;
-    } );
+    this.partitionSplitVisibleProperties = this.wrapOrientationPairProperty( _.property( 'partitionSplitVisibleProperties' ) );
 
     // @public {OrientationPair.<Property.<number|null>>}
-    this.visiblePartitionLineSplitProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.visiblePartitionLineSplitProperties;
-    } );
+    this.visiblePartitionLineSplitProperties = this.wrapOrientationPairProperty( _.property( 'visiblePartitionLineSplitProperties' ) );
 
     // @public {OrientationPair.<Property.<ProportionalPartition>>}
-    this.primaryPartitionsProperty = this.wrapOrientationPair( function( area ) {
-      return area.primaryPartitions;
-    } );
-    this.secondaryPartitionsProperty = this.wrapOrientationPair( function( area ) {
-      return area.secondaryPartitions;
-    } );
+    this.primaryPartitionsProperty = this.wrapOrientationPair( _.property( 'primaryPartitions' ) );
+    this.secondaryPartitionsProperty = this.wrapOrientationPair( _.property( 'secondaryPartitions' ) );
   }
 
   areaModelCommon.register( 'ProportionalAreaDisplay', ProportionalAreaDisplay );

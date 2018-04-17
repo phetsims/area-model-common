@@ -26,9 +26,7 @@ define( function( require ) {
     this.areaProperty = areaProperty;
 
     // @public {OrientationPair.<Property.<Array.<Partition>>>}
-    this.partitionsProperties = this.wrapOrientationPair( function( area ) {
-      return area.partitions;
-    } );
+    this.partitionsProperties = this.wrapOrientationPair( _.property( 'partitions' ) );
 
     // @public {Property.<Array.<Partition>>}
     this.allPartitionsProperty = new DerivedProperty(
@@ -38,56 +36,36 @@ define( function( require ) {
       } );
 
     // @public {OrientationPair.<Property.<Color>>}
-    this.colorProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.colorProperties;
-    } );
+    this.colorProperties = this.wrapOrientationPairProperty( _.property( 'colorProperties' ) );
 
     // @public {Property.<number>}
-    this.coordinateRangeMaxProperty = this.wrapObject( function( area ) {
-      return area.coordinateRangeMax;
-    } );
+    this.coordinateRangeMaxProperty = this.wrapObject( _.property( 'coordinateRangeMax' ) );
 
     // @public {Property.<boolean>}
-    this.allowExponentsProperty = this.wrapObject( function( area ) {
-      return area.allowExponents;
-    } );
+    this.allowExponentsProperty = this.wrapObject( _.property( 'allowExponents' ) );
 
     // @public {Property.<number>}
-    this.calculationIndexProperty = this.wrapProperty( function( area ) {
-      return area.calculationIndexProperty;
-    } );
+    this.calculationIndexProperty = this.wrapProperty( _.property( 'calculationIndexProperty' ) );
 
     // @public {Property.<Array.<PartitionedArea>>}
-    this.partitionedAreasProperty = this.wrapObject( function( area ) {
-      return area.partitionedAreas;
-    } );
+    this.partitionedAreasProperty = this.wrapObject( _.property( 'partitionedAreas' ) );
 
     // @public {OrientationPair.<Property.<Polynomial|null>>}
-    this.totalProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.totalProperties;
-    } );
+    this.totalProperties = this.wrapOrientationPairProperty( _.property( 'totalProperties' ) );
 
     // @public {OrientationPair.<Property.<TermList|null>>}
-    this.termListProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.termListProperties;
-    } );
+    this.termListProperties = this.wrapOrientationPairProperty( _.property( 'termListProperties' ) );
 
     // @public {Property.<Polynomial|null>}
-    this.totalAreaProperty = this.wrapProperty( function( area ) {
-      return area.totalAreaProperty;
-    }, {
+    this.totalAreaProperty = this.wrapProperty( _.property( 'totalAreaProperty' ), {
       useDeepEquality: true
     } );
 
     // @public {OrientationPair.<Property.<TermList|null>>}
-    this.displayProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.displayProperties;
-    } );
+    this.displayProperties = this.wrapOrientationPairProperty( _.property( 'displayProperties' ) );
 
     // @public {OrientationPair.<Property.<Array.<number>>>}
-    this.partitionBoundariesProperties = this.wrapOrientationPairProperty( function( area ) {
-      return area.partitionBoundariesProperties;
-    } );
+    this.partitionBoundariesProperties = this.wrapOrientationPairProperty( _.property( 'partitionBoundariesProperties' ) );
   }
 
   areaModelCommon.register( 'AreaDisplay', AreaDisplay );
