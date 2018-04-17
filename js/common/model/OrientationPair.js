@@ -54,6 +54,7 @@ define( function( require ) {
      * @param {Function} callback - function( {*}, {Orientation} ): {*}
      * @returns {OrientationPair.<*>} - With the mapped values
      */
+    // REVIEW: I'd recommend to call the parameter mapFunction or something other than callback (which sounds side-effect-ish)
     map: function( callback ) {
       return new OrientationPair(
         callback( this.horizontal, Orientation.HORIZONTAL ),

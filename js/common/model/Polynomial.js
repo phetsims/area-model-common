@@ -2,6 +2,7 @@
 
 /**
  * A polynomial as a sum of Terms with different powers. Collapses same-power terms, and orders by power.
+ * REVIEW: I'd like to see even a small number of Polynomial/Term/TermList unit tests, particularly for Polynomial.times
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -100,6 +101,8 @@ define( function( require ) {
      * @returns {Polynomial}
      */
     times: function( termList ) {
+
+      //REVIEW: this seems like it should leverage TermList.times
       return new Polynomial( _.flatten( this.terms.map( function( term ) {
         return termList.terms.map( function( otherTerm ) {
           return term.times( otherTerm );

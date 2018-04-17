@@ -92,7 +92,8 @@ define( function( require ) {
 
     /**
      * Equality for just whether the terms are the same (so a TermList can be compared to a Polynomial and be equal
-     * despite being different types.
+     * despite being different types.)  Note that Polynomial orders the terms so this order-dependent check will still
+     * work.
      * @public
      *
      * @param {TermList} termList
@@ -102,6 +103,7 @@ define( function( require ) {
         return false;
       }
 
+      // REVIEW: why reverse search instead of forward?
       for ( var i = this.terms.length - 1; i >= 0; i-- ) {
         if ( !this.terms[ i ].equals( termList.terms[ i ] ) ) {
           return false;

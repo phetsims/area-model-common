@@ -24,6 +24,8 @@ define( function( require ) {
    */
   function Term( coefficient, power ) {
     // Properly handle 0x, see https://github.com/phetsims/area-model-common/issues/6
+    // REVIEW: please summarize #6 here in the code, as mathematically it seems sufficient for coefficient to be 0,
+    // REVIEW: please explain.
     if ( coefficient === 0 ) {
       power = 0;
     }
@@ -34,6 +36,7 @@ define( function( require ) {
     assert && assert( typeof coefficient === 'number' && isFinite( coefficient ),
       'Coefficient only needs to be a finite number' );
 
+    // REVIEW: 4 (this and other similar occurrences) should be factored out to a AreaModelCommonConstants
     assert && assert( typeof power === 'number' && isFinite( power ) && power >= 0 && power <= 4 && power % 1 === 0,
       'Power should be a finite integer between 0 and 4 (inclusive)' );
 
@@ -81,7 +84,7 @@ define( function( require ) {
       var string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
-        string += Util.roundSymmetric( Math.abs( this.coefficient ) * 100 ) / 100;
+        string += Util.roundSymmetric( Math.abs( this.coefficient ) * 100 ) / 100;  //REVIEW: can you remind me with a code comment whan the *100/100 does?
       }
       if ( this.power > 0 ) {
         string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
@@ -134,9 +137,11 @@ define( function( require ) {
      * @returns {string}
      */
     getLongestGenericString: function( allowExponents, digitCount ) {
+
+      // REVIEW: is 9 the widest number in the same way that M is the widest letter?  Please comment.
       var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
-        return MathSymbols.MINUS + digits + 'x<sup>2</sup>';
+        return MathSymbols.MINUS + digits + 'x<sup>2</sup>'; // REVIEW: why ^2 here?
       }
       else {
         return MathSymbols.MINUS + digits;
@@ -150,6 +155,7 @@ define( function( require ) {
      * @param {*} thing
      * @returns {boolean}
      */
+    // REVIEW: NullableTerm sounds like a different type, I'd recommend renaming this method to isTermOrNull or something like that
     isNullableTerm: function( thing ) {
       return thing === null || thing instanceof Term;
     }

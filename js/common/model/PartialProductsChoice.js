@@ -20,6 +20,7 @@ define( function( require ) {
   areaModelCommon.register( 'PartialProductsChoice', PartialProductsChoice );
 
   // @public {Array.<PartialProductsChoice>} - All values the enumeration can take.
+  // REVIEW: The e.g. documentation seems it belongs with the declarations above, not with the VALUES below.
   PartialProductsChoice.VALUES = [
     PartialProductsChoice.HIDDEN, // e.g. nothing shown
     PartialProductsChoice.PRODUCTS, // e.g. '52'
