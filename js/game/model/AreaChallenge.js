@@ -357,11 +357,13 @@ define( function( require ) {
         var actual1 = actual1Property.value;
         var actual2 = actual2Property.value;
 
-        var matches1 = actual1.equals( expected1 ) || actual1.equals( expected2 );
-        var matches2 = actual2.equals( expected1 ) || actual2.equals( expected2 );
+        if ( actual1 && actual2 ) {
+          var matches1 = actual1.equals( expected1 ) || actual1.equals( expected2 );
+          var matches2 = actual2.equals( expected1 ) || actual2.equals( expected2 );
 
-        if ( matches1 !== matches2 && ( actual1.equals( expected2 ) || actual2.equals( expected1 ) ) ) {
-          reversed = true;
+          if ( matches1 !== matches2 && ( actual1.equals( expected2 ) || actual2.equals( expected1 ) ) ) {
+            reversed = true;
+          }
         }
 
         if ( reversed ) {

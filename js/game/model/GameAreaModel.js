@@ -158,6 +158,17 @@ define( function( require ) {
     },
 
     /**
+     * Fills in the answers without moving to the "SHOW_SOLUTION" state.
+     * @public
+     */
+    cheat: function() {
+      if ( this.currentChallengeProperty.value ) {
+        this.currentChallengeProperty.value.showAnswers();
+        this.activeEditableProperty.reset();
+      }
+    },
+
+    /**
      * Returns the model to its initial state.
      * @public
      */
