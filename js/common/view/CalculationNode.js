@@ -51,6 +51,7 @@ define( function( require ) {
     } );
     this.addChild( background );
 
+    // REVIEW: I typically move these out to // constants and uppercase them.
     var arrowSize = 18;
     var arrowTouchDilation = 8;
     var previousShape = new Shape().moveTo( 0, 0 )

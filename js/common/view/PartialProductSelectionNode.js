@@ -4,6 +4,7 @@
  * Shows radio buttons that allow selecting between different ways of showing partial products in partitioned areas.
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * // REVIEW: Rename type to PartialProductRadioButtonGroup for clarity.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

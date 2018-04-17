@@ -3,6 +3,9 @@
 /**
  * Common logic for where we have a variable number of nodes that need to be used.
  *
+ * // REVIEW: it would help me understand this better if you described how we previously solved this problem, or if this
+ * // REVIEW is a novel problem for this simulation.
+ *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
@@ -47,6 +50,9 @@ define( function( require ) {
       // Called after we run an update.
       updatedCallback: null
     }, options );
+
+    // REVIEW: those options aren't really optional.  Either add assertions that require they are supplied or promote
+    // REVIEW: them to required arguments.
 
     Node.call( this );
 

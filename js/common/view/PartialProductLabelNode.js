@@ -98,6 +98,7 @@ define( function( require ) {
     var rectangleSize = allowExponents ? 12 : 14;
 
     // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
+    // REVIEW: Better name for magicConstant
     var magicConstant = allowExponents ? 1.3 : 0;
     var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + magicConstant;
     var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
@@ -171,6 +172,8 @@ define( function( require ) {
 
         // So, due to performance, we REALLY don't want to remove and then add these back in. Scenery was burning a
         // chunk of CPU on some of this, and having the RichTexts not pool has been annoying enough.
+        // REVIEW: would it help if we had a scenery method or option to check children before doing anything?
+        // REVIEW: That is, moving this workaround into scenery/Node?
         var currentChildren = box.children;
         var needsUpdate = false;
         if ( currentChildren.length !== children.length ) {

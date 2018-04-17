@@ -5,6 +5,9 @@
  * partition)
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * // REVIEW: I'd recommend changing the wording of the "This type should be persistent" (in all relevant files) to be something more like:
+ * // REVIEW: "This type is designed to be persistent" or "Instances of this type persist for the lifetime of the simulation"
+ * // REVIEW: Using the word "should" has a connotation that "it *should*, but maybe it doesn't"
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -119,6 +122,8 @@ define( function( require ) {
           if ( index < tickLocations.length ) {
             tick.visible = true;
             tick.translation = orientation.vector( tickLocations[ index ], rangeOffset );
+
+            // REVIEW: please comment to explain the logic on this line
             tick.y1 = ( index === 0 || index === tickLocations.length - 1 ) ? -TICK_LENGTH / 2 : 0;
           }
           else {
