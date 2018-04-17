@@ -180,6 +180,11 @@ define( function( require ) {
      * @param {number} dimension
      * @param {MultidimensionalArray.<*>} array - A multidimensional array of the specified dimension
      * @param {function} forEach - function( element {*} ): {*}
+     * // REVIEW: This seems overly complicated, and I cannot understand it too well after studying it for several minutes.
+     * // REVIEW: Given that the simulation only needs to support dimension===2, perhaps the hard-coded version for
+     * dimension=2 would be better.  If not, then we should create Unit tests to ensure the behavior is as desired and
+     * as a place to document examples of the functionality.  Same goes for dimensionMap.
+     * // REVIEW: alternatively, if there is a lodash method that already has the intended behavior, we could use that instead.
      */
     dimensionForEach: function( dimension, array, forEach ) {
       var indices = [];
