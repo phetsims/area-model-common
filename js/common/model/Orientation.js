@@ -20,6 +20,11 @@ define( function( require ) {
    * @param {Object} options - Placed directly on the object.
    */
   function Orientation( options ) {
+
+    // REVIEW: this style of creating object makes it impossible for IDEA to track down usages.  For instance:
+    // REVIEW: ProportionalAreaDisplayNode has orientation.minSide which IDEA reports as unused.  If I change the constructor
+    // REVIEW: to read this.minSide = minSide, then IDEA can find it.  I recommend to use the "required arguments"
+    // REVIEW: strategy for this case.  This will also permit visibility annotations, centralized doc, etc.
     _.extend( this, options );
 
     // @public {Orientation|null} - Will be filled in after construction.
@@ -50,6 +55,7 @@ define( function( require ) {
      * @param {number} secondary
      * @returns {Vector2}
      */
+    // REVIEW: Rename toVector
     vector: function( primary, secondary ) {
       var vector = new Vector2();
       vector[ this.coordinate ] = primary;
