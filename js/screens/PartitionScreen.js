@@ -58,7 +58,7 @@ define( function( require ) {
           _.extend( { maximumSize: 10 }, commonAreaOptions ),
           _.extend( { maximumSize: 12 }, commonAreaOptions )
         ], {
-          initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES,
+          initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES
         } );
       },
       function( model ) {
