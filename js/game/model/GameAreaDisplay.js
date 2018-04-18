@@ -90,6 +90,10 @@ define( function( require ) {
     // REVIEW: several of the documented types in this file don't match the instantiated types
     // REVIEW*: This one was definitely wrong, but the others (now?) look correct. totalProperties notes TermList, which
     // REVIEW*: is a supertype of Polynomial (and matches AreaDisplay).
+    // REVIEW: To clarify--the instance type is DynamicProperty but the annotated type is Property.<Polynomial|null>
+    // REVIEW: Is it annotated as Property instead of DynamicProperty because the client-side API should only know that it
+    // REVIEW: is Property and not DynamicProperty?  For the sake of argument, if DynamicProperty had some method like
+    // REVIEW: setBidirectional() that we expected clients to be able to use, then we would use @public {DynamicProperty.<...>}, right?
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );

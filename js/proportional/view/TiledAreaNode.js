@@ -21,8 +21,6 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
 
-  // REVIEW: Doc param? Return type? Visibility?
-  // REVIEW*: JO: I don't think this needs visibility, as it is not externally exposed.
   /**
    * Rounds a numeric value to the nearest thousandth (0.001).
    *
