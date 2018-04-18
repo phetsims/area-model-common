@@ -154,17 +154,40 @@ define( function( require ) {
      * Map for multidimensional arrays.
      * @public
      *
+     * e.g. dimensionMap( 1, array, callback ) is equivalent to array.map( callback )
+     * e.g. dimensionMap( 2, [ [ 1, 2 ], [ 3, 4 ] ], f ) will return [ [ f(1), f(2) ], [ f(3), f(4) ] ]
+     * e.g. dimensionMap( 3, [ [ [ 1 ], [ 2 ] ], [ [ 3 ], [ 4 ] ] ], f ) will return
+     *          [ [ [ f(1) ], [ f(2) ] ], [ [ f(3) ], [ f(4) ] ] ]
+     *
      * @param {number} dimension
      * @param {MultidimensionalArray.<*>} array - A multidimensional array of the specified dimension
-     * @param {function} map - function( element {*} ): {*}
+     * @param {function} map - function( element: {*}, indices: {Array.<number>} ): {*}
+     *                         Called for each individual element. The indices are a generalization of the single index
+     *                         passed to normal maps, such that:
+     *                         array[ indices[ 0 ] ]...[ indices[ dimension - 1 ] ] === element
      */
     dimensionMap: function( dimension, array, map ) {
+      // Will get indices pushed when we go deeper into the multidimensional array, and popped when we go back, so that
+      // this essentially represents our "position" in the multidimensional array during iteration.
       var indices = [];
 
+      /**
+       * Responsible for mapping a multidimensional array of the given dimension, while accumulating
+       * indices.
+       *
+       * @param {number} dim
+       * @param {MultidimensionalArray.<*>} arr
+       * @return {MultidimensionalArray.<*>}
+       */
       function recur( dim, arr ) {
         return arr.map( function( element, index ) {
+          // To process this element, we need to record our index (in case it is an array that we iterate through).
           indices.push( index );
+
+          // If our dimension is 1, it's our base case (apply the normal map function), otherwise continue recursively.
           var result = dim === 1 ? map( element, indices ) : recur( dim - 1, element );
+
+          // We are done with iteration
           indices.pop();
           return result;
         } );
@@ -177,27 +200,52 @@ define( function( require ) {
      * Foreach for multidimensional arrays.
      * @public
      *
+     * e.g. dimensionForEach( 1, array, callback ) is equivalent to array.forEach( callback )
+     * e.g. dimensionForEach( 2, [ [ 1, 2 ], [ 3, 4 ] ], f ) will call f(1),f(2),f(3),f(4)
+     * e.g. dimensionForEach( 3, [ [ [ 1 ], [ 2 ] ], [ [ 3 ], [ 4 ] ] ], f ) will call f(1),f(2),f(3),f(4)
+     *
      * @param {number} dimension
      * @param {MultidimensionalArray.<*>} array - A multidimensional array of the specified dimension
-     * @param {function} forEach - function( element {*} ): {*}
+     * @param {function} forEach - function( element: {*}, indices: {Array.<number>} ): {*}
+     *                             Called for each individual element. The indices are a generalization of the single
+     *                             index passed to normal maps, such that:
+     *                             array[ indices[ 0 ] ]...[ indices[ dimension - 1 ] ] === element
      * // REVIEW: This seems overly complicated, and I cannot understand it too well after studying it for several minutes.
      * // REVIEW: Given that the simulation only needs to support dimension===2, perhaps the hard-coded version for
      * dimension=2 would be better.  If not, then we should create Unit tests to ensure the behavior is as desired and
      * as a place to document examples of the functionality.  Same goes for dimensionMap.
      * // REVIEW: alternatively, if there is a lodash method that already has the intended behavior, we could use that instead.
+     * // REVIEW*: I'd like to move dimensionMap/dimensionForEach to common code for general use, and I wanted to handle
+     * // REVIEW*: an arbitrary dimension. If there is lodash code that does these things, I'll be super happy to use
+     * // REVIEW*: those instead. I can definitely create unit tests. What repo would be best? phet-core? dot?
      */
     dimensionForEach: function( dimension, array, forEach ) {
+      // Will get indices pushed when we go deeper into the multidimensional array, and popped when we go back, so that
+      // this essentially represents our "position" in the multidimensional array during iteration.
       var indices = [];
 
+      /**
+       * Responsible for iterating through a multidimensional array of the given dimension, while accumulating
+       * indices.
+       *
+       * @param {number} dim
+       * @param {MultidimensionalArray.<*>} arr
+       */
       function recur( dim, arr ) {
         return arr.forEach( function( element, index ) {
+          // To process this element, we need to record our index (in case it is an array that we iterate through).
           indices.push( index );
+
+          // Our base case, where recur was passed a 1-dimensional array
           if ( dim === 1 ) {
             forEach( element, indices );
           }
+          // We have more dimensions
           else {
             recur( dim - 1, element );
           }
+
+          // We are done with iteration
           indices.pop();
         } );
       }
