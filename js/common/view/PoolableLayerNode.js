@@ -7,6 +7,7 @@
  * // REVIEW is a novel problem for this simulation.
  * // REVIEW*: Mainly novel for this sim, and had 3 basically duplicated code areas. OK for me to describe the exact
  * // REVIEW*: use case (and why this is helpful) in prose above (will do), or is something else required?
+ * // REVIEW: Prose in this doc sounds great, thanks!
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
@@ -55,6 +56,7 @@ define( function( require ) {
 
     // REVIEW: those options aren't really optional.  Either add assertions that require they are supplied or promote
     // REVIEW: them to required arguments.
+    // REVIEW: See also https://github.com/phetsims/tasks/issues/930
 
     Node.call( this );
 

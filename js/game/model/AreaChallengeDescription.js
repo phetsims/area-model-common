@@ -56,6 +56,8 @@ define( function( require ) {
   // REVIEW: @zepumph said he normally solves this problem with a jsdoc typedef
   // REVIEW*: A typedef that is used once always feels like something that is wrong and should be inlined. Can we
   // REVIEW*: discuss and investigate options for documenting this?
+  // REVIEW: This seems related to https://github.com/phetsims/tasks/issues/930
+  // REVIEW: I'll add a note about it there
   function AreaChallengeDescription( options ) {
 
     // @public {OrientationPair.<Array.<EntryType>>} - Entry types for partition sizes
