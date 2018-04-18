@@ -72,6 +72,8 @@ define( function( require ) {
     // REVIEW*: > Sam Reid [5:17 PM]
     // REVIEW*: > I’d recommend to leave debug query parameters in for long term maintenance--so maintainers or reviewers
     // REVIEW*: > can benefit from them
+    // REVIEW: My apologies for the runaround.  Now that I better understand the simulation and maximumLayout1, I'd like
+    // REVIEW: to keep it, but rename it something like: AreaModelCommonQueryParameters.maximumCalculationSize
     if ( AreaModelCommonQueryParameters.maximumLayout1 ) {
       horizontalPartitions.forEach( function( partition, index ) {
         partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
