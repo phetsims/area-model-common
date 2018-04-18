@@ -70,7 +70,6 @@ define( function( require ) {
      * @returns {boolean}
      */
     equals: function( term ) {
-      console.log( this.coefficient, term.coefficient );
       // REVIEW: Can you please explain/document why an equality check for the coefficients?
       // REVIEW*: Things like this are needed because of floating-point arithmetic. Should we rename this approxEquals?
       // REVIEW: I'm concerned that approxEquals won't work if combined with Property.deepEquals.
