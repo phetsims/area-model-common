@@ -52,6 +52,8 @@ define( function( require ) {
     this.addChild( background );
 
     // REVIEW: I typically move these out to // constants and uppercase them.
+    // REVIEW*: Since they are locally used (not across the file), it seems nicer to have next to the one spot in code
+    // REVIEW*: that uses it. Maybe good to discuss at a dev meeting?
     var arrowSize = 18;
     var arrowTouchDilation = 8;
     var previousShape = new Shape().moveTo( 0, 0 )

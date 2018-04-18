@@ -53,12 +53,14 @@ define( function( require ) {
   areaModelCommon.register( 'AreaCalculationSelectionNode', AreaCalculationSelectionNode );
 
   /**
-   * Creates a calculation icon with two fills (one for the top line only).
+   * Creates a calculation icon with two fills.
    * REVIEW: What does (one for the top line only) mean?
+   * REVIEW*: Just was noting that the top fill is only used for 1 line, whereas the bottom one is for multiple lines.
+   * REVIEW*: Added docs to params to help more, is that sufficient?
    * @private
    *
-   * @param {Property.<Color>} topColorProperty
-   * @param {Property.<Color>} bottomColorProperty
+   * @param {Property.<Color>} topColorProperty - Fill for the top line
+   * @param {Property.<Color>} bottomColorProperty - Fill for the bottom-most three lines
    * @returns {Node}
    */
   function createCalculationIcon( topColorProperty, bottomColorProperty ) {

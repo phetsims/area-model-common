@@ -5,6 +5,8 @@
  *
  * // REVIEW: it would help me understand this better if you described how we previously solved this problem, or if this
  * // REVIEW is a novel problem for this simulation.
+ * // REVIEW*: Mainly novel for this sim, and had 3 basically duplicated code areas. OK for me to describe the exact
+ * // REVIEW*: use case (and why this is helpful) in prose above (will do), or is something else required?
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *

@@ -51,8 +51,9 @@ define( function( require ) {
     this.isProportional = options.isProportional;
 
     // @public {OrientationPair.<Property.<Color>>}
-    // REVIEW: it seems sketchy to use boolean values to key into an object that uses string keys 'true' and 'false'
-    this.colorProperties = AreaModelCommonColorProfile.mainColorProperties[ options.isProportional ];
+    this.colorProperties = options.isProportional
+      ? AreaModelCommonColorProfile.proportionalColorProperties
+      : AreaModelCommonColorProfile.genericColorProperties;
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( defaultArea, {
@@ -101,6 +102,8 @@ define( function( require ) {
      * @returns {AreaDisplay}
      */
     // REVIEW: Is this being used?
+    // REVIEW*: I see usage in AreaModelCommonModel. Are you talking about the exact function here that throws an error
+    // REVIEW*: instead?
     createAreaDisplay: function( areaProperty ) {
       throw new Error( 'abstract method' );
     },

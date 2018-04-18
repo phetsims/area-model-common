@@ -53,6 +53,8 @@ define( function( require ) {
 
     // @public {Node} - Layers (public for a11y)
     // REVIEW: Should be annotated @public (a11y) {Node} - Layers
+    // REVIEW*: I haven't seen that before. Can we add it to the code review checklist if it's a thing? (Have only seen
+    // REVIEW*: repository-specific or read-only there).
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
@@ -160,6 +162,8 @@ define( function( require ) {
     } );
 
     // REVIEW: comment where the addChild calls are made, and why they are not made here
+    // REVIEW*: It seems like a common pattern I'm using, so I'm curious how a comment would help?
+    // REVIEW*: Or is it recommending that have `this.children = [ ... ]` here (which totally looks possible)?
   }
 
   areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );

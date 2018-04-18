@@ -32,6 +32,10 @@ define( function( require ) {
 
       // REVIEW: the second arg of the filter call (the array) is unfamiliar to the reviewers.  Can you please clarify
       // how it works?
+      // REVIEW*: Returns terms that have term.power === power. Lodash docs note the example:
+      // // The `_.matchesProperty` iteratee shorthand.
+      // _.filter(users, ['active', false]);
+      // // => objects for ['fred']
       var sum = _.sum( _.map( _.filter( terms, [ 'power', power ] ), 'coefficient' ) );
       if ( sum !== 0 ) {
         combinedTerms.push( new Term( sum, power ) );
@@ -101,13 +105,7 @@ define( function( require ) {
      * @returns {Polynomial}
      */
     times: function( termList ) {
-
-      //REVIEW: this seems like it should leverage TermList.times
-      return new Polynomial( _.flatten( this.terms.map( function( term ) {
-        return termList.terms.map( function( otherTerm ) {
-          return term.times( otherTerm );
-        } );
-      } ) ) );
+      return new Polynomial( TermList.prototype.times.call( this, termList ).terms );
     }
   } );
 } );

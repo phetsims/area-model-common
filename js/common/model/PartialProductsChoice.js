@@ -12,19 +12,18 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var PartialProductsChoice = {
-    HIDDEN: 'HIDDEN',
-    PRODUCTS: 'PRODUCTS',
-    FACTORS: 'FACTORS'
+    HIDDEN: 'HIDDEN', // e.g. nothing shown
+    PRODUCTS: 'PRODUCTS', // e.g. '52'
+    FACTORS: 'FACTORS' // e.g. '26 x 2'
   };
 
   areaModelCommon.register( 'PartialProductsChoice', PartialProductsChoice );
 
   // @public {Array.<PartialProductsChoice>} - All values the enumeration can take.
-  // REVIEW: The e.g. documentation seems it belongs with the declarations above, not with the VALUES below.
   PartialProductsChoice.VALUES = [
-    PartialProductsChoice.HIDDEN, // e.g. nothing shown
-    PartialProductsChoice.PRODUCTS, // e.g. '52'
-    PartialProductsChoice.FACTORS // e.g. '26 x 2'
+    PartialProductsChoice.HIDDEN,
+    PartialProductsChoice.PRODUCTS,
+    PartialProductsChoice.FACTORS
   ];
 
   // verify that enum is immutable, without the runtime penalty in production code

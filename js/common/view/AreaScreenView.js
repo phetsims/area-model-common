@@ -68,8 +68,8 @@ define( function( require ) {
       // {boolean} - If true, changes the location/size of the area to take up more space
       useLargeArea: false,
 
-      // {boolean} - If true, a simplified accordion box will be used for the calculation lines
-      // REVIEW: If false, it adds a CalculationNode instead, please comment here on what that means
+      // {boolean} - If true, a simplified accordion box will be used for the calculation lines (instead of a panel).
+      // Notably, the accordion box does NOT support line-by-line appearance, and can be collapsed.
       useCalculationBox: false
     }, options );
 
@@ -216,10 +216,11 @@ define( function( require ) {
      * @param {number} dt
      */
     // REVIEW: Unused param. Remove?
+    // REVIEW*: I thought it was customary to keep them (in case they are needed) here, particularly since it gets called
+    // REVIEW*: with the parameter. Thoughts?
     step: function( dt ) {
 
-      // REVIEW: Comment that no animation is happening in the view, and that this code is for batching updates to happen
-      // no more than once per frame.
+      // No animation is happening in the view. This is for batching updates to happen only once a frame.
       this.calculationNode.update();
       this.areaDisplayNode.update();
     },

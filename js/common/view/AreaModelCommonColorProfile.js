@@ -159,11 +159,5 @@ define( function( require ) {
     AreaModelCommonColorProfile.genericHeightProperty
   );
 
-  // @public {boolean} isProportional => {OrientationPair.<Property.<Color>>>}
-  AreaModelCommonColorProfile.mainColorProperties = {
-    true: AreaModelCommonColorProfile.proportionalColorProperties,
-    false: AreaModelCommonColorProfile.genericColorProperties
-  };
-
   return AreaModelCommonColorProfile;
 } );

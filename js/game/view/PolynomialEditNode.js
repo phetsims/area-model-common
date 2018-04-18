@@ -123,8 +123,7 @@ define( function( require ) {
     }
 
     function linkProperty( property, entryProperty ) {
-      // REVIEW: Unused variable 'value'? Can we remove?
-      property.link( function( value ) {
+      property.link( function() {
         // Only flag the values as edited when the user makes a change (not when we set it as part of a challengeb)
         if ( property.isExternallyChanging ) {
           editedCallback();

@@ -104,6 +104,10 @@ define( function( require ) {
       }
 
       // REVIEW: why reverse search instead of forward?
+      // REVIEW*: Original reasoning is that the naive JIT of this only accesses this.terms.length once, whereas
+      // REVIEW*: forward iteration would access it multiple times. If this (e.g. Polynomial) ever gets moved to common
+      // REVIEW*: code, the optimization could be helpful. It probably ended up not mattering for Area Model, as the
+      // REVIEW*: RichText stuff burns WAY more cycles.
       for ( var i = this.terms.length - 1; i >= 0; i-- ) {
         if ( !this.terms[ i ].equals( termList.terms[ i ] ) ) {
           return false;

@@ -46,7 +46,8 @@ define( function( require ) {
      *
      * @param {TermList|Term} term
      * @param {Property.<Color>} colorProperty
-     * @param {boolean} excludeSign // REVIEW: please explain why some Terms are sometimes shown without their sign
+     * @param {boolean} excludeSign - Set to true when this node will be placed after a plus or minus symbol (for example,
+     *                                `x + -5` is a case to NOT exclude the sign, whereas `x - 5` is a case TO exclude it)
      * @returns {TermText}
      */
     initialize: function( term, colorProperty, excludeSign ) {

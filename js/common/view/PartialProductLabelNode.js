@@ -83,6 +83,7 @@ define( function( require ) {
 
     // Make sure this is understood?
     // REVIEW: Please comment what this is.
+    // REVIEW*: Possibly a secret message. Investigate?
     var placeholderString = 'base64: aG9wZSB0aGUgY29kZSByZXZpZXcgaXMgZ29pbmcgd2VsbA==';
 
     // RichTexts (we reuse the same instances to prevent GC and cpu cost)
