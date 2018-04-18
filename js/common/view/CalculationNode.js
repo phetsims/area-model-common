@@ -54,6 +54,7 @@ define( function( require ) {
     // REVIEW: I typically move these out to // constants and uppercase them.
     // REVIEW*: Since they are locally used (not across the file), it seems nicer to have next to the one spot in code
     // REVIEW*: that uses it. Maybe good to discuss at a dev meeting?
+    // REVIEW: Yes, I'd like to know what the group consensus is, because it will change how I proceed in my sims.
     var arrowSize = 18;
     var arrowTouchDilation = 8;
     var previousShape = new Shape().moveTo( 0, 0 )

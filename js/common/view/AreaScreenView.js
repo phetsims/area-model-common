@@ -331,7 +331,6 @@ define( function( require ) {
      * @param {number} decimalPlaces
      * @returns {Node}
      */
-    // REVIEW: Is this being used? Can we remove?
     createFactorsNode: function( model, decimalPlaces ) {
       throw new Error( 'abstract method, should be implemented by subtype' );
     },
@@ -343,7 +342,6 @@ define( function( require ) {
      * @param {AreaModelCommonModel} model
      * @returns {AreaDisplayNode}
      */
-    // REVIEW: Is this being used? Can we remove?
     createAreaDisplayNode: function( model ) {
       throw new Error( 'abstract method, should be implemented by subtype' );
     }
