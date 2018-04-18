@@ -218,6 +218,7 @@ define( function( require ) {
     // REVIEW: Unused param. Remove?
     // REVIEW*: I thought it was customary to keep them (in case they are needed) here, particularly since it gets called
     // REVIEW*: with the parameter. Thoughts?
+    // REVIEW: I agree, it's nice to leave the argument as documentation.  I'll email Denzell to notify him.
     step: function( dt ) {
 
       // No animation is happening in the view. This is for batching updates to happen only once a frame.
