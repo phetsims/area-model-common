@@ -73,18 +73,11 @@ define( function( require ) {
 
     // @public {Property.<Array.<Array.<Entry>>} - Reference to a 2D array for the grid of partial products.
     // First index is vertical (for the row), second is horizontal (for the column)
-    this.partialProductEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
-      return areaChallenge.partialProductSizeEntries;
-    } );
+    this.partialProductEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], _.property( 'partialProductSizeEntries' ) );
 
     // @public {Property.<Array.<Entry>>} - Reference to an array of editable properties for the total area.
     // Uses just one for an editable "constant" value, and multiple properties for polynomial entry (one per term).
-    this.totalEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
-      return areaChallenge.description.numberOrVariable(
-        [ areaChallenge.totalConstantEntry ],
-        [ areaChallenge.totalConstantEntry, areaChallenge.totalXProperty, areaChallenge.totalXSquaredProperty ]
-      );
-    } );
+    this.totalEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], _.property( 'totalCoefficientEntries' ) );
 
     // @public {Property.<Polynomial|null>} - The "total area" property reference
     // REVIEW: several of the documented types in this file don't match the instantiated types

@@ -65,10 +65,10 @@ define( function( require ) {
       validValues: GameState.VALUES.concat( [ null ] )
     } );
 
-    // @public {Property.<boolean>} - Whether the active challenge has null values (default true when no challenge)
-    this.hasNullProperty = new DynamicProperty( this.currentChallengeProperty, {
-      derive: 'hasNullProperty',
-      defaultValue: true
+    // @public {Property.<boolean>} - Whether the check button should be enabled
+    this.allowCheckingProperty = new DynamicProperty( this.currentChallengeProperty, {
+      derive: 'allowCheckingProperty',
+      defaultValue: false
     } );
   }
 

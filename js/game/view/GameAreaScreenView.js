@@ -331,9 +331,7 @@ define( function( require ) {
 
     var checkButton = createGameButton( checkString, function() {
       model.check();
-    }, new DerivedProperty( [ model.hasNullProperty ], function( hasNull ) {
-      return !hasNull;
-    } ) );
+    }, model.allowCheckingProperty );
 
     var tryAgainButton = createGameButton( tryAgainString, function() {
       model.tryAgain();

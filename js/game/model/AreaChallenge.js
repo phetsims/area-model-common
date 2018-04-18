@@ -145,6 +145,15 @@ define( function( require ) {
       displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
 
+    // @public {Array.<Entry>} - All of the coefficient entries that are used by this challenge.
+    this.totalCoefficientEntries = [ this.totalConstantEntry ];
+    if ( totalOptions.inputMethod !== InputMethod.CONSTANT ) {
+      this.totalCoefficientEntries.push( this.totalXProperty );
+    }
+    if ( totalOptions.inputMethod === InputMethod.POLYNOMIAL_2 ) {
+      this.totalCoefficientEntries.push( this.totalXSquaredProperty );
+    }
+
     // @public {Property.<Polynomial|null>}
     this.totalProperty = new DerivedProperty(
       [ this.totalConstantEntry.valueProperty, this.totalXProperty.valueProperty, this.totalXSquaredProperty.valueProperty ],
@@ -156,20 +165,21 @@ define( function( require ) {
       } );
 
     // All of the entries for the challenge
-    var availableEntries = this.partitionSizeEntries.horizontal
+    var mainEntries = this.partitionSizeEntries.horizontal
       .concat( this.partitionSizeEntries.vertical )
-      .concat( _.flatten( this.partialProductSizeEntries ) )
-      .concat( [
-        this.totalConstantEntry,
-        this.totalXProperty,
-        this.totalXSquaredProperty
-      ] );
+      .concat( _.flatten( this.partialProductSizeEntries ) );
+    var checkingNotificationProperties = mainEntries.map( _.property( 'valueProperty' ) )
+      .concat( this.totalCoefficientEntries.map( _.property( 'statusProperty' ) ) );
 
-    // @public {Property.<boolean>}
-    this.hasNullProperty = new DerivedProperty( availableEntries.map( _.property( 'valueProperty' ) ), function() {
-      return _.some( availableEntries, function( entry ) {
+    // @public {Property.<boolean>} - Whether the check button should be enabled
+    this.allowCheckingProperty = new DerivedProperty( checkingNotificationProperties, function() {
+      var allDirtyCoefficients = _.every( self.totalCoefficientEntries, function( entry ) {
+        return entry.type === EntryType.EDITABLE && entry.statusProperty.value === EntryStatus.DIRTY;
+      } );
+      var hasNullMain = _.some( mainEntries, function( entry ) {
         return entry.valueProperty.value === null && entry.type === EntryType.EDITABLE;
       } );
+      return !hasNullMain && !allDirtyCoefficients;
     } );
 
     /*---------------------------------------------------------------------------*
@@ -365,6 +375,8 @@ define( function( require ) {
           this.totalProperties.horizontal.value = this.totals.horizontal;
           this.totalProperties.vertical.value = this.totals.vertical;
         }
+        actual1Entry.statusProperty.value = EntryStatus.NORMAL;
+        actual2Entry.statusProperty.value = EntryStatus.NORMAL;
       }
       else {
         this.partitionSizeEntries.horizontal.forEach( function( entry, index ) {
@@ -380,11 +392,15 @@ define( function( require ) {
 
       AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeEntries, function( entry, indices ) {
         entry.valueProperty.value = self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ];
+        entry.statusProperty.value = EntryStatus.NORMAL;
       } );
 
       this.totalConstantEntry.valueProperty.value = this.total.getTerm( 0 );
       this.totalXProperty.valueProperty.value = this.total.getTerm( 1 );
       this.totalXSquaredProperty.valueProperty.value = this.total.getTerm( 2 );
+      this.totalConstantEntry.statusProperty.value = EntryStatus.NORMAL;
+      this.totalXProperty.statusProperty.value = EntryStatus.NORMAL;
+      this.totalXSquaredProperty.statusProperty.value = EntryStatus.NORMAL;
     },
 
     /**

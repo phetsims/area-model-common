@@ -77,7 +77,7 @@ define( function( require ) {
       return totalEntries.length > 1 ? totalEntries[ 1 ] : new Entry( null );
     } );
     var xSquaredEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
-      return totalEntries.length > 1 ? totalEntries[ 2 ] : new Entry( null );
+      return totalEntries.length > 2 ? totalEntries[ 2 ] : new Entry( null );
     } );
 
     var constantProperty = new DynamicProperty( constantEntryProperty, {
