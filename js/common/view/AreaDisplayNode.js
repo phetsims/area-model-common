@@ -56,7 +56,8 @@ define( function( require ) {
     // REVIEW*: I haven't seen that before. Can we add it to the code review checklist if it's a thing? (Have only seen
     // REVIEW*: repository-specific or read-only there).
     // REVIEW: @public (phet-io) and @public (a11y) have numerous usages across our codebase.  Should we discuss it
-    // REVIEW: at developer meeting to make sure everyone is aware of this?
+    // REVIEW: at developer meeting to make sure everyone is aware of this? Also, I added those entries to the
+    // REVIEW: code_review checklist
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
