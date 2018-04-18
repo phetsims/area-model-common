@@ -218,6 +218,8 @@ define( function( require ) {
      * // REVIEW*: I'd like to move dimensionMap/dimensionForEach to common code for general use, and I wanted to handle
      * // REVIEW*: an arbitrary dimension. If there is lodash code that does these things, I'll be super happy to use
      * // REVIEW*: those instead. I can definitely create unit tests. What repo would be best? phet-core? dot?
+     * // REVIEW: How does this method differ from _.flatten(array).forEach()?  That seems that it would give the same
+     * // REVIEW: result for the 3 examples above.
      */
     dimensionForEach: function( dimension, array, forEach ) {
       // Will get indices pushed when we go deeper into the multidimensional array, and popped when we go back, so that

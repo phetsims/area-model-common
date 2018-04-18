@@ -104,6 +104,8 @@ define( function( require ) {
     // REVIEW: Is this being used?
     // REVIEW*: I see usage in AreaModelCommonModel. Are you talking about the exact function here that throws an error
     // REVIEW*: instead?
+    // REVIEW: I think one of the reviewers is unfamiliar with this abstract method pattern.  This is the appropriate way
+    // REVIEW: to implement it.
     createAreaDisplay: function( areaProperty ) {
       throw new Error( 'abstract method' );
     },

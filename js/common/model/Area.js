@@ -24,6 +24,7 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
+   * // REVIEW: did you mean to say "memorized"?
    * @param {OrientationPair.<Array.<Partition>>} partitions - The passed-in partitions become "owned" by this Area
    *                                                           object memorized (and they should not be shared by
    *                                                           multiple areas ever). Usually created in subtypes anyways.
@@ -110,6 +111,7 @@ define( function( require ) {
       // REVIEW: Does this multilink need a corresponding unlink?  If not, why not?
       // REVIEW*: Does not need an unlink (subtypes create them, so they are basically "owned" memory-wise by this
       // REVIEW*: area). Added a note in the constructor, is that sufficient? Should I have a comment here about it too?
+      // REVIEW: So they persist for the life of the sim and don't need to be disposed?  Yes add a note here as well.
       Property.multilink(
         [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ],
         function( horizontalSize, verticalSize ) {
@@ -233,6 +235,7 @@ define( function( require ) {
         // REVIEW*: as not even having a list. It looks like it would be possible to refactor many cases, but
         // REVIEW*: complicated by the fact that new Polynomial( [] ).terms.length is NOT 0 for a reason. I'd advise
         // REVIEW*: against a change, but I'd like to hear your opinion.
+        // REVIEW: OK to keep it as is, but I'm wondering why new Polynomial( [] ).terms.length is NOT 0
         if ( terms.length ) {
           return new TermList( terms );
         }
