@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
+  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
 
   var EntryType = {
     EDITABLE: 'EDITABLE',
@@ -28,9 +28,9 @@ define( function( require ) {
   ];
 
   var gameToDisplayMap = {};
-  gameToDisplayMap[ EntryType.EDITABLE ] = DisplayType.EDITABLE;
-  gameToDisplayMap[ EntryType.DYNAMIC ] = DisplayType.READOUT;
-  gameToDisplayMap[ EntryType.GIVEN ] = DisplayType.READOUT;
+  gameToDisplayMap[ EntryType.EDITABLE ] = EntryDisplayType.EDITABLE;
+  gameToDisplayMap[ EntryType.DYNAMIC ] = EntryDisplayType.READOUT;
+  gameToDisplayMap[ EntryType.GIVEN ] = EntryDisplayType.READOUT;
 
   /**
    * Returns the preferred display type for a given game value.

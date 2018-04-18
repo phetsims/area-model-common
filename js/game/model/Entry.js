@@ -1,9 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * A property whose value can be edited, and may be displayed in different ways.
- * // REVIEW: Please comment why it is appropriate to extend Property in this case, and why subtyping is more appropriate
- * // REVIEW: than using composition for this problem.
+ * A logical entry whose value can be edited, and may be displayed in different ways.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -13,7 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
+  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -23,37 +21,36 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {Property}
+   * @extends {Object}
    *
-   * @param {Term|null} value - The initial value of the property
-   * @param {Object} [options] - Options passed to the Property
+   * @param {Term|null} value - The initial value
+   * @param {Object} [options]
    */
-  function EditableProperty( value, options ) {
+  function Entry( value, options ) {
     options = _.extend( {
-
-      // Property options
-      useDeepEquality: true,
-      isValidValue: Term.isNullableTerm,
-
       // Our options
       type: EntryType.GIVEN,
-      displayType: DisplayType.HIDDEN,
+      displayType: EntryDisplayType.HIDDEN,
       inputMethod: InputMethod.CONSTANT,
       digits: 0,
       correctValue: null // Only used for the total coefficients
     }, options );
 
     // Always start off by editing null, and it should be the default value.
-    if ( options.displayType === DisplayType.EDITABLE ) {
+    if ( options.displayType === EntryDisplayType.EDITABLE ) {
       value = null;
     }
 
-    Property.call( this, value, options );
+    // @public {Property.<Term|null>} - The current value of the entry
+    this.valueProperty = new Property( value, {
+      useDeepEquality: true,
+      isValidValue: Term.isNullableTerm
+    } );
 
     // @public {EntryType} - Whether we are dynamic/editable/given.
     this.type = options.type;
 
-    // @public {DisplayType} - Whether we are a readout or editable/hidden
+    // @public {EntryDisplayType} - Whether we are a readout or editable/hidden
     this.displayType = options.displayType;
 
     // @public {InputMethod} - What format should be used if we are edited? (Need different keypads or a polynomial
@@ -70,12 +67,12 @@ define( function( require ) {
     this.statusProperty = new Property( EntryStatus.DIRTY );
 
     // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight
-    this.nonErrorValueProperty = new DerivedProperty( [ this, this.statusProperty ], function( value, highlight ) {
+    this.nonErrorValueProperty = new DerivedProperty( [ this.valueProperty, this.statusProperty ], function( value, highlight ) {
       return ( highlight === EntryStatus.ERROR ) ? null : value;
     } );
   }
 
-  areaModelCommon.register( 'EditableProperty', EditableProperty );
+  areaModelCommon.register( 'Entry', Entry );
 
-  return inherit( Property, EditableProperty );
+  return inherit( Object, Entry );
 } );

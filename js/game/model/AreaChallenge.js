@@ -12,8 +12,8 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
-  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
@@ -55,10 +55,10 @@ define( function( require ) {
       );
     } );
 
-    // @public {OrientationPair.<Array.<EditableProperty>>}
-    this.partitionSizeProperties = OrientationPair.create( function( orientation ) {
+    // @public {OrientationPair.<Array.<Entry>>} Entries for the size of each partition.
+    this.partitionSizeEntries = OrientationPair.create( function( orientation ) {
       return self.partitionSizes.get( orientation ).map( function( size, index ) {
-        return new EditableProperty( size, {
+        return new Entry( size, {
           type: description.partitionTypes.get( orientation )[ index ],
           displayType: EntryType.toDisplayType( description.partitionTypes.get( orientation )[ index ] ),
           inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
@@ -67,11 +67,10 @@ define( function( require ) {
       } );
     } );
 
-    // @public {OrientationPair.<Array.<EditableProperty>>}
+    // @public {OrientationPair.<Array.<Property.<Term|null>>>} - Basically the values of the partitionSizeEntries, but
+    // null if the entry's status is 'error'.
     this.nonErrorPartitionSizeProperties = OrientationPair.create( function( orientation ) {
-      return self.partitionSizeProperties.get( orientation ).map( function( editableProperty ) {
-        return editableProperty.nonErrorValueProperty;
-      } );
+      return self.partitionSizeEntries.get( orientation ).map( _.property( 'nonErrorValueProperty' ) );
     } );
 
     // @public {Array.<Array.<Term|null>>}
@@ -81,14 +80,14 @@ define( function( require ) {
       } );
     } );
 
-    // @public {Array.<Array.<EditableProperty>>}
-    this.partialProductSizeProperties = AreaModelCommonConstants.dimensionMap( 2, this.partialProductSizes, function( size, indices ) {
+    // @public {Array.<Array.<Entry>>}
+    this.partialProductSizeEntries = AreaModelCommonConstants.dimensionMap( 2, this.partialProductSizes, function( size, indices ) {
       var verticalIndex = indices[ 0 ];
       var horizontalIndex = indices[ 1 ];
 
       var numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
       var type = description.productTypes[ verticalIndex ][ horizontalIndex ];
-      var property = new EditableProperty( size, {
+      var entry = new Entry( size, {
         type: type,
         displayType: EntryType.toDisplayType( type ),
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
@@ -98,20 +97,15 @@ define( function( require ) {
       } );
       // Link up if dynamic
       if ( type === EntryType.DYNAMIC ) {
-        var properties = [
+        Property.multilink( [
           self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
           self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
-        ];
-        Property.multilink( properties, function( horizontal, vertical ) {
-          if ( horizontal === null || vertical === null ) {
-            property.value = null;
-          }
-          else {
-            property.value = horizontal.times( vertical );
-          }
+        ], function( horizontal, vertical ) {
+          // horizontal or vertical could be null (resulting in null)
+          entry.valueProperty.value = horizontal && vertical && horizontal.times( vertical );
         } );
       }
-      return property;
+      return entry;
     } );
 
     var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
@@ -134,54 +128,47 @@ define( function( require ) {
       digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
 
-    // @public {EditableProperty}
-    this.totalConstantProperty = new EditableProperty( this.total.getTerm( 0 ), _.extend( {
+    // @public {Entry}
+    this.totalConstantEntry = new Entry( this.total.getTerm( 0 ), _.extend( {
       correctValue: this.total.getTerm( 0 ),
       type: description.totalType,
       displayType: EntryType.toDisplayType( description.totalType )
     }, totalOptions ) );
-    this.totalXProperty = new EditableProperty( this.total.getTerm( 1 ), _.extend( {
+    this.totalXProperty = new Entry( this.total.getTerm( 1 ), _.extend( {
       correctValue: this.total.getTerm( 1 ),
       type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
-      displayType: description.numberOrVariable( DisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
+      displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
-    this.totalXSquaredProperty = new EditableProperty( this.total.getTerm( 2 ), _.extend( {
+    this.totalXSquaredProperty = new Entry( this.total.getTerm( 2 ), _.extend( {
       correctValue: this.total.getTerm( 2 ),
       type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
-      displayType: description.numberOrVariable( DisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
+      displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
 
     // @public {Property.<Polynomial|null>}
     this.totalProperty = new DerivedProperty(
-      [ this.totalConstantProperty, this.totalXProperty, this.totalXSquaredProperty ],
+      [ this.totalConstantEntry.valueProperty, this.totalXProperty.valueProperty, this.totalXSquaredProperty.valueProperty ],
       function( constant, x, xSquared ) {
         var terms = [ constant, x, xSquared ].filter( function( term ) {
           return term !== null;
         } );
-        if ( terms.length ) {
-          return new Polynomial( terms );
-        }
-        else {
-          return null;
-        }
+        return terms.length ? new Polynomial( terms ) : null;
       } );
 
-    // Properties for all of the values
-    var availableProperties = this.partitionSizeProperties.horizontal
-      .concat( this.partitionSizeProperties.vertical )
-      .concat( _.flatten( this.partialProductSizeProperties ) )
+    // All of the entries for the challenge
+    var availableEntries = this.partitionSizeEntries.horizontal
+      .concat( this.partitionSizeEntries.vertical )
+      .concat( _.flatten( this.partialProductSizeEntries ) )
       .concat( [
-        this.totalProperties.horizontal,
-        this.totalProperties.vertical,
-        this.totalConstantProperty,
+        this.totalConstantEntry,
         this.totalXProperty,
         this.totalXSquaredProperty
       ] );
 
     // @public {Property.<boolean>}
-    this.hasNullProperty = new DerivedProperty( availableProperties, function() {
-      return _.some( availableProperties, function( property ) {
-        return property.value === null && property.type === EntryType.EDITABLE;
+    this.hasNullProperty = new DerivedProperty( availableEntries.map( _.property( 'valueProperty' ) ), function() {
+      return _.some( availableEntries, function( entry ) {
+        return entry.valueProperty.value === null && entry.type === EntryType.EDITABLE;
       } );
     } );
 
@@ -215,16 +202,16 @@ define( function( require ) {
      * Returns a list of all of the editable properties that are incorrect.
      * @public
      *
-     * @returns {Array.<EditableProperty>}
+     * @returns {Array.<Entry>}
      */
-    getIncorrectEditableProperties: function() {
+    getIncorrectEntries: function() {
       var self = this;
 
-      var incorrectProperties = [];
+      var incorrectEntries = [];
 
-      function compareProperty( property, expectedValue ) {
-        if ( property.value === null || !property.value.equals( expectedValue ) ) {
-          incorrectProperties.push( property );
+      function compareEntry( entry, expectedValue ) {
+        if ( entry.valueProperty.value === null || !entry.valueProperty.value.equals( expectedValue ) ) {
+          incorrectEntries.push( entry );
         }
       }
 
@@ -233,34 +220,34 @@ define( function( require ) {
         // Logic described by https://github.com/phetsims/area-model-common/issues/39
         // Addendum to logic in https://github.com/phetsims/area-model-common/issues/42
         if ( this.hasNonUniqueBadMatch() ) {
-          incorrectProperties.push( this.partitionSizeProperties.get( this.arbitraryNonUniqueWrongOrientation )[ 1 ] );
+          incorrectEntries.push( this.partitionSizeEntries.get( this.arbitraryNonUniqueWrongOrientation )[ 1 ] );
         }
         else {
           if ( !this.nonUniqueHorizontalMatches() ) {
-            incorrectProperties.push( this.partitionSizeProperties.horizontal[ 1 ] );
+            incorrectEntries.push( this.partitionSizeEntries.horizontal[ 1 ] );
           }
           if ( !this.nonUniqueVerticalMatches() ) {
-            incorrectProperties.push( this.partitionSizeProperties.vertical[ 1 ] );
+            incorrectEntries.push( this.partitionSizeEntries.vertical[ 1 ] );
           }
         }
       }
       else {
-        this.partitionSizeProperties.horizontal.forEach( function( property, index ) {
-          compareProperty( property, self.partitionSizes.horizontal[ index ] );
+        this.partitionSizeEntries.horizontal.forEach( function( entry, index ) {
+          compareEntry( entry, self.partitionSizes.horizontal[ index ] );
         } );
-        this.partitionSizeProperties.vertical.forEach( function( property, index ) {
-          compareProperty( property, self.partitionSizes.vertical[ index ] );
+        this.partitionSizeEntries.vertical.forEach( function( entry, index ) {
+          compareEntry( entry, self.partitionSizes.vertical[ index ] );
         } );
-        AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeProperties, function( property, indices ) {
-          compareProperty( property, self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ] );
+        AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeEntries, function( entry, indices ) {
+          compareEntry( entry, self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ] );
         } );
-        compareProperty( this.totalConstantProperty, this.total.getTerm( 0 ) );
-        compareProperty( this.totalXProperty, this.total.getTerm( 1 ) );
-        compareProperty( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
+        compareEntry( this.totalConstantEntry, this.total.getTerm( 0 ) );
+        compareEntry( this.totalXProperty, this.total.getTerm( 1 ) );
+        compareEntry( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
       }
 
-      return _.uniq( incorrectProperties ).filter( function( property ) {
-        return property.displayType === DisplayType.EDITABLE;
+      return _.uniq( incorrectEntries ).filter( function( entry ) {
+        return entry.displayType === EntryDisplayType.EDITABLE;
       } );
     },
 
@@ -274,7 +261,7 @@ define( function( require ) {
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
-      var actual1 = this.partitionSizeProperties.horizontal[ 1 ].value;
+      var actual1 = this.partitionSizeEntries.horizontal[ 1 ].valueProperty.value;
 
       return actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
     },
@@ -289,7 +276,7 @@ define( function( require ) {
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
-      var actual2 = this.partitionSizeProperties.vertical[ 1 ].value;
+      var actual2 = this.partitionSizeEntries.vertical[ 1 ].valueProperty.value;
 
       return actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
     },
@@ -305,8 +292,8 @@ define( function( require ) {
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
-      var actual1 = this.partitionSizeProperties.horizontal[ 1 ].value;
-      var actual2 = this.partitionSizeProperties.vertical[ 1 ].value;
+      var actual1 = this.partitionSizeEntries.horizontal[ 1 ].valueProperty.value;
+      var actual2 = this.partitionSizeEntries.vertical[ 1 ].valueProperty.value;
 
       return actual1 !== null && actual2 !== null &&
              ( ( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) ||
@@ -331,8 +318,8 @@ define( function( require ) {
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
-          this.partitionSizeProperties.horizontal[ 1 ].statusProperty.value = EntryStatus.NORMAL;
-          this.partitionSizeProperties.vertical[ 1 ].statusProperty.value = EntryStatus.NORMAL;
+          this.partitionSizeEntries.horizontal[ 1 ].statusProperty.value = EntryStatus.NORMAL;
+          this.partitionSizeEntries.vertical[ 1 ].statusProperty.value = EntryStatus.NORMAL;
         }
       }
     },
@@ -351,11 +338,11 @@ define( function( require ) {
         var expected1 = this.partitionSizes.horizontal[ 1 ];
         var expected2 = this.partitionSizes.vertical[ 1 ];
 
-        var actual1Property = this.partitionSizeProperties.horizontal[ 1 ];
-        var actual2Property = this.partitionSizeProperties.vertical[ 1 ];
+        var actual1Entry = this.partitionSizeEntries.horizontal[ 1 ];
+        var actual2Entry = this.partitionSizeEntries.vertical[ 1 ];
 
-        var actual1 = actual1Property.value;
-        var actual2 = actual2Property.value;
+        var actual1 = actual1Entry.valueProperty.value;
+        var actual2 = actual2Entry.valueProperty.value;
 
         if ( actual1 && actual2 ) {
           var matches1 = actual1.equals( expected1 ) || actual1.equals( expected2 );
@@ -367,37 +354,37 @@ define( function( require ) {
         }
 
         if ( reversed ) {
-          actual1Property.value = expected2;
-          actual2Property.value = expected1;
+          actual1Entry.valueProperty.value = expected2;
+          actual2Entry.valueProperty.value = expected1;
           this.totalProperties.horizontal.value = this.totals.vertical;
           this.totalProperties.vertical.value = this.totals.horizontal;
         }
         else {
-          actual1Property.value = expected1;
-          actual2Property.value = expected2;
+          actual1Entry.valueProperty.value = expected1;
+          actual2Entry.valueProperty.value = expected2;
           this.totalProperties.horizontal.value = this.totals.horizontal;
           this.totalProperties.vertical.value = this.totals.vertical;
         }
       }
       else {
-        this.partitionSizeProperties.horizontal.forEach( function( property, index ) {
-          property.value = self.partitionSizes.horizontal[ index ];
+        this.partitionSizeEntries.horizontal.forEach( function( entry, index ) {
+          entry.valueProperty.value = self.partitionSizes.horizontal[ index ];
         } );
-        this.partitionSizeProperties.vertical.forEach( function( property, index ) {
-          property.value = self.partitionSizes.vertical[ index ];
+        this.partitionSizeEntries.vertical.forEach( function( entry, index ) {
+          entry.valueProperty.value = self.partitionSizes.vertical[ index ];
         } );
 
         this.totalProperties.horizontal.value = this.totals.horizontal;
         this.totalProperties.vertical.value = this.totals.vertical;
       }
 
-      AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeProperties, function( property, indices ) {
-        property.value = self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ];
+      AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeEntries, function( entry, indices ) {
+        entry.valueProperty.value = self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ];
       } );
 
-      this.totalConstantProperty.value = this.total.getTerm( 0 );
-      this.totalXProperty.value = this.total.getTerm( 1 );
-      this.totalXSquaredProperty.value = this.total.getTerm( 2 );
+      this.totalConstantEntry.valueProperty.value = this.total.getTerm( 0 );
+      this.totalXProperty.valueProperty.value = this.total.getTerm( 1 );
+      this.totalXSquaredProperty.valueProperty.value = this.total.getTerm( 2 );
     },
 
     /**
@@ -409,14 +396,14 @@ define( function( require ) {
     check: function() {
       var scoreIncrease = 0;
 
-      var badProperties = this.getIncorrectEditableProperties();
-      var isCorrect = badProperties.length === 0;
+      var badEntries = this.getIncorrectEntries();
+      var isCorrect = badEntries.length === 0;
 
       var currentState = this.stateProperty.value;
 
       if ( !isCorrect ) {
-        badProperties.forEach( function( property ) {
-          property.statusProperty.value = EntryStatus.ERROR;
+        badEntries.forEach( function( badEntry ) {
+          badEntry.statusProperty.value = EntryStatus.ERROR;
         } );
       }
 

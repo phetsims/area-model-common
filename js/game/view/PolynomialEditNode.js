@@ -16,7 +16,7 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
@@ -37,10 +37,10 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {Property.<Polynomial|null>} polynomialProperty
-   * @param {Property.<Array.<EditableProperty>>} totalPropertiesProperty
+   * @param {Property.<Array.<Entry>>} totalEntriesProperty
    * @param {function} editedCallback - Called with no arguments when something is edited
    */
-  function PolynomialEditNode( polynomialProperty, totalPropertiesProperty, editedCallback ) {
+  function PolynomialEditNode( polynomialProperty, totalEntriesProperty, editedCallback ) {
     var longestString = new Polynomial( [
       new Term( -9, 2 ),
       new Term( -9, 1 ),
@@ -69,19 +69,19 @@ define( function( require ) {
 
     var editFont = AreaModelCommonConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
-    var constantPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
-      return totalProperties.length > 1 ? totalProperties[ 0 ] : new EditableProperty( null );
+    // {Property.<Entry>}
+    var constantEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
+      return totalEntries.length > 1 ? totalEntries[ 0 ] : new Entry( null );
+    } );
+    var xEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
+      return totalEntries.length > 1 ? totalEntries[ 1 ] : new Entry( null );
+    } );
+    var xSquaredEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
+      return totalEntries.length > 1 ? totalEntries[ 2 ] : new Entry( null );
     } );
 
-    var xPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
-      return totalProperties.length > 1 ? totalProperties[ 1 ] : new EditableProperty( null );
-    } );
-
-    var xSquaredPropertyProperty = new DerivedProperty( [ totalPropertiesProperty ], function( totalProperties ) {
-      return totalProperties.length > 1 ? totalProperties[ 2 ] : new EditableProperty( null );
-    } );
-
-    var constantProperty = new DynamicProperty( constantPropertyProperty, {
+    var constantProperty = new DynamicProperty( constantEntryProperty, {
+      derive: 'valueProperty',
       map: function( term ) {
         return term === null ? 0 : term.coefficient;
       },
@@ -91,7 +91,8 @@ define( function( require ) {
       bidirectional: true
     } );
 
-    var xProperty = new DynamicProperty( xPropertyProperty, {
+    var xProperty = new DynamicProperty( xEntryProperty, {
+      derive: 'valueProperty',
       map: function( term ) {
         return term === null ? 0 : term.coefficient;
       },
@@ -101,7 +102,8 @@ define( function( require ) {
       bidirectional: true
     } );
 
-    var xSquaredProperty = new DynamicProperty( xSquaredPropertyProperty, {
+    var xSquaredProperty = new DynamicProperty( xSquaredEntryProperty, {
+      derive: 'valueProperty',
       map: function( term ) {
         return term === null ? 0 : term.coefficient;
       },
@@ -112,28 +114,29 @@ define( function( require ) {
     } );
 
     function makeNotDirty() {
-      [ constantPropertyProperty, xPropertyProperty, xSquaredPropertyProperty ].forEach( function( propertyProperty, index ) {
-        if ( propertyProperty.value.value === null ) {
-          propertyProperty.value.value = new Term( 0, index );
+      [ constantEntryProperty, xEntryProperty, xSquaredEntryProperty ].forEach( function( entryProperty, index ) {
+        var valueProperty = entryProperty.value.valueProperty;
+        if ( valueProperty.value === null ) {
+          valueProperty.value = new Term( 0, index );
         }
       } );
     }
 
-    function linkProperty( property, propertyProperty ) {
+    function linkProperty( property, entryProperty ) {
       // REVIEW: Unused variable 'value'? Can we remove?
       property.link( function( value ) {
         // Only flag the values as edited when the user makes a change (not when we set it as part of a challengeb)
         if ( property.isExternallyChanging ) {
           editedCallback();
           makeNotDirty();
-          propertyProperty.value.statusProperty.value = EntryStatus.NORMAL;
+          entryProperty.value.statusProperty.value = EntryStatus.NORMAL;
         }
       } );
     }
 
-    linkProperty( constantProperty, constantPropertyProperty );
-    linkProperty( xProperty, xPropertyProperty );
-    linkProperty( xSquaredProperty, xSquaredPropertyProperty );
+    linkProperty( constantProperty, constantEntryProperty );
+    linkProperty( xProperty, xEntryProperty );
+    linkProperty( xSquaredProperty, xSquaredEntryProperty );
 
     var rangeProperty = new Property( new Range( -81, 81 ) );
 
@@ -151,21 +154,21 @@ define( function( require ) {
 
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
       color: new DerivedProperty( [
-        new DynamicProperty( constantPropertyProperty, { derive: 'statusProperty' } ),
+        new DynamicProperty( constantEntryProperty, { derive: 'statusProperty' } ),
         AreaModelCommonColorProfile.errorStatusProperty,
         AreaModelCommonColorProfile.dirtyStatusProperty
       ], highlightFunction )
     } );
     var xPicker = new NumberPicker( xProperty, rangeProperty, {
       color: new DerivedProperty( [
-        new DynamicProperty( xPropertyProperty, { derive: 'statusProperty' } ),
+        new DynamicProperty( xEntryProperty, { derive: 'statusProperty' } ),
         AreaModelCommonColorProfile.errorStatusProperty,
         AreaModelCommonColorProfile.dirtyStatusProperty
       ], highlightFunction )
     } );
     var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
       color: new DerivedProperty( [
-        new DynamicProperty( xSquaredPropertyProperty, { derive: 'statusProperty' } ),
+        new DynamicProperty( xSquaredEntryProperty, { derive: 'statusProperty' } ),
         AreaModelCommonColorProfile.errorStatusProperty,
         AreaModelCommonColorProfile.dirtyStatusProperty
       ], highlightFunction )
@@ -194,8 +197,8 @@ define( function( require ) {
 
     var pickerContainer = new Node();
     // Hide the x^2 term if we won't use it
-    constantPropertyProperty.link( function( polynomialProperty ) {
-      pickerContainer.children = polynomialProperty.inputMethod === InputMethod.POLYNOMIAL_2
+    constantEntryProperty.link( function( constantEntry ) {
+      pickerContainer.children = constantEntry.inputMethod === InputMethod.POLYNOMIAL_2
         ? xSquaredChildren
         : xChildren;
     } );

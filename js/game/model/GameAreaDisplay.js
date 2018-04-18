@@ -14,7 +14,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -56,38 +56,40 @@ define( function( require ) {
       } );
     } );
 
-    // @public {OrientationPair.<Property.<Array.<EditableProperty>>>}
+    // @public {OrientationPair.<Property.<Array.<Entry>>>}
     // Partition sizes. Inner values may be changed by the view client.
-    this.partitionSizeProperties = OrientationPair.create( function( orientation ) {
+    this.partitionSizeEntriesProperties = OrientationPair.create( function( orientation ) {
       return new DerivedProperty( [ self.areaChallengeProperty ], function( areaChallenge ) {
         // If there's only one value on a side (and it's a given), there is no use showing a size here.
-        if ( areaChallenge.partitionSizeProperties.get( orientation ).length === 1 &&
+        if ( areaChallenge.partitionSizeEntries.get( orientation ).length === 1 &&
              areaChallenge.description.partitionTypes.get( orientation )[ 0 ] === EntryType.GIVEN ) {
-          return [ new EditableProperty( null ) ];
+          return [ new Entry( null ) ];
         }
         else {
-          return areaChallenge.partitionSizeProperties.get( orientation );
+          return areaChallenge.partitionSizeEntries.get( orientation );
         }
       } );
     } );
 
-    // @public {Property.<Array.<Array.<EditableProperty>>} - Reference to a 2D array for the grid of partial products.
+    // @public {Property.<Array.<Array.<Entry>>} - Reference to a 2D array for the grid of partial products.
     // First index is vertical (for the row), second is horizontal (for the column)
-    this.partialProductsProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
-      return areaChallenge.partialProductSizeProperties;
+    this.partialProductEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
+      return areaChallenge.partialProductSizeEntries;
     } );
 
-    // @public {Property.<Array.<EditableProperty>>} - Reference to an array of editable properties for the total area.
+    // @public {Property.<Array.<Entry>>} - Reference to an array of editable properties for the total area.
     // Uses just one for an editable "constant" value, and multiple properties for polynomial entry (one per term).
-    this.totalPropertiesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
+    this.totalEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
       return areaChallenge.description.numberOrVariable(
-        [ areaChallenge.totalConstantProperty ],
-        [ areaChallenge.totalConstantProperty, areaChallenge.totalXProperty, areaChallenge.totalXSquaredProperty ]
+        [ areaChallenge.totalConstantEntry ],
+        [ areaChallenge.totalConstantEntry, areaChallenge.totalXProperty, areaChallenge.totalXSquaredProperty ]
       );
     } );
 
-    // @public {Property.<Property.<TermList|null>>} - The "total area" property reference
+    // @public {Property.<Polynomial|null>} - The "total area" property reference
     // REVIEW: several of the documented types in this file don't match the instantiated types
+    // REVIEW*: This one was definitely wrong, but the others (now?) look correct. totalProperties notes TermList, which
+    // REVIEW*: is a supertype of Polynomial (and matches AreaDisplay).
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );

@@ -13,7 +13,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -44,10 +44,10 @@ define( function( require ) {
       }
     } );
 
-    // @public {Property.<EditableProperty|null}
-    this.activeEditableProperty = new Property( null, {
+    // @public {Property.<Entry|null}
+    this.activeEntryProperty = new Property( null, {
       isValidValue: function( value ) {
-        return value === null || value instanceof EditableProperty;
+        return value === null || value instanceof Entry;
       }
     } );
 
@@ -55,7 +55,7 @@ define( function( require ) {
     this.currentChallengeProperty = new DynamicProperty( this.currentLevelProperty, {
       derive: 'currentChallengeProperty'
     } );
-    this.currentChallengeProperty.lazyLink( this.activeEditableProperty.reset.bind( this.activeEditableProperty ) );
+    this.currentChallengeProperty.lazyLink( this.activeEntryProperty.reset.bind( this.activeEntryProperty ) );
 
     // @public {Property.<GameState|null>}
     this.stateProperty = new DynamicProperty( this.currentChallengeProperty, {
@@ -97,9 +97,9 @@ define( function( require ) {
       // REVIEW: Please summarize the main points of the issue as it pertains to this implementation
       this.currentChallengeProperty.value.checkNonUniqueChanges();
 
-      this.activeEditableProperty.value.value = term;
-      this.activeEditableProperty.value.statusProperty.value = EntryStatus.NORMAL;
-      this.activeEditableProperty.value = null;
+      this.activeEntryProperty.value.valueProperty.value = term;
+      this.activeEntryProperty.value.statusProperty.value = EntryStatus.NORMAL;
+      this.activeEntryProperty.value = null;
     },
 
     /**
@@ -108,7 +108,7 @@ define( function( require ) {
      */
     check: function() {
       // Close any keypads, see https://github.com/phetsims/area-model-common/issues/66
-      this.activeEditableProperty.value = null;
+      this.activeEntryProperty.value = null;
 
       var challenge = this.currentChallengeProperty.value;
 
@@ -154,7 +154,7 @@ define( function( require ) {
       if ( this.currentChallengeProperty.value ) {
         this.currentChallengeProperty.value.showAnswers();
         this.currentChallengeProperty.value.stateProperty.value = GameState.SHOW_SOLUTION;
-        this.activeEditableProperty.reset();
+        this.activeEntryProperty.reset();
       }
     },
 
@@ -165,7 +165,7 @@ define( function( require ) {
     cheat: function() {
       if ( this.currentChallengeProperty.value ) {
         this.currentChallengeProperty.value.showAnswers();
-        this.activeEditableProperty.reset();
+        this.activeEntryProperty.reset();
       }
     },
 
@@ -174,7 +174,7 @@ define( function( require ) {
      * @public
      */
     reset: function() {
-      this.activeEditableProperty.reset();
+      this.activeEntryProperty.reset();
       this.soundEnabledProperty.reset();
       this.currentLevelProperty.reset();
       this.levels.forEach( function( level ) {

@@ -21,8 +21,8 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
-  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
   var FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
   var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
@@ -228,7 +228,7 @@ define( function( require ) {
     // @private {GameAreaDisplay}
     this.areaDisplay = new GameAreaDisplay( model.currentChallengeProperty );
 
-    var gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEditableProperty, model.stateProperty, function( term ) {
+    var gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEntryProperty, model.stateProperty, function( term ) {
       model.setActiveTerm( term );
     } );
     this.challengeLayer.addChild( gameAreaNode );
@@ -244,21 +244,21 @@ define( function( require ) {
     var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
     // If we have a polynomial, don't use this editable property (use the polynomial editor component instead)
-    var totalTermPropertyProperty = new DerivedProperty( [ this.areaDisplay.totalPropertiesProperty ], function( totalProperties ) {
-      return totalProperties.length === 1 ? totalProperties[ 0 ] : new EditableProperty( null );
+    var totalTermEntryProperty = new DerivedProperty( [ this.areaDisplay.totalEntriesProperty ], function( totalEntries ) {
+      return totalEntries.length === 1 ? totalEntries[ 0 ] : new Entry( null );
     } );
 
     var totalNode = new GameEditableLabelNode( {
-      valuePropertyProperty: totalTermPropertyProperty,
+      entryProperty: totalTermEntryProperty,
       gameStateProperty: model.stateProperty,
-      activeEditableProperty: model.activeEditableProperty,
+      activeEntryProperty: model.activeEntryProperty,
       colorProperty: AreaModelCommonColorProfile.totalEditableProperty,
       allowExponentsProperty: this.areaDisplay.allowExponentsProperty,
       orientation: Orientation.HORIZONTAL,
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );
-    var polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalPropertiesProperty, function() {
+    var polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalEntriesProperty, function() {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT;
       }
@@ -275,10 +275,10 @@ define( function( require ) {
 
     var totalContainer = new Node();
     Property.multilink(
-      [ this.areaDisplay.totalPropertiesProperty, model.stateProperty ],
-      function( totalProperties, gameState ) {
-        if ( totalProperties.length > 1 ) {
-          if ( totalProperties[ 0 ].displayType === DisplayType.EDITABLE &&
+      [ this.areaDisplay.totalEntriesProperty, model.stateProperty ],
+      function( totalEntries, gameState ) {
+        if ( totalEntries.length > 1 ) {
+          if ( totalEntries[ 0 ].displayType === EntryDisplayType.EDITABLE &&
                gameState !== GameState.CORRECT_ANSWER &&
                gameState !== GameState.SHOW_SOLUTION ) {
             totalContainer.children = [ polynomialEditNode ];

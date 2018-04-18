@@ -15,8 +15,8 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DisplayType = require( 'AREA_MODEL_COMMON/game/model/DisplayType' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
+  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -37,9 +37,9 @@ define( function( require ) {
     options = _.extend( {
       // REQUIRED options (yes, I know it's an oxymoron, and I'd like to have a better name for this options)
       // They are marked as null for now
-      valuePropertyProperty: null, // {Property.<EditableProperty>}
+      entryProperty: null, // {Property.<Entry>}
       gameStateProperty: null, // {Property.<GameState>}
-      activeEditableProperty: null, // {Property.<EditableProperty>}
+      activeEntryProperty: null, // {Property.<Entry|null>}
       colorProperty: null, // {Property.<Color>}
       allowExponentsProperty: null, // {Property.<boolean>}
       orientation: null, // {Orientation}
@@ -51,24 +51,25 @@ define( function( require ) {
     Node.call( this );
 
     // Helpful to break out some options
-    var valuePropertyProperty = options.valuePropertyProperty;
+    var entryProperty = options.entryProperty;
     var gameStateProperty = options.gameStateProperty;
-    var activeEditableProperty = options.activeEditableProperty;
+    var activeEntryProperty = options.activeEntryProperty;
     var colorProperty = options.colorProperty;
     var allowExponentsProperty = options.allowExponentsProperty;
     var orientation = options.orientation;
 
-    var valueProperty = new DynamicProperty( valuePropertyProperty, {
+    var valueProperty = new DynamicProperty( entryProperty, {
+      derive: 'valueProperty',
       bidirectional: true
     } );
-    var digitsProperty = new DerivedProperty( [ valuePropertyProperty ], _.property( 'digits' ) );
-    var statusProperty = new DynamicProperty( valuePropertyProperty, {
+    var digitsProperty = new DerivedProperty( [ entryProperty ], _.property( 'digits' ) );
+    var statusProperty = new DynamicProperty( entryProperty, {
       derive: 'statusProperty'
     } );
     var isActiveProperty = new DerivedProperty(
-      [ valuePropertyProperty, activeEditableProperty ],
-      function( valueProperty, activeProperty ) {
-        return valueProperty === activeProperty;
+      [ entryProperty, activeEntryProperty ],
+      function( entry, activeEntry ) {
+        return entry === activeEntry;
       } );
 
     var readoutText = new RichText( '?', {
@@ -118,7 +119,7 @@ define( function( require ) {
         if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
           gameStateProperty.value = GameState.SECOND_ATTEMPT;
         }
-        activeEditableProperty.value = valuePropertyProperty.value;
+        activeEntryProperty.value = entryProperty.value;
       },
       font: options.editFont
     } );
@@ -131,11 +132,11 @@ define( function( require ) {
     digitsProperty.link( centerTermEditNode );
     allowExponentsProperty.link( centerTermEditNode );
 
-    Property.multilink( [ valuePropertyProperty, gameStateProperty ], function( valueProperty, gameState ) {
+    Property.multilink( [ entryProperty, gameStateProperty ], function( entry, gameState ) {
       var isReadoutOverride = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
-      readoutText.visible = valueProperty.displayType === DisplayType.READOUT ||
-                            ( isReadoutOverride && valueProperty.displayType === DisplayType.EDITABLE );
-      termEditNode.visible = valueProperty.displayType === DisplayType.EDITABLE && !isReadoutOverride;
+      readoutText.visible = entry.displayType === EntryDisplayType.READOUT ||
+                            ( isReadoutOverride && entry.displayType === EntryDisplayType.EDITABLE );
+      termEditNode.visible = entry.displayType === EntryDisplayType.EDITABLE && !isReadoutOverride;
     } );
   }
 

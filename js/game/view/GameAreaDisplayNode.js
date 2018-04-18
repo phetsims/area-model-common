@@ -15,7 +15,7 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var EditableProperty = require( 'AREA_MODEL_COMMON/game/model/EditableProperty' );
+  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
   var GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
@@ -34,11 +34,11 @@ define( function( require ) {
    * @extends {Node}
    *
    * @param {GameAreaDisplay} areaDisplay
-   * @param {Property.<EditableProperty|null>} activeEditableProperty
+   * @param {Property.<Entry|null>} activeEntryProperty
    * @param {Property.<GameState>} gameStateProperty
    * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */
-  function GameAreaDisplayNode( areaDisplay, activeEditableProperty, gameStateProperty, setActiveTerm ) {
+  function GameAreaDisplayNode( areaDisplay, activeEntryProperty, gameStateProperty, setActiveTerm ) {
     var self = this;
 
     Node.call( this );
@@ -107,17 +107,17 @@ define( function( require ) {
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
       _.range( 0, 3 ).forEach( function( partitionIndex ) {
-        var valuePropertyProperty = new DerivedProperty(
-          [ areaDisplay.partitionSizeProperties.get( orientation ) ],
-          function( values ) {
-            return values[ partitionIndex ] ? values[ partitionIndex ] : new EditableProperty( null );
+        var entryProperty = new DerivedProperty(
+          [ areaDisplay.partitionSizeEntriesProperties.get( orientation ) ],
+          function( entries ) {
+            return entries[ partitionIndex ] ? entries[ partitionIndex ] : new Entry( null );
           } );
         var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
         var label = new GameEditableLabelNode( {
-          valuePropertyProperty: valuePropertyProperty,
+          entryProperty: entryProperty,
           gameStateProperty: gameStateProperty,
-          activeEditableProperty: activeEditableProperty,
+          activeEntryProperty: activeEntryProperty,
           colorProperty: colorProperty,
           allowExponentsProperty: areaDisplay.allowExponentsProperty,
           orientation: orientation
@@ -134,18 +134,18 @@ define( function( require ) {
 
     _.range( 0, 3 ).forEach( function( horizontalIndex ) {
       _.range( 0, 3 ).forEach( function( verticalIndex ) {
-        var valuePropertyProperty = new DerivedProperty( [ areaDisplay.partialProductsProperty ], function( values ) {
+        var entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], function( values ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] )
             ? values[ verticalIndex ][ horizontalIndex ]
-            : new EditableProperty( null );
+            : new Entry( null );
         } );
 
         var colorProperty = new DerivedProperty( [
-          valuePropertyProperty,
+          entryProperty,
           AreaModelCommonColorProfile.dynamicPartialProductProperty,
           AreaModelCommonColorProfile.fixedPartialProductProperty
-        ], function( editableProperty, dynamicColor, fixedColor ) {
-          if ( editableProperty && editableProperty.type === EntryType.DYNAMIC ) {
+        ], function( entry, dynamicColor, fixedColor ) {
+          if ( entry && entry.type === EntryType.DYNAMIC ) {
             return dynamicColor;
           }
           else {
@@ -154,9 +154,9 @@ define( function( require ) {
         } );
 
         var label = new GameEditableLabelNode( {
-          valuePropertyProperty: valuePropertyProperty,
+          entryProperty: entryProperty,
           gameStateProperty: gameStateProperty,
-          activeEditableProperty: activeEditableProperty,
+          activeEntryProperty: activeEntryProperty,
           colorProperty: colorProperty,
           allowExponentsProperty: areaDisplay.allowExponentsProperty,
           orientation: Orientation.VERTICAL,
@@ -170,8 +170,8 @@ define( function( require ) {
       } );
     } );
 
-    var digitsProperty = new DerivedProperty( [ activeEditableProperty ], function( editableProperty ) {
-      return editableProperty ? editableProperty.digits : 1;
+    var digitsProperty = new DerivedProperty( [ activeEntryProperty ], function( entry ) {
+      return entry ? entry.digits : 1;
     } );
 
     var keypadOptions = {
@@ -188,12 +188,12 @@ define( function( require ) {
     noExponentKeypadPanel.visible = false;
     exponentKeypadPanel.visible = false;
 
-    activeEditableProperty.link( function( newEditableProperty ) {
+    activeEntryProperty.link( function( newEntry ) {
       noExponentKeypadPanel.clear();
       exponentKeypadPanel.clear();
 
-      noExponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.inputMethod === InputMethod.CONSTANT;
-      exponentKeypadPanel.visible = newEditableProperty !== null && newEditableProperty.inputMethod === InputMethod.TERM;
+      noExponentKeypadPanel.visible = newEntry !== null && newEntry.inputMethod === InputMethod.CONSTANT;
+      exponentKeypadPanel.visible = newEntry !== null && newEntry.inputMethod === InputMethod.TERM;
     } );
   }
 
