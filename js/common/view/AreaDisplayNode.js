@@ -55,6 +55,8 @@ define( function( require ) {
     // REVIEW: Should be annotated @public (a11y) {Node} - Layers
     // REVIEW*: I haven't seen that before. Can we add it to the code review checklist if it's a thing? (Have only seen
     // REVIEW*: repository-specific or read-only there).
+    // REVIEW: @public (phet-io) and @public (a11y) have numerous usages across our codebase.  Should we discuss it
+    // REVIEW: at developer meeting to make sure everyone is aware of this?
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
