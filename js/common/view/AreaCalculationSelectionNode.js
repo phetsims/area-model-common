@@ -54,9 +54,6 @@ define( function( require ) {
 
   /**
    * Creates a calculation icon with two fills.
-   * REVIEW: What does (one for the top line only) mean?
-   * REVIEW*: Just was noting that the top fill is only used for 1 line, whereas the bottom one is for multiple lines.
-   * REVIEW*: Added docs to params to help more, is that sufficient?
    * @private
    *
    * @param {Property.<Color>} topColorProperty - Fill for the top line
