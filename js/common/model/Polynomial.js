@@ -30,13 +30,11 @@ define( function( require ) {
     // REVIEW: should assert that the power <= MAX_POWER
     for ( var power = 4; power >= 0; power-- ) {
 
-      // REVIEW: the second arg of the filter call (the array) is unfamiliar to the reviewers.  Can you please clarify
-      // how it works?
-      // REVIEW*: Returns terms that have term.power === power. Lodash docs note the example:
-      // // The `_.matchesProperty` iteratee shorthand.
-      // _.filter(users, ['active', false]);
-      // // => objects for ['fred']
-      var sum = _.sum( _.map( _.filter( terms, [ 'power', power ] ), 'coefficient' ) );
+      // Collect the terms with the corresponding power
+      var termsWithPower = _.filter( terms, [ 'power', power ] );
+
+      // Get their coefficients and sum them
+      var sum = _.sum( _.map( termsWithPower, 'coefficient' ) );
       if ( sum !== 0 ) {
         combinedTerms.push( new Term( sum, power ) );
       }
