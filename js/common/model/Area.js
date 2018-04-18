@@ -29,10 +29,13 @@ define( function( require ) {
    *                                                           object memorized (and they should not be shared by
    *                                                           multiple areas ever). Usually created in subtypes anyways.
    * @param {OrientationPair.<Property.<Color>>} colorProperties
-   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. // REVIEW: I noticed that when placing the triangle partition at the max, it jumps back to 0.  Is this max inclusive or exclusive?
+   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. A partition can
+   * be held at the max, but if released at the max it will jump back to 0.
+   * REVIEW: I noticed that when placing the triangle partition at the max, it jumps back to 0.  Is this max inclusive or exclusive?
    * REVIEW*: It's the far right/bottom edge in the model coordinates. So in the proportional case it is the maximum size of a full side.
    * REVIEW*: It's technically inclusive, since you can drag a partition line temporarily to that location (if the area is large enough).
    * REVIEW*: But it's unrelated to that concept, and a better name would probably be helpful. Thoughts on a good name?
+   * REVIEW: I updated the @param, will you see if that is sufficient?
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
