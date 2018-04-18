@@ -167,6 +167,8 @@ define( function( require ) {
     // REVIEW: comment where the addChild calls are made, and why they are not made here
     // REVIEW*: It seems like a common pattern I'm using, so I'm curious how a comment would help?
     // REVIEW*: Or is it recommending that have `this.children = [ ... ]` here (which totally looks possible)?
+    // REVIEW: My apologies, I thought they were in some other function or file.  Now that I see them earlier in the
+    // REVIEW: constructor, I realize everything is OK.
   }
 
   areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
