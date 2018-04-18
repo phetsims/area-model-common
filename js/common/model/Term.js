@@ -23,13 +23,10 @@ define( function( require ) {
    * @param {number} [power]
    */
   function Term( coefficient, power ) {
-    // Properly handle 0x, see https://github.com/phetsims/area-model-common/issues/6. This generally removes a lot of
-    // special-cases (e.g. 0x^2 equals 0), and allows things like Polynomial to easily have one term of each power
-    // (where if the constant is 0, its power is 0). Also applies to things like sorting by power or how we want things
-    // displayed (0, not 0x).
-    // REVIEW: please summarize #6 here in the code, as mathematically it seems sufficient for coefficient to be 0,
-    // REVIEW: please explain.
-    // REVIEW*: Is the above sufficient?
+    // Properly handle 0x. This generally removes a lot of special-cases (e.g. 0x^2 equals 0), and allows things like
+    // Polynomial to easily have one term of each power (where if the constant is 0, its power is 0). Also applies to
+    // things like sorting by power or how we want things displayed (0, not 0x).
+    // See https://github.com/phetsims/area-model-common/issues/6
     if ( coefficient === 0 ) {
       power = 0;
     }
