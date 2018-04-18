@@ -70,9 +70,13 @@ define( function( require ) {
      * @returns {boolean}
      */
     equals: function( term ) {
-
+      console.log( this.coefficient, term.coefficient );
       // REVIEW: Can you please explain/document why an equality check for the coefficients?
       // REVIEW*: Things like this are needed because of floating-point arithmetic. Should we rename this approxEquals?
+      // REVIEW: I'm concerned that approxEquals won't work if combined with Property.deepEquals.
+      // REVIEW: I know it's safe to check against an epsilon, but are you sure there are values x,y for which
+      // abs(x-y)<1E-7 and x!==y ?
+      // REVIEW: Or why not round coefficient to the nearest allowed value?
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 
@@ -86,7 +90,9 @@ define( function( require ) {
       var string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
-        string += Util.roundSymmetric( Math.abs( this.coefficient ) * 100 ) / 100;  //REVIEW: can you remind me with a code comment whan the *100/100 does?
+
+        //REVIEW: can you remind me with a code comment whan the *100/100 does?
+        string += Util.roundSymmetric( Math.abs( this.coefficient ) * 100 ) / 100;
       }
       if ( this.power > 0 ) {
         string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
