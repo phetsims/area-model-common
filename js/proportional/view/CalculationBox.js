@@ -42,6 +42,7 @@ define( function( require ) {
     // @private {CalculationLinesNode}
     this.calculationLinesNode = new CalculationLinesNode( model );
 
+    // REVIEW: Move to // constants?
     var margin = 8;
 
     var alignBox = new AlignBox( this.calculationLinesNode, {

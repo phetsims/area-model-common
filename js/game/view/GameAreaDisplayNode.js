@@ -77,6 +77,8 @@ define( function( require ) {
     var centerProperties = OrientationPair.create( function( orientation ) {
       return [
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
+
+          // REVIEW: Perhaps rename var to paritionCount?
           var quantity = layout.getPartitionQuantity( orientation );
           if ( quantity === 1 ) {
             return fullOffset / 2;
@@ -89,6 +91,8 @@ define( function( require ) {
           }
         } ),
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
+
+          // REVIEW: Same as above
           var quantity = layout.getPartitionQuantity( orientation );
           if ( quantity === 2 ) {
             return ( fullOffset + singleOffset ) / 2;

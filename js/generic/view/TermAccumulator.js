@@ -167,6 +167,7 @@ define( function( require ) {
      * @override
      *
      * @param {Array.<KeyID>} proposedKeys
+     * REVIEW: Return type
      */
     defaultValidator: function( proposedKeys ) {
       var xCount = 0;

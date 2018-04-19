@@ -242,8 +242,11 @@ define( function( require ) {
         // We may not be able to access labels if we are in a partial state (some properties have changed, but others
         // have not).
         if ( leftLabel && rightLabel ) {
+
+          // REVIEW: Rename isRightPartitionVisible
           var hasTwo = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
 
+          // REVIEW: Move to // constants?
           var leftOverlapBump = 22;
           var labelOverlapBump = 10;
 

@@ -310,6 +310,8 @@ define( function( require ) {
     } ) );
 
     function createGameButton( string, listener, enabledProperty ) {
+
+      // REVIEW: Can we revise RectangularPushButton to be mutable?
       var button = new MutableOptionsNode( RectangularPushButton, [], {
         content: new Text( string, {
           font: AreaModelCommonConstants.BUTTON_FONT,

@@ -89,6 +89,8 @@ define( function( require ) {
 
     // Set up partition coordinate/size
     Orientation.VALUES.forEach( function( orientation ) {
+
+      // REVIEW: Rename to partitionCount or numberOfPartitions
       var quantity = layout.getPartitionQuantity( orientation );
 
       var partitions = self.partitions.get( orientation );

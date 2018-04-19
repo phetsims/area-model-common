@@ -90,6 +90,8 @@ define( function( require ) {
      * @private
      */
     update: function() {
+
+      // REVIEW: Please use more expressive variable name
       var mvt = this.modelViewTransformProperty.value;
 
       // Ignore updates if we are not dirty
@@ -99,12 +101,14 @@ define( function( require ) {
       if ( !this.countingVisibleProperty.value ) { return; }
 
       // Coordinate mapping into the view
+      // REVIEW: Rename like modelToViewX
       var mapX = mvt.modelToViewX.bind( mvt );
       var mapY = mvt.modelToViewY.bind( mvt );
 
       var width = this.activeTotalProperties.horizontal.value;
       var height = this.activeTotalProperties.vertical.value;
 
+      // REVIEW: More expressive variable name for number
       var number = 1;
       for ( var row = 0; row < height; row++ ) {
         var rowCenter = mapY( row + 0.5 );

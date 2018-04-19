@@ -27,7 +27,7 @@ define( function( require ) {
 
   // constants
   var BOX_SIZE = 30;
-  var PAREN_BOUNDS = new Text( ')(', {
+  var PAREN_BOUNDS = new Text( ')(', { //REVIEW: I've seen this string in a couple of places.  Do we need to move '(' to our Symbols file?
     font: AreaModelCommonConstants.FACTORS_PAREN_FONT,
     boundsMethod: 'accurate'
   } ).bounds;
@@ -46,6 +46,7 @@ define( function( require ) {
       return self.createOrientationReadout( orientation, displayProperty );
     } );
 
+    // REVIEW: Should these characters be in the symbols file?
     var leftParenText = new Text( '(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
     var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
     var rightParenText = new Text( ')', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );

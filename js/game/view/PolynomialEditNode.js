@@ -50,6 +50,8 @@ define( function( require ) {
     var readoutText = new RichText( longestString, {
       font: AreaModelCommonConstants.POLYNOMIAL_EDIT_READOUT_FONT
     } );
+
+    // REVIEW: Name with a Node or Rectangle suffix
     var readoutBackground = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
       cornerRadius: 3,
       stroke: 'black',
@@ -137,6 +139,7 @@ define( function( require ) {
     linkProperty( xProperty, xEntryProperty );
     linkProperty( xSquaredProperty, xSquaredEntryProperty );
 
+    // REVIEW: Can you comment on these values?  Why -81 to 81?
     var rangeProperty = new Property( new Range( -81, 81 ) );
 
     function highlightFunction( highlight, errorColor, dirtyColor ) {

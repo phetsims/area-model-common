@@ -28,7 +28,7 @@ define( function( require ) {
    * @returns {number}
    */
   function thousandRound( value ) {
-    return Util.roundSymmetric( 1000 * value ) / 1000;
+    return Util.roundSymmetric( 1000 * value ) / 1000; // REVIEW: I saw other code somewhere in the sim that did the same thing but with 100
   }
 
   /**
@@ -115,6 +115,8 @@ define( function( require ) {
         var verticalGridShape = new Shape();
         var maxX = modelViewTransform.modelToViewX( maximumSize );
         var maxY = modelViewTransform.modelToViewY( maximumSize );
+
+        // REVIEW: Why does this start at -1?
         for ( var i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
           var x = modelViewTransform.modelToViewX( i * smallTileSize );
           var y = modelViewTransform.modelToViewY( i * smallTileSize );
@@ -202,6 +204,7 @@ define( function( require ) {
       this.dirty = false;
 
       // Coordinate mapping into the view
+      // REVIEW: Rename modelToViewX and modelToViewY
       var mapX = this.modelViewTransformProperty.value.modelToViewX.bind( this.modelViewTransformProperty.value );
       var mapY = this.modelViewTransformProperty.value.modelToViewY.bind( this.modelViewTransformProperty.value );
 

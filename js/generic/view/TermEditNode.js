@@ -65,6 +65,7 @@ define( function( require ) {
 
     var self = this;
 
+    // REVIEW: Should this be from MathSymbols.js?
     var readoutText = new RichText( '-', {
       fill: options.textColorProperty,
       font: options.font
