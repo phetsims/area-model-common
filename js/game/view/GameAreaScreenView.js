@@ -123,7 +123,6 @@ define( function( require ) {
     var levelButtons = model.levels.map( function( level, index ) {
       // Doesn't support a color property as the baseColor, so we need to wrap it.
       return new MutableOptionsNode( LevelSelectionButton, [ levelIcons[ index ], level.scoreProperty ], {
-        buttonWidth: 120,
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
           numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
