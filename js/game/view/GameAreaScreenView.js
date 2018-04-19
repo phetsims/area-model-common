@@ -441,7 +441,8 @@ define( function( require ) {
             }, {
               cornerRadius: 8,
               center: self.layoutBounds.center,
-              fill: level.colorProperty
+              fill: level.colorProperty,
+              contentMaxWidth: 400
             } )
         ];
 
