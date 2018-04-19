@@ -85,6 +85,8 @@ define( function( require ) {
     // REVIEW: Is it annotated as Property instead of DynamicProperty because the client-side API should only know that it
     // REVIEW: is Property and not DynamicProperty?  For the sake of argument, if DynamicProperty had some method like
     // REVIEW: setBidirectional() that we expected clients to be able to use, then we would use @public {DynamicProperty.<...>}, right?
+    // REVIEW*: Yup, definitely. I only want clients to know it is a Property they can observe/check. You'll probably
+    // REVIEW*: see this also with things marked as {Node} where that's the only part that matters.
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );

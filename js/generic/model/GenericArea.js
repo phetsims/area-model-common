@@ -74,7 +74,8 @@ define( function( require ) {
     // REVIEW*: > can benefit from them
     // REVIEW: My apologies for the runaround.  Now that I better understand the simulation and maximumLayout1, I'd like
     // REVIEW: to keep it, but rename it something like: AreaModelCommonQueryParameters.maximumCalculationSize
-    if ( AreaModelCommonQueryParameters.maximumLayout1 ) {
+    // REVIEW*: Done, and Steele mentioned he thought it would be valuable to have.
+    if ( AreaModelCommonQueryParameters.maximumCalculationSize ) {
       horizontalPartitions.forEach( function( partition, index ) {
         partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
       } );

@@ -25,6 +25,7 @@ define( function( require ) {
     // REVIEW: ProportionalAreaDisplayNode has orientation.minSide which IDEA reports as unused.  If I change the constructor
     // REVIEW: to read this.minSide = minSide, then IDEA can find it.  I recommend to use the "required arguments"
     // REVIEW: strategy for this case.  This will also permit visibility annotations, centralized doc, etc.
+    // [PENDING] REVIEW*: Waiting on resolution to the "required arguments" pattern (dev meeting)
     _.extend( this, options );
 
     // @public {Orientation|null} - Will be filled in after construction.

@@ -28,13 +28,14 @@ define( function( require ) {
    *                                                           object (and they should not be shared by multiple areas
    *                                                           ever). Usually created in subtypes anyways.
    * @param {OrientationPair.<Property.<Color>>} colorProperties
-   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. A partition can
-   * be held at the max, but if released at the max it will jump back to 0.
+   * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. A (proportional)
+   * partition can be held at the max, but if released at the max it will jump back to 0.
    * REVIEW: I noticed that when placing the triangle partition at the max, it jumps back to 0.  Is this max inclusive or exclusive?
    * REVIEW*: It's the far right/bottom edge in the model coordinates. So in the proportional case it is the maximum size of a full side.
    * REVIEW*: It's technically inclusive, since you can drag a partition line temporarily to that location (if the area is large enough).
    * REVIEW*: But it's unrelated to that concept, and a better name would probably be helpful. Thoughts on a good name?
    * REVIEW: I updated the @param, will you see if that is sufficient?
+   * REVIEW*: Its description seems to be specific to ProportionalArea's behavior, so I added a note. Anything else needed?
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
@@ -110,10 +111,8 @@ define( function( require ) {
       var partitionedArea = new PartitionedArea( partitions );
 
       // By default, have the area linked to the partitions. This won't work for the game.
-      // REVIEW: Does this multilink need a corresponding unlink?  If not, why not?
-      // REVIEW*: Does not need an unlink (subtypes create them, so they are basically "owned" memory-wise by this
-      // REVIEW*: area). Added a note in the constructor, is that sufficient? Should I have a comment here about it too?
-      // REVIEW: So they persist for the life of the sim and don't need to be disposed?  Yes add a note here as well.
+      // NOTE: Since we "own" the partitions memory-wise, we don't need to unlink here since they should all be GC'ed
+      // at the same time.
       Property.multilink(
         [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ],
         function( horizontalSize, verticalSize ) {
@@ -238,6 +237,7 @@ define( function( require ) {
         // REVIEW*: complicated by the fact that new Polynomial( [] ).terms.length is NOT 0 for a reason. I'd advise
         // REVIEW*: against a change, but I'd like to hear your opinion.
         // REVIEW: OK to keep it as is, but I'm wondering why new Polynomial( [] ).terms.length is NOT 0
+        // REVIEW*: Fundamentally because we want it displayed as '0' not ''.
         if ( terms.length ) {
           return new TermList( terms );
         }
