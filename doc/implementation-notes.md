@@ -193,3 +193,6 @@ We need to switch between showing different areas a lot (scenes and the game), a
 Our model-view transforms vary a bit. For proportional screens, they map the actual coordinate into view space, but for generic screens the "model" space in each orientation is from 0 to 1 (so that gets mapped over).
 
 Since almost every feature is shared between multiple area-model sims, almost all the code is in this common repository. This includes the screens (since some are shared), so those are under js/screens/ (and each sim references the screens that it uses).
+
+Additionally, due to performance concerns, many types in area-model-common are poolable. This is helpful, even for cases where we can use the DAG nature of Scenery, since the CPU cost of creating the wrapper nodes was unacceptable. By pooling, it lowers the garbage collection and object creation overhead, and should allow for smoother animation.
+
