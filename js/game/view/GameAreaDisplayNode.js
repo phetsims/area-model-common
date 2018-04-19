@@ -136,6 +136,7 @@ define( function( require ) {
       } );
     } );
 
+    // REVIEW: Add a come comment here explaining what is happening.
     _.range( 0, 3 ).forEach( function( horizontalIndex ) {
       _.range( 0, 3 ).forEach( function( verticalIndex ) {
         var entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], function( values ) {
