@@ -239,7 +239,7 @@ define( function( require ) {
           result.push( term.coefficient >= 0 ? self.plus() : self.minus() );
         }
 
-        result.push( self.baseTermText( term, true ) );
+        result.push( self.baseTermText( term, index > 0 ) );
 
         return result;
       } ) ), AreaModelCommonConstants.CALCULATION_OP_PADDING );
