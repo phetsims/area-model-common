@@ -12,7 +12,6 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
@@ -33,6 +32,7 @@ define( function( require ) {
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
+  var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
@@ -64,6 +64,24 @@ define( function( require ) {
   var showAnswerString = require( 'string!VEGAS/showAnswer' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
   var tryAgainString = require( 'string!VEGAS/tryAgain' );
+
+  // images
+  var level1IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-1-icon.png' );
+  var level2IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-2-icon.png' );
+  var level3IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-3-icon.png' );
+  var level4IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-4-icon.png' );
+  var level5IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-5-icon.png' );
+  var level6IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-6-icon.png' );
+
+  // constants
+  var LEVEL_ICON_IMAGES = [
+    level1IconImage,
+    level2IconImage,
+    level3IconImage,
+    level4IconImage,
+    level5IconImage,
+    level6IconImage
+  ];
 
   /**
    * @constructor
@@ -97,13 +115,8 @@ define( function( require ) {
       showingLeftProperty );
     this.addChild( this.slidingScreen );
 
-    var levelIconAlignGroup = new AlignGroup();
-    var levelIcons = model.levels.map( function( level ) {
-      return new AlignBox( level.icon, {
-        group: levelIconAlignGroup,
-        xMargin: 10,
-        yMargin: 30
-      } );
+    var levelIcons = LEVEL_ICON_IMAGES.map( function( iconImage ) {
+      return new Image( iconImage );
     } );
 
     var buttonSpacing = 15;

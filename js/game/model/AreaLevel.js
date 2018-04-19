@@ -24,10 +24,9 @@ define( function( require ) {
    * @param {number} number
    * @param {AreaChallengeType} type
    * @param {Property.<Color>} colorProperty
-   * @param {Node} icon
    * @param {Array.<AreaChallengeDescription>} challengeDescriptions
    */
-  function AreaLevel( number, type, colorProperty, icon, challengeDescriptions ) {
+  function AreaLevel( number, type, colorProperty, challengeDescriptions ) {
     var self = this;
 
     // @public {number}
@@ -38,9 +37,6 @@ define( function( require ) {
 
     // @public {Property.<Color>}
     this.colorProperty = colorProperty;
-
-    // @public {Node}
-    this.icon = icon;
 
     // @public {Array.<AreaChallengeDescription>} - Descriptions for each type of level
     this.challengeDescriptions = challengeDescriptions;
