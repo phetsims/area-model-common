@@ -87,6 +87,7 @@ define( function( require ) {
     // REVIEW: setBidirectional() that we expected clients to be able to use, then we would use @public {DynamicProperty.<...>}, right?
     // REVIEW*: Yup, definitely. I only want clients to know it is a Property they can observe/check. You'll probably
     // REVIEW*: see this also with things marked as {Node} where that's the only part that matters.
+    // REVIEW: Sounds like a good policy, but I doubt other developers are aware of this.
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );
