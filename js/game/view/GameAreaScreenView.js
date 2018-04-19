@@ -139,7 +139,7 @@ define( function( require ) {
     } );
 
     this.levelSelectionLayer.addChild( new VBox( {
-      children: _.chunk( levelButtons, 6 ).map( function( children ) {
+      children: _.chunk( levelButtons, 3 ).map( function( children ) {
         return new HBox( {
           children: children,
           spacing: buttonSpacing
