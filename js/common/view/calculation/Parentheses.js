@@ -94,6 +94,8 @@ define( function( require ) {
 
   // Standard boilerplate for pooling :(
   Poolable.mixInto( Parentheses, {
+
+    // REVIEW: Perhaps we should create standard documentation for this function and copy it to each declaration.
     constructorDuplicateFactory: function( pool ) {
       return function( content, baseColorProperty ) {
         if ( pool.length ) {
