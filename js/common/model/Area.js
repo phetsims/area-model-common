@@ -24,10 +24,9 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * // REVIEW: did you mean to say "memorized"?
    * @param {OrientationPair.<Array.<Partition>>} partitions - The passed-in partitions become "owned" by this Area
-   *                                                           object memorized (and they should not be shared by
-   *                                                           multiple areas ever). Usually created in subtypes anyways.
+   *                                                           object (and they should not be shared by multiple areas
+   *                                                           ever). Usually created in subtypes anyways.
    * @param {OrientationPair.<Property.<Color>>} colorProperties
    * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. A partition can
    * be held at the max, but if released at the max it will jump back to 0.

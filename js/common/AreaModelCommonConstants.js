@@ -220,6 +220,8 @@ define( function( require ) {
      * // REVIEW*: those instead. I can definitely create unit tests. What repo would be best? phet-core? dot?
      * // REVIEW: How does this method differ from _.flatten(array).forEach()?  That seems that it would give the same
      * // REVIEW: result for the 3 examples above.
+     * // REVIEW*: That wouldn't work, because it wouldn't provide the correct indices in the callback.
+     * // REVIEW*: Additionally, it would be _.flattenDepth( array, dimension - 1 ).forEach.
      */
     dimensionForEach: function( dimension, array, forEach ) {
       // Will get indices pushed when we go deeper into the multidimensional array, and popped when we go back, so that

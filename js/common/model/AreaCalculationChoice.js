@@ -12,8 +12,14 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var AreaCalculationChoice = {
+    // Don't show the calculation panel/box at all
     HIDDEN: 'HIDDEN',
+
+    // Show one line (with adjacent lines somewhat faded). Only supported by the calculation panel (using
+    // CalculationNode), since the CalculationBox doesn't have room or the desire for the complexity.
     LINE_BY_LINE: 'LINE_BY_LINE',
+
+    // Show all lines at once (supported by calculation panel/box)
     SHOW_ALL_LINES: 'SHOW_ALL_LINES'
   };
 
