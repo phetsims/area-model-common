@@ -115,6 +115,8 @@ define( function( require ) {
       lineWidth: 0.7
     } );
     if ( allowExponents ) {
+
+      // REVIEW: Should this also be moved to // constants?  See https://github.com/phetsims/tasks/issues/931
       var exponentPadding = 2;
       horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
       verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
