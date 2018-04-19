@@ -41,9 +41,7 @@ define( function( require ) {
       }
     } );
 
-    GenericAreaDisplay.call( this, new DerivedProperty( [ this.areaChallengeProperty ], function( areaChallenge ) {
-      return areaChallenge.area;
-    } ) );
+    GenericAreaDisplay.call( this, new DerivedProperty( [ this.areaChallengeProperty ], _.property( 'area' ) ) );
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Values for dimension line label and product box, null is
     // hidden.
