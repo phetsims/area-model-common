@@ -272,6 +272,17 @@ define( function( require ) {
      * @returns {Array.<CalculationLine>}
      */
     getAdjacentLines: function() {
+
+      // REVIEW: I prefer this push-based implementation:
+      // var result = [];
+      // if (this.previousLine){
+      //   result.push(this.previousLine);
+      // }
+      // result.push(this);
+      // if (this.nextLine){
+      //   result.push(this.nextLine);
+      // }
+      // return result;
       var result = [ this ];
       if ( this.previousLine ) {
         result = [ this.previousLine ].concat( result );

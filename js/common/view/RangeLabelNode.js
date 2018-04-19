@@ -47,6 +47,7 @@ define( function( require ) {
       ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
       : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
+    // REVIEW: rename to richText or textNode
     var text = new RichText( '', {
       font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
       fill: colorProperty
@@ -54,6 +55,8 @@ define( function( require ) {
 
     // Constrain width on the left side (don't let it go out of the layout bounds)
     if ( orientation === Orientation.VERTICAL ) {
+
+      // REVIEW: Eliminate extraneous parentheses
       var verticalRangeOffset = ( isProportional
         ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
         : AreaModelCommonConstants.GENERIC_RANGE_OFFSET );
@@ -62,6 +65,9 @@ define( function( require ) {
 
     // Update the label text
     termListProperty.link( function( termList ) {
+
+      // REVIEW: In another review discussion, we discussed that termList.terms.length would be >0 if the list was non-null,/
+      // REVIEW: Did I understand that conversation properly?
       var hasTerms = termList !== null && termList.terms.length > 0;
 
       text.visible = hasTerms;

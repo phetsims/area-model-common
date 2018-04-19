@@ -30,6 +30,7 @@ define( function( require ) {
   function ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, 1, area, activeIndexProperty, allowExponents, isProportional );
 
+    // REVIEW: Give more boolean-ish sounding names, like isHorizontalSingle
     var horizontalSingle = horizontalTerms.length === 1;
     var verticalSingle = verticalTerms.length === 1;
 

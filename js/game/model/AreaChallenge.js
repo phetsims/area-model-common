@@ -82,9 +82,13 @@ define( function( require ) {
 
     // @public {Array.<Array.<Entry>>}
     this.partialProductSizeEntries = AreaModelCommonConstants.dimensionMap( 2, this.partialProductSizes, function( size, indices ) {
+
+      // REVIEW: It is a slight code smell that the dimensions got packed into array indices, not sure if it can
+      // REVIEW: be addressed or if this is already the best solution.  What do you think?
       var verticalIndex = indices[ 0 ];
       var horizontalIndex = indices[ 1 ];
 
+      // REVIEW: I cannot figure out what the numbersDigits are, can you improve the variable name or add a helpful comment?
       var numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
       var type = description.productTypes[ verticalIndex ][ horizontalIndex ];
       var entry = new Entry( size, {
@@ -165,6 +169,7 @@ define( function( require ) {
       } );
 
     // All of the entries for the challenge
+    // REVIEW: Can this be renamed to allChallengeEntries?
     var mainEntries = this.partitionSizeEntries.horizontal
       .concat( this.partitionSizeEntries.vertical )
       .concat( _.flatten( this.partialProductSizeEntries ) );
@@ -268,6 +273,9 @@ define( function( require ) {
      * @returns {boolean}
      */
     nonUniqueHorizontalMatches: function() {
+
+      // REVIEW: I'm not following this part.  Why do we need the 1th term?  expected1 and expected2 are terms, right?
+      // REVIEW: can they be named as such?  There are several places in this file that could benefit from changes.
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
@@ -283,6 +291,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     nonUniqueVerticalMatches: function() {
+      // REVIEW: see comments in preceding method
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
@@ -299,6 +308,8 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasNonUniqueMatch: function() {
+
+      // REVIEW: see comments in preceding method
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
@@ -345,6 +356,7 @@ define( function( require ) {
       if ( !this.description.unique ) {
         var reversed = false;
 
+        // REVIEW: see comments in preceding method
         var expected1 = this.partitionSizes.horizontal[ 1 ];
         var expected2 = this.partitionSizes.vertical[ 1 ];
 
@@ -487,6 +499,7 @@ define( function( require ) {
           var sign = phet.joist.random.nextBoolean() ? 1 : -1;
 
           // Exclude a 1 if our length is 1
+          // REVIEW: Why exclude a 1 if length is 1?
           var digit = phet.joist.random.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
           return new Term( sign * digit, power );
         }
