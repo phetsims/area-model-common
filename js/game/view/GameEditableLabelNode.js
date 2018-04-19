@@ -119,7 +119,14 @@ define( function( require ) {
         if ( gameStateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
           gameStateProperty.value = GameState.SECOND_ATTEMPT;
         }
-        activeEntryProperty.value = entryProperty.value;
+        if ( activeEntryProperty.value !== entryProperty.value ) {
+          activeEntryProperty.value = entryProperty.value;
+        }
+        else {
+          // Pressing on the edit button when that keypad is already open will instead close the keypad.
+          // See https://github.com/phetsims/area-model-common/issues/127
+          activeEntryProperty.value = null;
+        }
       },
       font: options.editFont
     } );

@@ -58,7 +58,14 @@ define( function( require ) {
       } ),
       allowExponentsProperty: new Property( allowExponents ),
       editCallback: function() {
-        activePartitionProperty.value = partitionProperty.value;
+        if ( activePartitionProperty.value !== partitionProperty.value ) {
+          activePartitionProperty.value = partitionProperty.value;
+        }
+        else {
+          // Pressing on the edit button when that keypad is already open will instead close the keypad.
+          // See https://github.com/phetsims/area-model-common/issues/127
+          activePartitionProperty.value = null;
+        }
       }
     } );
 
