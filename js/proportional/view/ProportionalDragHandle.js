@@ -64,35 +64,38 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
+    function updateOffsetProperty( event, listener ) {
+      var area = areaProperty.value;
+      var modelViewTransform = modelViewTransformProperty.value;
+
+      // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
+      // actually is (and we want it to be efficient).
+
+      var pointerViewPoint = listener.parentPoint;
+      var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
+      var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
+
+      var width = Util.roundSymmetric( modelPoint.x / area.snapSize ) * area.snapSize;
+      var height = Util.roundSymmetric( modelPoint.y / area.snapSize ) * area.snapSize;
+
+      width = Util.clamp( width, area.minimumSize, area.maximumSize );
+      height = Util.clamp( height, area.minimumSize, area.maximumSize );
+
+      activeTotalProperties.horizontal.value = width;
+      activeTotalProperties.vertical.value = height;
+
+      offsetProperty.value = new Vector2(
+        viewPoint.x - modelViewTransform.modelToViewX( width ),
+        viewPoint.y - modelViewTransform.modelToViewY( height )
+      );
+    }
+
     var dragListener = new DragListener( {
       targetNode: this,
       applyOffset: false,
       isPressedProperty: draggedProperty,
-      drag: function( event, listener ) {
-        var area = areaProperty.value;
-        var modelViewTransform = modelViewTransformProperty.value;
-
-        // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
-        // actually is (and we want it to be efficient).
-
-        var pointerViewPoint = listener.parentPoint;
-        var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
-        var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
-
-        var width = Util.roundSymmetric( modelPoint.x / area.snapSize ) * area.snapSize;
-        var height = Util.roundSymmetric( modelPoint.y / area.snapSize ) * area.snapSize;
-
-        width = Util.clamp( width, area.minimumSize, area.maximumSize );
-        height = Util.clamp( height, area.minimumSize, area.maximumSize );
-
-        activeTotalProperties.horizontal.value = width;
-        activeTotalProperties.vertical.value = height;
-
-        offsetProperty.value = new Vector2(
-          viewPoint.x - modelViewTransform.modelToViewX( width ),
-          viewPoint.y - modelViewTransform.modelToViewY( height )
-        );
-      }
+      start: updateOffsetProperty,
+      drag: updateOffsetProperty
     } );
     // Interrupt the drag when one of our parameters changes
     areaProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
