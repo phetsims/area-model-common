@@ -183,6 +183,7 @@ define( function( require ) {
     },
 
     /**
+     * // REVIEW: There is a lot of duplication with .createTermListProperty(). Can we factor this out?
      * Creates a derived property with the total size for a particular dimension.
      * @private
      *
@@ -210,6 +211,7 @@ define( function( require ) {
     },
 
     /**
+     * // REVIEW: There is a lot of duplication with .createTotalProperty(). Can we factor this out?
      * Creates a derived property with the total (defined) term list for a particular dimension.
      * @private
      *
