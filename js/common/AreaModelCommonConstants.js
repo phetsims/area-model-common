@@ -230,6 +230,8 @@ define( function( require ) {
      * // REVIEW: and can sometimes indicate suboptimal code, see the comments at the dimensionMap usage sites.
      * // REVIEW: Also, I'm interested in trying out the full-blown 2D version to see how much it simplifies the implementation
      * // REVIEW: and the call sites.
+     * // REVIEW: We looked at providing the dimensions in the callback as top-level arguments like (value,dimensionA,dimensionB, etc)
+     * // REVIEW: And it seemed preferable to packing the indices into an array (at least for this usage in area model)
      */
     dimensionForEach: function( dimension, array, forEach ) {
 

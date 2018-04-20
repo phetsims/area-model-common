@@ -29,13 +29,8 @@ define( function( require ) {
    *                                                           ever). Usually created in subtypes anyways.
    * @param {OrientationPair.<Property.<Color>>} colorProperties
    * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. A (proportional)
-   * partition can be held at the max, but if released at the max it will jump back to 0.
-   * REVIEW: I noticed that when placing the triangle partition at the max, it jumps back to 0.  Is this max inclusive or exclusive?
-   * REVIEW*: It's the far right/bottom edge in the model coordinates. So in the proportional case it is the maximum size of a full side.
-   * REVIEW*: It's technically inclusive, since you can drag a partition line temporarily to that location (if the area is large enough).
-   * REVIEW*: But it's unrelated to that concept, and a better name would probably be helpful. Thoughts on a good name?
-   * REVIEW: I updated the @param, will you see if that is sufficient?
-   * REVIEW*: Its description seems to be specific to ProportionalArea's behavior, so I added a note. Anything else needed?
+   *                                    - partition can be held at the max, but if released at the max it will jump back
+   *                                    - to 0.
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
@@ -230,14 +225,6 @@ define( function( require ) {
 
       return new DerivedProperty( properties, function() {
         var terms = self.getTerms( orientation );
-
-        // REVIEW: Would it be clearer to use a termList of length 0 instead of null?  Why or why not?
-        // REVIEW*: Easier to check for null everywhere instead of having to check for length 0, and I conceptualized it
-        // REVIEW*: as not even having a list. It looks like it would be possible to refactor many cases, but
-        // REVIEW*: complicated by the fact that new Polynomial( [] ).terms.length is NOT 0 for a reason. I'd advise
-        // REVIEW*: against a change, but I'd like to hear your opinion.
-        // REVIEW: OK to keep it as is, but I'm wondering why new Polynomial( [] ).terms.length is NOT 0
-        // REVIEW*: Fundamentally because we want it displayed as '0' not ''.
         if ( terms.length ) {
           return new TermList( terms );
         }

@@ -3,8 +3,8 @@
 /**
  * Base type for something that displays Areas.
  *
- * // REVIEW: Can you please provide documentation about why this problem warrants using the "wrap*" strategy?
- * // REVIEW: (i.e., what is special about the setup of AreaDisplay that leads to using wrap* when other places don't need wrap*?)
+ * This acts as a wrapper over the main areaProperty included, providing top-level Properties (or orientaion pair
+ * properties) that provide elements of the current Area.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -76,7 +76,7 @@ define( function( require ) {
   return inherit( Object, AreaDisplay, {
     /**
      * Wraps an orientation pair into one that contains properties.
-     * @public
+     * @protected
      *
      * @param {function} map - function( {Area} ): {OrientationPair.<*>}
      * @param {Object} [options]
@@ -94,7 +94,7 @@ define( function( require ) {
 
     /**
      * Wraps an orientation pair of properties
-     * @public
+     * @protected
      *
      * @param {function} map - function( {Area} ): {OrientationPair.<Property.<*>>}
      * @param {Object} [options]
@@ -112,7 +112,7 @@ define( function( require ) {
 
     /**
      * Wraps a property.
-     * @public
+     * @protected
      *
      * @param {function} map - function( {Area} ): {Property.<*>}
      * @param {Object} [options]
@@ -120,24 +120,20 @@ define( function( require ) {
      */
     wrapProperty: function( map, options ) {
       return new DynamicProperty( this.areaProperty, _.extend( {
-        derive: function( area ) {
-          return map( area );
-        }
+        derive: map
       }, options ) );
     },
 
     /**
      * Wraps an object into a property.
-     * @public
+     * @protected
      *
      * @param {function} map - function( {Area} ): {*}
      * @param {Object} [options]
      * @returns {Property.<*>}
      */
     wrapObject: function( map, options ) {
-      return new DerivedProperty( [ this.areaProperty ], function( area ) {
-        return map( area );
-      }, options );
+      return new DerivedProperty( [ this.areaProperty ], map, options );
     }
   } );
 } );
