@@ -59,6 +59,9 @@ define( function( require ) {
     GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
     // {string} - The string to be provided to RichText for a mathematical-looking x
+    // REVIEW: MDM suggests "Do not use this element!" regarding the font tag for html5. "The former behavior of the
+    //         <font> element can be achieved, and even better controlled using the CSS Fonts CSS properties."
+    //         According to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font
     X_VARIABLE_RICH_STRING: '<font face="'
                             + new MathSymbolFont( 10 ).family
                               .replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' )
