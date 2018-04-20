@@ -64,15 +64,15 @@ define( function( require ) {
       cursor: 'pointer'
     } );
 
+    var initialOffset;
     function updateOffsetProperty( event, listener ) {
       var area = areaProperty.value;
       var modelViewTransform = modelViewTransformProperty.value;
 
       // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
       // actually is (and we want it to be efficient).
-
       var pointerViewPoint = listener.parentPoint;
-      var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET );
+      var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET ).minus( initialOffset );
       var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
 
       var width = Util.roundSymmetric( modelPoint.x / area.snapSize ) * area.snapSize;
@@ -94,7 +94,10 @@ define( function( require ) {
       targetNode: this,
       applyOffset: false,
       isPressedProperty: draggedProperty,
-      start: updateOffsetProperty,
+      start: function( event, listener ) {
+        initialOffset = listener.localPoint.minusScalar( CIRCLE_DRAG_OFFSET );
+        updateOffsetProperty( event, listener );
+      },
       drag: updateOffsetProperty
     } );
     // Interrupt the drag when one of our parameters changes
