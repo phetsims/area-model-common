@@ -124,6 +124,7 @@ define( function( require ) {
       else {
         self.transitionNode.dissolveTo( self.levelSelectionLayer, {
           duration: 0.4,
+          gamma: 2.2,
           targetOptions: {
             easing: Easing.LINEAR
           }
