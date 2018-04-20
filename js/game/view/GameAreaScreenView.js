@@ -20,6 +20,7 @@ define( function( require ) {
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
+  var Easing = require( 'TWIXT/Easing' );
   var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
@@ -50,11 +51,11 @@ define( function( require ) {
   var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
   var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SlidingScreen = require( 'TWIXT/SlidingScreen' );
   var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var TransitionNode = require( 'TWIXT/TransitionNode' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
@@ -105,15 +106,30 @@ define( function( require ) {
     // @private {GameAudio} - Responsible for all audio
     this.audio = new GameAudio( model );
 
-    var showingLeftProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
-      return level === null;
+    // @private {TransitionNode}
+    this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
+      content: this.levelSelectionLayer,
+      useBoundsClip: false // better performance without the clipping
     } );
-    // @private {SlidingScreen}
-    this.slidingScreen = new SlidingScreen( this.levelSelectionLayer,
-      this.challengeLayer,
-      this.visibleBoundsProperty,
-      showingLeftProperty );
-    this.addChild( this.slidingScreen );
+    this.addChild( this.transitionNode );
+    model.currentLevelProperty.lazyLink( function( level ) {
+      if ( level ) {
+        self.transitionNode.slideLeftTo( self.challengeLayer, {
+          duration: 0.4,
+          targetOptions: {
+            easing: Easing.QUADRATIC_IN_OUT
+          }
+        } );
+      }
+      else {
+        self.transitionNode.dissolveTo( self.levelSelectionLayer, {
+          duration: 0.4,
+          targetOptions: {
+            easing: Easing.LINEAR
+          }
+        } );
+      }
+    } );
 
     var levelIcons = LEVEL_ICON_IMAGES.map( function( iconImage ) {
       return new Image( iconImage );
@@ -522,7 +538,7 @@ define( function( require ) {
      * @param {number} dt
      */
     step: function( dt ) {
-      this.slidingScreen.step( dt );
+      this.transitionNode.step( dt );
 
       this.rewardNode && this.rewardNode.step( dt );
     }
