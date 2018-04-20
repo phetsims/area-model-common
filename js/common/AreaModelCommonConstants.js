@@ -167,6 +167,7 @@ define( function( require ) {
      *                         array[ indices[ 0 ] ]...[ indices[ dimension - 1 ] ] === element
      */
     dimensionMap: function( dimension, array, map ) {
+
       // Will get indices pushed when we go deeper into the multidimensional array, and popped when we go back, so that
       // this essentially represents our "position" in the multidimensional array during iteration.
       var indices = [];
@@ -181,6 +182,7 @@ define( function( require ) {
        */
       function recur( dim, arr ) {
         return arr.map( function( element, index ) {
+
           // To process this element, we need to record our index (in case it is an array that we iterate through).
           indices.push( index );
 
@@ -224,6 +226,7 @@ define( function( require ) {
      * // REVIEW*: Additionally, it would be _.flattenDepth( array, dimension - 1 ).forEach.
      */
     dimensionForEach: function( dimension, array, forEach ) {
+
       // Will get indices pushed when we go deeper into the multidimensional array, and popped when we go back, so that
       // this essentially represents our "position" in the multidimensional array during iteration.
       var indices = [];
@@ -237,6 +240,7 @@ define( function( require ) {
        */
       function recur( dim, arr ) {
         return arr.forEach( function( element, index ) {
+
           // To process this element, we need to record our index (in case it is an array that we iterate through).
           indices.push( index );
 
