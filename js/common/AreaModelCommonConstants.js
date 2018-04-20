@@ -16,6 +16,7 @@ define( function( require ) {
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // constants
   var PANEL_CORNER_RADIUS = 5;
   var LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;
   var NORMAL_EDIT_FONT_SIZE = 18;
