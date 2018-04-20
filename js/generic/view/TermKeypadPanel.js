@@ -34,6 +34,7 @@ define( function( require ) {
   var enterString = require( 'string!AREA_MODEL_COMMON/enter' );
 
   // layout constants
+  // REVIEW: Can we factor out these layouts? It seems like the only difference is in the plus/minus symbol being used.
   var noExponentLayout = [
     [
       new Key( '7', KeyID.SEVEN ),
@@ -73,7 +74,8 @@ define( function( require ) {
       new Key( '3', KeyID.THREE )
     ],
     [
-      null, new Key( '0', KeyID.ZERO ),
+      null,
+      new Key( '0', KeyID.ZERO ),
       new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE )
     ]
   ];
