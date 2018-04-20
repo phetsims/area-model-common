@@ -59,22 +59,6 @@ define( function( require ) {
       allowExponents
     );
 
-    // NOTE: Leaving here because the query parameter may be helpful in the future. If it complicates things, please
-    // just remove it.
-    // REVIEW: Consult with the design team to gauge the probability this will be useful in the next year.  If less than 20%
-    // REVIEW: likely to be used in the next year, then delete it, leave a code comment about what it was
-    // REVIEW: and how it can be seen in the commit history
-    // REVIEW*: I asked AM. I had this originally set for removal, but from Slack dev-public April 6th:
-    // REVIEW*: > Jonathan Olson [4:37 PM]
-    // REVIEW*: > Have others been removing debug query parameters when moving a sim to production, or is it best to leave
-    // REVIEW*: > some in-place permanently? (area-model has one that fills out generic partition values such that it
-    // REVIEW*: > shows the "maximum layout" size for a number of things)
-    // REVIEW*: > Sam Reid [5:17 PM]
-    // REVIEW*: > I’d recommend to leave debug query parameters in for long term maintenance--so maintainers or reviewers
-    // REVIEW*: > can benefit from them
-    // REVIEW: My apologies for the runaround.  Now that I better understand the simulation and maximumLayout1, I'd like
-    // REVIEW: to keep it, but rename it something like: AreaModelCommonQueryParameters.maximumCalculationSize
-    // REVIEW*: Done, and Steele mentioned he thought it would be valuable to have.
     if ( AreaModelCommonQueryParameters.maximumCalculationSize ) {
       horizontalPartitions.forEach( function( partition, index ) {
         partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
