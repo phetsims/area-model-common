@@ -40,6 +40,8 @@ define( function( require ) {
     var self = this;
 
     // @public {Node|null} - Filled in later, should be non-null outside CalculationLine usage
+    // REVIEW: It is unclear how setting this value later does anything.  Is it added as a child?  When does that happen?
+    // REVIEW: Have you considered passing it as an argument instead of specifying it in the subtype?
     this.node = null;
 
     // @public {number}

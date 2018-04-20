@@ -224,6 +224,12 @@ define( function( require ) {
      * // REVIEW: result for the 3 examples above.
      * // REVIEW*: That wouldn't work, because it wouldn't provide the correct indices in the callback.
      * // REVIEW*: Additionally, it would be _.flattenDepth( array, dimension - 1 ).forEach.
+     * // REVIEW: All of the code reviewers are struggling with understanding when it is appropriate to use dimensionForEach
+     * // REVIEW: and dimensionMap.  Perhaps as a first step, move to phet-core and add unit tests?
+     * // REVIEW: But we also think it is odd to need the dimension indices in the callback--these are rarely used in [].forEach
+     * // REVIEW: and can sometimes indicate suboptimal code, see the comments at the dimensionMap usage sites.
+     * // REVIEW: Also, I'm interested in trying out the full-blown 2D version to see how much it simplifies the implementation
+     * // REVIEW: and the call sites.
      */
     dimensionForEach: function( dimension, array, forEach ) {
 
