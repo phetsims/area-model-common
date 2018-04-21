@@ -22,7 +22,7 @@ define( function( require ) {
   var genericGameScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-navbar.png' );
 
   // strings
-  var screenGenericGameString = require( 'string!AREA_MODEL_COMMON/screen.genericGame' );
+  var screenGameString = require( 'string!AREA_MODEL_COMMON/screen.game' );
 
   /**
    * @constructor
@@ -30,7 +30,7 @@ define( function( require ) {
   function GenericGameScreen() {
 
     var options = {
-      name: screenGenericGameString,
+      name: screenGameString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( genericGameScreenIconImage ),
       navigationBarIcon: new Image( genericGameScreenNavbarImage )

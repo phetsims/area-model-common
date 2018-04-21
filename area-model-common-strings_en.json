@@ -17,10 +17,7 @@
   "screen.decimals": {
     "value": "Decimals"
   },
-  "screen.genericGame": {
-    "value": "Game"
-  },
-  "screen.variablesGame": {
+  "screen.game": {
     "value": "Game"
   },
   "dimensions": {

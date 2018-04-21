@@ -22,7 +22,7 @@ define( function( require ) {
   var variablesGameScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/variables-game-screen-navbar.png' );
 
   // strings
-  var screenVariablesGameString = require( 'string!AREA_MODEL_COMMON/screen.variablesGame' );
+  var screenGameString = require( 'string!AREA_MODEL_COMMON/screen.game' );
 
   /**
    * @constructor
@@ -30,7 +30,7 @@ define( function( require ) {
   function VariablesGameScreen() {
 
     var options = {
-      name: screenVariablesGameString,
+      name: screenGameString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( variablesGameScreenIconImage ),
       navigationBarIcon: new Image( variablesGameScreenNavbarImage )
