@@ -28,6 +28,8 @@ define( function( require ) {
   function Parentheses( content, baseColorProperty ) {
 
     // @private {Text}
+    // REVIEW: What is the criteria for determining whether characters should appear in MathSymbol.js?
+    // REVIEW: Does () match the criteria?
     this.leftParen = new Text( '(', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT
     } );

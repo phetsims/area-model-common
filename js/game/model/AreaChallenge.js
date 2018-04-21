@@ -45,6 +45,7 @@ define( function( require ) {
     this.stateProperty = new Property( GameState.FIRST_ATTEMPT );
 
     // @public {GameArea}
+    // REVIEW: Is this ever used?
     this.area = new GameArea( description.layout, description.allowExponents );
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes

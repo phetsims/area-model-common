@@ -29,7 +29,7 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {number} index
-   * @param {Area} area
+   * @param {Area} area // REVIEW: Pass area.colorProperties instead of the whole area
    * @param {Property.<number|null>} activeIndexProperty
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
@@ -52,6 +52,7 @@ define( function( require ) {
     this.nextLine = null;
 
     // @private {Area}
+    // REVIEW: This looks unused
     this.area = area;
 
     // @private {boolean}

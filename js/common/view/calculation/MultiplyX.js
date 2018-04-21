@@ -84,6 +84,8 @@ define( function( require ) {
       assert && assert( this.children.length === 3, 'Should have two content nodes and our timesNode' );
 
       // Remove our content
+      // REVIEW: How much time/memory is it really saving to keep the timesNode?  I don't think I understand
+      // REVIEW: the performance implications of this code, is it called frequently?
       this.removeChild( this.leftContent );
       this.removeChild( this.rightContent );
       this.leftContent.clean();
