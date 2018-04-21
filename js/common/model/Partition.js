@@ -35,12 +35,15 @@ define( function( require ) {
     } );
 
     // @public {Orientation}
+    // REVIEW: Is it necessary for Partition to know its Orientation?  After all, Area contains an OrientationPair.<Array.<Partition>>
+    // REVIEW: so it seems redundant and error-prone (since the values may deviate).
     this.orientation = orientation;
 
     // @public {Property.<Color>}
     this.colorProperty = colorProperty;
 
     // @public {Property.<boolean>}
+    // REVIEW: Do these Properties need to be reset or disposed?  Please address or comment.
     this.visibleProperty = new BooleanProperty( true );
 
     // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when

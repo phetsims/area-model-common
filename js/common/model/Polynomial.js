@@ -27,7 +27,9 @@ define( function( require ) {
 
     // Sum common powers, in decreasing order (for display ease)
     // REVIEW: this seems to assume that powers never exceed 4.  If so, that should be a factored-out constant and terms
-    // REVIEW: should assert that the power <= MAX_POWER
+    // REVIEW: should assert that the power <= MAX_POWER.
+    // REVIEW: Even better would be to generalize this code: get the powers from the terms, then sort and iterate
+    // REVIEW: (descending) through those.
     for ( var power = 4; power >= 0; power-- ) {
 
       // Collect the terms with the corresponding power

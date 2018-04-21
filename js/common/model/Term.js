@@ -38,6 +38,8 @@ define( function( require ) {
       'Coefficient only needs to be a finite number' );
 
     // REVIEW: 4 (this and other similar occurrences) should be factored out to a AreaModelCommonConstants
+    // REVIEW: Or, since this otherwise feels very general, generalize this implementation and check
+    // REVIEW: at call sites or in a subclass AreaModelCommonTerm
     assert && assert( typeof power === 'number' && isFinite( power ) && power >= 0 && power <= 4 && power % 1 === 0,
       'Power should be a finite integer between 0 and 4 (inclusive)' );
 

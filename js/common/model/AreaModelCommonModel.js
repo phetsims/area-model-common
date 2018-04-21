@@ -84,6 +84,8 @@ define( function( require ) {
     } ) );
 
     // @public {Property.<Polynomial>}
+    // REVIEW: would it be sufficient to observe the [this.currentAreaProperty]?  If not, comment why not.
+    // REVIEW: If so, then use currentArea as the DerivedProperty callback argument.
     this.totalAreaProperty = new DerivedProperty( totalAreaProperties, function() {
       return self.currentAreaProperty.value.totalAreaProperty.value;
     }, {

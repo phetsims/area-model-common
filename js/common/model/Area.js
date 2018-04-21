@@ -30,7 +30,7 @@ define( function( require ) {
    * @param {OrientationPair.<Property.<Color>>} colorProperties
    * @param {number} coordinateRangeMax - The maximum value that partition coordinate ranges may take. A (proportional)
    *                                    - partition can be held at the max, but if released at the max it will jump back
-   *                                    - to 0.
+   *                                    - to 0.  Only one value is needed because the area is always square.
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
@@ -52,6 +52,7 @@ define( function( require ) {
     this.allowExponents = allowExponents;
 
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
+    // REVIEW: This seems like it should be in AreaModelCommonModel
     this.calculationIndexProperty = new NumberProperty( 0 );
 
     // @public {Array.<PartitionedArea>} - An array of 2-dimensional sections of area defined by a horizontal and
@@ -85,10 +86,10 @@ define( function( require ) {
     // defined total.
     this.displayProperties = allowExponents ? this.termListProperties : this.totalProperties;
 
-    // @public {OrientationPair.<Property.<Array.<number>>>} - For each orientation, will contain a property with a list
-    // of unique boundary locations (the minimum or maximum coordinates of partitions). So if there are two partitions
-    // for an orientation, one from 1 to 5, and the other from 5 to 7, the value of the property will be [ 1, 5, 7 ].
-    // NOTE: Currently things are not guaranteed to be sorted. Looks like it should not be an issue.
+    // @public {OrientationPair.<Property.<Array.<number>>>} - For each orientation, will contain a property with an
+    // unsorted list of unique boundary locations (the minimum or maximum coordinates of partitions). So if there are
+    // two partitions for an orientation, one from 1 to 5, and the other from 5 to 7, the value of the property will be
+    // [ 1, 5, 7 ]
     this.partitionBoundariesProperties = OrientationPair.create( this.createPartitionBoundariesProperty.bind( this ) );
   }
 

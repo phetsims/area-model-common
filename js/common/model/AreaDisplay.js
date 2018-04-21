@@ -1,9 +1,9 @@
 // Copyright 2018, University of Colorado Boulder
 
 /**
- * Base type for something that displays Areas.
+ * Base type for something that displays swappable Areas.
  *
- * This acts as a wrapper over the main areaProperty included, providing top-level Properties (or orientaion pair
+ * This acts as a wrapper over the main areaProperty included, providing top-level Properties (or orientation pair
  * properties) that provide elements of the current Area.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
@@ -22,7 +22,7 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Property.<Area>} areaProperty
+   * @param {Property.<Area>} areaProperty // REVIEW: can you please comment when this area property changes? Is it primarily through scene (size) changes?
    */
   function AreaDisplay( areaProperty ) {
     // @public {Property.<Area>}
@@ -31,6 +31,9 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<Array.<Partition>>>}
     this.partitionsProperties = this.wrapOrientationPair( _.property( 'partitions' ) );
 
+    // REVIEW: Why not leverage Area.allPartitions for this part?  It would be
+    // REVIEW: this.allPartitionsProperty = this.wrapObject(_.property('allPartitions'));
+    // REVIEW: Right?
     // @public {Property.<Array.<Partition>>}
     this.allPartitionsProperty = new DerivedProperty(
       [ this.partitionsProperties.horizontal, this.partitionsProperties.vertical ],
@@ -85,6 +88,7 @@ define( function( require ) {
     wrapOrientationPair: function( map, options ) {
       var self = this;
 
+      // REVIEW: Factor out duplicated code between this and wrapOrientationPairProperty
       return OrientationPair.create( function( orientation ) {
         return self.wrapObject( function( area ) {
           return map( area ).get( orientation );
