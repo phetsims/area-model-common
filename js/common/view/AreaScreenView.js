@@ -1,7 +1,7 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Supertype screenview for generic/proportional screens (NOT the game screens)
+ * Supertype ScreenView for generic/proportional screens (NOT the game screens)
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
@@ -74,6 +74,8 @@ define( function( require ) {
     }, options );
 
     assert && assert( model instanceof AreaModelCommonModel );
+
+    // REVIEW: this seems to be required, either move to a required argument, or change from [options] to config
     assert && assert( typeof options.decimalPlaces === 'number' );
 
     ScreenView.call( this );
@@ -107,7 +109,7 @@ define( function( require ) {
 
       // REVIEW: This implementation seems odd, would it be clearer if we iterate through the selectionNodes and add
       // REVIEW: the nodes and separators into a new array instead of using insertChild and i+=2
-      // REVIEW: Especially since (but not only because) we are adding te selectionContent while iterating over it.
+      // REVIEW: Especially since (but not only because) we are adding the selectionContent while iterating over it.
       selectionContent.children = selectionNodes;
       // Add separators between items
       for ( var i = 1; i < selectionContent.children.length; i += 2 ) {

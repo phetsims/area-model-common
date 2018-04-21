@@ -196,6 +196,8 @@ define( function( require ) {
      * @returns {number}
      */
     mapCoordinate: function( value ) {
+
+      // REVIEW: why doesn't this use this.modelViewTransformProperty? Rewrite to use it or comment how it is different.
       return this.viewSize * value / this.areaDisplay.coordinateRangeMaxProperty.value;
     }
   } );

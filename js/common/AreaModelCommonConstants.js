@@ -128,6 +128,7 @@ define( function( require ) {
     // {number} - Padding between a term and an adjacent parenthesis, e.g. "x(" or ")x"
     CALCULATION_TERM_PAREN_PADDING: 1,
 
+    // REVIEW: Move these next two vars to new file AreaModelCommonAccordionBox, see comment in AreaScreenView
     // {number} - Maximum accordion box title size
     ACCORDION_BOX_TITLE_MAX: 200,
 

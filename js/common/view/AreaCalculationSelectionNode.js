@@ -34,6 +34,17 @@ define( function( require ) {
     var darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
     var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
+    // REVIEW: I prefer this formatting, you can use whichever you prefer.
+    // AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
+    //   value: AreaCalculationChoice.HIDDEN,
+    //   node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
+    // }, {
+    //   value: AreaCalculationChoice.LINE_BY_LINE,
+    //   node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
+    // }, {
+    //   value: AreaCalculationChoice.SHOW_ALL_LINES,
+    //   node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
+    // } ] );
     AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [
       {
         value: AreaCalculationChoice.HIDDEN,
