@@ -214,7 +214,7 @@ define( function( require ) {
     var promptText = new Text( ' ', {
       font: AreaModelCommonConstants.GAME_STATUS_BAR_PROMPT_FONT,
       pickable: false,
-      maxWidth: 600,
+      maxWidth: 600, // REVIEW: should this be based off of the screenView layout bounds?
       top: this.layoutBounds.top + statusBar.height + 20
     } );
     this.challengeLayer.addChild( promptText );
@@ -338,9 +338,12 @@ define( function( require ) {
       rightMargin: AreaModelCommonConstants.PANEL_MARGIN
     } ) );
 
+    // REVIEW: It would be good to have JSDoc for this function even though it is not on the prototype
+    // REVIEW: Did you consider making enabledProperty optional, and setting it to new BooleanProperty(true) if
+    // REVIEW: not supplied?
     function createGameButton( string, listener, enabledProperty ) {
 
-      // REVIEW: Can we revise RectangularPushButton to be mutable?
+      // REVIEW: Revise RectangularPushButton to be mutable
       var button = new MutableOptionsNode( RectangularPushButton, [], {
         content: new Text( string, {
           font: AreaModelCommonConstants.BUTTON_FONT,
@@ -389,6 +392,7 @@ define( function( require ) {
       this.challengeLayer.addChild( cheatButton );
     }
 
+    // REVIEW: Can this use FaceWithPointsNode instead?
     var faceNode = new FaceNode( 90, {
       centerX: showAnswerButton.centerX,
       top: showAnswerButton.bottom + 10
@@ -429,6 +433,8 @@ define( function( require ) {
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
+
+        // REVIEW: I have seen several variants of this logic, and this is my favorite so far, nice work!
         gameAreaNode.visible = state !== GameState.LEVEL_COMPLETE;
         panelBox.visible = state !== GameState.LEVEL_COMPLETE;
         statusBar.visible = state !== GameState.LEVEL_COMPLETE;
@@ -462,7 +468,7 @@ define( function( require ) {
         var level = model.currentLevelProperty.value;
         levelCompleteContainer.children = [
           new LevelCompletedNode(
-            level.number - 1,
+            level.number - 1, // REVIEW: if the framework is 0-indexed, why is the sim 1-indexed?
             level.scoreProperty.value,
             AreaModelCommonConstants.PERFECT_SCORE,
             AreaModelCommonConstants.NUM_CHALLENGES,

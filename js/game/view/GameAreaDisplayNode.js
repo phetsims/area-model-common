@@ -78,7 +78,7 @@ define( function( require ) {
       return [
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
 
-          // REVIEW: Perhaps rename var to paritionCount?
+          // REVIEW: Perhaps rename partitionCount or numberOfPartitions?
           var quantity = layout.getPartitionQuantity( orientation );
           if ( quantity === 1 ) {
             return fullOffset / 2;
@@ -101,7 +101,7 @@ define( function( require ) {
             return ( secondOffset + firstOffset ) / 2;
           }
           else {
-            return 0; // no need to position here
+            return 0; // no need to position here  // REVIEW, but why?
           }
         } ),
         new Property( ( fullOffset + secondOffset ) / 2 )
@@ -110,6 +110,8 @@ define( function( require ) {
 
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
+
+      // REVIEW: _.range( 0, 3 ) appears 3 times in this file, please factor out to // constants and document it.
       _.range( 0, 3 ).forEach( function( partitionIndex ) {
         var entryProperty = new DerivedProperty(
           [ areaDisplay.partitionSizeEntriesProperties.get( orientation ) ],
@@ -136,13 +138,13 @@ define( function( require ) {
       } );
     } );
 
-    // REVIEW: Add a come comment here explaining what is happening.
+    // REVIEW: Add a comment here explaining what is happening.
     _.range( 0, 3 ).forEach( function( horizontalIndex ) {
       _.range( 0, 3 ).forEach( function( verticalIndex ) {
         var entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], function( values ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] )
-            ? values[ verticalIndex ][ horizontalIndex ]
-            : new Entry( null );
+                 ? values[ verticalIndex ][ horizontalIndex ]
+                 : new Entry( null );
         } );
 
         var colorProperty = new DerivedProperty( [
@@ -190,6 +192,7 @@ define( function( require ) {
     this.addChild( noExponentKeypadPanel );
     this.addChild( exponentKeypadPanel );
 
+    // REVIEW: These lines seem unnecessary since the link below updates their visibility
     noExponentKeypadPanel.visible = false;
     exponentKeypadPanel.visible = false;
 

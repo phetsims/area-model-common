@@ -58,6 +58,7 @@ define( function( require ) {
     this.currentChallengeProperty.lazyLink( this.activeEntryProperty.reset.bind( this.activeEntryProperty ) );
 
     // @public {Property.<GameState|null>}
+    // REVIEW: Please explain what null means for this Property
     this.stateProperty = new DynamicProperty( this.currentChallengeProperty, {
       derive: 'stateProperty',
       bidirectional: true

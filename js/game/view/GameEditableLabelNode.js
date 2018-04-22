@@ -36,6 +36,7 @@ define( function( require ) {
 
     options = _.extend( {
       // REQUIRED options (yes, I know it's an oxymoron, and I'd like to have a better name for this options)
+      // REVIEW: Move to the new config pattern
       // They are marked as null for now
       entryProperty: null, // {Property.<Entry>}
       gameStateProperty: null, // {Property.<GameState>}

@@ -115,6 +115,7 @@ define( function( require ) {
       bidirectional: true
     } );
 
+    // REVIEW: document, perhaps rename as 'clear'?
     function makeNotDirty() {
       [ constantEntryProperty, xEntryProperty, xSquaredEntryProperty ].forEach( function( entryProperty, index ) {
         var valueProperty = entryProperty.value.valueProperty;
@@ -154,6 +155,8 @@ define( function( require ) {
       }
     }
 
+    // REVIEW: factor out getColorProperty(entryProperty) for the following 3 occurrences.  It will include highlightFunction
+    // REVIEW: within it
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
       color: new DerivedProperty( [
         new DynamicProperty( constantEntryProperty, { derive: 'statusProperty' } ),
