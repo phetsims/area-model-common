@@ -14,6 +14,8 @@ define( function( require ) {
   var EntryStatus = {
     NORMAL: 'NORMAL',
     DIRTY: 'DIRTY', // needs to be interacted with before submitting
+
+    // REVIEW: Error sounds too much like a bug. Please rename to INCORRECT.
     ERROR: 'ERROR' // was wrong after submission
   };
 

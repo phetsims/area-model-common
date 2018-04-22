@@ -86,6 +86,7 @@ define( function( require ) {
 
       // REVIEW: It is a slight code smell that the dimensions got packed into array indices, not sure if it can
       // REVIEW: be addressed or if this is already the best solution.  What do you think?
+      // REVIEW: We decided to put the arguments as varargs instead of array
       var verticalIndex = indices[ 0 ];
       var horizontalIndex = indices[ 1 ];
 
@@ -98,10 +99,13 @@ define( function( require ) {
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
 
         // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
+        // REVIEW: Why do variables get 3 digits?
         digits: description.numberOrVariable( numbersDigits, 2 ) + 1
       } );
       // Link up if dynamic
       if ( type === EntryType.DYNAMIC ) {
+
+        // REVIEW: Comment on unlink, is it needed?  If not, why not?
         Property.multilink( [
           self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
           self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
@@ -113,9 +117,11 @@ define( function( require ) {
       return entry;
     } );
 
+    // REVIEW: What is happening here and why is 4 the threshold?
     var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
+    // REVIEW: This one seems redundant, can we use a var + totalProperties instead?
     this.totals = OrientationPair.create( function( orientation ) {
       return new Polynomial( self.partitionSizes.get( orientation ) );
     } );

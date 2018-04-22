@@ -112,6 +112,8 @@ define( function( require ) {
 
       var challenge = this.currentChallengeProperty.value;
 
+      // REVIEW: It seems like "Sanity check for multitouch" was maybe meant as a TODO?  It doesn't seem to explain
+      // REVIEW: the following lines.
       // Sanity check for multitouch
       if ( challenge ) {
         this.currentLevelProperty.value.scoreProperty.value += challenge.check();
@@ -164,6 +166,9 @@ define( function( require ) {
      */
     cheat: function() {
       if ( this.currentChallengeProperty.value ) {
+
+        // REVIEW: why is the active entry reset *after* showing the answers?  It seems like it should be before
+        // REVIEW: (or more likely that I have a misunderstanding of what those parts mean).
         this.currentChallengeProperty.value.showAnswers();
         this.activeEntryProperty.reset();
       }

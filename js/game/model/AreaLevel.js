@@ -90,6 +90,7 @@ define( function( require ) {
 
     /**
      * Selects the level (resetting progress and generates a new challenge).
+     * REVIEW: Is this the same as starting the level?
      * @public
      */
     select: function() {
@@ -100,7 +101,7 @@ define( function( require ) {
     },
 
     /**
-     * Marks the level as finished.
+     * Marks the level as finished.  This means challenges will be regenerated if the level is selected again.
      * @public
      */
     finish: function() {

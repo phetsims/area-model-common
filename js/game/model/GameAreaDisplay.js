@@ -30,6 +30,9 @@ define( function( require ) {
   function GameAreaDisplay( areaChallengeProperty ) {
     var self = this;
 
+    // This placeholder will never be seen in the user interface, it is to help make sure areaChallengeProperty is never
+    // null, see below.
+    // REVIEW: Check if the preceding explanation is correct.
     var placeholderChallenge = new AreaChallenge( AreaChallengeDescription.LEVEL_1_NUMBERS_1 );
 
     // @public {Property.<AreaChallenge>} - Always has an AreaChallenge, unlike the passed-in nullable variety. This is
@@ -56,6 +59,7 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<Array.<Entry>>>}
     // Partition sizes. Inner values may be changed by the view client.
+
     this.partitionSizeEntriesProperties = OrientationPair.create( function( orientation ) {
       return new DerivedProperty( [ self.areaChallengeProperty ], function( areaChallenge ) {
         // If there's only one value on a side (and it's a given), there is no use showing a size here.

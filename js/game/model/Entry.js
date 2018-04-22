@@ -28,15 +28,21 @@ define( function( require ) {
    */
   function Entry( value, options ) {
     options = _.extend( {
+
+      // REVIEW: Remove the "Our options" comment.
       // Our options
       type: EntryType.GIVEN,
       displayType: EntryDisplayType.HIDDEN,
       inputMethod: InputMethod.CONSTANT,
+
+      // REVIEW: Rename to numberOfDigits, otherwise it sounds like the digits themselves.
       digits: 0,
       correctValue: null // Only used for the total coefficients
     }, options );
 
     // Always start off by editing null, and it should be the default value.
+    // REVIEW: Shouldn't this be as assertion, that if it was editable the value should have been null?  Or are there
+    // REVIEW: call sites passing non-null value for editable displayTypes?
     if ( options.displayType === EntryDisplayType.EDITABLE ) {
       value = null;
     }
@@ -61,6 +67,7 @@ define( function( require ) {
     this.digits = options.digits;
 
     // @public {Term|null}
+    // REVIEW: I don't see any getters for this value, is it used?  Here and for the options default.  And supplied options.
     this.correctValue = options.correctValue;
 
     // @public {Property.<EntryStatus>}
