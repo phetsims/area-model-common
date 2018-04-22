@@ -4,6 +4,7 @@
  * Shows a combo box that allows selecting between different layouts
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * REVIEW: We should generalize SUN/ComboBox to accommodate different layouts instead of providing a complete replacement
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

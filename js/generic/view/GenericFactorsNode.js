@@ -113,6 +113,8 @@ define( function( require ) {
 
       var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
+      // REVIEW: I saw some other place that used a different whitespace for creating a RichText to get the spacing
+      // REVIEW: right.  Does that need to be done here?  If not, why not?
       var richText = new RichText( ' ', {
         font: AreaModelCommonConstants.FACTORS_TERM_FONT,
         fill: colorProperty

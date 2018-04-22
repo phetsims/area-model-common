@@ -105,6 +105,10 @@ define( function( require ) {
      * @param {KeyID} keyIdentifier - identifier for the key pressed
      */
     handleKeyPressed: function( keyIdentifier ) {
+
+      // REVIEW: This code needs code comments to explain what power is, why we just look at the first power,
+      // REVIEW: why the power can be overriden, etc.  I'm pretty confused about how the accumulator works
+      // REVIEW: and what keys it might contain.
       var currentKeys = this.accumulatedKeysProperty.get();
 
       var negative = _.includes( currentKeys, KeyID.PLUS_MINUS );
@@ -163,6 +167,8 @@ define( function( require ) {
 
     /**
      * Whether a set of proposed keys is allowed.
+     * REVIEW: If I'm understanding the intent here, it seems it would be a better user experience to gray out keys
+     * REVIEW: that cannot lead to valid sequences.
      * @public
      * @override
      *

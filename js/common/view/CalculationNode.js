@@ -45,7 +45,7 @@ define( function( require ) {
     this.calculationLinesNode = new CalculationLinesNode( model );
 
     var background = new Rectangle( {
-      cornerRadius: 5,
+      cornerRadius: 5, // REVIEW: Maybe this should use PANEL_CORNER_RADIUS, which is also 5?
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
       stroke: AreaModelCommonColorProfile.panelBorderProperty
     } );

@@ -44,7 +44,7 @@ define( function( require ) {
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, {
       allowExponents: allowExponents,
-      isProportional: false // just here to be explicit
+      isProportional: false // just here to be explicit // REVIEW: I'd recommend to remove this line--it's more distracting than helpful
     } );
 
     this.labelLayer.addChild( this.eraseButton );

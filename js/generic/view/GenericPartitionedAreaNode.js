@@ -56,6 +56,7 @@ define( function( require ) {
     } ).linkAttribute( this, 'visible' );
 
     // Bounds
+    // REVIEW: This is very dense and difficult to understand, can you please add helpful comments?
     var rangeMultilinks = null; // {OrientationPair.<Multilink>|null}
     partitionedAreaProperty.link( function( partitionedArea ) {
       // Release any previous references

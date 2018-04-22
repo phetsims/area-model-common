@@ -142,7 +142,7 @@ define( function( require ) {
     // Do it once initially for proper layout at the start
     this.positionProductLabels();
 
-    // @public {Node} - Exposed publicly for a11y
+    // @public {Node} - Exposed publicly for a11y, and used in subclasses
     this.eraseButton = new EraserButton( {
       listener: function() {
         areaDisplay.areaProperty.value.erase();

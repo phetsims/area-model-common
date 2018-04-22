@@ -1,7 +1,11 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * A generic area, split up with potentially two partition lines per dimension.
+ * A generic area, split up with up to two partition lines per dimension.
+ * REVIEW: I'm confused about the partition counts.  This comment said potentially 2 partition lines per dimension,
+ * REVIEW: but GenericLayout goes up to new Dimension2( 3, 3 ), which is documented as
+ * REVIEW: > Dimension describes how many partitions are available in each orientation.
+ * REVIEW: So one of them is incorrect or I am very confused.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

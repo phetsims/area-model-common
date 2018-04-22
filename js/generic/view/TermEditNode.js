@@ -110,6 +110,8 @@ define( function( require ) {
     } );
 
     options.isActiveProperty.link( function( isActive ) {
+
+      // REVIEW: The formatting here doesn't match the other ternaries in the sim.
       readoutBackground.fill = isActive ? AreaModelCommonColorProfile.editActiveBackgroundProperty
         : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
@@ -121,7 +123,7 @@ define( function( require ) {
 
     function updateText() {
       if ( termProperty.value === null ) {
-        // REIVEW: Handle TODO
+        // REVIEW: Handle TODO
         readoutText.text = '\u00a0'; // TODO: handle https://github.com/phetsims/scenery/issues/769
       }
       else {

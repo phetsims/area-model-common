@@ -39,6 +39,8 @@ define( function( require ) {
     this.popupLayer = new Node();
 
     // @private {Node|null} - Will be filled in with getRightSideNodes (we need lazy creation here unfortunately).
+    // REVIEW: this should be cleaned up.  At a minimum, pull out the this.layoutSelectionNode to another function
+    // REVIEW: and document what is happening and why it cannot happen during the constructor.
     this.layoutSelectionNode = null;
 
     AreaScreenView.call( this, model, {
@@ -59,6 +61,8 @@ define( function( require ) {
      * @returns {Array.<Node>}
      */
     getRightSideNodes: function() {
+
+      // REVIEW: If this cannot be cleaned up, as recommended above, then at assert that it is only called once.
       this.layoutSelectionNode = new GenericLayoutSelectionNode(
         this.model.genericLayoutProperty,
         this.popupLayer,
