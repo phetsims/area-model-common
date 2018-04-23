@@ -53,6 +53,9 @@ define( function( require ) {
 
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
     // REVIEW: This seems like it should be in AreaModelCommonModel
+    // REVIEW*: Each area has a separate calculation with different lines. It seems desired that you can switch between
+    // REVIEW*: two scenes (with two areas) and have each stay highlighted in the same place. What is the advantage of
+    // REVIEW*: removing this?
     this.calculationIndexProperty = new NumberProperty( 0 );
 
     // @public {Array.<PartitionedArea>} - An array of 2-dimensional sections of area defined by a horizontal and
@@ -65,12 +68,16 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<Polynomial|null>>} - Null if there is no defined total. Otherwise it's the
     // sum of the sizes of all (defined) partitions of the given orientation.
-    this.totalProperties = OrientationPair.create( this.createTotalProperty.bind( this ) );
+    this.totalProperties = OrientationPair.create( this.createMappedTermsArrayProperty.bind( this, function( terms ) {
+      return new Polynomial( terms );
+    } ) );
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Null if there is no defined partition. Otherwise it's a
     // list of the sizes of all (defined) partitions of the given orientation. This does NOT combine terms with the
     // same exponent, unlike this.totalProperties.
-    this.termListProperties = OrientationPair.create( this.createTermListProperty.bind( this ) );
+    this.termListProperties = OrientationPair.create( this.createMappedTermsArrayProperty.bind( this, function( terms ) {
+      return new TermList( terms );
+    } ) );
 
     // @public {Property.<Polynomial|null>} - Null if there is no defined total, otherwise the total area (width of the
     // "area" times its height).
@@ -184,14 +191,15 @@ define( function( require ) {
     },
 
     /**
-     * // REVIEW: There is a lot of duplication with .createTermListProperty(). Can we factor this out?
-     * Creates a derived property with the total size for a particular dimension.
+     * Creates a DerivedProperty with `map( totalSizeTerms )` for a particular orientation, where totalSizeTerms
+     * is an array of the total terms for that orientation.
      * @private
      *
+     * @param {function} map - function( {Array.<Terms>} ): *
      * @param {Orientation} orientation
-     * @returns {Property.<Polynomial|null>}
+     * @returns {Property.<*|null>}
      */
-    createTotalProperty: function( orientation ) {
+    createMappedTermsArrayProperty: function( map, orientation ) {
       var self = this;
 
       var properties = _.flatten( this.partitions.get( orientation ).map( function( partition ) {
@@ -201,35 +209,7 @@ define( function( require ) {
       return new DerivedProperty( properties, function() {
         var terms = self.getTerms( orientation );
         if ( terms.length ) {
-          return new Polynomial( terms );
-        }
-        else {
-          return null;
-        }
-      }, {
-        useDeepEquality: true
-      } );
-    },
-
-    /**
-     * // REVIEW: There is a lot of duplication with .createTotalProperty(). Can we factor this out?
-     * Creates a derived property with the total (defined) term list for a particular dimension.
-     * @private
-     *
-     * @param {Orientation} orientation
-     * @returns {Property.<TermList|null>}
-     */
-    createTermListProperty: function( orientation ) {
-      var self = this;
-
-      var properties = _.flatten( this.partitions.get( orientation ).map( function( partition ) {
-        return [ partition.sizeProperty, partition.visibleProperty ];
-      } ) );
-
-      return new DerivedProperty( properties, function() {
-        var terms = self.getTerms( orientation );
-        if ( terms.length ) {
-          return new TermList( terms );
+          return map( terms );
         }
         else {
           return null;
