@@ -90,9 +90,7 @@ define( function( require ) {
      * @private
      */
     update: function() {
-
-      // REVIEW: Please use more expressive variable name
-      var mvt = this.modelViewTransformProperty.value;
+      var modelViewTransform = this.modelViewTransformProperty.value;
 
       // Ignore updates if we are not dirty
       if ( !this.dirty ) { return; }
@@ -101,24 +99,25 @@ define( function( require ) {
       if ( !this.countingVisibleProperty.value ) { return; }
 
       // Coordinate mapping into the view
-      // REVIEW: Rename like modelToViewX
-      var mapX = mvt.modelToViewX.bind( mvt );
-      var mapY = mvt.modelToViewY.bind( mvt );
+      var modelToViewX = modelViewTransform.modelToViewX.bind( modelViewTransform );
+      var modelToViewY = modelViewTransform.modelToViewY.bind( modelViewTransform );
 
       var width = this.activeTotalProperties.horizontal.value;
       var height = this.activeTotalProperties.vertical.value;
 
       // REVIEW: More expressive variable name for number
+      // REVIEW*: Not sure what would be more helpful here, as each cell is labeled with its 'number'. Suggestions?
       var number = 1;
       for ( var row = 0; row < height; row++ ) {
-        var rowCenter = mapY( row + 0.5 );
+        var rowCenter = modelToViewY( row + 0.5 );
 
         for ( var col = 0; col < width; col++ ) {
-          var colCenter = mapX( col + 0.5 );
+          var colCenter = modelToViewX( col + 0.5 );
 
           // REVIEW: There is an assumption about the way textNodes were populated by calling createTextNode which
           // REVIEW: seems brittle, especially since it is number-1 indexed.  Perhaps key it based on the number value
           // REVIEW: instead of number-1?  Or assign to this.textNodes[number-1] when creating new text node?
+          // REVIEW*: Would isolation into a getTextNode( number ) function be sufficient?
           var text = this.textNodes[ number - 1 ];
           // lazy creation (in case)
           if ( !text ) {

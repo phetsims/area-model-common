@@ -183,8 +183,7 @@ define( function( require ) {
     },
 
     /**
-     * REVIEW: did you mean node?
-     * Returns the partial product note at the given horizontal/vertical indices.
+     * Returns the partial product node at the given horizontal/vertical indices.
      * @private
      *
      * @param {number} horizontalIndex
@@ -248,17 +247,16 @@ define( function( require ) {
         // We may not be able to access labels if we are in a partial state (some properties have changed, but others
         // have not).
         if ( leftLabel && rightLabel ) {
-
-          // REVIEW: Rename isRightPartitionVisible
-          var hasTwo = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
+          var isRightPartitionVisible = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
 
           // REVIEW: Move to // constants?  Or leave here, either way seems fine.
+          // REVIEW*: Local usage, so prefer to leave here if fine?
           var leftOverlapBump = 22;
           var labelOverlapBump = 10;
 
           var hasLeftOverlap = rangesPair.vertical[ 1 ] !== null && leftLabel.left < -5;
           var canAvoidLeftOverlap = leftLabel.top - leftOverlapBump >= verticalRange.min - 5;
-          var hasLabelOverlap = hasTwo && leftLabel.right > rightLabel.left;
+          var hasLabelOverlap = isRightPartitionVisible && leftLabel.right > rightLabel.left;
           var canAvoidLabelOverlap = leftLabel.top - labelOverlapBump >= verticalRange.min - 3;
 
           var leftOffset = 0;
@@ -276,7 +274,7 @@ define( function( require ) {
           if ( leftOffset ) {
             leftLabel.y -= leftOffset;
           }
-          if ( rightOffset && hasTwo ) {
+          if ( rightOffset && isRightPartitionVisible ) {
             rightLabel.y += rightOffset;
           }
         }

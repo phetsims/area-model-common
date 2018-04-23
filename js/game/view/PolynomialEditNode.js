@@ -51,20 +51,19 @@ define( function( require ) {
       font: AreaModelCommonConstants.POLYNOMIAL_EDIT_READOUT_FONT
     } );
 
-    // REVIEW: Name with a Node or Rectangle suffix
-    var readoutBackground = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
+    var readoutBackgroundRectangle = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
       cornerRadius: 3,
       stroke: 'black',
       fill: 'white'
     } );
-    readoutText.centerY = readoutBackground.centerY; // Don't reposition vertically with exponents
+    readoutText.centerY = readoutBackgroundRectangle.centerY; // Don't reposition vertically with exponents
     polynomialProperty.link( function( polynomial ) {
       readoutText.text = polynomial === null ? '0' : polynomial.toRichString();
-      readoutText.centerX = readoutBackground.centerX;
+      readoutText.centerX = readoutBackgroundRectangle.centerX;
     } );
     var readout = new Node( {
       children: [
-        readoutBackground,
+        readoutBackgroundRectangle,
         readoutText
       ]
     } );
@@ -140,7 +139,8 @@ define( function( require ) {
     linkProperty( xProperty, xEntryProperty );
     linkProperty( xSquaredProperty, xSquaredEntryProperty );
 
-    // REVIEW: Can you comment on these values?  Why -81 to 81?
+    // [-81,81] is the actual range we need for editable values,
+    // see https://github.com/phetsims/area-model-common/issues/94
     var rangeProperty = new Property( new Range( -81, 81 ) );
 
     function highlightFunction( highlight, errorColor, dirtyColor ) {

@@ -1,8 +1,8 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * View for ProportionalArea.
- * REVIEW: JSDoc description is incorrect.
+ * Shows a draggable circle to the lower-right of a proportional area that, when dragged, adjusts the width/height to
+ * match.
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *

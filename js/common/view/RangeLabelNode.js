@@ -127,7 +127,7 @@ define( function( require ) {
         ticks.forEach( function( tick, index ) {
           if ( index < tickLocations.length ) {
             tick.visible = true;
-            tick.translation = orientation.vector( tickLocations[ index ], rangeOffset );
+            tick.translation = orientation.toVector( tickLocations[ index ], rangeOffset );
 
             // REVIEW: please comment to explain the logic on this line
             tick.y1 = ( index === 0 || index === tickLocations.length - 1 ) ? -TICK_LENGTH / 2 : 0;
@@ -140,8 +140,8 @@ define( function( require ) {
         var minLocation = tickLocations[ 0 ];
         var maxLocation = tickLocations[ tickLocations.length - 1 ];
 
-        line.p1 = orientation.vector( minLocation, rangeOffset );
-        line.p2 = orientation.vector( maxLocation, rangeOffset );
+        line.p1 = orientation.toVector( minLocation, rangeOffset );
+        line.p2 = orientation.toVector( maxLocation, rangeOffset );
         textContainer[ orientation.coordinate ] = ( maxLocation + minLocation ) / 2; // centered
       }
     } );

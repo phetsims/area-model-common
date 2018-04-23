@@ -2,7 +2,6 @@
 
 /**
  * Colors for the Area Model simulations.
- * REVIEW: Has the sim been color blind tested?
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

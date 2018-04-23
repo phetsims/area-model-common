@@ -111,14 +111,20 @@ define( function( require ) {
       // REVIEW: and what keys it might contain.
       var currentKeys = this.accumulatedKeysProperty.get();
 
+      // Whether we have a negative sign in our current input
       var negative = _.includes( currentKeys, KeyID.PLUS_MINUS );
+
+      // The power of x (X or X_SQUARED) in our input (otherwise undefined).
       var power = _.find( currentKeys, function( key ) {
         return key === KeyID.X || key === KeyID.X_SQUARED;
       } );
+
+      // All of the digits in our current input.
       var digits = currentKeys.filter( function( key ) {
         return _.includes( DIGIT_STRINGS, key );
       } );
 
+      // Helpful booleans for what our pressed key is.
       var isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyIdentifier );
       var isZero = keyIdentifier === KeyID.ZERO;
       var isBackspace = keyIdentifier === KeyID.BACKSPACE;
@@ -173,7 +179,7 @@ define( function( require ) {
      * @override
      *
      * @param {Array.<KeyID>} proposedKeys
-     * REVIEW: Return type
+     * @returns {boolean}
      */
     defaultValidator: function( proposedKeys ) {
       var xCount = 0;

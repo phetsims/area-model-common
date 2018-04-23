@@ -77,20 +77,17 @@ define( function( require ) {
 
     // Set up partition coordinate/size
     Orientation.VALUES.forEach( function( orientation ) {
-
-      // REVIEW: Rename to partitionCount or numberOfPartitions
-      var quantity = layout.getPartitionQuantity( orientation );
-
+      var partitionCount = layout.getPartitionQuantity( orientation );
       var partitions = self.partitions.get( orientation );
 
-      if ( quantity === 1 ) {
+      if ( partitionCount === 1 ) {
         partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );
       }
-      else if ( quantity === 2 ) {
+      else if ( partitionCount === 2 ) {
         partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_SINGLE_OFFSET );
         partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SINGLE_OFFSET, 1 );
       }
-      else if ( quantity === 3 ) {
+      else if ( partitionCount === 3 ) {
         partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_FIRST_OFFSET );
         partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_FIRST_OFFSET, AreaModelCommonConstants.GENERIC_SECOND_OFFSET );
         partitions[ 2 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SECOND_OFFSET, 1 );

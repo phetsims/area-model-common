@@ -199,7 +199,8 @@ define( function( require ) {
      * @returns {Node}
      */
     createGridIconNode: function() {
-      var gridIconShape = new Shape().moveTo( RADIO_ICON_SIZE / 4, 0 ) // REVIEW: Can we move this down a line?
+      var gridIconShape = new Shape()
+        .moveTo( RADIO_ICON_SIZE / 4, 0 )
         .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
         .moveTo( RADIO_ICON_SIZE / 2, 0 )
         .lineTo( RADIO_ICON_SIZE / 2, RADIO_ICON_SIZE )

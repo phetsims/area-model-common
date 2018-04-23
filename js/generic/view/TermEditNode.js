@@ -65,8 +65,9 @@ define( function( require ) {
 
     var self = this;
 
-    // REVIEW: Should this be from MathSymbols.js?
-    var readoutText = new RichText( '-', {
+    // TODO: handle https://github.com/phetsims/scenery/issues/769
+    // REVIEW*: Fix the TODO here
+    var readoutText = new RichText( '\u00a0', {
       fill: options.textColorProperty,
       font: options.font
     } );
@@ -110,9 +111,8 @@ define( function( require ) {
     } );
 
     options.isActiveProperty.link( function( isActive ) {
-
-      // REVIEW: The formatting here doesn't match the other ternaries in the sim.
-      readoutBackground.fill = isActive ? AreaModelCommonColorProfile.editActiveBackgroundProperty
+      readoutBackground.fill = isActive
+        ? AreaModelCommonColorProfile.editActiveBackgroundProperty
         : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
 

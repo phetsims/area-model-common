@@ -65,11 +65,10 @@ define( function( require ) {
       self.dirty = true;
     }
 
-    // REVIEW: these invalidates could be lazyLinks for clarity.
-    tilesVisibleProperty.link( invalidate );
-    modelViewTransformProperty.link( invalidate );
-    this.smallTileSizeProperty.link( invalidate );
-    this.largeTileSizeProperty.link( invalidate );
+    tilesVisibleProperty.lazyLink( invalidate );
+    modelViewTransformProperty.lazyLink( invalidate );
+    this.smallTileSizeProperty.lazyLink( invalidate );
+    this.largeTileSizeProperty.lazyLink( invalidate );
     areaDisplay.allPartitionsProperty.link( function( partitions, oldPartitions ) {
       oldPartitions && oldPartitions.forEach( function( partition ) {
         partition.visibleProperty.unlink( invalidate );
@@ -81,6 +80,7 @@ define( function( require ) {
       } );
       invalidate();
     } );
+    invalidate();
 
     // @private {Path} - Background color paths for each section
     this.bigPath = new Path( null, {
@@ -117,7 +117,7 @@ define( function( require ) {
         var maxX = modelViewTransform.modelToViewX( maximumSize );
         var maxY = modelViewTransform.modelToViewY( maximumSize );
 
-        // REVIEW: Why does this start at -1?
+        // We need the grid lines to extend out past each side a bit for correct appearance
         for ( var i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
           var x = modelViewTransform.modelToViewX( i * smallTileSize );
           var y = modelViewTransform.modelToViewY( i * smallTileSize );
@@ -165,9 +165,7 @@ define( function( require ) {
      * @param {Orientation} orientation
      * @param {function} callback - callback( largeCount, smallCount, min, border, max )
      */
-    // REVIEW: Perhaps rename to forEachPartition, so that it will be clearer to maintainers that it is a forEach style=
-    // REVIEW: iteration.
-    forPartitions: function( orientation, callback ) {
+    forEachPartition: function( orientation, callback ) {
       var self = this;
 
       this.areaDisplay.partitionsProperties.get( orientation ).value.forEach( function( partition ) {
@@ -207,9 +205,8 @@ define( function( require ) {
       this.dirty = false;
 
       // Coordinate mapping into the view
-      // REVIEW: Rename modelToViewX and modelToViewY
-      var mapX = this.modelViewTransformProperty.value.modelToViewX.bind( this.modelViewTransformProperty.value );
-      var mapY = this.modelViewTransformProperty.value.modelToViewY.bind( this.modelViewTransformProperty.value );
+      var modelToViewX = this.modelViewTransformProperty.value.modelToViewX.bind( this.modelViewTransformProperty.value );
+      var modelToViewY = this.modelViewTransformProperty.value.modelToViewY.bind( this.modelViewTransformProperty.value );
 
       var largeTileSize = this.largeTileSizeProperty.value;
       var maximumSize = this.maximumSizeProperty.value;
@@ -222,18 +219,18 @@ define( function( require ) {
       var smallShape = new Shape();
       var extraLinesShape = new Shape();
 
-      this.forPartitions( Orientation.HORIZONTAL, function( horizontalLargeCount, horizontalSmallCount, xMin, xBorder, xMax ) {
-        self.forPartitions( Orientation.VERTICAL, function( verticalLargeCount, verticalSmallCount, yMin, yBorder, yMax ) {
+      this.forEachPartition( Orientation.HORIZONTAL, function( horizontalLargeCount, horizontalSmallCount, xMin, xBorder, xMax ) {
+        self.forEachPartition( Orientation.VERTICAL, function( verticalLargeCount, verticalSmallCount, yMin, yBorder, yMax ) {
 
           // Add in extra lines on the far sides of large sections.
           var i;
           for ( i = 0; i < horizontalLargeCount; i++ ) {
-            var x = xMin + mapX( ( i + 1 ) * largeTileSize );
-            extraLinesShape.moveTo( x, 0 ).lineTo( x, mapY( maximumSize ) );
+            var x = xMin + modelToViewX( ( i + 1 ) * largeTileSize );
+            extraLinesShape.moveTo( x, 0 ).lineTo( x, modelToViewY( maximumSize ) );
           }
           for ( i = 0; i < verticalLargeCount; i++ ) {
-            var y = yMin + mapY( ( i + 1 ) * largeTileSize );
-            extraLinesShape.moveTo( 0, y ).lineTo( mapX( maximumSize ), y );
+            var y = yMin + modelToViewY( ( i + 1 ) * largeTileSize );
+            extraLinesShape.moveTo( 0, y ).lineTo( modelToViewX( maximumSize ), y );
           }
 
           // Add sections to the relevant shapes.
@@ -275,8 +272,8 @@ define( function( require ) {
       this.extraLinesPath.clipArea = Shape.rect(
         0,
         0,
-        mapX( this.areaDisplay.activeTotalProperties.horizontal.value ),
-        mapY( this.areaDisplay.activeTotalProperties.vertical.value )
+        modelToViewX( this.areaDisplay.activeTotalProperties.horizontal.value ),
+        modelToViewY( this.areaDisplay.activeTotalProperties.vertical.value )
       );
     }
   } );

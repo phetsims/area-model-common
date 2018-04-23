@@ -24,6 +24,9 @@ define( function( require ) {
   // strings
   var calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
 
+  // constants
+  var MARGIN = 8;
+
   /**
    * @constructor
    * @extends {AccordionBox}
@@ -42,13 +45,9 @@ define( function( require ) {
     // @private {CalculationLinesNode}
     this.calculationLinesNode = new CalculationLinesNode( model );
 
-    // REVIEW: Move to // constants?
-    // REVIEW: Since it is used in the next two expressions, it seems fine to leave it here if you prefer.
-    var margin = 8;
-
     var alignBox = new AlignBox( this.calculationLinesNode, {
-      // Since our AccordionBox expands by our margin, we need to set content bounds without that
-      alignBounds: bounds.eroded( margin ),
+      // Since our AccordionBox expands by our MARGIN, we need to set content bounds without that
+      alignBounds: bounds.eroded( MARGIN ),
       pickable: false
     } );
 
@@ -58,8 +57,8 @@ define( function( require ) {
         maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
       } ),
       expandedProperty: model.calculationBoxVisibleProperty,
-      contentXMargin: margin,
-      contentYMargin: margin,
+      contentXMargin: MARGIN,
+      contentYMargin: MARGIN,
 
       // REVIEW: A negative spacing seems unusual, please comment what is happening.
       contentXSpacing: -10

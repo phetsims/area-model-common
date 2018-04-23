@@ -22,7 +22,7 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Property.<Area>} areaProperty // REVIEW: can you please comment when this area property changes? Is it primarily through scene (size) changes?
+   * @param {Property.<Area>} areaProperty - This changes when the scene changes (we have one area per scene)
    */
   function AreaDisplay( areaProperty ) {
     // @public {Property.<Area>}

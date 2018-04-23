@@ -56,8 +56,7 @@ define( function( require ) {
      * @param {number} secondary
      * @returns {Vector2}
      */
-    // REVIEW: Rename toVector
-    vector: function( primary, secondary ) {
+    toVector: function( primary, secondary ) {
       var vector = new Vector2();
       vector[ this.coordinate ] = primary;
       vector[ this.opposite.coordinate ] = secondary;
