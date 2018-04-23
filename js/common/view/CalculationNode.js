@@ -172,14 +172,14 @@ define( function( require ) {
 
       // Empirically determined to be the best Y location given all of the combinations. Hard to determine with
       // computation, so left here.
-      self.centerY = 543 - AreaModelCommonConstants.PANEL_MARGIN;
+      self.centerY = 543 - AreaModelCommonConstants.LAYOUT_SPACING;
 
       // First try to center
       self.centerX = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
-      if ( self.left < AreaModelCommonConstants.PANEL_MARGIN ) {
+      if ( self.left < AreaModelCommonConstants.LAYOUT_SPACING ) {
 
         // If that doesn't work, don't let it go out of bounds left-side.
-        self.left = AreaModelCommonConstants.PANEL_MARGIN;
+        self.left = AreaModelCommonConstants.LAYOUT_SPACING;
       }
     }
 

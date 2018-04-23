@@ -245,8 +245,8 @@ define( function( require ) {
         model.reset();
       },
       touchAreaDilation: 10,
-      right: this.layoutBounds.right - AreaModelCommonConstants.PANEL_MARGIN,
-      bottom: this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN
+      right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,
+      bottom: this.layoutBounds.bottom - AreaModelCommonConstants.LAYOUT_SPACING
     } );
     this.levelSelectionLayer.addChild( resetAllButton );
 
@@ -328,14 +328,14 @@ define( function( require ) {
         factorsContent,
         productContent
       ],
-      spacing: AreaModelCommonConstants.PANEL_SPACING
+      spacing: AreaModelCommonConstants.LAYOUT_SPACING
     } );
     this.challengeLayer.addChild( new AlignBox( panelBox, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'top',
       topMargin: gameAreaNode.y,
-      rightMargin: AreaModelCommonConstants.PANEL_MARGIN
+      rightMargin: AreaModelCommonConstants.LAYOUT_SPACING
     } ) );
 
     // REVIEW: It would be good to have JSDoc for this function even though it is not on the prototype

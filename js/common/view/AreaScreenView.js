@@ -165,13 +165,13 @@ define( function( require ) {
     // @protected {VBox} - Available for subtype positioning relative to this.
     this.rightPanelContainer = new VBox( {
       children: this.getRightSideNodes(),
-      spacing: AreaModelCommonConstants.PANEL_SPACING
+      spacing: AreaModelCommonConstants.LAYOUT_SPACING
     } );
     this.addChild( new AlignBox( this.rightPanelContainer, {
       alignBounds: this.layoutBounds,
       xAlign: 'right',
       yAlign: 'top',
-      margin: AreaModelCommonConstants.PANEL_MARGIN
+      margin: AreaModelCommonConstants.LAYOUT_SPACING
     } ) );
 
     // @protected {Node|null} - The calculation panel/box near the bottom of the screen
@@ -179,8 +179,8 @@ define( function( require ) {
     if ( options.useCalculationBox ) {
       var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y +
                            AreaModelCommonConstants.AREA_SIZE +
-                           AreaModelCommonConstants.PANEL_MARGIN + 30;
-      var calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN;
+                           AreaModelCommonConstants.LAYOUT_SPACING + 30;
+      var calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.LAYOUT_SPACING;
       var calculationBounds = new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop );
       this.calculationNode = new CalculationBox( model, calculationBounds, {
         x: AreaModelCommonConstants.MAIN_AREA_OFFSET.x,
@@ -198,8 +198,8 @@ define( function( require ) {
         model.reset();
       },
       touchAreaDilation: 10,
-      right: this.layoutBounds.right - AreaModelCommonConstants.PANEL_MARGIN,
-      bottom: this.layoutBounds.bottom - AreaModelCommonConstants.PANEL_MARGIN
+      right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,
+      bottom: this.layoutBounds.bottom - AreaModelCommonConstants.LAYOUT_SPACING
     } );
     this.addChild( this.resetAllButton );
 

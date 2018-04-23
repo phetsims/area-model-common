@@ -62,6 +62,9 @@ define( function( require ) {
     // REVIEW: MDM suggests "Do not use this element!" regarding the font tag for html5. "The former behavior of the
     //         <font> element can be achieved, and even better controlled using the CSS Fonts CSS properties."
     //         According to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font
+    // REVIEW*: Since this is provided only to RichText, is the suggestion to be able to add a `style="..."` with
+    // REVIEW*: arbitrary CSS that could control the font parameters? This is a bit nicer in some ways, but way harder
+    // REVIEW*: to parse in general (parsing arbitrary CSS and computing things is a lot harder).
     X_VARIABLE_RICH_STRING: '<font face="'
                             + new MathSymbolFont( 10 ).family
                               .replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' )
@@ -77,8 +80,7 @@ define( function( require ) {
     GAME_AREA_OFFSET: new Vector2( 180, 200 ),
 
     // {number} - Panel options
-    PANEL_MARGIN: 10, // REVIEW: these margins are also used for things that aren't panels, so come up with a more general name
-    PANEL_SPACING: 10,
+    LAYOUT_SPACING: 10,
     PANEL_CORNER_RADIUS: PANEL_CORNER_RADIUS,
     PANEL_INTERIOR_MAX: 230, // Maximum width of the content inside the panels
 

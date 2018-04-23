@@ -60,7 +60,7 @@ define( function( require ) {
       var verticalRangeOffset = ( isProportional
         ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
         : AreaModelCommonConstants.GENERIC_RANGE_OFFSET );
-      text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.PANEL_MARGIN;
+      text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.LAYOUT_SPACING;
     }
 
     // Update the label text
