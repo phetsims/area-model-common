@@ -4,6 +4,8 @@
  * Shows radio buttons that allow selecting between different sized proportional areas.
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * REVIEW: Rename to SceneSelectionRadioButtonGroup for clarity.  Oh wait, I just realized that AreaModelCommonRadioButtonGroup
+ * REVIEW: is currently MutableOptionsNode.  That should be fixed though.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

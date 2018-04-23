@@ -116,6 +116,9 @@ define( function( require ) {
         for ( var col = 0; col < width; col++ ) {
           var colCenter = mapX( col + 0.5 );
 
+          // REVIEW: There is an assumption about the way textNodes were populated by calling createTextNode which
+          // REVIEW: seems brittle, especially since it is number-1 indexed.  Perhaps key it based on the number value
+          // REVIEW: instead of number-1?  Or assign to this.textNodes[number-1] when creating new text node?
           var text = this.textNodes[ number - 1 ];
           // lazy creation (in case)
           if ( !text ) {

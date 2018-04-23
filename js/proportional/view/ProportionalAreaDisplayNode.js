@@ -80,8 +80,8 @@ define( function( require ) {
     // Active area background
     var activeAreaBackground = new Rectangle( {
       fill: options.useTileLikeBackground
-        ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
-        : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
+            ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
+            : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalActiveAreaBorderProperty
     } );
     Property.multilink(
@@ -183,6 +183,7 @@ define( function( require ) {
     },
 
     /**
+     * REVIEW: did you mean node?
      * Returns the partial product note at the given horizontal/vertical indices.
      * @private
      *
@@ -213,9 +214,13 @@ define( function( require ) {
       var rangesPair = this.areaDisplay.partitionsProperties.map( function( partitionsProperties, orientation ) {
         return partitionsProperties.value.map( function( partition ) {
           var range = partition.coordinateRangeProperty.value;
-          if ( range === null ) { return null; }
-          return new Range( orientation.modelToView( self.modelViewTransformProperty.value, range.min ),
-            orientation.modelToView( self.modelViewTransformProperty.value, range.max ) );
+          if ( range === null ) {
+            return null;
+          }
+          return new Range(
+            orientation.modelToView( self.modelViewTransformProperty.value, range.min ),
+            orientation.modelToView( self.modelViewTransformProperty.value, range.max )
+          );
         } );
       } );
 
@@ -247,7 +252,7 @@ define( function( require ) {
           // REVIEW: Rename isRightPartitionVisible
           var hasTwo = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
 
-          // REVIEW: Move to // constants?
+          // REVIEW: Move to // constants?  Or leave here, either way seems fine.
           var leftOverlapBump = 22;
           var labelOverlapBump = 10;
 

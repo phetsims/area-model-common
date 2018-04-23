@@ -43,6 +43,7 @@ define( function( require ) {
     this.calculationLinesNode = new CalculationLinesNode( model );
 
     // REVIEW: Move to // constants?
+    // REVIEW: Since it is used in the next two expressions, it seems fine to leave it here if you prefer.
     var margin = 8;
 
     var alignBox = new AlignBox( this.calculationLinesNode, {
@@ -59,6 +60,8 @@ define( function( require ) {
       expandedProperty: model.calculationBoxVisibleProperty,
       contentXMargin: margin,
       contentYMargin: margin,
+
+      // REVIEW: A negative spacing seems unusual, please comment what is happening.
       contentXSpacing: -10
     } ) );
 

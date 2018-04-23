@@ -74,6 +74,7 @@ define( function( require ) {
 
       function roundToPlaces( n ) {
         // Need to add in additional rounding, see https://github.com/phetsims/area-model-decimals/issues/2
+        // REVIEW: I saw *100/100 (or some numbers like that) somewhere else in the sim, should it be factored out?
         var multiplier = Math.pow( 10, decimalPlaces );
         return Util.roundSymmetric( n * multiplier ) / multiplier;
       }

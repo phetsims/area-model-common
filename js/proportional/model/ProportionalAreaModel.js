@@ -80,6 +80,8 @@ define( function( require ) {
       }
       else {
         // Should be guaranteed to only have 1 digit in front
+        // REVIEW: If we change the number of decmimal points, what are all the different places in the code that
+        // REVIEW: need to be changed?  Should we factor that out and centralize it?
         return '7.89';
       }
     },

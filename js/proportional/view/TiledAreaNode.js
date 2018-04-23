@@ -65,6 +65,7 @@ define( function( require ) {
       self.dirty = true;
     }
 
+    // REVIEW: these invalidates could be lazyLinks for clarity.
     tilesVisibleProperty.link( invalidate );
     modelViewTransformProperty.link( invalidate );
     this.smallTileSizeProperty.link( invalidate );
@@ -164,6 +165,8 @@ define( function( require ) {
      * @param {Orientation} orientation
      * @param {function} callback - callback( largeCount, smallCount, min, border, max )
      */
+    // REVIEW: Perhaps rename to forEachPartition, so that it will be clearer to maintainers that it is a forEach style=
+    // REVIEW: iteration.
     forPartitions: function( orientation, callback ) {
       var self = this;
 

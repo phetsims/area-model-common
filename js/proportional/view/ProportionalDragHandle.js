@@ -2,6 +2,7 @@
 
 /**
  * View for ProportionalArea.
+ * REVIEW: JSDoc description is incorrect.
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  *
@@ -65,6 +66,7 @@ define( function( require ) {
     } );
 
     var initialOffset;
+
     function updateOffsetProperty( event, listener ) {
       var area = areaProperty.value;
       var modelViewTransform = modelViewTransformProperty.value;
