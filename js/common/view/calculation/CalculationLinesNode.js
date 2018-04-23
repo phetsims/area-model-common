@@ -209,7 +209,7 @@ define( function( require ) {
      * @returns {CalculationLine|null}
      */
     getActiveLine: function() {
-      var activeLine = this.calculationLinesProperty.value.find( function( line ) {
+      var activeLine = _.find( this.calculationLinesProperty.value, function( line ) {
         return line.isActiveProperty.value;
       } ) || null;
 
