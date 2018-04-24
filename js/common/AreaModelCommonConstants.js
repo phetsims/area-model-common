@@ -10,14 +10,12 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var PANEL_CORNER_RADIUS = 5;
   var LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;
   var NORMAL_EDIT_FONT_SIZE = 18;
 
@@ -81,7 +79,7 @@ define( function( require ) {
 
     // {number} - Panel options
     LAYOUT_SPACING: 10,
-    PANEL_CORNER_RADIUS: PANEL_CORNER_RADIUS,
+    PANEL_CORNER_RADIUS: 5,
     PANEL_INTERIOR_MAX: 230, // Maximum width of the content inside the panels
 
     // {number} - Partition drag handle options
@@ -129,25 +127,6 @@ define( function( require ) {
 
     // {number} - Padding between a term and an adjacent parenthesis, e.g. "x(" or ")x"
     CALCULATION_TERM_PAREN_PADDING: 1,
-
-    // REVIEW: Move these next two vars to new file AreaModelCommonAccordionBox, see comment in AreaScreenView
-    // {number} - Maximum accordion box title size
-    ACCORDION_BOX_TITLE_MAX: 200,
-
-    // {Object} - Common accordion box options
-    ACCORDION_BOX_OPTIONS: {
-      resize: true,
-      cornerRadius: PANEL_CORNER_RADIUS,
-      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.panelBorderProperty,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
-      titleAlignX: 'left',
-      titleXSpacing: 8,
-      buttonLength: 20,
-      buttonXMargin: 10,
-      buttonYMargin: 8
-    },
 
     // {OrientationPair.<number>} - The opposite-orientation offset to use for term edit nodes, e.g.
     // node[ orientation.opposite.coordinate ] = PARTITION_OFFSET.get( orientation )

@@ -11,15 +11,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationLinesNode = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLinesNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
@@ -29,7 +27,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {AccordionBox}
+   * @extends {AreaModelCommonAccordionBox}
    *
    * @param {ProportionalAreaModel} model
    * @param {Bounds2} bounds - Where to lay out the box in view space
@@ -51,18 +49,14 @@ define( function( require ) {
       pickable: false
     } );
 
-    AccordionBox.call( this, alignBox, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
-      titleNode: new Text( calculationString, {
-        font: AreaModelCommonConstants.TITLE_FONT,
-        maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
-      } ),
-      expandedProperty: model.calculationBoxVisibleProperty,
+    AreaModelCommonAccordionBox.call( this, calculationString, model.calculationBoxVisibleProperty, alignBox, {
+      // Different margins than our other accordion boxes
       contentXMargin: MARGIN,
       contentYMargin: MARGIN,
 
-      // REVIEW: A negative spacing seems unusual, please comment what is happening.
+      // We don't have room for the normal spacing, so we need to make things closer together than they normally are.
       contentXSpacing: -10
-    } ) );
+    } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {
       assert && assert( choice !== AreaCalculationChoice.LINE_BY_LINE, 'Should be HIDDEN or SHOW_ALL_LINES' );
@@ -83,7 +77,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'CalculationBox', CalculationBox );
 
-  return inherit( AccordionBox, CalculationBox, {
+  return inherit( AreaModelCommonAccordionBox, CalculationBox, {
     /**
      * Updates the content of the calculation box (if needed).
      * @public

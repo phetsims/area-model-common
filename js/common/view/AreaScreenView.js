@@ -11,10 +11,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationSelectionNode' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
@@ -136,7 +136,7 @@ define( function( require ) {
 
     // @protected {Node} - Exposed for a11y order
     // REVIEW Use @protected (a11y) or is it @public (a11y) ?  In other places as well.
-    this.factorsBox = this.createAccordionBox(
+    this.factorsBox = new AreaModelCommonAccordionBox(
       options.useSimplifiedNames ? factorsString : dimensionsString,
       model.factorsBoxExpanded,
       factorsBoxContent,
@@ -156,7 +156,7 @@ define( function( require ) {
     } );
 
     // @protected {Node} - Exposed for a11y order
-    this.areaBox = this.createAccordionBox(
+    this.areaBox = new AreaModelCommonAccordionBox(
       options.useSimplifiedNames ? productString : totalAreaOfModelString,
       model.areaBoxExpanded,
       areaBoxContent
@@ -289,28 +289,6 @@ define( function( require ) {
         ],
         spacing: 10
       } );
-    },
-
-    /**
-     * Creates an accordion box with common settings.
-     * @private
-     *
-     * @param {string} titleString
-     * @param {Property.<boolean>} expandedProperty
-     * @param {Node} content
-     * @param {Object} [options]
-     */
-    // REVIEW: Move this to AreaModelCommonAccordionBox.js
-    createAccordionBox: function( titleString, expandedProperty, content, options ) {
-      return new AccordionBox( content, _.extend( {}, AreaModelCommonConstants.ACCORDION_BOX_OPTIONS, {
-        titleNode: new Text( titleString, {
-          font: AreaModelCommonConstants.TITLE_FONT,
-          maxWidth: AreaModelCommonConstants.ACCORDION_BOX_TITLE_MAX
-        } ),
-        expandedProperty: expandedProperty,
-        contentXMargin: 15,
-        contentYMargin: 12
-      }, options ) );
     },
 
     /**
