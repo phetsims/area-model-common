@@ -177,6 +177,7 @@ define( function( require ) {
 
     // All of the entries for the challenge
     // REVIEW: Can this be renamed to allChallengeEntries?
+    // REVIEW*: It's missing the coefficient entries (since we need to handle the statusProperty there instead). Thoughts?
     var mainEntries = this.partitionSizeEntries.horizontal
       .concat( this.partitionSizeEntries.vertical )
       .concat( _.flatten( this.partialProductSizeEntries ) );
@@ -283,6 +284,10 @@ define( function( require ) {
 
       // REVIEW: I'm not following this part.  Why do we need the 1th term?  expected1 and expected2 are terms, right?
       // REVIEW: can they be named as such?  There are several places in this file that could benefit from changes.
+      // REVIEW*: This is only called in the case where we have 2 terms in each orientation. This can't be guaranteed
+      // REVIEW*: in general. Would it be ok having firstTerms (OrientationPair.<Term>) and secondTerms
+      // REVIEW*: (OrientationPair.<Term|null>) since it would clean up a lot of these usages?
+      // REVIEW*: Also couldn't help myself: '1th', would I call it firthTerm?
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
