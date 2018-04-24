@@ -163,7 +163,7 @@ define( function( require ) {
           } ),
           touchAreaXDilation: 5,
           touchAreaYDilation: 5,
-          baseColor: 'white', // Not separated out, matches keypad.
+          baseColor: 'yellow',
           xMargin: 15,
           yMargin: 5,
           listener: function() {
