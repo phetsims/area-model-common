@@ -134,6 +134,9 @@ define( function( require ) {
       digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
 
+    // @private {InputMethod}
+    this.totalInputMethod = totalOptions.inputMethod;
+
     // @public {Entry}
     this.totalConstantEntry = new Entry( this.total.getTerm( 0 ), _.extend( {
       correctValue: this.total.getTerm( 0 ),
@@ -259,9 +262,14 @@ define( function( require ) {
         dimensionForEach( 2, this.partialProductSizeEntries, function( entry, verticalIndex, horizontalIndex ) {
           compareEntry( entry, self.partialProductSizes[ verticalIndex ][ horizontalIndex ] );
         } );
+
         compareEntry( this.totalConstantEntry, this.total.getTerm( 0 ) );
-        compareEntry( this.totalXProperty, this.total.getTerm( 1 ) );
-        compareEntry( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
+        if ( this.inputMethod !== InputMethod.CONSTANT ) {
+          compareEntry( this.totalXProperty, this.total.getTerm( 1 ) );
+        }
+        if ( this.inputMethod === InputMethod.POLYNOMIAL_2 ) {
+          compareEntry( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
+        }
       }
 
       return _.uniq( incorrectEntries ).filter( function( entry ) {
