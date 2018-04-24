@@ -2,7 +2,6 @@
 
 /**
  * A polynomial as a sum of Terms with different powers. Collapses same-power terms, and orders by power.
- * REVIEW: I'd like to see even a small number of Polynomial/Term/TermList unit tests, particularly for Polynomial.times
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

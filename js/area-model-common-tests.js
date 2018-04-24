@@ -10,6 +10,8 @@ define( function( require ) {
 
   // modules
   require( 'AREA_MODEL_COMMON/common/model/TermTests' );
+  require( 'AREA_MODEL_COMMON/common/model/TermListTests' );
+  require( 'AREA_MODEL_COMMON/common/model/PolynomialTests' );
 
   // Since our tests are loaded asynchronously, we must direct QUnit to begin the tests
   QUnit.start();
