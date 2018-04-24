@@ -76,6 +76,8 @@ define( function( require ) {
       // REVIEW: Or why not round coefficient to the nearest allowed value?
       // REVIEW*: There are for sure values (x=0, y=1e-10). And rounding doesn't work for the decimals sim. And in
       // REVIEW*: general, rounding is unclean.
+      // REVIEW: Why can't we use rounding for the decimals sim? You would round values to the nearest 0.1.  Then
+      // REVIEW: direct equality would work here.
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 
@@ -145,10 +147,13 @@ define( function( require ) {
 
       // REVIEW: is 9 the widest number in the same way that M is the widest letter?  Please comment.
       // REVIEW*: Not guaranteed, just tries to get the approximately longest string. Best way to handle?
+      // REVIEW: Perhaps factor out AreaModelCommonConstants.MEASURING_CHARACTER and document it?
       var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
-        return MathSymbols.MINUS + digits + 'x<sup>2</sup>'; // REVIEW: why ^2 here?
-        //REVIEW*: the power is so that it increases the height. Maybe getLargestGenericString would make more sense?
+        return MathSymbols.MINUS + digits + 'x<sup>2</sup>';
+        // REVIEW: why ^2 here?
+        // REVIEW*: the power is so that it increases the height. Maybe getLargestGenericString would make more sense?
+        // REVIEW: Yes please rename to getLargestGenericString, and add a comment that the ^2 increases the height.
       }
       else {
         return MathSymbols.MINUS + digits;

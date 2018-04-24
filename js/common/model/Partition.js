@@ -42,6 +42,8 @@ define( function( require ) {
     // REVIEW*: due to looking through structures. Seems cleaner, and while improper use COULD cause deviation, that
     // REVIEW*: doesn't happen. Same argument as "why does Node have a list of parents when you can search all nodes
     // REVIEW*: and check the children arrays".
+    // REVIEW: Please comment that this information is duplicated with Area for the reasons you mentioned.  Is there a way
+    // REVIEW: we can check that they don't get out of sync?
     this.orientation = orientation;
 
     // @public {Property.<Color>}

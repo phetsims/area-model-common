@@ -39,6 +39,8 @@ define( function( require ) {
     // REVIEW*: example, so you're preaching to the choir. I believe others preferred the formatting I took. Your
     // REVIEW*: preference to open an issue (for dev meeting) to discuss, or change this formatting or whatever, I'm
     // REVIEW*: fine any way.
+    // REVIEW: I did not know that the same-line style was contraindicated by the team.  I thought it was
+    // REVIEW: developer-preference for this, so I'll leave it up to you.
     // AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
     //   value: AreaCalculationChoice.HIDDEN,
     //   node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )

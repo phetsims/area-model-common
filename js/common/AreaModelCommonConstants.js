@@ -57,12 +57,14 @@ define( function( require ) {
     GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
     // {string} - The string to be provided to RichText for a mathematical-looking x
-    // REVIEW: MDM suggests "Do not use this element!" regarding the font tag for html5. "The former behavior of the
+    // REVIEW: MDN suggests "Do not use this element!" regarding the font tag for html5. "The former behavior of the
     //         <font> element can be achieved, and even better controlled using the CSS Fonts CSS properties."
     //         According to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font
     // REVIEW*: Since this is provided only to RichText, is the suggestion to be able to add a `style="..."` with
     // REVIEW*: arbitrary CSS that could control the font parameters? This is a bit nicer in some ways, but way harder
     // REVIEW*: to parse in general (parsing arbitrary CSS and computing things is a lot harder).
+    // REVIEW: I know very little about RichText--do we have our own parser for it, or is it rendered with DOM? Would it work to provide <i style=...>x</i>
+    // REVIEW: Is there no other way to specify fonts for RichText?
     X_VARIABLE_RICH_STRING: '<font face="'
                             + new MathSymbolFont( 10 ).family
                               .replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' )

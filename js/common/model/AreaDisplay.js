@@ -85,6 +85,8 @@ define( function( require ) {
       // REVIEW*: Maybe it's atypical of me, but I actually prefer the bit of duplication here. Factoring out would
       // REVIEW*: result in something notably harder to read/debug. Can we discuss on a call (as going through the
       // REVIEW*: quick refactor would be illustrative).
+      // REVIEW: I'm ok to leave this case with the duplication, but please document that it is a near-copy and how it
+      // REVIEW: differs.
       return OrientationPair.create( function( orientation ) {
         return self.wrapObject( function( area ) {
           return map( area ).get( orientation );

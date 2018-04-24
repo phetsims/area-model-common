@@ -176,6 +176,7 @@ define( function( require ) {
     // All of the entries for the challenge
     // REVIEW: Can this be renamed to allChallengeEntries?
     // REVIEW*: It's missing the coefficient entries (since we need to handle the statusProperty there instead). Thoughts?
+    // REVIEW: Thanks for clarifying, please comment as such and these review comments can be deleted.
     var mainEntries = this.partitionSizeEntries.horizontal
       .concat( this.partitionSizeEntries.vertical )
       .concat( _.flatten( this.partialProductSizeEntries ) );

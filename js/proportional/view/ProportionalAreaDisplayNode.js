@@ -248,9 +248,6 @@ define( function( require ) {
         // have not).
         if ( leftLabel && rightLabel ) {
           var isRightPartitionVisible = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
-
-          // REVIEW: Move to // constants?  Or leave here, either way seems fine.
-          // REVIEW*: Local usage, so prefer to leave here if fine?
           var leftOverlapBump = 22;
           var labelOverlapBump = 10;
 

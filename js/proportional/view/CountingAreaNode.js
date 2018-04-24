@@ -107,6 +107,7 @@ define( function( require ) {
 
       // REVIEW: More expressive variable name for number
       // REVIEW*: Not sure what would be more helpful here, as each cell is labeled with its 'number'. Suggestions?
+      // REVIEW: Perhaps cellValue?  But I'm fine if we leave it as number, now that I understand it better.
       var number = 1;
       for ( var row = 0; row < height; row++ ) {
         var rowCenter = modelToViewY( row + 0.5 );
@@ -118,6 +119,7 @@ define( function( require ) {
           // REVIEW: seems brittle, especially since it is number-1 indexed.  Perhaps key it based on the number value
           // REVIEW: instead of number-1?  Or assign to this.textNodes[number-1] when creating new text node?
           // REVIEW*: Would isolation into a getTextNode( number ) function be sufficient?
+          // REVIEW: That sounds great.
           var text = this.textNodes[ number - 1 ];
           // lazy creation (in case)
           if ( !text ) {
