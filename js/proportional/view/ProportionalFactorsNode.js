@@ -72,19 +72,12 @@ define( function( require ) {
         return new Range( area.minimumSize, area.maximumSize );
       } );
 
-      function roundToPlaces( n ) {
-        // Need to add in additional rounding, see https://github.com/phetsims/area-model-decimals/issues/2
-        // REVIEW: I saw *100/100 (or some numbers like that) somewhere else in the sim, should it be factored out?
-        var multiplier = Math.pow( 10, decimalPlaces );
-        return Util.roundSymmetric( n * multiplier ) / multiplier;
-      }
-
       return new NumberPicker( bidirectionalProperty, rangeProperty, {
         upFunction: function( value ) {
-          return roundToPlaces( value + currentAreaProperty.value.snapSize );
+          return Util.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces );
         },
         downFunction: function( value ) {
-          return roundToPlaces( value - currentAreaProperty.value.snapSize );
+          return Util.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces );
         },
         decimalPlaces: decimalPlaces,
         scale: 1.5,

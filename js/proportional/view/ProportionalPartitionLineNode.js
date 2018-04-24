@@ -137,9 +137,7 @@ define( function( require ) {
       } );
 
     this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
-      constrainValue: function( value ) {
-        return Util.roundSymmetric( value );
-      },
+      constrainValue: Util.roundSymmetric,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5

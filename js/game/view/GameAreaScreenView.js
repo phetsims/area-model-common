@@ -469,6 +469,8 @@ define( function( require ) {
         levelCompleteContainer.children = [
           new LevelCompletedNode(
             level.number - 1, // REVIEW: if the framework is 0-indexed, why is the sim 1-indexed?
+            //REVIEW*: Because LevelCompletedNode takes an index, which is different than the level number. If we
+            //REVIEW*: showed "Level 0", I'd be more than happy to make it level 0 in the code.
             level.scoreProperty.value,
             AreaModelCommonConstants.PERFECT_SCORE,
             AreaModelCommonConstants.NUM_CHALLENGES,

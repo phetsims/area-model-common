@@ -22,16 +22,6 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   /**
-   * Rounds a numeric value to the nearest thousandth (0.001).
-   *
-   * @param {number} value
-   * @returns {number}
-   */
-  function thousandRound( value ) {
-    return Util.roundSymmetric( 1000 * value ) / 1000; // REVIEW: I saw other code somewhere in the sim that did the same thing but with 100
-  }
-
-  /**
    * @constructor
    * @extends {Node}
    *
@@ -177,7 +167,7 @@ define( function( require ) {
         }
 
         var size = range.getLength();
-        var largeCount = Math.floor( thousandRound( size / self.largeTileSizeProperty.value ) );
+        var largeCount = Math.floor( Util.toFixedNumber( size / self.largeTileSizeProperty.value, 3 ) );
 
         var smallCount = Util.roundSymmetric(
           ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value

@@ -91,9 +91,7 @@ define( function( require ) {
       var string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
-
-        //REVIEW: can you remind me with a code comment whan the *100/100 does?
-        string += Util.roundSymmetric( Math.abs( this.coefficient ) * 100 ) / 100;
+        string += Util.toFixedNumber( Math.abs( this.coefficient ), 2 );
       }
       if ( this.power > 0 ) {
         string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
