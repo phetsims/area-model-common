@@ -30,17 +30,16 @@ define( function( require ) {
   function ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, 1, area, activeIndexProperty, allowExponents, isProportional );
 
-    // REVIEW: Give more boolean-ish sounding names, like isHorizontalSingle
-    var horizontalSingle = horizontalTerms.length === 1;
-    var verticalSingle = verticalTerms.length === 1;
+    var isHorizontalSingle = horizontalTerms.length === 1;
+    var isVerticalSingle = verticalTerms.length === 1;
 
     var horizontalNode = this.sumOrientedTerms( horizontalTerms, Orientation.HORIZONTAL );
     var verticalNode = this.sumOrientedTerms( verticalTerms, Orientation.VERTICAL );
 
-    if ( !horizontalSingle || allowExponents ) {
+    if ( !isHorizontalSingle || allowExponents ) {
       horizontalNode = this.parentheses( horizontalNode );
     }
-    if ( !verticalSingle || allowExponents ) {
+    if ( !isVerticalSingle || allowExponents ) {
       verticalNode = this.parentheses( verticalNode );
     }
 
@@ -48,7 +47,7 @@ define( function( require ) {
       this.node = this.multiplyX( verticalNode, horizontalNode );
     }
     else {
-      var spacing = ( horizontalSingle || verticalSingle )
+      var spacing = ( isHorizontalSingle || isVerticalSingle )
                     ? AreaModelCommonConstants.CALCULATION_TERM_PAREN_PADDING
                     : AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING;
       this.node = this.group( [ verticalNode, horizontalNode ], spacing );

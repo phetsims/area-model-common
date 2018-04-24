@@ -86,6 +86,7 @@ define( function( require ) {
       // Remove our content
       // REVIEW: How much time/memory is it really saving to keep the timesNode?  I don't think I understand
       // REVIEW: the performance implications of this code, is it called frequently?
+      // REVIEW*: 5 nodes created every frame was part of the performance impact (and it's nice to consistently pool).
       this.removeChild( this.leftContent );
       this.removeChild( this.rightContent );
       this.leftContent.clean();
