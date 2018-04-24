@@ -264,10 +264,10 @@ define( function( require ) {
         } );
 
         compareEntry( this.totalConstantEntry, this.total.getTerm( 0 ) );
-        if ( this.inputMethod !== InputMethod.CONSTANT ) {
+        if ( this.totalInputMethod !== InputMethod.CONSTANT ) {
           compareEntry( this.totalXProperty, this.total.getTerm( 1 ) );
         }
-        if ( this.inputMethod === InputMethod.POLYNOMIAL_2 ) {
+        if ( this.totalInputMethod === InputMethod.POLYNOMIAL_2 ) {
           compareEntry( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
         }
       }
