@@ -117,6 +117,8 @@ define( function( require ) {
     keypadReadoutBorder: { default: Color.BLACK },
     keypadReadoutBackground: { default: Color.WHITE },
 
+    keypadEnterBackground: { default: new Color( 241, 232, 0 ) },
+
     // Area sign highlights
     genericPositiveBackground: { default: new Color( 0xd4f3fe ) },
     genericNegativeBackground: { default: new Color( 0xe5a5ab ) },
