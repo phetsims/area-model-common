@@ -10,8 +10,9 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
+  var dimensionForEach = require( 'PHET_CORE/dimensionForEach' );
+  var dimensionMap = require( 'PHET_CORE/dimensionMap' );
   var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
@@ -82,13 +83,7 @@ define( function( require ) {
     } );
 
     // @public {Array.<Array.<Entry>>}
-    this.partialProductSizeEntries = AreaModelCommonConstants.dimensionMap( 2, this.partialProductSizes, function( size, indices ) {
-
-      // REVIEW: It is a slight code smell that the dimensions got packed into array indices, not sure if it can
-      // REVIEW: be addressed or if this is already the best solution.  What do you think?
-      // REVIEW: We decided to put the arguments as varargs instead of array
-      var verticalIndex = indices[ 0 ];
-      var horizontalIndex = indices[ 1 ];
+    this.partialProductSizeEntries = dimensionMap( 2, this.partialProductSizes, function( size, verticalIndex, horizontalIndex ) {
 
       // REVIEW: I cannot figure out what the numbersDigits are, can you improve the variable name or add a helpful comment?
       var numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
@@ -261,8 +256,8 @@ define( function( require ) {
         this.partitionSizeEntries.vertical.forEach( function( entry, index ) {
           compareEntry( entry, self.partitionSizes.vertical[ index ] );
         } );
-        AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeEntries, function( entry, indices ) {
-          compareEntry( entry, self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ] );
+        dimensionForEach( 2, this.partialProductSizeEntries, function( entry, verticalIndex, horizontalIndex ) {
+          compareEntry( entry, self.partialProductSizes[ verticalIndex ][ horizontalIndex ] );
         } );
         compareEntry( this.totalConstantEntry, this.total.getTerm( 0 ) );
         compareEntry( this.totalXProperty, this.total.getTerm( 1 ) );
@@ -414,8 +409,8 @@ define( function( require ) {
         this.totalProperties.vertical.value = this.totals.vertical;
       }
 
-      AreaModelCommonConstants.dimensionForEach( 2, this.partialProductSizeEntries, function( entry, indices ) {
-        entry.valueProperty.value = self.partialProductSizes[ indices[ 0 ] ][ indices[ 1 ] ];
+      dimensionForEach( 2, this.partialProductSizeEntries, function( entry, verticalIndex, horizontalIndex ) {
+        entry.valueProperty.value = self.partialProductSizes[ verticalIndex ][ horizontalIndex ];
         entry.statusProperty.value = EntryStatus.NORMAL;
       } );
 
