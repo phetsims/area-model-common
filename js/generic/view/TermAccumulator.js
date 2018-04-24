@@ -87,7 +87,7 @@ define( function( require ) {
         }
       }
       else {
-        coefficient = Number.parseInt( digitString, 10 );
+        coefficient = parseInt( digitString, 10 );
       }
 
       return new Term( coefficient, power );
