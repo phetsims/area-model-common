@@ -48,17 +48,10 @@ define( function( require ) {
       this.node = this.multiplyX( verticalNode, horizontalNode );
     }
     else {
-      // REVIEW: I prefer this formatting:
-      // var spacing = ( horizontalSingle || verticalSingle )
-      //               ? AreaModelCommonConstants.CALCULATION_TERM_PAREN_PADDING
-      //               : AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING;
-      // this.node = this.group( [ verticalNode, horizontalNode ], spacing );
-      this.node = this.group( [
-        verticalNode,
-        horizontalNode
-      ], ( horizontalSingle || verticalSingle )
-        ? AreaModelCommonConstants.CALCULATION_TERM_PAREN_PADDING
-        : AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING );
+      var spacing = ( horizontalSingle || verticalSingle )
+                    ? AreaModelCommonConstants.CALCULATION_TERM_PAREN_PADDING
+                    : AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING;
+      this.node = this.group( [ verticalNode, horizontalNode ], spacing );
     }
   }
 
