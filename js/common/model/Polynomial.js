@@ -36,7 +36,9 @@ define( function( require ) {
         sortedTerms.shift();
       }
 
-      combinedTerms.push( new Term( coefficient, power ) );
+      if ( coefficient !== 0 ) {
+        combinedTerms.push( new Term( coefficient, power ) );
+      }
     }
 
     // If empty, add a zero term
