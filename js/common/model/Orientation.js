@@ -17,16 +17,49 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Object} options - Placed directly on the object.
+   * @param {Object} config
    */
-  function Orientation( options ) {
+  function Orientation( config ) {
+    config = _.extend( {
+      // {string} - So you can position things like node[ orientation.coordinate ] = value
+      coordinate: null,
 
-    // REVIEW: this style of creating object makes it impossible for IDEA to track down usages.  For instance:
-    // REVIEW: ProportionalAreaDisplayNode has orientation.minSide which IDEA reports as unused.  If I change the constructor
-    // REVIEW: to read this.minSide = minSide, then IDEA can find it.  I recommend to use the "required arguments"
-    // REVIEW: strategy for this case.  This will also permit visibility annotations, centralized doc, etc.
-    // [PENDING] REVIEW*: Waiting on resolution to the "required arguments" pattern (dev meeting)
-    _.extend( this, options );
+      // {string} - So you can center things like node[ orientation.centerCoordinate ] = value
+      centerCoordinate: null,
+
+      // {string} - For handling model-view conversions of position (see orientation.modelToView).
+      modelViewName: null,
+
+      // {string} - For getting the minimal/maximal values from bounds/nodes
+      minSide: null,
+      maxSide: null,
+
+      // {string} - For being able to handle Rectangles (x/y) and (width/height)
+      rectCoordinate: null,
+      rectSize: null,
+
+      // {string} - The name of the orientation when used for LayoutBox
+      layoutBoxOrientation: null
+    }, config );
+
+    assert && assert( typeof config.coordinate === 'string' );
+    assert && assert( typeof config.centerCoordinate === 'string' );
+    assert && assert( typeof config.modelViewName === 'string' );
+    assert && assert( typeof config.minSide === 'string' );
+    assert && assert( typeof config.maxSide === 'string' );
+    assert && assert( typeof config.rectCoordinate === 'string' );
+    assert && assert( typeof config.rectSize === 'string' );
+    assert && assert( typeof config.layoutBoxOrientation === 'string' );
+
+    // @public {string}
+    this.coordinate = config.coordinate;
+    this.centerCoordinate = config.centerCoordinate;
+    this.modelViewName = config.modelViewName;
+    this.minSide = config.minSide;
+    this.maxSide = config.maxSide;
+    this.rectCoordinate = config.rectCoordinate;
+    this.rectSize = config.rectSize;
+    this.layoutBoxOrientation = config.layoutBoxOrientation;
 
     // @public {Orientation|null} - Will be filled in after construction.
     this.opposite = null;
