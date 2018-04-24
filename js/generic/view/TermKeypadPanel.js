@@ -20,6 +20,7 @@ define( function( require ) {
   var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
   var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -139,19 +140,20 @@ define( function( require ) {
           ]
         } ),
         this.keypad,
-        new RectangularPushButton( {
+        new MutableOptionsNode( RectangularPushButton, [], {
           content: new Text( enterString, {
             font: AreaModelCommonConstants.KEYPAD_FONT,
             maxWidth: 100
           } ),
           touchAreaXDilation: 5,
           touchAreaYDilation: 5,
-          baseColor: 'yellow',
           xMargin: 15,
           yMargin: 5,
           listener: function() {
             enterCallback( termAccumulator.termProperty.value );
           }
+        }, {
+          baseColor: AreaModelCommonColorProfile.keypadEnterBackgroundProperty
         } )
       ],
       spacing: 10
