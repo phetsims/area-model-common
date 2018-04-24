@@ -35,6 +35,10 @@ define( function( require ) {
     var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
     // REVIEW: I prefer this formatting, you can use whichever you prefer.
+    // REVIEW*: I've argued that it's nicer to put closing/opening braces on the same line like you have in your
+    // REVIEW*: example, so you're preaching to the choir. I believe others preferred the formatting I took. Your
+    // REVIEW*: preference to open an issue (for dev meeting) to discuss, or change this formatting or whatever, I'm
+    // REVIEW*: fine any way.
     // AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
     //   value: AreaCalculationChoice.HIDDEN,
     //   node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )

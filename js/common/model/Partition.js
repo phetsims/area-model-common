@@ -37,18 +37,22 @@ define( function( require ) {
     // @public {Orientation}
     // REVIEW: Is it necessary for Partition to know its Orientation?  After all, Area contains an OrientationPair.<Array.<Partition>>
     // REVIEW: so it seems redundant and error-prone (since the values may deviate).
+    // REVIEW*: While not STRICTLY necessary, it means whenever we need to look up the orientation, (a) it isn't
+    // REVIEW*: overly-complicated by having to iterate through many structures, and (b) we don't lose performance
+    // REVIEW*: due to looking through structures. Seems cleaner, and while improper use COULD cause deviation, that
+    // REVIEW*: doesn't happen. Same argument as "why does Node have a list of parents when you can search all nodes
+    // REVIEW*: and check the children arrays".
     this.orientation = orientation;
 
     // @public {Property.<Color>}
     this.colorProperty = colorProperty;
 
-    // @public {Property.<boolean>}
-    // REVIEW: Do these Properties need to be reset or disposed?  Please address or comment.
+    // @public {Property.<boolean>} - Owned property, does not need to be disposed.
     this.visibleProperty = new BooleanProperty( true );
 
     // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when
     // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
-    // will be from 0 to its maximum size.
+    // will be from 0 to its maximum size. Owned property, does not need to be disposed.
     this.coordinateRangeProperty = new Property( null, {
       useDeepEquality: true,
       isValidValue: function( value ) {

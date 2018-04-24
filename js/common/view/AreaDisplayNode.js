@@ -67,6 +67,16 @@ define( function( require ) {
     // @public {number}
     this.viewSize = options.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
 
+    var modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
+      return new Bounds2( 0, 0, coordinateRangeMax, coordinateRangeMax );
+    } );
+    var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
+
+    // @protected {Property.<ModelViewTransform2>} - Maps from coordinate range values to view values.
+    this.modelViewTransformProperty = new DerivedProperty( [ modelBoundsProperty ], function( modelBounds ) {
+      return ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
+    } );
+
     // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {
       var colorProperty = self.areaDisplay.colorProperties.get( orientation );
@@ -75,7 +85,7 @@ define( function( require ) {
         [ areaDisplay.partitionBoundariesProperties.get( orientation ) ],
         function( partitionBoundaries ) {
           return partitionBoundaries.map( function( boundary ) {
-            return self.mapCoordinate( boundary );
+            return orientation.modelToView( self.modelViewTransformProperty.value, boundary );
           } );
         } );
       self.labelLayer.addChild( new RangeLabelNode(
@@ -85,16 +95,6 @@ define( function( require ) {
         colorProperty,
         options.isProportional
       ) );
-    } );
-
-    var modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
-      return new Bounds2( 0, 0, coordinateRangeMax, coordinateRangeMax );
-    } );
-    var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
-
-    // @protected {Property.<ModelViewTransform2>} - Maps from coordinate range values to view values.
-    this.modelViewTransformProperty = new DerivedProperty( [ modelBoundsProperty ], function( modelBounds ) {
-      return ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds );
     } );
 
     // @private {boolean} - Whether we need to update the labels. It's expensive, so we only do it at most once a frame.
@@ -185,20 +185,6 @@ define( function( require ) {
      */
     positionProductLabels: function() {
       throw new Error( 'abstract method' );
-    },
-
-    /**
-     * Maps a coordinate range (from 0 to area.coordinateRangeMax) to view coordinates relative to the AreaDisplayNode's
-     * origin.
-     * @private
-     *
-     * @param {number} value
-     * @returns {number}
-     */
-    mapCoordinate: function( value ) {
-
-      // REVIEW: why doesn't this use this.modelViewTransformProperty? Rewrite to use it or comment how it is different.
-      return this.viewSize * value / this.areaDisplay.coordinateRangeMaxProperty.value;
     }
   } );
 } );
