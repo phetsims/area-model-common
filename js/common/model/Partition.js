@@ -31,7 +31,7 @@ define( function( require ) {
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( null, {
       useDeepEquality: true,
-      isValidValue: Term.isNullableTerm
+      isValidValue: Term.isTermOrNull
     } );
 
     // @public {Orientation}

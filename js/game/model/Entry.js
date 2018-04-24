@@ -50,7 +50,7 @@ define( function( require ) {
     // @public {Property.<Term|null>} - The current value of the entry
     this.valueProperty = new Property( value, {
       useDeepEquality: true,
-      isValidValue: Term.isNullableTerm
+      isValidValue: Term.isTermOrNull
     } );
 
     // @public {EntryType} - Whether we are dynamic/editable/given.

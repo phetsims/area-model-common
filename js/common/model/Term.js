@@ -74,6 +74,8 @@ define( function( require ) {
       // REVIEW: I know it's safe to check against an epsilon, but are you sure there are values x,y for which
       // abs(x-y)<1E-7 and x!==y ?
       // REVIEW: Or why not round coefficient to the nearest allowed value?
+      // REVIEW*: There are for sure values (x=0, y=1e-10). And rounding doesn't work for the decimals sim. And in
+      // REVIEW*: general, rounding is unclean.
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 
@@ -142,9 +144,11 @@ define( function( require ) {
     getLongestGenericString: function( allowExponents, digitCount ) {
 
       // REVIEW: is 9 the widest number in the same way that M is the widest letter?  Please comment.
+      // REVIEW*: Not guaranteed, just tries to get the approximately longest string. Best way to handle?
       var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
         return MathSymbols.MINUS + digits + 'x<sup>2</sup>'; // REVIEW: why ^2 here?
+        //REVIEW*: the power is so that it increases the height. Maybe getLargestGenericString would make more sense?
       }
       else {
         return MathSymbols.MINUS + digits;
@@ -158,8 +162,7 @@ define( function( require ) {
      * @param {*} thing
      * @returns {boolean}
      */
-    // REVIEW: NullableTerm sounds like a different type, I'd recommend renaming this method to isTermOrNull or something like that
-    isNullableTerm: function( thing ) {
+    isTermOrNull: function( thing ) {
       return thing === null || thing instanceof Term;
     }
   } );
