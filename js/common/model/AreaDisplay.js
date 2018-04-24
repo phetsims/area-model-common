@@ -31,15 +31,8 @@ define( function( require ) {
     // @public {OrientationPair.<Property.<Array.<Partition>>>}
     this.partitionsProperties = this.wrapOrientationPair( _.property( 'partitions' ) );
 
-    // REVIEW: Why not leverage Area.allPartitions for this part?  It would be
-    // REVIEW: this.allPartitionsProperty = this.wrapObject(_.property('allPartitions'));
-    // REVIEW: Right?
     // @public {Property.<Array.<Partition>>}
-    this.allPartitionsProperty = new DerivedProperty(
-      [ this.partitionsProperties.horizontal, this.partitionsProperties.vertical ],
-      function( horizontalPartitions, verticalPartitions ) {
-        return horizontalPartitions.concat( verticalPartitions );
-      } );
+    this.allPartitionsProperty = this.wrapObject( _.property( 'allPartitions' ) );
 
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = this.wrapOrientationPairProperty( _.property( 'colorProperties' ) );
