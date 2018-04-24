@@ -23,22 +23,20 @@ define( function( require ) {
   function Polynomial( terms ) {
 
     var combinedTerms = [];
+    var sortedTerms = _.sortBy( terms, function( term ) {
+      return -term.power;
+    } );
 
-    // Sum common powers, in decreasing order (for display ease)
-    // REVIEW: this seems to assume that powers never exceed 4.  If so, that should be a factored-out constant and terms
-    // REVIEW: should assert that the power <= MAX_POWER.
-    // REVIEW: Even better would be to generalize this code: get the powers from the terms, then sort and iterate
-    // REVIEW: (descending) through those.
-    for ( var power = 4; power >= 0; power-- ) {
+    while ( sortedTerms.length ) {
+      var coefficient = 0;
+      var power = sortedTerms[ 0 ].power;
 
-      // Collect the terms with the corresponding power
-      var termsWithPower = _.filter( terms, [ 'power', power ] );
-
-      // Get their coefficients and sum them
-      var sum = _.sum( _.map( termsWithPower, 'coefficient' ) );
-      if ( sum !== 0 ) {
-        combinedTerms.push( new Term( sum, power ) );
+      while ( sortedTerms.length && sortedTerms[ 0 ].power === power ) {
+        coefficient += sortedTerms[ 0 ].coefficient;
+        sortedTerms.shift();
       }
+
+      combinedTerms.push( new Term( coefficient, power ) );
     }
 
     // If empty, add a zero term
