@@ -114,11 +114,6 @@ define( function( require ) {
         : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
 
-    function layout() {
-      readoutText.center = readoutBackground.selfBounds.center;
-      readoutBackground.touchArea = readoutBackground.parentToLocalBounds( self.localBounds ).dilated( 6 );
-    }
-
     function updateText() {
       if ( termProperty.value === null ) {
         // REIVEW: Handle TODO
@@ -127,7 +122,9 @@ define( function( require ) {
       else {
         readoutText.text = termProperty.value.toRichString( false );
       }
-      layout();
+
+      readoutText.center = readoutBackground.selfBounds.center;
+      readoutBackground.touchArea = readoutBackground.parentToLocalBounds( self.localBounds ).dilated( 6 );
     }
 
     function updateDigits() {
@@ -140,6 +137,7 @@ define( function( require ) {
     termProperty.lazyLink( updateText );
     options.digitCountProperty.lazyLink( updateDigits );
     options.allowExponentsProperty.lazyLink( updateDigits );
+    orientationProperty.lazyLink( updateDigits );
 
     updateDigits();
   }
