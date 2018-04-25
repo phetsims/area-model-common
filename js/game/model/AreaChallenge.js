@@ -292,6 +292,9 @@ define( function( require ) {
       // REVIEW*: in general. Would it be ok having firstTerms (OrientationPair.<Term>) and secondTerms
       // REVIEW*: (OrientationPair.<Term|null>) since it would clean up a lot of these usages?
       // REVIEW*: Also couldn't help myself: '1th', would I call it firthTerm?
+      // REVIEW: firstTerms (OrientationPair.<Term>) and secondTerms (OrientationPair.<Term|null>) sound great, though
+      // REVIEW: I am not 100% certain where you are envisoning they will go.  Perhaps implement it and I'll see it in
+      // REVIEW: the changeset?
       var expected1 = this.partitionSizes.horizontal[ 1 ];
       var expected2 = this.partitionSizes.vertical[ 1 ];
 
