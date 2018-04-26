@@ -59,9 +59,6 @@ define( function( require ) {
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, options );
 
-    // REVIEW: eraseButton is added to labelLayer in both generic and proportional displayNodes, can it be done in the parent type?
-    this.labelLayer.addChild( this.eraseButton );
-
     // Background fill
     this.areaLayer.addChild( this.backgroundNode );
 

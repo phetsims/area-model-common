@@ -47,8 +47,6 @@ define( function( require ) {
       isProportional: false
     } );
 
-    this.labelLayer.addChild( this.eraseButton );
-
     this.areaLayer.addChild( this.backgroundNode );
 
     // Sign-colored partition area backgrounds (effectively pooled)

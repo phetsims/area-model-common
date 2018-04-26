@@ -163,6 +163,8 @@ define( function( require ) {
     this.borderNode = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
       stroke: AreaModelCommonColorProfile.areaBorderProperty
     } );
+
+    this.labelLayer.addChild( this.eraseButton );
   }
 
   areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
