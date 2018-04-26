@@ -130,7 +130,7 @@ define( function( require ) {
     }
 
     function updateDigits() {
-      readoutText.text = Term.getLongestGenericString( options.allowExponentsProperty.value, options.digitCountProperty.value );
+      readoutText.text = Term.getLargestGenericString( options.allowExponentsProperty.value, options.digitCountProperty.value );
       readoutBackground.rectWidth = readoutText.width + 5;
       readoutBackground.rectHeight = readoutText.height + 5;
       updateText();

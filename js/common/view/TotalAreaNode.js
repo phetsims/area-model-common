@@ -40,7 +40,7 @@ define( function( require ) {
   function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
-    var areaText = new RichText( Term.getLongestGenericString( true, 3 ), {
+    var areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
       font: AreaModelCommonConstants.TOTAL_AREA_VALUE_FONT
     } );
 

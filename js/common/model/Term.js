@@ -146,17 +146,15 @@ define( function( require ) {
      * @param {number} digitCount - If no powers of x allowed, how many numeric digits can be allowed.
      * @returns {string}
      */
-    getLongestGenericString: function( allowExponents, digitCount ) {
+    getLargestGenericString: function( allowExponents, digitCount ) {
+      var digits = _.range( 0, digitCount ).map( function() {
+        return AreaModelCommonConstants.MEASURING_CHARACTER;
+      } ).join( '' );
 
-      // REVIEW: is 9 the widest number in the same way that M is the widest letter?  Please comment.
-      // REVIEW*: Not guaranteed, just tries to get the approximately longest string. Best way to handle?
-      // REVIEW: Perhaps factor out AreaModelCommonConstants.MEASURING_CHARACTER and document it?
-      var digits = _.range( 0, digitCount ).map( function() { return '9'; } ).join( '' );
       if ( allowExponents ) {
+        // The square is an example of an exponent that will increase the height of the displayed string, so we want to
+        // include it if exponents are allowed.
         return MathSymbols.MINUS + digits + 'x<sup>2</sup>';
-        // REVIEW: why ^2 here?
-        // REVIEW*: the power is so that it increases the height. Maybe getLargestGenericString would make more sense?
-        // REVIEW: Yes please rename to getLargestGenericString, and add a comment that the ^2 increases the height.
       }
       else {
         return MathSymbols.MINUS + digits;

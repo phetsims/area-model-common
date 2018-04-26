@@ -139,6 +139,10 @@ define( function( require ) {
 
     // {OrientationPair.<number>} - The opposite-orientation offset to use for term edit nodes, e.g.
     // node[ orientation.opposite.coordinate ] = PARTITION_OFFSET.get( orientation )
-    PARTITION_OFFSET: new OrientationPair( -20, -30 )
+    PARTITION_OFFSET: new OrientationPair( -20, -30 ),
+
+    // {string} - The character we use as a generic decimal character to get an approximate width for numeric
+    // representations.
+    MEASURING_CHARACTER: '9'
   } );
 } );

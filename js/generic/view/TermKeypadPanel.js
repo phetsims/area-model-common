@@ -118,7 +118,7 @@ define( function( require ) {
     // When the active partition changes, resize the background to fit to the largest size.
     digitCountProperty.link( function( digitCount ) {
       // Temporarily use a different string
-      readoutText.text = Term.getLongestGenericString( allowExponents, digitCount );
+      readoutText.text = Term.getLargestGenericString( allowExponents, digitCount );
 
       // Update the background
       readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 1 ) );
