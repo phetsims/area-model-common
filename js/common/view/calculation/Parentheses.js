@@ -3,6 +3,8 @@
 /**
  * Wraps a Node with parentheses (poolable).
  *
+ * This is pooled for performance, as recreating the view structure had unacceptable performance/GC characteristics.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
@@ -27,9 +29,11 @@ define( function( require ) {
    */
   function Parentheses( content, baseColorProperty ) {
 
-    // @private {Text}
+    // @private {Text} - Persistent (since these are declared in the constructor instead of the initialize function,
+    // they will persist for the life of this node).
     // REVIEW: What is the criteria for determining whether characters should appear in MathSymbol.js?
     // REVIEW: Does () match the criteria?
+    // REVIEW*: Waiting on https://github.com/phetsims/area-model-common/issues/140
     this.leftParen = new Text( '(', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT
     } );
@@ -98,6 +102,9 @@ define( function( require ) {
   Poolable.mixInto( Parentheses, {
 
     // REVIEW: Perhaps we should create standard documentation for this function and copy it to each declaration.
+    // REVIEW*: I'll probably want to see if there is a more convenient way of setting this up that doesn't hurt
+    // REVIEW*: performance. Specifying the function for each case makes sure that it works well with browser
+    // REVIEW*: optimizations.
     constructorDuplicateFactory: function( pool ) {
       return function( content, baseColorProperty ) {
         if ( pool.length ) {

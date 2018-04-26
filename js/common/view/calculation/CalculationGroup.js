@@ -3,6 +3,8 @@
 /**
  * A poolable HBox for grouping calculation items with a specified spacing.
  *
+ * This is pooled for performance, as recreating the view structure had unacceptable performance/GC characteristics.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {

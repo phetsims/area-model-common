@@ -27,6 +27,8 @@ define( function( require ) {
   // constants
   var MAX_LINE_WIDTH = 680; // may need to be updated if the panel size is changed.
   var LINE_BY_LINE_EXPANSION = 25;
+  var ARROW_SIZE = 18;
+  var ARROW_TOUCH_DILATION = 8;
 
   /**
    * @constructor
@@ -45,31 +47,22 @@ define( function( require ) {
     this.calculationLinesNode = new CalculationLinesNode( model );
 
     var background = new Rectangle( {
-      cornerRadius: 5, // REVIEW: Maybe this should use PANEL_CORNER_RADIUS, which is also 5?
+      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
       stroke: AreaModelCommonColorProfile.panelBorderProperty
     } );
     this.addChild( background );
 
-    // REVIEW: I typically move these out to // constants and uppercase them.
-    // REVIEW*: Since they are locally used (not across the file), it seems nicer to have next to the one spot in code
-    // REVIEW*: that uses it. Maybe good to discuss at a dev meeting?
-    // REVIEW: Yes, I'd like to know what the group consensus is, because it will change how I proceed in my sims.
-    // REVIEW: See https://github.com/phetsims/tasks/issues/931
-    // REVIEW: Perhaps move arrowSide to // constants ARROW_SIZE since it is likely to change?  But I'm fine if we
-    // REVIEW: decide to leave it.
-    var arrowSize = 18;
-    var arrowTouchDilation = 8;
     var previousShape = new Shape().moveTo( 0, 0 )
-      .lineTo( arrowSize, 0 )
-      .lineTo( arrowSize / 2, -arrowSize * 0.8 )
+      .lineTo( ARROW_SIZE, 0 )
+      .lineTo( ARROW_SIZE / 2, -ARROW_SIZE * 0.8 )
       .close();
     var previousArrow = new Path( previousShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     previousArrow.mouseArea = previousArrow.localBounds;
-    previousArrow.touchArea = previousArrow.localBounds.dilated( arrowTouchDilation );
+    previousArrow.touchArea = previousArrow.localBounds.dilated( ARROW_TOUCH_DILATION );
     var previousListener = new FireListener( {
       fire: function() {
         self.calculationLinesNode.moveToPreviousLine();
@@ -86,15 +79,15 @@ define( function( require ) {
 
     this.addChild( previousArrow );
     var nextShape = new Shape().moveTo( 0, 0 )
-      .lineTo( arrowSize, 0 )
-      .lineTo( arrowSize / 2, arrowSize * 0.8 )
+      .lineTo( ARROW_SIZE, 0 )
+      .lineTo( ARROW_SIZE / 2, ARROW_SIZE * 0.8 )
       .close();
     var nextArrow = new Path( nextShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     nextArrow.mouseArea = nextArrow.localBounds;
-    nextArrow.touchArea = nextArrow.localBounds.dilated( arrowTouchDilation );
+    nextArrow.touchArea = nextArrow.localBounds.dilated( ARROW_TOUCH_DILATION );
     this.addChild( nextArrow );
     var nextListener = new FireListener( {
       fire: function() {

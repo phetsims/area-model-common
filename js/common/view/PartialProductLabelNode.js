@@ -88,6 +88,8 @@ define( function( require ) {
     // REVIEW: I'm concerned that these values may leak out of the PhET-iO API if those
     // REVIEW: Rich texts get instrumented.  Would '' work?  Or does the string need to be a certain minimum length
     // REVIEW: or other constraints?
+    // REVIEW*: I'll resolve this as part of https://github.com/phetsims/scenery/issues/769.
+    // TODO: Resolve above
     var placeholderString = 'base64: aG9wZSB0aGUgY29kZSByZXZpZXcgaXMgZ29pbmcgd2VsbA==';
 
     // RichTexts (we reuse the same instances to prevent GC and cpu cost)
@@ -103,9 +105,8 @@ define( function( require ) {
     var rectangleSize = allowExponents ? 12 : 14;
 
     // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
-    // REVIEW: Better name for magicConstant
-    var magicConstant = allowExponents ? 1.3 : 0;
-    var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + magicConstant;
+    var rectangleExponentPadding = allowExponents ? 1.3 : 0;
+    var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + rectangleExponentPadding;
     var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
       stroke: 'black',
       lineWidth: 0.7
@@ -115,8 +116,6 @@ define( function( require ) {
       lineWidth: 0.7
     } );
     if ( allowExponents ) {
-
-      // REVIEW: Should this also be moved to // constants?  See https://github.com/phetsims/tasks/issues/931
       var exponentPadding = 2;
       horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
       verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
@@ -181,6 +180,8 @@ define( function( require ) {
         // chunk of CPU on some of this, and having the RichTexts not pool has been annoying enough.
         // REVIEW: would it help if we had a scenery method or option to check children before doing anything?
         // REVIEW: That is, moving this workaround into scenery/Node?
+        // REVIEW*: The more I think about it, the more I think node.setChildren should be smarter about things.
+        // TODO: Look into setChildren improvements that won't remove and add something back in.
         var currentChildren = box.children;
         var needsUpdate = false;
         if ( currentChildren.length !== children.length ) {

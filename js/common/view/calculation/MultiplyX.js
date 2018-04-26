@@ -3,6 +3,8 @@
 /**
  * Combines two nodes with an x-like multiplication in the middle (poolable)
  *
+ * This is pooled for performance, as recreating the view structure had unacceptable performance/GC characteristics.
+ *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 define( function( require ) {
@@ -29,7 +31,8 @@ define( function( require ) {
    */
   function MultiplyX( leftContent, rightContent, baseColorProperty ) {
 
-    // @private {Text}
+    // @private {Text} - Persistent (since it's declared in the constructor instead of the initialize function, this
+    // will persist for the life of this node).
     this.timesNode = new Text( MathSymbols.TIMES, {
       font: AreaModelCommonConstants.CALCULATION_X_FONT
     } );
@@ -84,11 +87,6 @@ define( function( require ) {
       assert && assert( this.children.length === 3, 'Should have two content nodes and our timesNode' );
 
       // Remove our content
-      // REVIEW: How much time/memory is it really saving to keep the timesNode?  I don't think I understand
-      // REVIEW: the performance implications of this code, is it called frequently?
-      // REVIEW*: 5 nodes created every frame was part of the performance impact (and it's nice to consistently pool).
-      // REVIEW: Please comment that the timesNode does not get garage collected and recreated, and mention the
-      // REVIEW: performance concerns you raised.
       this.removeChild( this.leftContent );
       this.removeChild( this.rightContent );
       this.leftContent.clean();

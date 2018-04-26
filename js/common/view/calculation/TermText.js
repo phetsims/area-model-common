@@ -2,9 +2,8 @@
 
 /**
  * A poolable RichText for a Term with a colorProperty fill.
- * // REVIEW: for poolable types, it would be nice to describe why pooling is valuable.  Are these created lots of times?
- * // REVIEW: does performance suffer on iPad if not pooled, etc?  Generally, pooling adds complexity so it would be good
- * // REVIEW: to document why that complexity is warranted.
+ *
+ * This is pooled for performance, as recreating the view structure had unacceptable performance/GC characteristics.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
