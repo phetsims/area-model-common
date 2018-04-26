@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function MultipliedLine( multipliedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
-    CalculationLine.call( this, 3, area, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, 3, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.node = this.sumWithNegativeParens( multipliedTermList.terms );
   }

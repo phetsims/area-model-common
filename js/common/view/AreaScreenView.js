@@ -46,37 +46,35 @@ define( function( require ) {
    * @extends {ScreenView}
    *
    * @param {AreaModelCommonModel} model
-   * @param {Object} [options]
+   * @param {Object} config
    */
-  function AreaScreenView( model, options ) {
-    options = _.extend( {
-      // {number} - How many decimal places should be shown
+  function AreaScreenView( model, config ) {
+    config = _.extend( {
+      // {number} (required) - How many decimal places should be shown
       decimalPlaces: 0,
 
-      // {boolean} - Whether we show options that let the user select the partial product style
+      // {boolean} (optional) - Whether we show options that let the user select the partial product style
       showProductsSelection: true,
 
-      // {boolean} - Whether we show options that let the user select the calculation style
+      // {boolean} (optional) - Whether we show options that let the user select the calculation style
       showCalculationSelection: true,
 
-      // {boolean} - Selected area background and products box use a light-tile-colored background
+      // {boolean} (optional) - Selected area background and products box use a light-tile-colored background
       useTileLikeBackground: false,
 
-      // {boolean} - Uses "product" and "factors" to be simpler and more multiplication-like
+      // {boolean} (optional) - Uses "product" and "factors" to be simpler and more multiplication-like
       useSimplifiedNames: false,
 
-      // {boolean} - If true, changes the location/size of the area to take up more space
+      // {boolean} (optional) - If true, changes the location/size of the area to take up more space
       useLargeArea: false,
 
-      // {boolean} - If true, a simplified accordion box will be used for the calculation lines (instead of a panel).
+      // {boolean} (optional) - If true, a simplified accordion box will be used for the calculation lines (instead of a panel).
       // Notably, the accordion box does NOT support line-by-line appearance, and can be collapsed.
       useCalculationBox: false
-    }, options );
+    }, config );
+    assert && assert( typeof config.decimalPlaces === 'number' );
 
     assert && assert( model instanceof AreaModelCommonModel );
-
-    // REVIEW: this seems to be required, either move to a required argument, or change from [options] to config
-    assert && assert( typeof options.decimalPlaces === 'number' );
 
     ScreenView.call( this );
 
@@ -84,10 +82,10 @@ define( function( require ) {
     this.model = model;
 
     // @protected {boolean}
-    this.useTileLikeBackground = options.useTileLikeBackground;
-    this.useLargeArea = options.useLargeArea;
-    this.showProductsSelection = options.showProductsSelection;
-    this.showCalculationSelection = options.showCalculationSelection;
+    this.useTileLikeBackground = config.useTileLikeBackground;
+    this.useLargeArea = config.useLargeArea;
+    this.showProductsSelection = config.showProductsSelection;
+    this.showCalculationSelection = config.showCalculationSelection;
 
     // @protected {Node} - Exposed for a11y selection
     this.productsSelectionPanel = this.createPanelContent(
@@ -96,7 +94,7 @@ define( function( require ) {
       new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
 
-    // REVIEW: Type doc, visibility?
+    // @public {Node} (a11y)
     this.calculationSelectionPanel = this.createPanelContent(
       areaModelCalculationString,
       AreaModelCommonGlobals.panelAlignGroup,
@@ -110,6 +108,8 @@ define( function( require ) {
       // REVIEW: This implementation seems odd, would it be clearer if we iterate through the selectionNodes and add
       // REVIEW: the nodes and separators into a new array instead of using insertChild and i+=2
       // REVIEW: Especially since (but not only because) we are adding the selectionContent while iterating over it.
+      // REVIEW*: I'm not sure I understand how it would be simpler. Wouldn't it add a line or two of code for declaring
+      // REVIEW*: the array?
       selectionContent.children = selectionNodes;
       // Add separators between items
       for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
@@ -120,7 +120,7 @@ define( function( require ) {
       }
     } );
 
-    // @protected {Node} - Shows radio button groups to select partial product / calculation / partition line options.
+    // @protected {Node} (a11y) - Shows radio button groups to select partial product / calculation / partition line options.
     this.selectionPanel = new Panel( selectionContent, {
       xMargin: 15,
       yMargin: 10,
@@ -129,15 +129,14 @@ define( function( require ) {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
-    var factorsBoxContent = new AlignBox( this.createFactorsNode( model, options.decimalPlaces ), {
+    var factorsBoxContent = new AlignBox( this.createFactorsNode( model, config.decimalPlaces ), {
       group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
 
-    // @protected {Node} - Exposed for a11y order
-    // REVIEW Use @protected (a11y) or is it @public (a11y) ?  In other places as well.
+    // @protected {Node} (a11y) - Exposed for a11y order
     this.factorsBox = new AreaModelCommonAccordionBox(
-      options.useSimplifiedNames ? factorsString : dimensionsString,
+      config.useSimplifiedNames ? factorsString : dimensionsString,
       model.factorsBoxExpanded,
       factorsBoxContent,
       {
@@ -155,9 +154,9 @@ define( function( require ) {
       xAlign: 'center'
     } );
 
-    // @protected {Node} - Exposed for a11y order
+    // @protected {Node} (a11y)
     this.areaBox = new AreaModelCommonAccordionBox(
-      options.useSimplifiedNames ? productString : totalAreaOfModelString,
+      config.useSimplifiedNames ? productString : totalAreaOfModelString,
       model.areaBoxExpanded,
       areaBoxContent
     );
@@ -174,9 +173,9 @@ define( function( require ) {
       margin: AreaModelCommonConstants.LAYOUT_SPACING
     } ) );
 
-    // @protected {Node|null} - The calculation panel/box near the bottom of the screen
+    // @protected {Node|null} (a11y) - The calculation panel/box near the bottom of the screen
     this.calculationNode = null;
-    if ( options.useCalculationBox ) {
+    if ( config.useCalculationBox ) {
       var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y +
                            AreaModelCommonConstants.AREA_SIZE +
                            AreaModelCommonConstants.LAYOUT_SPACING + 30;
@@ -192,7 +191,7 @@ define( function( require ) {
     }
     this.addChild( this.calculationNode );
 
-    // @protected {Node} - Reset all button
+    // @protected {Node} (a11y) - Reset all button
     this.resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
@@ -232,6 +231,8 @@ define( function( require ) {
      */
     // REVIEW: Perhaps a more specific name, since this omits the reset all button.  Perhaps getRightSidePanels or getRightSideBoxes or something like that?
     // REVIEW: Or maybe getRightSideNodesForAlignment?
+    // REVIEW*: NodesForAlignment seems very verbose, and the others aren't great since it is a combination of panels,
+    // REVIEW*: accordion boxes and radio button groups. Thoughts?
     getRightSideNodes: function() {
       var children = [
         this.factorsBox,

@@ -32,7 +32,7 @@ define( function( require ) {
     // REVIEW: How can the index be hard-coded as 2?  It seems like it should be set by CalculationLinesNode.createLines
     // REVIEW: This comment applies to all hard-coded indices in this directory.  Perhaps sometimes some indices are
     // REVIEW: skipped?  It would be more direct and easier to maintain if the indices were passed as arguments.
-    CalculationLine.call( this, 2, area, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, 2, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.node = this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
       return horizontalTerms.map( function( horizontalTerm ) {

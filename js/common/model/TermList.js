@@ -110,6 +110,7 @@ define( function( require ) {
       // REVIEW*: code, the optimization could be helpful. It probably ended up not mattering for Area Model, as the
       // REVIEW*: RichText stuff burns WAY more cycles.
       // REVIEW: If it is important to access the length only once, you could get it as a var, then go forward, right?
+      // REVIEW*: Totally, but this is simpler (and backwards iteration is pretty common in a lot of code?)
       for ( var i = this.terms.length - 1; i >= 0; i-- ) {
         if ( !this.terms[ i ].equals( termList.terms[ i ] ) ) {
           return false;

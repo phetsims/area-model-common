@@ -29,12 +29,12 @@ define( function( require ) {
    * @extends {Object}
    *
    * @param {number} index
-   * @param {Area} area // REVIEW: Pass area.colorProperties instead of the whole area
+   * @param {OrientationPair.<Property.<Color>>} colorProperties
    * @param {Property.<number|null>} activeIndexProperty
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
-  function CalculationLine( index, area, activeIndexProperty, allowExponents, isProportional ) {
+  function CalculationLine( index, colorProperties, activeIndexProperty, allowExponents, isProportional ) {
     assert && assert( typeof index === 'number' );
 
     var self = this;
@@ -50,10 +50,6 @@ define( function( require ) {
     // @public {CalculationLine|null} - Linked-list support for easy traversal through lines
     this.previousLine = null;
     this.nextLine = null;
-
-    // @private {Area}
-    // REVIEW: This looks unused
-    this.area = area;
 
     // @private {boolean}
     this.allowExponents = allowExponents;
@@ -79,7 +75,7 @@ define( function( require ) {
     this.orientedColorProperties = OrientationPair.create( function( orientation ) {
       return new DerivedProperty( [
         self.isActiveProperty,
-        area.colorProperties.get( orientation ),
+        colorProperties.get( orientation ),
         AreaModelCommonColorProfile.calculationInactiveProperty
       ], function( isActive, activeColor, inactiveColor ) {
         return isActive ? activeColor : inactiveColor;

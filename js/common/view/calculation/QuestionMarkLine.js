@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function QuestionMarkLine( area, activeIndexProperty, allowExponents, isProportional ) {
-    CalculationLine.call( this, 0, area, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, 0, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.node = this.questionMark();
   }
