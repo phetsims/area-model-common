@@ -78,6 +78,9 @@ define( function( require ) {
       // REVIEW*: general, rounding is unclean.
       // REVIEW: Why can't we use rounding for the decimals sim? You would round values to the nearest 0.1.  Then
       // REVIEW: direct equality would work here.
+      // REVIEW*: Rounding to the nearest 0.1 would break, since 0.1 * 0.1 is 0.01 (used in the decimals sim). Using
+      // REVIEW*: that type of rounding would require handling the most decimal points needed across the sim, and would
+      // REVIEW*: make it easy to break in the future.
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 

@@ -52,11 +52,6 @@ define( function( require ) {
     this.allowExponents = allowExponents;
 
     // @public {Property.<number>} - The index of the highlighted calculation line (if using the LINE_BY_LINE choice).
-    // REVIEW: This seems like it should be in AreaModelCommonModel
-    // REVIEW*: Each area has a separate calculation with different lines. It seems desired that you can switch between
-    // REVIEW*: two scenes (with two areas) and have each stay highlighted in the same place. What is the advantage of
-    // REVIEW*: removing this?
-    // REVIEW: Thanks for explaining that, it seems no work is necessary here.
     this.calculationIndexProperty = new NumberProperty( 0 );
 
     // @public {Array.<PartitionedArea>} - An array of 2-dimensional sections of area defined by a horizontal and

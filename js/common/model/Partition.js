@@ -44,6 +44,10 @@ define( function( require ) {
     // REVIEW*: and check the children arrays".
     // REVIEW: Please comment that this information is duplicated with Area for the reasons you mentioned.  Is there a way
     // REVIEW: we can check that they don't get out of sync?
+    // REVIEW*: The orientation seems like an inherent property of the Partition, so it feels wrong to document or check.
+    // REVIEW*: For instance, if you have a Foot object, whether it's a left or right foot is a property of the foot.
+    // REVIEW*: You don't want to have to ask the body about the foot's own properties. Maybe this is worth discussion
+    // REVIEW*: on a call?
     this.orientation = orientation;
 
     // @public {Property.<Color>}
