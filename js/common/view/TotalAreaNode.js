@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -22,11 +23,15 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var RichText = require( 'SCENERY/nodes/RichText' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
   var areaString = require( 'string!AREA_MODEL_COMMON/area' );
+
+  // a11y strings
+  var areaEqualsPatternString = AreaModelCommonA11yStrings.areaEqualsPattern.value;
 
   /**
    * @constructor
@@ -38,6 +43,7 @@ define( function( require ) {
    * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */
   function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
+    var self = this;
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     var areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
@@ -70,16 +76,23 @@ define( function( require ) {
       areaNode = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
     }
 
-    // Update the text.
-    totalAreaProperty.link( function( polynomial ) {
-      areaText.text = polynomial === null ? '?' : polynomial.toRichString();
-    } );
-
     Node.call( this, {
       children: [
         areaNode
       ],
-      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
+      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
+
+      // a11y
+      tagName: 'p'
+    } );
+
+    // Update the text.
+    totalAreaProperty.link( function( polynomial ) {
+      var labelString = polynomial === null ? '?' : polynomial.toRichString();
+      areaText.text = labelString;
+      self.innerContent = StringUtils.fillIn( areaEqualsPatternString, {
+        area: labelString
+      } );
     } );
   }
 

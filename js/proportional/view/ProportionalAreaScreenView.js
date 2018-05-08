@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
@@ -36,6 +37,11 @@ define( function( require ) {
 
   // strings
   var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
+
+  // a11y strings
+  var countingNumbersDescriptionString = AreaModelCommonA11yStrings.countingNumbersDescription.value;
+  var countingNumbersLabelString = AreaModelCommonA11yStrings.countingNumbersLabel.value;
+  var gridLinesLabelString = AreaModelCommonA11yStrings.gridLinesLabel.value;
 
   // constants
   var RADIO_ICON_SIZE = 30;
@@ -75,9 +81,20 @@ define( function( require ) {
     AreaScreenView.call( this, model, options );
 
     // Checkboxes
-    var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty );
-    var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty );
-    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty );
+    var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
+      // a11y
+      labelTagName: 'label',
+      labelContent: gridLinesLabelString
+    } );
+    var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
+
+    } );
+    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
+      // a11y
+      labelTagName: 'label',
+      labelContent: countingNumbersLabelString,
+      descriptionContent: countingNumbersDescriptionString
+    } );
 
     var checkboxContainer = new VBox( {
       children: [ gridCheckbox, countingCheckbox, tileCheckbox ],

@@ -13,8 +13,17 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var AreaModelCommonA11yStrings = {
+    areaEqualsPattern: {
+      value: 'Area equals {{area}}'
+    },
     areaGrid: {
       value: 'Area Grid'
+    },
+    countingNumbersDescription: {
+      value: 'Count each unit of area'
+    },
+    countingNumbersLabel: {
+      value: 'Counting numbers'
     },
     dragHandle: {
       value: 'Drag handle'
@@ -24,6 +33,9 @@ define( function( require ) {
     },
     factorsBox: {
       value: 'Factors'
+    },
+    gridLinesLabel: {
+      value: 'Grid lines'
     },
     horizontalPartitionHandle: {
       value: 'Horizontal partition handle'
