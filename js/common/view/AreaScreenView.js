@@ -14,6 +14,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationSelectionNode' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
@@ -40,6 +41,10 @@ define( function( require ) {
   var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
   var productString = require( 'string!AREA_MODEL_COMMON/product' );
   var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
+
+  // a11y strings
+  var factorsBoxString = AreaModelCommonA11yStrings.factorsBox.value;
+  var productBoxString = AreaModelCommonA11yStrings.productBox.value;
 
   /**
    * @constructor
@@ -141,7 +146,10 @@ define( function( require ) {
       factorsBoxContent,
       {
         // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
-        contentYSpacing: model.allowExponents ? 5 : 8
+        contentYSpacing: model.allowExponents ? 5 : 8,
+
+        // a11y
+        accessibleAccordionTitle: factorsBoxString
       } );
 
     var areaBoxContent = new AlignBox( new TotalAreaNode(
@@ -158,7 +166,10 @@ define( function( require ) {
     this.areaBox = new AreaModelCommonAccordionBox(
       config.useSimplifiedNames ? productString : totalAreaOfModelString,
       model.areaBoxExpanded,
-      areaBoxContent
+      areaBoxContent, {
+        // a11y
+        accessibleAccordionTitle: productBoxString
+      }
     );
 
     // @protected {VBox} - Available for subtype positioning relative to this.

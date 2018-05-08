@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -24,6 +25,10 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
+
+  // a11y strings
+  var horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
+  var verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
 
   /**
    * @constructor
@@ -89,7 +94,11 @@ define( function( require ) {
             return Util.toFixed( value, 1 );
           }
         },
-        color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation )
+        color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
+
+        // a11y
+        innerContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
+        a11yDecimalPlaces: decimalPlaces
       } );
     }
   } );

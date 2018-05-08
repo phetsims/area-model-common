@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var AreaDisplayNode = require( 'AREA_MODEL_COMMON/common/view/AreaDisplayNode' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
@@ -30,6 +31,9 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
+
+  // a11y strings
+  var areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
 
   /**
    * @constructor
@@ -56,6 +60,13 @@ define( function( require ) {
       // Specified for supertype
       isProportional: true
     }, options );
+
+    nodeOptions = _.extend( {
+      // a11y
+      tagName: 'div',
+      labelTagName: 'h3',
+      labelContent: areaGridString
+    }, nodeOptions );
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, options );
 

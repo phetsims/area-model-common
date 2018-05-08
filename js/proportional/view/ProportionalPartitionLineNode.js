@@ -13,6 +13,7 @@ define( function( require ) {
   // modules
   var AccessibleSlider = require( 'SUN/accessibility/AccessibleSlider' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
@@ -32,6 +33,10 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
+
+  // a11y strings
+  var horizontalPartitionHandleString = AreaModelCommonA11yStrings.horizontalPartitionHandle.value;
+  var verticalPartitionHandleString = AreaModelCommonA11yStrings.verticalPartitionHandle.value;
 
   /**
    * @constructor
@@ -136,12 +141,18 @@ define( function( require ) {
         return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
       } );
 
+    // a11y
     this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
       constrainValue: Util.roundSymmetric,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5
+
+      // TODO: add accessibleDecimalPlaces
     } );
+
+    this.labelTagName = 'label';
+    this.labelContent = orientation === Orientation.HORIZONTAL ? horizontalPartitionHandleString : verticalPartitionHandleString;
 
     this.focusHighlight = new FocusHighlightPath( handleShape.getOffsetShape( 5 ) );
     handle.addChild( this.focusHighlight );

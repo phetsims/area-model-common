@@ -13,11 +13,32 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var AreaModelCommonA11yStrings = {
+    areaGrid: {
+      value: 'Area Grid'
+    },
     dragHandle: {
-      value: 'Drag Handle'
+      value: 'Drag handle'
     },
     erase: {
       value: 'Erase'
+    },
+    factorsBox: {
+      value: 'Factors'
+    },
+    horizontalPartitionHandle: {
+      value: 'Horizontal partition handle'
+    },
+    horizontalPicker: {
+      value: 'Width'
+    },
+    productBox: {
+      value: 'Product'
+    },
+    verticalPartitionHandle: {
+      value: 'Vertical partition handle'
+    },
+    verticalPicker: {
+      value: 'Height'
     }
   };
 
