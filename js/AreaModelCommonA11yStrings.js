@@ -14,10 +14,10 @@ define( function( require ) {
 
   var AreaModelCommonA11yStrings = {
     areaEqualsPattern: {
-      value: 'Area equals {{area}}'
+      value: 'Area equals {{area}}.'
     },
     areaGrid: {
-      value: 'Area Grid'
+      value: 'Area grid'
     },
     countingNumbersDescription: {
       value: 'Count each unit of area'
@@ -35,7 +35,7 @@ define( function( require ) {
       value: 'Erase'
     },
     eraseDescription: {
-      value: 'Clear the rectangle and build a new one'
+      value: 'Clear the rectangle and build a new one.'
     },
     factorsBox: {
       value: 'Factors'
@@ -50,13 +50,13 @@ define( function( require ) {
       value: 'Width'
     },
     multiplyTitle: {
-      value: 'Multiply Screen'
+      value: 'Multiply screen'
     },
     multiplyDescription: {
       value: 'Play with multiplication by interacting with an area model.'
     },
     partitionTitle: {
-      value: 'Partition Screen'
+      value: 'Partition screen'
     },
     partitionDescription: {
       value: 'Partition your area model and explore the distributive property.'

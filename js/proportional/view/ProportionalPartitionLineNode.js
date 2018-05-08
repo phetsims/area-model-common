@@ -146,7 +146,8 @@ define( function( require ) {
       constrainValue: Util.roundSymmetric,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
-      pageKeyboardStep: 5
+      pageKeyboardStep: 5,
+      ariaOrientation: orientation.layoutBoxOrientation
 
       // TODO: add accessibleDecimalPlaces
     } );
