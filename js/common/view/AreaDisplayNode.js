@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -26,6 +27,9 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+
+  // a11y strings
+  var eraseString = AreaModelCommonA11yStrings.erase.value;
 
   /**
    * @constructor
@@ -151,7 +155,10 @@ define( function( require ) {
               ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
               : AreaModelCommonConstants.GENERIC_RANGE_OFFSET,
       touchAreaXDilation: 8,
-      touchAreaYDilation: 8
+      touchAreaYDilation: 8,
+
+      // a11y
+      innerContent: eraseString
     } );
 
     // @protected {Node}

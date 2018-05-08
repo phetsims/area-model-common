@@ -13,6 +13,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Circle = require( 'SCENERY/nodes/Circle' );
@@ -26,6 +27,9 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
+
+  // a11y strings
+  var dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
 
   // constants
   var DRAG_OFFSET = 8;
@@ -56,13 +60,16 @@ define( function( require ) {
     } );
 
     var circle = new Circle( DRAG_RADIUS, {
-      tagName: 'div',
-      focusable: true,
       touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
       focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
       fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
       stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
-      cursor: 'pointer'
+      cursor: 'pointer',
+
+      // a11y
+      tagName: 'div',
+      innerContent: dragHandleString,
+      focusable: true
     } );
 
     var initialOffset;
