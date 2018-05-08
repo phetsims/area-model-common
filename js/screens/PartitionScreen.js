@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -26,6 +27,10 @@ define( function( require ) {
   // strings
   var screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
 
+  // a11y strings
+  var partitionTitleString = AreaModelCommonA11yStrings.partitionTitle.value;
+  var partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
+
   /**
    * @constructor
    */
@@ -35,7 +40,11 @@ define( function( require ) {
       name: screenPartitionString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( partitionScreenIconImage ),
-      navigationBarIcon: new Image( partitionScreenNavbarImage )
+      navigationBarIcon: new Image( partitionScreenNavbarImage ),
+
+      // a11y
+      labelContent: partitionTitleString,
+      descriptionContent: partitionDescriptionString
     };
 
     var commonAreaOptions = {

@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var Image = require( 'SCENERY/nodes/Image' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -26,6 +27,10 @@ define( function( require ) {
   // strings
   var screenMultiplyString = require( 'string!AREA_MODEL_COMMON/screen.multiply' );
 
+  // a11y strings
+  var multiplyTitleString = AreaModelCommonA11yStrings.multiplyTitle.value;
+  var multiplyDescriptionString = AreaModelCommonA11yStrings.multiplyDescription.value;
+
   /**
    * @constructor
    */
@@ -35,7 +40,11 @@ define( function( require ) {
       name: screenMultiplyString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( multiplyScreenIconImage ),
-      navigationBarIcon: new Image( multiplyScreenNavbarImage )
+      navigationBarIcon: new Image( multiplyScreenNavbarImage ),
+
+      // a11y
+      labelContent: multiplyTitleString,
+      descriptionContent: multiplyDescriptionString
     };
 
     var commonAreaOptions = {

@@ -30,6 +30,7 @@ define( function( require ) {
 
   // a11y strings
   var eraseString = AreaModelCommonA11yStrings.erase.value;
+  var eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
 
   /**
    * @constructor
@@ -158,7 +159,8 @@ define( function( require ) {
       touchAreaYDilation: 8,
 
       // a11y
-      innerContent: eraseString
+      innerContent: eraseString,
+      descriptionContent: eraseDescriptionString
     } );
 
     // @protected {Node}

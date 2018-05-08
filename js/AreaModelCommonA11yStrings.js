@@ -28,8 +28,14 @@ define( function( require ) {
     dragHandle: {
       value: 'Drag handle'
     },
+    dragHandleDescriptionPattern: {
+      value: 'Drag the handle to build a rectangle up to {{height}} by {{width}}.'
+    },
     erase: {
       value: 'Erase'
+    },
+    eraseDescription: {
+      value: 'Clear the rectangle and build a new one'
     },
     factorsBox: {
       value: 'Factors'
@@ -42,6 +48,18 @@ define( function( require ) {
     },
     horizontalPicker: {
       value: 'Width'
+    },
+    multiplyTitle: {
+      value: 'Multiply Screen'
+    },
+    multiplyDescription: {
+      value: 'Play with multiplication by interacting with an area model.'
+    },
+    partitionTitle: {
+      value: 'Partition Screen'
+    },
+    partitionDescription: {
+      value: 'Partition your area model and explore the distributive property.'
     },
     productBox: {
       value: 'Product'

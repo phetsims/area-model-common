@@ -25,11 +25,13 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var Shape = require( 'KITE/Shape' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // a11y strings
   var dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
+  var dragHandleDescriptionPatternString = AreaModelCommonA11yStrings.dragHandleDescriptionPattern.value;
 
   // constants
   var DRAG_OFFSET = 8;
@@ -70,6 +72,13 @@ define( function( require ) {
       tagName: 'div',
       innerContent: dragHandleString,
       focusable: true
+    } );
+
+    areaProperty.link( function( area ) {
+      circle.descriptionContent = StringUtils.fillIn( dragHandleDescriptionPatternString, {
+        width: area.maximumSize,
+        height: area.maximumSize
+      } );
     } );
 
     var initialOffset;
