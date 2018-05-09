@@ -14,7 +14,7 @@ define( function( require ) {
 
   var AreaModelCommonA11yStrings = {
     areaEqualsPattern: {
-      value: 'Area equals {{area}}.'
+      value: 'Area equals {{area}}'
     },
     areaGrid: {
       value: 'Area grid'
@@ -49,14 +49,8 @@ define( function( require ) {
     horizontalPicker: {
       value: 'Width'
     },
-    multiplyTitle: {
-      value: 'Multiply screen'
-    },
     multiplyDescription: {
       value: 'Play with multiplication by interacting with an area model.'
-    },
-    partitionTitle: {
-      value: 'Partition screen'
     },
     partitionDescription: {
       value: 'Partition your area model and explore the distributive property.'

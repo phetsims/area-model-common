@@ -153,7 +153,7 @@ define( function( require ) {
     } );
 
     this.labelTagName = 'label';
-    this.labelContent = orientation === Orientation.HORIZONTAL ? horizontalPartitionHandleString : verticalPartitionHandleString;
+    this.labelContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleString : horizontalPartitionHandleString;
 
     this.focusHighlight = new FocusHighlightPath( handleShape.getOffsetShape( 5 ) );
     handle.addChild( this.focusHighlight );

@@ -28,7 +28,6 @@ define( function( require ) {
   var screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
 
   // a11y strings
-  var partitionTitleString = AreaModelCommonA11yStrings.partitionTitle.value;
   var partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
 
   /**
@@ -43,7 +42,6 @@ define( function( require ) {
       navigationBarIcon: new Image( partitionScreenNavbarImage ),
 
       // a11y
-      labelContent: partitionTitleString,
       descriptionContent: partitionDescriptionString
     };
 

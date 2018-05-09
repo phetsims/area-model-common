@@ -28,7 +28,6 @@ define( function( require ) {
   var screenMultiplyString = require( 'string!AREA_MODEL_COMMON/screen.multiply' );
 
   // a11y strings
-  var multiplyTitleString = AreaModelCommonA11yStrings.multiplyTitle.value;
   var multiplyDescriptionString = AreaModelCommonA11yStrings.multiplyDescription.value;
 
   /**
@@ -43,7 +42,6 @@ define( function( require ) {
       navigationBarIcon: new Image( multiplyScreenNavbarImage ),
 
       // a11y
-      labelContent: multiplyTitleString,
       descriptionContent: multiplyDescriptionString
     };
 
