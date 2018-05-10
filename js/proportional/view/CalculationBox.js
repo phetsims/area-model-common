@@ -25,6 +25,7 @@ define( function( require ) {
 
   // a11y strings
   var calculationAccordionTitleString = AreaModelCommonA11yStrings.calculationAccordionTitle.value;
+  var calculationBoxDescriptionString = AreaModelCommonA11yStrings.calculationBoxDescription.value;
 
   // constants
   var MARGIN = 8;
@@ -61,8 +62,12 @@ define( function( require ) {
       // We don't have room for the normal spacing, so we need to make things closer together than they normally are.
       contentXSpacing: -10,
 
-      // a11h
-      accessibleAccordionTitle: calculationAccordionTitleString
+      // a11y
+      labelTagName: 'h3',
+      labelContent: calculationAccordionTitleString,
+      titleBarOptions: {
+        descriptionContent: calculationBoxDescriptionString
+      }
     } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {

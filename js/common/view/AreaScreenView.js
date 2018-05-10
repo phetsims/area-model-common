@@ -44,7 +44,9 @@ define( function( require ) {
 
   // a11y strings
   var factorsBoxString = AreaModelCommonA11yStrings.factorsBox.value;
+  var factorsBoxDescriptionString = AreaModelCommonA11yStrings.factorsBoxDescription.value;
   var productBoxString = AreaModelCommonA11yStrings.productBox.value;
+  var productBoxDescriptionString = AreaModelCommonA11yStrings.productBoxDescription.value;
 
   /**
    * @constructor
@@ -149,7 +151,11 @@ define( function( require ) {
         contentYSpacing: model.allowExponents ? 5 : 8,
 
         // a11y
-        accessibleAccordionTitle: factorsBoxString
+        labelTagName: 'h3',
+        labelContent: factorsBoxString,
+        titleBarOptions: {
+          descriptionContent: factorsBoxDescriptionString
+        }
       } );
 
     var areaBoxContent = new AlignBox( new TotalAreaNode(
@@ -168,7 +174,11 @@ define( function( require ) {
       model.areaBoxExpanded,
       areaBoxContent, {
         // a11y
-        accessibleAccordionTitle: productBoxString
+        labelTagName: 'h3',
+        labelContent: productBoxString,
+        titleBarOptions: {
+          descriptionContent: productBoxDescriptionString
+        }
       }
     );
 

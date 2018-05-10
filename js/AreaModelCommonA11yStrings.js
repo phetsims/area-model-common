@@ -22,8 +22,12 @@ define( function( require ) {
     base10AreaTiles: {
       value: 'Base 10 area tiles'
     },
+    // TODO: Box or Accordion?
     calculationAccordionTitle: {
       value: 'Calculation'
+    },
+    calculationBoxDescription: {
+      value: 'Show or hide the calculation.'
     },
     countingNumbersDescription: {
       value: 'Count each unit of area'
@@ -45,6 +49,9 @@ define( function( require ) {
     },
     factorsBox: {
       value: 'Factors'
+    },
+    factorsBoxDescription: {
+      value: 'Show or hide the factors.'
     },
     gridLinesLabel: {
       value: 'Grid lines'
@@ -72,6 +79,9 @@ define( function( require ) {
     },
     productBox: {
       value: 'Product'
+    },
+    productBoxDescription: {
+      value: 'Show or hide the product.'
     },
     sceneSelectionPattern: {
       value: '{{height}} by {{width}} board'
