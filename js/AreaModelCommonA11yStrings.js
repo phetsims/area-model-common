@@ -70,11 +70,20 @@ define( function( require ) {
     productBox: {
       value: 'Product'
     },
+    sceneSelectionPattern: {
+      value: '{{height}} by {{width}} board'
+    },
     showPartialProductFactors: {
       value: 'Show partial product factors'
     },
     showPartialProducts: {
       value: 'Show partial products'
+    },
+    threeSceneSelectionDescriptionPattern: {
+      value: 'Switch between a {{first}}, {{second}} and {{third}} board.'
+    },
+    twoSceneSelectionDescriptionPattern: {
+      value: 'Switch between a {{first}} and {{second}} board.'
     },
     verticalPartition: {
       value: 'Vertical partition'
