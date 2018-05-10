@@ -36,7 +36,9 @@ define( function( require ) {
 
   // a11y strings
   var horizontalPartitionHandleString = AreaModelCommonA11yStrings.horizontalPartitionHandle.value;
+  var horizontalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.horizontalPartitionHandleDescription.value;
   var verticalPartitionHandleString = AreaModelCommonA11yStrings.verticalPartitionHandle.value;
+  var verticalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.verticalPartitionHandleDescription.value;
 
   /**
    * @constructor
@@ -154,6 +156,7 @@ define( function( require ) {
 
     this.labelTagName = 'label';
     this.labelContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleString : horizontalPartitionHandleString;
+    this.descriptionContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleDescriptionString : horizontalPartitionHandleDescriptionString;
 
     this.focusHighlight = new FocusHighlightPath( handleShape.getOffsetShape( 5 ) );
     handle.addChild( this.focusHighlight );

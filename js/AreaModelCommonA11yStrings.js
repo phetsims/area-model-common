@@ -68,8 +68,14 @@ define( function( require ) {
     horizontalPartitionHandle: {
       value: 'Horizontal partition handle'
     },
+    horizontalPartitionHandleDescription: {
+      value: 'Partition area into two smaller areas.'
+    },
     horizontalPicker: {
       value: 'Width'
+    },
+    horizontalPickerDescription: {
+      value: 'Change the dimensions of the rectangle.'
     },
     multiplyDescription: {
       value: 'Play with multiplication by interacting with an area model.'
@@ -78,7 +84,7 @@ define( function( require ) {
       value: 'Partition your area model and explore the distributive property.'
     },
     partitionSelectionDescription: {
-      value: 'Switch between vertical and horizontal partition line.'
+      value: 'Switch between vertical and horizontal partition lines.'
     },
     productBox: {
       value: 'Product'
@@ -107,8 +113,14 @@ define( function( require ) {
     verticalPartitionHandle: {
       value: 'Vertical partition handle'
     },
+    verticalPartitionHandleDescription: {
+      value: 'Partition area into two smaller areas.'
+    },
     verticalPicker: {
       value: 'Height'
+    },
+    verticalPickerDescription: {
+      value: 'Change the dimensions of the rectangle.'
     }
   };
 

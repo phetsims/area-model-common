@@ -31,7 +31,9 @@ define( function( require ) {
   // a11y strings
   var factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
   var horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
+  var horizontalPickerDescriptionString = AreaModelCommonA11yStrings.horizontalPickerDescription.value;
   var verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
+  var verticalPickerDescriptionString = AreaModelCommonA11yStrings.verticalPickerDescription.value;
 
   /**
    * @constructor
@@ -112,6 +114,7 @@ define( function( require ) {
 
         // a11y
         innerContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
+        descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
         a11yDecimalPlaces: decimalPlaces
       } );
     }
