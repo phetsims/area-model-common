@@ -14,6 +14,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var CalculationLinesNode = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLinesNode' );
@@ -21,6 +22,9 @@ define( function( require ) {
 
   // strings
   var calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
+
+  // a11y strings
+  var calculationAccordionTitleString = AreaModelCommonA11yStrings.calculationAccordionTitle.value;
 
   // constants
   var MARGIN = 8;
@@ -55,7 +59,10 @@ define( function( require ) {
       contentYMargin: MARGIN,
 
       // We don't have room for the normal spacing, so we need to make things closer together than they normally are.
-      contentXSpacing: -10
+      contentXSpacing: -10,
+
+      // a11h
+      accessibleAccordionTitle: calculationAccordionTitleString
     } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {

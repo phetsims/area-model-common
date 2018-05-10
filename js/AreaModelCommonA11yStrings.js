@@ -22,6 +22,9 @@ define( function( require ) {
     base10AreaTiles: {
       value: 'Base 10 area tiles'
     },
+    calculationAccordionTitle: {
+      value: 'Calculation'
+    },
     countingNumbersDescription: {
       value: 'Count each unit of area'
     },
