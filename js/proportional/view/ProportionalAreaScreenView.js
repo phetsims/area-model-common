@@ -124,43 +124,35 @@ define( function( require ) {
       }
     } );
 
-    // a11y
-    var playAreaNode = new Node( {
+    // "Play Area" (a11y)
+    this.addChild( new Node( {
       tagName: 'div',
       labelTagName: 'h2',
-      labelContent: playAreaString
-    } );
-    this.addChild( playAreaNode );
+      labelContent: playAreaString,
+      accessibleOrder: [
+        this.areaDisplayNode,
+        this.factorsBox,
+        this.areaBox,
+        this.productsSelectionPanel,
+        this.calculationSelectionPanel,
+        this.partitionSelectionPanel,
+        this.calculationNode
+      ].filter( function( node ) { return node !== undefined; } ) // this.partitionSelectionPanel may not exist
+    } ) );
 
-    // a11y
-    var controlPanelNode = new Node( {
+    // "Control Panel" (a11y)
+    this.addChild( new Node( {
       tagName: 'div',
       labelTagName: 'h2',
-      labelContent: controlPanelString
-    } );
-    this.addChild( controlPanelNode );
-
-    playAreaNode.accessibleOrder = [
-      this.areaDisplayNode,
-      this.factorsBox,
-      this.areaBox,
-      this.productsSelectionPanel,
-      this.calculationSelectionPanel
-    ];
-    if ( this.partitionSelectionPanel ) {
-      playAreaNode.accessibleOrder = playAreaNode.accessibleOrder.concat( [ this.partitionSelectionPanel ] );
-    }
-    playAreaNode.accessibleOrder = playAreaNode.accessibleOrder.concat( [
-      this.calculationNode
-    ] );
-
-    controlPanelNode.accessibleOrder = [
-      gridCheckbox,
-      tileCheckbox,
-      countingCheckbox,
-      this.sceneSelectionNode,
-      this.resetAllButton
-    ];
+      labelContent: controlPanelString,
+      accessibleOrder: [
+        gridCheckbox,
+        tileCheckbox,
+        countingCheckbox,
+        this.sceneSelectionNode,
+        this.resetAllButton
+      ]
+    } ) );
   }
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
