@@ -53,6 +53,9 @@ define( function( require ) {
     factorsBoxDescription: {
       value: 'Show or hide the factors.'
     },
+    factorsTimesPattern: {
+      value: '{{height}} times {{width}}'
+    },
     gridLinesLabel: {
       value: 'Grid lines'
     },

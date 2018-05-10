@@ -216,7 +216,7 @@ define( function( require ) {
      * @returns {Node}
      */
     createFactorsNode: function( model, decimalPlaces ) {
-      return new ProportionalFactorsNode( model.currentAreaProperty, decimalPlaces );
+      return new ProportionalFactorsNode( model.currentAreaProperty, model.areaDisplay.activeTotalProperties, decimalPlaces );
     },
 
     /**

@@ -22,11 +22,14 @@ define( function( require ) {
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
 
   // a11y strings
+  var factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
   var horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
   var verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
 
@@ -35,16 +38,27 @@ define( function( require ) {
    * @extends {HBox}
    *
    * @param {Property.<Area>} currentAreaProperty
+   * @param {OrientationPair.<Property.<number>>} - activeTotalProperties
    * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
    */
-  function ProportionalFactorsNode( currentAreaProperty, decimalPlaces ) {
+  function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
+    var self = this;
+
     HBox.call( this, {
       children: [
         this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
         new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ),
         this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
       ],
-      spacing: 10
+      spacing: 10,
+      tagName: 'div'
+    } );
+
+    Property.multilink( activeTotalProperties.values, function( horizontalTotal, verticalTotal ) {
+      self.labelContent = StringUtils.fillIn( factorsTimesPatternString, {
+        width: horizontalTotal,
+        height: verticalTotal
+      } );
     } );
   }
 
