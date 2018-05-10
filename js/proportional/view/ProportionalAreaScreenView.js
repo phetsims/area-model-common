@@ -23,6 +23,7 @@ define( function( require ) {
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
   var PartitionSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/PartitionSelectionNode' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -39,9 +40,11 @@ define( function( require ) {
   var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
 
   // a11y strings
+  var controlPanelString = AreaModelCommonA11yStrings.controlPanel.value;
   var countingNumbersDescriptionString = AreaModelCommonA11yStrings.countingNumbersDescription.value;
   var countingNumbersLabelString = AreaModelCommonA11yStrings.countingNumbersLabel.value;
   var gridLinesLabelString = AreaModelCommonA11yStrings.gridLinesLabel.value;
+  var playAreaString = AreaModelCommonA11yStrings.playArea.value;
 
   // constants
   var RADIO_ICON_SIZE = 30;
@@ -121,23 +124,43 @@ define( function( require ) {
       }
     } );
 
-    // Our keyboard-accessible order
-    var accessibleOrder = [];
-    accessibleOrder.push( this.areaDisplayNode );
-    accessibleOrder.push( this.factorsBox );
-    accessibleOrder.push( this.areaBox );
-    accessibleOrder.push( this.productsSelectionPanel );
-    accessibleOrder.push( this.calculationSelectionPanel );
+    // a11y
+    var playAreaNode = new Node( {
+      tagName: 'div',
+      labelTagName: 'h2',
+      labelContent: playAreaString
+    } );
+    this.addChild( playAreaNode );
+
+    // a11y
+    var controlPanelNode = new Node( {
+      tagName: 'div',
+      labelTagName: 'h2',
+      labelContent: controlPanelString
+    } );
+    this.addChild( controlPanelNode );
+
+    playAreaNode.accessibleOrder = [
+      this.areaDisplayNode,
+      this.factorsBox,
+      this.areaBox,
+      this.productsSelectionPanel,
+      this.calculationSelectionPanel
+    ];
     if ( this.partitionSelectionPanel ) {
-      accessibleOrder.push( this.partitionSelectionPanel );
+      playAreaNode.accessibleOrder = playAreaNode.accessibleOrder.concat( [ this.partitionSelectionPanel ] );
     }
-    accessibleOrder.push( this.calculationNode );
-    accessibleOrder.push( gridCheckbox );
-    accessibleOrder.push( tileCheckbox );
-    accessibleOrder.push( countingCheckbox );
-    accessibleOrder.push( this.sceneSelectionNode );
-    accessibleOrder.push( this.resetAllButton );
-    this.accessibleOrder = accessibleOrder;
+    playAreaNode.accessibleOrder = playAreaNode.accessibleOrder.concat( [
+      this.calculationNode
+    ] );
+
+    controlPanelNode.accessibleOrder = [
+      gridCheckbox,
+      tileCheckbox,
+      countingCheckbox,
+      this.sceneSelectionNode,
+      this.resetAllButton
+    ];
   }
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );

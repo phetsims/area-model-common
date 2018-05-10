@@ -19,6 +19,9 @@ define( function( require ) {
     areaGrid: {
       value: 'Area grid'
     },
+    controlPanel: {
+      value: 'Control panel'
+    },
     countingNumbersDescription: {
       value: 'Count each unit of area'
     },
@@ -54,6 +57,9 @@ define( function( require ) {
     },
     partitionDescription: {
       value: 'Partition your area model and explore the distributive property.'
+    },
+    playArea: {
+      value: 'Play area'
     },
     productBox: {
       value: 'Product'
