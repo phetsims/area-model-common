@@ -14,6 +14,7 @@ define( function( require ) {
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -25,6 +26,11 @@ define( function( require ) {
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalPartitionLineNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Vector2 = require( 'DOT/Vector2' );
+
+  // a11y strings
+  var horizontalPartitionString = AreaModelCommonA11yStrings.horizontalPartition.value;
+  var partitionSelectionDescriptionString = AreaModelCommonA11yStrings.partitionSelectionDescription.value;
+  var verticalPartitionString = AreaModelCommonA11yStrings.verticalPartition.value;
 
   /**
    * @constructor
@@ -38,12 +44,18 @@ define( function( require ) {
       var icon = PartitionSelectionNode.createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
       return {
         value: orientation,
-        node: new AlignBox( icon, { group: selectionButtonAlignGroup } )
+        node: new AlignBox( icon, { group: selectionButtonAlignGroup } ),
+
+        // a11y
+        labelContent: orientation === Orientation.HORIZONTAL ? verticalPartitionString : horizontalPartitionString
       };
     } ), {
       // Less margin than others desired here
       buttonContentXMargin: 7,
-      buttonContentYMargin: 7
+      buttonContentYMargin: 7,
+
+      // a11y
+      descriptionContent: partitionSelectionDescriptionString
     } );
   }
 

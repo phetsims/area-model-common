@@ -19,8 +19,8 @@ define( function( require ) {
     areaGrid: {
       value: 'Area grid'
     },
-    controlPanel: {
-      value: 'Control panel'
+    base10AreaTiles: {
+      value: 'Base 10 area tiles'
     },
     countingNumbersDescription: {
       value: 'Count each unit of area'
@@ -46,6 +46,12 @@ define( function( require ) {
     gridLinesLabel: {
       value: 'Grid lines'
     },
+    hidePartialProducts: {
+      value: 'Hide partial products'
+    },
+    horizontalPartition: {
+      value: 'Horizontal partition'
+    },
     horizontalPartitionHandle: {
       value: 'Horizontal partition handle'
     },
@@ -58,11 +64,20 @@ define( function( require ) {
     partitionDescription: {
       value: 'Partition your area model and explore the distributive property.'
     },
-    playArea: {
-      value: 'Play area'
+    partitionSelectionDescription: {
+      value: 'Switch between vertical and horizontal partition line.'
     },
     productBox: {
       value: 'Product'
+    },
+    showPartialProductFactors: {
+      value: 'Show partial product factors'
+    },
+    showPartialProducts: {
+      value: 'Show partial products'
+    },
+    verticalPartition: {
+      value: 'Vertical partition'
     },
     verticalPartitionHandle: {
       value: 'Vertical partition handle'

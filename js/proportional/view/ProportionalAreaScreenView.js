@@ -19,14 +19,15 @@ define( function( require ) {
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var Checkbox = require( 'SUN/Checkbox' );
+  var ControlPanelNode = require( 'SCENERY_PHET/accessibility/nodes/ControlPanelNode' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
   var PartitionSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/PartitionSelectionNode' );
   var Path = require( 'SCENERY/nodes/Path' );
+  var PlayAreaNode = require( 'SCENERY_PHET/accessibility/nodes/PlayAreaNode' );
   var ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalFactorsNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalFactorsNode' );
@@ -40,11 +41,10 @@ define( function( require ) {
   var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
 
   // a11y strings
-  var controlPanelString = AreaModelCommonA11yStrings.controlPanel.value;
+  var base10AreaTilesString = AreaModelCommonA11yStrings.base10AreaTiles.value;
   var countingNumbersDescriptionString = AreaModelCommonA11yStrings.countingNumbersDescription.value;
   var countingNumbersLabelString = AreaModelCommonA11yStrings.countingNumbersLabel.value;
   var gridLinesLabelString = AreaModelCommonA11yStrings.gridLinesLabel.value;
-  var playAreaString = AreaModelCommonA11yStrings.playArea.value;
 
   // constants
   var RADIO_ICON_SIZE = 30;
@@ -90,7 +90,9 @@ define( function( require ) {
       labelContent: gridLinesLabelString
     } );
     var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
-
+      // a11y
+      labelTagName: 'label',
+      labelContent: base10AreaTilesString
     } );
     var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
       // a11y
@@ -125,10 +127,7 @@ define( function( require ) {
     } );
 
     // "Play Area" (a11y)
-    this.addChild( new Node( {
-      tagName: 'div',
-      labelTagName: 'h2',
-      labelContent: playAreaString,
+    this.addChild( new PlayAreaNode( {
       accessibleOrder: [
         this.areaDisplayNode,
         this.factorsBox,
@@ -141,10 +140,7 @@ define( function( require ) {
     } ) );
 
     // "Control Panel" (a11y)
-    this.addChild( new Node( {
-      tagName: 'div',
-      labelTagName: 'h2',
-      labelContent: controlPanelString,
+    this.addChild( new ControlPanelNode( {
       accessibleOrder: [
         gridCheckbox,
         tileCheckbox,

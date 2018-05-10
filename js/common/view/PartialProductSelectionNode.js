@@ -15,6 +15,7 @@ define( function( require ) {
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
@@ -27,6 +28,11 @@ define( function( require ) {
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/model/PartialProductsChoice' );
   var Text = require( 'SCENERY/nodes/Text' );
+
+  // a11y strings
+  var hidePartialProductsString = AreaModelCommonA11yStrings.hidePartialProducts.value;
+  var showPartialProductsString = AreaModelCommonA11yStrings.showPartialProducts.value;
+  var showPartialProductFactorsString = AreaModelCommonA11yStrings.showPartialProductFactors.value;
 
   /**
    * @constructor
@@ -61,17 +67,26 @@ define( function( require ) {
     AreaModelCommonRadioButtonGroup.call( this, model.partialProductsChoiceProperty, [
       {
         value: PartialProductsChoice.HIDDEN,
-        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
+        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } ),
+
+        // a11y
+        labelContent: hidePartialProductsString
       },
       {
         value: PartialProductsChoice.PRODUCTS,
 
         // Hardcoded 'A' string since we don't want it to be translatable
-        node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } )
+        node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
+
+        // a11y
+        labelContent: showPartialProductsString
       },
       {
         value: PartialProductsChoice.FACTORS,
-        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } )
+        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
+
+        // a11y
+        labelContent: showPartialProductFactorsString
       }
     ] );
   }
