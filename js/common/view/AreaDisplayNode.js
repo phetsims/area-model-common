@@ -22,15 +22,21 @@ define( function( require ) {
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductLabelNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductLabelNode' );
   var PoolableLayerNode = require( 'AREA_MODEL_COMMON/common/view/PoolableLayerNode' );
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // a11y strings
   var eraseString = AreaModelCommonA11yStrings.erase.value;
   var eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
+  var horizontalDimensionCapitalizedString = AreaModelCommonA11yStrings.horizontalDimensionCapitalized.value;
+  var threePartitionsSplitString = AreaModelCommonA11yStrings.threePartitionsSplit.value;
+  var twoPartitionsSplitString = AreaModelCommonA11yStrings.twoPartitionsSplit.value;
+  var verticalDimensionCapitalizedString = AreaModelCommonA11yStrings.verticalDimensionCapitalized.value;
 
   /**
    * @constructor
@@ -63,14 +69,60 @@ define( function( require ) {
     // REVIEW: @public (phet-io) and @public (a11y) have numerous usages across our codebase.  Should we discuss it
     // REVIEW: at developer meeting to make sure everyone is aware of this? Also, I added those entries to the
     // REVIEW: code_review checklist
+    this.accessibleParagraphNode = new Node( {
+      tagName: 'p'
+    } );
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
+    this.addChild( this.accessibleParagraphNode );
     this.addChild( this.areaLayer );
     this.addChild( this.labelLayer );
 
     // @public {number}
     this.viewSize = options.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
+
+    var accessiblePartitionNodes = OrientationPair.create( function( orientation ) {
+      var partitionLabel = new Node( {
+        tagName: 'span'
+      } );
+      Property.multilink( [
+          areaDisplay.partitionsProperties.get( orientation ),
+          areaDisplay.totalProperties.get( orientation )
+      ], function( partitions, total ) {
+        // TODO: How are we notifying here?
+        // TODO: Pass something like visiblePartitions through the AreaDisplay, so we don't have this complexity here
+        partitions = partitions.filter( function( partition ) {
+          return partition.sizeProperty.value !== null && partition.visibleProperty.value === true;
+        } );
+        if ( partitions.length < 2 || total === null ) {
+          partitionLabel.innerContent = '';
+        }
+        else if ( partitions.length === 2 ) {
+          partitionLabel.innerContent = StringUtils.fillIn( twoPartitionsSplitString, {
+            partition: orientation === Orientation.HORIZONTAL ? horizontalDimensionCapitalizedString : verticalDimensionCapitalizedString,
+            size: total.toRichString(),
+            size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
+            size2: partitions[ 1 ].sizeProperty.value.toRichString( false )
+          } );
+        }
+        else if ( partitions.length === 3 ) {
+          partitionLabel.innerContent = StringUtils.fillIn( threePartitionsSplitString, {
+            partition: orientation === Orientation.HORIZONTAL ? horizontalDimensionCapitalizedString : verticalDimensionCapitalizedString,
+            size: total.toRichString(),
+            size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
+            size2: partitions[ 1 ].sizeProperty.value.toRichString( false ),
+            size3: partitions[ 2 ].sizeProperty.value.toRichString( false )
+          } );
+        }
+        else {
+          throw new Error( 'unexpected number of partitions for a11y' );
+        }
+      } );
+      return partitionLabel;
+    } );
+    this.accessibleParagraphNode.addChild( accessiblePartitionNodes.vertical );
+    this.accessibleParagraphNode.addChild( accessiblePartitionNodes.horizontal );
 
     var modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
       return new Bounds2( 0, 0, coordinateRangeMax, coordinateRangeMax );

@@ -19,6 +19,9 @@ define( function( require ) {
     areaGrid: {
       value: 'Area grid'
     },
+    areaGridRectanglePattern: {
+      value: '{{height}} by {{width}} rectangle.'
+    },
     base10AreaTiles: {
       value: 'Base 10 area tiles'
     },
@@ -62,6 +65,9 @@ define( function( require ) {
     hidePartialProducts: {
       value: 'Hide partial products'
     },
+    horizontalDimensionCapitalized: {
+      value: 'Width'
+    },
     horizontalPartition: {
       value: 'Horizontal partition'
     },
@@ -101,11 +107,20 @@ define( function( require ) {
     showPartialProducts: {
       value: 'Show partial products'
     },
+    threePartitionsSplit: {
+      value: '{{partition}} of {{size}} split into {{size1}}, {{size2}} and {{size3}}.'
+    },
     threeSceneSelectionDescriptionPattern: {
       value: 'Switch between a {{first}}, {{second}} and {{third}} board.'
     },
+    twoPartitionsSplit: {
+      value: '{{partition}} of {{size}} split into {{size1}} and {{size2}}.'
+    },
     twoSceneSelectionDescriptionPattern: {
       value: 'Switch between a {{first}} and {{second}} board.'
+    },
+    verticalDimensionCapitalized: {
+      value: 'Height'
     },
     verticalPartition: {
       value: 'Vertical partition'

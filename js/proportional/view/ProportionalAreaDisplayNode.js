@@ -29,11 +29,13 @@ define( function( require ) {
   var ProportionalPartitionLineNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalPartitionLineNode' );
   var Range = require( 'DOT/Range' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
 
   // a11y strings
   var areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
+  var areaGridRectanglePatternString = AreaModelCommonA11yStrings.areaGridRectanglePattern.value;
 
   /**
    * @constructor
@@ -69,6 +71,17 @@ define( function( require ) {
     }, nodeOptions );
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, options );
+
+    var areaAccessibleLabel = new Node( {
+      tagName: 'span'
+    } );
+    this.accessibleParagraphNode.insertChild( 0, areaAccessibleLabel );
+    Property.multilink( areaDisplay.activeTotalProperties.values, function( width, height ) {
+      areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
+        width: width,
+        height: height
+      } );
+    } );
 
     // Background fill
     this.areaLayer.addChild( this.backgroundNode );
