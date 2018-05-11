@@ -92,6 +92,9 @@ define( function( require ) {
     partitionSelectionDescription: {
       value: 'Switch between vertical and horizontal partition lines.'
     },
+    placeholder: {
+      value: 'empty'
+    },
     productBox: {
       value: 'Product'
     },
@@ -101,6 +104,12 @@ define( function( require ) {
     productBoxDescription: {
       value: 'Show or hide the product.'
     },
+    quantityPattern: {
+      value: 'the quantity {{content}}'
+    },
+    questionMark: {
+      value: 'undefined'
+    },
     sceneSelectionPattern: {
       value: '{{height}} by {{width}} board'
     },
@@ -109,6 +118,12 @@ define( function( require ) {
     },
     showPartialProducts: {
       value: 'Show partial products'
+    },
+    sumMinus: {
+      value: 'minus'
+    },
+    sumPlus: {
+      value: 'plus'
     },
     threePartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}}, {{size2}} and {{size3}}.'

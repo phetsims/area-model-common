@@ -12,12 +12,16 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Poolable = require( 'PHET_CORE/Poolable' );
   var Property = require( 'AXON/Property' );
   var Text = require( 'SCENERY/nodes/Text' );
+
+  // a11y strings
+  var sumPlusString = AreaModelCommonA11yStrings.sumPlus.value;
 
   /**
    * @constructor
@@ -29,6 +33,9 @@ define( function( require ) {
     Text.call( this, MathSymbols.PLUS, {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT
     } );
+
+    // @public {string}
+    this.accessibleText = sumPlusString;
 
     this.initialize( baseColorProperty );
   }

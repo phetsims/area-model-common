@@ -34,13 +34,13 @@ define( function( require ) {
     } );
 
     if ( allowExponents ) {
-      this.node = this.group( [
+      this.finalizeNode( this.group( [
         this.parentheses( totalTexts.vertical ),
         this.parentheses( totalTexts.horizontal )
-      ], AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING );
+      ], AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING ) );
     }
     else {
-      this.node = this.multiplyX( totalTexts.vertical, totalTexts.horizontal );
+      this.finalizeNode( this.multiplyX( totalTexts.vertical, totalTexts.horizontal ) );
     }
   }
 

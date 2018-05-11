@@ -37,7 +37,7 @@ define( function( require ) {
     // REVIEW*: these constants be listed in CalculationLine.js instead? (Or a place to document the "why" that I noted)?
     CalculationLine.call( this, 2, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.node = this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
+    this.finalizeNode( this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
       return horizontalTerms.map( function( horizontalTerm ) {
         var horizontalText = self.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
         var verticalText = self.orientedTermText( Orientation.VERTICAL, verticalTerm );
@@ -57,7 +57,7 @@ define( function( require ) {
           return self.parentheses( self.multiplyX( verticalText, horizontalText ) );
         }
       } );
-    } ) ) );
+    } ) ) ) );
   }
 
   areaModelCommon.register( 'DistributionLine', DistributionLine );

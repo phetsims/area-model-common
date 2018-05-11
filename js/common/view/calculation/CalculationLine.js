@@ -92,6 +92,20 @@ define( function( require ) {
 
   return inherit( Object, CalculationLine, {
     /**
+     * Used by a subtype to set the node.
+     * @protected
+     *
+     * @param {Node} node
+     */
+    finalizeNode: function( node ) {
+      this.node = node;
+
+      // a11y
+      node.tagName = 'span';
+      node.innerContent = node.accessibleText;
+    },
+
+    /**
      * Creates a TermText with the baseColor.
      * @public
      *

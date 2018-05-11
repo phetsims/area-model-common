@@ -55,6 +55,10 @@ define( function( require ) {
       this.spacing = spacing;
       this.children = nodes;
 
+      this.accessibleText = nodes.map( function( node ) {
+        return node.accessibleText;
+      } ).join( ' ' );
+
       return this;
     },
 

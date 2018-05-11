@@ -12,10 +12,14 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Poolable = require( 'PHET_CORE/Poolable' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+
+  // a11y strings
+  var placeholderString = AreaModelCommonA11yStrings.placeholder.value;
 
   /**
    * @constructor
@@ -28,6 +32,9 @@ define( function( require ) {
     Rectangle.call( this, 0, 0, 16, 16, {
       lineWidth: 0.7
     } );
+
+    // @public {string}
+    this.accessibleText = placeholderString;
 
     this.initialize( colorProperty, allowExponents );
   }

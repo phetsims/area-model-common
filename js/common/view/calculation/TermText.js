@@ -57,6 +57,9 @@ define( function( require ) {
       this.text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
       this.fill = colorProperty;
 
+      // @public {string}
+      this.accessibleText = this.text;
+
       return this;
     },
 
