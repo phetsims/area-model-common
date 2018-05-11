@@ -95,6 +95,9 @@ define( function( require ) {
     productBox: {
       value: 'Product'
     },
+    productTimesPattern: {
+      value: '{{left}} times {{right}}'
+    },
     productBoxDescription: {
       value: 'Show or hide the product.'
     },
@@ -112,6 +115,12 @@ define( function( require ) {
     },
     threeSceneSelectionDescriptionPattern: {
       value: 'Switch between a {{first}}, {{second}} and {{third}} board.'
+    },
+    twoPartialProductFactorsPattern: {
+      value: 'Partial product factors are {{first}} and {{second}}.'
+    },
+    twoPartialProductsPattern: {
+      value: 'Partial products are {{first}} and {{second}}.'
     },
     twoPartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}} and {{size2}}.'

@@ -24,6 +24,7 @@ define( function( require ) {
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var PartialProductLabelNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductLabelNode' );
+  var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/model/PartialProductsChoice' );
   var PoolableLayerNode = require( 'AREA_MODEL_COMMON/common/view/PoolableLayerNode' );
   var Property = require( 'AXON/Property' );
   var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
@@ -31,10 +32,14 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // a11y strings
+  // TODO: Missing some 'pattern' suffixes here
   var eraseString = AreaModelCommonA11yStrings.erase.value;
   var eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
   var horizontalDimensionCapitalizedString = AreaModelCommonA11yStrings.horizontalDimensionCapitalized.value;
+  var productTimesPatternString = AreaModelCommonA11yStrings.productTimesPattern.value;
   var threePartitionsSplitString = AreaModelCommonA11yStrings.threePartitionsSplit.value;
+  var twoPartialProductFactorsPatternString = AreaModelCommonA11yStrings.twoPartialProductFactorsPattern.value;
+  var twoPartialProductsPatternString = AreaModelCommonA11yStrings.twoPartialProductsPattern.value;
   var twoPartitionsSplitString = AreaModelCommonA11yStrings.twoPartitionsSplit.value;
   var verticalDimensionCapitalizedString = AreaModelCommonA11yStrings.verticalDimensionCapitalized.value;
 
@@ -82,6 +87,7 @@ define( function( require ) {
     // @public {number}
     this.viewSize = options.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
 
+    // A11y description for the partitions for each orientation
     var accessiblePartitionNodes = OrientationPair.create( function( orientation ) {
       var partitionLabel = new Node( {
         tagName: 'span'
@@ -123,6 +129,56 @@ define( function( require ) {
     } );
     this.accessibleParagraphNode.addChild( accessiblePartitionNodes.vertical );
     this.accessibleParagraphNode.addChild( accessiblePartitionNodes.horizontal );
+
+    // A11y description for the partial products
+    var accessiblePartialProductNode = new Node( {
+      tagName: 'span'
+    } );
+    var accessiblePartialMultilink = null;
+    areaDisplay.partitionedAreasProperty.link( function( partitionedAreas ) {
+      if ( accessiblePartialMultilink ) {
+        accessiblePartialMultilink.dispose();
+      }
+      // TODO: for performance, can we delay the update of this until the frame?
+      var properties = [
+        partialProductsChoiceProperty
+      ].concat( partitionedAreas.map( function( partitionedArea ) { return partitionedArea.areaProperty; } ) )
+        .concat( partitionedAreas.map( function( partitionedArea ) { return partitionedArea.visibleProperty; } ) );
+      accessiblePartialMultilink = Property.multilink( properties, function() {
+        var activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( function( partitionedArea ) {
+          return partitionedArea.visibleProperty.value && partitionedArea.areaProperty.value !== null;
+        } );
+        if ( activePartitionedAreas.length !== 2 ) {
+          accessiblePartialProductNode.innerContent = '';
+        }
+        else if ( partialProductsChoiceProperty.value === PartialProductsChoice.HIDDEN ) {
+          accessiblePartialProductNode.innerContent = '';
+        }
+        else if ( partialProductsChoiceProperty.value === PartialProductsChoice.PRODUCTS ) {
+          accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductsPatternString, {
+            first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false ),
+            second: activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false )
+          } );
+        }
+        else if ( partialProductsChoiceProperty.value === PartialProductsChoice.FACTORS ) {
+          accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductFactorsPatternString, {
+            first: StringUtils.fillIn( productTimesPatternString, {
+              left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+              right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
+            } ),
+            second: StringUtils.fillIn( productTimesPatternString, {
+              left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+              right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
+            } )
+          } );
+        }
+        else {
+          throw new Error( 'unknown situation for a11y partial products' );
+        }
+        // TODO: handle more generally
+      } );
+    } );
+    this.accessibleParagraphNode.addChild( accessiblePartialProductNode );
 
     var modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
       return new Bounds2( 0, 0, coordinateRangeMax, coordinateRangeMax );
