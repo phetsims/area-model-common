@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DistributionLine = require( 'AREA_MODEL_COMMON/common/view/calculation/DistributionLine' );
@@ -20,6 +21,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MinusesLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MinusesLine' );
   var MultipliedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MultipliedLine' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var OrderedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/OrderedLine' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
@@ -28,6 +30,10 @@ define( function( require ) {
   var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
   var TotalsLine = require( 'AREA_MODEL_COMMON/common/view/calculation/TotalsLine' );
   var VBox = require( 'SCENERY/nodes/VBox' );
+
+  // a11y strings
+  var afterCalculationLinesString = AreaModelCommonA11yStrings.afterCalculationLines.value;
+  var betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
 
   /**
    * @constructor
@@ -198,6 +204,14 @@ define( function( require ) {
       }
 
       this.children = _.map( displayedLines, 'node' );
+      for ( var i = 0; i < this.children.length; i++ ) {
+        this.children[ i ].labelContent = ( i === 0 ) ? '' : betweenCalculationLinesString;
+      }
+      this.addChild( new Node( {
+        tagName: 'span',
+        innerContent: afterCalculationLinesString
+      } ) );
+
       this.displayDirty = false;
       this.displayUpdatedEmitter.emit();
     },

@@ -80,7 +80,7 @@ define( function( require ) {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,
         height: height
-      } );
+      } ) + ' '; // TODO: Don't require padding like this
     } );
 
     // Background fill

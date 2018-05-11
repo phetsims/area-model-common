@@ -110,7 +110,7 @@ define( function( require ) {
             size: total.toRichString(),
             size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
             size2: partitions[ 1 ].sizeProperty.value.toRichString( false )
-          } );
+          } ) + ' '; // TODO: Don't require padding like this
         }
         else if ( partitions.length === 3 ) {
           partitionLabel.innerContent = StringUtils.fillIn( threePartitionsSplitString, {
@@ -119,7 +119,7 @@ define( function( require ) {
             size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
             size2: partitions[ 1 ].sizeProperty.value.toRichString( false ),
             size3: partitions[ 2 ].sizeProperty.value.toRichString( false )
-          } );
+          } ) + ' ';
         }
         else {
           throw new Error( 'unexpected number of partitions for a11y' );
@@ -158,7 +158,7 @@ define( function( require ) {
           accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductsPatternString, {
             first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false ),
             second: activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false )
-          } );
+          } ) + ' '; // TODO: don't require padding like this
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.FACTORS ) {
           accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductFactorsPatternString, {
@@ -170,7 +170,7 @@ define( function( require ) {
               left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
               right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
             } )
-          } );
+          } ) + ' ';
         }
         else {
           throw new Error( 'unknown situation for a11y partial products' );

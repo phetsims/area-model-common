@@ -13,6 +13,9 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var AreaModelCommonA11yStrings = {
+    afterCalculationLines: {
+      value: '.'
+    },
     areaEqualsPattern: {
       value: 'Area equals {{area}}'
     },
@@ -24,6 +27,9 @@ define( function( require ) {
     },
     base10AreaTiles: {
       value: 'Base 10 area tiles'
+    },
+    betweenCalculationLines: {
+      value: ', is equivalent to '
     },
     // TODO: Box or Accordion?
     calculationAccordionTitle: {

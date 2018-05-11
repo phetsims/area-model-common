@@ -103,6 +103,8 @@ define( function( require ) {
       // a11y
       node.tagName = 'span';
       node.innerContent = node.accessibleText;
+      node.labelTagName = 'span';
+      node.containerTagName = 'span';
     },
 
     /**
