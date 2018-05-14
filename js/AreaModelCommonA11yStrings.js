@@ -81,7 +81,7 @@ define( function( require ) {
       value: 'Horizontal partition handle'
     },
     horizontalPartitionHandleDescription: {
-      value: 'Partition area into two smaller areas.'
+      value: 'Partition rectangle into two smaller areas by splitting the height.'
     },
     horizontalPicker: {
       value: 'Width'
@@ -159,7 +159,7 @@ define( function( require ) {
       value: 'Vertical partition handle'
     },
     verticalPartitionHandleDescription: {
-      value: 'Partition area into two smaller areas.'
+      value: 'Partition rectangle into two smaller areas by splitting the width.'
     },
     verticalPicker: {
       value: 'Height'
