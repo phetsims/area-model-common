@@ -30,7 +30,9 @@ define( function( require ) {
    */
   function TermText( term, colorProperty, excludeSign ) {
     RichText.call( this, ' ', {
-      font: AreaModelCommonConstants.CALCULATION_TERM_FONT
+      font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
+      tagName: 'mn',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
     this.initialize( term, colorProperty, excludeSign );
@@ -57,8 +59,7 @@ define( function( require ) {
       this.text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
       this.fill = colorProperty;
 
-      // @public {string}
-      this.accessibleText = this.text;
+      this.innerContent = this.text;
 
       return this;
     },

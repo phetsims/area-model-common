@@ -12,6 +12,7 @@ define( function( require ) {
 
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
+  // TODO: Make sure all of these are used
   var AreaModelCommonA11yStrings = {
     afterCalculationLines: {
       value: '.'
@@ -29,7 +30,7 @@ define( function( require ) {
       value: 'Base 10 area tiles'
     },
     betweenCalculationLines: {
-      value: ', is equivalent to '
+      value: 'is equivalent to '
     },
     // TODO: Box or Accordion?
     calculationAccordionTitle: {
@@ -61,9 +62,6 @@ define( function( require ) {
     },
     factorsBoxDescription: {
       value: 'Show or hide the factors.'
-    },
-    factorsTimesPattern: {
-      value: '{{height}} times {{width}}'
     },
     gridLinesLabel: {
       value: 'Grid lines'
@@ -110,9 +108,6 @@ define( function( require ) {
     productBoxDescription: {
       value: 'Show or hide the product.'
     },
-    quantityPattern: {
-      value: 'the quantity {{content}}'
-    },
     questionMark: {
       value: 'undefined'
     },
@@ -124,12 +119,6 @@ define( function( require ) {
     },
     showPartialProducts: {
       value: 'Show partial products'
-    },
-    sumMinus: {
-      value: 'minus'
-    },
-    sumPlus: {
-      value: 'plus'
     },
     threePartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}}, {{size2}} and {{size3}}.'

@@ -29,7 +29,8 @@ define( function( require ) {
     this.nodes = null;
 
     HBox.call( this, {
-      align: 'bottom'
+      align: 'bottom',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
     this.initialize( nodes, spacing );
@@ -50,14 +51,12 @@ define( function( require ) {
       assert && assert( Array.isArray( nodes ) );
       assert && assert( typeof spacing === 'number' );
 
+      this.tagName = nodes.length > 1 ? 'mrow' : null;
+
       this.nodes = nodes;
 
       this.spacing = spacing;
       this.children = nodes;
-
-      this.accessibleText = nodes.map( function( node ) {
-        return node.accessibleText;
-      } ).join( ' ' );
 
       return this;
     },

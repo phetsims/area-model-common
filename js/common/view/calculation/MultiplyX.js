@@ -12,7 +12,6 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -20,11 +19,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Poolable = require( 'PHET_CORE/Poolable' );
   var Property = require( 'AXON/Property' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-
-  // a11y strings
-  var productTimesPatternString = AreaModelCommonA11yStrings.productTimesPattern.value;
 
   /**
    * @constructor
@@ -39,7 +34,10 @@ define( function( require ) {
     // @private {Text} - Persistent (since it's declared in the constructor instead of the initialize function, this
     // will persist for the life of this node).
     this.timesNode = new Text( MathSymbols.TIMES, {
-      font: AreaModelCommonConstants.CALCULATION_X_FONT
+      font: AreaModelCommonConstants.CALCULATION_X_FONT,
+      tagName: 'mo',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      innerContent: '&times;'
     } );
 
     // @private {Node|null}
@@ -80,12 +78,6 @@ define( function( require ) {
       this.insertChild( 0, leftContent );
       this.addChild( rightContent );
       this.timesNode.fill = baseColorProperty;
-
-      // @public {string}
-      this.accessibleText = StringUtils.fillIn( productTimesPatternString, {
-        left: leftContent.accessibleText,
-        right: rightContent.accessibleText
-      } );
 
       return this;
     },

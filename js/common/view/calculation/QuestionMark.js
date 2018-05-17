@@ -30,11 +30,11 @@ define( function( require ) {
    */
   function QuestionMark( baseColorProperty ) {
     Text.call( this, '?', {
-      font: AreaModelCommonConstants.CALCULATION_TERM_FONT
+      font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
+      tagName: 'mi',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      innerContent: questionMarkString
     } );
-
-    // @public {string}
-    this.accessibleText = questionMarkString;
 
     this.initialize( baseColorProperty );
   }

@@ -21,7 +21,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MinusesLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MinusesLine' );
   var MultipliedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MultipliedLine' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var OrderedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/OrderedLine' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
@@ -32,7 +31,6 @@ define( function( require ) {
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // a11y strings
-  var afterCalculationLinesString = AreaModelCommonA11yStrings.afterCalculationLines.value;
   var betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
 
   /**
@@ -207,10 +205,6 @@ define( function( require ) {
       for ( var i = 0; i < this.children.length; i++ ) {
         this.children[ i ].labelContent = ( i === 0 ) ? '' : betweenCalculationLinesString;
       }
-      this.addChild( new Node( {
-        tagName: 'span',
-        innerContent: afterCalculationLinesString
-      } ) );
 
       this.displayDirty = false;
       this.displayUpdatedEmitter.emit();

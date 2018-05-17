@@ -20,16 +20,14 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
 
   // a11y strings
-  var factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
   var horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
   var horizontalPickerDescriptionString = AreaModelCommonA11yStrings.horizontalPickerDescription.value;
   var verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
@@ -44,9 +42,48 @@ define( function( require ) {
    * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
    */
   function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
-    var self = this;
+    Node.call( this );
 
-    HBox.call( this, {
+    var ns = 'http://www.w3.org/1998/Math/MathML';
+
+    var verticalNode = new Node( {
+      tagName: 'mn',
+      accessibleNamespace: ns
+    } );
+    activeTotalProperties.vertical.link( function( verticalTotal ) {
+      verticalNode.innerContent = '' + verticalTotal;
+    } );
+    var horizontalNode = new Node( {
+      tagName: 'mn',
+      accessibleNamespace: ns
+    } );
+    activeTotalProperties.horizontal.link( function( horizontalTotal ) {
+      horizontalNode.innerContent = '' + horizontalTotal;
+    } );
+
+    var mathNode = new Node( {
+      tagName: 'math',
+      accessibleNamespace: ns,
+      children: [
+        new Node( {
+          tagName: 'mrow',
+          accessibleNamespace: ns,
+          children: [
+            verticalNode,
+            new Node( {
+              tagName: 'mo',
+              accessibleNamespace: ns,
+              innerContent: '&times;'
+            } ),
+            horizontalNode
+          ]
+        } )
+      ]
+    } );
+    mathNode.setAccessibleAttribute( 'xmlns', ns ); // sanity check?
+    this.addChild( mathNode );
+
+    this.addChild( new HBox( {
       children: [
         this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
         new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ),
@@ -54,19 +91,12 @@ define( function( require ) {
       ],
       spacing: 10,
       tagName: 'div'
-    } );
-
-    Property.multilink( activeTotalProperties.values, function( horizontalTotal, verticalTotal ) {
-      self.labelContent = StringUtils.fillIn( factorsTimesPatternString, {
-        width: horizontalTotal,
-        height: verticalTotal
-      } );
-    } );
+    } ) );
   }
 
   areaModelCommon.register( 'ProportionalFactorsNode', ProportionalFactorsNode );
 
-  return inherit( HBox, ProportionalFactorsNode, {
+  return inherit( Node, ProportionalFactorsNode, {
     /**
      * Creates a picker that adjusts the specified orientation's total size.
      * @private
