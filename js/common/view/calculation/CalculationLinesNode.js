@@ -21,6 +21,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MinusesLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MinusesLine' );
   var MultipliedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MultipliedLine' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var OrderedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/OrderedLine' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
@@ -42,9 +43,19 @@ define( function( require ) {
   function CalculationLinesNode( model ) {
     var self = this;
 
-    VBox.call( this, {
-      spacing: 1
+    Node.call( this, {
+      tagName: 'math',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
+    this.setAccessibleAttribute( 'xmlns', 'http://www.w3.org/1998/Math/MathML' ); // sanity check?
+
+    // @private {Node}
+    this.box = new VBox( {
+      spacing: 1,
+      tagName: 'mtable',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+    } );
+    this.addChild( this.box );
 
     // @public {Property.<boolean>} - Whether there are previous/next lines (when in line-by-line mode)
     this.previousEnabledProperty = new BooleanProperty( false );
@@ -107,7 +118,7 @@ define( function( require ) {
 
   areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
 
-  return inherit( VBox, CalculationLinesNode, {
+  return inherit( Node, CalculationLinesNode, {
     /**
      * Called whenever the calculation may need an update.
      * @public
@@ -145,6 +156,16 @@ define( function( require ) {
     },
 
     /**
+     * Removes children (basically) TODO.
+     * @private
+     */
+    wipe: function() {
+      while ( this.box.children.length ) {
+        this.box.children[ 0 ].dispose();
+      }
+    },
+
+    /**
      * Update the internally-stored calculation lines.
      * @private
      */
@@ -154,7 +175,7 @@ define( function( require ) {
       }
 
       // As a sanity check, just remove all children here (so we don't leak things)
-      this.removeAllChildren();
+      this.wipe();
 
       // Release line references that we had before
       this.calculationLinesProperty.value.forEach( function( calculationLine ) {
@@ -183,7 +204,7 @@ define( function( require ) {
       }
 
       // As a sanity check, just remove all children here (so we don't leak things)
-      this.removeAllChildren();
+      this.wipe();
 
       var displayedLines = this.calculationLinesProperty.value;
 
@@ -201,10 +222,29 @@ define( function( require ) {
         this.nextEnabledProperty.value = false;
       }
 
-      this.children = _.map( displayedLines, 'node' );
-      for ( var i = 0; i < this.children.length; i++ ) {
-        this.children[ i ].labelContent = ( i === 0 ) ? '' : betweenCalculationLinesString;
-      }
+      this.box.children = displayedLines.map( function( line, index ) {
+        var node = new Node( {
+          tagName: 'mtr',
+          accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+          children: [
+            line.node
+          ]
+        } );
+        if ( index > 0 ) {
+          node.insertChild( 0, new Node( {
+            tagName: 'mtext',
+            accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+            innerContent: betweenCalculationLinesString
+          } ) );
+        }
+        return node;
+      } );
+
+      // TODO: between calculation
+      // this.children = _.map( displayedLines, 'node' );
+      // for ( var i = 0; i < this.children.length; i++ ) {
+      //   this.children[ i ].labelContent = ( i === 0 ) ? '' : betweenCalculationLinesString;
+      // }
 
       this.displayDirty = false;
       this.displayUpdatedEmitter.emit();

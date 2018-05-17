@@ -17,7 +17,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Minus = require( 'AREA_MODEL_COMMON/common/view/calculation/Minus' );
   var MultiplyX = require( 'AREA_MODEL_COMMON/common/view/calculation/MultiplyX' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   var Parentheses = require( 'AREA_MODEL_COMMON/common/view/calculation/Parentheses' );
   var PlaceholderBox = require( 'AREA_MODEL_COMMON/common/view/calculation/PlaceholderBox' );
@@ -99,16 +98,8 @@ define( function( require ) {
      * @param {Node} node
      */
     finalizeNode: function( node ) {
-      this.node = new Node( {
-        children: [ node ],
-        tagName: 'math',
-        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
-      } );
-      this.node.clean = function() {
-        node.clean();
-      };
-      // TODO: dedup namespace
-      this.node.setAccessibleAttribute( 'xmlns', 'http://www.w3.org/1998/Math/MathML' ); // sanity check?
+      this.node = node;
+      // TODO: can we remove this?
     },
 
     /**
