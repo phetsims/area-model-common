@@ -185,7 +185,7 @@ define( function( require ) {
             } ) + ' ';
           }
           else {
-            accessiblePartialProductNode.innerContent = StringUtils.fill( onePartialProductFactorPatternString, {
+            accessiblePartialProductNode.innerContent = StringUtils.fillIn( onePartialProductFactorPatternString, {
               first: StringUtils.fillIn( productTimesPatternString, {
                 left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
                 right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
