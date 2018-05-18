@@ -166,7 +166,7 @@ define( function( require ) {
           }
           else {
             // TODO: The "Partitions Set" part should be factored out
-            accessiblePartialProductNode.innerContent = StringUtils.fill( onePartialProductPatternString, {
+            accessiblePartialProductNode.innerContent = StringUtils.fillIn( onePartialProductPatternString, {
               first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false )
             } ) + ' '; // TODO: don't require padding like this
           }
