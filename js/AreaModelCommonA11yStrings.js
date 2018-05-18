@@ -42,6 +42,9 @@ define( function( require ) {
     countingNumbersLabel: {
       value: 'Counting numbers'
     },
+    countingNumbersPattern: {
+      value: 'Area units count to {{count}}.'
+    },
     dragHandle: {
       value: 'Drag handle'
     },
@@ -90,6 +93,12 @@ define( function( require ) {
     multiplyDescription: {
       value: 'Play with multiplication by interacting with an area model.'
     },
+    onePartialProductFactorPattern: {
+      value: 'No partition set. Product factors are {{first}}.'
+    },
+    onePartialProductPattern: {
+      value: 'No partition set. Product is {{first}}.'
+    },
     partitionDescription: {
       value: 'Partition your area model and explore the distributive property.'
     },
@@ -115,7 +124,7 @@ define( function( require ) {
       value: 'undefined'
     },
     sceneSelectionPattern: {
-      value: '{{height}} by {{width}} board'
+      value: '{{height}} by {{width}}'
     },
     showPartialProductFactors: {
       value: 'Show partial product factors'
@@ -136,10 +145,10 @@ define( function( require ) {
       value: 'Switch between a {{first}}, {{second}} and {{third}} board.'
     },
     twoPartialProductFactorsPattern: {
-      value: 'Partial product factors are {{first}} and {{second}}.'
+      value: 'There are two partitions. Partial product factors are {{first}} and {{second}}.'
     },
     twoPartialProductsPattern: {
-      value: 'Partial products are {{first}} and {{second}}.'
+      value: 'There are two partitions. Partial products are {{first}} and {{second}}.'
     },
     twoPartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}} and {{size2}}.'

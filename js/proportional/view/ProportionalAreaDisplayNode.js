@@ -36,6 +36,7 @@ define( function( require ) {
   // a11y strings
   var areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
   var areaGridRectanglePatternString = AreaModelCommonA11yStrings.areaGridRectanglePattern.value;
+  var countingNumbersPatternString = AreaModelCommonA11yStrings.countingNumbersPattern.value;
 
   /**
    * @constructor
@@ -72,6 +73,12 @@ define( function( require ) {
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, options );
 
+    var countingLabel = new Node( {
+      tagName: 'span'
+    } );
+    this.accessibleParagraphNode.insertChild( 0, countingLabel );
+    options.countingVisibleProperty.linkAttribute( countingLabel, 'visible' );
+
     var areaAccessibleLabel = new Node( {
       tagName: 'span'
     } );
@@ -80,6 +87,10 @@ define( function( require ) {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,
         height: height
+      } ) + ' '; // TODO: Don't require padding like this
+      // TODO: handle decimal rounding here?
+      countingLabel.innerContent = StringUtils.fillIn( countingNumbersPatternString, {
+        count: width * height
       } ) + ' '; // TODO: Don't require padding like this
     } );
 

@@ -36,6 +36,8 @@ define( function( require ) {
   var eraseString = AreaModelCommonA11yStrings.erase.value;
   var eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
   var horizontalDimensionCapitalizedString = AreaModelCommonA11yStrings.horizontalDimensionCapitalized.value;
+  var onePartialProductFactorPatternString = AreaModelCommonA11yStrings.onePartialProductFactorPattern.value;
+  var onePartialProductPatternString = AreaModelCommonA11yStrings.onePartialProductPattern.value;
   var productTimesPatternString = AreaModelCommonA11yStrings.productTimesPattern.value;
   var threePartitionsSplitString = AreaModelCommonA11yStrings.threePartitionsSplit.value;
   var twoPartialProductFactorsPatternString = AreaModelCommonA11yStrings.twoPartialProductFactorsPattern.value;
@@ -148,29 +150,48 @@ define( function( require ) {
         var activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( function( partitionedArea ) {
           return partitionedArea.visibleProperty.value && partitionedArea.areaProperty.value !== null;
         } );
-        if ( activePartitionedAreas.length !== 2 ) {
+        // TODO: A lot of refactoring clean up here
+        if ( activePartitionedAreas.length > 2 ) {
           accessiblePartialProductNode.innerContent = '';
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.HIDDEN ) {
           accessiblePartialProductNode.innerContent = '';
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.PRODUCTS ) {
-          accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductsPatternString, {
-            first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false ),
-            second: activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false )
-          } ) + ' '; // TODO: don't require padding like this
+          if ( activePartitionedAreas.length === 2 ) {
+            accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductsPatternString, {
+              first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false ),
+              second: activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false )
+            } ) + ' '; // TODO: don't require padding like this
+          }
+          else {
+            // TODO: The "Partitions Set" part should be factored out
+            accessiblePartialProductNode.innerContent = StringUtils.fill( onePartialProductPatternString, {
+              first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false )
+            } ) + ' '; // TODO: don't require padding like this
+          }
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.FACTORS ) {
-          accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductFactorsPatternString, {
-            first: StringUtils.fillIn( productTimesPatternString, {
-              left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
-              right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
-            } ),
-            second: StringUtils.fillIn( productTimesPatternString, {
-              left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
-              right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
-            } )
-          } ) + ' ';
+          if ( activePartitionedAreas.length === 2 ) {
+            accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductFactorsPatternString, {
+              first: StringUtils.fillIn( productTimesPatternString, {
+                left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+                right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
+              } ),
+              second: StringUtils.fillIn( productTimesPatternString, {
+                left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+                right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
+              } )
+            } ) + ' ';
+          }
+          else {
+            accessiblePartialProductNode.innerContent = StringUtils.fill( onePartialProductFactorPatternString, {
+              first: StringUtils.fillIn( productTimesPatternString, {
+                left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+                right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
+              } )
+            } ) + ' '; // TODO: don't require padding like this
+          }
         }
         else {
           throw new Error( 'unknown situation for a11y partial products' );
