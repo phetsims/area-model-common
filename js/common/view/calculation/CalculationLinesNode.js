@@ -54,7 +54,6 @@ define( function( require ) {
 
     if ( !AreaModelCommonQueryParameters.rawMath ) {
       this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
-      this.setAccessibleAttribute( 'xmlns', 'http://www.w3.org/1998/Math/MathML' ); // sanity check? Check if needed
       this.tagName = 'math';
 
       this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';

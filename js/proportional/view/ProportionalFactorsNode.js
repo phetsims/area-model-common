@@ -97,7 +97,6 @@ define( function( require ) {
           } )
         ]
       } );
-      mathNode.setAccessibleAttribute( 'xmlns', ns ); // sanity check?
       this.addChild( mathNode );
     }
 
