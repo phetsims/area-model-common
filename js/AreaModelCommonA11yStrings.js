@@ -14,9 +14,6 @@ define( function( require ) {
 
   // TODO: Make sure all of these are used
   var AreaModelCommonA11yStrings = {
-    afterCalculationLines: {
-      value: '.'
-    },
     areaEqualsPattern: {
       value: 'Area equals {{area}}'
     },
