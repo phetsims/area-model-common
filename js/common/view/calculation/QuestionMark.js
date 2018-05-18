@@ -36,6 +36,9 @@ define( function( require ) {
       innerContent: questionMarkString
     } );
 
+    // @public {string}
+    this.accessibleText = questionMarkString;
+
     this.initialize( baseColorProperty );
   }
 

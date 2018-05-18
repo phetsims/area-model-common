@@ -61,6 +61,9 @@ define( function( require ) {
 
       this.innerContent = this.text;
 
+      // @public {string}
+      this.accessibleText = this.text;
+
       return this;
     },
 

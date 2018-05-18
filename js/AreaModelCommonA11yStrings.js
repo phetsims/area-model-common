@@ -63,6 +63,9 @@ define( function( require ) {
     factorsBoxDescription: {
       value: 'Show or hide the factors.'
     },
+    factorsTimesPattern: {
+      value: '{{height}} times {{width}}'
+    },
     gridLinesLabel: {
       value: 'Grid lines'
     },
@@ -108,6 +111,9 @@ define( function( require ) {
     productBoxDescription: {
       value: 'Show or hide the product.'
     },
+    quantityPattern: {
+      value: 'left parenthesis {{content}} right parenthesis'
+    },
     questionMark: {
       value: 'undefined'
     },
@@ -119,6 +125,12 @@ define( function( require ) {
     },
     showPartialProducts: {
       value: 'Show partial products'
+    },
+    sumMinus: {
+      value: 'minus'
+    },
+    sumPlus: {
+      value: 'plus'
     },
     threePartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}}, {{size2}} and {{size3}}.'

@@ -15,6 +15,7 @@ define( function( require ) {
   var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -23,11 +24,14 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
 
   // a11y strings
+  var factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
   var horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
   var horizontalPickerDescriptionString = AreaModelCommonA11yStrings.horizontalPickerDescription.value;
   var verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
@@ -44,44 +48,56 @@ define( function( require ) {
   function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
     Node.call( this );
 
-    var ns = 'http://www.w3.org/1998/Math/MathML';
+    var self = this;
 
-    var verticalNode = new Node( {
-      tagName: 'mn',
-      accessibleNamespace: ns
-    } );
-    activeTotalProperties.vertical.link( function( verticalTotal ) {
-      verticalNode.innerContent = '' + verticalTotal;
-    } );
-    var horizontalNode = new Node( {
-      tagName: 'mn',
-      accessibleNamespace: ns
-    } );
-    activeTotalProperties.horizontal.link( function( horizontalTotal ) {
-      horizontalNode.innerContent = '' + horizontalTotal;
-    } );
+    if ( AreaModelCommonQueryParameters.rawMath ) {
+      self.tagName = 'div';
+      Property.multilink( activeTotalProperties.values, function( horizontalTotal, verticalTotal ) {
+        self.innerContent = StringUtils.fillIn( factorsTimesPatternString, {
+          width: horizontalTotal,
+          height: verticalTotal
+        } );
+      } );
+    }
+    else {
+      var ns = 'http://www.w3.org/1998/Math/MathML';
+      var verticalNode = new Node( {
+        tagName: 'mn',
+        accessibleNamespace: ns
+      } );
+      activeTotalProperties.vertical.link( function( verticalTotal ) {
+        verticalNode.innerContent = '' + verticalTotal;
+      } );
+      var horizontalNode = new Node( {
+        tagName: 'mn',
+        accessibleNamespace: ns
+      } );
+      activeTotalProperties.horizontal.link( function( horizontalTotal ) {
+        horizontalNode.innerContent = '' + horizontalTotal;
+      } );
 
-    var mathNode = new Node( {
-      tagName: 'math',
-      accessibleNamespace: ns,
-      children: [
-        new Node( {
-          tagName: 'mrow',
-          accessibleNamespace: ns,
-          children: [
-            verticalNode,
-            new Node( {
-              tagName: 'mo',
-              accessibleNamespace: ns,
-              innerContent: '&times;'
-            } ),
-            horizontalNode
-          ]
-        } )
-      ]
-    } );
-    mathNode.setAccessibleAttribute( 'xmlns', ns ); // sanity check?
-    this.addChild( mathNode );
+      var mathNode = new Node( {
+        tagName: 'math',
+        accessibleNamespace: ns,
+        children: [
+          new Node( {
+            tagName: 'mrow',
+            accessibleNamespace: ns,
+            children: [
+              verticalNode,
+              new Node( {
+                tagName: 'mo',
+                accessibleNamespace: ns,
+                innerContent: '&times;'
+              } ),
+              horizontalNode
+            ]
+          } )
+        ]
+      } );
+      mathNode.setAccessibleAttribute( 'xmlns', ns ); // sanity check?
+      this.addChild( mathNode );
+    }
 
     this.addChild( new HBox( {
       children: [
@@ -89,8 +105,7 @@ define( function( require ) {
         new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ),
         this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
       ],
-      spacing: 10,
-      tagName: 'div'
+      spacing: 10
     } ) );
   }
 

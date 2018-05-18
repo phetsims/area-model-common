@@ -36,6 +36,9 @@ define( function( require ) {
       innerContent: placeholderString
     } );
 
+    // @public {string}
+    this.accessibleText = placeholderString;
+
     this.initialize( colorProperty, allowExponents );
   }
 

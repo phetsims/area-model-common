@@ -17,7 +17,10 @@ define( function( require ) {
     maximumCalculationSize: { type: 'flag' },
 
     // Shows a button that fills in the answers when clicked.
-    showAnswers: { type: 'flag' }
+    showAnswers: { type: 'flag' },
+
+    // If set, uses constructed English strings instead of MathML for the accessible parallel DOM.
+    rawMath: { type: 'flag' }
   } );
 
   areaModelCommon.register( 'AreaModelCommonQueryParameters', AreaModelCommonQueryParameters );

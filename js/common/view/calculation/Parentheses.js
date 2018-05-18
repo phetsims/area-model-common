@@ -12,13 +12,18 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Poolable = require( 'PHET_CORE/Poolable' );
   var Property = require( 'AXON/Property' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
+
+  // a11y strings
+  var quantityPatternString = AreaModelCommonA11yStrings.quantityPattern.value;
 
   /**
    * @constructor
@@ -85,6 +90,11 @@ define( function( require ) {
       this.insertChild( 1, content );
       this.leftParen.fill = baseColorProperty;
       this.rightParen.fill = baseColorProperty;
+
+      // @public {string}
+      this.accessibleText = StringUtils.fillIn( quantityPatternString, {
+        content: content.accessibleText
+      } );
 
       return this;
     },

@@ -12,6 +12,7 @@ define( function( require ) {
   var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DistributionLine = require( 'AREA_MODEL_COMMON/common/view/calculation/DistributionLine' );
@@ -43,19 +44,22 @@ define( function( require ) {
   function CalculationLinesNode( model ) {
     var self = this;
 
-    Node.call( this, {
-      tagName: 'math',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
-    } );
-    this.setAccessibleAttribute( 'xmlns', 'http://www.w3.org/1998/Math/MathML' ); // sanity check?
+    Node.call( this );
 
     // @private {Node}
     this.box = new VBox( {
-      spacing: 1,
-      tagName: 'mtable',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      spacing: 1
     } );
     this.addChild( this.box );
+
+    if ( !AreaModelCommonQueryParameters.rawMath ) {
+      this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+      this.setAccessibleAttribute( 'xmlns', 'http://www.w3.org/1998/Math/MathML' ); // sanity check? Check if needed
+      this.tagName = 'math';
+
+      this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+      this.box.tagName = 'mtable';
+    }
 
     // @public {Property.<boolean>} - Whether there are previous/next lines (when in line-by-line mode)
     this.previousEnabledProperty = new BooleanProperty( false );
@@ -223,28 +227,36 @@ define( function( require ) {
       }
 
       this.box.children = displayedLines.map( function( line, index ) {
-        var node = new Node( {
-          tagName: 'mtr',
-          accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+        var lineNode = new Node( {
           children: [
             line.node
           ]
         } );
-        if ( index > 0 ) {
-          node.insertChild( 0, new Node( {
-            tagName: 'mtext',
-            accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-            innerContent: betweenCalculationLinesString
-          } ) );
+        if ( AreaModelCommonQueryParameters.rawMath ) {
+          lineNode.tagName = 'span';
+          lineNode.innerContent = line.node.accessibleText;
+          lineNode.containerTagName = 'span';
+          line.node.accessibleVisible = false;
         }
-        return node;
+        else {
+          lineNode.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+          lineNode.tagName = 'mtr';
+        }
+        if ( index > 0 ) {
+          if ( AreaModelCommonQueryParameters.rawMath ) {
+            lineNode.labelTagName = 'span';
+            lineNode.labelContent = betweenCalculationLinesString;
+          }
+          else {
+            lineNode.insertChild( 0, new Node( {
+              tagName: 'mtext',
+              accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+              innerContent: betweenCalculationLinesString
+            } ) );
+          }
+        }
+        return lineNode;
       } );
-
-      // TODO: between calculation
-      // this.children = _.map( displayedLines, 'node' );
-      // for ( var i = 0; i < this.children.length; i++ ) {
-      //   this.children[ i ].labelContent = ( i === 0 ) ? '' : betweenCalculationLinesString;
-      // }
 
       this.displayDirty = false;
       this.displayUpdatedEmitter.emit();
