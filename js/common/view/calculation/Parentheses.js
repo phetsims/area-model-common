@@ -47,7 +47,9 @@ define( function( require ) {
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '('
     } );
-    this.leftParen.setAccessibleAttribute( 'form', 'prefix' );
+    this.leftParen.setAccessibleAttribute( 'form', 'prefix', {
+      namespace: 'http://www.w3.org/1998/Math/MathML'
+    } );
     this.rightParen = new Text( ')', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
@@ -56,7 +58,9 @@ define( function( require ) {
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: ')'
     } );
-    this.rightParen.setAccessibleAttribute( 'form', 'postfix' );
+    this.rightParen.setAccessibleAttribute( 'form', 'postfix', {
+      namespace: 'http://www.w3.org/1998/Math/MathML'
+    } );
 
     // @private {Node|null}
     this.content = null;
