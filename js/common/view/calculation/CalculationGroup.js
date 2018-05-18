@@ -30,6 +30,8 @@ define( function( require ) {
 
     HBox.call( this, {
       align: 'bottom',
+
+      // a11y
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 

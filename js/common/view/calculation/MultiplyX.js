@@ -40,6 +40,8 @@ define( function( require ) {
     // will persist for the life of this node).
     this.timesNode = new Text( MathSymbols.TIMES, {
       font: AreaModelCommonConstants.CALCULATION_X_FONT,
+
+      // a11y
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&times;'

@@ -249,6 +249,7 @@ define( function( require ) {
           }
           else {
             lineNode.insertChild( 0, new Node( {
+              // a11y
               tagName: 'mtext',
               accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
               innerContent: betweenCalculationLinesString

@@ -41,6 +41,8 @@ define( function( require ) {
     // REVIEW*: Waiting on https://github.com/phetsims/area-model-common/issues/140
     this.leftParen = new Text( '(', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
+
+      // a11y
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '('
@@ -48,6 +50,8 @@ define( function( require ) {
     this.leftParen.setAccessibleAttribute( 'form', 'prefix' );
     this.rightParen = new Text( ')', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
+
+      // a11y
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: ')'
@@ -60,6 +64,8 @@ define( function( require ) {
     HBox.call( this, {
       children: [ this.leftParen, this.rightParen ],
       spacing: AreaModelCommonConstants.CALCULATION_PAREN_PADDING,
+
+      // a11y
       align: 'bottom',
       tagName: 'mrow',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',

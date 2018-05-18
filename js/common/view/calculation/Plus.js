@@ -32,6 +32,8 @@ define( function( require ) {
   function Plus( baseColorProperty ) {
     Text.call( this, MathSymbols.PLUS, {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
+
+      // a11y
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&plus;'

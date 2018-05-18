@@ -31,6 +31,8 @@ define( function( require ) {
   function PlaceholderBox( colorProperty, allowExponents ) {
     Rectangle.call( this, 0, 0, 16, 16, {
       lineWidth: 0.7,
+
+      // a11y
       tagName: 'mi',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: placeholderString

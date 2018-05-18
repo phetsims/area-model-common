@@ -32,6 +32,8 @@ define( function( require ) {
   function Minus( baseColorProperty ) {
     Text.call( this, MathSymbols.MINUS, {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
+
+      // a11y
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&minus;'

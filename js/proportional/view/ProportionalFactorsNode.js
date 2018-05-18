@@ -62,6 +62,7 @@ define( function( require ) {
     else {
       var ns = 'http://www.w3.org/1998/Math/MathML';
       var verticalNode = new Node( {
+        // a11y
         tagName: 'mn',
         accessibleNamespace: ns
       } );
@@ -69,6 +70,7 @@ define( function( require ) {
         verticalNode.innerContent = '' + verticalTotal;
       } );
       var horizontalNode = new Node( {
+        // a11y
         tagName: 'mn',
         accessibleNamespace: ns
       } );

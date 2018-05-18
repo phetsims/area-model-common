@@ -31,6 +31,8 @@ define( function( require ) {
   function TermText( term, colorProperty, excludeSign ) {
     RichText.call( this, ' ', {
       font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
+
+      // a11y
       tagName: 'mn',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
