@@ -151,7 +151,7 @@ define( function( require ) {
           return partitionedArea.visibleProperty.value && partitionedArea.areaProperty.value !== null;
         } );
         // TODO: A lot of refactoring clean up here
-        if ( activePartitionedAreas.length > 2 ) {
+        if ( activePartitionedAreas.length > 2 || activePartitionedAreas.length === 0 ) {
           accessiblePartialProductNode.innerContent = '';
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.HIDDEN ) {
