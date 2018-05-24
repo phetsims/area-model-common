@@ -4,7 +4,6 @@
  * Shows radio buttons that allow selecting between a vertical or horizontal partition
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
- * REVIEW: Rename to PartitionRadioButtonGroup for clarity.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -39,9 +38,9 @@ define( function( require ) {
    * @param {Property.<AreaCalculationChoice>} currentAreaOrientationProperty
    * @param {AlignGroup} selectionButtonAlignGroup
    */
-  function PartitionSelectionNode( currentAreaOrientationProperty, selectionButtonAlignGroup ) {
+  function PartitionRadioButtonGroup( currentAreaOrientationProperty, selectionButtonAlignGroup ) {
     AreaModelCommonRadioButtonGroup.call( this, currentAreaOrientationProperty, Orientation.VALUES.map( function( orientation ) {
-      var icon = PartitionSelectionNode.createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
+      var icon = PartitionRadioButtonGroup.createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
       return {
         value: orientation,
         node: new AlignBox( icon, { group: selectionButtonAlignGroup } ),
@@ -59,9 +58,9 @@ define( function( require ) {
     } );
   }
 
-  areaModelCommon.register( 'PartitionSelectionNode', PartitionSelectionNode );
+  areaModelCommon.register( 'PartitionRadioButtonGroup', PartitionRadioButtonGroup );
 
-  return inherit( AreaModelCommonRadioButtonGroup, PartitionSelectionNode, {}, {
+  return inherit( AreaModelCommonRadioButtonGroup, PartitionRadioButtonGroup, {}, {
     /**
      * Creates an icon showing a switch to partition lines of a given orientation.
      * @private

@@ -12,7 +12,7 @@ define( function( require ) {
 
   // modules
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaCalculationSelectionNode = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationSelectionNode' );
+  var AreaCalculationRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationRadioButtonGroup' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
@@ -26,7 +26,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Panel = require( 'SUN/Panel' );
-  var PartialProductSelectionNode = require( 'AREA_MODEL_COMMON/common/view/PartialProductSelectionNode' );
+  var PartialProductRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/PartialProductRadioButtonGroup' );
   var Property = require( 'AXON/Property' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
@@ -98,14 +98,14 @@ define( function( require ) {
     this.productsSelectionPanel = this.createPanelContent(
       partialProductsString,
       AreaModelCommonGlobals.panelAlignGroup,
-      new PartialProductSelectionNode( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
+      new PartialProductRadioButtonGroup( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
 
     // @public {Node} (a11y)
     this.calculationSelectionPanel = this.createPanelContent(
       areaModelCalculationString,
       AreaModelCommonGlobals.panelAlignGroup,
-      new AreaCalculationSelectionNode( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup )
+      new AreaCalculationRadioButtonGroup( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
     var selectionContent = new VBox( {
       spacing: 15

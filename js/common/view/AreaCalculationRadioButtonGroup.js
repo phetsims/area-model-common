@@ -4,7 +4,6 @@
  * Shows radio buttons that allow selecting between different ways of showing area computations (or none).
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
- * REVIEW: Please rename to AreaCalculationRadioButtonGroup for clarity.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -29,7 +28,7 @@ define( function( require ) {
    * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
    * @param {AlignGroup} selectionButtonAlignGroup
    */
-  function AreaCalculationSelectionNode( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
+  function AreaCalculationRadioButtonGroup( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
     var darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
     var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
@@ -46,7 +45,7 @@ define( function( require ) {
     } ] );
   }
 
-  areaModelCommon.register( 'AreaCalculationSelectionNode', AreaCalculationSelectionNode );
+  areaModelCommon.register( 'AreaCalculationRadioButtonGroup', AreaCalculationRadioButtonGroup );
 
   /**
    * Creates a calculation icon with two fills.
@@ -72,5 +71,5 @@ define( function( require ) {
     } );
   }
 
-  return inherit( AreaModelCommonRadioButtonGroup, AreaCalculationSelectionNode );
+  return inherit( AreaModelCommonRadioButtonGroup, AreaCalculationRadioButtonGroup );
 } );

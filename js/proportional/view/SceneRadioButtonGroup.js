@@ -4,8 +4,6 @@
  * Shows radio buttons that allow selecting between different sized proportional areas.
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
- * REVIEW: Rename to SceneSelectionRadioButtonGroup for clarity.  Oh wait, I just realized that AreaModelCommonRadioButtonGroup
- * REVIEW: is currently MutableOptionsNode.  That should be fixed though.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -35,7 +33,7 @@ define( function( require ) {
    * @param {ProportionalAreaModel} model
    * @param {Object} [nodeOptions]
    */
-  function SceneSelectionNode( model, nodeOptions ) {
+  function SceneRadioButtonGroup( model, nodeOptions ) {
     var group = new AlignGroup(); // have all the buttons the same size
 
     assert && assert( model.areas.length === 2 || model.areas.length === 3,
@@ -78,7 +76,7 @@ define( function( require ) {
     this.mutate( nodeOptions );
   }
 
-  areaModelCommon.register( 'SceneSelectionNode', SceneSelectionNode );
+  areaModelCommon.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );
 
-  return inherit( AreaModelCommonRadioButtonGroup, SceneSelectionNode );
+  return inherit( AreaModelCommonRadioButtonGroup, SceneRadioButtonGroup );
 } );

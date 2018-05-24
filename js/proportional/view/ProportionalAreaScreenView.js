@@ -25,14 +25,14 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
-  var PartitionSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/PartitionSelectionNode' );
+  var PartitionRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/PartitionRadioButtonGroup' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PlayAreaNode = require( 'SCENERY_PHET/accessibility/nodes/PlayAreaNode' );
   var ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalFactorsNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalFactorsNode' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SceneSelectionNode = require( 'AREA_MODEL_COMMON/proportional/view/SceneSelectionNode' );
+  var SceneRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/SceneRadioButtonGroup' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -64,7 +64,7 @@ define( function( require ) {
     }, options );
 
     // @private {Node} - Scene selection, created before super call since it will be added in it.
-    this.sceneSelectionNode = new SceneSelectionNode( model );
+    this.sceneSelectionNode = new SceneRadioButtonGroup( model );
 
     var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
       derive: 'visiblePartitionOrientationProperty',
@@ -78,7 +78,7 @@ define( function( require ) {
     this.partitionSelectionPanel = this.createPanelContent(
       partitionString,
       AreaModelCommonGlobals.panelAlignGroup,
-      new PartitionSelectionNode( currentAreaOrientationProperty, partitionSelectionAlignGroup )
+      new PartitionRadioButtonGroup( currentAreaOrientationProperty, partitionSelectionAlignGroup )
     );
 
     AreaScreenView.call( this, model, options );

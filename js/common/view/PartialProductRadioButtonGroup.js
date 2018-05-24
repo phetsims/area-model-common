@@ -4,7 +4,6 @@
  * Shows radio buttons that allow selecting between different ways of showing partial products in partitioned areas.
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
- * // REVIEW: Rename type to PartialProductRadioButtonGroup for clarity.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -41,7 +40,7 @@ define( function( require ) {
    * @param {AreaModelCommonModel} model
    * @param {AlignGroup} selectionButtonAlignGroup
    */
-  function PartialProductSelectionNode( model, selectionButtonAlignGroup ) {
+  function PartialProductRadioButtonGroup( model, selectionButtonAlignGroup ) {
 
     // hardcoded strings since they shouldn't be translatable
     var templateLabels = OrientationPair.create( function( orientation ) {
@@ -57,10 +56,10 @@ define( function( require ) {
 
     // Both are built here so it is a consistent size across screens.
     var iconGroup = new AlignGroup();
-    var exponentsIcon = new AlignBox( PartialProductSelectionNode.createExponentIcon( templateLabels ), {
+    var exponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createExponentIcon( templateLabels ), {
       group: iconGroup
     } );
-    var noExponentsIcon = new AlignBox( PartialProductSelectionNode.createNonExponentIcon( templateLabels ), {
+    var noExponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createNonExponentIcon( templateLabels ), {
       group: iconGroup
     } );
 
@@ -91,9 +90,9 @@ define( function( require ) {
     ] );
   }
 
-  areaModelCommon.register( 'PartialProductSelectionNode', PartialProductSelectionNode );
+  areaModelCommon.register( 'PartialProductRadioButtonGroup', PartialProductRadioButtonGroup );
 
-  return inherit( AreaModelCommonRadioButtonGroup, PartialProductSelectionNode, {}, {
+  return inherit( AreaModelCommonRadioButtonGroup, PartialProductRadioButtonGroup, {}, {
     /**
      * Creates an 'exponents-allowed' icon based on a pair of nodes.
      * @private
