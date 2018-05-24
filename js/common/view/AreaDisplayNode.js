@@ -69,13 +69,7 @@ define( function( require ) {
     // @public {AreaDisplay}
     this.areaDisplay = areaDisplay;
 
-    // @public {Node} - Layers (public for a11y)
-    // REVIEW: Should be annotated @public (a11y) {Node} - Layers
-    // REVIEW*: I haven't seen that before. Can we add it to the code review checklist if it's a thing? (Have only seen
-    // REVIEW*: repository-specific or read-only there).
-    // REVIEW: @public (phet-io) and @public (a11y) have numerous usages across our codebase.  Should we discuss it
-    // REVIEW: at developer meeting to make sure everyone is aware of this? Also, I added those entries to the
-    // REVIEW: code_review checklist
+    // @public {Node} - Layers (a11y)
     this.accessibleParagraphNode = new Node( {
       tagName: 'p'
     } );
