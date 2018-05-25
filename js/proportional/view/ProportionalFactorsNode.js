@@ -159,7 +159,7 @@ define( function( require ) {
         color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
 
         // a11y
-        innerContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
+        labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
         descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
         a11yDecimalPlaces: decimalPlaces
       } );
