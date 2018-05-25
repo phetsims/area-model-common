@@ -23,6 +23,9 @@ define( function( require ) {
     areaGridRectanglePattern: {
       value: '{{height}} by {{width}} rectangle.'
     },
+    areaGridSize: {
+      value: 'Area Grid Size'
+    },
     base10AreaTiles: {
       value: 'Base 10 area tiles'
     },
@@ -141,9 +144,6 @@ define( function( require ) {
     threePartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}}, {{size2}} and {{size3}}.'
     },
-    threeSceneSelectionDescriptionPattern: {
-      value: 'Switch between a {{first}}, {{second}} and {{third}} board.'
-    },
     twoPartialProductFactorsPattern: {
       value: 'There are two partitions. Partial product factors are {{first}} and {{second}}.'
     },
@@ -152,9 +152,6 @@ define( function( require ) {
     },
     twoPartitionsSplit: {
       value: '{{partition}} of {{size}} split into {{size1}} and {{size2}}.'
-    },
-    twoSceneSelectionDescriptionPattern: {
-      value: 'Switch between a {{first}} and {{second}} board.'
     },
     verticalDimensionCapitalized: {
       value: 'Height'

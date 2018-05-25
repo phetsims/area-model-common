@@ -22,9 +22,8 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
 
   // a11y strings
+  var areaGridSizeString = AreaModelCommonA11yStrings.areaGridSize.value;
   var sceneSelectionPatternString = AreaModelCommonA11yStrings.sceneSelectionPattern.value;
-  var threeSceneSelectionDescriptionPatternString = AreaModelCommonA11yStrings.threeSceneSelectionDescriptionPattern.value;
-  var twoSceneSelectionDescriptionPatternString = AreaModelCommonA11yStrings.twoSceneSelectionDescriptionPattern.value;
 
   /**
    * @constructor
@@ -38,22 +37,6 @@ define( function( require ) {
 
     assert && assert( model.areas.length === 2 || model.areas.length === 3,
       'We only have strings for the 2 or 3 case (right now)' );
-
-    // Handle different number of scenes slightly differently for the accessible description.
-    var descriptionString;
-    if ( model.areas.length === 2 ) {
-      descriptionString = StringUtils.fillIn( twoSceneSelectionDescriptionPatternString, {
-        first: model.areas[ 0 ].getDimensionString(),
-        second: model.areas[ 1 ].getDimensionString()
-      } );
-    }
-    if ( model.areas.length === 3 ) {
-      descriptionString = StringUtils.fillIn( threeSceneSelectionDescriptionPatternString, {
-        first: model.areas[ 0 ].getDimensionString(),
-        second: model.areas[ 1 ].getDimensionString(),
-        third: model.areas[ 2 ].getDimensionString()
-      } );
-    }
 
     AreaModelCommonRadioButtonGroup.call( this, model.currentAreaProperty, model.areas.map( function( area ) {
       return {
@@ -70,7 +53,7 @@ define( function( require ) {
       };
     } ), {
       // a11y
-      descriptionContent: descriptionString
+      labelContent: areaGridSizeString
     } );
 
     this.mutate( nodeOptions );
