@@ -128,10 +128,7 @@ define( function( require ) {
   // Standard boilerplate for pooling :(
   Poolable.mixInto( Parentheses, {
 
-    // REVIEW: Perhaps we should create standard documentation for this function and copy it to each declaration.
-    // REVIEW*: I'll probably want to see if there is a more convenient way of setting this up that doesn't hurt
-    // REVIEW*: performance. Specifying the function for each case makes sure that it works well with browser
-    // REVIEW*: optimizations.
+    // REVIEW*: https://github.com/phetsims/phet-core/issues/35
     constructorDuplicateFactory: function( pool ) {
       return function( content, baseColorProperty ) {
         if ( pool.length ) {
