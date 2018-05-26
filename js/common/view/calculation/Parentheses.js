@@ -36,9 +36,6 @@ define( function( require ) {
 
     // @private {Text} - Persistent (since these are declared in the constructor instead of the initialize function,
     // they will persist for the life of this node).
-    // REVIEW: What is the criteria for determining whether characters should appear in MathSymbol.js?
-    // REVIEW: Does () match the criteria?
-    // REVIEW*: Waiting on https://github.com/phetsims/area-model-common/issues/140
     this.leftParen = new Text( '(', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
