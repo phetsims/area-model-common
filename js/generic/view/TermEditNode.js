@@ -92,6 +92,7 @@ define( function( require ) {
       spacing: 4,
       children: [
         readoutBackground,
+        // REVIEW*: https://github.com/phetsims/sun/issues/362
         new MutableOptionsNode( RectangularPushButton, [], {
           content: new FontAwesomeNode( 'pencil_square_o', {
             scale: 0.4,

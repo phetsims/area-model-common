@@ -139,6 +139,7 @@ define( function( require ) {
     var buttonSpacing = 15;
     var levelButtons = model.levels.map( function( level, index ) {
       // Doesn't support a color property as the baseColor, so we need to wrap it.
+      // REVIEW*: https://github.com/phetsims/sun/issues/362
       return new MutableOptionsNode( LevelSelectionButton, [ levelIcons[ index ], level.scoreProperty ], {
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
@@ -344,6 +345,7 @@ define( function( require ) {
     function createGameButton( string, listener, enabledProperty ) {
 
       // REVIEW: Revise RectangularPushButton to be mutable
+      // REVIEW*: https://github.com/phetsims/sun/issues/362
       var button = new MutableOptionsNode( RectangularPushButton, [], {
         content: new Text( string, {
           font: AreaModelCommonConstants.BUTTON_FONT,

@@ -140,6 +140,7 @@ define( function( require ) {
           ]
         } ),
         this.keypad,
+        // REVIEW*: https://github.com/phetsims/sun/issues/362
         new MutableOptionsNode( RectangularPushButton, [], {
           content: new Text( enterString, {
             font: AreaModelCommonConstants.KEYPAD_FONT,

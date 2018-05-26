@@ -6,6 +6,7 @@
  * selectedStroke/baseColor being color Properties.
  * // REVIEW: Can we rewrite RadioButtonGroup to have the support you need?  Then eliminate the need for MutableOptionsNode in this case.
  * // TODO: I'll create an issue for it.
+ * // REVIEW*: https://github.com/phetsims/sun/issues/362
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
