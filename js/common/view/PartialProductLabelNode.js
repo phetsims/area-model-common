@@ -81,26 +81,15 @@ define( function( require ) {
       self.visible = areaVisible && ( choice !== PartialProductsChoice.HIDDEN );
     } );
 
-    // Make sure this is understood?
-    // REVIEW: Please comment what this is.
-    // REVIEW*: Possibly a secret message. Investigate?
-    // REVIEW: Message received, thanks!  base64: aXQncyBnb2luZyB3ZWxsIHNvIGZhciwgdGhhbmtzIQ==
-    // REVIEW: I'm concerned that these values may leak out of the PhET-iO API if those
-    // REVIEW: Rich texts get instrumented.  Would '' work?  Or does the string need to be a certain minimum length
-    // REVIEW: or other constraints?
-    // REVIEW*: I'll resolve this as part of https://github.com/phetsims/scenery/issues/769.
-    // TODO: Resolve above
-    var placeholderString = 'base64: aG9wZSB0aGUgY29kZSByZXZpZXcgaXMgZ29pbmcgd2VsbA==';
-
     // RichTexts (we reuse the same instances to prevent GC and cpu cost)
-    var productRichText = new RichText( placeholderString, {
+    var productRichText = new RichText( '', {
       font: AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
     } );
     var factorsTextOptions = {
       font: AreaModelCommonConstants.PARTIAL_FACTOR_FONT
     };
-    var horizontalRichText = new RichText( placeholderString, factorsTextOptions );
-    var verticalRichText = new RichText( placeholderString, factorsTextOptions );
+    var horizontalRichText = new RichText( '', factorsTextOptions );
+    var verticalRichText = new RichText( '', factorsTextOptions );
 
     var rectangleSize = allowExponents ? 12 : 14;
 

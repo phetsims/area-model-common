@@ -65,9 +65,7 @@ define( function( require ) {
 
     var self = this;
 
-    // TODO: handle https://github.com/phetsims/scenery/issues/769
-    // REVIEW*: Fix the TODO here
-    var readoutText = new RichText( '\u00a0', {
+    var readoutText = new RichText( '', {
       fill: options.textColorProperty,
       font: options.font
     } );
@@ -119,8 +117,7 @@ define( function( require ) {
 
     function updateText() {
       if ( termProperty.value === null ) {
-        // REVIEW: Handle TODO
-        readoutText.text = '\u00a0'; // TODO: handle https://github.com/phetsims/scenery/issues/769
+        readoutText.text = '';
       }
       else {
         readoutText.text = termProperty.value.toRichString( false );
