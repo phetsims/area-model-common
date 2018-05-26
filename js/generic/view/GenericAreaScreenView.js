@@ -61,8 +61,8 @@ define( function( require ) {
      * @returns {Array.<Node>}
      */
     getRightSideNodes: function() {
+      assert && assert( !this.layoutSelectionNode, 'Should not be called multiple times or it will leak memory' );
 
-      // REVIEW: If this cannot be cleaned up, as recommended above, then at assert that it is only called once.
       this.layoutSelectionNode = new GenericLayoutSelectionNode(
         this.model.genericLayoutProperty,
         this.popupLayer,

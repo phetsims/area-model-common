@@ -192,10 +192,6 @@ define( function( require ) {
     this.addChild( noExponentKeypadPanel );
     this.addChild( exponentKeypadPanel );
 
-    // REVIEW: These lines seem unnecessary since the link below updates their visibility
-    noExponentKeypadPanel.visible = false;
-    exponentKeypadPanel.visible = false;
-
     activeEntryProperty.link( function( newEntry ) {
       noExponentKeypadPanel.clear();
       exponentKeypadPanel.clear();

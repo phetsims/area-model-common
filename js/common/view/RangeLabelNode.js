@@ -55,11 +55,9 @@ define( function( require ) {
 
     // Constrain width on the left side (don't let it go out of the layout bounds)
     if ( orientation === Orientation.VERTICAL ) {
-
-      // REVIEW: Eliminate extraneous parentheses
-      var verticalRangeOffset = ( isProportional
+      var verticalRangeOffset = isProportional
         ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
-        : AreaModelCommonConstants.GENERIC_RANGE_OFFSET );
+        : AreaModelCommonConstants.GENERIC_RANGE_OFFSET;
       text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.LAYOUT_SPACING;
     }
 

@@ -57,8 +57,7 @@ define( function( require ) {
     } );
     this.currentChallengeProperty.lazyLink( this.activeEntryProperty.reset.bind( this.activeEntryProperty ) );
 
-    // @public {Property.<GameState|null>}
-    // REVIEW: Please explain what null means for this Property
+    // @public {Property.<GameState|null>} - This is null when there is no current challenge (e.g. level selection)
     this.stateProperty = new DynamicProperty( this.currentChallengeProperty, {
       derive: 'stateProperty',
       bidirectional: true

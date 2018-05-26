@@ -94,7 +94,7 @@ define( function( require ) {
     var readoutBackground = new Rectangle( {
       fill: AreaModelCommonColorProfile.keypadReadoutBackgroundProperty,
       stroke: AreaModelCommonColorProfile.keypadReadoutBorderProperty,
-      cornerRadius: 5 // REVIEW: Maybe this should use PANEL_CORNER_RADIUS, which is also 5?
+      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
     var readoutTextOptions = {
@@ -159,7 +159,7 @@ define( function( require ) {
       ],
       spacing: 10
     } ), {
-      cornerRadius: 5, // REVIEW: Maybe this should use PANEL_CORNER_RADIUS, which is also 5?
+      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
       xMargin: 15,
       yMargin: 15,
       fill: AreaModelCommonColorProfile.keypadPanelBackgroundProperty,

@@ -92,9 +92,13 @@ define( function( require ) {
         } ),
         new Path( ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation ), {
           fill: new DerivedProperty(
-            [ currentAreaOrientationProperty, AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ) ],
-            function( currentOrientation, widthColor ) {
-              return currentOrientation === orientation ? widthColor : '#333'; // REVIEW: This seems like the only color not in the color profile, perhaps it should join its allies.
+            [
+              currentAreaOrientationProperty,
+              AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
+              AreaModelCommonColorProfile.partitionLineIconHandleProperty
+            ],
+            function( currentOrientation, widthColor, handleColor ) {
+              return currentOrientation === orientation ? widthColor : handleColor;
             } ),
           scale: 0.5,
           translation: p2

@@ -44,16 +44,6 @@ define( function( require ) {
      */
     createPartitionedArea: function( partitions ) {
       return new PartitionedArea( partitions );
-    },
-
-    /**
-     * Resets the area to its initial values.
-     * @public
-     * @override
-     */
-    // REVIEW: this override should be removed
-    reset: function() {
-      GenericArea.prototype.reset.call( this );
     }
   } );
 } );

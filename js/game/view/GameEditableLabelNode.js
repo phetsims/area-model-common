@@ -21,6 +21,7 @@ define( function( require ) {
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   var Property = require( 'AXON/Property' );
   var RichText = require( 'SCENERY/nodes/RichText' );
   var TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
@@ -30,14 +31,12 @@ define( function( require ) {
    * @constructor
    * @extends {Node}
    *
-   * @param {Object} options - See constructor
+   * @param {Object} config - See constructor
    */
-  function GameEditableLabelNode( options ) {
+  function GameEditableLabelNode( config ) {
 
-    options = _.extend( {
-      // REQUIRED options (yes, I know it's an oxymoron, and I'd like to have a better name for this options)
-      // REVIEW: Move to the new config pattern
-      // They are marked as null for now
+    config = _.extend( {
+      // required
       entryProperty: null, // {Property.<Entry>}
       gameStateProperty: null, // {Property.<GameState>}
       activeEntryProperty: null, // {Property.<Entry|null>}
@@ -45,19 +44,27 @@ define( function( require ) {
       allowExponentsProperty: null, // {Property.<boolean>}
       orientation: null, // {Orientation}
 
+      // optional
       labelFont: AreaModelCommonConstants.GAME_MAIN_LABEL_FONT,
       editFont: AreaModelCommonConstants.GAME_MAIN_EDIT_FONT
-    }, options );
+    }, config );
+
+    assert && assert( config.entryProperty instanceof Property );
+    assert && assert( config.gameStateProperty instanceof Property );
+    assert && assert( config.activeEntryProperty instanceof Property );
+    assert && assert( config.colorProperty instanceof Property );
+    assert && assert( config.allowExponentsProperty instanceof Property );
+    assert && assert( Orientation.isOrientation( config.orientation ) );
 
     Node.call( this );
 
-    // Helpful to break out some options
-    var entryProperty = options.entryProperty;
-    var gameStateProperty = options.gameStateProperty;
-    var activeEntryProperty = options.activeEntryProperty;
-    var colorProperty = options.colorProperty;
-    var allowExponentsProperty = options.allowExponentsProperty;
-    var orientation = options.orientation;
+    // Helpful to break out some values
+    var entryProperty = config.entryProperty;
+    var gameStateProperty = config.gameStateProperty;
+    var activeEntryProperty = config.activeEntryProperty;
+    var colorProperty = config.colorProperty;
+    var allowExponentsProperty = config.allowExponentsProperty;
+    var orientation = config.orientation;
 
     var valueProperty = new DynamicProperty( entryProperty, {
       derive: 'valueProperty',
@@ -75,7 +82,7 @@ define( function( require ) {
 
     var readoutText = new RichText( '?', {
       fill: colorProperty,
-      font: options.labelFont
+      font: config.labelFont
     } );
     this.addChild( readoutText );
 
@@ -129,7 +136,7 @@ define( function( require ) {
           activeEntryProperty.value = null;
         }
       },
-      font: options.editFont
+      font: config.editFont
     } );
     this.addChild( termEditNode );
 

@@ -28,9 +28,6 @@ define( function( require ) {
    */
   function Entry( value, options ) {
     options = _.extend( {
-
-      // REVIEW: Remove the "Our options" comment.
-      // Our options
       type: EntryType.GIVEN,
       displayType: EntryDisplayType.HIDDEN,
       inputMethod: InputMethod.CONSTANT,

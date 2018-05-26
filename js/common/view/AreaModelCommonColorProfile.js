@@ -91,6 +91,7 @@ define( function( require ) {
     partitionLineIconBorder: { default: new Color( 0xaa, 0xaa, 0xaa ) },
     partitionLineIconBackground: { default: Color.WHITE },
     partitionLineIconLine: { default: Color.BLACK },
+    partitionLineIconHandle: { default: new Color( 0x33, 0x33, 0x33 ) },
 
     // Color for the counting/numbering labels for each grid square
     countingLabel: { default: Color.BLACK },

@@ -175,6 +175,7 @@ define( function( require ) {
      * Whether a set of proposed keys is allowed.
      * REVIEW: If I'm understanding the intent here, it seems it would be a better user experience to gray out keys
      * REVIEW: that cannot lead to valid sequences.
+     * REVIEW*: https://github.com/phetsims/area-model-common/issues/138
      * @public
      * @override
      *
