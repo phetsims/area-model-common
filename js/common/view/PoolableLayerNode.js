@@ -33,15 +33,13 @@ define( function( require ) {
    * Hopefully this doesn't become a common pattern. We have 3+ usages of it, and it cleans things up overall to have
    * the not-super-simple logic in one place. Enjoy.
    *
-   * @param {Object} options
+   * @param {Object} config
    */
-  function PoolableLayerNode( options ) {
+  function PoolableLayerNode( config ) {
     var self = this;
 
-    options = _.extend( {
-
-      // REVIEW: Are we still in search of a better name?
-      // REQUIRED options (again, if you think of a better name...)
+    config = _.extend( {
+      // required
       arrayProperty: null, // {Property.<Array.<*>>} - Property that has an array of items
       createNode: null, // {function} - function( {*} item ): {Node} - Create a node from an item
       getItemProperty: null, // {function} - function( {*} itemNode ): {Property.<*>} - ItemNode => Item Property
@@ -52,23 +50,19 @@ define( function( require ) {
 
       // Called after we run an update.
       updatedCallback: null
-    }, options );
-
-    // REVIEW: those options aren't really optional.  Either add assertions that require they are supplied or promote
-    // REVIEW: them to required arguments.
-    // REVIEW: See also https://github.com/phetsims/tasks/issues/930
+    }, config );
 
     Node.call( this );
 
-    var usedArray = options.usedArray;
-    var unusedArray = options.unusedArray;
+    var usedArray = config.usedArray;
+    var unusedArray = config.unusedArray;
 
-    options.arrayProperty.link( function( items ) {
+    config.arrayProperty.link( function( items ) {
 
       // Unuse all of the item nodes (set their property to null, hiding them, and put them in the unused array)
       while ( usedArray.length ) {
         var oldItemNode = usedArray.pop();
-        options.getItemProperty( oldItemNode ).value = null;
+        config.getItemProperty( oldItemNode ).value = null;
         unusedArray.push( oldItemNode );
       }
 
@@ -78,19 +72,19 @@ define( function( require ) {
         // Grab one from the pool
         if ( unusedArray.length ) {
           itemNode = unusedArray.pop();
-          options.getItemProperty( itemNode ).value = item;
+          config.getItemProperty( itemNode ).value = item;
         }
 
         // Or create a new one
         else {
-          itemNode = options.createNode( item );
+          itemNode = config.createNode( item );
           self.addChild( itemNode );
         }
 
         usedArray.push( itemNode );
       } );
 
-      options.updatedCallback && options.updatedCallback();
+      config.updatedCallback && config.updatedCallback();
     } );
   }
 

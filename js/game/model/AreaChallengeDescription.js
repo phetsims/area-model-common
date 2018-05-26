@@ -43,37 +43,46 @@ define( function( require ) {
    * @constructor
    * @extends {Object}
    *
-   * @param {Object} options - Has the following fields:
-   * @param {Array.<EntryType>} options.horizontal
-   * @param {Array.<EntryType>} options.vertical
-   * @param {Array.<Array.<EntryType>>} options.products
-   * @param {EntryType} options.total
-   * @param {EntryType} options.horizontalTotal
-   * @param {EntryType} options.verticalTotal
-   * @param {AreaChallengeType} options.type
+   * @param {Object} config
    */
-  // REVIEW: This is unconventional and potentially incorrect way to document options.
-  // REVIEW: @zepumph said he normally solves this problem with a jsdoc typedef
-  // REVIEW*: A typedef that is used once always feels like something that is wrong and should be inlined. Can we
-  // REVIEW*: discuss and investigate options for documenting this?
-  // REVIEW: This seems related to https://github.com/phetsims/tasks/issues/930
-  // REVIEW: I'll add a note about it there
-  function AreaChallengeDescription( options ) {
+  function AreaChallengeDescription( config ) {
+    config = _.extend( {
+      // required
+      horizontal: null, // {Array.<EntryType>}
+      vertical: null, // {Array.<EntryType>}
+      products: null, // {Array.<Array.<EntryType>>}
+      total: null, // {EntryType}
+      horizontalTotal: null, // {EntryType}
+      verticalTotal: null, // {EntryType}
+      type: null, // {AreaChallengeType}
+
+      // optional
+      shufflable: true,
+      unique: true
+    }, config );
+
+    assert && assert( Array.isArray( config.horizontal ) );
+    assert && assert( Array.isArray( config.vertical ) );
+    assert && assert( Array.isArray( config.products ) );
+    assert && assert( _.includes( EntryType.VALUES, config.total ) );
+    assert && assert( _.includes( EntryType.VALUES, config.horizontalTotal ) );
+    assert && assert( _.includes( EntryType.VALUES, config.verticalTotal ) );
+    assert && assert( _.includes( AreaChallengeType.VALUES, config.type ) );
 
     // @public {OrientationPair.<Array.<EntryType>>} - Entry types for partition sizes
-    this.partitionTypes = new OrientationPair( options.horizontal, options.vertical );
+    this.partitionTypes = new OrientationPair( config.horizontal, config.vertical );
 
     // @public {Array.<Array.<EntryType>>} - Entry types for partitioned areas
-    this.productTypes = options.products;
+    this.productTypes = config.products;
 
     // @public {OrientationPair.<EntryType>} - Entry types for horizontal and vertical dimension totals
-    this.dimensionTypes = new OrientationPair( options.horizontalTotal, options.verticalTotal );
+    this.dimensionTypes = new OrientationPair( config.horizontalTotal, config.verticalTotal );
 
     // @public {EntryType} - Entry type for the total area
-    this.totalType = options.total;
+    this.totalType = config.total;
 
     // @public {AreaChallengeType} - The type of challenge
-    this.type = options.type;
+    this.type = config.type;
 
     // @public {boolean}
     this.allowExponents = this.type === AreaChallengeType.VARIABLES;
@@ -82,13 +91,13 @@ define( function( require ) {
     this.transposable = this.type === AreaChallengeType.NUMBERS;
 
     // @public {boolean}
-    this.shufflable = options.shufflable === undefined ? true : options.shufflable;
+    this.shufflable = config.shufflable;
 
     // @public {boolean}
-    this.unique = options.unique === undefined ? true : options.unique;
+    this.unique = config.unique;
 
     // @public {GenericLayout}
-    this.layout = GenericLayout.fromValues( options.horizontal.length, options.vertical.length );
+    this.layout = GenericLayout.fromValues( config.horizontal.length, config.vertical.length );
   }
 
   areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
