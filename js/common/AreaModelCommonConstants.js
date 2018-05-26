@@ -57,21 +57,7 @@ define( function( require ) {
     GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
     // {string} - The string to be provided to RichText for a mathematical-looking x
-    // REVIEW: MDN suggests "Do not use this element!" regarding the font tag for html5. "The former behavior of the
-    //         <font> element can be achieved, and even better controlled using the CSS Fonts CSS properties."
-    //         According to https://developer.mozilla.org/en-US/docs/Web/HTML/Element/font
-    // REVIEW*: Since this is provided only to RichText, is the suggestion to be able to add a `style="..."` with
-    // REVIEW*: arbitrary CSS that could control the font parameters? This is a bit nicer in some ways, but way harder
-    // REVIEW*: to parse in general (parsing arbitrary CSS and computing things is a lot harder).
-    // REVIEW: I know very little about RichText--do we have our own parser for it, or is it rendered with DOM? Would it work to provide <i style=...>x</i>
-    // REVIEW: Is there no other way to specify fonts for RichText?
-    // REVIEW*: There is currently no other way of specifying fonts for RichText. The example of the potential inclusion
-    // REVIEW*: of more "arbitrary" CSS would be like <span style="font-family: Arial; font-size: 10px">...</span>.
-    // REVIEW*: Having to parse CSS in this is something I'm hoping to avoid due to the complexity. This could be done
-    // REVIEW*: with an additional library (like how we use himalaya to parse the HTML for RichText), or there may be
-    // REVIEW*: ways to use the browser DOM to parse the CSS for us (which is generally a no-go, since we are trying to
-    // REVIEW*: avoid XSS vulnerabilities). If the CSS way of specifying things for RichText sounds desirable, can we
-    // REVIEW*: create an issue for discussion?
+    // REVIEW*: https://github.com/phetsims/scenery/issues/807
     X_VARIABLE_RICH_STRING: '<font face="'
                             + new MathSymbolFont( 10 ).family
                               .replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' )
