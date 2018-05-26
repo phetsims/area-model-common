@@ -5,6 +5,7 @@
  *
  * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
  * REVIEW: We should generalize SUN/ComboBox to accommodate different layouts instead of providing a complete replacement
+ * REVIEW*: https://github.com/phetsims/sun/issues/363
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
