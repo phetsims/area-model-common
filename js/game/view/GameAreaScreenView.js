@@ -109,7 +109,8 @@ define( function( require ) {
     // @private {TransitionNode}
     this.transitionNode = new TransitionNode( this.visibleBoundsProperty, {
       content: this.levelSelectionLayer,
-      useBoundsClip: false // better performance without the clipping
+      useBoundsClip: false, // better performance without the clipping
+      cachedNodes: [ this.levelSelectionLayer, this.challengeLayer ]
     } );
     this.addChild( this.transitionNode );
     model.currentLevelProperty.lazyLink( function( level ) {
