@@ -85,6 +85,21 @@ define( function( require ) {
     },
 
     /**
+     * Returns the reusable text node with a given number.
+     * @private
+     *
+     * @param {number} number
+     * @returns {Text}
+     */
+    getTextNode: function( number ) {
+      var text = this.textNodes[ number - 1 ];
+      if ( !text ) {
+        text = this.createTextNode( number );
+      }
+      return text;
+    },
+
+    /**
      * Updates the view for tiled areas (since it is somewhat expensive to re-draw, and we don't want it being done
      * multiple times per frame.
      * @private
@@ -105,36 +120,24 @@ define( function( require ) {
       var width = this.activeTotalProperties.horizontal.value;
       var height = this.activeTotalProperties.vertical.value;
 
-      // REVIEW: More expressive variable name for number
-      // REVIEW*: Not sure what would be more helpful here, as each cell is labeled with its 'number'. Suggestions?
-      // REVIEW: Perhaps cellValue?  But I'm fine if we leave it as number, now that I understand it better.
-      var number = 1;
+      var cellNumber = 1;
       for ( var row = 0; row < height; row++ ) {
         var rowCenter = modelToViewY( row + 0.5 );
 
         for ( var col = 0; col < width; col++ ) {
           var colCenter = modelToViewX( col + 0.5 );
 
-          // REVIEW: There is an assumption about the way textNodes were populated by calling createTextNode which
-          // REVIEW: seems brittle, especially since it is number-1 indexed.  Perhaps key it based on the number value
-          // REVIEW: instead of number-1?  Or assign to this.textNodes[number-1] when creating new text node?
-          // REVIEW*: Would isolation into a getTextNode( number ) function be sufficient?
-          // REVIEW: That sounds great.
-          var text = this.textNodes[ number - 1 ];
-          // lazy creation (in case)
-          if ( !text ) {
-            text = this.createTextNode( number );
-          }
+          var text = this.getTextNode( cellNumber );
           text.center = scratchVector.setXY( colCenter, rowCenter );
           text.visible = true;
 
-          number++;
+          cellNumber++;
         }
       }
 
       // Hide the rest of the text nodes (that should NOT show up)
-      for ( ; number - 1 < this.textNodes.length; number++ ) {
-        this.textNodes[ number - 1 ].visible = false;
+      for ( ; cellNumber - 1 < this.textNodes.length; cellNumber++ ) {
+        this.textNodes[ cellNumber - 1 ].visible = false;
       }
     }
   } );
