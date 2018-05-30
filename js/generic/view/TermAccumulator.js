@@ -106,20 +106,18 @@ define( function( require ) {
      */
     handleKeyPressed: function( keyIdentifier ) {
 
-      // REVIEW: This code needs code comments to explain what power is, why we just look at the first power,
-      // REVIEW: why the power can be overriden, etc.  I'm pretty confused about how the accumulator works
-      // REVIEW: and what keys it might contain.
       var currentKeys = this.accumulatedKeysProperty.get();
 
       // Whether we have a negative sign in our current input
       var negative = _.includes( currentKeys, KeyID.PLUS_MINUS );
 
-      // The power of x (X or X_SQUARED) in our input (otherwise undefined).
+      // The power of x (X or X_SQUARED) in our input (otherwise undefined). This keypad only allows one "power" of X,
+      // e.g. 0, 1 or 2 (corresponding to multiplying times 1, x, x^2). This is the corresponding key for that power.
       var power = _.find( currentKeys, function( key ) {
         return key === KeyID.X || key === KeyID.X_SQUARED;
       } );
 
-      // All of the digits in our current input.
+      // All of the digits in our current input. (just numerical parts, not powers of x or negative signs)
       var digits = currentKeys.filter( function( key ) {
         return _.includes( DIGIT_STRINGS, key );
       } );
