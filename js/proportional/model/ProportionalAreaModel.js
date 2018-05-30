@@ -13,8 +13,14 @@ define( function( require ) {
   var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
   var BooleanProperty = require( 'AXON/BooleanProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
   var ProportionalAreaDisplay = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaDisplay' );
+  var TextBounds = require( 'SCENERY/util/TextBounds' );
+  var Util = require( 'DOT/Util' );
+
+  // constants
+  var TEST_FONT = new PhetFont( 12 );
 
   /**
    * @constructor
@@ -71,19 +77,19 @@ define( function( require ) {
      * @returns {string}
      */
     getMaximumAreaString: function() {
-      var hasNoDecimals = _.every( this.areas, function( area ) { return area.snapSize >= 1; } );
-      if ( hasNoDecimals ) {
-        // Figure out the actual maximum area, and return it as a string.
-        return '' + _.max( _.map( this.areas, function( area ) {
-          return area.maximumSize * area.maximumSize;
-        } ) );
-      }
-      else {
-        // Should be guaranteed to only have 1 digit in front
-        // REVIEW: If we change the number of decmimal points, what are all the different places in the code that
-        // REVIEW: need to be changed?  Should we factor that out and centralize it?
-        return '7.89';
-      }
+      var maxString = '9';
+      var maxLength = 0;
+      this.areas.forEach( function( area ) {
+        var representativeSize = area.snapSize + area.maximumSize;
+        // Round because of floating point precision
+        var string = '' + Util.toFixedNumber( representativeSize * representativeSize, 8 ); // Square for area
+        var length = TextBounds.approximateCanvasWidth( TEST_FONT, string );
+        if ( length > maxLength ) {
+          maxLength = length;
+          maxString = string;
+        }
+      } );
+      return maxString;
     },
 
     /**
