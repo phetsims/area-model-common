@@ -91,6 +91,8 @@ define( function( require ) {
     /**
      * Selects the level (resetting progress and generates a new challenge).
      * REVIEW: Is this the same as starting the level?
+     * REVIEW*: It's more of a "switch to" operation, since there will already be challenges. We want to delay the
+     * REVIEW*: resetting of the level until it's selected again.
      * @public
      */
     select: function() {

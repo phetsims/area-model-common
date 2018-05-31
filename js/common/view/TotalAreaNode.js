@@ -53,7 +53,7 @@ define( function( require ) {
     var areaNode;
     if ( isProportional ) {
 
-      // REVIEW: Does areaText need maxWidth for isProportional?  If not, comment why.
+      // Has numeric display, so it doesn't need maxWidth
       areaText.text = maximumWidthString;
       areaNode = new HBox( {
         spacing: 8,

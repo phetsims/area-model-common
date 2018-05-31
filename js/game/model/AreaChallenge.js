@@ -47,6 +47,7 @@ define( function( require ) {
 
     // @public {GameArea}
     // REVIEW: Is this ever used?
+    // REVIEW*: Yes. Try setting it to null
     this.area = new GameArea( description.layout, description.allowExponents );
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
@@ -85,7 +86,9 @@ define( function( require ) {
     // @public {Array.<Array.<Entry>>}
     this.partialProductSizeEntries = dimensionMap( 2, this.partialProductSizes, function( size, verticalIndex, horizontalIndex ) {
 
-      // REVIEW: I cannot figure out what the numbersDigits are, can you improve the variable name or add a helpful comment?
+      // The number of allowed digits in entry. Basically it's the sum of vertical and horizontal (multiplication sums
+      // the number of digits). The far-right/bototm partition gets 1 digit, and successively higher numbers of digits
+      // are used for consecutive partitions.
       var numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
       var type = description.productTypes[ verticalIndex ][ horizontalIndex ];
       var entry = new Entry( size, {
@@ -94,13 +97,12 @@ define( function( require ) {
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
 
         // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
-        // REVIEW: Why do variables get 3 digits?
         digits: description.numberOrVariable( numbersDigits, 2 ) + 1
       } );
       // Link up if dynamic
       if ( type === EntryType.DYNAMIC ) {
 
-        // REVIEW: Comment on unlink, is it needed?  If not, why not?
+        // No unlink needed, since this is just for setup. We have a fixed number of these.
         Property.multilink( [
           self.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
           self.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
@@ -112,11 +114,13 @@ define( function( require ) {
       return entry;
     } );
 
-    // REVIEW: What is happening here and why is 4 the threshold?
+    // We need at least a certain number of partitions to reach x^2 in the total (either at least an x^2 on one side,
+    // or two x-powers on each side).
     var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
     // REVIEW: This one seems redundant, can we use a var + totalProperties instead?
+    // REVIEW*: I don't see the redundancy. Can you clarify?
     this.totals = OrientationPair.create( function( orientation ) {
       return new Polynomial( self.partitionSizes.get( orientation ) );
     } );
@@ -173,10 +177,7 @@ define( function( require ) {
         return terms.length ? new Polynomial( terms ) : null;
       } );
 
-    // All of the entries for the challenge
-    // REVIEW: Can this be renamed to allChallengeEntries?
-    // REVIEW*: It's missing the coefficient entries (since we need to handle the statusProperty there instead). Thoughts?
-    // REVIEW: Thanks for clarifying, please comment as such and these review comments can be deleted.
+    // All of the entries for the challenge - Not including the polynomial "total" coefficient entries
     var mainEntries = this.partitionSizeEntries.horizontal
       .concat( this.partitionSizeEntries.vertical )
       .concat( _.flatten( this.partialProductSizeEntries ) );

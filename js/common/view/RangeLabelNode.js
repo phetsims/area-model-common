@@ -63,6 +63,7 @@ define( function( require ) {
 
       // REVIEW: In another review discussion, we discussed that termList.terms.length would be >0 if the list was non-null,/
       // REVIEW: Did I understand that conversation properly?
+      // REVIEW*: I believe that's only for Polynomial, not the general-case TermList
       var hasTerms = termList !== null && termList.terms.length > 0;
 
       richText.visible = hasTerms;
@@ -124,7 +125,7 @@ define( function( require ) {
             tick.visible = true;
             tick.translation = orientation.toVector( tickLocations[ index ], rangeOffset );
 
-            // REVIEW: please comment to explain the logic on this line
+            // The first/last ticks should have a different length
             tick.y1 = ( index === 0 || index === tickLocations.length - 1 ) ? -TICK_LENGTH / 2 : 0;
           }
           else {
