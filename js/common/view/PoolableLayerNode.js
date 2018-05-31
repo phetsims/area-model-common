@@ -3,13 +3,12 @@
 /**
  * Common logic for where we have a variable number of nodes that need to be used.
  *
- * // REVIEW: it would help me understand this better if you described how we previously solved this problem, or if this
- * // REVIEW is a novel problem for this simulation.
- * // REVIEW*: Mainly novel for this sim, and had 3 basically duplicated code areas. OK for me to describe the exact
- * // REVIEW*: use case (and why this is helpful) in prose above (will do), or is something else required?
- * // REVIEW: Prose in this doc sounds great, thanks!
+ * This is helpful in the situation (that occurs 3 times in this sim) where you need to have a layer with a variable
+ * number of objects (where, for memory/performance needs, you need to pool them). So given a maximum number N, you'll
+ * have a current number X <= N that are used. We don't create new ones, we just reuse a pool of nodes, having
+ * X be visible, and any other nodes beyond will be hidden.
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

@@ -3,7 +3,7 @@
 /**
  * Supertype screenview for generic screens.
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -38,9 +38,9 @@ define( function( require ) {
     // @private {Node}
     this.popupLayer = new Node();
 
-    // @private {Node|null} - Will be filled in with getRightSideNodes (we need lazy creation here unfortunately).
-    // REVIEW: this should be cleaned up.  At a minimum, pull out the this.layoutSelectionNode to another function
-    // REVIEW: and document what is happening and why it cannot happen during the constructor.
+    // @private {Node|null} - Will be filled in with getRightAlignNodes (we need lazy creation here unfortunately).
+    // We need to construct it later when factorsBox.width is defined (so we can properly size it), but we can't wait
+    // until the supertype is fully constructed since then our right align setup will have been constructed fully.
     this.layoutSelectionNode = null;
 
     AreaScreenView.call( this, model, {
@@ -60,7 +60,7 @@ define( function( require ) {
      *
      * @returns {Array.<Node>}
      */
-    getRightSideNodes: function() {
+    getRightAlignNodes: function() {
       assert && assert( !this.layoutSelectionNode, 'Should not be called multiple times or it will leak memory' );
 
       this.layoutSelectionNode = new GenericLayoutSelectionNode(
@@ -68,7 +68,7 @@ define( function( require ) {
         this.popupLayer,
         this.factorsBox.width
       );
-      return [ this.layoutSelectionNode ].concat( AreaScreenView.prototype.getRightSideNodes.call( this ) );
+      return [ this.layoutSelectionNode ].concat( AreaScreenView.prototype.getRightAlignNodes.call( this ) );
     },
 
     /**

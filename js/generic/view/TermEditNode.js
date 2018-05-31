@@ -3,7 +3,7 @@
 /**
  * An edit button and readout for the associated term.
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */

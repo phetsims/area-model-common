@@ -4,10 +4,7 @@
  * A range label that displays a specific TermList along a line covering the range (with start/end ticks for every
  * partition)
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
- * // REVIEW: I'd recommend changing the wording of the "This type should be persistent" (in all relevant files) to be something more like:
- * // REVIEW: "This type is designed to be persistent" or "Instances of this type persist for the lifetime of the simulation"
- * // REVIEW: Using the word "should" has a connotation that "it *should*, but maybe it doesn't"
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -48,7 +45,7 @@ define( function( require ) {
       : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
     // REVIEW: rename to richText or textNode
-    var text = new RichText( '', {
+    var richText = new RichText( '', {
       font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
       fill: colorProperty
     } );
@@ -58,33 +55,33 @@ define( function( require ) {
       var verticalRangeOffset = isProportional
         ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
         : AreaModelCommonConstants.GENERIC_RANGE_OFFSET;
-      text.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.LAYOUT_SPACING;
+      richText.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.LAYOUT_SPACING;
     }
 
-    // Update the label text
+    // Update the label richText
     termListProperty.link( function( termList ) {
 
       // REVIEW: In another review discussion, we discussed that termList.terms.length would be >0 if the list was non-null,/
       // REVIEW: Did I understand that conversation properly?
       var hasTerms = termList !== null && termList.terms.length > 0;
 
-      text.visible = hasTerms;
+      richText.visible = hasTerms;
       if ( hasTerms ) {
-        text.text = termList.toRichString();
+        richText.text = termList.toRichString();
 
         // Relative positioning
         if ( orientation === Orientation.HORIZONTAL ) {
-          text.centerBottom = Vector2.ZERO;
+          richText.centerBottom = Vector2.ZERO;
         }
         else {
-          text.rightCenter = Vector2.ZERO;
+          richText.rightCenter = Vector2.ZERO;
         }
       }
     } );
 
     // Wrap our text in a label, so that we can handle positioning independent of bounds checks
     var textContainer = new Node( {
-      children: [ text ]
+      children: [ richText ]
     } );
     this.addChild( textContainer );
 

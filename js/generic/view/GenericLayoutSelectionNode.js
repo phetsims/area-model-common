@@ -3,7 +3,7 @@
 /**
  * Shows a combo box that allows selecting between different layouts
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  * REVIEW: We should generalize SUN/ComboBox to accommodate different layouts instead of providing a complete replacement
  * REVIEW*: https://github.com/phetsims/sun/issues/363
  *

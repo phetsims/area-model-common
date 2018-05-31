@@ -3,7 +3,7 @@
 /**
  * Supertype ScreenView for generic/proportional screens (NOT the game screens)
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -184,7 +184,7 @@ define( function( require ) {
 
     // @protected {VBox} - Available for subtype positioning relative to this.
     this.rightPanelContainer = new VBox( {
-      children: this.getRightSideNodes(),
+      children: this.getRightAlignNodes(),
       spacing: AreaModelCommonConstants.LAYOUT_SPACING
     } );
     this.addChild( new AlignBox( this.rightPanelContainer, {
@@ -250,11 +250,7 @@ define( function( require ) {
      *
      * @returns {Array.<Node>}
      */
-    // REVIEW: Perhaps a more specific name, since this omits the reset all button.  Perhaps getRightSidePanels or getRightSideBoxes or something like that?
-    // REVIEW: Or maybe getRightSideNodesForAlignment?
-    // REVIEW*: NodesForAlignment seems very verbose, and the others aren't great since it is a combination of panels,
-    // REVIEW*: accordion boxes and radio button groups. Thoughts?
-    getRightSideNodes: function() {
+    getRightAlignNodes: function() {
       var children = [
         this.factorsBox,
         this.areaBox

@@ -3,7 +3,7 @@
 /**
  * Supertype screenview for proportional screens.
  *
- * NOTE: This type should be persistent, so we don't need to handle unlinking of properties.
+ * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
@@ -160,8 +160,8 @@ define( function( require ) {
      *
      * @returns {Array.<Node>}
      */
-    getRightSideNodes: function() {
-      return AreaScreenView.prototype.getRightSideNodes.call( this ).concat( [ this.sceneSelectionNode ] );
+    getRightAlignNodes: function() {
+      return AreaScreenView.prototype.getRightAlignNodes.call( this ).concat( [ this.sceneSelectionNode ] );
     },
 
     /**
