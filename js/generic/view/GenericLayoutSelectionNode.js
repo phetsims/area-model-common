@@ -4,8 +4,8 @@
  * Shows a combo box that allows selecting between different layouts
  *
  * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
- * REVIEW: We should generalize SUN/ComboBox to accommodate different layouts instead of providing a complete replacement
- * REVIEW*: https://github.com/phetsims/sun/issues/363
+ *
+ * NOTE: May be generalized in the future, see https://github.com/phetsims/sun/issues/363
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
