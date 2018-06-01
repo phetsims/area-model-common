@@ -70,6 +70,15 @@ define( function( require ) {
       } );
     } );
 
+    // @public {OrientationPair.<Term>|null} - If we're non-unique, it will hold the 0th-place coefficients (e.g. for
+    // x+3 times x-7, it would hold the terms 3 and -7). It will always be two 1st-order polynomials times each other.
+    this.swappableSizes = this.description.unique ? null : this.partitionSizes.map( _.property( 1 ) );
+
+    // @public {OrientationPair.<Entry>|null} - If we're non-unique, it will hold the 0th-place entries (e.g. for
+    // x+3 times x-7, it would hold the entries for 3 and -7). It will always be two 1st-order polynomials times each
+    // other.
+    this.swappableEntries = this.description.unique ? null : this.partitionSizeEntries.map( _.property( 1 ) );
+
     // @public {OrientationPair.<Array.<Property.<Term|null>>>} - Basically the values of the partitionSizeEntries, but
     // null if the entry's status is 'error'.
     this.nonErrorPartitionSizeProperties = OrientationPair.create( function( orientation ) {
@@ -243,14 +252,14 @@ define( function( require ) {
         // Logic described by https://github.com/phetsims/area-model-common/issues/39
         // Addendum to logic in https://github.com/phetsims/area-model-common/issues/42
         if ( this.hasNonUniqueBadMatch() ) {
-          incorrectEntries.push( this.partitionSizeEntries.get( this.arbitraryNonUniqueWrongOrientation )[ 1 ] );
+          incorrectEntries.push( this.swappableEntries.get( this.arbitraryNonUniqueWrongOrientation ) );
         }
         else {
           if ( !this.nonUniqueHorizontalMatches() ) {
-            incorrectEntries.push( this.partitionSizeEntries.horizontal[ 1 ] );
+            incorrectEntries.push( this.swappableEntries.horizontal );
           }
           if ( !this.nonUniqueVerticalMatches() ) {
-            incorrectEntries.push( this.partitionSizeEntries.vertical[ 1 ] );
+            incorrectEntries.push( this.swappableEntries.vertical );
           }
         }
       }
@@ -296,12 +305,10 @@ define( function( require ) {
       // REVIEW: firstTerms (OrientationPair.<Term>) and secondTerms (OrientationPair.<Term|null>) sound great, though
       // REVIEW: I am not 100% certain where you are envisoning they will go.  Perhaps implement it and I'll see it in
       // REVIEW: the changeset?
-      var expected1 = this.partitionSizes.horizontal[ 1 ];
-      var expected2 = this.partitionSizes.vertical[ 1 ];
+      // REVIEW*: Handled, can you check?
+      var actual = this.swappableEntries.horizontal.valueProperty.value;
 
-      var actual1 = this.partitionSizeEntries.horizontal[ 1 ].valueProperty.value;
-
-      return actual1 !== null && ( actual1.equals( expected1 ) || actual1.equals( expected2 ) );
+      return actual !== null && ( actual.equals( this.swappableSizes.horizontal ) || actual.equals( this.swappableSizes.vertical ) );
     },
 
     /**
@@ -311,13 +318,9 @@ define( function( require ) {
      * @returns {boolean}
      */
     nonUniqueVerticalMatches: function() {
-      // REVIEW: see comments in preceding method
-      var expected1 = this.partitionSizes.horizontal[ 1 ];
-      var expected2 = this.partitionSizes.vertical[ 1 ];
+      var actual = this.swappableEntries.vertical.valueProperty.value;
 
-      var actual2 = this.partitionSizeEntries.vertical[ 1 ].valueProperty.value;
-
-      return actual2 !== null && ( actual2.equals( expected1 ) || actual2.equals( expected2 ) );
+      return actual !== null && ( actual.equals( this.swappableSizes.horizontal ) || actual.equals( this.swappableSizes.vertical ) );
     },
 
     /**
@@ -328,13 +331,11 @@ define( function( require ) {
      * @returns {boolean}
      */
     hasNonUniqueMatch: function() {
+      var expected1 = this.swappableSizes.horizontal;
+      var expected2 = this.swappableSizes.vertical;
 
-      // REVIEW: see comments in preceding method
-      var expected1 = this.partitionSizes.horizontal[ 1 ];
-      var expected2 = this.partitionSizes.vertical[ 1 ];
-
-      var actual1 = this.partitionSizeEntries.horizontal[ 1 ].valueProperty.value;
-      var actual2 = this.partitionSizeEntries.vertical[ 1 ].valueProperty.value;
+      var actual1 = this.swappableEntries.horizontal.valueProperty.value;
+      var actual2 = this.swappableEntries.vertical.valueProperty.value;
 
       return actual1 !== null && actual2 !== null &&
              ( ( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) ||
@@ -359,8 +360,8 @@ define( function( require ) {
     checkNonUniqueChanges: function() {
       if ( !this.description.unique ) {
         if ( this.hasNonUniqueBadMatch() ) {
-          this.partitionSizeEntries.horizontal[ 1 ].statusProperty.value = EntryStatus.NORMAL;
-          this.partitionSizeEntries.vertical[ 1 ].statusProperty.value = EntryStatus.NORMAL;
+          this.swappableEntries.horizontal.statusProperty.value = EntryStatus.NORMAL;
+          this.swappableEntries.vertical.statusProperty.value = EntryStatus.NORMAL;
         }
       }
     },
@@ -377,11 +378,11 @@ define( function( require ) {
         var reversed = false;
 
         // REVIEW: see comments in preceding method
-        var expected1 = this.partitionSizes.horizontal[ 1 ];
-        var expected2 = this.partitionSizes.vertical[ 1 ];
+        var expected1 = this.swappableSizes.horizontal;
+        var expected2 = this.swappableSizes.vertical;
 
-        var actual1Entry = this.partitionSizeEntries.horizontal[ 1 ];
-        var actual2Entry = this.partitionSizeEntries.vertical[ 1 ];
+        var actual1Entry = this.swappableEntries.horizontal;
+        var actual2Entry = this.swappableEntries.vertical;
 
         var actual1 = actual1Entry.valueProperty.value;
         var actual2 = actual2Entry.valueProperty.value;
