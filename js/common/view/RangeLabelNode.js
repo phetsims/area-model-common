@@ -44,7 +44,6 @@ define( function( require ) {
       ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
       : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
-    // REVIEW: rename to richText or textNode
     var richText = new RichText( '', {
       font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
       fill: colorProperty

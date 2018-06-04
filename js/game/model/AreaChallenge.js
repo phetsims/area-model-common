@@ -377,7 +377,6 @@ define( function( require ) {
       if ( !this.description.unique ) {
         var reversed = false;
 
-        // REVIEW: see comments in preceding method
         var expected1 = this.swappableSizes.horizontal;
         var expected2 = this.swappableSizes.vertical;
 
