@@ -17,7 +17,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Poolable = require( 'PHET_CORE/Poolable' );
+  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
   var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -33,79 +33,69 @@ define( function( require ) {
    * @param {Property.<Color>} baseColorProperty
    */
   function Parentheses( content, baseColorProperty ) {
+    assert && assert( content instanceof Node );
+    assert && assert( baseColorProperty instanceof Property );
 
-    // @private {Text} - Persistent (since these are declared in the constructor instead of the initialize function,
-    // they will persist for the life of this node).
-    this.leftParen = new Text( '(', {
-      font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-
-      // a11y
-      tagName: 'mo',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-      innerContent: '('
-    } );
-    this.leftParen.setAccessibleAttribute( 'form', 'prefix', {
-      namespace: 'http://www.w3.org/1998/Math/MathML'
-    } );
-    this.rightParen = new Text( ')', {
-      font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
-
-      // a11y
-      tagName: 'mo',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-      innerContent: ')'
-    } );
-    this.rightParen.setAccessibleAttribute( 'form', 'postfix', {
-      namespace: 'http://www.w3.org/1998/Math/MathML'
+    // @public {string}
+    this.accessibleText = StringUtils.fillIn( quantityPatternString, {
+      content: content.accessibleText
     } );
 
     // @private {Node|null}
-    this.content = null;
+    this.content = content;
 
-    HBox.call( this, {
-      children: [ this.leftParen, this.rightParen ],
-      spacing: AreaModelCommonConstants.CALCULATION_PAREN_PADDING,
+    if ( !this.initialized ) {
+      this.initialized = true;
 
-      // a11y
-      align: 'bottom',
-      tagName: 'mrow',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-    } );
+      // @private {Text} - Persistent (since these are declared in the constructor instead of the initialize function,
+      // they will persist for the life of this node).
+      this.leftParen = new Text( '(', {
+        font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
-    this.initialize( content, baseColorProperty );
+        // a11y
+        tagName: 'mo',
+        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+        innerContent: '('
+      } );
+      this.leftParen.setAccessibleAttribute( 'form', 'prefix', {
+        namespace: 'http://www.w3.org/1998/Math/MathML'
+      } );
+
+      // @private {Text} - See notes above
+      this.rightParen = new Text( ')', {
+        font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
+
+        // a11y
+        tagName: 'mo',
+        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+        innerContent: ')'
+      } );
+      this.rightParen.setAccessibleAttribute( 'form', 'postfix', {
+        namespace: 'http://www.w3.org/1998/Math/MathML'
+      } );
+
+      HBox.call( this, {
+        children: [ this.leftParen, this.rightParen ],
+        spacing: AreaModelCommonConstants.CALCULATION_PAREN_PADDING,
+
+        // a11y
+        align: 'bottom',
+        tagName: 'mrow',
+        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      } );
+    }
+
+    assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
+
+    this.insertChild( 1, content );
+
+    this.leftParen.fill = baseColorProperty;
+    this.rightParen.fill = baseColorProperty;
   }
 
   areaModelCommon.register( 'Parentheses', Parentheses );
 
   inherit( HBox, Parentheses, {
-    /**
-     * Initializes the state of this node (could be from pool, or fresh from a constructor).
-     * @public
-     *
-     * @param {Node} content - Should have a clean() method to support pooling
-     * @param {Property.<Color>} baseColorProperty
-     * @returns {Parentheses}
-     */
-    initialize: function( content, baseColorProperty ) {
-      assert && assert( content instanceof Node );
-      assert && assert( baseColorProperty instanceof Property );
-
-      assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
-
-      this.content = content;
-
-      this.insertChild( 1, content );
-      this.leftParen.fill = baseColorProperty;
-      this.rightParen.fill = baseColorProperty;
-
-      // @public {string}
-      this.accessibleText = StringUtils.fillIn( quantityPatternString, {
-        content: content.accessibleText
-      } );
-
-      return this;
-    },
-
     /**
      * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
      * @public
@@ -125,21 +115,7 @@ define( function( require ) {
     }
   } );
 
-  // Standard boilerplate for pooling :(
-  Poolable.mixInto( Parentheses, {
-
-    // REVIEW*: https://github.com/phetsims/phet-core/issues/35
-    constructorDuplicateFactory: function( pool ) {
-      return function( content, baseColorProperty ) {
-        if ( pool.length ) {
-          return pool.pop().initialize( content, baseColorProperty );
-        }
-        else {
-          return new Parentheses( content, baseColorProperty );
-        }
-      };
-    }
-  } );
+  ExperimentalPoolable.mixInto( Parentheses );
 
   return Parentheses;
 } );

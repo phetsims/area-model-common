@@ -12,9 +12,9 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Poolable = require( 'PHET_CORE/Poolable' );
 
   /**
    * @constructor
@@ -24,50 +24,38 @@ define( function( require ) {
    * @param {number} spacing
    */
   function CalculationGroup( nodes, spacing ) {
+    assert && assert( Array.isArray( nodes ) );
+    assert && assert( typeof spacing === 'number' );
+
+    // @public {string}
+    this.accessibleText = nodes.map( function( node ) {
+      return node.accessibleText;
+    } ).join( ' ' );
 
     // @private {Array.<Node>|null}
-    this.nodes = null;
+    this.nodes = nodes;
 
-    HBox.call( this, {
-      align: 'bottom',
+    if ( !this.initialized ) {
+      this.initialized = true;
 
-      // a11y
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
+      HBox.call( this, {
+        align: 'bottom',
+
+        // a11y
+        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
+      } );
+    }
+
+    this.mutate( {
+      tagName: nodes.length > 1 ? 'mrow' : null,
+      spacing: spacing,
+      children: nodes
     } );
-
-    this.initialize( nodes, spacing );
   }
 
   areaModelCommon.register( 'CalculationGroup', CalculationGroup );
 
   inherit( HBox, CalculationGroup, {
-    /**
-     * Initializes the state of this node (could be from pool, or fresh from a constructor).
-     * @public
-     *
-     * @param {Array.<Node>} nodes - Each should have a clean() method to support pooling
-     * @param {number} spacing
-     * @returns {CalculationGroup}
-     */
-    initialize: function( nodes, spacing ) {
-      assert && assert( Array.isArray( nodes ) );
-      assert && assert( typeof spacing === 'number' );
-
-      this.tagName = nodes.length > 1 ? 'mrow' : null;
-
-      this.nodes = nodes;
-
-      this.spacing = spacing;
-      this.children = nodes;
-
-      // @public {string}
-      this.accessibleText = nodes.map( function( node ) {
-        return node.accessibleText;
-      } ).join( ' ' );
-
-      return this;
-    },
-
     /**
      * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
      * @public
@@ -84,19 +72,7 @@ define( function( require ) {
     }
   } );
 
-  // Standard boilerplate for pooling
-  Poolable.mixInto( CalculationGroup, {
-    constructorDuplicateFactory: function( pool ) {
-      return function( nodes, spacing ) {
-        if ( pool.length ) {
-          return pool.pop().initialize( nodes, spacing );
-        }
-        else {
-          return new CalculationGroup( nodes, spacing );
-        }
-      };
-    }
-  } );
+  ExperimentalPoolable.mixInto( CalculationGroup );
 
   return CalculationGroup;
 } );

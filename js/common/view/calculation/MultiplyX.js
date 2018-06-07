@@ -18,7 +18,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Poolable = require( 'PHET_CORE/Poolable' );
+  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
   var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -35,66 +35,52 @@ define( function( require ) {
    * @param {Property.<Color>} baseColorProperty
    */
   function MultiplyX( leftContent, rightContent, baseColorProperty ) {
+    assert && assert( leftContent instanceof Node );
+    assert && assert( rightContent instanceof Node );
+    assert && assert( baseColorProperty instanceof Property );
 
-    // @private {Text} - Persistent (since it's declared in the constructor instead of the initialize function, this
-    // will persist for the life of this node).
-    this.timesNode = new Text( MathSymbols.TIMES, {
-      font: AreaModelCommonConstants.CALCULATION_X_FONT,
-
-      // a11y
-      tagName: 'mo',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-      innerContent: '&times;'
+    // @public {string}
+    this.accessibleText = StringUtils.fillIn( productTimesPatternString, {
+      left: leftContent.accessibleText,
+      right: rightContent.accessibleText
     } );
 
     // @private {Node|null}
-    this.leftContent = null;
-    this.rightContent = null;
+    this.leftContent = leftContent;
+    this.rightContent = rightContent;
 
-    HBox.call( this, {
-      children: [ this.timesNode ],
-      spacing: AreaModelCommonConstants.CALCULATION_X_PADDING,
-      align: 'bottom'
-    } );
+    if ( !this.initialized ) {
+      this.initialized = true;
 
-    this.initialize( leftContent, rightContent, baseColorProperty );
+      // @private {Text} - Persistent (since it's declared in the constructor instead of the initialize function, this
+      // will persist for the life of this node).
+      this.timesNode = new Text( MathSymbols.TIMES, {
+        font: AreaModelCommonConstants.CALCULATION_X_FONT,
+
+        // a11y
+        tagName: 'mo',
+        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+        innerContent: '&times;'
+      } );
+
+      HBox.call( this, {
+        children: [ this.timesNode ],
+        spacing: AreaModelCommonConstants.CALCULATION_X_PADDING,
+        align: 'bottom'
+      } );
+    }
+
+    assert && assert( this.children.length === 1, 'Should only have the timesNode' );
+
+    this.insertChild( 0, leftContent );
+    this.addChild( rightContent );
+
+    this.timesNode.fill = baseColorProperty;
   }
 
   areaModelCommon.register( 'MultiplyX', MultiplyX );
 
   inherit( HBox, MultiplyX, {
-    /**
-     * Initializes the state of this node (could be from pool, or fresh from a constructor).
-     * @public
-     *
-     * @param {Node} leftContent - Should have a clean() method to support pooling
-     * @param {Node} rightContent - Should have a clean() method to support pooling
-     * @param {Property.<Color>} baseColorProperty
-     * @returns {MultiplyX}
-     */
-    initialize: function( leftContent, rightContent, baseColorProperty ) {
-      assert && assert( leftContent instanceof Node );
-      assert && assert( rightContent instanceof Node );
-      assert && assert( baseColorProperty instanceof Property );
-
-      assert && assert( this.children.length === 1, 'Should only have the timesNode' );
-
-      this.leftContent = leftContent;
-      this.rightContent = rightContent;
-
-      this.insertChild( 0, leftContent );
-      this.addChild( rightContent );
-      this.timesNode.fill = baseColorProperty;
-
-      // @public {string}
-      this.accessibleText = StringUtils.fillIn( productTimesPatternString, {
-        left: leftContent.accessibleText,
-        right: rightContent.accessibleText
-      } );
-
-      return this;
-    },
-
     /**
      * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
      * @public
@@ -116,19 +102,7 @@ define( function( require ) {
     }
   } );
 
-  // Standard boilerplate for pooling :(
-  Poolable.mixInto( MultiplyX, {
-    constructorDuplicateFactory: function( pool ) {
-      return function( leftContent, rightContent, baseColorProperty ) {
-        if ( pool.length ) {
-          return pool.pop().initialize( leftContent, rightContent, baseColorProperty );
-        }
-        else {
-          return new MultiplyX( leftContent, rightContent, baseColorProperty );
-        }
-      };
-    }
-  } );
+  ExperimentalPoolable.mixInto( MultiplyX );
 
   return MultiplyX;
 } );
