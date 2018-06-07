@@ -20,7 +20,6 @@ define( function( require ) {
   var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
   var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -140,8 +139,7 @@ define( function( require ) {
           ]
         } ),
         this.keypad,
-        // REVIEW*: https://github.com/phetsims/sun/issues/362
-        new MutableOptionsNode( RectangularPushButton, [], {
+        new RectangularPushButton( {
           content: new Text( enterString, {
             font: AreaModelCommonConstants.KEYPAD_FONT,
             maxWidth: 100
@@ -152,8 +150,7 @@ define( function( require ) {
           yMargin: 5,
           listener: function() {
             enterCallback( termAccumulator.termProperty.value );
-          }
-        }, {
+          },
           baseColor: AreaModelCommonColorProfile.keypadEnterBackgroundProperty
         } )
       ],

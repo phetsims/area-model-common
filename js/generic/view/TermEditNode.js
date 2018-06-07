@@ -20,7 +20,6 @@ define( function( require ) {
   var FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -90,8 +89,7 @@ define( function( require ) {
       spacing: 4,
       children: [
         readoutBackground,
-        // REVIEW*: https://github.com/phetsims/sun/issues/362
-        new MutableOptionsNode( RectangularPushButton, [], {
+        new RectangularPushButton( {
           content: new FontAwesomeNode( 'pencil_square_o', {
             scale: 0.4,
             xMargin: 6,
@@ -99,8 +97,7 @@ define( function( require ) {
           } ),
           listener: function() {
             options.editCallback();
-          }
-        }, {
+          },
           baseColor: AreaModelCommonColorProfile.editButtonBackgroundProperty
         } )
       ]

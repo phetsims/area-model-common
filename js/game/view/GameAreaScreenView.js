@@ -139,9 +139,7 @@ define( function( require ) {
 
     var buttonSpacing = 15;
     var levelButtons = model.levels.map( function( level, index ) {
-      // Doesn't support a color property as the baseColor, so we need to wrap it.
-      // REVIEW*: https://github.com/phetsims/sun/issues/362
-      return new MutableOptionsNode( LevelSelectionButton, [ levelIcons[ index ], level.scoreProperty ], {
+      return new LevelSelectionButton( levelIcons[ index ], level.scoreProperty, {
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
           numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
@@ -149,9 +147,7 @@ define( function( require ) {
         },
         listener: function() {
           model.selectLevel( level );
-        }
-      }, {
-        // dynamic
+        },
         baseColor: level.colorProperty
       } );
     } );
@@ -344,7 +340,6 @@ define( function( require ) {
     // REVIEW: Did you consider making enabledProperty optional, and setting it to new BooleanProperty(true) if
     // REVIEW: not supplied?
     function createGameButton( string, listener, enabledProperty ) {
-
       // REVIEW: Revise RectangularPushButton to be mutable
       // REVIEW*: https://github.com/phetsims/sun/issues/362
       var button = new MutableOptionsNode( RectangularPushButton, [], {
@@ -354,9 +349,9 @@ define( function( require ) {
         } ),
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
-        listener: listener
-      }, {
+        listener: listener,
         baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty,
+      }, {
         enabled: enabledProperty
       }, {
         centerX: panelBox.centerX,
