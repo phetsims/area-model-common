@@ -16,7 +16,7 @@ define( function( require ) {
 
   /**
    * @constructor
-   * @extends {MutableOptionsNode}
+   * @extends {RadioButtonGroup}
    *
    * @param {Property.<*>} property
    * @param {Array.<Object>} items - See RadioButtonGroup for more info
