@@ -37,7 +37,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
   var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
-  var MutableOptionsNode = require( 'SUN/MutableOptionsNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var NumberProperty = require( 'AXON/NumberProperty' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -340,9 +339,7 @@ define( function( require ) {
     // REVIEW: Did you consider making enabledProperty optional, and setting it to new BooleanProperty(true) if
     // REVIEW: not supplied?
     function createGameButton( string, listener, enabledProperty ) {
-      // REVIEW: Revise RectangularPushButton to be mutable
-      // REVIEW*: https://github.com/phetsims/sun/issues/362
-      var button = new MutableOptionsNode( RectangularPushButton, [], {
+      var button = new RectangularPushButton( {
         content: new Text( string, {
           font: AreaModelCommonConstants.BUTTON_FONT,
           maxWidth: 200
@@ -351,11 +348,11 @@ define( function( require ) {
         touchAreaYDilation: 10,
         listener: listener,
         baseColor: AreaModelCommonColorProfile.gameButtonBackgroundProperty,
-      }, {
-        enabled: enabledProperty
-      }, {
         centerX: panelBox.centerX,
         top: panelBox.bottom + 80
+      } );
+      enabledProperty.link( function( enabled ) {
+        button.enabled = enabled;
       } );
       self.challengeLayer.addChild( button );
       return button;
