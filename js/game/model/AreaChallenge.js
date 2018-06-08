@@ -65,7 +65,7 @@ define( function( require ) {
           type: description.partitionTypes.get( orientation )[ index ],
           displayType: EntryType.toDisplayType( description.partitionTypes.get( orientation )[ index ] ),
           inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
-          digits: description.numberOrVariable( description.partitionTypes.get( orientation ).length - index, 1 )
+          numberOfDigits: description.numberOrVariable( description.partitionTypes.get( orientation ).length - index, 1 )
         } );
       } );
     } );
@@ -106,7 +106,7 @@ define( function( require ) {
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
 
         // Always let them put in 1 more digit than the actual answer, see https://github.com/phetsims/area-model-common/issues/63
-        digits: description.numberOrVariable( numbersDigits, 2 ) + 1
+        numberOfDigits: description.numberOrVariable( numbersDigits, 2 ) + 1
       } );
       // Link up if dynamic
       if ( type === EntryType.DYNAMIC ) {
@@ -144,7 +144,7 @@ define( function( require ) {
 
     var totalOptions = {
       inputMethod: description.numberOrVariable( InputMethod.CONSTANT, hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ),
-      digits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
+      numberOfDigits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
 
     // @private {InputMethod}
@@ -518,8 +518,8 @@ define( function( require ) {
         else {
           var sign = phet.joist.random.nextBoolean() ? 1 : -1;
 
-          // Exclude a 1 if our length is 1
-          // REVIEW: Why exclude a 1 if length is 1?
+          // Exclude a 1 if our length is 1 (so that we don't just have a single 1 as a dimensinon, so there is the
+          // ability to have a partition line)
           var digit = phet.joist.random.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
           return new Term( sign * digit, power );
         }
