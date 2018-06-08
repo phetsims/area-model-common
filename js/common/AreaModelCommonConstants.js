@@ -57,11 +57,7 @@ define( function( require ) {
     GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
     // {string} - The string to be provided to RichText for a mathematical-looking x
-    // REVIEW*: https://github.com/phetsims/scenery/issues/807
-    X_VARIABLE_RICH_STRING: '<font face="'
-                            + new MathSymbolFont( 10 ).family
-                              .replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( /"/g, '&quot;' )
-                            + '"><i>x</i></font>',
+    X_VARIABLE_RICH_STRING: '<i style=\'font-family: ' + new MathSymbolFont( 10 ).family + '\'>x</i>',
 
     // {number} Two different area sizes (they are square), one needed for the intro sim
     AREA_SIZE: 350,
