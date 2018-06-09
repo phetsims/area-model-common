@@ -451,7 +451,7 @@ define( function( require ) {
 
       if ( !isCorrect ) {
         badEntries.forEach( function( badEntry ) {
-          badEntry.statusProperty.value = EntryStatus.ERROR;
+          badEntry.statusProperty.value = EntryStatus.INCORRECT;
         } );
       }
 

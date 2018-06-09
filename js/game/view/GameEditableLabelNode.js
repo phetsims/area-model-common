@@ -94,7 +94,7 @@ define( function( require ) {
     var textColorProperty = new DerivedProperty(
       [ statusProperty, colorProperty, AreaModelCommonColorProfile.errorStatusProperty ],
       function( highlight, color, errorColor ) {
-        if ( highlight === EntryStatus.ERROR ) {
+        if ( highlight === EntryStatus.INCORRECT ) {
           return errorColor;
         }
         else {

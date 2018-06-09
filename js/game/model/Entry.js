@@ -68,7 +68,7 @@ define( function( require ) {
 
     // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight
     this.nonErrorValueProperty = new DerivedProperty( [ this.valueProperty, this.statusProperty ], function( value, highlight ) {
-      return ( highlight === EntryStatus.ERROR ) ? null : value;
+      return ( highlight === EntryStatus.INCORRECT ) ? null : value;
     } );
   }
 
