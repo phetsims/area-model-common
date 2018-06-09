@@ -93,8 +93,8 @@ define( function( require ) {
      * @param {Term} term
      */
     setActiveTerm: function( term ) {
-      // Appearance change for https://github.com/phetsims/area-model-common/issues/42
-      // REVIEW: Please summarize the main points of the issue as it pertains to this implementation
+      // Appearance change for https://github.com/phetsims/area-model-common/issues/42, handles only showing the
+      // "wrong" values for the variables 6-1 case (non-unique)
       this.currentChallengeProperty.value.checkNonUniqueChanges();
 
       this.activeEntryProperty.value.valueProperty.value = term;
@@ -112,12 +112,7 @@ define( function( require ) {
 
       var challenge = this.currentChallengeProperty.value;
 
-      // REVIEW: It seems like "Sanity check for multitouch" was maybe meant as a TODO?  It doesn't seem to explain
-      // REVIEW: the following lines.
-      // Sanity check for multitouch
-      if ( challenge ) {
-        this.currentLevelProperty.value.scoreProperty.value += challenge.check();
-      }
+      this.currentLevelProperty.value.scoreProperty.value += challenge.check();
     },
 
     /**

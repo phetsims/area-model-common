@@ -33,6 +33,7 @@ define( function( require ) {
     // This placeholder will never be seen in the user interface, it is to help make sure areaChallengeProperty is never
     // null, see below.
     // REVIEW: Check if the preceding explanation is correct.
+    // REVIEW*: Yes, looks accurate, anything to do here?
     var placeholderChallenge = new AreaChallenge( AreaChallengeDescription.LEVEL_1_NUMBERS_1 );
 
     // @public {Property.<AreaChallenge>} - Always has an AreaChallenge, unlike the passed-in nullable variety. This is
@@ -92,6 +93,7 @@ define( function( require ) {
     // REVIEW*: Yup, definitely. I only want clients to know it is a Property they can observe/check. You'll probably
     // REVIEW*: see this also with things marked as {Node} where that's the only part that matters.
     // REVIEW: Sounds like a good policy, but I doubt other developers are aware of this.
+    // REVIEW*: Should I mention at a dev meeting to see if this is typical?
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );
