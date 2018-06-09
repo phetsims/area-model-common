@@ -17,8 +17,8 @@ define( function( require ) {
   var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
-  var GameArea = require( 'AREA_MODEL_COMMON/game/model/GameArea' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
   var inherit = require( 'PHET_CORE/inherit' );
   var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -45,10 +45,10 @@ define( function( require ) {
     // @public {Property.<GameState>}
     this.stateProperty = new Property( GameState.FIRST_ATTEMPT );
 
-    // @public {GameArea}
+    // @public {GenericArea}
     // REVIEW: Is this ever used?
     // REVIEW*: Yes. Try setting it to null
-    this.area = new GameArea( description.layout, description.allowExponents );
+    this.area = new GenericArea( description.layout, description.allowExponents );
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
     this.partitionSizes = OrientationPair.create( function( orientation ) {

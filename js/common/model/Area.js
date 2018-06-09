@@ -100,7 +100,7 @@ define( function( require ) {
 
   return inherit( Object, Area, {
     /**
-     * Creates a partitioned area given two partitions. Meant to be overridden where needed.
+     * Creates a partitioned area given two partitions.
      * @protected
      *
      * @param {OrientationPair.<Partition>} partitions
