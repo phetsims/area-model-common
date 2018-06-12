@@ -81,7 +81,7 @@ define( function( require ) {
         // a11y
         align: 'bottom',
         tagName: 'mrow',
-        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
       } );
     }
 
