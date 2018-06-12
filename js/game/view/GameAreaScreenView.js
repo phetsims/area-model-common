@@ -23,6 +23,7 @@ define( function( require ) {
   var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
   var FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  var FaceWithPointsNode = require( 'SCENERY_PHET/FaceWithPointsNode' );
   var FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
   var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
   var GameAreaDisplayNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaDisplayNode' );
@@ -392,17 +393,15 @@ define( function( require ) {
       this.challengeLayer.addChild( cheatButton );
     }
 
-    // REVIEW: Can this use FaceWithPointsNode instead?
-    var faceNode = new FaceNode( 90, {
-      centerX: showAnswerButton.centerX,
+    var faceScoreNode = new FaceWithPointsNode( {
+      faceDiameter: 90,
+      pointsAlignment: 'rightBottom',
+      pointsFont: AreaModelCommonConstants.SCORE_INCREASE_FONT,
+      spacing: 10,
+      centerX: showAnswerButton.centerX, // a bit unclean, since the text hasn't been positioned yet.
       top: showAnswerButton.bottom + 10
     } );
-    this.challengeLayer.addChild( faceNode );
-    var scoreIncreaseText = new Text( ' ', {
-      font: AreaModelCommonConstants.SCORE_INCREASE_FONT,
-      leftBottom: faceNode.rightBottom
-    } );
-    this.challengeLayer.addChild( scoreIncreaseText );
+    this.challengeLayer.addChild( faceScoreNode );
 
     var levelCompleteContainer = new Node();
     this.challengeLayer.addChild( levelCompleteContainer );
@@ -446,23 +445,20 @@ define( function( require ) {
         nextButton.visible = state === GameState.CORRECT_ANSWER ||
                              state === GameState.SHOW_SOLUTION;
         showAnswerButton.visible = state === GameState.WRONG_SECOND_ANSWER;
-        faceNode.visible = state === GameState.CORRECT_ANSWER ||
-                           state === GameState.WRONG_FIRST_ANSWER ||
-                           state === GameState.WRONG_SECOND_ANSWER;
-        scoreIncreaseText.visible = state === GameState.CORRECT_ANSWER;
+        faceScoreNode.visible = state === GameState.CORRECT_ANSWER ||
+                                state === GameState.WRONG_FIRST_ANSWER ||
+                                state === GameState.WRONG_SECOND_ANSWER;
         if ( cheatButton ) {
           cheatButton.visible = state === GameState.FIRST_ATTEMPT ||
                                 state === GameState.SECOND_ATTEMPT;
         }
       }
       if ( state === GameState.CORRECT_ANSWER ) {
-        faceNode.smile();
+        faceScoreNode.smile();
+        faceScoreNode.setPoints( oldState === GameState.FIRST_ATTEMPT ? 2 : 1 );
       }
       else if ( state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER ) {
-        faceNode.frown();
-      }
-      if ( state === GameState.CORRECT_ANSWER ) {
-        scoreIncreaseText.text = ( oldState === GameState.FIRST_ATTEMPT ) ? '+2' : '+1';
+        faceScoreNode.frown();
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
         var level = model.currentLevelProperty.value;
