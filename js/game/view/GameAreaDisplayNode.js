@@ -29,6 +29,9 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
 
+  // constants
+  var MAX_PARTITIONS = 3; // The maximum number of partitions for a specific dimension
+
   /**
    * @constructor
    * @extends {Node}
@@ -77,31 +80,27 @@ define( function( require ) {
     var centerProperties = OrientationPair.create( function( orientation ) {
       return [
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
-
-          // REVIEW: Perhaps rename partitionCount or numberOfPartitions?
-          var quantity = layout.getPartitionQuantity( orientation );
-          if ( quantity === 1 ) {
+          var partitionCount = layout.getPartitionQuantity( orientation );
+          if ( partitionCount === 1 ) {
             return fullOffset / 2;
           }
-          else if ( quantity === 2 ) {
+          else if ( partitionCount === 2 ) {
             return singleOffset / 2;
           }
-          else if ( quantity === 3 ) {
+          else if ( partitionCount === 3 ) {
             return firstOffset / 2;
           }
         } ),
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
-
-          // REVIEW: Same as above
-          var quantity = layout.getPartitionQuantity( orientation );
-          if ( quantity === 2 ) {
+          var partitionCount = layout.getPartitionQuantity( orientation );
+          if ( partitionCount === 2 ) {
             return ( fullOffset + singleOffset ) / 2;
           }
-          else if ( quantity === 3 ) {
+          else if ( partitionCount === 3 ) {
             return ( secondOffset + firstOffset ) / 2;
           }
           else {
-            return 0; // no need to position here  // REVIEW, but why?
+            return 0; // no need to position here, since this will never be used with a partitionCount of 1
           }
         } ),
         new Property( ( fullOffset + secondOffset ) / 2 )
@@ -110,9 +109,7 @@ define( function( require ) {
 
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
-
-      // REVIEW: _.range( 0, 3 ) appears 3 times in this file, please factor out to // constants and document it.
-      _.range( 0, 3 ).forEach( function( partitionIndex ) {
+      _.range( 0, MAX_PARTITIONS ).forEach( function( partitionIndex ) {
         var entryProperty = new DerivedProperty(
           [ areaDisplay.partitionSizeEntriesProperties.get( orientation ) ],
           function( entries ) {
@@ -138,9 +135,9 @@ define( function( require ) {
       } );
     } );
 
-    // REVIEW: Add a comment here explaining what is happening.
-    _.range( 0, 3 ).forEach( function( horizontalIndex ) {
-      _.range( 0, 3 ).forEach( function( verticalIndex ) {
+    // Labels for each partitioned area
+    _.range( 0, MAX_PARTITIONS ).forEach( function( horizontalIndex ) {
+      _.range( 0, MAX_PARTITIONS ).forEach( function( verticalIndex ) {
         var entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], function( values ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] )
                  ? values[ verticalIndex ][ horizontalIndex ]

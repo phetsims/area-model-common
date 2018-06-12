@@ -5,6 +5,8 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  * REVIEW: These states and corresponding logic are duplicated across many games.  Do we have the potential to factor something out?
+ * REVIEW*: Probably not easily, as showing a "correct" solution, giving two attempts, and having a "level complete"
+ * REVIEW*: state are not-at-all universal for game sims.
  */
 define( function( require ) {
   'use strict';

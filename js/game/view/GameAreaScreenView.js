@@ -17,7 +17,6 @@ define( function( require ) {
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var Easing = require( 'TWIXT/Easing' );
@@ -212,6 +211,8 @@ define( function( require ) {
       font: AreaModelCommonConstants.GAME_STATUS_BAR_PROMPT_FONT,
       pickable: false,
       maxWidth: 600, // REVIEW: should this be based off of the screenView layout bounds?
+      // REVIEW*: I've mainly seen maxWidths hardcoded. Lots of things are implicitly constants depending on the
+      // REVIEW*: layout bounds. Are we ever planning on changing the layout bounds in the future for sims?
       top: this.layoutBounds.top + statusBar.height + 20
     } );
     this.challengeLayer.addChild( promptText );
@@ -335,12 +336,16 @@ define( function( require ) {
       rightMargin: AreaModelCommonConstants.LAYOUT_SPACING
     } ) );
 
-    // REVIEW: It would be good to have JSDoc for this function even though it is not on the prototype
-    // REVIEW: Did you consider making enabledProperty optional, and setting it to new BooleanProperty(true) if
-    // REVIEW: not supplied?
-    function createGameButton( string, listener, enabledProperty ) {
+    /**
+     * Creates a game-style button that may be enabled via a property
+     *
+     * @param {string} label
+     * @param {function} listener - The callback for when the button is pressed
+     * @param {Property.<boolean>} [enabledProperty]
+     */
+    function createGameButton( label, listener, enabledProperty ) {
       var button = new RectangularPushButton( {
-        content: new Text( string, {
+        content: new Text( label, {
           font: AreaModelCommonConstants.BUTTON_FONT,
           maxWidth: 200
         } ),
@@ -351,7 +356,7 @@ define( function( require ) {
         centerX: panelBox.centerX,
         top: panelBox.bottom + 80
       } );
-      enabledProperty.link( function( enabled ) {
+      enabledProperty && enabledProperty.link( function( enabled ) {
         button.enabled = enabled;
       } );
       self.challengeLayer.addChild( button );
@@ -364,15 +369,15 @@ define( function( require ) {
 
     var tryAgainButton = createGameButton( tryAgainString, function() {
       model.tryAgain();
-    }, new BooleanProperty( true ) );
+    } );
 
     var nextButton = createGameButton( nextString, function() {
       model.next();
-    }, new BooleanProperty( true ) );
+    } );
 
     var showAnswerButton = createGameButton( showAnswerString, function() {
       model.showAnswer();
-    }, new BooleanProperty( true ) );
+    } );
 
     // Cheat button, see https://github.com/phetsims/area-model-common/issues/116
     if ( AreaModelCommonQueryParameters.showAnswers ) {
