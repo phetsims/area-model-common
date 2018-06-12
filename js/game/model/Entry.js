@@ -61,7 +61,7 @@ define( function( require ) {
     this.inputMethod = options.inputMethod;
 
     // @public {number}
-    this.digits = options.digits;
+    this.digits = options.numberOfDigits;
 
     // @public {Property.<EntryStatus>}
     this.statusProperty = new Property( EntryStatus.DIRTY );
