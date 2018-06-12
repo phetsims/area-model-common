@@ -114,8 +114,9 @@ define( function( require ) {
       bidirectional: true
     } );
 
-    // REVIEW: document, perhaps rename as 'clear'?
-    function makeNotDirty() {
+    // When one is changed, we want to make sure that all entries are not marked as dirty internally (so that the user
+    // can submit after just changing one value). This is done by providing an actual value to the property.
+    function provideEntryValues() {
       [ constantEntryProperty, xEntryProperty, xSquaredEntryProperty ].forEach( function( entryProperty, index ) {
         var valueProperty = entryProperty.value.valueProperty;
         if ( valueProperty.value === null ) {
@@ -129,7 +130,7 @@ define( function( require ) {
         // Only flag the values as edited when the user makes a change (not when we set it as part of a challenge)
         if ( property.isExternallyChanging ) {
           editedCallback();
-          makeNotDirty();
+          provideEntryValues();
           entryProperty.value.statusProperty.value = EntryStatus.NORMAL;
         }
       } );
@@ -143,40 +144,32 @@ define( function( require ) {
     // see https://github.com/phetsims/area-model-common/issues/94
     var rangeProperty = new Property( new Range( -81, 81 ) );
 
-    function highlightFunction( highlight, errorColor, dirtyColor ) {
-      if ( highlight === EntryStatus.NORMAL ) {
-        return 'black';
-      }
-      else if ( highlight === EntryStatus.DIRTY ) {
-        return dirtyColor;
-      }
-      else {
-        return errorColor;
-      }
+    function getPickerColorProperty( entryProperty ) {
+      return new DerivedProperty( [
+        new DynamicProperty( entryProperty, { derive: 'statusProperty' } ),
+        AreaModelCommonColorProfile.errorStatusProperty,
+        AreaModelCommonColorProfile.dirtyStatusProperty
+      ], function( highlight, errorColor, dirtyColor ) {
+        if ( highlight === EntryStatus.NORMAL ) {
+          return 'black';
+        }
+        else if ( highlight === EntryStatus.DIRTY ) {
+          return dirtyColor;
+        }
+        else {
+          return errorColor;
+        }
+      } );
     }
 
-    // REVIEW: factor out getColorProperty(entryProperty) for the following 3 occurrences.  It will include highlightFunction
-    // REVIEW: within it
     var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
-      color: new DerivedProperty( [
-        new DynamicProperty( constantEntryProperty, { derive: 'statusProperty' } ),
-        AreaModelCommonColorProfile.errorStatusProperty,
-        AreaModelCommonColorProfile.dirtyStatusProperty
-      ], highlightFunction )
+      color: getPickerColorProperty( constantEntryProperty )
     } );
     var xPicker = new NumberPicker( xProperty, rangeProperty, {
-      color: new DerivedProperty( [
-        new DynamicProperty( xEntryProperty, { derive: 'statusProperty' } ),
-        AreaModelCommonColorProfile.errorStatusProperty,
-        AreaModelCommonColorProfile.dirtyStatusProperty
-      ], highlightFunction )
+      color: getPickerColorProperty( xEntryProperty )
     } );
     var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
-      color: new DerivedProperty( [
-        new DynamicProperty( xSquaredEntryProperty, { derive: 'statusProperty' } ),
-        AreaModelCommonColorProfile.errorStatusProperty,
-        AreaModelCommonColorProfile.dirtyStatusProperty
-      ], highlightFunction )
+      color: getPickerColorProperty( xSquaredEntryProperty )
     } );
 
     var xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );

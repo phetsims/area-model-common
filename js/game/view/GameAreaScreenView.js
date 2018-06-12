@@ -432,8 +432,6 @@ define( function( require ) {
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
-
-        // REVIEW: I have seen several variants of this logic, and this is my favorite so far, nice work!
         gameAreaNode.visible = state !== GameState.LEVEL_COMPLETE;
         panelBox.visible = state !== GameState.LEVEL_COMPLETE;
         statusBar.visible = state !== GameState.LEVEL_COMPLETE;
@@ -468,6 +466,7 @@ define( function( require ) {
             //REVIEW*: Because LevelCompletedNode takes an index, which is different than the level number. If we
             //REVIEW*: showed "Level 0", I'd be more than happy to make it level 0 in the code.
             // REVIEW: Should we change LevelCompletedNode to be 1-indexed?
+            // REVIEW*: https://github.com/phetsims/vegas/issues/73
             level.scoreProperty.value,
             AreaModelCommonConstants.PERFECT_SCORE,
             AreaModelCommonConstants.NUM_CHALLENGES,
