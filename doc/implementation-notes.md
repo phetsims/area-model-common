@@ -196,3 +196,5 @@ Since almost every feature is shared between multiple area-model sims, almost al
 
 Additionally, due to performance concerns, many types in area-model-common are poolable. This is helpful, even for cases where we can use the DAG nature of Scenery, since the CPU cost of creating the wrapper nodes was unacceptable. By pooling, it lowers the garbage collection and object creation overhead, and should allow for smoother animation.
 
+For the game, internally we use the displayed level numbers (e.g. 1 for "Level 1") instead of using the 0-based VEGAS system. This was originally done because we had two level 3s in the same game (one "Variables" and one "Numbers"), although these were split into separate screens later in development.
+
