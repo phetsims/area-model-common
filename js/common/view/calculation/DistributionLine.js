@@ -35,6 +35,8 @@ define( function( require ) {
     // REVIEW*: Each type of line should have its own specific index, so that if the calculation is changed (and some
     // REVIEW*: other lines are added/removed) then the same line stays highlighted. So is there a better way, or should
     // REVIEW*: these constants be listed in CalculationLine.js instead? (Or a place to document the "why" that I noted)?
+    // REVIEW: Would a unique identifier be sufficient to preserve highlighting when the calculation is changed? (like the
+    // REVIEW: auto-incremented ID pattern we sometimes use)?
     CalculationLine.call( this, 2, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.finalizeNode( this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {

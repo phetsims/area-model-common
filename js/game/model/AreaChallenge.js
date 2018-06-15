@@ -45,10 +45,8 @@ define( function( require ) {
     // @public {Property.<GameState>}
     this.stateProperty = new Property( GameState.FIRST_ATTEMPT );
 
-    // @public {GenericArea}
-    // REVIEW: Is this ever used?
-    // REVIEW*: Yes. Try setting it to null
-    this.area = new GenericArea( description.layout, description.allowExponents );
+    // @public {GenericArea} - used in _.property( 'area' )
+    this.area = null;
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
     this.partitionSizes = OrientationPair.create( function( orientation ) {
