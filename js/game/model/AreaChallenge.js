@@ -126,8 +126,6 @@ define( function( require ) {
     var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
-    // REVIEW: This one seems redundant, can we use a var + totalProperties instead?
-    // REVIEW*: I don't see the redundancy. Can you clarify?
     this.totals = OrientationPair.create( function( orientation ) {
       return new Polynomial( self.partitionSizes.get( orientation ) );
     } );
@@ -293,19 +291,7 @@ define( function( require ) {
      * @returns {boolean}
      */
     nonUniqueHorizontalMatches: function() {
-
-      // REVIEW: I'm not following this part.  Why do we need the 1th term?  expected1 and expected2 are terms, right?
-      // REVIEW: can they be named as such?  There are several places in this file that could benefit from changes.
-      // REVIEW*: This is only called in the case where we have 2 terms in each orientation. This can't be guaranteed
-      // REVIEW*: in general. Would it be ok having firstTerms (OrientationPair.<Term>) and secondTerms
-      // REVIEW*: (OrientationPair.<Term|null>) since it would clean up a lot of these usages?
-      // REVIEW*: Also couldn't help myself: '1th', would I call it firthTerm?
-      // REVIEW: firstTerms (OrientationPair.<Term>) and secondTerms (OrientationPair.<Term|null>) sound great, though
-      // REVIEW: I am not 100% certain where you are envisoning they will go.  Perhaps implement it and I'll see it in
-      // REVIEW: the changeset?
-      // REVIEW*: Handled, can you check?
       var actual = this.swappableEntries.horizontal.valueProperty.value;
-
       return actual !== null && ( actual.equals( this.swappableSizes.horizontal ) || actual.equals( this.swappableSizes.vertical ) );
     },
 
