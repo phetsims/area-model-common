@@ -32,8 +32,6 @@ define( function( require ) {
 
     // This placeholder will never be seen in the user interface, it is to help make sure areaChallengeProperty is never
     // null, see below.
-    // REVIEW: Check if the preceding explanation is correct.
-    // REVIEW*: Yes, looks accurate, anything to do here?
     var placeholderChallenge = new AreaChallenge( AreaChallengeDescription.LEVEL_1_NUMBERS_1 );
 
     // @public {Property.<AreaChallenge>} - Always has an AreaChallenge, unlike the passed-in nullable variety. This is
@@ -83,17 +81,6 @@ define( function( require ) {
     this.totalEntriesProperty = new DerivedProperty( [ this.areaChallengeProperty ], _.property( 'totalCoefficientEntries' ) );
 
     // @public {Property.<Polynomial|null>} - The "total area" property reference
-    // REVIEW: several of the documented types in this file don't match the instantiated types
-    // REVIEW*: This one was definitely wrong, but the others (now?) look correct. totalProperties notes TermList, which
-    // REVIEW*: is a supertype of Polynomial (and matches AreaDisplay).
-    // REVIEW: To clarify--the instance type is DynamicProperty but the annotated type is Property.<Polynomial|null>
-    // REVIEW: Is it annotated as Property instead of DynamicProperty because the client-side API should only know that it
-    // REVIEW: is Property and not DynamicProperty?  For the sake of argument, if DynamicProperty had some method like
-    // REVIEW: setBidirectional() that we expected clients to be able to use, then we would use @public {DynamicProperty.<...>}, right?
-    // REVIEW*: Yup, definitely. I only want clients to know it is a Property they can observe/check. You'll probably
-    // REVIEW*: see this also with things marked as {Node} where that's the only part that matters.
-    // REVIEW: Sounds like a good policy, but I doubt other developers are aware of this.
-    // REVIEW*: Should I mention at a dev meeting to see if this is typical?
     this.totalProperty = new DynamicProperty( this.areaChallengeProperty, {
       derive: 'totalProperty'
     } );

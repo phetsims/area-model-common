@@ -36,10 +36,6 @@ define( function( require ) {
     }, options );
 
     // Always start off by editing null, and it should be the default value.
-    // REVIEW: Shouldn't this be as assertion, that if it was editable the value should have been null?  Or are there
-    // REVIEW: call sites passing non-null value for editable displayTypes?
-    // REVIEW*: This is mainly a convenience helper, since this is pretty much always the behavior we want, but
-    // REVIEW*: conditionals in every instantiation would make things less readable.
     if ( options.displayType === EntryDisplayType.EDITABLE ) {
       value = null;
     }
