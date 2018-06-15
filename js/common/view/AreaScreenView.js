@@ -117,8 +117,18 @@ define( function( require ) {
       // REVIEW: Especially since (but not only because) we are adding the selectionContent while iterating over it.
       // REVIEW*: I'm not sure I understand how it would be simpler. Wouldn't it add a line or two of code for declaring
       // REVIEW*: the array?
+      // REVIEW: By "cleaner" I did not mean less lines of code--it is generally a code smell and error-prone for maintenance
+      // REVIEW: to increase the size of an array while iterating over the array.  What would be great is a method
+      // REVIEW: like Array.join that returns an array instead of a string and takes a generator function instead of a constant.
+      // REVIEW: Do you know if lodash has something like that?
+      // REVIEW: If not, then perhaps the comment I revised below is sufficient?  Please review and edit accordingly.
       selectionContent.children = selectionNodes;
-      // Add separators between items
+
+      // Add separators between items - note this grows the selectionContent array while the selectionContent is
+      // being iterated over.
+      // REVIEW: Also, it seems this code would incorrectly add a separator when selectionContent.children.length===1
+      // REVIEW: If that's right, does this need to be addressed?  Maybe even if the simulation doesn't reach that case
+      // REVIEW: at the moment, one day it might?
       for ( var i = 1; i < selectionContent.children.length; i += 2 ) {
         selectionContent.insertChild( i, new Line( {
           x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
