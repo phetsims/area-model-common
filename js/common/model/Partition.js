@@ -34,20 +34,7 @@ define( function( require ) {
       isValidValue: Term.isTermOrNull
     } );
 
-    // @public {Orientation}
-    // REVIEW: Is it necessary for Partition to know its Orientation?  After all, Area contains an OrientationPair.<Array.<Partition>>
-    // REVIEW: so it seems redundant and error-prone (since the values may deviate).
-    // REVIEW*: While not STRICTLY necessary, it means whenever we need to look up the orientation, (a) it isn't
-    // REVIEW*: overly-complicated by having to iterate through many structures, and (b) we don't lose performance
-    // REVIEW*: due to looking through structures. Seems cleaner, and while improper use COULD cause deviation, that
-    // REVIEW*: doesn't happen. Same argument as "why does Node have a list of parents when you can search all nodes
-    // REVIEW*: and check the children arrays".
-    // REVIEW: Please comment that this information is duplicated with Area for the reasons you mentioned.  Is there a way
-    // REVIEW: we can check that they don't get out of sync?
-    // REVIEW*: The orientation seems like an inherent property of the Partition, so it feels wrong to document or check.
-    // REVIEW*: For instance, if you have a Foot object, whether it's a left or right foot is a property of the foot.
-    // REVIEW*: You don't want to have to ask the body about the foot's own properties. Maybe this is worth discussion
-    // REVIEW*: on a call?
+    // @public {Orientation} - an intrinsic property of the Partition
     this.orientation = orientation;
 
     // @public {Property.<Color>}

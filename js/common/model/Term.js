@@ -81,6 +81,7 @@ define( function( require ) {
       // REVIEW*: Rounding to the nearest 0.1 would break, since 0.1 * 0.1 is 0.01 (used in the decimals sim). Using
       // REVIEW*: that type of rounding would require handling the most decimal points needed across the sim, and would
       // REVIEW*: make it easy to break in the future.
+      // REVIEW: Now tracked in https://github.com/phetsims/area-model-common/issues/156
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 
