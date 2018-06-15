@@ -162,11 +162,10 @@ define( function( require ) {
     cheat: function() {
       if ( this.currentChallengeProperty.value ) {
 
-        // REVIEW: why is the active entry reset *after* showing the answers?  It seems like it should be before
-        // REVIEW: (or more likely that I have a misunderstanding of what those parts mean).
-        // REVIEW*: They seem somewhat independent (filling in the correct answers to the entries, and unselecting
-        // REVIEW*: the edited one and closing the keypad if necessary).
+        // filling in the correct answers to the entries
         this.currentChallengeProperty.value.showAnswers();
+
+        // unselecting the edited one and closing the keypad if necessary
         this.activeEntryProperty.reset();
       }
     },
