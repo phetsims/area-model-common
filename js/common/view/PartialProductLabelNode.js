@@ -172,6 +172,7 @@ define( function( require ) {
         // REVIEW*: The more I think about it, the more I think node.setChildren should be smarter about things.
         // TODO: Look into setChildren improvements that won't remove and add something back in.
         // REVIEW*: https://github.com/phetsims/scenery/issues/789
+        // REVIEW: Now that Node.children is optimized, do you need the `needsUpdate` logic here too?
         var currentChildren = box.children;
         var needsUpdate = false;
         if ( currentChildren.length !== children.length ) {

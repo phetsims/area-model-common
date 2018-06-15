@@ -60,9 +60,6 @@ define( function( require ) {
     // Update the label richText
     termListProperty.link( function( termList ) {
 
-      // REVIEW: In another review discussion, we discussed that termList.terms.length would be >0 if the list was non-null,/
-      // REVIEW: Did I understand that conversation properly?
-      // REVIEW*: I believe that's only for Polynomial, not the general-case TermList
       var hasTerms = termList !== null && termList.terms.length > 0;
 
       richText.visible = hasTerms;
