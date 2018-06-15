@@ -68,20 +68,6 @@ define( function( require ) {
      * @returns {boolean}
      */
     equals: function( term ) {
-      // REVIEW: Can you please explain/document why an equality check for the coefficients?
-      // REVIEW*: Things like this are needed because of floating-point arithmetic. Should we rename this approxEquals?
-      // REVIEW: I'm concerned that approxEquals won't work if combined with Property.deepEquals.
-      // REVIEW: I know it's safe to check against an epsilon, but are you sure there are values x,y for which
-      // abs(x-y)<1E-7 and x!==y ?
-      // REVIEW: Or why not round coefficient to the nearest allowed value?
-      // REVIEW*: There are for sure values (x=0, y=1e-10). And rounding doesn't work for the decimals sim. And in
-      // REVIEW*: general, rounding is unclean.
-      // REVIEW: Why can't we use rounding for the decimals sim? You would round values to the nearest 0.1.  Then
-      // REVIEW: direct equality would work here.
-      // REVIEW*: Rounding to the nearest 0.1 would break, since 0.1 * 0.1 is 0.01 (used in the decimals sim). Using
-      // REVIEW*: that type of rounding would require handling the most decimal points needed across the sim, and would
-      // REVIEW*: make it easy to break in the future.
-      // REVIEW: Now tracked in https://github.com/phetsims/area-model-common/issues/156
       return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
     },
 
