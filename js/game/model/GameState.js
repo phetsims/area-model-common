@@ -1,12 +1,10 @@
 // Copyright 2017-2018, University of Colorado Boulder
 
 /**
- * Enumeration for all states that the game can be in.
+ * Enumeration for all states that the game can be in.  See https://github.com/phetsims/vegas/issues/74 about whether
+ * this can/should be factored out.
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
- * REVIEW: These states and corresponding logic are duplicated across many games.  Do we have the potential to factor something out?
- * REVIEW*: Probably not easily, as showing a "correct" solution, giving two attempts, and having a "level complete"
- * REVIEW*: state are not-at-all universal for game sims.
  */
 define( function( require ) {
   'use strict';
