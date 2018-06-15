@@ -63,8 +63,8 @@ define( function( require ) {
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
             fill: useTileLikeBackground
-              ? AreaModelCommonColorProfile.smallTileProperty
-              : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
+                  ? AreaModelCommonColorProfile.smallTileProperty
+                  : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
           } )
         ]
       } );

@@ -41,8 +41,8 @@ define( function( require ) {
     Node.call( this );
 
     var rangeOffset = ( isProportional
-      ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
-      : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
+                        ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
+                        : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
     var richText = new RichText( '', {
       font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
@@ -52,8 +52,8 @@ define( function( require ) {
     // Constrain width on the left side (don't let it go out of the layout bounds)
     if ( orientation === Orientation.VERTICAL ) {
       var verticalRangeOffset = isProportional
-        ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
-        : AreaModelCommonConstants.GENERIC_RANGE_OFFSET;
+                                ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
+                                : AreaModelCommonConstants.GENERIC_RANGE_OFFSET;
       richText.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.LAYOUT_SPACING;
     }
 

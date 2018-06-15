@@ -30,7 +30,7 @@ define( function( require ) {
 
     var totalTexts = area.displayProperties.map( function( orientationTotal, orientation ) {
       return orientationTotal.value ? self.orientedTermText( orientation, orientationTotal.value )
-        : self.orientedPlaceholderBox( orientation );
+                                    : self.orientedPlaceholderBox( orientation );
     } );
 
     if ( allowExponents ) {

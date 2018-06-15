@@ -197,8 +197,8 @@ define( function( require ) {
     // Hide the x^2 term if we won't use it
     constantEntryProperty.link( function( constantEntry ) {
       pickerContainer.children = constantEntry.inputMethod === InputMethod.POLYNOMIAL_2
-        ? xSquaredChildren
-        : xChildren;
+                                 ? xSquaredChildren
+                                 : xChildren;
     } );
 
     xSquaredChildren.forEach( function( node, index ) {

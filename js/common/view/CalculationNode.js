@@ -73,8 +73,8 @@ define( function( require ) {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
       previousArrow.fill = enabled
-        ? AreaModelCommonColorProfile.calculationArrowUpProperty
-        : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
+                           ? AreaModelCommonColorProfile.calculationArrowUpProperty
+                           : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     this.addChild( previousArrow );
@@ -99,8 +99,8 @@ define( function( require ) {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
       nextArrow.fill = enabled
-        ? AreaModelCommonColorProfile.calculationArrowUpProperty
-        : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
+                       ? AreaModelCommonColorProfile.calculationArrowUpProperty
+                       : AreaModelCommonColorProfile.calculationArrowDisabledProperty;
     } );
 
     model.areaCalculationChoiceProperty.link( function( choice ) {

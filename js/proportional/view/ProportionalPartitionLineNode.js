@@ -128,8 +128,8 @@ define( function( require ) {
     // We need to reverse the accessible property for the vertical case.
     // See https://github.com/phetsims/area-model-introduction/issues/2
     var accessibleProperty = orientation === Orientation.HORIZONTAL
-      ? partitionSplitProperty
-      : new DynamicProperty( new Property( partitionSplitProperty ), {
+                             ? partitionSplitProperty
+                             : new DynamicProperty( new Property( partitionSplitProperty ), {
         bidirectional: true,
         map: function( v ) { return -v; },
         inverseMap: function( v ) { return -v; }

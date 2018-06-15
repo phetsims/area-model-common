@@ -130,8 +130,8 @@ define( function( require ) {
         // Product
         else if ( choice === PartialProductsChoice.PRODUCTS ) {
           productRichText.text = ( horizontalSize === null || verticalSize === null )
-            ? '?'
-            : horizontalSize.times( verticalSize ).toRichString( false );
+                                 ? '?'
+                                 : horizontalSize.times( verticalSize ).toRichString( false );
           children = [ productRichText ];
         }
 
@@ -139,11 +139,11 @@ define( function( require ) {
         else {
 
           var horizontalNode = horizontalSize
-            ? horizontalRichText.setText( horizontalSize.toRichString( false ) )
-            : horizontalRectangle;
+                               ? horizontalRichText.setText( horizontalSize.toRichString( false ) )
+                               : horizontalRectangle;
           var verticalNode = verticalSize
-            ? verticalRichText.setText( verticalSize.toRichString( false ) )
-            : verticalRectangle;
+                             ? verticalRichText.setText( verticalSize.toRichString( false ) )
+                             : verticalRectangle;
 
           if ( allowExponents ) {
             box.spacing = 0;

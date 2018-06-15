@@ -52,8 +52,8 @@ define( function( require ) {
 
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = options.isProportional
-      ? AreaModelCommonColorProfile.proportionalColorProperties
-      : AreaModelCommonColorProfile.genericColorProperties;
+                           ? AreaModelCommonColorProfile.proportionalColorProperties
+                           : AreaModelCommonColorProfile.genericColorProperties;
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( defaultArea, {

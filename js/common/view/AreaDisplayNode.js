@@ -89,8 +89,8 @@ define( function( require ) {
         tagName: 'span'
       } );
       Property.multilink( [
-          areaDisplay.partitionsProperties.get( orientation ),
-          areaDisplay.totalProperties.get( orientation )
+        areaDisplay.partitionsProperties.get( orientation ),
+        areaDisplay.totalProperties.get( orientation )
       ], function( partitions, total ) {
         // TODO: How are we notifying here?
         // TODO: Pass something like visiblePartitions through the AreaDisplay, so we don't have this complexity here
