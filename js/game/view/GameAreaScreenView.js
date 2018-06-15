@@ -211,9 +211,7 @@ define( function( require ) {
     var promptText = new Text( ' ', {
       font: AreaModelCommonConstants.GAME_STATUS_BAR_PROMPT_FONT,
       pickable: false,
-      maxWidth: 600, // REVIEW: should this be based off of the screenView layout bounds?
-      // REVIEW*: I've mainly seen maxWidths hardcoded. Lots of things are implicitly constants depending on the
-      // REVIEW*: layout bounds. Are we ever planning on changing the layout bounds in the future for sims?
+      maxWidth: 600,
       top: this.layoutBounds.top + statusBar.height + 20
     } );
     this.challengeLayer.addChild( promptText );
@@ -462,11 +460,7 @@ define( function( require ) {
         var level = model.currentLevelProperty.value;
         levelCompleteContainer.children = [
           new LevelCompletedNode(
-            level.number - 1, // REVIEW: if the framework is 0-indexed, why is the sim 1-indexed?
-            //REVIEW*: Because LevelCompletedNode takes an index, which is different than the level number. If we
-            //REVIEW*: showed "Level 0", I'd be more than happy to make it level 0 in the code.
-            // REVIEW: Should we change LevelCompletedNode to be 1-indexed?
-            // REVIEW*: https://github.com/phetsims/vegas/issues/73
+            level.number - 1,
             level.scoreProperty.value,
             AreaModelCommonConstants.PERFECT_SCORE,
             AreaModelCommonConstants.NUM_CHALLENGES,
