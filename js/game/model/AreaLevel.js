@@ -29,7 +29,8 @@ define( function( require ) {
   function AreaLevel( number, type, colorProperty, challengeDescriptions ) {
     var self = this;
 
-    // @public {number}
+    // @public {number} - Will be the value 1 for "Level 1". Not using the 0-based values used in VEGAS, so sometimes
+    // this value will need to be decremented when passed to VEGAS components.
     this.number = number;
 
     // @public {AreaChallengeType}
