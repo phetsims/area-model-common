@@ -40,11 +40,8 @@ define( function( require ) {
     var self = this;
 
     // @public {Node|null} - Filled in later, should be non-null outside CalculationLine usage
-    // REVIEW: It is unclear how setting this value later does anything.  Is it added as a child?  When does that happen?
-    // REVIEW: Have you considered passing it as an argument instead of specifying it in the subtype?
-    // REVIEW*: Subtypes rely on methods on the supertype (this) that rely on the below variables being set. Those are
-    // REVIEW*: called for the creation of the node, so it can't be directly rewritten to be a constructor parameter.
-    // REVIEW*: Can you recommend an improvement?
+    // REVIEW: The type of {Node|null} is incorrect, if an arbitrary {Node} is passed in, it will fail.  I think this
+    // REVIEW: code needs to indicate that the Node has a `clean` method as well.
     this.node = null;
 
     // @public {number}
