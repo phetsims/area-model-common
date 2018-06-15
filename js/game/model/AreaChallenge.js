@@ -46,7 +46,7 @@ define( function( require ) {
     this.stateProperty = new Property( GameState.FIRST_ATTEMPT );
 
     // @public {GenericArea} - used in _.property( 'area' )
-    this.area = null;
+    this.area = new GenericArea( description.layout, description.allowExponents );
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
     this.partitionSizes = OrientationPair.create( function( orientation ) {
