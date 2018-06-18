@@ -102,6 +102,9 @@ define( function( require ) {
         function( totalSize, visibleOrientation ) {
           if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
           if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
+
+          // Given the number of digits in the decimals sim (with potential future changes), 1e-7 should be sufficiently
+          // small (but not too small).
           return totalSize >= ( self.partitionSnapSize + self.snapSize ) - 1e-7;
         } );
     } );

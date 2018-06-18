@@ -68,7 +68,9 @@ define( function( require ) {
      * @returns {boolean}
      */
     equals: function( term ) {
-      return Math.abs( this.coefficient - term.coefficient ) < 1e-7 && this.power === term.power;
+      // Handle floating-point error for common cases. Epsilon guessed at what may be most relevant if this is moved
+      // to common code.
+      return Util.equalsEpsilon( this.coefficient, term.coefficient, 1e-7 ) && this.power === term.power;
     },
 
     /**

@@ -149,7 +149,8 @@ define( function( require ) {
         decimalPlaces: decimalPlaces,
         scale: 1.5,
         formatValue: function( value ) {
-          if ( Math.abs( value - Util.roundSymmetric( value ) ) < 1e-6 ) {
+          // Epsilon chosen to avoid round-off errors while not "rounding" any values in the decimals sims improperly.
+          if ( Util.equalsEpsilon( value, Util.roundSymmetric( value ), 1e-6 ) ) {
             return Util.toFixed( value, 0 );
           }
           else {
