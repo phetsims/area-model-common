@@ -32,8 +32,7 @@ define( function( require ) {
     betweenCalculationLines: {
       value: 'is equivalent to '
     },
-    // TODO: Box or Accordion?
-    calculationAccordionTitle: {
+    calculationBoxTitle: {
       value: 'Calculation'
     },
     calculationBoxDescription: {

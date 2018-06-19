@@ -24,7 +24,7 @@ define( function( require ) {
   var calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
 
   // a11y strings
-  var calculationAccordionTitleString = AreaModelCommonA11yStrings.calculationAccordionTitle.value;
+  var calculationBoxTitleString = AreaModelCommonA11yStrings.calculationBoxTitle.value;
   var calculationBoxDescriptionString = AreaModelCommonA11yStrings.calculationBoxDescription.value;
 
   // constants
@@ -64,7 +64,7 @@ define( function( require ) {
 
       // a11y
       labelTagName: 'h3',
-      labelContent: calculationAccordionTitleString,
+      labelContent: calculationBoxTitleString,
       titleBarOptions: {
         descriptionContent: calculationBoxDescriptionString
       }

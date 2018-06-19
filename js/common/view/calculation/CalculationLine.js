@@ -39,9 +39,9 @@ define( function( require ) {
 
     var self = this;
 
-    // @public {Node|null} - Filled in later, should be non-null outside CalculationLine usage
-    // REVIEW: The type of {Node|null} is incorrect, if an arbitrary {Node} is passed in, it will fail.  I think this
-    // REVIEW: code needs to indicate that the Node has a `clean` method as well.
+    // @public {Node|null} - The {Node}, if provided, should have a `node.clean()` method to release references
+    // (usually freeing it to a pool) and a `node.accessibleText` {string} representing the description of the line.
+    // Filled in later, should be non-null outside CalculationLine usage.
     this.node = null;
 
     // @public {number}
