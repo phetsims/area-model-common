@@ -165,30 +165,7 @@ define( function( require ) {
           }
         }
 
-        // So, due to performance, we REALLY don't want to remove and then add these back in. Scenery was burning a
-        // chunk of CPU on some of this, and having the RichTexts not pool has been annoying enough.
-        // REVIEW: would it help if we had a scenery method or option to check children before doing anything?
-        // REVIEW: That is, moving this workaround into scenery/Node?
-        // REVIEW*: The more I think about it, the more I think node.setChildren should be smarter about things.
-        // TODO: Look into setChildren improvements that won't remove and add something back in.
-        // REVIEW*: https://github.com/phetsims/scenery/issues/789
-        // REVIEW: Now that Node.children is optimized, do you need the `needsUpdate` logic here too?
-        var currentChildren = box.children;
-        var needsUpdate = false;
-        if ( currentChildren.length !== children.length ) {
-          needsUpdate = true;
-        }
-        else {
-          for ( var i = 0; i < children.length; i++ ) {
-            if ( currentChildren[ i ] !== children[ i ] ) {
-              needsUpdate = true;
-              break;
-            }
-          }
-        }
-        if ( needsUpdate ) {
-          box.children = children;
-        }
+        box.children = children;
 
         if ( isFinite( box.width ) ) {
           box.center = Vector2.ZERO;
