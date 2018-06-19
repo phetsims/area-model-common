@@ -18,7 +18,7 @@ define( function( require ) {
       value: 'Area equals {{area}}'
     },
     areaGrid: {
-      value: 'Area grid'
+      value: 'Area Grid'
     },
     areaGridRectanglePattern: {
       value: '{{height}} by {{width}} rectangle.'
@@ -43,7 +43,7 @@ define( function( require ) {
       value: 'Count each unit of area'
     },
     countingNumbersLabel: {
-      value: 'Counting numbers'
+      value: 'Counting Numbers'
     },
     countingNumbersPattern: {
       value: 'Area units count to {{count}}.'
