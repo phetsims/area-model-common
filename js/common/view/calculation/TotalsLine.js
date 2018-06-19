@@ -26,7 +26,7 @@ define( function( require ) {
   function TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) {
     var self = this;
 
-    CalculationLine.call( this, 0, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, CalculationLine.TOTALS_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     var totalTexts = area.displayProperties.map( function( orientationTotal, orientation ) {
       return orientationTotal.value ? self.orientedTermText( orientation, orientationTotal.value )

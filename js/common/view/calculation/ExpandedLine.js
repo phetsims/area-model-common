@@ -28,7 +28,7 @@ define( function( require ) {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) {
-    CalculationLine.call( this, 1, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, CalculationLine.EXPANDED_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     var isHorizontalSingle = horizontalTerms.length === 1;
     var isVerticalSingle = verticalTerms.length === 1;

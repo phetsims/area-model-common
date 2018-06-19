@@ -24,7 +24,7 @@ define( function( require ) {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function OrderedLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
-    CalculationLine.call( this, 4, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, CalculationLine.ORDERED_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.finalizeNode( this.sumWithNegativeParens( orderedTermList.terms ) );
   }

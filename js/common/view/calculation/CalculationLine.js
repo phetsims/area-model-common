@@ -305,5 +305,16 @@ define( function( require ) {
       this.baseColorProperty.dispose();
       this.isActiveProperty.dispose();
     }
+  }, {
+    // @public {number} - Calculation line indices. Each individual type of line will have an index value in the order
+    // it would show up in the calculation panel. This index is used to determine what the "active" line is (for the
+    // line-by-line view), so that when updating the calculation it can attempt to stay on the same active line.
+    TOTALS_LINE_INDEX: 0,
+    EXPANDED_LINE_INDEX: 1,
+    DISTRIBUTION_LINE_INDEX: 2,
+    MULTIPLIED_LINE_INDEX: 3,
+    ORDERED_LINE_INDEX: 4,
+    MINUSES_LINE_INDEX: 5,
+    SUM_LINE_INDEX: 6
   } );
 } );

@@ -25,7 +25,7 @@ define( function( require ) {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function MinusesLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
-    CalculationLine.call( this, 5, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, CalculationLine.MINUSES_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.finalizeNode( this.sumOrDifferenceOfTerms( orderedTermList.terms ) );
   }

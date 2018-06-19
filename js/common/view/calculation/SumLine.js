@@ -23,7 +23,7 @@ define( function( require ) {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function SumLine( area, activeIndexProperty, allowExponents, isProportional ) {
-    CalculationLine.call( this, 6, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
+    CalculationLine.call( this, CalculationLine.SUM_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.finalizeNode( this.baseTermText( area.totalAreaProperty.value, false ) );
   }
