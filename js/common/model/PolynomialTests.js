@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
+  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   QUnit.module( 'Polynomial' );
 

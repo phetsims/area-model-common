@@ -17,7 +17,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
+  var Poolable = require( 'PHET_CORE/Poolable' );
   var Property = require( 'AXON/Property' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -115,7 +115,7 @@ define( function( require ) {
     }
   } );
 
-  ExperimentalPoolable.mixInto( Parentheses );
+  Poolable.mixInto( Parentheses );
 
   return Parentheses;
 } );

@@ -12,9 +12,9 @@ define( function( require ) {
 
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var Poolable = require( 'PHET_CORE/Poolable' );
 
   /**
    * @constructor
@@ -72,7 +72,7 @@ define( function( require ) {
     }
   } );
 
-  ExperimentalPoolable.mixInto( CalculationGroup );
+  Poolable.mixInto( CalculationGroup );
 
   return CalculationGroup;
 } );

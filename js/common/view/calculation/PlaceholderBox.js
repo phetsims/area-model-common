@@ -14,7 +14,7 @@ define( function( require ) {
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
+  var Poolable = require( 'PHET_CORE/Poolable' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
@@ -65,7 +65,7 @@ define( function( require ) {
     }
   } );
 
-  ExperimentalPoolable.mixInto( PlaceholderBox );
+  Poolable.mixInto( PlaceholderBox );
 
   return PlaceholderBox;
 } );
