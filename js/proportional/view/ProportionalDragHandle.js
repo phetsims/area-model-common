@@ -150,6 +150,7 @@ define( function( require ) {
     var keyboardListener;
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
       if ( keyboardListener ) {
+        circle.interruptAccessibleInput();
         circle.removeAccessibleInputListener( keyboardListener );
         keyboardListener.dispose();
       }
@@ -176,9 +177,6 @@ define( function( require ) {
       } );
 
       circle.addAccessibleInputListener( keyboardListener );
-
-      // BLOCKED TODO: Interruption of the keyboard listener when things change (when we don't have to recreate),
-      // https://github.com/phetsims/scenery-phet/issues/368
     } );
 
     // Apply offsets while dragging for a smoother experience.
