@@ -12,7 +12,6 @@ define( function( require ) {
 
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  // TODO: Make sure all of these are used
   var AreaModelCommonA11yStrings = {
     areaEqualsPattern: {
       value: 'Area equals {{area}}'
@@ -113,11 +112,11 @@ define( function( require ) {
     productBox: {
       value: 'Product'
     },
-    productTimesPattern: {
-      value: '{{left}} times {{right}}'
-    },
     productBoxDescription: {
       value: 'Show or hide the product.'
+    },
+    productTimesPattern: {
+      value: '{{left}} times {{right}}'
     },
     quantityPattern: {
       value: 'left parenthesis {{content}} right parenthesis'
