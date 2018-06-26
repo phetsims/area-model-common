@@ -26,7 +26,7 @@ define( function( require ) {
   function OrderedLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, CalculationLine.ORDERED_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.finalizeNode( this.sumWithNegativeParens( orderedTermList.terms ) );
+    this.node = this.sumWithNegativeParens( orderedTermList.terms );
   }
 
   areaModelCommon.register( 'OrderedLine', OrderedLine );

@@ -25,7 +25,7 @@ define( function( require ) {
   function SumLine( area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, CalculationLine.SUM_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.finalizeNode( this.baseTermText( area.totalAreaProperty.value, false ) );
+    this.node = this.baseTermText( area.totalAreaProperty.value, false );
   }
 
   areaModelCommon.register( 'SumLine', SumLine );

@@ -27,7 +27,7 @@ define( function( require ) {
   function MinusesLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, CalculationLine.MINUSES_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.finalizeNode( this.sumOrDifferenceOfTerms( orderedTermList.terms ) );
+    this.node = this.sumOrDifferenceOfTerms( orderedTermList.terms );
   }
 
   areaModelCommon.register( 'MinusesLine', MinusesLine );

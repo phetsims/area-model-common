@@ -31,7 +31,7 @@ define( function( require ) {
 
     CalculationLine.call( this, CalculationLine.DISTRIBUTION_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.finalizeNode( this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
+    this.node = this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
       return horizontalTerms.map( function( horizontalTerm ) {
         var horizontalText = self.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
         var verticalText = self.orientedTermText( Orientation.VERTICAL, verticalTerm );
@@ -51,7 +51,7 @@ define( function( require ) {
           return self.parentheses( self.multiplyX( verticalText, horizontalText ) );
         }
       } );
-    } ) ) ) );
+    } ) ) );
   }
 
   areaModelCommon.register( 'DistributionLine', DistributionLine );

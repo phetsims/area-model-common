@@ -159,7 +159,7 @@ define( function( require ) {
     },
 
     /**
-     * Removes children (basically) TODO.
+     * Removes and disposes children.
      * @private
      */
     wipe: function() {

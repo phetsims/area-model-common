@@ -27,7 +27,7 @@ define( function( require ) {
   function MultipliedLine( multipliedTermList, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, CalculationLine.MULTIPLIED_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.finalizeNode( this.sumWithNegativeParens( multipliedTermList.terms ) );
+    this.node = this.sumWithNegativeParens( multipliedTermList.terms );
   }
 
   areaModelCommon.register( 'MultipliedLine', MultipliedLine );

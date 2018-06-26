@@ -89,17 +89,6 @@ define( function( require ) {
 
   return inherit( Object, CalculationLine, {
     /**
-     * Used by a subtype to set the node.
-     * @protected
-     *
-     * @param {Node} node
-     */
-    finalizeNode: function( node ) {
-      this.node = node;
-      // TODO: can we remove this?
-    },
-
-    /**
      * Creates a TermText with the baseColor.
      * @public
      *

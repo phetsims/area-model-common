@@ -25,7 +25,7 @@ define( function( require ) {
   function QuestionMarkLine( area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, CalculationLine.TOTALS_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    this.finalizeNode( this.questionMark() );
+    this.node = this.questionMark();
   }
 
   areaModelCommon.register( 'QuestionMarkLine', QuestionMarkLine );
