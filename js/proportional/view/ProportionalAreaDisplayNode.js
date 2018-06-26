@@ -87,11 +87,11 @@ define( function( require ) {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,
         height: height
-      } ) + ' '; // BLOCKED TODO: Don't require padding like this. https://github.com/phetsims/area-model-common/issues/160
+      } );
       // TODO: handle decimal rounding here?
       countingLabel.innerContent = StringUtils.fillIn( countingNumbersPatternString, {
         count: width * height
-      } ) + ' '; // BLOCKED TODO: Don't require padding like this. https://github.com/phetsims/area-model-common/issues/160
+      } );
     } );
 
     // Background fill
