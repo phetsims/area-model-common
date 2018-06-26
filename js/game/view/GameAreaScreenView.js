@@ -460,7 +460,7 @@ define( function( require ) {
         var level = model.currentLevelProperty.value;
         levelCompleteContainer.children = [
           new LevelCompletedNode(
-            level.number - 1,
+            level.number,
             level.scoreProperty.value,
             AreaModelCommonConstants.PERFECT_SCORE,
             AreaModelCommonConstants.NUM_CHALLENGES,
