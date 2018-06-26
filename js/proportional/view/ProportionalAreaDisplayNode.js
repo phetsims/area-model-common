@@ -32,6 +32,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
+  var Util = require( 'DOT/Util' );
 
   // a11y strings
   var areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
@@ -88,9 +89,8 @@ define( function( require ) {
         width: width,
         height: height
       } );
-      // TODO: handle decimal rounding here?
       countingLabel.innerContent = StringUtils.fillIn( countingNumbersPatternString, {
-        count: width * height
+        count: Util.toFixedNumber( width * height, Util.numberOfDecimalPlaces( width ) + Util.numberOfDecimalPlaces( height ) )
       } );
     } );
 
