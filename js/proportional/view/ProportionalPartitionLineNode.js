@@ -155,7 +155,7 @@ define( function( require ) {
         return ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v;
       }
 
-      // TODO: add accessibleDecimalPlaces (https://github.com/phetsims/sun/issues/368), needs to be mutable
+      // BLOCKED TODO: add accessibleDecimalPlaces (https://github.com/phetsims/sun/issues/368), needs to be mutable
     } );
 
     this.labelTagName = 'label';
