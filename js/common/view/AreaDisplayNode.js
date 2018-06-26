@@ -105,7 +105,7 @@ define( function( require ) {
             size: total.toRichString(),
             size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
             size2: partitions[ 1 ].sizeProperty.value.toRichString( false )
-          } ) + ' '; // BLOCKED TODO: don't require padding like this https://github.com/phetsims/area-model-common/issues/160
+          } );
         }
         else if ( partitions.length === 3 ) {
           partitionLabel.innerContent = StringUtils.fillIn( threePartitionsSplitPatternString, {
@@ -114,7 +114,7 @@ define( function( require ) {
             size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
             size2: partitions[ 1 ].sizeProperty.value.toRichString( false ),
             size3: partitions[ 2 ].sizeProperty.value.toRichString( false )
-          } ) + ' ';
+          } );
         }
         else {
           throw new Error( 'unexpected number of partitions for a11y' );
@@ -155,13 +155,13 @@ define( function( require ) {
             accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductsPatternString, {
               first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false ),
               second: activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false )
-            } ) + ' '; // BLOCKED TODO: don't require padding like this https://github.com/phetsims/area-model-common/issues/160
+            } );
           }
           else {
             // TODO: The "Partitions Set" part should be factored out
             accessiblePartialProductNode.innerContent = StringUtils.fillIn( onePartialProductPatternString, {
               first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false )
-            } ) + ' '; // BLOCKED TODO: don't require padding like this https://github.com/phetsims/area-model-common/issues/160
+            } );
           }
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.FACTORS ) {
@@ -175,7 +175,7 @@ define( function( require ) {
                 left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
                 right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
               } )
-            } ) + ' '; // BLOCKED TODO: don't require padding like this https://github.com/phetsims/area-model-common/issues/160
+            } );
           }
           else {
             accessiblePartialProductNode.innerContent = StringUtils.fillIn( onePartialProductFactorPatternString, {
@@ -183,7 +183,7 @@ define( function( require ) {
                 left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
                 right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
               } )
-            } ) + ' '; // BLOCKED TODO: don't require padding like this https://github.com/phetsims/area-model-common/issues/160
+            } );
           }
         }
         else {

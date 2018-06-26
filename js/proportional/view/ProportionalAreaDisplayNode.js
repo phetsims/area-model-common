@@ -32,6 +32,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
+  var Util = require( 'DOT/Util' );
 
   // a11y strings
   var areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
@@ -87,11 +88,10 @@ define( function( require ) {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,
         height: height
-      } ) + ' '; // BLOCKED TODO: Don't require padding like this. https://github.com/phetsims/area-model-common/issues/160
-      // BLOCKED TODO: handle decimal rounding here?. https://github.com/phetsims/area-model-common/issues/160
+      } );
       countingLabel.innerContent = StringUtils.fillIn( countingNumbersPatternString, {
-        count: width * height
-      } ) + ' '; // BLOCKED TODO: Don't require padding like this. https://github.com/phetsims/area-model-common/issues/160
+        count: Util.toFixedNumber( width * height, Util.numberOfDecimalPlaces( width ) + Util.numberOfDecimalPlaces( height ) )
+      } );
     } );
 
     // Background fill
