@@ -32,17 +32,16 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // a11y strings
-  // TODO: Missing some 'pattern' suffixes here
   var eraseString = AreaModelCommonA11yStrings.erase.value;
   var eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
   var horizontalDimensionCapitalizedString = AreaModelCommonA11yStrings.horizontalDimensionCapitalized.value;
   var onePartialProductFactorPatternString = AreaModelCommonA11yStrings.onePartialProductFactorPattern.value;
   var onePartialProductPatternString = AreaModelCommonA11yStrings.onePartialProductPattern.value;
   var productTimesPatternString = AreaModelCommonA11yStrings.productTimesPattern.value;
-  var threePartitionsSplitString = AreaModelCommonA11yStrings.threePartitionsSplit.value;
+  var threePartitionsSplitPatternString = AreaModelCommonA11yStrings.threePartitionsSplitPattern.value;
   var twoPartialProductFactorsPatternString = AreaModelCommonA11yStrings.twoPartialProductFactorsPattern.value;
   var twoPartialProductsPatternString = AreaModelCommonA11yStrings.twoPartialProductsPattern.value;
-  var twoPartitionsSplitString = AreaModelCommonA11yStrings.twoPartitionsSplit.value;
+  var twoPartitionsSplitPatternString = AreaModelCommonA11yStrings.twoPartitionsSplitPattern.value;
   var verticalDimensionCapitalizedString = AreaModelCommonA11yStrings.verticalDimensionCapitalized.value;
 
   /**
@@ -101,7 +100,7 @@ define( function( require ) {
           partitionLabel.innerContent = '';
         }
         else if ( partitions.length === 2 ) {
-          partitionLabel.innerContent = StringUtils.fillIn( twoPartitionsSplitString, {
+          partitionLabel.innerContent = StringUtils.fillIn( twoPartitionsSplitPatternString, {
             partition: orientation === Orientation.HORIZONTAL ? horizontalDimensionCapitalizedString : verticalDimensionCapitalizedString,
             size: total.toRichString(),
             size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),
@@ -109,7 +108,7 @@ define( function( require ) {
           } ) + ' '; // TODO: Don't require padding like this
         }
         else if ( partitions.length === 3 ) {
-          partitionLabel.innerContent = StringUtils.fillIn( threePartitionsSplitString, {
+          partitionLabel.innerContent = StringUtils.fillIn( threePartitionsSplitPatternString, {
             partition: orientation === Orientation.HORIZONTAL ? horizontalDimensionCapitalizedString : verticalDimensionCapitalizedString,
             size: total.toRichString(),
             size1: partitions[ 0 ].sizeProperty.value.toRichString( false ),

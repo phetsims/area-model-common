@@ -140,7 +140,7 @@ define( function( require ) {
     sumPlus: {
       value: 'plus'
     },
-    threePartitionsSplit: {
+    threePartitionsSplitPattern: {
       value: '{{partition}} of {{size}} split into {{size1}}, {{size2}} and {{size3}}.'
     },
     twoPartialProductFactorsPattern: {
@@ -149,7 +149,7 @@ define( function( require ) {
     twoPartialProductsPattern: {
       value: 'There are two partitions. Partial products are {{first}} and {{second}}.'
     },
-    twoPartitionsSplit: {
+    twoPartitionsSplitPattern: {
       value: '{{partition}} of {{size}} split into {{size1}} and {{size2}}.'
     },
     verticalDimensionCapitalized: {
