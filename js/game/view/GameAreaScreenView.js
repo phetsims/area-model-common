@@ -427,6 +427,8 @@ define( function( require ) {
       } );
     } );
 
+    var levelCompletedNode = null;
+
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
@@ -458,21 +460,25 @@ define( function( require ) {
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
         var level = model.currentLevelProperty.value;
+
+        levelCompletedNode && levelCompletedNode.dispose();
+        levelCompletedNode = new LevelCompletedNode(
+          level.number - 1,
+          level.scoreProperty.value,
+          AreaModelCommonConstants.PERFECT_SCORE,
+          AreaModelCommonConstants.NUM_CHALLENGES,
+          false, 0, 0, 0,
+          function() {
+            model.moveToLevelSelection();
+          }, {
+            cornerRadius: 8,
+            center: self.layoutBounds.center,
+            fill: level.colorProperty,
+            contentMaxWidth: 400
+          } );
+
         levelCompleteContainer.children = [
-          new LevelCompletedNode(
-            level.number,
-            level.scoreProperty.value,
-            AreaModelCommonConstants.PERFECT_SCORE,
-            AreaModelCommonConstants.NUM_CHALLENGES,
-            false, 0, 0, 0,
-            function() {
-              model.moveToLevelSelection();
-            }, {
-              cornerRadius: 8,
-              center: self.layoutBounds.center,
-              fill: level.colorProperty,
-              contentMaxWidth: 400
-            } )
+          levelCompletedNode
         ];
 
         if ( level.scoreProperty.value === AreaModelCommonConstants.PERFECT_SCORE ) {
