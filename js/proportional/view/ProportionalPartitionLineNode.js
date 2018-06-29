@@ -154,8 +154,6 @@ define( function( require ) {
         // Reverse the negation above for readouts
         return ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v;
       }
-
-      // BLOCKED TODO: add accessibleDecimalPlaces (https://github.com/phetsims/sun/issues/368), needs to be mutable
     } );
 
     this.labelTagName = 'label';
