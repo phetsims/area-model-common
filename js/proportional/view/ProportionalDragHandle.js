@@ -156,7 +156,6 @@ define( function( require ) {
         circle.removeAccessibleInputListener( keyboardListener );
         keyboardListener.dispose();
       }
-      // BLOCKED TODO: Shouldn't have to recreate these. https://github.com/phetsims/scenery-phet/issues/367
       keyboardListener = new KeyboardDragListener( {
         downDelta: modelViewTransform.modelToViewDeltaX( 1 ),
         shiftDownDelta: modelViewTransform.modelToViewDeltaX( 1 ),
