@@ -91,8 +91,6 @@ define( function( require ) {
         areaDisplay.partitionsProperties.get( orientation ),
         areaDisplay.totalProperties.get( orientation )
       ], function( partitions, total ) {
-        // TODO: How are we notifying here?
-        // TODO: Pass something like visiblePartitions through the AreaDisplay, so we don't have this complexity here
         partitions = partitions.filter( function( partition ) {
           return partition.sizeProperty.value !== null && partition.visibleProperty.value === true;
         } );
@@ -134,7 +132,6 @@ define( function( require ) {
       if ( accessiblePartialMultilink ) {
         accessiblePartialMultilink.dispose();
       }
-      // TODO: for performance, can we delay the update of this until the frame?
       var properties = [
         partialProductsChoiceProperty
       ].concat( partitionedAreas.map( function( partitionedArea ) { return partitionedArea.areaProperty; } ) )
@@ -143,53 +140,44 @@ define( function( require ) {
         var activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( function( partitionedArea ) {
           return partitionedArea.visibleProperty.value && partitionedArea.areaProperty.value !== null;
         } );
-        // TODO: A lot of refactoring clean up here
-        if ( activePartitionedAreas.length > 2 || activePartitionedAreas.length === 0 ) {
-          accessiblePartialProductNode.innerContent = '';
-        }
-        else if ( partialProductsChoiceProperty.value === PartialProductsChoice.HIDDEN ) {
+        var fillObject = {};
+        var fillString;
+        if ( activePartitionedAreas.length > 2 ||
+             activePartitionedAreas.length === 0 ||
+             partialProductsChoiceProperty.value === PartialProductsChoice.HIDDEN ) {
           accessiblePartialProductNode.innerContent = '';
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.PRODUCTS ) {
+          fillString = onePartialProductPatternString;
+          fillObject.first = activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false );
+
           if ( activePartitionedAreas.length === 2 ) {
-            accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductsPatternString, {
-              first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false ),
-              second: activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false )
-            } );
+            fillString = twoPartialProductsPatternString;
+            fillObject.second = activePartitionedAreas[ 1 ].areaProperty.value.toRichString( false );
           }
-          else {
-            // TODO: The "Partitions Set" part should be factored out
-            accessiblePartialProductNode.innerContent = StringUtils.fillIn( onePartialProductPatternString, {
-              first: activePartitionedAreas[ 0 ].areaProperty.value.toRichString( false )
-            } );
-          }
+
+          accessiblePartialProductNode.innerContent = StringUtils.fillIn( fillString, fillObject );
         }
         else if ( partialProductsChoiceProperty.value === PartialProductsChoice.FACTORS ) {
+          fillString = onePartialProductFactorPatternString;
+          fillObject.first = StringUtils.fillIn( productTimesPatternString, {
+            left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+            right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
+          } );
+
           if ( activePartitionedAreas.length === 2 ) {
-            accessiblePartialProductNode.innerContent = StringUtils.fillIn( twoPartialProductFactorsPatternString, {
-              first: StringUtils.fillIn( productTimesPatternString, {
-                left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
-                right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
-              } ),
-              second: StringUtils.fillIn( productTimesPatternString, {
-                left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
-                right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
-              } )
+            fillString = twoPartialProductFactorsPatternString;
+            fillObject.second = StringUtils.fillIn( productTimesPatternString, {
+              left: activePartitionedAreas[ 1 ].partitions.vertical.sizeProperty.value.toRichString( false ),
+              right: activePartitionedAreas[ 1 ].partitions.horizontal.sizeProperty.value.toRichString( false )
             } );
           }
-          else {
-            accessiblePartialProductNode.innerContent = StringUtils.fillIn( onePartialProductFactorPatternString, {
-              first: StringUtils.fillIn( productTimesPatternString, {
-                left: activePartitionedAreas[ 0 ].partitions.vertical.sizeProperty.value.toRichString( false ),
-                right: activePartitionedAreas[ 0 ].partitions.horizontal.sizeProperty.value.toRichString( false )
-              } )
-            } );
-          }
+
+          accessiblePartialProductNode.innerContent = StringUtils.fillIn( fillString, fillObject );
         }
         else {
           throw new Error( 'unknown situation for a11y partial products' );
         }
-        // TODO: handle more generally
       } );
     } );
     this.accessibleParagraphNode.addChild( accessiblePartialProductNode );
