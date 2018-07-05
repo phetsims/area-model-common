@@ -138,7 +138,10 @@ define( function( require ) {
         .concat( partitionedAreas.map( function( partitionedArea ) { return partitionedArea.visibleProperty; } ) );
       accessiblePartialMultilink = Property.multilink( properties, function() {
         var activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( function( partitionedArea ) {
-          return partitionedArea.visibleProperty.value && partitionedArea.areaProperty.value !== null;
+          return partitionedArea.visibleProperty.value &&
+                 partitionedArea.areaProperty.value !== null &&
+                 partitionedArea.partitions.vertical.sizeProperty.value !== null &&
+                 partitionedArea.partitions.horizontal.sizeProperty.value !== null;
         } );
         var fillObject = {};
         var fillString;
