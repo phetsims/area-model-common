@@ -181,7 +181,7 @@ define( function( require ) {
       } ),
       numberOfChallengesProperty: new NumberProperty( AreaModelCommonConstants.NUM_CHALLENGES ),
       levelProperty: new DerivedProperty( [ lastLevelProperty ], function( level ) {
-        return level ? level.number - 1 : 0;
+        return level ? level.number : 1;
       } ),
       scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
