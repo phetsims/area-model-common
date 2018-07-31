@@ -463,7 +463,7 @@ define( function( require ) {
 
         levelCompletedNode && levelCompletedNode.dispose();
         levelCompletedNode = new LevelCompletedNode(
-          level.number - 1,
+          level.number,
           level.scoreProperty.value,
           AreaModelCommonConstants.PERFECT_SCORE,
           AreaModelCommonConstants.NUM_CHALLENGES,
