@@ -19,7 +19,7 @@ define( function( require ) {
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var Checkbox = require( 'SUN/Checkbox' );
-  var ControlPanelNode = require( 'SCENERY_PHET/accessibility/nodes/ControlPanelNode' );
+  var ControlAreaNode = require( 'SCENERY_PHET/accessibility/nodes/ControlAreaNode' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -140,7 +140,7 @@ define( function( require ) {
     } ) );
 
     // "Control Panel" (a11y)
-    this.addChild( new ControlPanelNode( {
+    this.addChild( new ControlAreaNode( {
       accessibleOrder: [
         gridCheckbox,
         tileCheckbox,
