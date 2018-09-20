@@ -137,7 +137,7 @@ define( function( require ) {
     // @protected {Node} (a11y) - Exposed for a11y order
     this.factorsBox = new AreaModelCommonAccordionBox(
       config.useSimplifiedNames ? factorsString : dimensionsString,
-      model.factorsBoxExpanded,
+      model.factorsBoxExpandedProperty,
       factorsBoxContent,
       {
         // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
@@ -164,7 +164,7 @@ define( function( require ) {
     // @protected {Node} (a11y)
     this.areaBox = new AreaModelCommonAccordionBox(
       config.useSimplifiedNames ? productString : totalAreaOfModelString,
-      model.areaBoxExpanded,
+      model.areaBoxExpandedProperty,
       areaBoxContent, {
         // a11y
         labelTagName: 'h3',

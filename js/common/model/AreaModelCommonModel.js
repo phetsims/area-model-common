@@ -64,10 +64,10 @@ define( function( require ) {
     this.areaDisplay = this.createAreaDisplay( this.currentAreaProperty );
 
     // @public {Property.<boolean>}
-    this.factorsBoxExpanded = new BooleanProperty( true );
+    this.factorsBoxExpandedProperty = new BooleanProperty( true );
 
     // @public {Property.<boolean>}
-    this.areaBoxExpanded = new BooleanProperty( options.initialAreaBoxExpanded );
+    this.areaBoxExpandedProperty = new BooleanProperty( options.initialAreaBoxExpanded );
 
     // @public {Property.<AreaCalculationChoice}
     this.areaCalculationChoiceProperty = new Property( options.initialAreaCalculationChoice, {
@@ -113,8 +113,8 @@ define( function( require ) {
      */
     reset: function() {
       this.currentAreaProperty.reset();
-      this.factorsBoxExpanded.reset();
-      this.areaBoxExpanded.reset();
+      this.factorsBoxExpandedProperty.reset();
+      this.areaBoxExpandedProperty.reset();
       this.areaCalculationChoiceProperty.reset();
       this.partialProductsChoiceProperty.reset();
 
