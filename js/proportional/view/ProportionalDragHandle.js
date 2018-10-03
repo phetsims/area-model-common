@@ -113,13 +113,14 @@ define( function( require ) {
     var dragListener = new DragListener( {
       targetNode: this,
       applyOffset: false,
-      isPressedProperty: draggedProperty,
       start: function( event, listener ) {
         initialOffset = listener.localPoint.minusScalar( CIRCLE_DRAG_OFFSET );
         updateOffsetProperty( event, listener );
       },
       drag: updateOffsetProperty
     } );
+    dragListener.isPressedProperty.link( draggedProperty.set.bind( draggedProperty ) );
+
     // Interrupt the drag when one of our parameters changes
     areaProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
     modelViewTransformProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
