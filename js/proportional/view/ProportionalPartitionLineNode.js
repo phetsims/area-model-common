@@ -192,7 +192,6 @@ define( function( require ) {
       }
       dragHandler = new DragListener( {
         transform: modelViewTransform,
-        isUserControlledProperty: areaDisplay.partitionSplitUserControlledProperties.get( orientation ),
         drag: function( event, listener ) {
           var value = listener.modelPoint[ orientation.coordinate ];
 
@@ -215,6 +214,9 @@ define( function( require ) {
             partitionSplitProperty.value = 0;
           }
         }
+      } );
+      dragHandler.isUserControlledProperty.link( function( controlled ) {
+        areaDisplay.partitionSplitUserControlledProperties.get( orientation ).value = controlled;
       } );
       self.addInputListener( dragHandler );
     } );
