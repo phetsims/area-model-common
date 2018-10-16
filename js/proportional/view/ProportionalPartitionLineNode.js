@@ -153,7 +153,8 @@ define( function( require ) {
       accessibleMapValue: function( v ) {
         // Reverse the negation above for readouts
         return ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v;
-      }
+      },
+      roundToStepSize: true
     } );
 
     this.labelTagName = 'label';
