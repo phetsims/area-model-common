@@ -16,9 +16,6 @@ define( function( require ) {
     // When provided, generic screens will have terms set to make the calculation area as large as possible, for debugging
     maximumCalculationSize: { type: 'flag' },
 
-    // Shows a button that fills in the answers when clicked.
-    showAnswers: { type: 'flag' },
-
     // If set, uses constructed English strings instead of MathML for the accessible parallel DOM.
     rawMath: { type: 'flag' }
   } );

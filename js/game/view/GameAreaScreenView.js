@@ -16,7 +16,6 @@ define( function( require ) {
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
-  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var Easing = require( 'TWIXT/Easing' );
@@ -378,8 +377,9 @@ define( function( require ) {
       model.showAnswer();
     } );
 
-    // Cheat button, see https://github.com/phetsims/area-model-common/issues/116
-    if ( AreaModelCommonQueryParameters.showAnswers ) {
+    // Cheat button, see https://github.com/phetsims/area-model-common/issues/116 and
+    // https://github.com/phetsims/area-model-common/issues/163
+    if ( phet.chipper.queryParameters.showAnswers ) {
       var cheatButton = new RectangularPushButton( {
         content: new FaceNode( 40 ),
         top: showAnswerButton.bottom + 10,
