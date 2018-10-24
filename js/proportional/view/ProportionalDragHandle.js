@@ -158,8 +158,8 @@ define( function( require ) {
         keyboardListener.dispose();
       }
       keyboardListener = new KeyboardDragListener( {
-        downDelta: modelViewTransform.modelToViewDeltaX( 1 ),
-        shiftDownDelta: modelViewTransform.modelToViewDeltaX( 1 ),
+        downDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
+        shiftDownDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
         transform: modelViewTransform,
         drag: function( delta ) {
           var width = activeTotalProperties.horizontal.value;
@@ -168,8 +168,8 @@ define( function( require ) {
           width += delta.x;
           height += delta.y;
 
-          width = Util.roundSymmetric( Util.clamp( width, area.minimumSize, area.maximumSize ) );
-          height = Util.roundSymmetric( Util.clamp( height, area.minimumSize, area.maximumSize ) );
+          width = Util.roundToInterval( Util.clamp( width, area.minimumSize, area.maximumSize ), area.snapSize );
+          height = Util.roundToInterval( Util.clamp( height, area.minimumSize, area.maximumSize ), area.snapSize );
 
           activeTotalProperties.horizontal.value = width;
           activeTotalProperties.vertical.value = height;
