@@ -26,7 +26,6 @@ define( function( require ) {
 
   // constants
   var MAX_LINE_WIDTH = 680; // may need to be updated if the panel size is changed.
-  var LINE_BY_LINE_EXPANSION = 25;
   var ARROW_SIZE = 18;
   var ARROW_TOUCH_DILATION = 8;
 
@@ -120,13 +119,12 @@ define( function( require ) {
         return;
       }
 
-      var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
       var maxLineWidth = _.reduce( self.calculationLinesNode.calculationLinesProperty.value, function( max, line ) {
         return Math.max( max, line.node.width );
       }, 0 );
 
       // If we are LINE_BY_LINE, we won't have as much room because of the buttons
-      var availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
+      var availableLineWidth = MAX_LINE_WIDTH;
 
       // Scale the calculation down if necessary, so we can fit within our MAX_LINE_WIDTH
       self.calculationLinesNode.setScaleMagnitude( maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1 );
@@ -143,11 +141,6 @@ define( function( require ) {
 
       // Add some space around the lines
       backgroundBounds = backgroundBounds.dilated( 5 );
-
-      // Add some space for the next/previous buttons
-      if ( isLineByLine ) {
-        backgroundBounds.maxX += LINE_BY_LINE_EXPANSION;
-      }
 
       // Minimum width of the area size
       if ( backgroundBounds.width < AreaModelCommonConstants.AREA_SIZE ) {
