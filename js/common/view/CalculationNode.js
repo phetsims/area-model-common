@@ -159,6 +159,16 @@ define( function( require ) {
         backgroundBounds = backgroundBounds.dilatedY( ( 120 - backgroundBounds.height ) / 2 );
       }
 
+      // If we support decimals, use a slightly larger minimum.
+      // See https://github.com/phetsims/area-model-decimals/issues/6
+      var decimalsLineByLineWidth = AreaModelCommonConstants.AREA_SIZE + 40;
+      if ( isLineByLine &&
+           model.currentAreaProperty.value.partitionSnapSize &&
+           model.currentAreaProperty.value.partitionSnapSize < 1 &&
+           backgroundBounds.width < decimalsLineByLineWidth ) {
+        backgroundBounds = backgroundBounds.dilatedX( ( decimalsLineByLineWidth - backgroundBounds.width ) / 2 );
+      }
+
       background.rectBounds = backgroundBounds;
       previousArrow.rightTop = backgroundBounds.eroded( 5 ).rightTop;
       nextArrow.rightBottom = backgroundBounds.eroded( 5 ).rightBottom;
