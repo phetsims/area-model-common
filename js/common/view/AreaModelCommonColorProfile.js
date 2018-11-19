@@ -17,7 +17,7 @@ define( function( require ) {
 
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)
-  var AreaModelCommonColorProfile = new ColorProfile( {
+  var AreaModelCommonColorProfile = new ColorProfile( [ 'default' ], {
     /*---------------------------------------------------------------------------*
     * Common colors
     *----------------------------------------------------------------------------*/
@@ -148,7 +148,7 @@ define( function( require ) {
 
     startOverButtonBaseColor: { default: PhetColorScheme.BUTTON_YELLOW }
 
-  }, [ 'default' ] );
+  } );
 
   areaModelCommon.register( 'AreaModelCommonColorProfile', AreaModelCommonColorProfile );
 
