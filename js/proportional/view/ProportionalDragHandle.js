@@ -153,8 +153,8 @@ define( function( require ) {
     var keyboardListener;
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
       if ( keyboardListener ) {
-        circle.interruptAccessibleInput();
-        circle.removeAccessibleInputListener( keyboardListener );
+        circle.interruptInput();
+        circle.removeInputListener( keyboardListener );
         keyboardListener.dispose();
       }
       keyboardListener = new KeyboardDragListener( {
@@ -178,7 +178,7 @@ define( function( require ) {
         moveOnHoldInterval: 70
       } );
 
-      circle.addAccessibleInputListener( keyboardListener );
+      circle.addInputListener( keyboardListener );
     } );
 
     // Apply offsets while dragging for a smoother experience.
