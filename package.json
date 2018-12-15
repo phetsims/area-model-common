@@ -17,5 +17,8 @@
       "vegas",
       "vibe"
     ]
+  },
+  "eslintConfig": {
+    "extends": "../chipper/eslint/.eslintrc.js"
   }
 }
