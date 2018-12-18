@@ -102,13 +102,6 @@ define( function( require ) {
     this.areaLayer.addChild( gridLinesNode );
     options.gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
-    // Active area drag handle
-    this.areaLayer.addChild( new ProportionalDragHandle(
-      areaDisplay.areaProperty,
-      areaDisplay.activeTotalProperties,
-      this.modelViewTransformProperty
-    ) );
-
     // Active area background
     var activeAreaBackground = new Rectangle( {
       fill: options.useTileLikeBackground
@@ -140,6 +133,13 @@ define( function( require ) {
 
     // Background stroke
     this.areaLayer.addChild( this.borderNode );
+
+    // Active area drag handle
+    this.areaLayer.addChild( new ProportionalDragHandle(
+      areaDisplay.areaProperty,
+      areaDisplay.activeTotalProperties,
+      this.modelViewTransformProperty
+    ) );
 
     var countingVisibleProperty = new DerivedProperty(
       [ areaDisplay.countingAvailableProperty, options.countingVisibleProperty ],
