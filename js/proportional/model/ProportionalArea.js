@@ -186,7 +186,7 @@ define( function( require ) {
      * Returns a string like 10x10 that can be used for the size.
      * @public
      *
-     * @return {string}
+     * @returns {string}
      */
     getDimensionString: function() {
       return this.maximumSize + 'x' + this.maximumSize;
