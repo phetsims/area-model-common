@@ -240,7 +240,6 @@ define( function( require ) {
       listener: function() {
         model.reset();
       },
-      touchAreaDilation: 10,
       right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,
       bottom: this.layoutBounds.bottom - AreaModelCommonConstants.LAYOUT_SPACING
     } );
