@@ -41,6 +41,7 @@ define( function( require ) {
   var verticalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.verticalPartitionHandleDescription.value;
 
   /**
+   * @mixes AccessibleSlider
    * @constructor
    * @extends {Node}
    *
