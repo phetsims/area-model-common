@@ -166,7 +166,9 @@ define( function( require ) {
         throw new Error( 'unknown digit: ' + keyIdentifier );
       }
 
-      this.validateAndUpdate( ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] ) );
+      // Validate and update the keys
+      var proposedKeys = ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] );
+      this.validateKeys( proposedKeys ) && this.updateKeys( proposedKeys );
     },
 
     /**
