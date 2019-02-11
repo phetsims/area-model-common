@@ -31,10 +31,37 @@ define( function( require ) {
    * @param {Property.<number>} digitCountProperty
    */
   function TermAccumulator( digitCountProperty ) {
+
     // @private {Property.<number>}
     this.digitCountProperty = digitCountProperty;
 
-    AbstractKeyAccumulator.call( this );
+    /**
+     * Whether a set of proposed keys is allowed, see https://github.com/phetsims/area-model-common/issues/138
+     * @public
+     * @override
+     *
+     * @param {Array.<KeyID>} proposedKeys
+     * @returns {boolean}
+     */
+    this.defaultValidator = function( proposedKeys ) {
+      var xCount = 0;
+      var digitCount = 0;
+
+
+      proposedKeys.forEach( function( key ) {
+        if ( key === KeyID.X || key === KeyID.X_SQUARED ) {
+          xCount++;
+        }
+
+        if ( _.includes( DIGIT_STRINGS, key ) ) {
+          digitCount++;
+        }
+      } );
+
+      return xCount <= 1 && digitCount <= this.digitCountProperty.value;
+    };
+
+    AbstractKeyAccumulator.call( this, this.defaultValidator );
 
     // @public {Property.<string>} - For display
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
@@ -169,31 +196,6 @@ define( function( require ) {
       // Validate and update the keys
       var proposedKeys = ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] );
       this.validateKeys( proposedKeys ) && this.updateKeys( proposedKeys );
-    },
-
-    /**
-     * Whether a set of proposed keys is allowed, see https://github.com/phetsims/area-model-common/issues/138
-     * @public
-     * @override
-     *
-     * @param {Array.<KeyID>} proposedKeys
-     * @returns {boolean}
-     */
-    defaultValidator: function( proposedKeys ) {
-      var xCount = 0;
-      var digitCount = 0;
-
-      proposedKeys.forEach( function( key ) {
-        if ( key === KeyID.X || key === KeyID.X_SQUARED ) {
-          xCount++;
-        }
-
-        if ( _.includes( DIGIT_STRINGS, key ) ) {
-          digitCount++;
-        }
-      } );
-
-      return xCount <= 1 && digitCount <= this.digitCountProperty.value;
     }
   } );
 } );
