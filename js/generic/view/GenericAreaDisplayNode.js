@@ -137,8 +137,8 @@ define( function( require ) {
      * @param {Property.<boolean>} visibilityProperty
      */
     createPartitionLine: function( orientation, offset, viewSize, visibilityProperty ) {
-      var firstPoint = new Vector2();
-      var secondPoint = new Vector2();
+      var firstPoint = new Vector2( 0, 0 );
+      var secondPoint = new Vector2( 0, 0 );
 
       firstPoint[ orientation.coordinate ] = offset;
       secondPoint[ orientation.coordinate ] = offset;

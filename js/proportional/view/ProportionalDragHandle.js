@@ -55,7 +55,7 @@ define( function( require ) {
 
     // {Property.<Vector2>} - The current view "offset" from where the pointer is compared to the point it is
     // controlling
-    var offsetProperty = new Property( new Vector2() );
+    var offsetProperty = new Property( new Vector2( 0, 0 ) );
 
     var line = new Line( {
       stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
@@ -133,7 +133,7 @@ define( function( require ) {
       ]
     } );
 
-    var locationProperty = new Property( new Vector2() );
+    var locationProperty = new Property( new Vector2( 0, 0 ) );
 
     function updateLocationProperty() {
       locationProperty.value = new Vector2(

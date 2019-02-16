@@ -80,8 +80,8 @@ define( function( require ) {
       // Expand bounds a bit, to allow room for the line-handle icon part (so we have even padding)
       background.localBounds = background.localBounds.dilated( 7 );
 
-      var p1 = new Vector2();
-      var p2 = new Vector2();
+      var p1 = new Vector2( 0, 0 );
+      var p2 = new Vector2( 0, 0 );
       p1[ orientation.coordinate ] = sizes.get( orientation ) * 2 / 3;
       p2[ orientation.coordinate ] = sizes.get( orientation ) * 2 / 3;
       p2[ orientation.opposite.coordinate ] = sizes.get( orientation.opposite ) * 1.1;

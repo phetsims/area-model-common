@@ -90,7 +90,7 @@ define( function( require ) {
      * @returns {Vector2}
      */
     toVector: function( primary, secondary ) {
-      var vector = new Vector2();
+      var vector = new Vector2( 0, 0 );
       vector[ this.coordinate ] = primary;
       vector[ this.opposite.coordinate ] = secondary;
       return vector;

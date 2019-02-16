@@ -20,7 +20,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var scratchVector = new Vector2(); // Created so we can minimize object creation and garbage collection
+  var scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
 
   /**
    * @constructor
