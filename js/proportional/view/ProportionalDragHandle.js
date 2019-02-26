@@ -19,7 +19,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var DragListener = require( 'SCENERY/listeners/DragListener' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var KeyboardDragListener = require( 'SCENERY_PHET/accessibility/listeners/KeyboardDragListener' );
+  var KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
