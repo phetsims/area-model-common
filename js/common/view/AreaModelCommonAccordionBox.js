@@ -40,13 +40,15 @@ define( function( require ) {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
       stroke: AreaModelCommonColorProfile.panelBorderProperty,
-      buttonTouchAreaXDilation: 5,
-      buttonTouchAreaYDilation: 5,
       titleAlignX: 'left',
       titleXSpacing: 8,
-      buttonLength: 20,
       buttonXMargin: 10,
-      buttonYMargin: 8
+      buttonYMargin: 8,
+      expandCollapseButtonOptions: {
+        sideLength: 20,
+        touchAreaXDilation: 5,
+        touchAreaYDilation: 5
+      }
     }, options );
 
     AccordionBox.call( this, content, options );
