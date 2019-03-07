@@ -28,6 +28,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   // a11y strings
   var dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
@@ -53,9 +54,8 @@ define( function( require ) {
     // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
     var draggedProperty = new BooleanProperty( false );
 
-    // {Property.<Vector2>} - The current view "offset" from where the pointer is compared to the point it is
-    // controlling
-    var offsetProperty = new Property( new Vector2( 0, 0 ) );
+    // The current view "offset" from where the pointer is compared to the point it is controlling
+    var offsetProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     var line = new Line( {
       stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
