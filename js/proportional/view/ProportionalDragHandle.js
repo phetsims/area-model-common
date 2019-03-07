@@ -133,7 +133,7 @@ define( function( require ) {
       ]
     } );
 
-    var locationProperty = new Property( new Vector2( 0, 0 ) );
+    var locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     function updateLocationProperty() {
       locationProperty.value = new Vector2(
