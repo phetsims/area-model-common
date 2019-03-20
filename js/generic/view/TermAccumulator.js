@@ -32,9 +32,6 @@ define( function( require ) {
    */
   function TermAccumulator( digitCountProperty ) {
 
-    // @private {Property.<number>}
-    this.digitCountProperty = digitCountProperty;
-
     /**
      * Whether a set of proposed keys is allowed, see https://github.com/phetsims/area-model-common/issues/138
      * @public
@@ -58,10 +55,13 @@ define( function( require ) {
         }
       } );
 
-      return xCount <= 1 && digitCount <= this.digitCountProperty.value;
+      return xCount <= 1 && digitCount <= digitCountProperty.value;
     };
 
-    AbstractKeyAccumulator.call( this, this.defaultValidator );
+    // Validators to be passed to AbstractKeyAccumulator
+    var validators = [ this.defaultValidator ];
+
+    AbstractKeyAccumulator.call( this, validators );
 
     // @public {Property.<string>} - For display
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
