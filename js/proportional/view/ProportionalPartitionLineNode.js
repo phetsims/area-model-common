@@ -151,7 +151,7 @@ define( function( require ) {
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
       ariaOrientation: orientation.layoutBoxOrientation,
-      accessibleMapValue: function( v ) {
+      a11yMapValue: function( v ) {
         // Reverse the negation above for readouts
         return ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v;
       },
