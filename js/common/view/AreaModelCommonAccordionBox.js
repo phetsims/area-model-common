@@ -31,7 +31,7 @@ define( function( require ) {
     options = _.extend( {
       titleNode: new Text( titleString, {
         font: AreaModelCommonConstants.TITLE_FONT,
-        maxWidth: 200
+        maxWidth: options.maxTitleWidth || 200
       } ),
       expandedProperty: expandedProperty,
       contentXMargin: 15,

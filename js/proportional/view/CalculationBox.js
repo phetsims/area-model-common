@@ -59,6 +59,9 @@ define( function( require ) {
       contentXMargin: MARGIN,
       contentYMargin: MARGIN,
 
+      // Different spacing
+      maxTitleWidth: 290,
+
       // We don't have room for the normal spacing, so we need to make things closer together than they normally are.
       contentXSpacing: -10,
 
