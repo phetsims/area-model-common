@@ -74,6 +74,12 @@ define( function( require ) {
       focusable: true
     } );
 
+    // Potential workaround for https://github.com/phetsims/area-model-common/issues/173 (Safari SVG dirty region issue)
+    circle.addChild( new Circle( DRAG_RADIUS + 10, {
+      pickable: false,
+      fill: 'transparent'
+    } ) );
+
     areaProperty.link( function( area ) {
       circle.descriptionContent = StringUtils.fillIn( dragHandleDescriptionPatternString, {
         width: area.maximumSize,
