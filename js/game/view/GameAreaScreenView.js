@@ -11,6 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var AlignBox = require( 'SCENERY/nodes/AlignBox' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
@@ -58,6 +59,7 @@ define( function( require ) {
 
   // strings
   var checkString = require( 'string!VEGAS/check' );
+  var chooseYourLevelString = require( 'string!VEGAS/chooseYourLevel' );
   var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
   var nextString = require( 'string!VEGAS/next' );
   var showAnswerString = require( 'string!VEGAS/showAnswer' );
@@ -159,6 +161,12 @@ define( function( require ) {
       } ),
       spacing: buttonSpacing,
       center: this.layoutBounds.center
+    } ) );
+
+    this.levelSelectionLayer.addChild( new Text( chooseYourLevelString, {
+      centerX: this.layoutBounds.centerX,
+      top: this.layoutBounds.top + 30,
+      font: new PhetFont( 30 )
     } ) );
 
     // Status bar
