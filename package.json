@@ -14,8 +14,7 @@
     "requirejsNamespace": "AREA_MODEL_COMMON",
     "phetLibs": [
       "twixt",
-      "vegas",
-      "vibe"
+      "vegas"
     ]
   },
   "eslintConfig": {
