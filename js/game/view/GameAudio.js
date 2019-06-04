@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var GameAudioPlayerOld = require( 'VEGAS/GameAudioPlayerOld' );
+  var GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
   var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   var inherit = require( 'PHET_CORE/inherit' );
 
@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {GameAreaModel} model
    */
   function GameAudio( model ) {
-    var audioPlayer = new GameAudioPlayerOld( model.soundEnabledProperty );
+    var audioPlayer = new GameAudioPlayer();
 
     model.stateProperty.link( function( state, oldState ) {
       // If we just moved to/from level section (outside of a level), don't fire sounds.
