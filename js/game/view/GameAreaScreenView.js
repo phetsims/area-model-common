@@ -165,7 +165,7 @@ define( function( require ) {
 
     this.levelSelectionLayer.addChild( new Text( chooseYourLevelString, {
       centerX: this.layoutBounds.centerX,
-      top: this.layoutBounds.top + 30,
+      centerY: ( this.layoutBounds.top + this.levelSelectionLayer.top ) / 2,
       font: new PhetFont( 30 )
     } ) );
 
