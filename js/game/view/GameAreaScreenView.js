@@ -50,7 +50,6 @@ define( function( require ) {
   var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
   var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var SoundToggleButton = require( 'SCENERY_PHET/buttons/SoundToggleButton' );
   var StarNode = require( 'SCENERY_PHET/StarNode' );
   var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -234,14 +233,6 @@ define( function( require ) {
         promptText.left = Math.max( promptText.left, self.layoutBounds.left + 20 );
       }
     } );
-
-    // "Spimd tpgg;e" was apparently what I typed. "Sound toggle" is probably more accurate.
-    this.levelSelectionLayer.addChild( new SoundToggleButton( model.soundEnabledProperty, {
-      touchAreaXDilation: 10,
-      touchAreaYDilation: 10,
-      x: 20,
-      bottom: this.layoutBounds.height - 20
-    } ) );
 
     // Reset All button
     var resetAllButton = new ResetAllButton( {

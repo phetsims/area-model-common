@@ -11,7 +11,6 @@ define( function( require ) {
   // modules
   var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
   var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
   var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
@@ -33,9 +32,6 @@ define( function( require ) {
 
     // @public {boolean}
     this.hasExponents = hasExponents;
-
-    // @public {BooleanProperty} - Whether sounds will occur on completion of game actions.
-    this.soundEnabledProperty = new BooleanProperty( true );
 
     // @public {Property.<AreaLevel|null>} - The current level
     this.currentLevelProperty = new Property( null, {
@@ -176,7 +172,6 @@ define( function( require ) {
      */
     reset: function() {
       this.activeEntryProperty.reset();
-      this.soundEnabledProperty.reset();
       this.currentLevelProperty.reset();
       this.levels.forEach( function( level ) {
         level.reset();

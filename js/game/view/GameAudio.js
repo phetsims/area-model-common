@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {GameAreaModel} model
    */
   function GameAudio( model ) {
-    var audioPlayer = new GameAudioPlayer( model.soundEnabledProperty );
+    var audioPlayer = new GameAudioPlayer();
 
     model.stateProperty.link( function( state, oldState ) {
       // If we just moved to/from level section (outside of a level), don't fire sounds.
