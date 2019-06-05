@@ -137,7 +137,7 @@ define( function( require ) {
       return new Image( iconImage );
     } );
 
-    var buttonSpacing = 15;
+    var buttonSpacing = 30;
     var levelButtons = model.levels.map( function( level, index ) {
       return new LevelSelectionButton( levelIcons[ index ], level.scoreProperty, {
         scoreDisplayConstructor: ScoreDisplayStars,
