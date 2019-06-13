@@ -126,6 +126,8 @@ define( function( require ) {
       this.allPartitions.forEach( function( partition ) {
         partition.sizeProperty.value = null;
       } );
+
+      this.activePartitionProperty.reset();
     }
   } );
 } );
