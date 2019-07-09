@@ -28,6 +28,7 @@ define( function( require ) {
       buttonContentXMargin: 10,
       buttonContentYMargin: 10,
       selectedLineWidth: 2,
+      deselectedLineWidth: 1.5,
       touchAreaXDilation: 6,
       touchAreaYDilation: 6,
       selectedStroke: AreaModelCommonColorProfile.radioBorderProperty,
