@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2017-2019, University of Colorado Boulder
 
 /**
  * Shows a draggable circle to the lower-right of a proportional area that, when dragged, adjusts the width/height to

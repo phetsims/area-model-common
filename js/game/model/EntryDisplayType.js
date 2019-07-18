@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Enumeration for the different ways an editable entry can be handled.
