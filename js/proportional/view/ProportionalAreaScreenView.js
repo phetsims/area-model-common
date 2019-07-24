@@ -19,7 +19,6 @@ define( function( require ) {
   var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
   var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
   var Checkbox = require( 'SUN/Checkbox' );
-  var ControlAreaNode = require( 'SCENERY_PHET/accessibility/nodes/ControlAreaNode' );
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var DynamicProperty = require( 'AXON/DynamicProperty' );
   var HBox = require( 'SCENERY/nodes/HBox' );
@@ -27,7 +26,6 @@ define( function( require ) {
   var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
   var PartitionRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/PartitionRadioButtonGroup' );
   var Path = require( 'SCENERY/nodes/Path' );
-  var PlayAreaNode = require( 'SCENERY_PHET/accessibility/nodes/PlayAreaNode' );
   var ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
   var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   var ProportionalFactorsNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalFactorsNode' );
@@ -102,7 +100,7 @@ define( function( require ) {
     } );
 
     var checkboxContainer = new VBox( {
-      children: [ gridCheckbox, countingCheckbox, tileCheckbox ],
+      children: [gridCheckbox, countingCheckbox, tileCheckbox],
       align: 'left',
       spacing: 20,
       // Manual positioning works best here
@@ -127,28 +125,24 @@ define( function( require ) {
     } );
 
     // "Play Area" (a11y)
-    this.addChild( new PlayAreaNode( {
-      accessibleOrder: [
-        this.areaDisplayNode,
-        this.factorsBox,
-        this.areaBox,
-        this.productsSelectionPanel,
-        this.calculationSelectionPanel,
-        this.partitionSelectionPanel,
-        this.calculationNode
-      ].filter( function( node ) { return node !== undefined; } ) // this.partitionSelectionPanel may not exist
-    } ) );
+    this.playAreaNode.accessibleOrder = [
+      this.areaDisplayNode,
+      this.factorsBox,
+      this.areaBox,
+      this.productsSelectionPanel,
+      this.calculationSelectionPanel,
+      this.partitionSelectionPanel,
+      this.calculationNode
+    ].filter( function( node ) { return node !== undefined; } ); // this.partitionSelectionPanel may not exist
 
     // "Control Panel" (a11y)
-    this.addChild( new ControlAreaNode( {
-      accessibleOrder: [
-        gridCheckbox,
-        tileCheckbox,
-        countingCheckbox,
-        this.sceneSelectionNode,
-        this.resetAllButton
-      ]
-    } ) );
+    this.controlAreaNode.accessibleOrder = [
+      gridCheckbox,
+      tileCheckbox,
+      countingCheckbox,
+      this.sceneSelectionNode,
+      this.resetAllButton
+    ];
   }
 
   areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
@@ -161,7 +155,7 @@ define( function( require ) {
      * @returns {Array.<Node>}
      */
     getRightAlignNodes: function() {
-      return AreaScreenView.prototype.getRightAlignNodes.call( this ).concat( [ this.sceneSelectionNode ] );
+      return AreaScreenView.prototype.getRightAlignNodes.call( this ).concat( [this.sceneSelectionNode] );
     },
 
     /**
@@ -174,15 +168,15 @@ define( function( require ) {
       var self = this;
 
       // Use a Property here so we don't recreate when we don't have to (just on area changes)
-      var hasPartitionSelectionProperty = new DerivedProperty( [ this.model.currentAreaProperty ], function( area ) {
+      var hasPartitionSelectionProperty = new DerivedProperty( [this.model.currentAreaProperty], function( area ) {
         return area.partitionLineChoice === PartitionLineChoice.ONE;
       } );
 
       // Conditionally include our partition selection on top of what else is included
       return new DerivedProperty(
-        [ AreaScreenView.prototype.getSelectionNodesProperty.call( this ), hasPartitionSelectionProperty ],
+        [AreaScreenView.prototype.getSelectionNodesProperty.call( this ), hasPartitionSelectionProperty],
         function( selectionNodes, hasPartitionSelection ) {
-          return hasPartitionSelection ? selectionNodes.concat( [ self.partitionSelectionPanel ] ) : selectionNodes;
+          return hasPartitionSelection ? selectionNodes.concat( [self.partitionSelectionPanel] ) : selectionNodes;
         } );
     },
 
