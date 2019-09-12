@@ -152,12 +152,12 @@ define( function( require ) {
       type: description.totalType,
       displayType: EntryType.toDisplayType( description.totalType )
     }, totalOptions ) );
-    this.totalXProperty = new Entry( this.total.getTerm( 1 ), _.extend( {
+    this.totalXEntry = new Entry( this.total.getTerm( 1 ), _.extend( {
       correctValue: this.total.getTerm( 1 ),
       type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
       displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
-    this.totalXSquaredProperty = new Entry( this.total.getTerm( 2 ), _.extend( {
+    this.totalXSquaredEntry = new Entry( this.total.getTerm( 2 ), _.extend( {
       correctValue: this.total.getTerm( 2 ),
       type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
       displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
@@ -166,15 +166,15 @@ define( function( require ) {
     // @public {Array.<Entry>} - All of the coefficient entries that are used by this challenge.
     this.totalCoefficientEntries = [ this.totalConstantEntry ];
     if ( totalOptions.inputMethod !== InputMethod.CONSTANT ) {
-      this.totalCoefficientEntries.push( this.totalXProperty );
+      this.totalCoefficientEntries.push( this.totalXEntry );
     }
     if ( totalOptions.inputMethod === InputMethod.POLYNOMIAL_2 ) {
-      this.totalCoefficientEntries.push( this.totalXSquaredProperty );
+      this.totalCoefficientEntries.push( this.totalXSquaredEntry );
     }
 
     // @public {Property.<Polynomial|null>}
     this.totalProperty = new DerivedProperty(
-      [ this.totalConstantEntry.valueProperty, this.totalXProperty.valueProperty, this.totalXSquaredProperty.valueProperty ],
+      [ this.totalConstantEntry.valueProperty, this.totalXEntry.valueProperty, this.totalXSquaredEntry.valueProperty ],
       function( constant, x, xSquared ) {
         var terms = [ constant, x, xSquared ].filter( function( term ) {
           return term !== null;
@@ -272,10 +272,10 @@ define( function( require ) {
 
         compareEntry( this.totalConstantEntry, this.total.getTerm( 0 ) );
         if ( this.totalInputMethod !== InputMethod.CONSTANT ) {
-          compareEntry( this.totalXProperty, this.total.getTerm( 1 ) );
+          compareEntry( this.totalXEntry, this.total.getTerm( 1 ) );
         }
         if ( this.totalInputMethod === InputMethod.POLYNOMIAL_2 ) {
-          compareEntry( this.totalXSquaredProperty, this.total.getTerm( 2 ) );
+          compareEntry( this.totalXSquaredEntry, this.total.getTerm( 2 ) );
         }
       }
 
@@ -412,11 +412,11 @@ define( function( require ) {
       } );
 
       this.totalConstantEntry.valueProperty.value = this.total.getTerm( 0 );
-      this.totalXProperty.valueProperty.value = this.total.getTerm( 1 );
-      this.totalXSquaredProperty.valueProperty.value = this.total.getTerm( 2 );
+      this.totalXEntry.valueProperty.value = this.total.getTerm( 1 );
+      this.totalXSquaredEntry.valueProperty.value = this.total.getTerm( 2 );
       this.totalConstantEntry.statusProperty.value = EntryStatus.NORMAL;
-      this.totalXProperty.statusProperty.value = EntryStatus.NORMAL;
-      this.totalXSquaredProperty.statusProperty.value = EntryStatus.NORMAL;
+      this.totalXEntry.statusProperty.value = EntryStatus.NORMAL;
+      this.totalXSquaredEntry.statusProperty.value = EntryStatus.NORMAL;
     },
 
     /**
