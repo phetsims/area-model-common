@@ -5,15 +5,15 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var Color = require( 'SCENERY/util/Color' );
-  var ColorProfile = require( 'SCENERY_PHET/ColorProfile' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const Color = require( 'SCENERY/util/Color' );
+  const ColorProfile = require( 'SCENERY_PHET/ColorProfile' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const PhetColorScheme = require( 'SCENERY_PHET/PhetColorScheme' );
 
   // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
   // tweaks with the top-level files)

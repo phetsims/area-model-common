@@ -7,30 +7,30 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
-  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
-  var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
-  var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const NumberPicker = require( 'SCENERY_PHET/NumberPicker' );
+  const Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
+  const Property = require( 'AXON/Property' );
+  const Range = require( 'DOT/Range' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   /**
    * @constructor

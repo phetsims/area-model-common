@@ -8,18 +8,18 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var TICK_LENGTH = 10; // How long the tick marks are for the range labels

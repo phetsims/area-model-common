@@ -7,27 +7,27 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
-  var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
-  var GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var Property = require( 'AXON/Property' );
-  var RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
+  const GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
+  const GenericAreaDisplayNode = require( 'AREA_MODEL_COMMON/generic/view/GenericAreaDisplayNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const Property = require( 'AXON/Property' );
+  const RangeLabelNode = require( 'AREA_MODEL_COMMON/common/view/RangeLabelNode' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
 
   // constants
   var MAX_PARTITIONS = 3; // The maximum number of partitions for a specific dimension

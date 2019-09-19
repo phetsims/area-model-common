@@ -5,19 +5,19 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
-  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
-  var Property = require( 'AXON/Property' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
+  const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
+  const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
+  const Property = require( 'AXON/Property' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   /**
    * @constructor

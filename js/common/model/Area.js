@@ -5,20 +5,20 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
-  var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
-  var Property = require( 'AXON/Property' );
-  var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const PartitionedArea = require( 'AREA_MODEL_COMMON/common/model/PartitionedArea' );
+  const Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
+  const Property = require( 'AXON/Property' );
+  const TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
 
   /**
    * @constructor

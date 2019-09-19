@@ -5,11 +5,11 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   QUnit.module( 'Term' );
 

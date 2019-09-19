@@ -7,21 +7,21 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var CalculationLinesNode = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLinesNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
+  const AlignBox = require( 'SCENERY/nodes/AlignBox' );
+  const AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  const AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const CalculationLinesNode = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLinesNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
 
   // strings
-  var calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
+  const calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
 
   // a11y strings
   var calculationBoxTitleString = AreaModelCommonA11yStrings.calculationBoxTitle.value;

@@ -5,24 +5,24 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var GameAreaScreenView = require( 'AREA_MODEL_COMMON/game/view/GameAreaScreenView' );
-  var GenericGameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GenericGameAreaModel' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Screen = require( 'JOIST/Screen' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const GameAreaScreenView = require( 'AREA_MODEL_COMMON/game/view/GameAreaScreenView' );
+  const GenericGameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GenericGameAreaModel' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Screen = require( 'JOIST/Screen' );
 
   // images
-  var genericGameScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-icon.png' );
-  var genericGameScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-navbar.png' );
+  const genericGameScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-icon.png' );
+  const genericGameScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/generic-game-screen-navbar.png' );
 
   // strings
-  var screenGameString = require( 'string!AREA_MODEL_COMMON/screen.game' );
+  const screenGameString = require( 'string!AREA_MODEL_COMMON/screen.game' );
 
   /**
    * @constructor

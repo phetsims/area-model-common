@@ -5,17 +5,17 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
-  var AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
-  var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
-  var inherit = require( 'PHET_CORE/inherit' );
+  const AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
+  const AreaChallengeType = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeType' );
+  const AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
+  const inherit = require( 'PHET_CORE/inherit' );
 
   /**
    * @constructor

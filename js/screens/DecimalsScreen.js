@@ -5,19 +5,19 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
-  var Screen = require( 'JOIST/Screen' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
+  const ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
+  const Screen = require( 'JOIST/Screen' );
 
   // strings
-  var screenDecimalsString = require( 'string!AREA_MODEL_COMMON/screen.decimals' );
+  const screenDecimalsString = require( 'string!AREA_MODEL_COMMON/screen.decimals' );
 
   /**
    * @constructor

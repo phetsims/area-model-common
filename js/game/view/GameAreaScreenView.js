@@ -7,71 +7,71 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var Easing = require( 'TWIXT/Easing' );
-  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
-  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
-  var FaceNode = require( 'SCENERY_PHET/FaceNode' );
-  var FaceWithPointsNode = require( 'SCENERY_PHET/FaceWithPointsNode' );
-  var FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
-  var GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
-  var GameAreaDisplayNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaDisplayNode' );
-  var GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
-  var GameAudio = require( 'AREA_MODEL_COMMON/game/view/GameAudio' );
-  var GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
-  var LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var Panel = require( 'SUN/Panel' );
-  var PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
-  var Property = require( 'AXON/Property' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var RewardNode = require( 'VEGAS/RewardNode' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
-  var ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var StarNode = require( 'SCENERY_PHET/StarNode' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TransitionNode = require( 'TWIXT/TransitionNode' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AlignBox = require( 'SCENERY/nodes/AlignBox' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const Easing = require( 'TWIXT/Easing' );
+  const Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
+  const FaceNode = require( 'SCENERY_PHET/FaceNode' );
+  const FaceWithPointsNode = require( 'SCENERY_PHET/FaceWithPointsNode' );
+  const FiniteStatusBar = require( 'VEGAS/FiniteStatusBar' );
+  const GameAreaDisplay = require( 'AREA_MODEL_COMMON/game/model/GameAreaDisplay' );
+  const GameAreaDisplayNode = require( 'AREA_MODEL_COMMON/game/view/GameAreaDisplayNode' );
+  const GameAreaModel = require( 'AREA_MODEL_COMMON/game/model/GameAreaModel' );
+  const GameAudio = require( 'AREA_MODEL_COMMON/game/view/GameAudio' );
+  const GameEditableLabelNode = require( 'AREA_MODEL_COMMON/game/view/GameEditableLabelNode' );
+  const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  const GenericFactorsNode = require( 'AREA_MODEL_COMMON/generic/view/GenericFactorsNode' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LevelCompletedNode = require( 'VEGAS/LevelCompletedNode' );
+  const LevelSelectionButton = require( 'VEGAS/LevelSelectionButton' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Panel = require( 'SUN/Panel' );
+  const PolynomialEditNode = require( 'AREA_MODEL_COMMON/game/view/PolynomialEditNode' );
+  const Property = require( 'AXON/Property' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const RewardNode = require( 'VEGAS/RewardNode' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const ScoreDisplayLabeledStars = require( 'VEGAS/ScoreDisplayLabeledStars' );
+  const ScoreDisplayStars = require( 'VEGAS/ScoreDisplayStars' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const StarNode = require( 'SCENERY_PHET/StarNode' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TransitionNode = require( 'TWIXT/TransitionNode' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var checkString = require( 'string!VEGAS/check' );
-  var chooseYourLevelString = require( 'string!VEGAS/chooseYourLevel' );
-  var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
-  var nextString = require( 'string!VEGAS/next' );
-  var showAnswerString = require( 'string!VEGAS/showAnswer' );
-  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
-  var tryAgainString = require( 'string!VEGAS/tryAgain' );
+  const checkString = require( 'string!VEGAS/check' );
+  const chooseYourLevelString = require( 'string!VEGAS/chooseYourLevel' );
+  const dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
+  const nextString = require( 'string!VEGAS/next' );
+  const showAnswerString = require( 'string!VEGAS/showAnswer' );
+  const totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
+  const tryAgainString = require( 'string!VEGAS/tryAgain' );
 
   // images
-  var level1IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-1-icon.png' );
-  var level2IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-2-icon.png' );
-  var level3IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-3-icon.png' );
-  var level4IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-4-icon.png' );
-  var level5IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-5-icon.png' );
-  var level6IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-6-icon.png' );
+  const level1IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-1-icon.png' );
+  const level2IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-2-icon.png' );
+  const level3IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-3-icon.png' );
+  const level4IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-4-icon.png' );
+  const level5IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-5-icon.png' );
+  const level6IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-6-icon.png' );
 
   // constants
   var LEVEL_ICON_IMAGES = [

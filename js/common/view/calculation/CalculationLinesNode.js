@@ -5,32 +5,32 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  var AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DistributionLine = require( 'AREA_MODEL_COMMON/common/view/calculation/DistributionLine' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var Emitter = require( 'AXON/Emitter' );
-  var ExpandedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/ExpandedLine' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var MinusesLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MinusesLine' );
-  var MultipliedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MultipliedLine' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var OrderedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/OrderedLine' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var Property = require( 'AXON/Property' );
-  var QuestionMarkLine = require( 'AREA_MODEL_COMMON/common/view/calculation/QuestionMarkLine' );
-  var SumLine = require( 'AREA_MODEL_COMMON/common/view/calculation/SumLine' );
-  var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
-  var TotalsLine = require( 'AREA_MODEL_COMMON/common/view/calculation/TotalsLine' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  const AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DistributionLine = require( 'AREA_MODEL_COMMON/common/view/calculation/DistributionLine' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const Emitter = require( 'AXON/Emitter' );
+  const ExpandedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/ExpandedLine' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const MinusesLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MinusesLine' );
+  const MultipliedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MultipliedLine' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const OrderedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/OrderedLine' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Property = require( 'AXON/Property' );
+  const QuestionMarkLine = require( 'AREA_MODEL_COMMON/common/view/calculation/QuestionMarkLine' );
+  const SumLine = require( 'AREA_MODEL_COMMON/common/view/calculation/SumLine' );
+  const TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
+  const TotalsLine = require( 'AREA_MODEL_COMMON/common/view/calculation/TotalsLine' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // a11y strings
   var betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;

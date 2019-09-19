@@ -7,36 +7,36 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
-  var AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
-  var Checkbox = require( 'SUN/Checkbox' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
-  var PartitionRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/PartitionRadioButtonGroup' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
-  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  var ProportionalFactorsNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalFactorsNode' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var SceneRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/SceneRadioButtonGroup' );
-  var Shape = require( 'KITE/Shape' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
+  const AreaScreenView = require( 'AREA_MODEL_COMMON/common/view/AreaScreenView' );
+  const Checkbox = require( 'SUN/Checkbox' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const HBox = require( 'SCENERY/nodes/HBox' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
+  const PartitionRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/PartitionRadioButtonGroup' );
+  const Path = require( 'SCENERY/nodes/Path' );
+  const ProportionalAreaDisplayNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaDisplayNode' );
+  const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
+  const ProportionalFactorsNode = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalFactorsNode' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const SceneRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/SceneRadioButtonGroup' );
+  const Shape = require( 'KITE/Shape' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
+  const partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
 
   // a11y strings
   var base10AreaTilesString = AreaModelCommonA11yStrings.base10AreaTiles.value;

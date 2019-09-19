@@ -5,15 +5,15 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const MathSymbolFont = require( 'SCENERY_PHET/MathSymbolFont' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;

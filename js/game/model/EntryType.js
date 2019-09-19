@@ -5,12 +5,12 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
 
   var EntryType = {
     EDITABLE: 'EDITABLE',

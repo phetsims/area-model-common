@@ -8,15 +8,15 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
 
   /**
    * @constructor

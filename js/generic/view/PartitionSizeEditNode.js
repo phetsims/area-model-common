@@ -7,19 +7,19 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var Color = require( 'SCENERY/util/Color' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var Property = require( 'AXON/Property' );
-  var TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const Color = require( 'SCENERY/util/Color' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Property = require( 'AXON/Property' );
+  const TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
 
   /**
    * @constructor

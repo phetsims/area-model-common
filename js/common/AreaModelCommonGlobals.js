@@ -5,12 +5,12 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AlignGroup = require( 'SCENERY/nodes/AlignGroup' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   return areaModelCommon.register( 'AreaModelCommonGlobals', {
 

@@ -5,17 +5,17 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AreaChallenge = require( 'AREA_MODEL_COMMON/game/model/AreaChallenge' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var NumberProperty = require( 'AXON/NumberProperty' );
+  const AreaChallenge = require( 'AREA_MODEL_COMMON/game/model/AreaChallenge' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const NumberProperty = require( 'AXON/NumberProperty' );
 
   /**
    * @constructor

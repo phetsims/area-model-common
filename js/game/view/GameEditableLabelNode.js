@@ -7,25 +7,25 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
-  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var Property = require( 'AXON/Property' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
+  const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
+  const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Property = require( 'AXON/Property' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @constructor

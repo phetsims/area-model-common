@@ -5,24 +5,24 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var CalculationGroup = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationGroup' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Minus = require( 'AREA_MODEL_COMMON/common/view/calculation/Minus' );
-  var MultiplyX = require( 'AREA_MODEL_COMMON/common/view/calculation/MultiplyX' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var Parentheses = require( 'AREA_MODEL_COMMON/common/view/calculation/Parentheses' );
-  var PlaceholderBox = require( 'AREA_MODEL_COMMON/common/view/calculation/PlaceholderBox' );
-  var Plus = require( 'AREA_MODEL_COMMON/common/view/calculation/Plus' );
-  var QuestionMark = require( 'AREA_MODEL_COMMON/common/view/calculation/QuestionMark' );
-  var TermText = require( 'AREA_MODEL_COMMON/common/view/calculation/TermText' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const CalculationGroup = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationGroup' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Minus = require( 'AREA_MODEL_COMMON/common/view/calculation/Minus' );
+  const MultiplyX = require( 'AREA_MODEL_COMMON/common/view/calculation/MultiplyX' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const Parentheses = require( 'AREA_MODEL_COMMON/common/view/calculation/Parentheses' );
+  const PlaceholderBox = require( 'AREA_MODEL_COMMON/common/view/calculation/PlaceholderBox' );
+  const Plus = require( 'AREA_MODEL_COMMON/common/view/calculation/Plus' );
+  const QuestionMark = require( 'AREA_MODEL_COMMON/common/view/calculation/QuestionMark' );
+  const TermText = require( 'AREA_MODEL_COMMON/common/view/calculation/TermText' );
 
   /**
    * @constructor

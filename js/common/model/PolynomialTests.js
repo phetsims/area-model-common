@@ -5,12 +5,12 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   QUnit.module( 'Polynomial' );
 

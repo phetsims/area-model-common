@@ -7,10 +7,10 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var AreaModelCommonA11yStrings = {
     areaEqualsPattern: {

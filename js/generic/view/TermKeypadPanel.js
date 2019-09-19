@@ -7,31 +7,31 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Key = require( 'SCENERY_PHET/keypad/Key' );
-  var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
-  var Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  var TermAccumulator = require( 'AREA_MODEL_COMMON/generic/view/TermAccumulator' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const BackspaceIcon = require( 'SCENERY_PHET/BackspaceIcon' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Key = require( 'SCENERY_PHET/keypad/Key' );
+  const KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
+  const Keypad = require( 'SCENERY_PHET/keypad/Keypad' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  const RectangularPushButton = require( 'SUN/buttons/RectangularPushButton' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const TermAccumulator = require( 'AREA_MODEL_COMMON/generic/view/TermAccumulator' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var enterString = require( 'string!AREA_MODEL_COMMON/enter' );
+  const enterString = require( 'string!AREA_MODEL_COMMON/enter' );
 
   // layout constants
   var positiveKeys = [

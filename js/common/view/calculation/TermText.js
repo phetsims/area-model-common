@@ -7,18 +7,18 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Poolable = require( 'PHET_CORE/Poolable' );
-  var Property = require( 'AXON/Property' );
-  var RichText = require( 'SCENERY/nodes/RichText' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Poolable = require( 'PHET_CORE/Poolable' );
+  const Property = require( 'AXON/Property' );
+  const RichText = require( 'SCENERY/nodes/RichText' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
 
   /**
    * @constructor

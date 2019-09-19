@@ -5,27 +5,27 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/model/PartialProductsChoice' );
-  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
-  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
-  var Screen = require( 'JOIST/Screen' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/model/PartialProductsChoice' );
+  const PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
+  const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
+  const ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
+  const Screen = require( 'JOIST/Screen' );
 
   // images
-  var multiplyScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/multiply-screen-icon.png' );
-  var multiplyScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/multiply-screen-navbar.png' );
+  const multiplyScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/multiply-screen-icon.png' );
+  const multiplyScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/multiply-screen-navbar.png' );
 
   // strings
-  var screenMultiplyString = require( 'string!AREA_MODEL_COMMON/screen.multiply' );
+  const screenMultiplyString = require( 'string!AREA_MODEL_COMMON/screen.multiply' );
 
   // a11y strings
   var multiplyDescriptionString = AreaModelCommonA11yStrings.multiplyDescription.value;

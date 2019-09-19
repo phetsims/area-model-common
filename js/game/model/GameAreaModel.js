@@ -5,18 +5,18 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
-  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  const AreaLevel = require( 'AREA_MODEL_COMMON/game/model/AreaLevel' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
+  const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
 
   /**
    * @constructor

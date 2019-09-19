@@ -5,21 +5,21 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AreaChallenge = require( 'AREA_MODEL_COMMON/game/model/AreaChallenge' );
-  var AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var DynamicProperty = require( 'AXON/DynamicProperty' );
-  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
-  var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var Property = require( 'AXON/Property' );
+  const AreaChallenge = require( 'AREA_MODEL_COMMON/game/model/AreaChallenge' );
+  const AreaChallengeDescription = require( 'AREA_MODEL_COMMON/game/model/AreaChallengeDescription' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const DynamicProperty = require( 'AXON/DynamicProperty' );
+  const Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
+  const GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const Property = require( 'AXON/Property' );
 
   /**
    * @constructor

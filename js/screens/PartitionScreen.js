@@ -5,27 +5,27 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
-  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
-  var Screen = require( 'JOIST/Screen' );
+  const AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
+  const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
+  const ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
+  const Screen = require( 'JOIST/Screen' );
 
   // images
-  var partitionScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-icon.png' );
-  var partitionScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-navbar.png' );
+  const partitionScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-icon.png' );
+  const partitionScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-navbar.png' );
 
   // strings
-  var screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
+  const screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
 
   // a11y strings
   var partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;

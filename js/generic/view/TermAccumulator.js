@@ -7,18 +7,18 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AbstractKeyAccumulator = require( 'SCENERY_PHET/keypad/AbstractKeyAccumulator' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const AbstractKeyAccumulator = require( 'SCENERY_PHET/keypad/AbstractKeyAccumulator' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const KeyID = require( 'SCENERY_PHET/keypad/KeyID' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   // constants
   var NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( function( n ) { return '' + n; } );

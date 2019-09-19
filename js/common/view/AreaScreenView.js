@@ -7,41 +7,41 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  var AreaCalculationRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationRadioButtonGroup' );
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  var AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  var AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
-  var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
-  var CalculationNode = require( 'AREA_MODEL_COMMON/common/view/CalculationNode' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var interleave = require( 'PHET_CORE/interleave' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var Panel = require( 'SUN/Panel' );
-  var PartialProductRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/PartialProductRadioButtonGroup' );
-  var Property = require( 'AXON/Property' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var TotalAreaNode = require( 'AREA_MODEL_COMMON/common/view/TotalAreaNode' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  const AlignBox = require( 'SCENERY/nodes/AlignBox' );
+  const AreaCalculationRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaCalculationRadioButtonGroup' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
+  const AreaModelCommonAccordionBox = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonAccordionBox' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
+  const AreaModelCommonGlobals = require( 'AREA_MODEL_COMMON/common/AreaModelCommonGlobals' );
+  const AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const CalculationBox = require( 'AREA_MODEL_COMMON/proportional/view/CalculationBox' );
+  const CalculationNode = require( 'AREA_MODEL_COMMON/common/view/CalculationNode' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const interleave = require( 'PHET_CORE/interleave' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const Panel = require( 'SUN/Panel' );
+  const PartialProductRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/PartialProductRadioButtonGroup' );
+  const Property = require( 'AXON/Property' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const TotalAreaNode = require( 'AREA_MODEL_COMMON/common/view/TotalAreaNode' );
+  const VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
-  var areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
-  var dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
-  var factorsString = require( 'string!AREA_MODEL_COMMON/factors' );
-  var partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
-  var productString = require( 'string!AREA_MODEL_COMMON/product' );
-  var totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
+  const areaModelCalculationString = require( 'string!AREA_MODEL_COMMON/areaModelCalculation' );
+  const dimensionsString = require( 'string!AREA_MODEL_COMMON/dimensions' );
+  const factorsString = require( 'string!AREA_MODEL_COMMON/factors' );
+  const partialProductsString = require( 'string!AREA_MODEL_COMMON/partialProducts' );
+  const productString = require( 'string!AREA_MODEL_COMMON/product' );
+  const totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   // a11y strings
   var factorsBoxString = AreaModelCommonA11yStrings.factorsBox.value;

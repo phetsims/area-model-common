@@ -5,24 +5,24 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  var ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
-  var Screen = require( 'JOIST/Screen' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
+  const Image = require( 'SCENERY/nodes/Image' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
+  const ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
+  const Screen = require( 'JOIST/Screen' );
 
   // images
-  var exploreScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/explore-screen-icon.png' );
-  var exploreScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/explore-screen-navbar.png' );
+  const exploreScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/explore-screen-icon.png' );
+  const exploreScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/explore-screen-navbar.png' );
 
   // strings
-  var screenExploreString = require( 'string!AREA_MODEL_COMMON/screen.explore' );
+  const screenExploreString = require( 'string!AREA_MODEL_COMMON/screen.explore' );
 
   /**
    * @constructor

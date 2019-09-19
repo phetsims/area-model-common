@@ -6,11 +6,11 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
   var GameState = {
     // "check" button, editable

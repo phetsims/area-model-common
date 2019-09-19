@@ -5,27 +5,27 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  var dimensionForEach = require( 'PHET_CORE/dimensionForEach' );
-  var dimensionMap = require( 'PHET_CORE/dimensionMap' );
-  var Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
-  var EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
-  var EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  var EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
-  var GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
-  var Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
-  var OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
-  var Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
-  var Property = require( 'AXON/Property' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const DerivedProperty = require( 'AXON/DerivedProperty' );
+  const dimensionForEach = require( 'PHET_CORE/dimensionForEach' );
+  const dimensionMap = require( 'PHET_CORE/dimensionMap' );
+  const Entry = require( 'AREA_MODEL_COMMON/game/model/Entry' );
+  const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
+  const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
+  const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
+  const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
+  const GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
+  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
+  const Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
+  const Property = require( 'AXON/Property' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   /**
    * @constructor

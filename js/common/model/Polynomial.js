@@ -5,14 +5,14 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  var TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
 
   /**
    * @constructor

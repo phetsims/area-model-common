@@ -5,17 +5,17 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  var AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
-  var GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
-  var GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
-  var GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var Property = require( 'AXON/Property' );
+  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+  const AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
+  const GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
+  const GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
+  const GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const Property = require( 'AXON/Property' );
 
   // constants
   var DEFAULT_LAYOUT = GenericLayout.TWO_BY_TWO;
