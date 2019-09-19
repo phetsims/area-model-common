@@ -31,16 +31,16 @@ define( require => {
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    */
   function PartitionSizeEditNode( activePartitionProperty, partitionProperty, modelViewTransformProperty, allowExponents ) {
-    var self = this;
+    const self = this;
 
     // @public {Property.<Partition|null>} - Exposed so it can be changed after creation in pooling.
     this.partitionProperty = partitionProperty;
 
-    var orientationProperty = new DerivedProperty( [ partitionProperty ], function( partition ) {
+    const orientationProperty = new DerivedProperty( [ partitionProperty ], function( partition ) {
       return partition ? partition.orientation : Orientation.HORIZONTAL; // Default if we have none
     } );
-    var sizeProperty = new DynamicProperty( partitionProperty, { derive: 'sizeProperty' } );
-    var colorProperty = new DynamicProperty( partitionProperty, {
+    const sizeProperty = new DynamicProperty( partitionProperty, { derive: 'sizeProperty' } );
+    const colorProperty = new DynamicProperty( partitionProperty, {
       derive: 'colorProperty',
       defaultValue: Color.MAGENTA // Should not see this, but need a valid color
     } );
@@ -70,7 +70,7 @@ define( require => {
     } );
 
     // Primary orientation (location of range center)
-    var coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
+    const coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
     Property.multilink(
       [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ],
       function( partition, range, modelViewTransform ) {

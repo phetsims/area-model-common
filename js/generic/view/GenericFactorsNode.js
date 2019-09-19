@@ -26,8 +26,8 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // constants
-  var BOX_SIZE = 30;
-  var PAREN_BOUNDS = new Text( ')(', {
+  const BOX_SIZE = 30;
+  const PAREN_BOUNDS = new Text( ')(', {
     font: AreaModelCommonConstants.FACTORS_PAREN_FONT,
     boundsMethod: 'accurate'
   } ).bounds;
@@ -40,16 +40,16 @@ define( require => {
    * @param {Property.<boolean>} allowExponentsProperty - Whether exponents (powers of x) are allowed
    */
   function GenericFactorsNode( displayProperties, allowExponentsProperty ) {
-    var self = this;
+    const self = this;
 
-    var readouts = displayProperties.map( function( displayProperty, orientation ) {
+    const readouts = displayProperties.map( function( displayProperty, orientation ) {
       return self.createOrientationReadout( orientation, displayProperty );
     } );
 
-    var leftParenText = new Text( '(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
-    var middleParenText = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
-    var rightParenText = new Text( ')', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
-    var xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } );
+    const leftParenText = new Text( '(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    const middleParenText = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    const rightParenText = new Text( ')', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    const xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } );
 
     // Have the X take up at least the same vertical bounds as the parentheses
     xText.localBounds = xText.localBounds.union(
@@ -57,7 +57,7 @@ define( require => {
     );
 
     // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
-    var box = new HBox( {
+    const box = new HBox( {
       spacing: 10,
       align: 'origin'
     } );
@@ -76,7 +76,7 @@ define( require => {
       ];
     } );
 
-    var spacer = new Node();
+    const spacer = new Node();
 
     AlignBox.call( this, new Node( {
       children: [ box, spacer ],
@@ -85,7 +85,7 @@ define( require => {
 
     // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
     allowExponentsProperty.link( function( allowExponents ) {
-      var maxBounds = Bounds2.NOTHING.copy();
+      const maxBounds = Bounds2.NOTHING.copy();
       maxBounds.includeBounds( new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', {
         font: AreaModelCommonConstants.FACTORS_TERM_FONT
       } ).bounds );
@@ -110,19 +110,19 @@ define( require => {
     createOrientationReadout: function( orientation, displayProperty ) {
       assert && assert( Orientation.isOrientation( orientation ) );
 
-      var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+      const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
-      var richText = new RichText( '', {
+      const richText = new RichText( '', {
         font: AreaModelCommonConstants.FACTORS_TERM_FONT,
         fill: colorProperty
       } );
 
-      var box = new Rectangle( 0, 0, BOX_SIZE, BOX_SIZE, {
+      const box = new Rectangle( 0, 0, BOX_SIZE, BOX_SIZE, {
         stroke: colorProperty,
         centerY: PAREN_BOUNDS.centerY // So that it is perfectly vertically aligned
       } );
 
-      var node = new Node();
+      const node = new Node();
       displayProperty.link( function( termList ) {
         if ( termList === null ) {
           node.children = [ box ];

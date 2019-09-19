@@ -34,20 +34,20 @@ define( require => {
   function GenericArea( layout, allowExponents ) {
     assert && assert( typeof allowExponents === 'boolean' );
 
-    var self = this;
+    const self = this;
 
     // If we allow powers of X, we'll only allow 1 digit in front.
-    var firstDigitCount = allowExponents ? 1 : 3;
-    var secondDigitCount = allowExponents ? 1 : 2;
-    var thirdDigitCount = 1;
+    const firstDigitCount = allowExponents ? 1 : 3;
+    const secondDigitCount = allowExponents ? 1 : 2;
+    const thirdDigitCount = 1;
 
-    var horizontalPartitions = [
+    const horizontalPartitions = [
       new GenericPartition( Orientation.HORIZONTAL, firstDigitCount ),
       new GenericPartition( Orientation.HORIZONTAL, secondDigitCount ),
       new GenericPartition( Orientation.HORIZONTAL, thirdDigitCount )
     ].slice( 0, layout.size.width );
 
-    var verticalPartitions = [
+    const verticalPartitions = [
       new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
       new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
       new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
@@ -75,8 +75,8 @@ define( require => {
 
     // Set up partition coordinate/size
     Orientation.VALUES.forEach( function( orientation ) {
-      var partitionCount = layout.getPartitionQuantity( orientation );
-      var partitions = self.partitions.get( orientation );
+      const partitionCount = layout.getPartitionQuantity( orientation );
+      const partitions = self.partitions.get( orientation );
 
       if ( partitionCount === 1 ) {
         partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );

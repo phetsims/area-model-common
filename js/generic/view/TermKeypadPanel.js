@@ -34,7 +34,7 @@ define( require => {
   const enterString = require( 'string!AREA_MODEL_COMMON/enter' );
 
   // layout constants
-  var positiveKeys = [
+  const positiveKeys = [
     [
       new Key( '7', KeyID.SEVEN ),
       new Key( '8', KeyID.EIGHT ),
@@ -51,17 +51,17 @@ define( require => {
       new Key( '3', KeyID.THREE )
     ]
   ];
-  var zeroAndBackspace = [
+  const zeroAndBackspace = [
     new Key( '0', KeyID.ZERO ),
     new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE )
   ];
-  var noExponentLayout = positiveKeys.concat( [
+  const noExponentLayout = positiveKeys.concat( [
     [ new Key( MathSymbols.PLUS + '/' + MathSymbols.MINUS, KeyID.PLUS_MINUS ) ].concat( zeroAndBackspace )
   ] );
-  var noNegativeLayout = positiveKeys.concat( [
+  const noNegativeLayout = positiveKeys.concat( [
     [ null ].concat( zeroAndBackspace )
   ] );
-  var exponentLayout = noExponentLayout.concat( [
+  const exponentLayout = noExponentLayout.concat( [
     [
       null,
       new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ),
@@ -83,24 +83,24 @@ define( require => {
     assert && assert( allowNegative || !allowExponents, 'We have no non-negative exponent keyboard layout' );
 
     // Handles logic for key-presses and conversion to strings/Terms.
-    var termAccumulator = new TermAccumulator( digitCountProperty );
+    const termAccumulator = new TermAccumulator( digitCountProperty );
 
     // @private {Keypad}
     this.keypad = new Keypad( allowExponents ? exponentLayout : ( allowNegative ? noExponentLayout : noNegativeLayout ), {
       accumulator: termAccumulator
     } );
 
-    var readoutBackground = new Rectangle( {
+    const readoutBackground = new Rectangle( {
       fill: AreaModelCommonColorProfile.keypadReadoutBackgroundProperty,
       stroke: AreaModelCommonColorProfile.keypadReadoutBorderProperty,
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
-    var readoutTextOptions = {
+    const readoutTextOptions = {
       font: AreaModelCommonConstants.KEYPAD_READOUT_FONT
     };
 
-    var readoutText = new RichText( '', readoutTextOptions );
+    const readoutText = new RichText( '', readoutTextOptions );
 
     function updateText( string ) {
       // Trick to be able to position an empty string

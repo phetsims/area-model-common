@@ -18,7 +18,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
 
   // constants
-  var DEFAULT_LAYOUT = GenericLayout.TWO_BY_TWO;
+  const DEFAULT_LAYOUT = GenericLayout.TWO_BY_TWO;
 
   /**
    * @constructor
@@ -27,7 +27,7 @@ define( require => {
    * @param {Object} [options]
    */
   function GenericAreaModel( options ) {
-    var self = this;
+    const self = this;
 
     assert && assert( options === undefined || typeof options === 'object', 'If provided, options should be an object' );
 
@@ -38,11 +38,11 @@ define( require => {
     // @public {Property.<GenericLayout>} - The current layout that is visible/selected.
     this.genericLayoutProperty = new Property( DEFAULT_LAYOUT );
 
-    var areas = GenericLayout.VALUES.map( function( layout ) {
+    const areas = GenericLayout.VALUES.map( function( layout ) {
       return new GenericArea( layout, options.allowExponents );
     } );
 
-    var defaultArea = _.find( areas, function( area ) {
+    const defaultArea = _.find( areas, function( area ) {
       return area.layout === DEFAULT_LAYOUT;
     } );
 

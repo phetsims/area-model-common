@@ -80,7 +80,7 @@ define( require => {
      * @returns {string}
      */
     toNoSignRichString: function() {
-      var string = '';
+      let string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
         string += Util.toFixedNumber( Math.abs( this.coefficient ), 2 );
@@ -106,7 +106,7 @@ define( require => {
     toRichString: function( includeBinaryOperation ) {
       assert && assert( typeof includeBinaryOperation === 'boolean' );
 
-      var string = '';
+      let string = '';
 
       if ( includeBinaryOperation ) {
         if ( this.coefficient < 0 ) {
@@ -136,7 +136,7 @@ define( require => {
      * @returns {string}
      */
     getLargestGenericString: function( allowExponents, digitCount ) {
-      var digits = _.range( 0, digitCount ).map( function() {
+      const digits = _.range( 0, digitCount ).map( function() {
         return AreaModelCommonConstants.MEASURING_CHARACTER;
       } ).join( '' );
 

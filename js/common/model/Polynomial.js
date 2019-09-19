@@ -22,14 +22,14 @@ define( require => {
    */
   function Polynomial( terms ) {
 
-    var combinedTerms = [];
-    var sortedTerms = _.sortBy( terms, function( term ) {
+    const combinedTerms = [];
+    const sortedTerms = _.sortBy( terms, function( term ) {
       return -term.power;
     } );
 
     while ( sortedTerms.length ) {
-      var coefficient = 0;
-      var power = sortedTerms[ 0 ].power;
+      let coefficient = 0;
+      const power = sortedTerms[ 0 ].power;
 
       while ( sortedTerms.length && sortedTerms[ 0 ].power === power ) {
         coefficient += sortedTerms[ 0 ].coefficient;
@@ -61,7 +61,7 @@ define( require => {
      * @returns {number}
      */
     getCoefficient: function( power ) {
-      var term = _.find( this.terms, function( term ) {
+      const term = _.find( this.terms, function( term ) {
         return term.power === power;
       } );
       if ( term ) {

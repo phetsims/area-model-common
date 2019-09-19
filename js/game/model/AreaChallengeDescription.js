@@ -27,13 +27,13 @@ define( require => {
   const levelPromptTwoProductsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.twoProducts' );
 
   // shortcuts
-  var EDITABLE = EntryType.EDITABLE;
-  var DYNAMIC = EntryType.DYNAMIC;
-  var GIVEN = EntryType.GIVEN;
+  const EDITABLE = EntryType.EDITABLE;
+  const DYNAMIC = EntryType.DYNAMIC;
+  const GIVEN = EntryType.GIVEN;
 
   // We need the ability to generate random permutations for different numbers of elements. It's simplest if we
   // enumerate the possibilities here.
-  var permutations = {
+  const permutations = {
     1: Permutation.permutations( 1 ),
     2: Permutation.permutations( 2 ),
     3: Permutation.permutations( 3 )
@@ -115,7 +115,7 @@ define( require => {
     return hasAreaEntry + ',' + numProductEntries + ',' + numPartitionEntries;
   }
 
-  var promptMap = {};
+  const promptMap = {};
   promptMap[ getPromptKey( true, 0, 0 ) ] = levelPromptTotalAreaString;
   promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductString;
   promptMap[ getPromptKey( false, 2, 0 ) ] = levelPromptTwoProductsString;
@@ -136,11 +136,11 @@ define( require => {
      * @returns {string}
      */
     getPromptString: function() {
-      var hasAreaEntry = isEditable( this.totalType );
-      var numProductEntries = _.flatten( this.productTypes ).filter( isEditable ).length;
-      var numPartitionEntries = this.partitionTypes.horizontal.concat( this.partitionTypes.vertical ).filter( isEditable ).length;
+      const hasAreaEntry = isEditable( this.totalType );
+      const numProductEntries = _.flatten( this.productTypes ).filter( isEditable ).length;
+      const numPartitionEntries = this.partitionTypes.horizontal.concat( this.partitionTypes.vertical ).filter( isEditable ).length;
 
-      var text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
+      const text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
       assert && assert( text );
 
       return text;
@@ -153,7 +153,7 @@ define( require => {
      * @returns {AreaChallengeDescription}
      */
     getPermutedDescription: function() {
-      var options = {
+      const options = {
         horizontal: this.partitionTypes.horizontal,
         vertical: this.partitionTypes.vertical,
         products: this.productTypes,
@@ -167,24 +167,24 @@ define( require => {
 
       if ( this.shufflable ) {
         // Horizontal shuffle
-        var horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
+        const horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
         options.horizontal = horizontalPermutation.apply( options.horizontal );
         options.products = options.products.map( function( row ) {
           return horizontalPermutation.apply( row );
         } );
 
         // Vertical shuffle
-        var verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
+        const verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
         options.vertical = verticalPermutation.apply( options.vertical );
         options.products = verticalPermutation.apply( options.products );
       }
 
       if ( this.transposable && phet.joist.random.nextBoolean() ) {
-        var tmpPartition = options.horizontal;
+        const tmpPartition = options.horizontal;
         options.horizontal = options.vertical;
         options.vertical = tmpPartition;
 
-        var tmpTotal = options.horizontalTotal;
+        const tmpTotal = options.horizontalTotal;
         options.horizontalTotal = options.verticalTotal;
         options.verticalTotal = tmpTotal;
 

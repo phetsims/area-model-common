@@ -31,7 +31,7 @@ define( require => {
    * @param {Object} [options]
    */
   function ProportionalArea( options ) {
-    var self = this;
+    const self = this;
 
     options = _.extend( {
       maximumSize: 20, // {number} - Maximum size our area can take up
@@ -118,12 +118,12 @@ define( require => {
         } );
     } );
 
-    var horizontalPartitions = [
+    const horizontalPartitions = [
       new Partition( Orientation.HORIZONTAL, AreaModelCommonColorProfile.proportionalWidthProperty ),
       new Partition( Orientation.HORIZONTAL, AreaModelCommonColorProfile.proportionalWidthProperty )
     ];
 
-    var verticalPartitions = [
+    const verticalPartitions = [
       new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty ),
       new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty )
     ];
@@ -151,8 +151,8 @@ define( require => {
             split = null;
           }
 
-          var primaryPartition = self.primaryPartitions.get( orientation );
-          var secondaryPartition = self.secondaryPartitions.get( orientation );
+          const primaryPartition = self.primaryPartitions.get( orientation );
+          const secondaryPartition = self.secondaryPartitions.get( orientation );
 
           secondaryPartition.visibleProperty.value = split !== null;
 

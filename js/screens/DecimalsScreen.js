@@ -24,12 +24,12 @@ define( require => {
    */
   function DecimalsScreen() {
 
-    var options = {
+    const options = {
       name: screenDecimalsString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
     };
 
-    var commonAreaOptions = {
+    const commonAreaOptions = {
       eraseWidth: 0.1,
       eraseHeight: 0.1,
       snapSize: 0.1,

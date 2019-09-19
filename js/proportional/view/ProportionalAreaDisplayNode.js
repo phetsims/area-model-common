@@ -35,9 +35,9 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // a11y strings
-  var areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
-  var areaGridRectanglePatternString = AreaModelCommonA11yStrings.areaGridRectanglePattern.value;
-  var countingNumbersPatternString = AreaModelCommonA11yStrings.countingNumbersPattern.value;
+  const areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
+  const areaGridRectanglePatternString = AreaModelCommonA11yStrings.areaGridRectanglePattern.value;
+  const countingNumbersPatternString = AreaModelCommonA11yStrings.countingNumbersPattern.value;
 
   /**
    * @constructor
@@ -50,7 +50,7 @@ define( require => {
    */
   function ProportionalAreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options, nodeOptions ) {
 
-    var self = this;
+    const self = this;
 
     options = _.extend( {
 
@@ -74,13 +74,13 @@ define( require => {
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, options );
 
-    var countingLabel = new Node( {
+    const countingLabel = new Node( {
       tagName: 'span'
     } );
     this.accessibleParagraphNode.insertChild( 0, countingLabel );
     options.countingVisibleProperty.linkAttribute( countingLabel, 'visible' );
 
-    var areaAccessibleLabel = new Node( {
+    const areaAccessibleLabel = new Node( {
       tagName: 'span'
     } );
     this.accessibleParagraphNode.insertChild( 0, areaAccessibleLabel );
@@ -98,12 +98,12 @@ define( require => {
     this.areaLayer.addChild( this.backgroundNode );
 
     // Grid lines
-    var gridLinesNode = new ProportionalAreaGridLinesNode( areaDisplay.areaProperty, this.modelViewTransformProperty );
+    const gridLinesNode = new ProportionalAreaGridLinesNode( areaDisplay.areaProperty, this.modelViewTransformProperty );
     this.areaLayer.addChild( gridLinesNode );
     options.gridLinesVisibleProperty.linkAttribute( gridLinesNode, 'visible' );
 
     // Active area background
-    var activeAreaBackground = new Rectangle( {
+    const activeAreaBackground = new Rectangle( {
       fill: options.useTileLikeBackground
             ? AreaModelCommonColorProfile.semiTransparentSmallTileProperty
             : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
@@ -121,7 +121,7 @@ define( require => {
       } );
     this.areaLayer.addChild( activeAreaBackground );
 
-    var tilesVisibleProperty = new DerivedProperty(
+    const tilesVisibleProperty = new DerivedProperty(
       [ areaDisplay.tilesAvailableProperty, options.tilesVisibleProperty ],
       function( tilesAvailable, tilesVisible ) {
         return tilesAvailable && tilesVisible;
@@ -141,7 +141,7 @@ define( require => {
       this.modelViewTransformProperty
     ) );
 
-    var countingVisibleProperty = new DerivedProperty(
+    const countingVisibleProperty = new DerivedProperty(
       [ areaDisplay.countingAvailableProperty, options.countingVisibleProperty ],
       function( countingAvailable, countingVisible ) {
         return countingAvailable && countingVisible;
@@ -166,14 +166,14 @@ define( require => {
 
     // Partition labels
     Orientation.VALUES.forEach( function( orientation ) {
-      var partitionsProperties = areaDisplay.partitionsProperties.get( orientation );
+      const partitionsProperties = areaDisplay.partitionsProperties.get( orientation );
 
       // because we will have at most 2
-      var labels = [ 0, 1 ].map( function( index ) {
-        var partitionProperty = new DerivedProperty( [ partitionsProperties ], function( partitions ) {
+      const labels = [ 0, 1 ].map( function( index ) {
+        const partitionProperty = new DerivedProperty( [ partitionsProperties ], function( partitions ) {
           return partitions[ index ];
         } );
-        var label = self.createPartitionLabel(
+        const label = self.createPartitionLabel(
           partitionProperty,
           areaDisplay.secondaryPartitionsProperty.get( orientation ),
           index,
@@ -183,7 +183,7 @@ define( require => {
         return label;
       } );
 
-      var labelListener = self.positionPartitionLabels.bind( self, orientation, labels );
+      const labelListener = self.positionPartitionLabels.bind( self, orientation, labels );
       partitionsProperties.link( function( partitions, oldPartitions ) {
         oldPartitions && oldPartitions.forEach( function( partition ) {
           partition.coordinateRangeProperty.unlink( labelListener );
@@ -223,11 +223,11 @@ define( require => {
      * @returns {PartialProductLabelNode}
      */
     getProductLabel: function( horizontalIndex, verticalIndex ) {
-      var horizontalPartitions = this.areaDisplay.partitionsProperties.horizontal.value;
-      var verticalPartitions = this.areaDisplay.partitionsProperties.vertical.value;
+      const horizontalPartitions = this.areaDisplay.partitionsProperties.horizontal.value;
+      const verticalPartitions = this.areaDisplay.partitionsProperties.vertical.value;
 
       return _.find( this.productLabels, function( productLabel ) {
-        var partitions = productLabel.partitionedAreaProperty.value.partitions;
+        const partitions = productLabel.partitionedAreaProperty.value.partitions;
         return partitions.get( Orientation.HORIZONTAL ) === horizontalPartitions[ horizontalIndex ] &&
                partitions.get( Orientation.VERTICAL ) === verticalPartitions[ verticalIndex ];
       } );
@@ -239,12 +239,12 @@ define( require => {
      * @override
      */
     positionProductLabels: function() {
-      var self = this;
+      const self = this;
 
       // {OrientationPair.<Array.<Range|null>>} - Current view ranges (if non-null) for each orientation
-      var rangesPair = this.areaDisplay.partitionsProperties.map( function( partitionsProperties, orientation ) {
+      const rangesPair = this.areaDisplay.partitionsProperties.map( function( partitionsProperties, orientation ) {
         return partitionsProperties.value.map( function( partition ) {
-          var range = partition.coordinateRangeProperty.value;
+          const range = partition.coordinateRangeProperty.value;
           if ( range === null ) {
             return null;
           }
@@ -258,8 +258,8 @@ define( require => {
       // First, center the labels (if they have defined ranges)
       this.productLabels.forEach( function( productLabel ) {
         rangesPair.forEach( function( ranges, orientation ) {
-          var partition = productLabel.partitionedAreaProperty.value.partitions.get( orientation );
-          var range = ranges[ _.indexOf( self.areaDisplay.partitionsProperties.get( orientation ).value, partition ) ];
+          const partition = productLabel.partitionedAreaProperty.value.partitions.get( orientation );
+          const range = ranges[ _.indexOf( self.areaDisplay.partitionsProperties.get( orientation ).value, partition ) ];
           if ( range ) {
             productLabel[ orientation.coordinate ] = range.getCenter();
           }
@@ -268,33 +268,33 @@ define( require => {
 
       // Handle each row separately
       [ 0, 1 ].forEach( function( verticalIndex ) {
-        var verticalRange = rangesPair.vertical[ verticalIndex ];
+        const verticalRange = rangesPair.vertical[ verticalIndex ];
 
         // Bail if this row isn't shown at all.
         if ( verticalRange === null ) { return; }
 
-        var leftLabel = self.getProductLabel( 0, verticalIndex );
-        var rightLabel = self.getProductLabel( 1, verticalIndex );
+        const leftLabel = self.getProductLabel( 0, verticalIndex );
+        const rightLabel = self.getProductLabel( 1, verticalIndex );
 
         // We may not be able to access labels if we are in a partial state (some properties have changed, but others
         // have not).
         if ( leftLabel && rightLabel ) {
-          var isRightPartitionVisible = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
-          var leftOverlapBump = 22;
-          var labelOverlapBump = 10;
+          const isRightPartitionVisible = rightLabel.partitionedAreaProperty.value.visibleProperty.value;
+          const leftOverlapBump = 22;
+          const labelOverlapBump = 10;
 
-          var hasLeftOverlap = rangesPair.vertical[ 1 ] !== null && leftLabel.left < -5;
-          var canAvoidLeftOverlap = leftLabel.top - leftOverlapBump >= verticalRange.min - 5;
-          var hasLabelOverlap = isRightPartitionVisible && leftLabel.right > rightLabel.left;
-          var canAvoidLabelOverlap = leftLabel.top - labelOverlapBump >= verticalRange.min - 3;
+          const hasLeftOverlap = rangesPair.vertical[ 1 ] !== null && leftLabel.left < -5;
+          const canAvoidLeftOverlap = leftLabel.top - leftOverlapBump >= verticalRange.min - 5;
+          const hasLabelOverlap = isRightPartitionVisible && leftLabel.right > rightLabel.left;
+          const canAvoidLabelOverlap = leftLabel.top - labelOverlapBump >= verticalRange.min - 3;
 
-          var leftOffset = 0;
-          var rightOffset = 0;
+          let leftOffset = 0;
+          let rightOffset = 0;
           if ( hasLeftOverlap && canAvoidLeftOverlap ) {
             leftOffset = leftOverlapBump;
           }
           if ( hasLabelOverlap && canAvoidLabelOverlap ) {
-            var labelOverlapOffset = Math.max( labelOverlapBump, verticalRange.getLength() / 6 );
+            const labelOverlapOffset = Math.max( labelOverlapBump, verticalRange.getLength() / 6 );
             leftOffset = Math.max( leftOffset, labelOverlapOffset );
             rightOffset = labelOverlapOffset;
           }
@@ -318,20 +318,20 @@ define( require => {
      * @param {Node} labels
      */
     positionPartitionLabels: function( orientation, labels ) {
-      var primaryRange = this.areaDisplay.primaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
-      var secondaryRange = this.areaDisplay.secondaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
+      const primaryRange = this.areaDisplay.primaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
+      const secondaryRange = this.areaDisplay.secondaryPartitionsProperty.get( orientation ).value.coordinateRangeProperty.value;
 
-      var min = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.min );
-      var middle = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.max );
-      var max = secondaryRange ? orientation.modelToView( this.modelViewTransformProperty.value, secondaryRange.max ) : 0;
+      const min = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.min );
+      const middle = orientation.modelToView( this.modelViewTransformProperty.value, primaryRange.max );
+      const max = secondaryRange ? orientation.modelToView( this.modelViewTransformProperty.value, secondaryRange.max ) : 0;
 
       labels[ 0 ][ orientation.coordinate ] = ( min + middle ) / 2;
       labels[ 1 ][ orientation.coordinate ] = ( middle + max ) / 2;
 
-      var pad = orientation === Orientation.HORIZONTAL ? 2 : 0;
+      const pad = orientation === Orientation.HORIZONTAL ? 2 : 0;
 
       if ( secondaryRange && labels[ 0 ][ orientation.maxSide ] > labels[ 1 ][ orientation.minSide ] - pad * 2 ) {
-        var center = ( labels[ 0 ][ orientation.maxSide ] + labels[ 1 ][ orientation.minSide ] ) / 2;
+        const center = ( labels[ 0 ][ orientation.maxSide ] + labels[ 1 ][ orientation.minSide ] ) / 2;
 
         labels[ 0 ][ orientation.maxSide ] = center - pad;
         labels[ 1 ][ orientation.minSide ] = center + pad;
@@ -349,12 +349,12 @@ define( require => {
      * @returns {Node}
      */
     createPartitionLabel: function( partitionProperty, secondaryPartitionProperty, index, orientation ) {
-      var text = new Text( '', {
+      const text = new Text( '', {
         font: AreaModelCommonConstants.PROPORTIONAL_PARTITION_READOUT_FONT,
         fill: new DynamicProperty( partitionProperty, { derive: 'colorProperty' } )
       } );
 
-      var labelContainer = new Node( {
+      const labelContainer = new Node( {
         children: [ text ]
       } );
 
@@ -379,8 +379,8 @@ define( require => {
         labelContainer.left = AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET.x + 6;
       }
 
-      var partitionVisibleProperty = new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } );
-      var secondaryPartitionSizeProperty = new DynamicProperty( secondaryPartitionProperty, { derive: 'sizeProperty' } );
+      const partitionVisibleProperty = new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } );
+      const secondaryPartitionSizeProperty = new DynamicProperty( secondaryPartitionProperty, { derive: 'sizeProperty' } );
 
       Property.multilink(
         [ partitionVisibleProperty, secondaryPartitionSizeProperty ],

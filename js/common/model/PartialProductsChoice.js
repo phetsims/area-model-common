@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var PartialProductsChoice = {
+  const PartialProductsChoice = {
     HIDDEN: 'HIDDEN', // e.g. nothing shown
     PRODUCTS: 'PRODUCTS', // e.g. '52'
     FACTORS: 'FACTORS' // e.g. '26 x 2'

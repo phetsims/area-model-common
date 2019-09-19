@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var AreaCalculationChoice = {
+  const AreaCalculationChoice = {
     // Don't show the calculation panel/box at all
     HIDDEN: 'HIDDEN',
 

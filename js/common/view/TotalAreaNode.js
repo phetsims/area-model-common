@@ -31,7 +31,7 @@ define( require => {
   const areaString = require( 'string!AREA_MODEL_COMMON/area' );
 
   // a11y strings
-  var areaEqualsPatternString = AreaModelCommonA11yStrings.areaEqualsPattern.value;
+  const areaEqualsPatternString = AreaModelCommonA11yStrings.areaEqualsPattern.value;
 
   /**
    * @constructor
@@ -43,14 +43,14 @@ define( require => {
    * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */
   function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
-    var self = this;
+    const self = this;
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
-    var areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
+    const areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
       font: AreaModelCommonConstants.TOTAL_AREA_VALUE_FONT
     } );
 
-    var areaNode;
+    let areaNode;
     if ( isProportional ) {
 
       // Has numeric display, so it doesn't need maxWidth
@@ -88,7 +88,7 @@ define( require => {
 
     // Update the text.
     totalAreaProperty.link( function( polynomial ) {
-      var labelString = polynomial === null ? '?' : polynomial.toRichString();
+      const labelString = polynomial === null ? '?' : polynomial.toRichString();
       areaText.text = labelString;
       self.innerContent = StringUtils.fillIn( areaEqualsPatternString, {
         area: labelString

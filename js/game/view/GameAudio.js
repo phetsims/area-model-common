@@ -22,7 +22,7 @@ define( require => {
    * @param {GameAreaModel} model
    */
   function GameAudio( model ) {
-    var audioPlayer = new GameAudioPlayer();
+    const audioPlayer = new GameAudioPlayer();
 
     model.stateProperty.link( function( state, oldState ) {
       // If we just moved to/from level section (outside of a level), don't fire sounds.
@@ -35,7 +35,7 @@ define( require => {
         audioPlayer.wrongAnswer();
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
-        var score = model.currentLevelProperty.value.scoreProperty.value;
+        const score = model.currentLevelProperty.value.scoreProperty.value;
         if ( score === AreaModelCommonConstants.PERFECT_SCORE ) {
           audioPlayer.gameOverPerfectScore();
         }

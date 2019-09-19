@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var EntryDisplayType = {
+  const EntryDisplayType = {
     EDITABLE: 'EDITABLE',
     READOUT: 'READOUT',
     HIDDEN: 'HIDDEN'

@@ -95,7 +95,7 @@ define( require => {
      * @returns {Node}
      */
     createFactorsNode: function( model, decimalPlaces ) {
-      var dynamicProperties = OrientationPair.create( function( orientation ) {
+      const dynamicProperties = OrientationPair.create( function( orientation ) {
         return new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
           return area.displayProperties.get( orientation );
         } ) );

@@ -35,7 +35,7 @@ define( require => {
    * @param {Object} config
    */
   function PoolableLayerNode( config ) {
-    var self = this;
+    const self = this;
 
     config = _.extend( {
       // required
@@ -53,20 +53,20 @@ define( require => {
 
     Node.call( this );
 
-    var usedArray = config.usedArray;
-    var unusedArray = config.unusedArray;
+    const usedArray = config.usedArray;
+    const unusedArray = config.unusedArray;
 
     config.arrayProperty.link( function( items ) {
 
       // Unuse all of the item nodes (set their property to null, hiding them, and put them in the unused array)
       while ( usedArray.length ) {
-        var oldItemNode = usedArray.pop();
+        const oldItemNode = usedArray.pop();
         config.getItemProperty( oldItemNode ).value = null;
         unusedArray.push( oldItemNode );
       }
 
       items.forEach( function( item ) {
-        var itemNode;
+        let itemNode;
 
         // Grab one from the pool
         if ( unusedArray.length ) {

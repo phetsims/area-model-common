@@ -79,7 +79,7 @@ define( require => {
      * @returns {OrientationPair.<Property.<*>>}
      */
     wrapOrientationPair: function( map, options ) {
-      var self = this;
+      const self = this;
 
       return OrientationPair.create( function( orientation ) {
         return self.wrapObject( function( area ) {
@@ -100,7 +100,7 @@ define( require => {
      * @returns {OrientationPair.<Property.<*>>}
      */
     wrapOrientationPairProperty: function( map, options ) {
-      var self = this;
+      const self = this;
 
       return OrientationPair.create( function( orientation ) {
         return self.wrapProperty( function( area ) {

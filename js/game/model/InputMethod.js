@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var InputMethod = {
+  const InputMethod = {
     CONSTANT: 'CONSTANT',
     TERM: 'TERM',
     POLYNOMIAL_2: 'POLYNOMIAL_2', // with x^2

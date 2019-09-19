@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var AreaChallengeType = {
+  const AreaChallengeType = {
     NUMBERS: 'NUMBERS',
     VARIABLES: 'VARIABLES'
   };

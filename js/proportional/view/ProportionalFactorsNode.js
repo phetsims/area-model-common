@@ -31,11 +31,11 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // a11y strings
-  var factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
-  var horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
-  var horizontalPickerDescriptionString = AreaModelCommonA11yStrings.horizontalPickerDescription.value;
-  var verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
-  var verticalPickerDescriptionString = AreaModelCommonA11yStrings.verticalPickerDescription.value;
+  const factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
+  const horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
+  const horizontalPickerDescriptionString = AreaModelCommonA11yStrings.horizontalPickerDescription.value;
+  const verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
+  const verticalPickerDescriptionString = AreaModelCommonA11yStrings.verticalPickerDescription.value;
 
   /**
    * @constructor
@@ -48,7 +48,7 @@ define( require => {
   function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
     Node.call( this );
 
-    var self = this;
+    const self = this;
 
     if ( AreaModelCommonQueryParameters.rawMath ) {
       self.tagName = 'div';
@@ -60,8 +60,8 @@ define( require => {
       } );
     }
     else {
-      var ns = 'http://www.w3.org/1998/Math/MathML';
-      var verticalNode = new Node( {
+      const ns = 'http://www.w3.org/1998/Math/MathML';
+      const verticalNode = new Node( {
         // a11y
         tagName: 'mn',
         accessibleNamespace: ns
@@ -69,7 +69,7 @@ define( require => {
       activeTotalProperties.vertical.link( function( verticalTotal ) {
         verticalNode.innerContent = '' + verticalTotal;
       } );
-      var horizontalNode = new Node( {
+      const horizontalNode = new Node( {
         // a11y
         tagName: 'mn',
         accessibleNamespace: ns
@@ -78,7 +78,7 @@ define( require => {
         horizontalNode.innerContent = '' + horizontalTotal;
       } );
 
-      var mathNode = new Node( {
+      const mathNode = new Node( {
         tagName: 'math',
         accessibleNamespace: ns,
         children: [
@@ -125,17 +125,17 @@ define( require => {
       assert && assert( Orientation.isOrientation( orientation ) );
 
       // {Property.<Property<Polynomial|null>>}
-      var currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
+      const currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
         return area.activeTotalProperties.get( orientation );
       } );
 
       // {Property.<Polynomial|null>}
-      var bidirectionalProperty = new DynamicProperty( currentTotalProperty, {
+      const bidirectionalProperty = new DynamicProperty( currentTotalProperty, {
         bidirectional: true
       } );
 
       // {Property.<Range>}
-      var rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
+      const rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
         return new Range( area.minimumSize, area.maximumSize );
       } );
 

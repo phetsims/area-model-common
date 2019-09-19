@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var PartitionLineChoice = {
+  const PartitionLineChoice = {
     NONE: 'NONE', // No partition lines
     ONE: 'ONE', // One at a time (toggles between the two)
     BOTH: 'BOTH' // Both partition lines available at all times

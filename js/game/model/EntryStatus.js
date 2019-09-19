@@ -11,7 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var EntryStatus = {
+  const EntryStatus = {
     NORMAL: 'NORMAL',
     DIRTY: 'DIRTY', // needs to be interacted with before submitting
     INCORRECT: 'INCORRECT' // was wrong after submission

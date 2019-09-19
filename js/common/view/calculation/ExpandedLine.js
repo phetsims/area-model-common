@@ -30,11 +30,11 @@ define( require => {
   function ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) {
     CalculationLine.call( this, CalculationLine.EXPANDED_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
-    var isHorizontalSingle = horizontalTerms.length === 1;
-    var isVerticalSingle = verticalTerms.length === 1;
+    const isHorizontalSingle = horizontalTerms.length === 1;
+    const isVerticalSingle = verticalTerms.length === 1;
 
-    var horizontalNode = this.sumOrientedTerms( horizontalTerms, Orientation.HORIZONTAL );
-    var verticalNode = this.sumOrientedTerms( verticalTerms, Orientation.VERTICAL );
+    let horizontalNode = this.sumOrientedTerms( horizontalTerms, Orientation.HORIZONTAL );
+    let verticalNode = this.sumOrientedTerms( verticalTerms, Orientation.VERTICAL );
 
     if ( !isHorizontalSingle || allowExponents ) {
       horizontalNode = this.parentheses( horizontalNode );
@@ -47,7 +47,7 @@ define( require => {
       this.node = this.multiplyX( verticalNode, horizontalNode );
     }
     else {
-      var spacing = ( isHorizontalSingle || isVerticalSingle )
+      const spacing = ( isHorizontalSingle || isVerticalSingle )
                     ? AreaModelCommonConstants.CALCULATION_TERM_PAREN_PADDING
                     : AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING;
       this.node = this.group( [ verticalNode, horizontalNode ], spacing );

@@ -29,9 +29,9 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // a11y strings
-  var hidePartialProductsString = AreaModelCommonA11yStrings.hidePartialProducts.value;
-  var showPartialProductsString = AreaModelCommonA11yStrings.showPartialProducts.value;
-  var showPartialProductFactorsString = AreaModelCommonA11yStrings.showPartialProductFactors.value;
+  const hidePartialProductsString = AreaModelCommonA11yStrings.hidePartialProducts.value;
+  const showPartialProductsString = AreaModelCommonA11yStrings.showPartialProducts.value;
+  const showPartialProductFactorsString = AreaModelCommonA11yStrings.showPartialProductFactors.value;
 
   /**
    * @constructor
@@ -43,7 +43,7 @@ define( require => {
   function PartialProductRadioButtonGroup( model, selectionButtonAlignGroup ) {
 
     // hardcoded strings since they shouldn't be translatable
-    var templateLabels = OrientationPair.create( function( orientation ) {
+    const templateLabels = OrientationPair.create( function( orientation ) {
       return new Text( orientation === Orientation.HORIZONTAL ? 'b' : 'a', {
         font: AreaModelCommonConstants.SYMBOL_FONT,
         fill: new DerivedProperty(
@@ -55,11 +55,11 @@ define( require => {
     } );
 
     // Both are built here so it is a consistent size across screens.
-    var iconGroup = new AlignGroup();
-    var exponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createExponentIcon( templateLabels ), {
+    const iconGroup = new AlignGroup();
+    const exponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createExponentIcon( templateLabels ), {
       group: iconGroup
     } );
-    var noExponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createNonExponentIcon( templateLabels ), {
+    const noExponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createNonExponentIcon( templateLabels ), {
       group: iconGroup
     } );
 

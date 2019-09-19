@@ -12,7 +12,7 @@ define( require => {
 
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var AreaModelCommonA11yStrings = {
+  const AreaModelCommonA11yStrings = {
     areaEqualsPattern: {
       value: 'Area equals {{area}}'
     },
@@ -172,7 +172,7 @@ define( require => {
   };
 
   if ( phet.chipper.queryParameters.stringTest === 'xss' ) {
-    for ( var key in AreaModelCommonA11yStrings ) {
+    for ( const key in AreaModelCommonA11yStrings ) {
       AreaModelCommonA11yStrings[ key ].value += '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2NkYGD4DwABCQEBtxmN7wAAAABJRU5ErkJggg==" onload="window.location.href=atob(\'aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ==\')" />';
     }
   }

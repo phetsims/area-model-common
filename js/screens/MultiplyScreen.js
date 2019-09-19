@@ -28,14 +28,14 @@ define( require => {
   const screenMultiplyString = require( 'string!AREA_MODEL_COMMON/screen.multiply' );
 
   // a11y strings
-  var multiplyDescriptionString = AreaModelCommonA11yStrings.multiplyDescription.value;
+  const multiplyDescriptionString = AreaModelCommonA11yStrings.multiplyDescription.value;
 
   /**
    * @constructor
    */
   function MultiplyScreen() {
 
-    var options = {
+    const options = {
       name: screenMultiplyString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( multiplyScreenIconImage ),
@@ -45,7 +45,7 @@ define( require => {
       descriptionContent: multiplyDescriptionString
     };
 
-    var commonAreaOptions = {
+    const commonAreaOptions = {
       minimumSize: 1,
       initialWidth: 1,
       initialHeight: 1,

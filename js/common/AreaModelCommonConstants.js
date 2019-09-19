@@ -16,8 +16,8 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;
-  var NORMAL_EDIT_FONT_SIZE = 18;
+  const LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;
+  const NORMAL_EDIT_FONT_SIZE = 18;
 
   return areaModelCommon.register( 'AreaModelCommonConstants', {
 

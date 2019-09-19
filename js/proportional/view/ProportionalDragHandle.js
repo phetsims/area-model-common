@@ -31,13 +31,13 @@ define( require => {
   const Vector2Property = require( 'DOT/Vector2Property' );
 
   // a11y strings
-  var dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
-  var dragHandleDescriptionPatternString = AreaModelCommonA11yStrings.dragHandleDescriptionPattern.value;
+  const dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
+  const dragHandleDescriptionPatternString = AreaModelCommonA11yStrings.dragHandleDescriptionPattern.value;
 
   // constants
-  var DRAG_OFFSET = 8;
-  var DRAG_RADIUS = 10.5;
-  var CIRCLE_DRAG_OFFSET = DRAG_OFFSET + Math.sqrt( 2 ) / 2 * DRAG_RADIUS;
+  const DRAG_OFFSET = 8;
+  const DRAG_RADIUS = 10.5;
+  const CIRCLE_DRAG_OFFSET = DRAG_OFFSET + Math.sqrt( 2 ) / 2 * DRAG_RADIUS;
 
   /**
    * @constructor
@@ -49,19 +49,19 @@ define( require => {
    */
   function ProportionalDragHandle( areaProperty, activeTotalProperties, modelViewTransformProperty ) {
 
-    var self = this;
+    const self = this;
 
     // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
-    var draggedProperty = new BooleanProperty( false );
+    const draggedProperty = new BooleanProperty( false );
 
     // The current view "offset" from where the pointer is compared to the point it is controlling
-    var offsetProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    const offsetProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
-    var line = new Line( {
+    const line = new Line( {
       stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
     } );
 
-    var circle = new Circle( DRAG_RADIUS, {
+    const circle = new Circle( DRAG_RADIUS, {
       touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
       focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
       fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
@@ -87,22 +87,22 @@ define( require => {
       } );
     } );
 
-    var initialOffset;
+    let initialOffset;
 
     function updateOffsetProperty( event, listener ) {
-      var area = areaProperty.value;
-      var modelViewTransform = modelViewTransformProperty.value;
+      const area = areaProperty.value;
+      const modelViewTransform = modelViewTransformProperty.value;
 
       // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
       // actually is (and we want it to be efficient).
-      var pointerViewPoint = listener.parentPoint;
-      var viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET ).minus( initialOffset );
-      var modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
+      const pointerViewPoint = listener.parentPoint;
+      const viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET ).minus( initialOffset );
+      const modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
 
-      var snapSizeInverse = 1 / area.snapSize;
+      const snapSizeInverse = 1 / area.snapSize;
 
-      var width = Util.roundSymmetric( modelPoint.x * snapSizeInverse ) / snapSizeInverse;
-      var height = Util.roundSymmetric( modelPoint.y * snapSizeInverse ) / snapSizeInverse;
+      let width = Util.roundSymmetric( modelPoint.x * snapSizeInverse ) / snapSizeInverse;
+      let height = Util.roundSymmetric( modelPoint.y * snapSizeInverse ) / snapSizeInverse;
 
       width = Util.clamp( width, area.minimumSize, area.maximumSize );
       height = Util.clamp( height, area.minimumSize, area.maximumSize );
@@ -116,7 +116,7 @@ define( require => {
       );
     }
 
-    var dragListener = new DragListener( {
+    const dragListener = new DragListener( {
       targetNode: this,
       applyOffset: false,
       start: function( event, listener ) {
@@ -139,7 +139,7 @@ define( require => {
       ]
     } );
 
-    var locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+    const locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     function updateLocationProperty() {
       locationProperty.value = new Vector2(
@@ -156,7 +156,7 @@ define( require => {
     activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
     activeTotalProperties.vertical.lazyLink( updateLocationProperty );
 
-    var keyboardListener;
+    let keyboardListener;
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
       if ( keyboardListener ) {
         circle.interruptInput();
@@ -168,8 +168,8 @@ define( require => {
         shiftDownDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
         transform: modelViewTransform,
         drag: function( delta ) {
-          var width = activeTotalProperties.horizontal.value;
-          var height = activeTotalProperties.vertical.value;
+          let width = activeTotalProperties.horizontal.value;
+          let height = activeTotalProperties.vertical.value;
 
           width += delta.x;
           height += delta.y;
@@ -190,7 +190,7 @@ define( require => {
     // Apply offsets while dragging for a smoother experience.
     // See https://github.com/phetsims/area-model-common/issues/3
     Property.multilink( [ draggedProperty, offsetProperty ], function( dragged, offset ) {
-      var combinedOffset = 0;
+      let combinedOffset = 0;
       if ( dragged ) {
         // Project to the line y=x, and limit for when the user goes to 1x1 or the max.
         combinedOffset = Util.clamp( ( offset.x + offset.y ) / 2, -10, 10 );

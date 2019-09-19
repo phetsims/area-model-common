@@ -59,28 +59,28 @@ define( require => {
     Node.call( this );
 
     // Helpful to break out some values
-    var entryProperty = config.entryProperty;
-    var gameStateProperty = config.gameStateProperty;
-    var activeEntryProperty = config.activeEntryProperty;
-    var colorProperty = config.colorProperty;
-    var allowExponentsProperty = config.allowExponentsProperty;
-    var orientation = config.orientation;
+    const entryProperty = config.entryProperty;
+    const gameStateProperty = config.gameStateProperty;
+    const activeEntryProperty = config.activeEntryProperty;
+    const colorProperty = config.colorProperty;
+    const allowExponentsProperty = config.allowExponentsProperty;
+    const orientation = config.orientation;
 
-    var valueProperty = new DynamicProperty( entryProperty, {
+    const valueProperty = new DynamicProperty( entryProperty, {
       derive: 'valueProperty',
       bidirectional: true
     } );
-    var digitsProperty = new DerivedProperty( [ entryProperty ], _.property( 'digits' ) );
-    var statusProperty = new DynamicProperty( entryProperty, {
+    const digitsProperty = new DerivedProperty( [ entryProperty ], _.property( 'digits' ) );
+    const statusProperty = new DynamicProperty( entryProperty, {
       derive: 'statusProperty'
     } );
-    var isActiveProperty = new DerivedProperty(
+    const isActiveProperty = new DerivedProperty(
       [ entryProperty, activeEntryProperty ],
       function( entry, activeEntry ) {
         return entry === activeEntry;
       } );
 
-    var readoutText = new RichText( '?', {
+    const readoutText = new RichText( '?', {
       fill: colorProperty,
       font: config.labelFont
     } );
@@ -91,7 +91,7 @@ define( require => {
       readoutText.center = Vector2.ZERO;
     } );
 
-    var textColorProperty = new DerivedProperty(
+    const textColorProperty = new DerivedProperty(
       [ statusProperty, colorProperty, AreaModelCommonColorProfile.errorStatusProperty ],
       function( highlight, color, errorColor ) {
         if ( highlight === EntryStatus.INCORRECT ) {
@@ -101,7 +101,7 @@ define( require => {
           return color;
         }
       } );
-    var borderColorProperty = new DerivedProperty( [
+    const borderColorProperty = new DerivedProperty( [
       statusProperty,
       colorProperty,
       AreaModelCommonColorProfile.errorStatusProperty,
@@ -117,7 +117,7 @@ define( require => {
         return errorColor;
       }
     } );
-    var termEditNode = new TermEditNode( new Property( orientation ), valueProperty, {
+    const termEditNode = new TermEditNode( new Property( orientation ), valueProperty, {
       textColorProperty: textColorProperty,
       borderColorProperty: borderColorProperty,
       isActiveProperty: isActiveProperty,
@@ -148,7 +148,7 @@ define( require => {
     allowExponentsProperty.link( centerTermEditNode );
 
     Property.multilink( [ entryProperty, gameStateProperty ], function( entry, gameState ) {
-      var isReadoutOverride = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
+      const isReadoutOverride = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
       readoutText.visible = entry.displayType === EntryDisplayType.READOUT ||
                             ( isReadoutOverride && entry.displayType === EntryDisplayType.EDITABLE );
       termEditNode.visible = entry.displayType === EntryDisplayType.EDITABLE && !isReadoutOverride;

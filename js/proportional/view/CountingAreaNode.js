@@ -20,7 +20,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
+  const scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
 
   /**
    * @constructor
@@ -34,7 +34,7 @@ define( require => {
 
     Node.call( this );
 
-    var self = this;
+    const self = this;
 
     // @private {OrientationPair.<Property.<number>>}
     this.activeTotalProperties = activeTotalProperties;
@@ -75,7 +75,7 @@ define( require => {
      * @returns {Text}
      */
     createTextNode: function( number ) {
-      var text = new Text( number, {
+      const text = new Text( number, {
         font: AreaModelCommonConstants.COUNTING_FONT,
         fill: AreaModelCommonColorProfile.countingLabelProperty
       } );
@@ -92,7 +92,7 @@ define( require => {
      * @returns {Text}
      */
     getTextNode: function( number ) {
-      var text = this.textNodes[ number - 1 ];
+      let text = this.textNodes[ number - 1 ];
       if ( !text ) {
         text = this.createTextNode( number );
       }
@@ -105,7 +105,7 @@ define( require => {
      * @private
      */
     update: function() {
-      var modelViewTransform = this.modelViewTransformProperty.value;
+      const modelViewTransform = this.modelViewTransformProperty.value;
 
       // Ignore updates if we are not dirty
       if ( !this.dirty ) { return; }
@@ -114,20 +114,20 @@ define( require => {
       if ( !this.countingVisibleProperty.value ) { return; }
 
       // Coordinate mapping into the view
-      var modelToViewX = modelViewTransform.modelToViewX.bind( modelViewTransform );
-      var modelToViewY = modelViewTransform.modelToViewY.bind( modelViewTransform );
+      const modelToViewX = modelViewTransform.modelToViewX.bind( modelViewTransform );
+      const modelToViewY = modelViewTransform.modelToViewY.bind( modelViewTransform );
 
-      var width = this.activeTotalProperties.horizontal.value;
-      var height = this.activeTotalProperties.vertical.value;
+      const width = this.activeTotalProperties.horizontal.value;
+      const height = this.activeTotalProperties.vertical.value;
 
-      var cellNumber = 1;
-      for ( var row = 0; row < height; row++ ) {
-        var rowCenter = modelToViewY( row + 0.5 );
+      let cellNumber = 1;
+      for ( let row = 0; row < height; row++ ) {
+        const rowCenter = modelToViewY( row + 0.5 );
 
-        for ( var col = 0; col < width; col++ ) {
-          var colCenter = modelToViewX( col + 0.5 );
+        for ( let col = 0; col < width; col++ ) {
+          const colCenter = modelToViewX( col + 0.5 );
 
-          var text = this.getTextNode( cellNumber );
+          const text = this.getTextNode( cellNumber );
           text.center = scratchVector.setXY( colCenter, rowCenter );
           text.visible = true;
 

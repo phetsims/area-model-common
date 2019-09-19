@@ -34,7 +34,7 @@ define( require => {
    * @param {AreaChallengeDescription} description
    */
   function AreaChallenge( description ) {
-    var self = this;
+    const self = this;
 
     // Reassign a permuted version so we don't have a chance to screw up referencing the wrong thing
     description = description.getPermutedDescription();
@@ -96,9 +96,9 @@ define( require => {
       // The number of allowed digits in entry. Basically it's the sum of vertical and horizontal (multiplication sums
       // the number of digits). The far-right/bototm partition gets 1 digit, and successively higher numbers of digits
       // are used for consecutive partitions.
-      var numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
-      var type = description.productTypes[ verticalIndex ][ horizontalIndex ];
-      var entry = new Entry( size, {
+      const numbersDigits = description.partitionTypes.vertical.length + description.partitionTypes.horizontal.length - verticalIndex - horizontalIndex;
+      const type = description.productTypes[ verticalIndex ][ horizontalIndex ];
+      const entry = new Entry( size, {
         type: type,
         displayType: EntryType.toDisplayType( type ),
         inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
@@ -123,7 +123,7 @@ define( require => {
 
     // We need at least a certain number of partitions to reach x^2 in the total (either at least an x^2 on one side,
     // or two x-powers on each side).
-    var hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
+    const hasXSquaredTotal = ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) >= 4;
 
     // @public {OrientationPair.<Polynomial>}
     this.totals = OrientationPair.create( function( orientation ) {
@@ -138,7 +138,7 @@ define( require => {
     // @public {Polynomial}
     this.total = this.totals.horizontal.times( this.totals.vertical );
 
-    var totalOptions = {
+    const totalOptions = {
       inputMethod: description.numberOrVariable( InputMethod.CONSTANT, hasXSquaredTotal ? InputMethod.POLYNOMIAL_2 : InputMethod.POLYNOMIAL_1 ),
       numberOfDigits: ( description.allowExponents ? 2 : ( this.partitionSizes.horizontal.length + this.partitionSizes.vertical.length ) )
     };
@@ -176,25 +176,25 @@ define( require => {
     this.totalProperty = new DerivedProperty(
       [ this.totalConstantEntry.valueProperty, this.totalXEntry.valueProperty, this.totalXSquaredEntry.valueProperty ],
       function( constant, x, xSquared ) {
-        var terms = [ constant, x, xSquared ].filter( function( term ) {
+        const terms = [ constant, x, xSquared ].filter( function( term ) {
           return term !== null;
         } );
         return terms.length ? new Polynomial( terms ) : null;
       } );
 
     // All of the entries for the challenge - Not including the polynomial "total" coefficient entries
-    var mainEntries = this.partitionSizeEntries.horizontal
+    const mainEntries = this.partitionSizeEntries.horizontal
       .concat( this.partitionSizeEntries.vertical )
       .concat( _.flatten( this.partialProductSizeEntries ) );
-    var checkingNotificationProperties = mainEntries.map( _.property( 'valueProperty' ) )
+    const checkingNotificationProperties = mainEntries.map( _.property( 'valueProperty' ) )
       .concat( this.totalCoefficientEntries.map( _.property( 'statusProperty' ) ) );
 
     // @public {Property.<boolean>} - Whether the check button should be enabled
     this.allowCheckingProperty = new DerivedProperty( checkingNotificationProperties, function() {
-      var allDirtyCoefficients = _.every( self.totalCoefficientEntries, function( entry ) {
+      const allDirtyCoefficients = _.every( self.totalCoefficientEntries, function( entry ) {
         return entry.type === EntryType.EDITABLE && entry.statusProperty.value === EntryStatus.DIRTY;
       } );
-      var hasNullMain = _.some( mainEntries, function( entry ) {
+      const hasNullMain = _.some( mainEntries, function( entry ) {
         return entry.valueProperty.value === null && entry.type === EntryType.EDITABLE;
       } );
       return !hasNullMain && !allDirtyCoefficients;
@@ -207,12 +207,12 @@ define( require => {
     // Now hook up dynamic parts, setting their values to null
     Orientation.VALUES.forEach( function( orientation ) {
       if ( description.dimensionTypes.get( orientation ) === EntryType.DYNAMIC ) {
-        var nonErrorProperties = self.nonErrorPartitionSizeProperties.get( orientation );
+        const nonErrorProperties = self.nonErrorPartitionSizeProperties.get( orientation );
         Property.multilink( nonErrorProperties, function() {
-          var terms = _.map( nonErrorProperties, 'value' ).filter( function( term ) {
+          const terms = _.map( nonErrorProperties, 'value' ).filter( function( term ) {
             return term !== null;
           } );
-          var lostATerm = terms.length !== nonErrorProperties.length;
+          const lostATerm = terms.length !== nonErrorProperties.length;
           self.totalProperties.get( orientation ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;
         } );
       }
@@ -233,9 +233,9 @@ define( require => {
      * @returns {Array.<Entry>}
      */
     getIncorrectEntries: function() {
-      var self = this;
+      const self = this;
 
-      var incorrectEntries = [];
+      const incorrectEntries = [];
 
       function compareEntry( entry, expectedValue ) {
         if ( entry.valueProperty.value === null || !entry.valueProperty.value.equals( expectedValue ) ) {
@@ -291,7 +291,7 @@ define( require => {
      * @returns {boolean}
      */
     nonUniqueHorizontalMatches: function() {
-      var actual = this.swappableEntries.horizontal.valueProperty.value;
+      const actual = this.swappableEntries.horizontal.valueProperty.value;
       return actual !== null && ( actual.equals( this.swappableSizes.horizontal ) || actual.equals( this.swappableSizes.vertical ) );
     },
 
@@ -302,7 +302,7 @@ define( require => {
      * @returns {boolean}
      */
     nonUniqueVerticalMatches: function() {
-      var actual = this.swappableEntries.vertical.valueProperty.value;
+      const actual = this.swappableEntries.vertical.valueProperty.value;
 
       return actual !== null && ( actual.equals( this.swappableSizes.horizontal ) || actual.equals( this.swappableSizes.vertical ) );
     },
@@ -315,11 +315,11 @@ define( require => {
      * @returns {boolean}
      */
     hasNonUniqueMatch: function() {
-      var expected1 = this.swappableSizes.horizontal;
-      var expected2 = this.swappableSizes.vertical;
+      const expected1 = this.swappableSizes.horizontal;
+      const expected2 = this.swappableSizes.vertical;
 
-      var actual1 = this.swappableEntries.horizontal.valueProperty.value;
-      var actual2 = this.swappableEntries.vertical.valueProperty.value;
+      const actual1 = this.swappableEntries.horizontal.valueProperty.value;
+      const actual2 = this.swappableEntries.vertical.valueProperty.value;
 
       return actual1 !== null && actual2 !== null &&
              ( ( actual1.equals( expected1 ) && actual2.equals( expected2 ) ) ||
@@ -355,24 +355,24 @@ define( require => {
      * @public
      */
     showAnswers: function() {
-      var self = this;
+      const self = this;
 
       // Match solutions for 6-1 variables, see https://github.com/phetsims/area-model-common/issues/42
       if ( !this.description.unique ) {
-        var reversed = false;
+        let reversed = false;
 
-        var expected1 = this.swappableSizes.horizontal;
-        var expected2 = this.swappableSizes.vertical;
+        const expected1 = this.swappableSizes.horizontal;
+        const expected2 = this.swappableSizes.vertical;
 
-        var actual1Entry = this.swappableEntries.horizontal;
-        var actual2Entry = this.swappableEntries.vertical;
+        const actual1Entry = this.swappableEntries.horizontal;
+        const actual2Entry = this.swappableEntries.vertical;
 
-        var actual1 = actual1Entry.valueProperty.value;
-        var actual2 = actual2Entry.valueProperty.value;
+        const actual1 = actual1Entry.valueProperty.value;
+        const actual2 = actual2Entry.valueProperty.value;
 
         if ( actual1 && actual2 ) {
-          var matches1 = actual1.equals( expected1 ) || actual1.equals( expected2 );
-          var matches2 = actual2.equals( expected1 ) || actual2.equals( expected2 );
+          const matches1 = actual1.equals( expected1 ) || actual1.equals( expected2 );
+          const matches2 = actual2.equals( expected1 ) || actual2.equals( expected2 );
 
           if ( matches1 !== matches2 && ( actual1.equals( expected2 ) || actual2.equals( expected1 ) ) ) {
             reversed = true;
@@ -426,12 +426,12 @@ define( require => {
      * @returns {number} - The amount of score gained
      */
     check: function() {
-      var scoreIncrease = 0;
+      let scoreIncrease = 0;
 
-      var badEntries = this.getIncorrectEntries();
-      var isCorrect = badEntries.length === 0;
+      const badEntries = this.getIncorrectEntries();
+      const isCorrect = badEntries.length === 0;
 
-      var currentState = this.stateProperty.value;
+      const currentState = this.stateProperty.value;
 
       if ( !isCorrect ) {
         badEntries.forEach( function( badEntry ) {
@@ -476,7 +476,7 @@ define( require => {
      * @returns {Array.<Term>}
      */
     generatePartitionTerms: function( quantity, allowExponents ) {
-      var maxPower = quantity - 1;
+      const maxPower = quantity - 1;
       return _.range( maxPower, -1 ).map( function( power ) {
         return AreaChallenge.generateTerm( power, maxPower, quantity, allowExponents );
       } );
@@ -500,11 +500,11 @@ define( require => {
           return new Term( 1, power );
         }
         else {
-          var sign = phet.joist.random.nextBoolean() ? 1 : -1;
+          const sign = phet.joist.random.nextBoolean() ? 1 : -1;
 
           // Exclude a 1 if our length is 1 (so that we don't just have a single 1 as a dimensinon, so there is the
           // ability to have a partition line)
-          var digit = phet.joist.random.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
+          const digit = phet.joist.random.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
           return new Term( sign * digit, power );
         }
       }

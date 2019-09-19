@@ -20,7 +20,7 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // constants
-  var TEST_FONT = new PhetFont( 12 );
+  const TEST_FONT = new PhetFont( 12 );
 
   /**
    * @constructor
@@ -37,7 +37,7 @@ define( require => {
       initialAreaBoxExpanded: true
     }, options );
 
-    var areas = areaOptionObjects.map( function( options ) {
+    const areas = areaOptionObjects.map( function( options ) {
       return new ProportionalArea( options );
     } );
 
@@ -77,13 +77,13 @@ define( require => {
      * @returns {string}
      */
     getMaximumAreaString: function() {
-      var maxString = '9';
-      var maxLength = 0;
+      let maxString = '9';
+      let maxLength = 0;
       this.areas.forEach( function( area ) {
-        var representativeSize = area.snapSize + area.maximumSize;
+        const representativeSize = area.snapSize + area.maximumSize;
         // Round because of floating point precision
-        var string = '' + Util.toFixedNumber( representativeSize * representativeSize, 8 ); // Square for area
-        var length = TextBounds.approximateCanvasWidth( TEST_FONT, string );
+        const string = '' + Util.toFixedNumber( representativeSize * representativeSize, 8 ); // Square for area
+        const length = TextBounds.approximateCanvasWidth( TEST_FONT, string );
         if ( length > maxLength ) {
           maxLength = length;
           maxString = string;

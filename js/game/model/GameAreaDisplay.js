@@ -28,11 +28,11 @@ define( require => {
    * @param {Property.<AreaChallenge|null>} areaChallengeProperty
    */
   function GameAreaDisplay( areaChallengeProperty ) {
-    var self = this;
+    const self = this;
 
     // This placeholder will never be seen in the user interface, it is to help make sure areaChallengeProperty is never
     // null, see below.
-    var placeholderChallenge = new AreaChallenge( AreaChallengeDescription.LEVEL_1_NUMBERS_1 );
+    const placeholderChallenge = new AreaChallenge( AreaChallengeDescription.LEVEL_1_NUMBERS_1 );
 
     // @public {Property.<AreaChallenge>} - Always has an AreaChallenge, unlike the passed-in nullable variety. This is
     // because we want to show the view of the last challenge as we animate back to the level-selection screen.

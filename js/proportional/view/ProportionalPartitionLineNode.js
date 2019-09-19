@@ -35,10 +35,10 @@ define( require => {
   const Util = require( 'DOT/Util' );
 
   // a11y strings
-  var horizontalPartitionHandleString = AreaModelCommonA11yStrings.horizontalPartitionHandle.value;
-  var horizontalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.horizontalPartitionHandleDescription.value;
-  var verticalPartitionHandleString = AreaModelCommonA11yStrings.verticalPartitionHandle.value;
-  var verticalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.verticalPartitionHandleDescription.value;
+  const horizontalPartitionHandleString = AreaModelCommonA11yStrings.horizontalPartitionHandle.value;
+  const horizontalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.horizontalPartitionHandleDescription.value;
+  const verticalPartitionHandleString = AreaModelCommonA11yStrings.verticalPartitionHandle.value;
+  const verticalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.verticalPartitionHandleDescription.value;
 
   /**
    * @mixes AccessibleSlider
@@ -52,20 +52,20 @@ define( require => {
   function ProportionalPartitionLineNode( areaDisplay, modelViewTransformProperty, orientation ) {
     assert && assert( Orientation.isOrientation( orientation ) );
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
     // @private {ProportionalAreaDisplay}
     this.areaDisplay = areaDisplay;
 
-    var showHintArrowsProperty = areaDisplay.hasHintArrows.get( orientation );
+    const showHintArrowsProperty = areaDisplay.hasHintArrows.get( orientation );
 
-    var minHintArrow;
-    var maxHintArrow;
-    var hintOffset = 15;
-    var hintLength = 20;
-    var arrowOptions = {
+    let minHintArrow;
+    let maxHintArrow;
+    const hintOffset = 15;
+    const hintLength = 20;
+    const arrowOptions = {
       fill: 'yellow',
       pickable: false
     };
@@ -80,13 +80,13 @@ define( require => {
     showHintArrowsProperty.linkAttribute( minHintArrow, 'visible' );
     showHintArrowsProperty.linkAttribute( maxHintArrow, 'visible' );
 
-    var handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
-    var handleMouseBounds = handleShape.bounds;
-    var handleTouchBounds = handleMouseBounds.dilated( 5 );
+    const handleShape = ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation );
+    const handleMouseBounds = handleShape.bounds;
+    const handleTouchBounds = handleMouseBounds.dilated( 5 );
 
     // We need to cut off the corners that would overlap between the two partition line handles, so we create a clipping
     // area and intersect with that. See https://github.com/phetsims/area-model-common/issues/80.
-    var handleClipShape = new Shape().moveToPoint( handleTouchBounds.leftTop )
+    let handleClipShape = new Shape().moveToPoint( handleTouchBounds.leftTop )
       .lineToPoint( handleTouchBounds.leftBottom )
       .lineToPoint( handleTouchBounds.rightBottom )
       .lineToPoint( handleTouchBounds.rightTop.blend( handleTouchBounds.rightBottom, 0.4 ) )
@@ -96,7 +96,7 @@ define( require => {
       handleClipShape = handleClipShape.transformed( Matrix3.rotation2( Math.PI ) );
     }
 
-    var handle = new Path( handleShape, {
+    const handle = new Path( handleShape, {
       mouseArea: Shape.bounds( handleMouseBounds ).shapeIntersection( handleClipShape ),
       touchArea: Shape.bounds( handleTouchBounds ).shapeIntersection( handleClipShape ),
       fill: areaDisplay.colorProperties.get( orientation ),
@@ -108,7 +108,7 @@ define( require => {
       ]
     } );
 
-    var line = new Line( {
+    const line = new Line( {
       stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty,
       lineWidth: 2,
       cursor: 'pointer'
@@ -122,13 +122,13 @@ define( require => {
     } );
 
     // Relevant properties
-    var partitionSplitProperty = areaDisplay.partitionSplitProperties.get( orientation );
-    var oppositeActiveTotalProperty = areaDisplay.activeTotalProperties.get( orientation.opposite );
-    var activeTotalProperty = areaDisplay.activeTotalProperties.get( orientation );
+    const partitionSplitProperty = areaDisplay.partitionSplitProperties.get( orientation );
+    const oppositeActiveTotalProperty = areaDisplay.activeTotalProperties.get( orientation.opposite );
+    const activeTotalProperty = areaDisplay.activeTotalProperties.get( orientation );
 
     // We need to reverse the accessible property for the vertical case.
     // See https://github.com/phetsims/area-model-introduction/issues/2
-    var accessibleProperty = orientation === Orientation.HORIZONTAL
+    const accessibleProperty = orientation === Orientation.HORIZONTAL
                              ? partitionSplitProperty
                              : new DynamicProperty( new Property( partitionSplitProperty ), {
         bidirectional: true,
@@ -137,10 +137,10 @@ define( require => {
       }, {
         valueType: 'number' // AccessibleSlider doesn't want anything besides a number
       } );
-    var accessibleRangeProperty = new DerivedProperty(
+    const accessibleRangeProperty = new DerivedProperty(
       [ activeTotalProperty, areaDisplay.snapSizeProperty ],
       function( total, snapSize ) {
-        var size = total - snapSize;
+        const size = total - snapSize;
         return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
       } );
 
@@ -175,7 +175,7 @@ define( require => {
     Property.multilink(
       [ oppositeActiveTotalProperty, modelViewTransformProperty ],
       function( oppositeTotal, modelViewTransform ) {
-        var offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) +
+        const offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) +
                           AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
         handle[ orientation.opposite.coordinate ] = offsetValue;
         line[ orientation.opposite.coordinate + '2' ] = offsetValue;
@@ -186,7 +186,7 @@ define( require => {
     // Visibility
     areaDisplay.partitionSplitVisibleProperties.get( orientation ).linkAttribute( self, 'visible' );
 
-    var dragHandler;
+    let dragHandler;
     modelViewTransformProperty.link( function( modelViewTransform ) {
       if ( dragHandler ) {
         self.removeInputListener( dragHandler );
@@ -195,7 +195,7 @@ define( require => {
       dragHandler = new DragListener( {
         transform: modelViewTransform,
         drag: function( event, listener ) {
-          var value = listener.modelPoint[ orientation.coordinate ];
+          let value = listener.modelPoint[ orientation.coordinate ];
 
           value = Util.roundSymmetric( value / areaDisplay.partitionSnapSizeProperty.value ) *
                   areaDisplay.partitionSnapSizeProperty.value;
@@ -203,7 +203,7 @@ define( require => {
 
           // Hint arrows disappear when the actual split changes during a drag, see
           // https://github.com/phetsims/area-model-common/issues/68
-          var currentSplitValue = partitionSplitProperty.value;
+          const currentSplitValue = partitionSplitProperty.value;
           if ( value !== currentSplitValue && value !== 0 ) {
             showHintArrowsProperty.value = false;
           }
@@ -227,14 +227,14 @@ define( require => {
   areaModelCommon.register( 'ProportionalPartitionLineNode', ProportionalPartitionLineNode );
 
   // Handle arrows
-  var arrowHalfLength = 10;
-  var arrowHalfWidth = 10;
-  var verticalArrowShape = new Shape()
+  const arrowHalfLength = 10;
+  const arrowHalfWidth = 10;
+  const verticalArrowShape = new Shape()
     .moveTo( -arrowHalfLength, 0 )
     .lineTo( arrowHalfLength, arrowHalfWidth )
     .lineTo( arrowHalfLength, -arrowHalfWidth )
     .close();
-  var horizontalArrowShape = verticalArrowShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
+  const horizontalArrowShape = verticalArrowShape.transformed( Matrix3.rotation2( Math.PI / 2 ) );
 
   inherit( Node, ProportionalPartitionLineNode, {}, {
     HANDLE_ARROW_SHAPES: new OrientationPair( horizontalArrowShape, verticalArrowShape )

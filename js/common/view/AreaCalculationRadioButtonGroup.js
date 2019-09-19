@@ -30,8 +30,8 @@ define( require => {
    */
   function AreaCalculationRadioButtonGroup( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
-    var darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
-    var lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
+    const darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
+    const lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
     AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
       value: AreaCalculationChoice.HIDDEN,
@@ -56,9 +56,9 @@ define( require => {
    * @returns {Node}
    */
   function createCalculationIcon( topColorProperty, bottomColorProperty ) {
-    var height = 5;
-    var fullWidth = 30;
-    var partialWidth = 20;
+    const height = 5;
+    const fullWidth = 30;
+    const partialWidth = 20;
     return new VBox( {
       children: [
         new Rectangle( 0, 0, partialWidth, height, { fill: topColorProperty } ),

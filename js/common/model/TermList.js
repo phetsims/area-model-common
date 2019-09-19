@@ -106,7 +106,7 @@ define( require => {
 
       // This uses a reverse search instead of a forward search for optimization--probably not important for Area Model,
       // but optimized in case it is moved to common code.
-      for ( var i = this.terms.length - 1; i >= 0; i-- ) {
+      for ( let i = this.terms.length - 1; i >= 0; i-- ) {
         if ( !this.terms[ i ].equals( termList.terms[ i ] ) ) {
           return false;
         }

@@ -19,7 +19,7 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   // a11y strings
-  var placeholderString = AreaModelCommonA11yStrings.placeholder.value;
+  const placeholderString = AreaModelCommonA11yStrings.placeholder.value;
 
   /**
    * @constructor

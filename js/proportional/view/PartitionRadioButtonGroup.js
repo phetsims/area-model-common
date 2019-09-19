@@ -27,9 +27,9 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // a11y strings
-  var horizontalPartitionString = AreaModelCommonA11yStrings.horizontalPartition.value;
-  var partitionSelectionDescriptionString = AreaModelCommonA11yStrings.partitionSelectionDescription.value;
-  var verticalPartitionString = AreaModelCommonA11yStrings.verticalPartition.value;
+  const horizontalPartitionString = AreaModelCommonA11yStrings.horizontalPartition.value;
+  const partitionSelectionDescriptionString = AreaModelCommonA11yStrings.partitionSelectionDescription.value;
+  const verticalPartitionString = AreaModelCommonA11yStrings.verticalPartition.value;
 
   /**
    * @constructor
@@ -40,7 +40,7 @@ define( require => {
    */
   function PartitionRadioButtonGroup( currentAreaOrientationProperty, selectionButtonAlignGroup ) {
     AreaModelCommonRadioButtonGroup.call( this, currentAreaOrientationProperty, Orientation.VALUES.map( function( orientation ) {
-      var icon = PartitionRadioButtonGroup.createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
+      const icon = PartitionRadioButtonGroup.createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
       return {
         value: orientation,
         node: new AlignBox( icon, { group: selectionButtonAlignGroup } ),
@@ -71,8 +71,8 @@ define( require => {
      */
     createPartitionOrientationIcon: function( orientation, currentAreaOrientationProperty ) {
       // The size of our rectangle
-      var sizes = new OrientationPair( 36, 24 );
-      var background = new Rectangle( 0, 0, sizes.horizontal, sizes.vertical, {
+      const sizes = new OrientationPair( 36, 24 );
+      const background = new Rectangle( 0, 0, sizes.horizontal, sizes.vertical, {
         stroke: AreaModelCommonColorProfile.partitionLineIconBorderProperty,
         fill: AreaModelCommonColorProfile.partitionLineIconBackgroundProperty
       } );
@@ -80,8 +80,8 @@ define( require => {
       // Expand bounds a bit, to allow room for the line-handle icon part (so we have even padding)
       background.localBounds = background.localBounds.dilated( 7 );
 
-      var p1 = new Vector2( 0, 0 );
-      var p2 = new Vector2( 0, 0 );
+      const p1 = new Vector2( 0, 0 );
+      const p2 = new Vector2( 0, 0 );
       p1[ orientation.coordinate ] = sizes.get( orientation ) * 2 / 3;
       p2[ orientation.coordinate ] = sizes.get( orientation ) * 2 / 3;
       p2[ orientation.opposite.coordinate ] = sizes.get( orientation.opposite ) * 1.1;

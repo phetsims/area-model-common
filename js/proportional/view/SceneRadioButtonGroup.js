@@ -22,8 +22,8 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // a11y strings
-  var areaGridSizeString = AreaModelCommonA11yStrings.areaGridSize.value;
-  var sceneSelectionPatternString = AreaModelCommonA11yStrings.sceneSelectionPattern.value;
+  const areaGridSizeString = AreaModelCommonA11yStrings.areaGridSize.value;
+  const sceneSelectionPatternString = AreaModelCommonA11yStrings.sceneSelectionPattern.value;
 
   /**
    * @constructor
@@ -33,7 +33,7 @@ define( require => {
    * @param {Object} [nodeOptions]
    */
   function SceneRadioButtonGroup( model, nodeOptions ) {
-    var group = new AlignGroup(); // have all the buttons the same size
+    const group = new AlignGroup(); // have all the buttons the same size
 
     assert && assert( model.areas.length === 2 || model.areas.length === 3,
       'We only have strings for the 2 or 3 case (right now)' );

@@ -24,11 +24,11 @@ define( require => {
   const calculationString = require( 'string!AREA_MODEL_COMMON/calculation' );
 
   // a11y strings
-  var calculationBoxTitleString = AreaModelCommonA11yStrings.calculationBoxTitle.value;
-  var calculationBoxDescriptionString = AreaModelCommonA11yStrings.calculationBoxDescription.value;
+  const calculationBoxTitleString = AreaModelCommonA11yStrings.calculationBoxTitle.value;
+  const calculationBoxDescriptionString = AreaModelCommonA11yStrings.calculationBoxDescription.value;
 
   // constants
-  var MARGIN = 8;
+  const MARGIN = 8;
 
   /**
    * @constructor
@@ -40,7 +40,7 @@ define( require => {
    */
   function CalculationBox( model, bounds, nodeOptions ) {
 
-    var self = this;
+    const self = this;
 
     // @private {ProportionalAreaModel}
     this.model = model;
@@ -48,7 +48,7 @@ define( require => {
     // @private {CalculationLinesNode}
     this.calculationLinesNode = new CalculationLinesNode( model );
 
-    var alignBox = new AlignBox( this.calculationLinesNode, {
+    const alignBox = new AlignBox( this.calculationLinesNode, {
       // Since our AccordionBox expands by our MARGIN, we need to set content bounds without that
       alignBounds: bounds.eroded( MARGIN ),
       pickable: false

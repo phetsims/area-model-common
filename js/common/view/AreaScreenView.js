@@ -44,10 +44,10 @@ define( require => {
   const totalAreaOfModelString = require( 'string!AREA_MODEL_COMMON/totalAreaOfModel' );
 
   // a11y strings
-  var factorsBoxString = AreaModelCommonA11yStrings.factorsBox.value;
-  var factorsBoxDescriptionString = AreaModelCommonA11yStrings.factorsBoxDescription.value;
-  var productBoxString = AreaModelCommonA11yStrings.productBox.value;
-  var productBoxDescriptionString = AreaModelCommonA11yStrings.productBoxDescription.value;
+  const factorsBoxString = AreaModelCommonA11yStrings.factorsBox.value;
+  const factorsBoxDescriptionString = AreaModelCommonA11yStrings.factorsBoxDescription.value;
+  const productBoxString = AreaModelCommonA11yStrings.productBox.value;
+  const productBoxDescriptionString = AreaModelCommonA11yStrings.productBoxDescription.value;
 
   /**
    * @constructor
@@ -108,7 +108,7 @@ define( require => {
       AreaModelCommonGlobals.panelAlignGroup,
       new AreaCalculationRadioButtonGroup( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
-    var selectionContent = new VBox( {
+    const selectionContent = new VBox( {
       spacing: 15
     } );
     this.getSelectionNodesProperty().link( function( selectionNodes ) {
@@ -129,7 +129,7 @@ define( require => {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
-    var factorsBoxContent = new AlignBox( this.createFactorsNode( model, config.decimalPlaces ), {
+    const factorsBoxContent = new AlignBox( this.createFactorsNode( model, config.decimalPlaces ), {
       group: AreaModelCommonGlobals.panelAlignGroup,
       xAlign: 'center'
     } );
@@ -151,7 +151,7 @@ define( require => {
         }
       } );
 
-    var areaBoxContent = new AlignBox( new TotalAreaNode(
+    const areaBoxContent = new AlignBox( new TotalAreaNode(
       model.totalAreaProperty,
       model.isProportional,
       model.isProportional ? model.getMaximumAreaString() : '',
@@ -190,11 +190,11 @@ define( require => {
     // @protected {Node|null} (a11y) - The calculation panel/box near the bottom of the screen
     this.calculationNode = null;
     if ( config.useCalculationBox ) {
-      var calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y +
+      const calculationTop = AreaModelCommonConstants.MAIN_AREA_OFFSET.y +
                            AreaModelCommonConstants.AREA_SIZE +
                            AreaModelCommonConstants.LAYOUT_SPACING + 30;
-      var calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.LAYOUT_SPACING;
-      var calculationBounds = new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop );
+      const calculationBottom = this.layoutBounds.bottom - AreaModelCommonConstants.LAYOUT_SPACING;
+      const calculationBounds = new Bounds2( 0, 0, AreaModelCommonConstants.AREA_SIZE, calculationBottom - calculationTop );
       this.calculationNode = new CalculationBox( model, calculationBounds, {
         x: AreaModelCommonConstants.MAIN_AREA_OFFSET.x,
         y: calculationTop
@@ -243,7 +243,7 @@ define( require => {
      * @returns {Array.<Node>}
      */
     getRightAlignNodes: function() {
-      var children = [
+      const children = [
         this.factorsBox,
         this.areaBox
       ];
@@ -262,7 +262,7 @@ define( require => {
      * @returns {Property.<Array.<Node>>}
      */
     getSelectionNodesProperty: function() {
-      var selectionNodes = [];
+      const selectionNodes = [];
       if ( this.showProductsSelection ) {
         selectionNodes.push( this.productsSelectionPanel );
       }

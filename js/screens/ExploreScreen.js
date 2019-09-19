@@ -29,7 +29,7 @@ define( require => {
    */
   function ExploreScreen() {
 
-    var options = {
+    const options = {
       name: screenExploreString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( exploreScreenIconImage ),

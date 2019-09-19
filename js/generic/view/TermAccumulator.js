@@ -21,8 +21,8 @@ define( require => {
   const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
   // constants
-  var NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( function( n ) { return '' + n; } );
-  var DIGIT_STRINGS = _.range( 0, 10 ).map( function( n ) { return '' + n; } );
+  const NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( function( n ) { return '' + n; } );
+  const DIGIT_STRINGS = _.range( 0, 10 ).map( function( n ) { return '' + n; } );
 
   /**
    * @constructor
@@ -41,8 +41,8 @@ define( require => {
      * @returns {boolean}
      */
     this.defaultValidator = function( proposedKeys ) {
-      var xCount = 0;
-      var digitCount = 0;
+      let xCount = 0;
+      let digitCount = 0;
 
 
       proposedKeys.forEach( function( key ) {
@@ -59,7 +59,7 @@ define( require => {
     };
 
     // Validators to be passed to AbstractKeyAccumulator
-    var validators = [ this.defaultValidator ];
+    const validators = [ this.defaultValidator ];
 
     AbstractKeyAccumulator.call( this, validators );
 
@@ -83,10 +83,10 @@ define( require => {
 
     // @public {Property.<Term|null>} - The term used if 'enter' is pressed
     this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
-      var lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
+      const lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
 
-      var coefficient = 1;
-      var power = 0;
+      let coefficient = 1;
+      let power = 0;
       if ( lastKey === KeyID.X ) {
         power = 1;
         accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
@@ -107,7 +107,7 @@ define( require => {
         }
       }
 
-      var digitString = accumulatedKeys.join( '' );
+      const digitString = accumulatedKeys.join( '' );
       if ( digitString === '' || digitString === '-' ) {
         if ( power === 0 ) {
           return null;
@@ -133,29 +133,29 @@ define( require => {
      */
     handleKeyPressed: function( keyIdentifier ) {
 
-      var currentKeys = this.accumulatedKeysProperty.get();
+      const currentKeys = this.accumulatedKeysProperty.get();
 
       // Whether we have a negative sign in our current input
-      var negative = _.includes( currentKeys, KeyID.PLUS_MINUS );
+      let negative = _.includes( currentKeys, KeyID.PLUS_MINUS );
 
       // The power of x (X or X_SQUARED) in our input (otherwise undefined). This keypad only allows one "power" of X,
       // e.g. 0, 1 or 2 (corresponding to multiplying times 1, x, x^2). This is the corresponding key for that power.
-      var power = _.find( currentKeys, function( key ) {
+      let power = _.find( currentKeys, function( key ) {
         return key === KeyID.X || key === KeyID.X_SQUARED;
       } );
 
       // All of the digits in our current input. (just numerical parts, not powers of x or negative signs)
-      var digits = currentKeys.filter( function( key ) {
+      let digits = currentKeys.filter( function( key ) {
         return _.includes( DIGIT_STRINGS, key );
       } );
 
       // Helpful booleans for what our pressed key is.
-      var isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyIdentifier );
-      var isZero = keyIdentifier === KeyID.ZERO;
-      var isBackspace = keyIdentifier === KeyID.BACKSPACE;
-      var isPlusMinus = keyIdentifier === KeyID.PLUS_MINUS;
-      var isX = keyIdentifier === KeyID.X;
-      var isXSquared = keyIdentifier === KeyID.X_SQUARED;
+      const isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyIdentifier );
+      const isZero = keyIdentifier === KeyID.ZERO;
+      const isBackspace = keyIdentifier === KeyID.BACKSPACE;
+      const isPlusMinus = keyIdentifier === KeyID.PLUS_MINUS;
+      const isX = keyIdentifier === KeyID.X;
+      const isXSquared = keyIdentifier === KeyID.X_SQUARED;
 
       if ( isBackspace ) {
         if ( power ) {
@@ -194,7 +194,7 @@ define( require => {
       }
 
       // Validate and update the keys
-      var proposedKeys = ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] );
+      const proposedKeys = ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] );
       this.validateKeys( proposedKeys ) && this.updateKeys( proposedKeys );
     }
   } );

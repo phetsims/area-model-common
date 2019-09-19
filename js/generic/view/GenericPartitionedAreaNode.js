@@ -26,7 +26,7 @@ define( require => {
    * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    */
   function GenericPartitionedAreaNode( partitionedAreaProperty, modelViewTransformProperty ) {
-    var self = this;
+    const self = this;
 
     // We'll set the fill/size/etc. below.
     Rectangle.call( this, {} );
@@ -57,7 +57,7 @@ define( require => {
 
     // Adjust our rectangle dimension/location so that we take up the bounds defined by the partitioned area. Our area
     // can change, so we need to swap out or multilink when the area changes (kept so we can dispose it)
-    var rangeMultilinks = null; // {OrientationPair.<Multilink>|null}
+    let rangeMultilinks = null; // {OrientationPair.<Multilink>|null}
     partitionedAreaProperty.link( function( partitionedArea ) {
       // Release any previous references
       rangeMultilinks && rangeMultilinks.forEach( function( rangeMultilink ) {

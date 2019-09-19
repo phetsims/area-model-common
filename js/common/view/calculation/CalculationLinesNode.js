@@ -33,7 +33,7 @@ define( require => {
   const VBox = require( 'SCENERY/nodes/VBox' );
 
   // a11y strings
-  var betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
+  const betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
 
   /**
    * @constructor
@@ -42,7 +42,7 @@ define( require => {
    * @param {AreaModelCommonModel} model
    */
   function CalculationLinesNode( model ) {
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
@@ -92,8 +92,8 @@ define( require => {
         return choice === AreaCalculationChoice.LINE_BY_LINE ? index : null;
       } );
 
-    var setLinesDirty = function() { self.linesDirty = true; };
-    var setDisplayDirty = function() { self.displayDirty = true; };
+    const setLinesDirty = function() { self.linesDirty = true; };
+    const setDisplayDirty = function() { self.displayDirty = true; };
 
     // Listen for changes that would make the display need an update
     model.areaCalculationChoiceProperty.lazyLink( setDisplayDirty );
@@ -141,7 +141,7 @@ define( require => {
      * @public
      */
     moveToPreviousLine: function() {
-      var activeLine = this.getActiveLine();
+      const activeLine = this.getActiveLine();
       if ( activeLine.previousLine ) {
         this.areaIndexProperty.value = activeLine.previousLine.index;
       }
@@ -152,7 +152,7 @@ define( require => {
      * @public
      */
     moveToNextLine: function() {
-      var activeLine = this.getActiveLine();
+      const activeLine = this.getActiveLine();
       if ( activeLine.nextLine ) {
         this.areaIndexProperty.value = activeLine.nextLine.index;
       }
@@ -209,12 +209,12 @@ define( require => {
       // As a sanity check, just remove all children here (so we don't leak things)
       this.wipe();
 
-      var displayedLines = this.calculationLinesProperty.value;
+      let displayedLines = this.calculationLinesProperty.value;
 
       // If we are in line-by-line mode, display adjacent lines
       if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE ) {
 
-        var activeLine = this.getActiveLine();
+        const activeLine = this.getActiveLine();
         displayedLines = activeLine.getAdjacentLines();
 
         this.previousEnabledProperty.value = !!activeLine.previousLine;
@@ -226,7 +226,7 @@ define( require => {
       }
 
       this.box.children = displayedLines.map( function( line, index ) {
-        var lineNode = new Node( {
+        const lineNode = new Node( {
           children: [
             line.node
           ]
@@ -269,14 +269,14 @@ define( require => {
      * @returns {CalculationLine|null}
      */
     getActiveLine: function() {
-      var activeLine = _.find( this.calculationLinesProperty.value, function( line ) {
+      let activeLine = _.find( this.calculationLinesProperty.value, function( line ) {
         return line.isActiveProperty.value;
       } ) || null;
 
       // If no line is currently active (maybe it was removed?), switch to the next-best line
       if ( !activeLine ) {
-        var nextBestLine = null;
-        var lastIndex = this.areaIndexProperty.value;
+        let nextBestLine = null;
+        const lastIndex = this.areaIndexProperty.value;
         this.calculationLinesProperty.value.forEach( function( calculationLine ) {
           if ( calculationLine.index <= lastIndex ) {
             nextBestLine = calculationLine;
@@ -303,8 +303,8 @@ define( require => {
      */
     createLines: function( area, activeIndexProperty, allowExponents, isProportional ) {
       // Whether there are ANY shown partitions for a given orientation
-      var horizontalEmpty = area.getDefinedPartitions( Orientation.HORIZONTAL ).length === 0;
-      var verticalEmpty = area.getDefinedPartitions( Orientation.VERTICAL ).length === 0;
+      const horizontalEmpty = area.getDefinedPartitions( Orientation.HORIZONTAL ).length === 0;
+      const verticalEmpty = area.getDefinedPartitions( Orientation.VERTICAL ).length === 0;
 
       // If both are empty, show a question mark
       if ( horizontalEmpty && verticalEmpty ) {
@@ -315,38 +315,38 @@ define( require => {
         return [ new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) ];
       }
 
-      var horizontalTermList = area.getTermList( Orientation.HORIZONTAL );
-      var verticalTermList = area.getTermList( Orientation.VERTICAL );
+      const horizontalTermList = area.getTermList( Orientation.HORIZONTAL );
+      const verticalTermList = area.getTermList( Orientation.VERTICAL );
 
-      var horizontalTerms = horizontalTermList.terms;
-      var verticalTerms = verticalTermList.terms;
+      const horizontalTerms = horizontalTermList.terms;
+      const verticalTerms = verticalTermList.terms;
 
       // The total/sum for each orientation
-      var horizontalPolynomial = area.totalProperties.horizontal.value;
-      var verticalPolynomial = area.totalProperties.vertical.value;
+      const horizontalPolynomial = area.totalProperties.horizontal.value;
+      const verticalPolynomial = area.totalProperties.vertical.value;
 
       // E.g. for ( 2 ) * ( 3 + x ), the result will be the terms 6 and 2x.
-      var multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
+      const multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
         return horizontalTerms.map( function( horizontalTerm ) {
           return horizontalTerm.times( verticalTerm );
         } );
       } ) ) );
-      var orderedTermList = multipliedTermList.orderedByExponent();
-      var totalPolynomial = area.totalAreaProperty.value;
+      const orderedTermList = multipliedTermList.orderedByExponent();
+      const totalPolynomial = area.totalAreaProperty.value;
 
       // Logic for what calculation lines are needed
-      var needsExpansion = !allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) ||
+      const needsExpansion = !allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) ||
                                                 !verticalTermList.equals( verticalPolynomial ) );
-      var needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
-      var needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
-      var needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
+      const needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
+      const needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
+      const needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
                          !( orderedTermList.equals( totalPolynomial ) &&
                          ( !allowExponents || !orderedTermList.hasNegativeTerm() ) );
-      var needsMinuses = needsMultiplied && allowExponents &&
+      const needsMinuses = needsMultiplied && allowExponents &&
                          orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
 
       // Add the actual lines
-      var lines = [];
+      const lines = [];
       // e.g. ( -x + x^2 )( x^2 - x ) <--- example used for everything except the ExpansionLine
       lines.push( new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) );
       if ( needsExpansion ) {
@@ -373,7 +373,7 @@ define( require => {
       lines.push( new SumLine( area, activeIndexProperty, allowExponents, isProportional ) );
 
       // Link the lines together, so it is easy to traverse
-      for ( var i = 1; i < lines.length; i++ ) {
+      for ( let i = 1; i < lines.length; i++ ) {
         lines[ i - 1 ].nextLine = lines[ i ];
         lines[ i ].previousLine = lines[ i - 1 ];
       }

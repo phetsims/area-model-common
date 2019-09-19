@@ -20,7 +20,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // a11y strings
-  var questionMarkString = AreaModelCommonA11yStrings.questionMark.value;
+  const questionMarkString = AreaModelCommonA11yStrings.questionMark.value;
 
   /**
    * @constructor

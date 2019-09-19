@@ -41,17 +41,17 @@ define( require => {
    * @param {function} editedCallback - Called with no arguments when something is edited
    */
   function PolynomialEditNode( polynomialProperty, totalEntriesProperty, editedCallback ) {
-    var longestString = new Polynomial( [
+    const longestString = new Polynomial( [
       new Term( -9, 2 ),
       new Term( -9, 1 ),
       new Term( -9, 0 )
     ] ).toRichString();
 
-    var readoutText = new RichText( longestString, {
+    const readoutText = new RichText( longestString, {
       font: AreaModelCommonConstants.POLYNOMIAL_EDIT_READOUT_FONT
     } );
 
-    var readoutBackgroundRectangle = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
+    const readoutBackgroundRectangle = Rectangle.bounds( readoutText.bounds.dilatedXY( 30, 5 ), {
       cornerRadius: 3,
       stroke: 'black',
       fill: 'white'
@@ -61,27 +61,27 @@ define( require => {
       readoutText.text = polynomial === null ? '0' : polynomial.toRichString();
       readoutText.centerX = readoutBackgroundRectangle.centerX;
     } );
-    var readout = new Node( {
+    const readout = new Node( {
       children: [
         readoutBackgroundRectangle,
         readoutText
       ]
     } );
 
-    var editFont = AreaModelCommonConstants.GAME_POLYNOMIAL_EDIT_FONT;
+    const editFont = AreaModelCommonConstants.GAME_POLYNOMIAL_EDIT_FONT;
 
     // {Property.<Entry>}
-    var constantEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
+    const constantEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
       return totalEntries.length > 1 ? totalEntries[ 0 ] : new Entry( null );
     } );
-    var xEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
+    const xEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
       return totalEntries.length > 1 ? totalEntries[ 1 ] : new Entry( null );
     } );
-    var xSquaredEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
+    const xSquaredEntryProperty = new DerivedProperty( [ totalEntriesProperty ], function( totalEntries ) {
       return totalEntries.length > 2 ? totalEntries[ 2 ] : new Entry( null );
     } );
 
-    var constantProperty = new DynamicProperty( constantEntryProperty, {
+    const constantProperty = new DynamicProperty( constantEntryProperty, {
       derive: 'valueProperty',
       map: function( term ) {
         return term === null ? 0 : term.coefficient;
@@ -92,7 +92,7 @@ define( require => {
       bidirectional: true
     } );
 
-    var xProperty = new DynamicProperty( xEntryProperty, {
+    const xProperty = new DynamicProperty( xEntryProperty, {
       derive: 'valueProperty',
       map: function( term ) {
         return term === null ? 0 : term.coefficient;
@@ -103,7 +103,7 @@ define( require => {
       bidirectional: true
     } );
 
-    var xSquaredProperty = new DynamicProperty( xSquaredEntryProperty, {
+    const xSquaredProperty = new DynamicProperty( xSquaredEntryProperty, {
       derive: 'valueProperty',
       map: function( term ) {
         return term === null ? 0 : term.coefficient;
@@ -118,7 +118,7 @@ define( require => {
     // can submit after just changing one value). This is done by providing an actual value to the property.
     function provideEntryValues() {
       [ constantEntryProperty, xEntryProperty, xSquaredEntryProperty ].forEach( function( entryProperty, index ) {
-        var valueProperty = entryProperty.value.valueProperty;
+        const valueProperty = entryProperty.value.valueProperty;
         if ( valueProperty.value === null ) {
           valueProperty.value = new Term( 0, index );
         }
@@ -142,7 +142,7 @@ define( require => {
 
     // [-81,81] is the actual range we need for editable values,
     // see https://github.com/phetsims/area-model-common/issues/94
-    var rangeProperty = new Property( new Range( -81, 81 ) );
+    const rangeProperty = new Property( new Range( -81, 81 ) );
 
     function getPickerColorProperty( entryProperty ) {
       return new DerivedProperty( [
@@ -162,22 +162,22 @@ define( require => {
       } );
     }
 
-    var constantPicker = new NumberPicker( constantProperty, rangeProperty, {
+    const constantPicker = new NumberPicker( constantProperty, rangeProperty, {
       color: getPickerColorProperty( constantEntryProperty )
     } );
-    var xPicker = new NumberPicker( xProperty, rangeProperty, {
+    const xPicker = new NumberPicker( xProperty, rangeProperty, {
       color: getPickerColorProperty( xEntryProperty )
     } );
-    var xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
+    const xSquaredPicker = new NumberPicker( xSquaredProperty, rangeProperty, {
       color: getPickerColorProperty( xSquaredEntryProperty )
     } );
 
-    var xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
-    var xSquaredText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
-    var plus1 = new Text( MathSymbols.PLUS, { font: editFont } );
-    var plus2 = new Text( MathSymbols.PLUS, { font: editFont } );
+    const xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
+    const xSquaredText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
+    const plus1 = new Text( MathSymbols.PLUS, { font: editFont } );
+    const plus2 = new Text( MathSymbols.PLUS, { font: editFont } );
 
-    var xSquaredChildren = [
+    const xSquaredChildren = [
       xSquaredPicker,
       xSquaredText,
       plus1,
@@ -186,14 +186,14 @@ define( require => {
       plus2,
       constantPicker
     ];
-    var xChildren = [
+    const xChildren = [
       xPicker,
       xText,
       plus2,
       constantPicker
     ];
 
-    var pickerContainer = new Node();
+    const pickerContainer = new Node();
     // Hide the x^2 term if we won't use it
     constantEntryProperty.link( function( constantEntry ) {
       pickerContainer.children = constantEntry.inputMethod === InputMethod.POLYNOMIAL_2

@@ -62,14 +62,14 @@ define( require => {
       font: AreaModelCommonConstants.TERM_EDIT_READOUT_FONT
     }, options );
 
-    var self = this;
+    const self = this;
 
-    var readoutText = new RichText( '', {
+    const readoutText = new RichText( '', {
       fill: options.textColorProperty,
       font: options.font
     } );
 
-    var readoutBackground = new Rectangle( {
+    const readoutBackground = new Rectangle( {
       stroke: options.borderColorProperty,
       cornerRadius: 4,
       children: [

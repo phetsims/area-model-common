@@ -19,8 +19,8 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
 
   // constants
-  var GRID_LINE_WIDTH = 0.5;
-  var HALF_GRID_LINE_WIDTH = GRID_LINE_WIDTH / 2;
+  const GRID_LINE_WIDTH = 0.5;
+  const HALF_GRID_LINE_WIDTH = GRID_LINE_WIDTH / 2;
 
   /**
    * @constructor
@@ -30,20 +30,20 @@ define( require => {
    * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    */
   function ProportionalAreaGridLinesNode( areaProperty, modelViewTransformProperty ) {
-    var self = this;
+    const self = this;
 
     Path.call( this, null, {
       stroke: AreaModelCommonColorProfile.gridLineProperty
     } );
 
     Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
-      var maxX = modelViewTransform.modelToViewX( area.maximumSize );
-      var maxY = modelViewTransform.modelToViewY( area.maximumSize );
+      const maxX = modelViewTransform.modelToViewX( area.maximumSize );
+      const maxY = modelViewTransform.modelToViewY( area.maximumSize );
 
-      var shape = new Shape();
-      for ( var i = area.gridSpacing; i < area.maximumSize; i += area.gridSpacing ) {
-        var x = modelViewTransform.modelToViewX( i );
-        var y = modelViewTransform.modelToViewY( i );
+      const shape = new Shape();
+      for ( let i = area.gridSpacing; i < area.maximumSize; i += area.gridSpacing ) {
+        const x = modelViewTransform.modelToViewX( i );
+        const y = modelViewTransform.modelToViewY( i );
 
         shape.moveTo( HALF_GRID_LINE_WIDTH, y );
         shape.lineTo( maxX - HALF_GRID_LINE_WIDTH, y );

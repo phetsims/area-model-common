@@ -30,7 +30,7 @@ define( require => {
   const TermKeypadPanel = require( 'AREA_MODEL_COMMON/generic/view/TermKeypadPanel' );
 
   // constants
-  var MAX_PARTITIONS = 3; // The maximum number of partitions for a specific dimension
+  const MAX_PARTITIONS = 3; // The maximum number of partitions for a specific dimension
 
   /**
    * @constructor
@@ -42,14 +42,14 @@ define( require => {
    * @param {function} setActiveTerm - function( {Term|null} ) - Called when the value of the edited term should be set.
    */
   function GameAreaDisplayNode( areaDisplay, activeEntryProperty, gameStateProperty, setActiveTerm ) {
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
-    var singleOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
-    var firstOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
-    var secondOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
-    var fullOffset = AreaModelCommonConstants.AREA_SIZE;
+    const singleOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
+    const firstOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
+    const secondOffset = AreaModelCommonConstants.AREA_SIZE * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
+    const fullOffset = AreaModelCommonConstants.AREA_SIZE;
 
     // Background fill and stroke
     this.addChild( new Rectangle( 0, 0, AreaModelCommonConstants.AREA_SIZE, AreaModelCommonConstants.AREA_SIZE, {
@@ -60,15 +60,15 @@ define( require => {
     this.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, AreaModelCommonConstants.AREA_SIZE ) );
 
     // Range views
-    var tickVariations = {
+    const tickVariations = {
       1: [ 0, fullOffset ],
       2: [ 0, singleOffset, fullOffset ],
       3: [ 0, firstOffset, secondOffset, fullOffset ]
     };
     Orientation.VALUES.forEach( function( orientation ) {
-      var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
-      var termListProperty = areaDisplay.totalProperties.get( orientation );
-      var tickLocationsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
+      const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+      const termListProperty = areaDisplay.totalProperties.get( orientation );
+      const tickLocationsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
         return tickVariations[ layout.getPartitionQuantity( orientation ) ];
       } );
       self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
@@ -77,10 +77,10 @@ define( require => {
     // {OrientationPair.<Array.<Property.<number>>>} - The visual centers of all of the partitions.
     // This duplicates some logic from GenericArea's coordinateRangeProperty handling, but here we need the full-length
     // array every time.
-    var centerProperties = OrientationPair.create( function( orientation ) {
+    const centerProperties = OrientationPair.create( function( orientation ) {
       return [
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
-          var partitionCount = layout.getPartitionQuantity( orientation );
+          const partitionCount = layout.getPartitionQuantity( orientation );
           if ( partitionCount === 1 ) {
             return fullOffset / 2;
           }
@@ -92,7 +92,7 @@ define( require => {
           }
         } ),
         new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
-          var partitionCount = layout.getPartitionQuantity( orientation );
+          const partitionCount = layout.getPartitionQuantity( orientation );
           if ( partitionCount === 2 ) {
             return ( fullOffset + singleOffset ) / 2;
           }
@@ -110,14 +110,14 @@ define( require => {
     // Partition size labels
     Orientation.VALUES.forEach( function( orientation ) {
       _.range( 0, MAX_PARTITIONS ).forEach( function( partitionIndex ) {
-        var entryProperty = new DerivedProperty(
+        const entryProperty = new DerivedProperty(
           [ areaDisplay.partitionSizeEntriesProperties.get( orientation ) ],
           function( entries ) {
             return entries[ partitionIndex ] ? entries[ partitionIndex ] : new Entry( null );
           } );
-        var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+        const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
-        var label = new GameEditableLabelNode( {
+        const label = new GameEditableLabelNode( {
           entryProperty: entryProperty,
           gameStateProperty: gameStateProperty,
           activeEntryProperty: activeEntryProperty,
@@ -138,13 +138,13 @@ define( require => {
     // Labels for each partitioned area
     _.range( 0, MAX_PARTITIONS ).forEach( function( horizontalIndex ) {
       _.range( 0, MAX_PARTITIONS ).forEach( function( verticalIndex ) {
-        var entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], function( values ) {
+        const entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], function( values ) {
           return ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] )
                  ? values[ verticalIndex ][ horizontalIndex ]
                  : new Entry( null );
         } );
 
-        var colorProperty = new DerivedProperty( [
+        const colorProperty = new DerivedProperty( [
           entryProperty,
           AreaModelCommonColorProfile.dynamicPartialProductProperty,
           AreaModelCommonColorProfile.fixedPartialProductProperty
@@ -157,7 +157,7 @@ define( require => {
           }
         } );
 
-        var label = new GameEditableLabelNode( {
+        const label = new GameEditableLabelNode( {
           entryProperty: entryProperty,
           gameStateProperty: gameStateProperty,
           activeEntryProperty: activeEntryProperty,
@@ -174,17 +174,17 @@ define( require => {
       } );
     } );
 
-    var digitsProperty = new DerivedProperty( [ activeEntryProperty ], function( entry ) {
+    const digitsProperty = new DerivedProperty( [ activeEntryProperty ], function( entry ) {
       return entry ? entry.digits : 1;
     } );
 
-    var keypadOptions = {
+    const keypadOptions = {
       // padding constant allows it to fit between the area and the other panels
       x: AreaModelCommonConstants.AREA_SIZE + AreaModelCommonConstants.KEYPAD_LEFT_PADDING,
       top: 0
     };
-    var noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, false, setActiveTerm, keypadOptions );
-    var exponentKeypadPanel = new TermKeypadPanel( digitsProperty, true, true, setActiveTerm, keypadOptions );
+    const noExponentKeypadPanel = new TermKeypadPanel( digitsProperty, false, false, setActiveTerm, keypadOptions );
+    const exponentKeypadPanel = new TermKeypadPanel( digitsProperty, true, true, setActiveTerm, keypadOptions );
 
     this.addChild( noExponentKeypadPanel );
     this.addChild( exponentKeypadPanel );

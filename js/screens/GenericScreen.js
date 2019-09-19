@@ -28,7 +28,7 @@ define( require => {
    */
   function GenericScreen() {
 
-    var options = {
+    const options = {
       name: screenGenericString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( genericScreenIconImage )

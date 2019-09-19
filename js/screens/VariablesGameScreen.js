@@ -29,7 +29,7 @@ define( require => {
    */
   function VariablesGameScreen() {
 
-    var options = {
+    const options = {
       name: screenGameString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( variablesGameScreenIconImage ),

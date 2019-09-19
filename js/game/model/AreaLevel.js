@@ -27,7 +27,7 @@ define( require => {
    * @param {Array.<AreaChallengeDescription>} challengeDescriptions
    */
   function AreaLevel( number, type, colorProperty, challengeDescriptions ) {
-    var self = this;
+    const self = this;
 
     // @public {number} - Will be the value 1 for "Level 1". Not using the 0-based values used in VEGAS, so sometimes
     // this value will need to be decremented when passed to VEGAS components.
@@ -73,7 +73,7 @@ define( require => {
     generateChallenges: function() {
 
       // Always include the first description as the first challenge
-      var descriptions = [ this.challengeDescriptions[ 0 ] ];
+      let descriptions = [ this.challengeDescriptions[ 0 ] ];
 
       // Shuffle the rest of them in a random order
       descriptions = descriptions.concat( phet.joist.random.shuffle( descriptions.slice( 1 ) ) );

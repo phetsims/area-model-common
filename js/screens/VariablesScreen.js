@@ -28,7 +28,7 @@ define( require => {
    */
   function VariablesScreen() {
 
-    var options = {
+    const options = {
       name: screenVariablesString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( variablesScreenIconImage )

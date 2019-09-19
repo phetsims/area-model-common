@@ -21,7 +21,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // a11y strings
-  var sumMinusString = AreaModelCommonA11yStrings.sumMinus.value;
+  const sumMinusString = AreaModelCommonA11yStrings.sumMinus.value;
 
   /**
    * @constructor

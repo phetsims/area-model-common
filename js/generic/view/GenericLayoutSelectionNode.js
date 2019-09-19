@@ -41,12 +41,12 @@ define( require => {
   function GenericLayoutSelectionNode( genericLayoutProperty, listParent, width ) {
     Node.call( this );
 
-    var self = this;
+    const self = this;
 
     // Our rectangles will be stroked, so we need to subtract 1 due to the lineWidth
     width -= 1;
 
-    var comboBoxItems = GenericLayout.VALUES.map( function( layout ) {
+    const comboBoxItems = GenericLayout.VALUES.map( function( layout ) {
       return {
         node: new HBox( {
           children: [
@@ -61,12 +61,12 @@ define( require => {
       };
     } );
 
-    var maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'node' ), 'height' ) );
-    var itemMargin = 6;
-    var arrowMargin = 8;
+    const maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'node' ), 'height' ) );
+    const itemMargin = 6;
+    const arrowMargin = 8;
 
-    var rectHeight = maxItemHeight + 2 * itemMargin;
-    var rectangle = new Rectangle( {
+    const rectHeight = maxItemHeight + 2 * itemMargin;
+    const rectangle = new Rectangle( {
       rectWidth: width,
       rectHeight: maxItemHeight + 2 * itemMargin,
       fill: 'white',
@@ -76,8 +76,8 @@ define( require => {
     } );
     this.addChild( rectangle );
 
-    var arrowSize = 15;
-    var arrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize * 0.5, arrowSize * 0.9 ).close(), {
+    const arrowSize = 15;
+    const arrow = new Path( new Shape().moveTo( 0, 0 ).lineTo( arrowSize, 0 ).lineTo( arrowSize * 0.5, arrowSize * 0.9 ).close(), {
       fill: 'black',
       right: rectangle.right - arrowMargin,
       centerY: rectangle.centerY,
@@ -85,7 +85,7 @@ define( require => {
     } );
     this.addChild( arrow );
 
-    var separatorX = arrow.left - arrowMargin;
+    const separatorX = arrow.left - arrowMargin;
     this.addChild( new Line( {
       x1: separatorX,
       y1: 0,
@@ -96,7 +96,7 @@ define( require => {
       pickable: false
     } ) );
 
-    var currentLabel = new Node( {
+    const currentLabel = new Node( {
       pickable: false
     } );
     genericLayoutProperty.link( function( layout ) {
@@ -110,7 +110,7 @@ define( require => {
     } );
     this.addChild( currentLabel );
 
-    var popup = new Rectangle( {
+    const popup = new Rectangle( {
       rectWidth: separatorX,
       rectHeight: separatorX,
       fill: 'white',
@@ -119,25 +119,25 @@ define( require => {
       pickable: true
     } );
 
-    var buttonSpacing = 12;
-    var buttonsNode = new VBox( {
+    const buttonSpacing = 12;
+    const buttonsNode = new VBox( {
       children: [ 1, 2, 3 ].map( function( numVertical ) {
         return new HBox( {
           children: [ 1, 2, 3 ].map( function( numHorizontal ) {
-            var layout = GenericLayout.fromValues( numHorizontal, numVertical );
+            const layout = GenericLayout.fromValues( numHorizontal, numVertical );
             // NOTE: Yes, it's weird this constant is here. We used to scale most things down by this amount. Now we
             // want the same appearance (but without the scaling, because it was bad practice), so to get the icon to
             // have the same appearance, a scale factor is needed.
-            var oldScale = 0.7;
-            var icon = createLayoutIcon( layout.size, oldScale * oldScale );
+            const oldScale = 0.7;
+            const icon = createLayoutIcon( layout.size, oldScale * oldScale );
             icon.scale( 1 / oldScale );
             icon.pickable = false;
-            var cornerRadius = 3;
-            var background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
+            const cornerRadius = 3;
+            const background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
               cursor: 'pointer'
             } );
             background.touchArea = background.localBounds.dilated( buttonSpacing / 2 );
-            var listener = new FireListener( {
+            const listener = new FireListener( {
               fire: function() {
                 genericLayoutProperty.value = layout;
                 visibleProperty.value = false; // hide
@@ -174,7 +174,7 @@ define( require => {
       } ),
       spacing: buttonSpacing
     } );
-    var panelMargin = 20;
+    const panelMargin = 20;
     buttonsNode.scale( ( popup.width - 2 * panelMargin ) / buttonsNode.width );
     buttonsNode.center = popup.center;
     popup.addChild( buttonsNode );
@@ -187,7 +187,7 @@ define( require => {
     } );
 
     // Handle dismissing the selection if the user clicks outside
-    var dismissListener = {
+    const dismissListener = {
       down: function( event ) {
         if ( !event.trail.isExtensionOf( self.getUniqueTrail() ) ) {
           visibleProperty.value = false;
@@ -196,7 +196,7 @@ define( require => {
     };
     visibleProperty.lazyLink( function( visible ) {
       if ( visible ) {
-        var matrix = self.getUniqueTrail().getMatrixTo( listParent.getUniqueTrail() );
+        const matrix = self.getUniqueTrail().getMatrixTo( listParent.getUniqueTrail() );
         popup.setScaleMagnitude( matrix.getScaleVector().x );
         // We subtract 1 off so that the strokes line up, and we don't get a "double-stroked" effect.
         popup.leftTop = matrix.timesVector2( rectangle.leftBottom.plusXY( 0, -1 ) );
@@ -229,8 +229,8 @@ define( require => {
    * @returns {Node}
    */
   function createLayoutIcon( size, lineWidth ) {
-    var length = 21;
-    var shape = new Shape().rect( 0, 0, length, length );
+    const length = 21;
+    const shape = new Shape().rect( 0, 0, length, length );
     if ( size.width === 2 ) {
       shape.moveTo( length * AreaModelCommonConstants.GENERIC_ICON_SINGLE_OFFSET, 0 ).verticalLineTo( length );
     }

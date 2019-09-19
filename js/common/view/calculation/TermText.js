@@ -33,7 +33,7 @@ define( require => {
     assert && assert( colorProperty instanceof Property );
     assert && assert( typeof excludeSign === 'boolean' || excludeSign === undefined );
 
-    var text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
+    const text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
 
     // @public {string}
     this.accessibleText = text;

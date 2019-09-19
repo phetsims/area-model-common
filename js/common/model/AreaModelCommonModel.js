@@ -39,7 +39,7 @@ define( require => {
       initialPartialProductsChoice: PartialProductsChoice.HIDDEN
     }, options );
 
-    var self = this;
+    const self = this;
 
     // @public {Array.<Area>} - All areas that can be switched between
     this.areas = areas;
@@ -79,7 +79,7 @@ define( require => {
       validValues: PartialProductsChoice.VALUES
     } );
 
-    var totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) {
+    const totalAreaProperties = [ this.currentAreaProperty ].concat( this.areas.map( function( area ) {
       return area.totalAreaProperty;
     } ) );
 

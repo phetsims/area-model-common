@@ -39,28 +39,28 @@ define( require => {
     assert && assert( partialProductsChoiceProperty instanceof Property );
     assert && assert( typeof allowExponents === 'boolean' );
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
     // @public {Property.<PartitionedArea|null>} - Exposed for improved positioning capability AND setting with pool
     this.partitionedAreaProperty = partitionedAreaProperty;
 
-    var areaProperty = new DynamicProperty( partitionedAreaProperty, {
+    const areaProperty = new DynamicProperty( partitionedAreaProperty, {
       derive: 'areaProperty'
     } );
-    var visibleProperty = new DynamicProperty( partitionedAreaProperty, {
+    const visibleProperty = new DynamicProperty( partitionedAreaProperty, {
       derive: 'visibleProperty',
       defaultValue: false
     } );
-    var horizontalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
+    const horizontalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
       derive: 'partitions.horizontal.sizeProperty'
     } );
-    var verticalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
+    const verticalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
       derive: 'partitions.vertical.sizeProperty'
     } );
 
-    var background = new Rectangle( {
+    const background = new Rectangle( {
       cornerRadius: 3,
       stroke: new DerivedProperty(
         [ areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ],
@@ -71,7 +71,7 @@ define( require => {
     } );
     this.addChild( background );
 
-    var box = new HBox( {
+    const box = new HBox( {
       align: 'origin'
     } );
     this.addChild( box );
@@ -82,45 +82,45 @@ define( require => {
     } );
 
     // RichTexts (we reuse the same instances to prevent GC and cpu cost)
-    var productRichText = new RichText( '', {
+    const productRichText = new RichText( '', {
       font: AreaModelCommonConstants.PARTIAL_PRODUCT_FONT
     } );
-    var factorsTextOptions = {
+    const factorsTextOptions = {
       font: AreaModelCommonConstants.PARTIAL_FACTOR_FONT
     };
-    var horizontalRichText = new RichText( '', factorsTextOptions );
-    var verticalRichText = new RichText( '', factorsTextOptions );
+    const horizontalRichText = new RichText( '', factorsTextOptions );
+    const verticalRichText = new RichText( '', factorsTextOptions );
 
-    var rectangleSize = allowExponents ? 12 : 14;
+    const rectangleSize = allowExponents ? 12 : 14;
 
     // Shifting the rectangles down, so we don't incur a large performance penalty for size-testing things
-    var rectangleExponentPadding = allowExponents ? 1.3 : 0;
-    var rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + rectangleExponentPadding;
-    var horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
+    const rectangleExponentPadding = allowExponents ? 1.3 : 0;
+    const rectangleCenterY = new Text( ' ', factorsTextOptions ).centerY - rectangleSize / 2 + rectangleExponentPadding;
+    const horizontalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
       stroke: 'black',
       lineWidth: 0.7
     } );
-    var verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
+    const verticalRectangle = new Rectangle( 0, rectangleCenterY, rectangleSize, rectangleSize, {
       stroke: 'black',
       lineWidth: 0.7
     } );
     if ( allowExponents ) {
-      var exponentPadding = 2;
+      const exponentPadding = 2;
       horizontalRectangle.localBounds = horizontalRectangle.localBounds.dilatedX( exponentPadding );
       verticalRectangle.localBounds = verticalRectangle.localBounds.dilatedX( exponentPadding );
     }
 
     // Persistent text nodes (for performance)
-    var leftParenNode = new Text( '(', factorsTextOptions );
-    var middleParensNode = new Text( ')(', factorsTextOptions );
-    var rightParenNode = new Text( ')', factorsTextOptions );
-    var timesNode = new Text( MathSymbols.TIMES, factorsTextOptions );
+    const leftParenNode = new Text( '(', factorsTextOptions );
+    const middleParensNode = new Text( ')(', factorsTextOptions );
+    const rightParenNode = new Text( ')', factorsTextOptions );
+    const timesNode = new Text( MathSymbols.TIMES, factorsTextOptions );
 
     // Text/alignment
     Property.multilink(
       [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ],
       function( horizontalSize, verticalSize, choice ) {
-        var children;
+        let children;
 
         // Hidden
         if ( choice === PartialProductsChoice.HIDDEN ) {
@@ -138,10 +138,10 @@ define( require => {
         // Factors
         else {
 
-          var horizontalNode = horizontalSize
+          const horizontalNode = horizontalSize
                                ? horizontalRichText.setText( horizontalSize.toRichString( false ) )
                                : horizontalRectangle;
-          var verticalNode = verticalSize
+          const verticalNode = verticalSize
                              ? verticalRichText.setText( verticalSize.toRichString( false ) )
                              : verticalRectangle;
 

@@ -12,7 +12,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
 
-  var GameState = {
+  const GameState = {
     // "check" button, editable
     FIRST_ATTEMPT: 'FIRST_ATTEMPT',
     SECOND_ATTEMPT: 'SECOND_ATTEMPT',

@@ -40,7 +40,7 @@ define( require => {
     assert && assert( typeof allowExponents === 'boolean' );
     assert && assert( partialProductsChoiceProperty instanceof Property );
 
-    var self = this;
+    const self = this;
 
     AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, {
       allowExponents: allowExponents,
@@ -82,10 +82,10 @@ define( require => {
     } ) );
 
     // Keypad
-    var digitCountProperty = new DerivedProperty( [ areaDisplay.activePartitionProperty ], function( activePartition ) {
+    const digitCountProperty = new DerivedProperty( [ areaDisplay.activePartitionProperty ], function( activePartition ) {
       return activePartition === null ? 1 : activePartition.digitCount;
     } );
-    var termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, true, function( term ) {
+    const termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, true, function( term ) {
       // Update the size of the partition.
       areaDisplay.activePartitionProperty.value.sizeProperty.value = term;
 
@@ -115,11 +115,11 @@ define( require => {
      * @override
      */
     positionProductLabels: function() {
-      var self = this;
+      const self = this;
 
       this.productLabels.forEach( function( productLabel ) {
         Orientation.VALUES.forEach( function( orientation ) {
-          var range = productLabel.partitionedAreaProperty.value.partitions.get( orientation ).coordinateRangeProperty.value;
+          const range = productLabel.partitionedAreaProperty.value.partitions.get( orientation ).coordinateRangeProperty.value;
           if ( range !== null ) {
             productLabel[ orientation.coordinate ] = orientation.modelToView( self.modelViewTransformProperty.value, range.getCenter() );
           }
@@ -137,15 +137,15 @@ define( require => {
      * @param {Property.<boolean>} visibilityProperty
      */
     createPartitionLine: function( orientation, offset, viewSize, visibilityProperty ) {
-      var firstPoint = new Vector2( 0, 0 );
-      var secondPoint = new Vector2( 0, 0 );
+      const firstPoint = new Vector2( 0, 0 );
+      const secondPoint = new Vector2( 0, 0 );
 
       firstPoint[ orientation.coordinate ] = offset;
       secondPoint[ orientation.coordinate ] = offset;
       firstPoint[ orientation.opposite.coordinate ] = viewSize;
       secondPoint[ orientation.opposite.coordinate ] = 0;
 
-      var line = new Line( {
+      const line = new Line( {
         p1: firstPoint,
         p2: secondPoint,
         stroke: AreaModelCommonColorProfile.partitionLineStrokeProperty
@@ -163,23 +163,23 @@ define( require => {
      * @returns {Node}
      */
     createPartitionLines: function( layoutProperty, viewSize ) {
-      var singleOffset = viewSize * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
-      var firstOffset = viewSize * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
-      var secondOffset = viewSize * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
+      const singleOffset = viewSize * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
+      const firstOffset = viewSize * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
+      const secondOffset = viewSize * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
 
-      var resultNode = new Node();
+      const resultNode = new Node();
 
       Orientation.VALUES.forEach( function( orientation ) {
-        var hasTwoProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
+        const hasTwoProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
           return layout.getPartitionQuantity( orientation ) === 2;
         } );
-        var hasThreeProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
+        const hasThreeProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
           return layout.getPartitionQuantity( orientation ) === 3;
         } );
 
-        var singleLine = GenericAreaDisplayNode.createPartitionLine( orientation, singleOffset, viewSize, hasTwoProperty );
-        var firstLine = GenericAreaDisplayNode.createPartitionLine( orientation, firstOffset, viewSize, hasThreeProperty );
-        var secondLine = GenericAreaDisplayNode.createPartitionLine( orientation, secondOffset, viewSize, hasThreeProperty );
+        const singleLine = GenericAreaDisplayNode.createPartitionLine( orientation, singleOffset, viewSize, hasTwoProperty );
+        const firstLine = GenericAreaDisplayNode.createPartitionLine( orientation, firstOffset, viewSize, hasThreeProperty );
+        const secondLine = GenericAreaDisplayNode.createPartitionLine( orientation, secondOffset, viewSize, hasThreeProperty );
         resultNode.addChild( singleLine );
         resultNode.addChild( firstLine );
         resultNode.addChild( secondLine );

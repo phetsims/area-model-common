@@ -32,17 +32,17 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // a11y strings
-  var eraseString = AreaModelCommonA11yStrings.erase.value;
-  var eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
-  var horizontalDimensionCapitalizedString = AreaModelCommonA11yStrings.horizontalDimensionCapitalized.value;
-  var onePartialProductFactorPatternString = AreaModelCommonA11yStrings.onePartialProductFactorPattern.value;
-  var onePartialProductPatternString = AreaModelCommonA11yStrings.onePartialProductPattern.value;
-  var productTimesPatternString = AreaModelCommonA11yStrings.productTimesPattern.value;
-  var threePartitionsSplitPatternString = AreaModelCommonA11yStrings.threePartitionsSplitPattern.value;
-  var twoPartialProductFactorsPatternString = AreaModelCommonA11yStrings.twoPartialProductFactorsPattern.value;
-  var twoPartialProductsPatternString = AreaModelCommonA11yStrings.twoPartialProductsPattern.value;
-  var twoPartitionsSplitPatternString = AreaModelCommonA11yStrings.twoPartitionsSplitPattern.value;
-  var verticalDimensionCapitalizedString = AreaModelCommonA11yStrings.verticalDimensionCapitalized.value;
+  const eraseString = AreaModelCommonA11yStrings.erase.value;
+  const eraseDescriptionString = AreaModelCommonA11yStrings.eraseDescription.value;
+  const horizontalDimensionCapitalizedString = AreaModelCommonA11yStrings.horizontalDimensionCapitalized.value;
+  const onePartialProductFactorPatternString = AreaModelCommonA11yStrings.onePartialProductFactorPattern.value;
+  const onePartialProductPatternString = AreaModelCommonA11yStrings.onePartialProductPattern.value;
+  const productTimesPatternString = AreaModelCommonA11yStrings.productTimesPattern.value;
+  const threePartitionsSplitPatternString = AreaModelCommonA11yStrings.threePartitionsSplitPattern.value;
+  const twoPartialProductFactorsPatternString = AreaModelCommonA11yStrings.twoPartialProductFactorsPattern.value;
+  const twoPartialProductsPatternString = AreaModelCommonA11yStrings.twoPartialProductsPattern.value;
+  const twoPartitionsSplitPatternString = AreaModelCommonA11yStrings.twoPartitionsSplitPattern.value;
+  const verticalDimensionCapitalizedString = AreaModelCommonA11yStrings.verticalDimensionCapitalized.value;
 
   /**
    * @constructor
@@ -61,7 +61,7 @@ define( require => {
       useLargeArea: false
     }, options );
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
@@ -83,8 +83,8 @@ define( require => {
     this.viewSize = options.useLargeArea ? AreaModelCommonConstants.LARGE_AREA_SIZE : AreaModelCommonConstants.AREA_SIZE;
 
     // A11y description for the partitions for each orientation
-    var accessiblePartitionNodes = OrientationPair.create( function( orientation ) {
-      var partitionLabel = new Node( {
+    const accessiblePartitionNodes = OrientationPair.create( function( orientation ) {
+      const partitionLabel = new Node( {
         tagName: 'span'
       } );
       Property.multilink( [
@@ -124,27 +124,27 @@ define( require => {
     this.accessibleParagraphNode.addChild( accessiblePartitionNodes.horizontal );
 
     // A11y description for the partial products
-    var accessiblePartialProductNode = new Node( {
+    const accessiblePartialProductNode = new Node( {
       tagName: 'span'
     } );
-    var accessiblePartialMultilink = null;
+    let accessiblePartialMultilink = null;
     areaDisplay.partitionedAreasProperty.link( function( partitionedAreas ) {
       if ( accessiblePartialMultilink ) {
         accessiblePartialMultilink.dispose();
       }
-      var properties = [
+      const properties = [
         partialProductsChoiceProperty
       ].concat( partitionedAreas.map( function( partitionedArea ) { return partitionedArea.areaProperty; } ) )
         .concat( partitionedAreas.map( function( partitionedArea ) { return partitionedArea.visibleProperty; } ) );
       accessiblePartialMultilink = Property.multilink( properties, function() {
-        var activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( function( partitionedArea ) {
+        const activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( function( partitionedArea ) {
           return partitionedArea.visibleProperty.value &&
                  partitionedArea.areaProperty.value !== null &&
                  partitionedArea.partitions.vertical.sizeProperty.value !== null &&
                  partitionedArea.partitions.horizontal.sizeProperty.value !== null;
         } );
-        var fillObject = {};
-        var fillString;
+        const fillObject = {};
+        let fillString;
         if ( activePartitionedAreas.length > 2 ||
              activePartitionedAreas.length === 0 ||
              partialProductsChoiceProperty.value === PartialProductsChoice.HIDDEN ) {
@@ -185,10 +185,10 @@ define( require => {
     } );
     this.accessibleParagraphNode.addChild( accessiblePartialProductNode );
 
-    var modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
+    const modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], function( coordinateRangeMax ) {
       return new Bounds2( 0, 0, coordinateRangeMax, coordinateRangeMax );
     } );
-    var viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
+    const viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
 
     // @protected {Property.<ModelViewTransform2>} - Maps from coordinate range values to view values.
     this.modelViewTransformProperty = new DerivedProperty( [ modelBoundsProperty ], function( modelBounds ) {
@@ -197,9 +197,9 @@ define( require => {
 
     // Dimension line views
     Orientation.VALUES.forEach( function( orientation ) {
-      var colorProperty = self.areaDisplay.colorProperties.get( orientation );
-      var termListProperty = self.areaDisplay.displayProperties.get( orientation );
-      var tickLocationsProperty = new DerivedProperty(
+      const colorProperty = self.areaDisplay.colorProperties.get( orientation );
+      const termListProperty = self.areaDisplay.displayProperties.get( orientation );
+      const tickLocationsProperty = new DerivedProperty(
         [ areaDisplay.partitionBoundariesProperties.get( orientation ) ],
         function( partitionBoundaries ) {
           return partitionBoundaries.map( function( boundary ) {
@@ -217,7 +217,7 @@ define( require => {
 
     // @private {boolean} - Whether we need to update the labels. It's expensive, so we only do it at most once a frame.
     this.productPositionLabelsDirty = true;
-    var invalidateProductLabels = function() {
+    const invalidateProductLabels = function() {
       self.productPositionLabelsDirty = true;
     };
 

@@ -34,7 +34,7 @@ define( require => {
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed for this area
    */
   function Area( partitions, colorProperties, coordinateRangeMax, allowExponents ) {
-    var self = this;
+    const self = this;
 
     // @public {OrientationPair.<Array.<Partition>>} - Partitions for each orientation
     this.partitions = partitions;
@@ -107,7 +107,7 @@ define( require => {
      * @returns {PartitionedArea}
      */
     createPartitionedArea: function( partitions ) {
-      var partitionedArea = new PartitionedArea( partitions );
+      const partitionedArea = new PartitionedArea( partitions );
 
       // By default, have the area linked to the partitions. This won't work for the game.
       // NOTE: Since we "own" the partitions memory-wise, we don't need to unlink here since they should all be GC'ed
@@ -196,14 +196,14 @@ define( require => {
      * @returns {Property.<*|null>}
      */
     createMappedTermsArrayProperty: function( map, orientation ) {
-      var self = this;
+      const self = this;
 
-      var properties = _.flatten( this.partitions.get( orientation ).map( function( partition ) {
+      const properties = _.flatten( this.partitions.get( orientation ).map( function( partition ) {
         return [ partition.sizeProperty, partition.visibleProperty ];
       } ) );
 
       return new DerivedProperty( properties, function() {
-        var terms = self.getTerms( orientation );
+        const terms = self.getTerms( orientation );
         if ( terms.length ) {
           return map( terms );
         }
@@ -224,16 +224,16 @@ define( require => {
      * @returns {Property.<Array.<number>>}
      */
     createPartitionBoundariesProperty: function( orientation ) {
-      var partitions = this.partitions.get( orientation );
+      const partitions = this.partitions.get( orientation );
 
       // Property dependencies
-      var partitionProperties = _.flatten( partitions.map( function( partition ) {
+      const partitionProperties = _.flatten( partitions.map( function( partition ) {
         return [ partition.coordinateRangeProperty, partition.visibleProperty ];
       } ) );
 
       return new DerivedProperty( partitionProperties, function() {
         return _.uniq( _.flatten( partitions.map( function( partition ) {
-          var range = partition.coordinateRangeProperty.value;
+          const range = partition.coordinateRangeProperty.value;
 
           // Ignore null range or invisible
           if ( range === null || !partition.visibleProperty.value ) {

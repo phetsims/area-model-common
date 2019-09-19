@@ -27,14 +27,14 @@ define( require => {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    */
   function DistributionLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) {
-    var self = this;
+    const self = this;
 
     CalculationLine.call( this, CalculationLine.DISTRIBUTION_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.node = this.sumGroup( _.flatten( verticalTerms.map( function( verticalTerm ) {
       return horizontalTerms.map( function( horizontalTerm ) {
-        var horizontalText = self.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
-        var verticalText = self.orientedTermText( Orientation.VERTICAL, verticalTerm );
+        const horizontalText = self.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
+        const verticalText = self.orientedTermText( Orientation.VERTICAL, verticalTerm );
 
         // Proportional uses X-multiplication, see https://github.com/phetsims/area-model-common/issues/71
         if ( isProportional ) {

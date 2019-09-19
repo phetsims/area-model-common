@@ -25,10 +25,10 @@ define( require => {
   const Shape = require( 'KITE/Shape' );
 
   // constants
-  var MAX_LINE_WIDTH = 680; // may need to be updated if the panel size is changed.
-  var LINE_BY_LINE_EXPANSION = 25;
-  var ARROW_SIZE = 18;
-  var ARROW_TOUCH_DILATION = 8;
+  const MAX_LINE_WIDTH = 680; // may need to be updated if the panel size is changed.
+  const LINE_BY_LINE_EXPANSION = 25;
+  const ARROW_SIZE = 18;
+  const ARROW_TOUCH_DILATION = 8;
 
   /**
    * @constructor
@@ -39,31 +39,31 @@ define( require => {
    */
   function CalculationNode( model, nodeOptions ) {
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
     // @private {CalculationLinesNode}
     this.calculationLinesNode = new CalculationLinesNode( model );
 
-    var background = new Rectangle( {
+    const background = new Rectangle( {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
       fill: AreaModelCommonColorProfile.panelBackgroundProperty,
       stroke: AreaModelCommonColorProfile.panelBorderProperty
     } );
     this.addChild( background );
 
-    var previousShape = new Shape().moveTo( 0, 0 )
+    const previousShape = new Shape().moveTo( 0, 0 )
       .lineTo( ARROW_SIZE, 0 )
       .lineTo( ARROW_SIZE / 2, -ARROW_SIZE * 0.8 )
       .close();
-    var previousArrow = new Path( previousShape, {
+    const previousArrow = new Path( previousShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     previousArrow.mouseArea = previousArrow.localBounds;
     previousArrow.touchArea = previousArrow.localBounds.dilated( ARROW_TOUCH_DILATION );
-    var previousListener = new FireListener( {
+    const previousListener = new FireListener( {
       fire: function() {
         self.calculationLinesNode.moveToPreviousLine();
       }
@@ -78,18 +78,18 @@ define( require => {
     } );
 
     this.addChild( previousArrow );
-    var nextShape = new Shape().moveTo( 0, 0 )
+    const nextShape = new Shape().moveTo( 0, 0 )
       .lineTo( ARROW_SIZE, 0 )
       .lineTo( ARROW_SIZE / 2, ARROW_SIZE * 0.8 )
       .close();
-    var nextArrow = new Path( nextShape, {
+    const nextArrow = new Path( nextShape, {
       fill: AreaModelCommonColorProfile.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     nextArrow.mouseArea = nextArrow.localBounds;
     nextArrow.touchArea = nextArrow.localBounds.dilated( ARROW_TOUCH_DILATION );
     this.addChild( nextArrow );
-    var nextListener = new FireListener( {
+    const nextListener = new FireListener( {
       fire: function() {
         self.calculationLinesNode.moveToNextLine();
       }
@@ -120,13 +120,13 @@ define( require => {
         return;
       }
 
-      var isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
-      var maxLineWidth = _.reduce( self.calculationLinesNode.calculationLinesProperty.value, function( max, line ) {
+      const isLineByLine = model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE;
+      let maxLineWidth = _.reduce( self.calculationLinesNode.calculationLinesProperty.value, function( max, line ) {
         return Math.max( max, line.node.width );
       }, 0 );
 
       // If we are LINE_BY_LINE, we won't have as much room because of the buttons
-      var availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
+      const availableLineWidth = MAX_LINE_WIDTH + ( isLineByLine ? 0 : LINE_BY_LINE_EXPANSION );
 
       // Scale the calculation down if necessary, so we can fit within our MAX_LINE_WIDTH
       self.calculationLinesNode.setScaleMagnitude( maxLineWidth > availableLineWidth ? ( availableLineWidth / maxLineWidth ) : 1 );
@@ -134,7 +134,7 @@ define( require => {
       // If we scaled things down, our maxLineWidth will be the available width (we don't want our 'panel' larger)
       maxLineWidth = Math.min( maxLineWidth, availableLineWidth );
 
-      var backgroundBounds = self.calculationLinesNode.bounds;
+      let backgroundBounds = self.calculationLinesNode.bounds;
 
       // If we removed lines for the "line-by-line", make sure we take up enough room to not change size.
       if ( backgroundBounds.width < maxLineWidth ) {
@@ -161,7 +161,7 @@ define( require => {
 
       // If we support decimals, use a slightly larger minimum.
       // See https://github.com/phetsims/area-model-decimals/issues/6
-      var decimalsLineByLineWidth = AreaModelCommonConstants.AREA_SIZE + 40;
+      const decimalsLineByLineWidth = AreaModelCommonConstants.AREA_SIZE + 40;
       if ( isLineByLine &&
            model.currentAreaProperty.value.partitionSnapSize &&
            model.currentAreaProperty.value.partitionSnapSize < 1 &&

@@ -106,7 +106,7 @@ define( require => {
       // Close any keypads, see https://github.com/phetsims/area-model-common/issues/66
       this.activeEntryProperty.value = null;
 
-      var challenge = this.currentChallengeProperty.value;
+      const challenge = this.currentChallengeProperty.value;
 
       this.currentLevelProperty.value.scoreProperty.value += challenge.check();
     },

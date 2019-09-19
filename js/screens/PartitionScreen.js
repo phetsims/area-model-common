@@ -28,14 +28,14 @@ define( require => {
   const screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
 
   // a11y strings
-  var partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
+  const partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
 
   /**
    * @constructor
    */
   function PartitionScreen() {
 
-    var options = {
+    const options = {
       name: screenPartitionString,
       backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new Image( partitionScreenIconImage ),
@@ -45,7 +45,7 @@ define( require => {
       descriptionContent: partitionDescriptionString
     };
 
-    var commonAreaOptions = {
+    const commonAreaOptions = {
       minimumSize: 1,
       initialWidth: 5,
       initialHeight: 5,

@@ -39,13 +39,13 @@ define( require => {
   const partitionString = require( 'string!AREA_MODEL_COMMON/partition' );
 
   // a11y strings
-  var base10AreaTilesString = AreaModelCommonA11yStrings.base10AreaTiles.value;
-  var countingNumbersDescriptionString = AreaModelCommonA11yStrings.countingNumbersDescription.value;
-  var countingNumbersLabelString = AreaModelCommonA11yStrings.countingNumbersLabel.value;
-  var gridLinesLabelString = AreaModelCommonA11yStrings.gridLinesLabel.value;
+  const base10AreaTilesString = AreaModelCommonA11yStrings.base10AreaTiles.value;
+  const countingNumbersDescriptionString = AreaModelCommonA11yStrings.countingNumbersDescription.value;
+  const countingNumbersLabelString = AreaModelCommonA11yStrings.countingNumbersLabel.value;
+  const gridLinesLabelString = AreaModelCommonA11yStrings.gridLinesLabel.value;
 
   // constants
-  var RADIO_ICON_SIZE = 30;
+  const RADIO_ICON_SIZE = 30;
 
   /**
    * @constructor
@@ -64,13 +64,13 @@ define( require => {
     // @private {Node} - Scene selection, created before super call since it will be added in it.
     this.sceneSelectionNode = new SceneRadioButtonGroup( model );
 
-    var currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
+    const currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
       derive: 'visiblePartitionOrientationProperty',
       bidirectional: true
     } );
 
     // Should have its own align group, so we don't modify other sizes
-    var partitionSelectionAlignGroup = new AlignGroup();
+    const partitionSelectionAlignGroup = new AlignGroup();
 
     // @private {Node} - Allows controlling which partition is currently visible (if we only show one)
     this.partitionSelectionPanel = this.createPanelContent(
@@ -82,24 +82,24 @@ define( require => {
     AreaScreenView.call( this, model, options );
 
     // Checkboxes
-    var gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
+    const gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
       // a11y
       labelTagName: 'label',
       labelContent: gridLinesLabelString
     } );
-    var tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
+    const tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
       // a11y
       labelTagName: 'label',
       labelContent: base10AreaTilesString
     } );
-    var countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
+    const countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
       // a11y
       labelTagName: 'label',
       labelContent: countingNumbersLabelString,
       descriptionContent: countingNumbersDescriptionString
     } );
 
-    var checkboxContainer = new VBox( {
+    const checkboxContainer = new VBox( {
       children: [gridCheckbox, countingCheckbox, tileCheckbox],
       align: 'left',
       spacing: 20,
@@ -165,10 +165,10 @@ define( require => {
      * @returns {Property.<Array.<Node>>}
      */
     getSelectionNodesProperty: function() {
-      var self = this;
+      const self = this;
 
       // Use a Property here so we don't recreate when we don't have to (just on area changes)
-      var hasPartitionSelectionProperty = new DerivedProperty( [this.model.currentAreaProperty], function( area ) {
+      const hasPartitionSelectionProperty = new DerivedProperty( [this.model.currentAreaProperty], function( area ) {
         return area.partitionLineChoice === PartitionLineChoice.ONE;
       } );
 
@@ -220,7 +220,7 @@ define( require => {
      * @returns {Node}
      */
     createGridIconNode: function() {
-      var gridIconShape = new Shape()
+      const gridIconShape = new Shape()
         .moveTo( RADIO_ICON_SIZE / 4, 0 )
         .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
         .moveTo( RADIO_ICON_SIZE / 2, 0 )
@@ -245,12 +245,12 @@ define( require => {
      * @returns {Node}
      */
     createTileIconNode: function() {
-      var tileIconOptions = {
+      const tileIconOptions = {
         fill: AreaModelCommonColorProfile.smallTileProperty,
         stroke: AreaModelCommonColorProfile.tileIconStrokeProperty,
         lineWidth: 0.5
       };
-      var SMALL_TILE_ICON_SIZE = RADIO_ICON_SIZE / 10;
+      const SMALL_TILE_ICON_SIZE = RADIO_ICON_SIZE / 10;
       return new HBox( {
         children: [
           new Rectangle( 0, 0, RADIO_ICON_SIZE, RADIO_ICON_SIZE, tileIconOptions ),

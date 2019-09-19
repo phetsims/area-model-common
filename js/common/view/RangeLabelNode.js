@@ -22,7 +22,7 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var TICK_LENGTH = 10; // How long the tick marks are for the range labels
+  const TICK_LENGTH = 10; // How long the tick marks are for the range labels
 
   /**
    * @constructor
@@ -36,22 +36,22 @@ define( require => {
    */
   function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) {
 
-    var self = this;
+    const self = this;
 
     Node.call( this );
 
-    var rangeOffset = ( isProportional
+    const rangeOffset = ( isProportional
                         ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
                         : AreaModelCommonConstants.GENERIC_RANGE_OFFSET )[ orientation.opposite.coordinate ];
 
-    var richText = new RichText( '', {
+    const richText = new RichText( '', {
       font: AreaModelCommonConstants.TOTAL_SIZE_READOUT_FONT,
       fill: colorProperty
     } );
 
     // Constrain width on the left side (don't let it go out of the layout bounds)
     if ( orientation === Orientation.VERTICAL ) {
-      var verticalRangeOffset = isProportional
+      const verticalRangeOffset = isProportional
                                 ? AreaModelCommonConstants.PROPORTIONAL_RANGE_OFFSET
                                 : AreaModelCommonConstants.GENERIC_RANGE_OFFSET;
       richText.maxWidth = AreaModelCommonConstants.MAIN_AREA_OFFSET.x + verticalRangeOffset.x - AreaModelCommonConstants.LAYOUT_SPACING;
@@ -60,7 +60,7 @@ define( require => {
     // Update the label richText
     termListProperty.link( function( termList ) {
 
-      var hasTerms = termList !== null && termList.terms.length > 0;
+      const hasTerms = termList !== null && termList.terms.length > 0;
 
       richText.visible = hasTerms;
       if ( hasTerms ) {
@@ -77,7 +77,7 @@ define( require => {
     } );
 
     // Wrap our text in a label, so that we can handle positioning independent of bounds checks
-    var textContainer = new Node( {
+    const textContainer = new Node( {
       children: [ richText ]
     } );
     this.addChild( textContainer );
@@ -86,12 +86,12 @@ define( require => {
     textContainer[ orientation.opposite.coordinate ] = rangeOffset + ( orientation === Orientation.HORIZONTAL ? -3 : -5 );
 
     // Our main line, that the tick marks will be off of
-    var line = new Line( {
+    const line = new Line( {
       stroke: colorProperty
     } );
     this.addChild( line );
 
-    var ticks = [];
+    const ticks = [];
 
     // Update the layout
     tickLocationsProperty.link( function( tickLocations ) {
@@ -106,7 +106,7 @@ define( require => {
 
         // Add any ticks that we need
         while ( ticks.length < tickLocations.length ) {
-          var tick = new Line( {
+          const tick = new Line( {
             y1: 0,
             y2: TICK_LENGTH / 2,
             stroke: colorProperty,
@@ -129,8 +129,8 @@ define( require => {
           }
         } );
 
-        var minLocation = tickLocations[ 0 ];
-        var maxLocation = tickLocations[ tickLocations.length - 1 ];
+        const minLocation = tickLocations[ 0 ];
+        const maxLocation = tickLocations[ tickLocations.length - 1 ];
 
         line.p1 = orientation.toVector( minLocation, rangeOffset );
         line.p2 = orientation.toVector( maxLocation, rangeOffset );

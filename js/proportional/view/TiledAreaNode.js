@@ -31,7 +31,7 @@ define( require => {
    */
   function TiledAreaNode( areaDisplay, modelViewTransformProperty, tilesVisibleProperty ) {
 
-    var self = this;
+    const self = this;
 
     // @private {Property.<ProportionalArea>}
     this.areaDisplay = areaDisplay;
@@ -101,16 +101,16 @@ define( require => {
       [ modelViewTransformProperty, this.maximumSizeProperty, this.smallTileSizeProperty ],
       function( modelViewTransform, maximumSize, smallTileSize ) {
         // Grid line shapes
-        var smallGridShape = new Shape();
-        var horizontalGridShape = new Shape();
-        var verticalGridShape = new Shape();
-        var maxX = modelViewTransform.modelToViewX( maximumSize );
-        var maxY = modelViewTransform.modelToViewY( maximumSize );
+        const smallGridShape = new Shape();
+        const horizontalGridShape = new Shape();
+        const verticalGridShape = new Shape();
+        const maxX = modelViewTransform.modelToViewX( maximumSize );
+        const maxY = modelViewTransform.modelToViewY( maximumSize );
 
         // We need the grid lines to extend out past each side a bit for correct appearance
-        for ( var i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
-          var x = modelViewTransform.modelToViewX( i * smallTileSize );
-          var y = modelViewTransform.modelToViewY( i * smallTileSize );
+        for ( let i = -1; i < maximumSize / smallTileSize + 1; i++ ) {
+          const x = modelViewTransform.modelToViewX( i * smallTileSize );
+          const y = modelViewTransform.modelToViewY( i * smallTileSize );
 
           smallGridShape.moveTo( x, 0 ).lineTo( x, maxY );
           smallGridShape.moveTo( 0, y ).lineTo( maxX, y );
@@ -156,27 +156,27 @@ define( require => {
      * @param {function} callback - callback( largeCount, smallCount, min, border, max )
      */
     forEachPartition: function( orientation, callback ) {
-      var self = this;
+      const self = this;
 
       this.areaDisplay.partitionsProperties.get( orientation ).value.forEach( function( partition ) {
-        var range = partition.coordinateRangeProperty.value;
+        const range = partition.coordinateRangeProperty.value;
 
         // Ignore partitions without a visible well-defined range.
         if ( !partition.visibleProperty.value || range === null ) {
           return;
         }
 
-        var size = range.getLength();
-        var largeCount = Math.floor( Util.toFixedNumber( size / self.largeTileSizeProperty.value, 3 ) );
+        const size = range.getLength();
+        const largeCount = Math.floor( Util.toFixedNumber( size / self.largeTileSizeProperty.value, 3 ) );
 
-        var smallCount = Util.roundSymmetric(
+        const smallCount = Util.roundSymmetric(
           ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value
         );
-        var min = orientation.modelToView( self.modelViewTransformProperty.value, range.min );
-        var border = orientation.modelToView(
+        const min = orientation.modelToView( self.modelViewTransformProperty.value, range.min );
+        const border = orientation.modelToView(
           self.modelViewTransformProperty.value, range.min + largeCount * self.largeTileSizeProperty.value
         );
-        var max = orientation.modelToView( self.modelViewTransformProperty.value, range.max );
+        const max = orientation.modelToView( self.modelViewTransformProperty.value, range.max );
 
         callback( largeCount, smallCount, min, border, max );
       } );
@@ -188,38 +188,38 @@ define( require => {
      * @private
      */
     update: function() {
-      var self = this;
+      const self = this;
 
       // Ignore updates if we are not dirty
       if ( !this.dirty ) { return; }
       this.dirty = false;
 
       // Coordinate mapping into the view
-      var modelToViewX = this.modelViewTransformProperty.value.modelToViewX.bind( this.modelViewTransformProperty.value );
-      var modelToViewY = this.modelViewTransformProperty.value.modelToViewY.bind( this.modelViewTransformProperty.value );
+      const modelToViewX = this.modelViewTransformProperty.value.modelToViewX.bind( this.modelViewTransformProperty.value );
+      const modelToViewY = this.modelViewTransformProperty.value.modelToViewY.bind( this.modelViewTransformProperty.value );
 
-      var largeTileSize = this.largeTileSizeProperty.value;
-      var maximumSize = this.maximumSizeProperty.value;
+      const largeTileSize = this.largeTileSizeProperty.value;
+      const maximumSize = this.maximumSizeProperty.value;
 
       this.visible = this.tilesVisibleProperty.value;
 
-      var bigShape = new Shape();
-      var horizontalShape = new Shape();
-      var verticalShape = new Shape();
-      var smallShape = new Shape();
-      var extraLinesShape = new Shape();
+      const bigShape = new Shape();
+      const horizontalShape = new Shape();
+      const verticalShape = new Shape();
+      const smallShape = new Shape();
+      const extraLinesShape = new Shape();
 
       this.forEachPartition( Orientation.HORIZONTAL, function( horizontalLargeCount, horizontalSmallCount, xMin, xBorder, xMax ) {
         self.forEachPartition( Orientation.VERTICAL, function( verticalLargeCount, verticalSmallCount, yMin, yBorder, yMax ) {
 
           // Add in extra lines on the far sides of large sections.
-          var i;
+          let i;
           for ( i = 0; i < horizontalLargeCount; i++ ) {
-            var x = xMin + modelToViewX( ( i + 1 ) * largeTileSize );
+            const x = xMin + modelToViewX( ( i + 1 ) * largeTileSize );
             extraLinesShape.moveTo( x, 0 ).lineTo( x, modelToViewY( maximumSize ) );
           }
           for ( i = 0; i < verticalLargeCount; i++ ) {
-            var y = yMin + modelToViewY( ( i + 1 ) * largeTileSize );
+            const y = yMin + modelToViewY( ( i + 1 ) * largeTileSize );
             extraLinesShape.moveTo( 0, y ).lineTo( modelToViewX( maximumSize ), y );
           }
 

@@ -23,7 +23,7 @@ define( require => {
   const Text = require( 'SCENERY/nodes/Text' );
 
   // a11y strings
-  var quantityPatternString = AreaModelCommonA11yStrings.quantityPattern.value;
+  const quantityPatternString = AreaModelCommonA11yStrings.quantityPattern.value;
 
   /**
    * @constructor

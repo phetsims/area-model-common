@@ -74,7 +74,7 @@ define( require => {
   const level6IconImage = require( 'mipmap!AREA_MODEL_COMMON/level-6-icon.png' );
 
   // constants
-  var LEVEL_ICON_IMAGES = [
+  const LEVEL_ICON_IMAGES = [
     level1IconImage,
     level2IconImage,
     level3IconImage,
@@ -92,7 +92,7 @@ define( require => {
   function GameAreaScreenView( model ) {
     assert && assert( model instanceof GameAreaModel );
 
-    var self = this;
+    const self = this;
 
     ScreenView.call( this );
 
@@ -132,12 +132,12 @@ define( require => {
       }
     } );
 
-    var levelIcons = LEVEL_ICON_IMAGES.map( function( iconImage ) {
+    const levelIcons = LEVEL_ICON_IMAGES.map( function( iconImage ) {
       return new Image( iconImage );
     } );
 
-    var buttonSpacing = 30;
-    var levelButtons = model.levels.map( function( level, index ) {
+    const buttonSpacing = 30;
+    const levelButtons = model.levels.map( function( level, index ) {
       return new LevelSelectionButton( levelIcons[ index ], level.scoreProperty, {
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
@@ -169,18 +169,18 @@ define( require => {
     } ) );
 
     // Status bar
-    var lastKnownLevel = null;
+    let lastKnownLevel = null;
     // Create a property that holds the "last known" level, so that we don't change the view when we are switching
     // away from the current level back to the level selection.
-    var lastLevelProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
+    const lastLevelProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
       level = level || lastKnownLevel;
       lastKnownLevel = level;
       return level;
     } );
-    var scoreProperty = new DynamicProperty( lastLevelProperty, {
+    const scoreProperty = new DynamicProperty( lastLevelProperty, {
       derive: 'scoreProperty'
     } );
-    var statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
+    const statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
       challengeIndexProperty: new DynamicProperty( lastLevelProperty, {
         derive: 'challengeIndexProperty',
         defaultValue: 1
@@ -214,7 +214,7 @@ define( require => {
     this.challengeLayer.addChild( statusBar );
 
     // Prompt
-    var promptText = new Text( ' ', {
+    const promptText = new Text( ' ', {
       font: AreaModelCommonConstants.GAME_STATUS_BAR_PROMPT_FONT,
       pickable: false,
       maxWidth: 600,
@@ -235,7 +235,7 @@ define( require => {
     } );
 
     // Reset All button
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
       },
@@ -251,7 +251,7 @@ define( require => {
     // @private {GameAreaDisplay}
     this.areaDisplay = new GameAreaDisplay( model.currentChallengeProperty );
 
-    var gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEntryProperty, model.stateProperty, function( term ) {
+    const gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEntryProperty, model.stateProperty, function( term ) {
       model.setActiveTerm( term );
     } );
     this.challengeLayer.addChild( gameAreaNode );
@@ -261,17 +261,17 @@ define( require => {
     * Panels
     *----------------------------------------------------------------------------*/
 
-    var panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
+    const panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
-    var factorsNode = new GenericFactorsNode( this.areaDisplay.totalProperties, this.areaDisplay.allowExponentsProperty );
-    var factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
+    const factorsNode = new GenericFactorsNode( this.areaDisplay.totalProperties, this.areaDisplay.allowExponentsProperty );
+    const factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
     // If we have a polynomial, don't use this editable property (use the polynomial editor component instead)
-    var totalTermEntryProperty = new DerivedProperty( [ this.areaDisplay.totalEntriesProperty ], function( totalEntries ) {
+    const totalTermEntryProperty = new DerivedProperty( [ this.areaDisplay.totalEntriesProperty ], function( totalEntries ) {
       return totalEntries.length === 1 ? totalEntries[ 0 ] : new Entry( null );
     } );
 
-    var totalNode = new GameEditableLabelNode( {
+    const totalNode = new GameEditableLabelNode( {
       entryProperty: totalTermEntryProperty,
       gameStateProperty: model.stateProperty,
       activeEntryProperty: model.activeEntryProperty,
@@ -281,12 +281,12 @@ define( require => {
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );
-    var polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalEntriesProperty, function() {
+    const polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalEntriesProperty, function() {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT;
       }
     } );
-    var polynomialReadoutText = new RichText( '?', {
+    const polynomialReadoutText = new RichText( '?', {
       font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT,
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
@@ -296,7 +296,7 @@ define( require => {
       }
     } );
 
-    var totalContainer = new Node();
+    const totalContainer = new Node();
     Property.multilink(
       [ this.areaDisplay.totalEntriesProperty, model.stateProperty ],
       function( totalEntries, gameState ) {
@@ -315,9 +315,9 @@ define( require => {
         }
       } );
 
-    var productContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
+    const productContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
 
-    var panelBox = new VBox( {
+    const panelBox = new VBox( {
       children: [
         factorsContent,
         productContent
@@ -340,7 +340,7 @@ define( require => {
      * @param {Property.<boolean>} [enabledProperty]
      */
     function createGameButton( label, listener, enabledProperty ) {
-      var button = new RectangularPushButton( {
+      const button = new RectangularPushButton( {
         content: new Text( label, {
           font: AreaModelCommonConstants.BUTTON_FONT,
           maxWidth: 200
@@ -359,19 +359,19 @@ define( require => {
       return button;
     }
 
-    var checkButton = createGameButton( checkString, function() {
+    const checkButton = createGameButton( checkString, function() {
       model.check();
     }, model.allowCheckingProperty );
 
-    var tryAgainButton = createGameButton( tryAgainString, function() {
+    const tryAgainButton = createGameButton( tryAgainString, function() {
       model.tryAgain();
     } );
 
-    var nextButton = createGameButton( nextString, function() {
+    const nextButton = createGameButton( nextString, function() {
       model.next();
     } );
 
-    var showAnswerButton = createGameButton( showAnswerString, function() {
+    const showAnswerButton = createGameButton( showAnswerString, function() {
       model.showAnswer();
     } );
 
@@ -389,7 +389,7 @@ define( require => {
       this.challengeLayer.addChild( cheatButton );
     }
 
-    var faceScoreNode = new FaceWithPointsNode( {
+    const faceScoreNode = new FaceWithPointsNode( {
       faceDiameter: 90,
       pointsAlignment: 'rightBottom',
       pointsFont: AreaModelCommonConstants.SCORE_INCREASE_FONT,
@@ -399,22 +399,22 @@ define( require => {
     } );
     this.challengeLayer.addChild( faceScoreNode );
 
-    var levelCompleteContainer = new Node();
+    const levelCompleteContainer = new Node();
     this.challengeLayer.addChild( levelCompleteContainer );
 
     // @private {RewardNode|null} - We need to step it when there is one
     this.rewardNode = null;
 
-    var rewardNodes = RewardNode.createRandomNodes( [
+    const rewardNodes = RewardNode.createRandomNodes( [
       new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
       new StarNode()
     ], 100 );
     Orientation.VALUES.forEach( function( orientation ) {
-      var colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+      const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
       _.range( 1, 10 ).forEach( function( digit ) {
         [ -1, 1 ].forEach( function( sign ) {
-          var powers = model.hasExponents ? [ 0, 1, 2 ] : [ 0, 0, 0 ];
+          const powers = model.hasExponents ? [ 0, 1, 2 ] : [ 0, 0, 0 ];
           powers.forEach( function( power ) {
             rewardNodes.push( new RichText( new Term( sign * digit, power ).toRichString( false ), {
               font: AreaModelCommonConstants.REWARD_NODE_FONT,
@@ -425,7 +425,7 @@ define( require => {
       } );
     } );
 
-    var levelCompletedNode = null;
+    let levelCompletedNode = null;
 
     model.stateProperty.link( function( state, oldState ) {
       // When we switch back to level selection, try to leave things as they were.
@@ -457,7 +457,7 @@ define( require => {
         faceScoreNode.frown();
       }
       if ( state === GameState.LEVEL_COMPLETE ) {
-        var level = model.currentLevelProperty.value;
+        const level = model.currentLevelProperty.value;
 
         levelCompletedNode && levelCompletedNode.dispose();
         levelCompletedNode = new LevelCompletedNode(
@@ -509,7 +509,7 @@ define( require => {
      * @param {Node} content
      */
     createPanel: function( titleString, panelAlignGroup, content ) {
-      var panelContent = new VBox( {
+      const panelContent = new VBox( {
         children: [
           new AlignBox( new Text( titleString, {
             font: AreaModelCommonConstants.TITLE_FONT,

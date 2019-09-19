@@ -12,7 +12,7 @@ define( require => {
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
 
-  var EntryType = {
+  const EntryType = {
     EDITABLE: 'EDITABLE',
     DYNAMIC: 'DYNAMIC',
     GIVEN: 'GIVEN'
@@ -27,7 +27,7 @@ define( require => {
     EntryType.GIVEN // this value is fixed for a given challenge
   ];
 
-  var gameToDisplayMap = {};
+  const gameToDisplayMap = {};
   gameToDisplayMap[ EntryType.EDITABLE ] = EntryDisplayType.EDITABLE;
   gameToDisplayMap[ EntryType.DYNAMIC ] = EntryDisplayType.READOUT;
   gameToDisplayMap[ EntryType.GIVEN ] = EntryDisplayType.READOUT;

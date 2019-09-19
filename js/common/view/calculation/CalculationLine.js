@@ -37,7 +37,7 @@ define( require => {
   function CalculationLine( index, colorProperties, activeIndexProperty, allowExponents, isProportional ) {
     assert && assert( typeof index === 'number' );
 
-    var self = this;
+    const self = this;
 
     // @public {Node|null} - The {Node}, if provided, should have a `node.clean()` method to release references
     // (usually freeing it to a pool) and a `node.accessibleText` {string} representing the description of the line.
@@ -198,7 +198,7 @@ define( require => {
      * @returns {Node}
      */
     sumGroup: function( nodes ) {
-      var self = this;
+      const self = this;
 
       return this.group( _.flatten( nodes.map( function( node, index ) {
         return index > 0 ? [ self.plus(), node ] : [ node ];
@@ -214,7 +214,7 @@ define( require => {
      * @returns {Node}
      */
     sumOrientedTerms: function( terms, orientation ) {
-      var self = this;
+      const self = this;
 
       return this.sumGroup( terms.map( function( term ) {
         return self.orientedTermText( orientation, term );
@@ -229,10 +229,10 @@ define( require => {
      * @returns {Node}
      */
     sumOrDifferenceOfTerms: function( terms ) {
-      var self = this;
+      const self = this;
 
       return this.group( _.flatten( terms.map( function( term, index ) {
-        var result = [];
+        const result = [];
 
         if ( index > 0 ) {
           result.push( term.coefficient >= 0 ? self.plus() : self.minus() );
@@ -253,10 +253,10 @@ define( require => {
      * @returns {Node}
      */
     sumWithNegativeParens: function( terms ) {
-      var self = this;
+      const self = this;
 
       return this.sumGroup( terms.map( function( term ) {
-        var text = self.baseTermText( term, false );
+        let text = self.baseTermText( term, false );
         if ( term.coefficient < 0 ) {
           text = self.parentheses( text );
         }
@@ -271,7 +271,7 @@ define( require => {
      * @returns {Array.<CalculationLine>}
      */
     getAdjacentLines: function() {
-      var result = [];
+      const result = [];
       if ( this.previousLine ) {
         result.push( this.previousLine );
       }
