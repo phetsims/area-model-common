@@ -1,4 +1,4 @@
-// Copyright 2017-2018, University of Colorado Boulder
+// Copyright 2017-2019, University of Colorado Boulder
 
 /**
  * Enumeration for all states that the game can be in.  See https://github.com/phetsims/vegas/issues/74 about whether

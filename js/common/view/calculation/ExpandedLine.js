@@ -1,4 +1,4 @@
-// Copyright 2018, University of Colorado Boulder
+// Copyright 2018-2019, University of Colorado Boulder
 
 /**
  * A potential line below the totals line, where each total (vertical and horizontal) is separated out into its
