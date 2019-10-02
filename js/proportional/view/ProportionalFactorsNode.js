@@ -162,7 +162,7 @@ define( require => {
         // a11y
         labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
         descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
-        a11yDecimalPlaces: decimalPlaces
+        a11yMapValue: value => Util.toFixedNumber( value, decimalPlaces )
       } );
     }
   } );
