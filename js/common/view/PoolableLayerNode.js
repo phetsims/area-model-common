@@ -18,6 +18,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
 
   /**
@@ -37,7 +38,7 @@ define( require => {
   function PoolableLayerNode( config ) {
     const self = this;
 
-    config = _.extend( {
+    config = merge( {
       // required
       arrayProperty: null, // {Property.<Array.<*>>} - Property that has an array of items
       createNode: null, // {function} - function( {*} item ): {Node} - Create a node from an item

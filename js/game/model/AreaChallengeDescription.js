@@ -14,6 +14,7 @@ define( require => {
   const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   const GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   const Permutation = require( 'DOT/Permutation' );
 
@@ -46,7 +47,7 @@ define( require => {
    * @param {Object} config
    */
   function AreaChallengeDescription( config ) {
-    config = _.extend( {
+    config = merge( {
       // required
       horizontal: null, // {Array.<EntryType>}
       vertical: null, // {Array.<EntryType>}

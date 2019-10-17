@@ -16,6 +16,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/model/PartialProductsChoice' );
   const Property = require( 'AXON/Property' );
 
@@ -31,7 +32,7 @@ define( require => {
 
     assert && assert( options === undefined || typeof options === 'object', 'If provided, options should be an object' );
 
-    options = _.extend( {
+    options = merge( {
       allowExponents: false,
       isProportional: false,
       initialAreaBoxExpanded: false,

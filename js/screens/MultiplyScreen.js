@@ -14,6 +14,7 @@ define( require => {
   const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   const Image = require( 'SCENERY/nodes/Image' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const PartialProductsChoice = require( 'AREA_MODEL_COMMON/common/model/PartialProductsChoice' );
   const PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
   const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
@@ -60,8 +61,8 @@ define( require => {
     Screen.call( this,
       function() {
         return new ProportionalAreaModel( [
-          _.extend( { maximumSize: 10 }, commonAreaOptions ),
-          _.extend( { maximumSize: 12 }, commonAreaOptions )
+          merge( { maximumSize: 10 }, commonAreaOptions ),
+          merge( { maximumSize: 12 }, commonAreaOptions )
         ], {
           initialPartialProductsChoice: PartialProductsChoice.HIDDEN
         } );

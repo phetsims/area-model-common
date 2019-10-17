@@ -12,6 +12,7 @@ define( require => {
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const RadioButtonGroup = require( 'SUN/buttons/RadioButtonGroup' );
 
   /**
@@ -23,7 +24,7 @@ define( require => {
    * @param {Object} [options]
    */
   function AreaModelCommonRadioButtonGroup( property, items, options ) {
-    RadioButtonGroup.call( this, property, items, _.extend( {
+    RadioButtonGroup.call( this, property, items, merge( {
       orientation: 'horizontal',
       buttonContentXMargin: 10,
       buttonContentYMargin: 10,

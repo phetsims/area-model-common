@@ -16,6 +16,7 @@ define( require => {
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const DynamicProperty = require( 'AXON/DynamicProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
 
   /**
@@ -118,7 +119,7 @@ define( require => {
      * @returns {Property.<*>}
      */
     wrapProperty: function( map, options ) {
-      return new DynamicProperty( this.areaProperty, _.extend( {
+      return new DynamicProperty( this.areaProperty, merge( {
         derive: map
       }, options ) );
     },

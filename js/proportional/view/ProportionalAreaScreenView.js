@@ -23,6 +23,7 @@ define( require => {
   const DynamicProperty = require( 'AXON/DynamicProperty' );
   const HBox = require( 'SCENERY/nodes/HBox' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
   const PartitionRadioButtonGroup = require( 'AREA_MODEL_COMMON/proportional/view/PartitionRadioButtonGroup' );
   const Path = require( 'SCENERY/nodes/Path' );
@@ -57,7 +58,7 @@ define( require => {
   function ProportionalAreaScreenView( model, options ) {
     assert && assert( model instanceof ProportionalAreaModel );
 
-    options = _.extend( {
+    options = merge( {
       isProportional: true
     }, options );
 

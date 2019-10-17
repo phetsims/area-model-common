@@ -13,6 +13,7 @@ define( require => {
   const AreaModelCommonModel = require( 'AREA_MODEL_COMMON/common/model/AreaModelCommonModel' );
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
   const ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
   const ProportionalAreaDisplay = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaDisplay' );
@@ -32,7 +33,7 @@ define( require => {
    */
   function ProportionalAreaModel( areaOptionObjects, options ) {
 
-    options = _.extend( {
+    options = merge( {
       isProportional: true,
       initialAreaBoxExpanded: true
     }, options );

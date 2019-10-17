@@ -11,6 +11,7 @@ define( require => {
   // modules
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -20,7 +21,7 @@ define( require => {
    * @param {Object} config
    */
   function Orientation( config ) {
-    config = _.extend( {
+    config = merge( {
       // {string} - So you can position things like node[ orientation.coordinate ] = value
       coordinate: null,
 

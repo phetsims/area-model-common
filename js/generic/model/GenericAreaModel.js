@@ -15,6 +15,7 @@ define( require => {
   const GenericAreaDisplay = require( 'AREA_MODEL_COMMON/generic/model/GenericAreaDisplay' );
   const GenericLayout = require( 'AREA_MODEL_COMMON/generic/model/GenericLayout' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
 
   // constants
@@ -31,7 +32,7 @@ define( require => {
 
     assert && assert( options === undefined || typeof options === 'object', 'If provided, options should be an object' );
 
-    options = _.extend( {
+    options = merge( {
       allowExponents: false
     }, options );
 

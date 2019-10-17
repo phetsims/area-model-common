@@ -21,6 +21,7 @@ define( require => {
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const DynamicProperty = require( 'AXON/DynamicProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   const Property = require( 'AXON/Property' );
@@ -52,7 +53,7 @@ define( require => {
 
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
 
       // Meant to be overridden
       gridLinesVisibleProperty: new BooleanProperty( false ),
@@ -65,7 +66,7 @@ define( require => {
       isProportional: true
     }, options );
 
-    nodeOptions = _.extend( {
+    nodeOptions = merge( {
       // a11y
       tagName: 'div',
       labelTagName: 'h3',

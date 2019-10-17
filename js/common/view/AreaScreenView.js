@@ -26,6 +26,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const interleave = require( 'PHET_CORE/interleave' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const PartialProductRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/PartialProductRadioButtonGroup' );
   const Property = require( 'AXON/Property' );
@@ -57,7 +58,7 @@ define( require => {
    * @param {Object} config
    */
   function AreaScreenView( model, config ) {
-    config = _.extend( {
+    config = merge( {
       // {number} (required) - How many decimal places should be shown
       decimalPlaces: 0,
 

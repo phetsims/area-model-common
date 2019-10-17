@@ -19,6 +19,7 @@ define( require => {
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
@@ -53,7 +54,7 @@ define( require => {
    * @param {Object} [options]
    */
   function AreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options ) {
-    options = _.extend( {
+    options = merge( {
 
       // These do not change for a given AreaDisplayNode
       allowExponents: false,

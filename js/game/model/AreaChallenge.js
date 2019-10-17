@@ -21,6 +21,7 @@ define( require => {
   const GenericArea = require( 'AREA_MODEL_COMMON/generic/model/GenericArea' );
   const inherit = require( 'PHET_CORE/inherit' );
   const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
+  const merge = require( 'PHET_CORE/merge' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
   const Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
@@ -147,17 +148,17 @@ define( require => {
     this.totalInputMethod = totalOptions.inputMethod;
 
     // @public {Entry}
-    this.totalConstantEntry = new Entry( this.total.getTerm( 0 ), _.extend( {
+    this.totalConstantEntry = new Entry( this.total.getTerm( 0 ), merge( {
       correctValue: this.total.getTerm( 0 ),
       type: description.totalType,
       displayType: EntryType.toDisplayType( description.totalType )
     }, totalOptions ) );
-    this.totalXEntry = new Entry( this.total.getTerm( 1 ), _.extend( {
+    this.totalXEntry = new Entry( this.total.getTerm( 1 ), merge( {
       correctValue: this.total.getTerm( 1 ),
       type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
       displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )
     }, totalOptions ) );
-    this.totalXSquaredEntry = new Entry( this.total.getTerm( 2 ), _.extend( {
+    this.totalXSquaredEntry = new Entry( this.total.getTerm( 2 ), merge( {
       correctValue: this.total.getTerm( 2 ),
       type: description.numberOrVariable( EntryType.GIVEN, description.totalType ),
       displayType: description.numberOrVariable( EntryDisplayType.READOUT, EntryType.toDisplayType( description.totalType ) )

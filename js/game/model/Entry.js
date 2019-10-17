@@ -16,6 +16,7 @@ define( require => {
   const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
   const inherit = require( 'PHET_CORE/inherit' );
   const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
+  const merge = require( 'PHET_CORE/merge' );
   const Property = require( 'AXON/Property' );
   const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
 
@@ -27,7 +28,7 @@ define( require => {
    * @param {Object} [options]
    */
   function Entry( value, options ) {
-    options = _.extend( {
+    options = merge( {
       type: EntryType.GIVEN,
       displayType: EntryDisplayType.HIDDEN,
       inputMethod: InputMethod.CONSTANT,

@@ -20,6 +20,7 @@ define( require => {
   const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
   const inherit = require( 'PHET_CORE/inherit' );
   const LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -39,7 +40,7 @@ define( require => {
     assert && assert( orientationProperty instanceof Property );
     assert && assert( termProperty instanceof Property );
 
-    options = _.extend( {
+    options = merge( {
       // {Property.<Color>} - The color of the readout text
       textColorProperty: new Property( Color.BLACK ),
 

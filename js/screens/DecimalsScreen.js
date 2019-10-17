@@ -12,6 +12,7 @@ define( require => {
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
   const ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
   const Screen = require( 'JOIST/Screen' );
@@ -41,7 +42,7 @@ define( require => {
     Screen.call( this,
       function() {
         return new ProportionalAreaModel( [
-          _.extend( {
+          merge( {
             maximumSize: 1,
             minimumSize: 0.1,
             initialWidth: 0.5,
@@ -49,7 +50,7 @@ define( require => {
             initialVerticalSplit: 0.2,
             partitionSnapSize: 0.1
           }, commonAreaOptions ),
-          _.extend( {
+          merge( {
             maximumSize: 2,
             minimumSize: 0.1,
             initialWidth: 1,
@@ -57,7 +58,7 @@ define( require => {
             initialVerticalSplit: 0.5,
             partitionSnapSize: 0.1
           }, commonAreaOptions ),
-          _.extend( {
+          merge( {
             maximumSize: 3,
             minimumSize: 0.1,
             initialWidth: 1,

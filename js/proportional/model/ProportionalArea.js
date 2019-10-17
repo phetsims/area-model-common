@@ -15,6 +15,7 @@ define( require => {
   const BooleanProperty = require( 'AXON/BooleanProperty' );
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const NumberProperty = require( 'AXON/NumberProperty' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   const OrientationPair = require( 'AREA_MODEL_COMMON/common/model/OrientationPair' );
@@ -33,7 +34,7 @@ define( require => {
   function ProportionalArea( options ) {
     const self = this;
 
-    options = _.extend( {
+    options = merge( {
       maximumSize: 20, // {number} - Maximum size our area can take up
       minimumSize: 1, // {number} - Minimum size our area can take up
       initialWidth: 1, // {number} - Initial width

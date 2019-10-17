@@ -16,6 +16,7 @@ define( require => {
   const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Text = require( 'SCENERY/nodes/Text' );
 
   /**
@@ -28,7 +29,7 @@ define( require => {
    * @param {Object} [options]
    */
   function AreaModelCommonAccordionBox( titleString, expandedProperty, content, options ) {
-    options = _.extend( {
+    options = merge( {
       titleNode: new Text( titleString, {
         font: AreaModelCommonConstants.TITLE_FONT,
         maxWidth: options.maxTitleWidth || 200

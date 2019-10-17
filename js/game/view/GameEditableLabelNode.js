@@ -20,6 +20,7 @@ define( require => {
   const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
   const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
   const inherit = require( 'PHET_CORE/inherit' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   const Property = require( 'AXON/Property' );
@@ -35,7 +36,7 @@ define( require => {
    */
   function GameEditableLabelNode( config ) {
 
-    config = _.extend( {
+    config = merge( {
       // required
       entryProperty: null, // {Property.<Entry>}
       gameStateProperty: null, // {Property.<GameState>}
