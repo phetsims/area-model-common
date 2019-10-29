@@ -126,7 +126,7 @@ define( require => {
     } );
 
     // "Play Area" (a11y)
-    this.playAreaNode.accessibleOrder = [
+    this.pdomPlayAreaNode.accessibleOrder = [
       this.areaDisplayNode,
       this.factorsBox,
       this.areaBox,
