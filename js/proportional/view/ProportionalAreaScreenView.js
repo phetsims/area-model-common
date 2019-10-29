@@ -137,7 +137,7 @@ define( require => {
     ].filter( function( node ) { return node !== undefined; } ); // this.partitionSelectionPanel may not exist
 
     // "Control Panel" (a11y)
-    this.controlAreaNode.accessibleOrder = [
+    this.pdomControlAreaNode.accessibleOrder = [
       gridCheckbox,
       tileCheckbox,
       countingCheckbox,
