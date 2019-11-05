@@ -30,6 +30,7 @@ define( require => {
   const Panel = require( 'SUN/Panel' );
   const PartialProductRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/PartialProductRadioButtonGroup' );
   const Property = require( 'AXON/Property' );
+  const required = require( 'PHET_CORE/required' );
   const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   const ScreenView = require( 'JOIST/ScreenView' );
   const Text = require( 'SCENERY/nodes/Text' );
@@ -59,10 +60,11 @@ define( require => {
    */
   function AreaScreenView( model, config ) {
     config = merge( {
-      // {number} (required) - How many decimal places should be shown
-      decimalPlaces: 0,
 
-      // {boolean} (optional) - Whether we show options that let the user select the partial product style
+      // {number} How many decimal places should be shown
+      decimalPlaces: required( config.decimalPlaces ),
+
+      // {boolean} Whether we show options that let the user select the partial product style
       showProductsSelection: true,
 
       // {boolean} (optional) - Whether we show options that let the user select the calculation style
@@ -81,7 +83,6 @@ define( require => {
       // Notably, the accordion box does NOT support line-by-line appearance, and can be collapsed.
       useCalculationBox: false
     }, config );
-    assert && assert( typeof config.decimalPlaces === 'number' );
 
     assert && assert( model instanceof AreaModelCommonModel );
 

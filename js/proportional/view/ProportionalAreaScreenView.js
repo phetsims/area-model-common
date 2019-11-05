@@ -59,6 +59,7 @@ define( require => {
     assert && assert( model instanceof ProportionalAreaModel );
 
     options = merge( {
+      decimalPlaces: 0,
       isProportional: true
     }, options );
 
