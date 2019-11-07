@@ -17,7 +17,7 @@ define( require => {
   const DerivedProperty = require( 'AXON/DerivedProperty' );
   const DynamicProperty = require( 'AXON/DynamicProperty' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const Property = require( 'AXON/Property' );
   const TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
 

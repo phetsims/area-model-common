@@ -22,10 +22,11 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
-  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const Property = require( 'AXON/Property' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const TermEditNode = require( 'AREA_MODEL_COMMON/generic/view/TermEditNode' );
+  const validate = require( 'AXON/validate' );
   const Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -55,7 +56,7 @@ define( require => {
     assert && assert( config.activeEntryProperty instanceof Property );
     assert && assert( config.colorProperty instanceof Property );
     assert && assert( config.allowExponentsProperty instanceof Property );
-    assert && assert( Orientation.isOrientation( config.orientation ) );
+    validate( config.orientation, { validValues: Orientation.VALUES } );
 
     Node.call( this );
 

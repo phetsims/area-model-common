@@ -13,7 +13,7 @@ define( require => {
   const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   const CalculationLine = require( 'AREA_MODEL_COMMON/common/view/calculation/CalculationLine' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
 
   /**
    * @constructor

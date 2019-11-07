@@ -12,7 +12,7 @@ define( require => {
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
   const inherit = require( 'PHET_CORE/inherit' );
-  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
   const validate = require( 'AXON/validate' );
 

@@ -17,7 +17,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Line = require( 'SCENERY/nodes/Line' );
   const Node = require( 'SCENERY/nodes/Node' );
-  const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const Orientation = require( 'PHET_CORE/Orientation' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const Vector2 = require( 'DOT/Vector2' );
 
