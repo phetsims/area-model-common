@@ -14,6 +14,7 @@ define( require => {
   const inherit = require( 'PHET_CORE/inherit' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
   const Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
+  const validate = require( 'AXON/validate' );
 
   /**
    * @constructor
@@ -23,7 +24,7 @@ define( require => {
    * @param {number} digitCount
    */
   function GenericPartition( orientation, digitCount ) {
-    assert && assert( Orientation.isOrientation( orientation ) );
+    validate( orientation, { validValues: Orientation.VALUES } );
     assert && assert( typeof digitCount === 'number' );
 
     Partition.call( this, orientation, AreaModelCommonColorProfile.genericColorProperties.get( orientation ) );

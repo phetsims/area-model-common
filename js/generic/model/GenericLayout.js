@@ -13,6 +13,7 @@ define( require => {
   const Dimension2 = require( 'DOT/Dimension2' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const validate = require( 'AXON/validate' );
 
   /**
    * @constructor
@@ -37,7 +38,7 @@ define( require => {
      * @returns {number}
      */
     getPartitionQuantity: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       return orientation === Orientation.HORIZONTAL ? this.size.width : this.size.height;
     }

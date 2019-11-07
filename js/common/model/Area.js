@@ -19,6 +19,7 @@ define( require => {
   const Polynomial = require( 'AREA_MODEL_COMMON/common/model/Polynomial' );
   const Property = require( 'AXON/Property' );
   const TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
+  const validate = require( 'AXON/validate' );
 
   /**
    * @constructor
@@ -151,7 +152,7 @@ define( require => {
      * @returns {Array.<Partition>}
      */
     getDefinedPartitions: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       return this.partitions.get( orientation ).filter( function( partition ) {
         return partition.isDefined();
@@ -166,7 +167,7 @@ define( require => {
      * @returns {Array.<Term>}
      */
     getTerms: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       return this.getDefinedPartitions( orientation ).map( function( partition ) {
         return partition.sizeProperty.value;
@@ -181,7 +182,7 @@ define( require => {
      * @returns {TermList}
      */
     getTermList: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       return new TermList( this.getTerms( orientation ) );
     },

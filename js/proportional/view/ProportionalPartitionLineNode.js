@@ -33,6 +33,7 @@ define( require => {
   const Range = require( 'DOT/Range' );
   const Shape = require( 'KITE/Shape' );
   const Util = require( 'DOT/Util' );
+  const validate = require( 'AXON/validate' );
 
   // a11y strings
   const horizontalPartitionHandleString = AreaModelCommonA11yStrings.horizontalPartitionHandle.value;
@@ -50,7 +51,7 @@ define( require => {
    * @param {Orientation} orientation
    */
   function ProportionalPartitionLineNode( areaDisplay, modelViewTransformProperty, orientation ) {
-    assert && assert( Orientation.isOrientation( orientation ) );
+    validate( orientation, { validValues: Orientation.VALUES } );
 
     const self = this;
 
@@ -129,8 +130,8 @@ define( require => {
     // We need to reverse the accessible property for the vertical case.
     // See https://github.com/phetsims/area-model-introduction/issues/2
     const accessibleProperty = orientation === Orientation.HORIZONTAL
-                             ? partitionSplitProperty
-                             : new DynamicProperty( new Property( partitionSplitProperty ), {
+                               ? partitionSplitProperty
+                               : new DynamicProperty( new Property( partitionSplitProperty ), {
         bidirectional: true,
         map: function( v ) { return -v; },
         inverseMap: function( v ) { return -v; }
@@ -176,7 +177,7 @@ define( require => {
       [ oppositeActiveTotalProperty, modelViewTransformProperty ],
       function( oppositeTotal, modelViewTransform ) {
         const offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) +
-                          AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
+                            AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
         handle[ orientation.opposite.coordinate ] = offsetValue;
         line[ orientation.opposite.coordinate + '2' ] = offsetValue;
         line.mouseArea = line.localBounds.dilated( 4 );

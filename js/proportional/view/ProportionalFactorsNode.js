@@ -29,6 +29,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Util = require( 'DOT/Util' );
+  const validate = require( 'AXON/validate' );
 
   // a11y strings
   const factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
@@ -122,7 +123,7 @@ define( require => {
      * @param {number} decimalPlaces
      */
     createPicker: function( orientation, currentAreaProperty, decimalPlaces ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       // {Property.<Property<Polynomial|null>>}
       const currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {

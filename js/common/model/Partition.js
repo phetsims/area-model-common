@@ -16,6 +16,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+  const validate = require( 'AXON/validate' );
 
   /**
    * @constructor
@@ -25,7 +26,7 @@ define( require => {
    * @param {Property.<Color>} colorProperty
    */
   function Partition( orientation, colorProperty ) {
-    assert && assert( Orientation.isOrientation( orientation ) );
+    validate( orientation, { validValues: Orientation.VALUES } );
     assert && assert( colorProperty instanceof Property );
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.

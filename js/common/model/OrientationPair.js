@@ -12,6 +12,7 @@ define( require => {
   const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
   const inherit = require( 'PHET_CORE/inherit' );
   const Orientation = require( 'AREA_MODEL_COMMON/common/model/Orientation' );
+  const validate = require( 'AXON/validate' );
 
   /**
    * @constructor
@@ -42,7 +43,7 @@ define( require => {
      * @returns {*}
      */
     get: function( orientation ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       return orientation === Orientation.HORIZONTAL ? this.horizontal : this.vertical;
     },

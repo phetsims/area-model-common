@@ -24,6 +24,7 @@ define( require => {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const RichText = require( 'SCENERY/nodes/RichText' );
   const Text = require( 'SCENERY/nodes/Text' );
+  const validate = require( 'AXON/validate' );
 
   // constants
   const BOX_SIZE = 30;
@@ -108,7 +109,7 @@ define( require => {
      * @returns {Node}
      */
     createOrientationReadout: function( orientation, displayProperty ) {
-      assert && assert( Orientation.isOrientation( orientation ) );
+      validate( orientation, { validValues: Orientation.VALUES } );
 
       const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
