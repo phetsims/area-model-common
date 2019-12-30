@@ -33,7 +33,7 @@ define( require => {
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
   const TiledAreaNode = require( 'AREA_MODEL_COMMON/proportional/view/TiledAreaNode' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // a11y strings
   const areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
@@ -91,7 +91,7 @@ define( require => {
         height: height
       } );
       countingLabel.innerContent = StringUtils.fillIn( countingNumbersPatternString, {
-        count: Util.toFixedNumber( width * height, Util.numberOfDecimalPlaces( width ) + Util.numberOfDecimalPlaces( height ) )
+        count: Utils.toFixedNumber( width * height, Utils.numberOfDecimalPlaces( width ) + Utils.numberOfDecimalPlaces( height ) )
       } );
     } );
 

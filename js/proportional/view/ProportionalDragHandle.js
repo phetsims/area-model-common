@@ -26,7 +26,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Shape = require( 'KITE/Shape' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
   const Vector2Property = require( 'DOT/Vector2Property' );
 
@@ -101,11 +101,11 @@ define( require => {
 
       const snapSizeInverse = 1 / area.snapSize;
 
-      let width = Util.roundSymmetric( modelPoint.x * snapSizeInverse ) / snapSizeInverse;
-      let height = Util.roundSymmetric( modelPoint.y * snapSizeInverse ) / snapSizeInverse;
+      let width = Utils.roundSymmetric( modelPoint.x * snapSizeInverse ) / snapSizeInverse;
+      let height = Utils.roundSymmetric( modelPoint.y * snapSizeInverse ) / snapSizeInverse;
 
-      width = Util.clamp( width, area.minimumSize, area.maximumSize );
-      height = Util.clamp( height, area.minimumSize, area.maximumSize );
+      width = Utils.clamp( width, area.minimumSize, area.maximumSize );
+      height = Utils.clamp( height, area.minimumSize, area.maximumSize );
 
       activeTotalProperties.horizontal.value = width;
       activeTotalProperties.vertical.value = height;
@@ -174,8 +174,8 @@ define( require => {
           width += delta.x;
           height += delta.y;
 
-          width = Util.roundToInterval( Util.clamp( width, area.minimumSize, area.maximumSize ), area.snapSize );
-          height = Util.roundToInterval( Util.clamp( height, area.minimumSize, area.maximumSize ), area.snapSize );
+          width = Utils.roundToInterval( Utils.clamp( width, area.minimumSize, area.maximumSize ), area.snapSize );
+          height = Utils.roundToInterval( Utils.clamp( height, area.minimumSize, area.maximumSize ), area.snapSize );
 
           activeTotalProperties.horizontal.value = width;
           activeTotalProperties.vertical.value = height;
@@ -193,7 +193,7 @@ define( require => {
       let combinedOffset = 0;
       if ( dragged ) {
         // Project to the line y=x, and limit for when the user goes to 1x1 or the max.
-        combinedOffset = Util.clamp( ( offset.x + offset.y ) / 2, -10, 10 );
+        combinedOffset = Utils.clamp( ( offset.x + offset.y ) / 2, -10, 10 );
       }
       line.x2 = line.y2 = combinedOffset + DRAG_OFFSET;
       circle.x = circle.y = combinedOffset + CIRCLE_DRAG_OFFSET;

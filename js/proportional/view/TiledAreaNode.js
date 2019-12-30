@@ -19,7 +19,7 @@ define( require => {
   const Path = require( 'SCENERY/nodes/Path' );
   const Property = require( 'AXON/Property' );
   const Shape = require( 'KITE/Shape' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @constructor
@@ -167,9 +167,9 @@ define( require => {
         }
 
         const size = range.getLength();
-        const largeCount = Math.floor( Util.toFixedNumber( size / self.largeTileSizeProperty.value, 3 ) );
+        const largeCount = Math.floor( Utils.toFixedNumber( size / self.largeTileSizeProperty.value, 3 ) );
 
-        const smallCount = Util.roundSymmetric(
+        const smallCount = Utils.roundSymmetric(
           ( size - self.largeTileSizeProperty.value * largeCount ) / self.smallTileSizeProperty.value
         );
         const min = orientation.modelToView( self.modelViewTransformProperty.value, range.min );

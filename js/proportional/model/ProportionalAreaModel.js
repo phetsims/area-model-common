@@ -18,7 +18,7 @@ define( require => {
   const ProportionalArea = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalArea' );
   const ProportionalAreaDisplay = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaDisplay' );
   const TextBounds = require( 'SCENERY/util/TextBounds' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // constants
   const TEST_FONT = new PhetFont( 12 );
@@ -83,7 +83,7 @@ define( require => {
       this.areas.forEach( function( area ) {
         const representativeSize = area.snapSize + area.maximumSize;
         // Round because of floating point precision
-        const string = '' + Util.toFixedNumber( representativeSize * representativeSize, 8 ); // Square for area
+        const string = '' + Utils.toFixedNumber( representativeSize * representativeSize, 8 ); // Square for area
         const length = TextBounds.approximateCanvasWidth( TEST_FONT, string );
         if ( length > maxLength ) {
           maxLength = length;

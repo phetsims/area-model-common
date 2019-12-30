@@ -32,7 +32,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const Range = require( 'DOT/Range' );
   const Shape = require( 'KITE/Shape' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const validate = require( 'AXON/validate' );
 
   // a11y strings
@@ -147,7 +147,7 @@ define( require => {
 
     // a11y
     this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
-      constrainValue: Util.roundSymmetric,
+      constrainValue: Utils.roundSymmetric,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
@@ -198,9 +198,9 @@ define( require => {
         drag: function( event, listener ) {
           let value = listener.modelPoint[ orientation.coordinate ];
 
-          value = Util.roundSymmetric( value / areaDisplay.partitionSnapSizeProperty.value ) *
+          value = Utils.roundSymmetric( value / areaDisplay.partitionSnapSizeProperty.value ) *
                   areaDisplay.partitionSnapSizeProperty.value;
-          value = Util.clamp( value, 0, activeTotalProperty.value );
+          value = Utils.clamp( value, 0, activeTotalProperty.value );
 
           // Hint arrows disappear when the actual split changes during a drag, see
           // https://github.com/phetsims/area-model-common/issues/68

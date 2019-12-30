@@ -13,7 +13,7 @@ define( require => {
   const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
   const inherit = require( 'PHET_CORE/inherit' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   /**
    * @constructor
@@ -70,7 +70,7 @@ define( require => {
     equals: function( term ) {
       // Handle floating-point error for common cases. Epsilon guessed at what may be most relevant if this is moved
       // to common code.
-      return Util.equalsEpsilon( this.coefficient, term.coefficient, 1e-7 ) && this.power === term.power;
+      return Utils.equalsEpsilon( this.coefficient, term.coefficient, 1e-7 ) && this.power === term.power;
     },
 
     /**
@@ -83,7 +83,7 @@ define( require => {
       let string = '';
 
       if ( Math.abs( this.coefficient ) !== 1 || this.power === 0 ) {
-        string += Util.toFixedNumber( Math.abs( this.coefficient ), 2 );
+        string += Utils.toFixedNumber( Math.abs( this.coefficient ), 2 );
       }
       if ( this.power > 0 ) {
         string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;

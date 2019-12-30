@@ -28,7 +28,7 @@ define( require => {
   const Range = require( 'DOT/Range' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const validate = require( 'AXON/validate' );
 
   // a11y strings
@@ -142,20 +142,20 @@ define( require => {
 
       return new NumberPicker( bidirectionalProperty, rangeProperty, {
         upFunction: function( value ) {
-          return Util.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces );
+          return Utils.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces );
         },
         downFunction: function( value ) {
-          return Util.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces );
+          return Utils.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces );
         },
         decimalPlaces: decimalPlaces,
         scale: 1.5,
         formatValue: function( value ) {
           // Epsilon chosen to avoid round-off errors while not "rounding" any values in the decimals sims improperly.
-          if ( Util.equalsEpsilon( value, Util.roundSymmetric( value ), 1e-6 ) ) {
-            return Util.toFixed( value, 0 );
+          if ( Utils.equalsEpsilon( value, Utils.roundSymmetric( value ), 1e-6 ) ) {
+            return Utils.toFixed( value, 0 );
           }
           else {
-            return Util.toFixed( value, 1 );
+            return Utils.toFixed( value, 1 );
           }
         },
         color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
@@ -163,7 +163,7 @@ define( require => {
         // a11y
         labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
         descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
-        a11yMapValue: value => Util.toFixedNumber( value, decimalPlaces )
+        a11yMapValue: value => Utils.toFixedNumber( value, decimalPlaces )
       } );
     }
   } );
