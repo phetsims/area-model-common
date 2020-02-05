@@ -53,7 +53,7 @@ define( require => {
    * @extends {AreaScreenView}
    *
    * @param {ProportionalAreaModel} model
-   * @param {Object} options
+   * @param {Object} [options]
    */
   function ProportionalAreaScreenView( model, options ) {
     assert && assert( model instanceof ProportionalAreaModel );
