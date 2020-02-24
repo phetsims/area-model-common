@@ -56,7 +56,7 @@
   "levelPrompt.totalArea": {
     "value": "Find the total area."
   },
-  "levelPrompt.oneProduct": {
+  "levelPrompt.oneProduct.text": {
     "value": "Find the partial product."
   },
   "levelPrompt.twoProducts": {

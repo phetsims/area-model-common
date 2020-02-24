@@ -20,7 +20,7 @@ define( require => {
 
   // strings
   const levelPromptOneProductOneLengthString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.oneLength' );
-  const levelPromptOneProductString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct' );
+  const levelPromptOneProductTextString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.text' );
   const levelPromptOneProductTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.oneProduct.totalArea' );
   const levelPromptThreeLengthsString = require( 'string!AREA_MODEL_COMMON/levelPrompt.threeLengths' );
   const levelPromptTotalAreaString = require( 'string!AREA_MODEL_COMMON/levelPrompt.totalArea' );
@@ -118,7 +118,7 @@ define( require => {
 
   const promptMap = {};
   promptMap[ getPromptKey( true, 0, 0 ) ] = levelPromptTotalAreaString;
-  promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductString;
+  promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductTextString;
   promptMap[ getPromptKey( false, 2, 0 ) ] = levelPromptTwoProductsString;
   promptMap[ getPromptKey( true, 1, 0 ) ] = levelPromptOneProductTotalAreaString;
   promptMap[ getPromptKey( false, 1, 1 ) ] = levelPromptOneProductOneLengthString;
