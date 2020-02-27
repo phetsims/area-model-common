@@ -7,138 +7,134 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const Text = require( 'SCENERY/nodes/Text' );
-  const Vector2 = require( 'DOT/Vector2' );
+import Vector2 from '../../../../dot/js/Vector2.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
+import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-  // constants
-  const scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
+// constants
+const scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
 
-  /**
-   * @constructor
-   * @extends {Node}
-   *
-   * @param {OrientationPair.<Property.<number>>} activeTotalProperties
-   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
-   * @param {Property.<boolean>} countingVisibleProperty
-   */
-  function CountingAreaNode( activeTotalProperties, modelViewTransformProperty, countingVisibleProperty ) {
+/**
+ * @constructor
+ * @extends {Node}
+ *
+ * @param {OrientationPair.<Property.<number>>} activeTotalProperties
+ * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
+ * @param {Property.<boolean>} countingVisibleProperty
+ */
+function CountingAreaNode( activeTotalProperties, modelViewTransformProperty, countingVisibleProperty ) {
 
-    Node.call( this );
+  Node.call( this );
 
-    const self = this;
+  const self = this;
 
-    // @private {OrientationPair.<Property.<number>>}
-    this.activeTotalProperties = activeTotalProperties;
+  // @private {OrientationPair.<Property.<number>>}
+  this.activeTotalProperties = activeTotalProperties;
 
-    // @private {Property.<ModelViewTransform2>}
-    this.modelViewTransformProperty = modelViewTransformProperty;
+  // @private {Property.<ModelViewTransform2>}
+  this.modelViewTransformProperty = modelViewTransformProperty;
 
-    // @private {Property.<boolean>}
-    this.countingVisibleProperty = countingVisibleProperty;
+  // @private {Property.<boolean>}
+  this.countingVisibleProperty = countingVisibleProperty;
 
-    // @private {Array.<Text>} - We reuse these to avoid GC/performance issues
-    this.textNodes = [];
+  // @private {Array.<Text>} - We reuse these to avoid GC/performance issues
+  this.textNodes = [];
 
-    // @private {boolean} - Whether we should be redrawn
-    this.dirty = true;
+  // @private {boolean} - Whether we should be redrawn
+  this.dirty = true;
 
-    // Things we depend on
-    function invalidate() {
-      self.dirty = true;
-    }
-
-    countingVisibleProperty.link( invalidate );
-    activeTotalProperties.horizontal.link( invalidate );
-    activeTotalProperties.vertical.link( invalidate );
-    modelViewTransformProperty.link( invalidate );
-
-    countingVisibleProperty.linkAttribute( this, 'visible' );
+  // Things we depend on
+  function invalidate() {
+    self.dirty = true;
   }
 
-  areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
+  countingVisibleProperty.link( invalidate );
+  activeTotalProperties.horizontal.link( invalidate );
+  activeTotalProperties.vertical.link( invalidate );
+  modelViewTransformProperty.link( invalidate );
 
-  return inherit( Node, CountingAreaNode, {
-    /**
-     * Creates a reusable text node with a given number.
-     * @private
-     *
-     * @param {number} number
-     * @returns {Text}
-     */
-    createTextNode: function( number ) {
-      const text = new Text( number, {
-        font: AreaModelCommonConstants.COUNTING_FONT,
-        fill: AreaModelCommonColorProfile.countingLabelProperty
-      } );
-      this.textNodes.push( text );
-      this.addChild( text );
-      return text;
-    },
+  countingVisibleProperty.linkAttribute( this, 'visible' );
+}
 
-    /**
-     * Returns the reusable text node with a given number.
-     * @private
-     *
-     * @param {number} number
-     * @returns {Text}
-     */
-    getTextNode: function( number ) {
-      let text = this.textNodes[ number - 1 ];
-      if ( !text ) {
-        text = this.createTextNode( number );
-      }
-      return text;
-    },
+areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
 
-    /**
-     * Updates the view for tiled areas (since it is somewhat expensive to re-draw, and we don't want it being done
-     * multiple times per frame.
-     * @private
-     */
-    update: function() {
-      const modelViewTransform = this.modelViewTransformProperty.value;
+export default inherit( Node, CountingAreaNode, {
+  /**
+   * Creates a reusable text node with a given number.
+   * @private
+   *
+   * @param {number} number
+   * @returns {Text}
+   */
+  createTextNode: function( number ) {
+    const text = new Text( number, {
+      font: AreaModelCommonConstants.COUNTING_FONT,
+      fill: AreaModelCommonColorProfile.countingLabelProperty
+    } );
+    this.textNodes.push( text );
+    this.addChild( text );
+    return text;
+  },
 
-      // Ignore updates if we are not dirty
-      if ( !this.dirty ) { return; }
-      this.dirty = false;
+  /**
+   * Returns the reusable text node with a given number.
+   * @private
+   *
+   * @param {number} number
+   * @returns {Text}
+   */
+  getTextNode: function( number ) {
+    let text = this.textNodes[ number - 1 ];
+    if ( !text ) {
+      text = this.createTextNode( number );
+    }
+    return text;
+  },
 
-      if ( !this.countingVisibleProperty.value ) { return; }
+  /**
+   * Updates the view for tiled areas (since it is somewhat expensive to re-draw, and we don't want it being done
+   * multiple times per frame.
+   * @private
+   */
+  update: function() {
+    const modelViewTransform = this.modelViewTransformProperty.value;
 
-      // Coordinate mapping into the view
-      const modelToViewX = modelViewTransform.modelToViewX.bind( modelViewTransform );
-      const modelToViewY = modelViewTransform.modelToViewY.bind( modelViewTransform );
+    // Ignore updates if we are not dirty
+    if ( !this.dirty ) { return; }
+    this.dirty = false;
 
-      const width = this.activeTotalProperties.horizontal.value;
-      const height = this.activeTotalProperties.vertical.value;
+    if ( !this.countingVisibleProperty.value ) { return; }
 
-      let cellNumber = 1;
-      for ( let row = 0; row < height; row++ ) {
-        const rowCenter = modelToViewY( row + 0.5 );
+    // Coordinate mapping into the view
+    const modelToViewX = modelViewTransform.modelToViewX.bind( modelViewTransform );
+    const modelToViewY = modelViewTransform.modelToViewY.bind( modelViewTransform );
 
-        for ( let col = 0; col < width; col++ ) {
-          const colCenter = modelToViewX( col + 0.5 );
+    const width = this.activeTotalProperties.horizontal.value;
+    const height = this.activeTotalProperties.vertical.value;
 
-          const text = this.getTextNode( cellNumber );
-          text.center = scratchVector.setXY( colCenter, rowCenter );
-          text.visible = true;
+    let cellNumber = 1;
+    for ( let row = 0; row < height; row++ ) {
+      const rowCenter = modelToViewY( row + 0.5 );
 
-          cellNumber++;
-        }
-      }
+      for ( let col = 0; col < width; col++ ) {
+        const colCenter = modelToViewX( col + 0.5 );
 
-      // Hide the rest of the text nodes (that should NOT show up)
-      for ( ; cellNumber - 1 < this.textNodes.length; cellNumber++ ) {
-        this.textNodes[ cellNumber - 1 ].visible = false;
+        const text = this.getTextNode( cellNumber );
+        text.center = scratchVector.setXY( colCenter, rowCenter );
+        text.visible = true;
+
+        cellNumber++;
       }
     }
-  } );
+
+    // Hide the rest of the text nodes (that should NOT show up)
+    for ( ; cellNumber - 1 < this.textNodes.length; cellNumber++ ) {
+      this.textNodes[ cellNumber - 1 ].visible = false;
+    }
+  }
 } );

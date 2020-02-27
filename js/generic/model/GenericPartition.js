@@ -5,35 +5,32 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Orientation = require( 'PHET_CORE/Orientation' );
-  const Partition = require( 'AREA_MODEL_COMMON/common/model/Partition' );
-  const validate = require( 'AXON/validate' );
+import validate from '../../../../axon/js/validate.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import Partition from '../../common/model/Partition.js';
+import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-  /**
-   * @constructor
-   * @extends {Partition}
-   *
-   * @param {Orientation} orientation
-   * @param {number} digitCount
-   */
-  function GenericPartition( orientation, digitCount ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
-    assert && assert( typeof digitCount === 'number' );
+/**
+ * @constructor
+ * @extends {Partition}
+ *
+ * @param {Orientation} orientation
+ * @param {number} digitCount
+ */
+function GenericPartition( orientation, digitCount ) {
+  validate( orientation, { validValues: Orientation.VALUES } );
+  assert && assert( typeof digitCount === 'number' );
 
-    Partition.call( this, orientation, AreaModelCommonColorProfile.genericColorProperties.get( orientation ) );
+  Partition.call( this, orientation, AreaModelCommonColorProfile.genericColorProperties.get( orientation ) );
 
-    // @public {number} - How many digits to allow in the editor
-    this.digitCount = digitCount;
-  }
+  // @public {number} - How many digits to allow in the editor
+  this.digitCount = digitCount;
+}
 
-  areaModelCommon.register( 'GenericPartition', GenericPartition );
+areaModelCommon.register( 'GenericPartition', GenericPartition );
 
-  return inherit( Partition, GenericPartition );
-} );
+inherit( Partition, GenericPartition );
+export default GenericPartition;

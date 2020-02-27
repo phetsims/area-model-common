@@ -5,83 +5,78 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const Image = require( 'SCENERY/nodes/Image' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const PartitionLineChoice = require( 'AREA_MODEL_COMMON/proportional/model/PartitionLineChoice' );
-  const ProportionalAreaModel = require( 'AREA_MODEL_COMMON/proportional/model/ProportionalAreaModel' );
-  const ProportionalAreaScreenView = require( 'AREA_MODEL_COMMON/proportional/view/ProportionalAreaScreenView' );
-  const Screen = require( 'JOIST/Screen' );
+import Screen from '../../../joist/js/Screen.js';
+import inherit from '../../../phet-core/js/inherit.js';
+import merge from '../../../phet-core/js/merge.js';
+import Image from '../../../scenery/js/nodes/Image.js';
+import partitionScreenIconImage from '../../mipmaps/partition-screen-icon_png.js';
+import partitionScreenNavbarImage from '../../mipmaps/partition-screen-navbar_png.js';
+import areaModelCommonStrings from '../area-model-common-strings.js';
+import areaModelCommon from '../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../AreaModelCommonA11yStrings.js';
+import AreaCalculationChoice from '../common/model/AreaCalculationChoice.js';
+import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
+import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
+import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
+import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
 
-  // images
-  const partitionScreenIconImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-icon.png' );
-  const partitionScreenNavbarImage = require( 'mipmap!AREA_MODEL_COMMON/partition-screen-navbar.png' );
+const screenPartitionString = areaModelCommonStrings.screen.partition;
 
-  // strings
-  const screenPartitionString = require( 'string!AREA_MODEL_COMMON/screen.partition' );
+// a11y strings
+const partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
 
-  // a11y strings
-  const partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
+/**
+ * @constructor
+ */
+function PartitionScreen() {
 
-  /**
-   * @constructor
-   */
-  function PartitionScreen() {
+  const options = {
+    name: screenPartitionString,
+    backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+    homeScreenIcon: new Image( partitionScreenIconImage ),
+    navigationBarIcon: new Image( partitionScreenNavbarImage ),
 
-    const options = {
-      name: screenPartitionString,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-      homeScreenIcon: new Image( partitionScreenIconImage ),
-      navigationBarIcon: new Image( partitionScreenNavbarImage ),
+    // a11y
+    descriptionContent: partitionDescriptionString
+  };
 
-      // a11y
-      descriptionContent: partitionDescriptionString
-    };
+  const commonAreaOptions = {
+    minimumSize: 1,
+    initialWidth: 5,
+    initialHeight: 5,
+    initialVerticalSplit: 2,
+    initialHorizontalSplit: 2,
+    partitionLineChoice: PartitionLineChoice.ONE,
+    snapSize: 1,
+    gridSpacing: 1,
+    partitionSnapSize: 1,
+    tilesAvailable: false,
+    productsAvailable: false
+  };
 
-    const commonAreaOptions = {
-      minimumSize: 1,
-      initialWidth: 5,
-      initialHeight: 5,
-      initialVerticalSplit: 2,
-      initialHorizontalSplit: 2,
-      partitionLineChoice: PartitionLineChoice.ONE,
-      snapSize: 1,
-      gridSpacing: 1,
-      partitionSnapSize: 1,
-      tilesAvailable: false,
-      productsAvailable: false
-    };
+  Screen.call( this,
+    function() {
+      return new ProportionalAreaModel( [
+        merge( { maximumSize: 10 }, commonAreaOptions ),
+        merge( { maximumSize: 12 }, commonAreaOptions )
+      ], {
+        initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES
+      } );
+    },
+    function( model ) {
+      return new ProportionalAreaScreenView( model, {
+        showCalculationSelection: false,
+        useTileLikeBackground: true,
+        useSimplifiedNames: true,
+        useCalculationBox: true
+      } );
+    },
+    options
+  );
+}
 
-    Screen.call( this,
-      function() {
-        return new ProportionalAreaModel( [
-          merge( { maximumSize: 10 }, commonAreaOptions ),
-          merge( { maximumSize: 12 }, commonAreaOptions )
-        ], {
-          initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES
-        } );
-      },
-      function( model ) {
-        return new ProportionalAreaScreenView( model, {
-          showCalculationSelection: false,
-          useTileLikeBackground: true,
-          useSimplifiedNames: true,
-          useCalculationBox: true
-        } );
-      },
-      options
-    );
-  }
+areaModelCommon.register( 'PartitionScreen', PartitionScreen );
 
-  areaModelCommon.register( 'PartitionScreen', PartitionScreen );
-
-  return inherit( Screen, PartitionScreen );
-} );
+inherit( Screen, PartitionScreen );
+export default PartitionScreen;

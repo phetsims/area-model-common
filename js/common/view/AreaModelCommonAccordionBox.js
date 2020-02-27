@@ -7,55 +7,52 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AccordionBox = require( 'SUN/AccordionBox' );
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Text = require( 'SCENERY/nodes/Text' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
+import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
 
-  /**
-   * @constructor
-   * @extends {AccordionBox}
-   *
-   * @param {string} titleString
-   * @param {Property.<boolean>} expandedProperty
-   * @param {Node} content
-   * @param {Object} [options]
-   */
-  function AreaModelCommonAccordionBox( titleString, expandedProperty, content, options ) {
-    options = merge( {
-      titleNode: new Text( titleString, {
-        font: AreaModelCommonConstants.TITLE_FONT,
-        maxWidth: options.maxTitleWidth || 200
-      } ),
-      expandedProperty: expandedProperty,
-      contentXMargin: 15,
-      contentYMargin: 12,
-      resize: true,
-      cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
-      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.panelBorderProperty,
-      titleAlignX: 'left',
-      titleXSpacing: 8,
-      buttonXMargin: 10,
-      buttonYMargin: 8,
-      expandCollapseButtonOptions: {
-        sideLength: 20,
-        touchAreaXDilation: 5,
-        touchAreaYDilation: 5
-      }
-    }, options );
+/**
+ * @constructor
+ * @extends {AccordionBox}
+ *
+ * @param {string} titleString
+ * @param {Property.<boolean>} expandedProperty
+ * @param {Node} content
+ * @param {Object} [options]
+ */
+function AreaModelCommonAccordionBox( titleString, expandedProperty, content, options ) {
+  options = merge( {
+    titleNode: new Text( titleString, {
+      font: AreaModelCommonConstants.TITLE_FONT,
+      maxWidth: options.maxTitleWidth || 200
+    } ),
+    expandedProperty: expandedProperty,
+    contentXMargin: 15,
+    contentYMargin: 12,
+    resize: true,
+    cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
+    fill: AreaModelCommonColorProfile.panelBackgroundProperty,
+    stroke: AreaModelCommonColorProfile.panelBorderProperty,
+    titleAlignX: 'left',
+    titleXSpacing: 8,
+    buttonXMargin: 10,
+    buttonYMargin: 8,
+    expandCollapseButtonOptions: {
+      sideLength: 20,
+      touchAreaXDilation: 5,
+      touchAreaYDilation: 5
+    }
+  }, options );
 
-    AccordionBox.call( this, content, options );
-  }
+  AccordionBox.call( this, content, options );
+}
 
-  areaModelCommon.register( 'AreaModelCommonAccordionBox', AreaModelCommonAccordionBox );
+areaModelCommon.register( 'AreaModelCommonAccordionBox', AreaModelCommonAccordionBox );
 
-  return inherit( AccordionBox, AreaModelCommonAccordionBox );
-} );
+inherit( AccordionBox, AreaModelCommonAccordionBox );
+export default AreaModelCommonAccordionBox;

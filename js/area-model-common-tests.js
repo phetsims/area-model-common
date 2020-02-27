@@ -5,14 +5,10 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  require( 'AREA_MODEL_COMMON/common/model/TermTests' );
-  require( 'AREA_MODEL_COMMON/common/model/TermListTests' );
-  require( 'AREA_MODEL_COMMON/common/model/PolynomialTests' );
+import './common/model/PolynomialTests.js';
+import './common/model/TermListTests.js';
+import './common/model/TermTests.js';
 
-  // Since our tests are loaded asynchronously, we must direct QUnit to begin the tests
-  QUnit.start();
-} );
+// Since our tests are loaded asynchronously, we must direct QUnit to begin the tests
+QUnit.start();

@@ -7,96 +7,93 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  const Bounds2 = require( 'DOT/Bounds2' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const Panel = require( 'SUN/Panel' );
-  const RichText = require( 'SCENERY/nodes/RichText' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
-  const Text = require( 'SCENERY/nodes/Text' );
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
+import HBox from '../../../../scenery/js/nodes/HBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
+import Text from '../../../../scenery/js/nodes/Text.js';
+import Panel from '../../../../sun/js/Panel.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
+import Term from '../model/Term.js';
+import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
 
-  // strings
-  const areaString = require( 'string!AREA_MODEL_COMMON/area' );
+const areaString = areaModelCommonStrings.area;
 
-  // a11y strings
-  const areaEqualsPatternString = AreaModelCommonA11yStrings.areaEqualsPattern.value;
+// a11y strings
+const areaEqualsPatternString = AreaModelCommonA11yStrings.areaEqualsPattern.value;
 
-  /**
-   * @constructor
-   * @extends {Node}
-   *
-   * @param {Property.<Polynomial|null>} totalAreaProperty
-   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
-   * @param {string} maximumWidthString - If proportional
-   * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
-   */
-  function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
-    const self = this;
+/**
+ * @constructor
+ * @extends {Node}
+ *
+ * @param {Property.<Polynomial|null>} totalAreaProperty
+ * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
+ * @param {string} maximumWidthString - If proportional
+ * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
+ */
+function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
+  const self = this;
 
-    // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
-    const areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
-      font: AreaModelCommonConstants.TOTAL_AREA_VALUE_FONT
-    } );
+  // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
+  const areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
+    font: AreaModelCommonConstants.TOTAL_AREA_VALUE_FONT
+  } );
 
-    let areaNode;
-    if ( isProportional ) {
+  let areaNode;
+  if ( isProportional ) {
 
-      // Has numeric display, so it doesn't need maxWidth
-      areaText.text = maximumWidthString;
-      areaNode = new HBox( {
-        spacing: 8,
-        children: [
-          new Text( areaString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
-          new Text( MathSymbols.EQUAL_TO, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
-          // AlignBox it so that it is always centered and keeps the same bounds
-          new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
-            fill: useTileLikeBackground
-                  ? AreaModelCommonColorProfile.smallTileProperty
-                  : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
-          } )
-        ]
-      } );
-    }
-    else {
-      areaText.maxWidth = AreaModelCommonConstants.PANEL_INTERIOR_MAX;
-
-      // AlignBox it so that it is always centered and keeps the same bounds
-      areaNode = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
-    }
-
-    Node.call( this, {
+    // Has numeric display, so it doesn't need maxWidth
+    areaText.text = maximumWidthString;
+    areaNode = new HBox( {
+      spacing: 8,
       children: [
-        areaNode
-      ],
-      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
-
-      // a11y
-      tagName: 'p'
-    } );
-
-    // Update the text.
-    totalAreaProperty.link( function( polynomial ) {
-      const labelString = polynomial === null ? '?' : polynomial.toRichString();
-      areaText.text = labelString;
-      self.innerContent = StringUtils.fillIn( areaEqualsPatternString, {
-        area: labelString
-      } );
+        new Text( areaString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
+        new Text( MathSymbols.EQUAL_TO, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
+        // AlignBox it so that it is always centered and keeps the same bounds
+        new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
+          fill: useTileLikeBackground
+                ? AreaModelCommonColorProfile.smallTileProperty
+                : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
+        } )
+      ]
     } );
   }
+  else {
+    areaText.maxWidth = AreaModelCommonConstants.PANEL_INTERIOR_MAX;
 
-  areaModelCommon.register( 'TotalAreaNode', TotalAreaNode );
+    // AlignBox it so that it is always centered and keeps the same bounds
+    areaNode = new AlignBox( areaText, { alignBounds: new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, areaText.height ) } );
+  }
 
-  return inherit( Node, TotalAreaNode );
-} );
+  Node.call( this, {
+    children: [
+      areaNode
+    ],
+    maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
+
+    // a11y
+    tagName: 'p'
+  } );
+
+  // Update the text.
+  totalAreaProperty.link( function( polynomial ) {
+    const labelString = polynomial === null ? '?' : polynomial.toRichString();
+    areaText.text = labelString;
+    self.innerContent = StringUtils.fillIn( areaEqualsPatternString, {
+      area: labelString
+    } );
+  } );
+}
+
+areaModelCommon.register( 'TotalAreaNode', TotalAreaNode );
+
+inherit( Node, TotalAreaNode );
+export default TotalAreaNode;

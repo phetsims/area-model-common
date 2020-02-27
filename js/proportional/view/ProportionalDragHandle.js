@@ -8,208 +8,205 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
-  const Circle = require( 'SCENERY/nodes/Circle' );
-  const DragListener = require( 'SCENERY/listeners/DragListener' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const KeyboardDragListener = require( 'SCENERY/listeners/KeyboardDragListener' );
-  const Line = require( 'SCENERY/nodes/Line' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const Orientation = require( 'PHET_CORE/Orientation' );
-  const Property = require( 'AXON/Property' );
-  const Shape = require( 'KITE/Shape' );
-  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  const Utils = require( 'DOT/Utils' );
-  const Vector2 = require( 'DOT/Vector2' );
-  const Vector2Property = require( 'DOT/Vector2Property' );
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import Shape from '../../../../kite/js/Shape.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
+import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import DragListener from '../../../../scenery/js/listeners/DragListener.js';
+import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-  // a11y strings
-  const dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
-  const dragHandleDescriptionPatternString = AreaModelCommonA11yStrings.dragHandleDescriptionPattern.value;
+// a11y strings
+const dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
+const dragHandleDescriptionPatternString = AreaModelCommonA11yStrings.dragHandleDescriptionPattern.value;
 
-  // constants
-  const DRAG_OFFSET = 8;
-  const DRAG_RADIUS = 10.5;
-  const CIRCLE_DRAG_OFFSET = DRAG_OFFSET + Math.sqrt( 2 ) / 2 * DRAG_RADIUS;
+// constants
+const DRAG_OFFSET = 8;
+const DRAG_RADIUS = 10.5;
+const CIRCLE_DRAG_OFFSET = DRAG_OFFSET + Math.sqrt( 2 ) / 2 * DRAG_RADIUS;
 
-  /**
-   * @constructor
-   * @extends {Node}
-   *
-   * @param {Property.<ProportionalArea>} areaProperty
-   * @param {OrientationPair.<Property.<number>>} activeTotalProperties
-   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
-   */
-  function ProportionalDragHandle( areaProperty, activeTotalProperties, modelViewTransformProperty ) {
+/**
+ * @constructor
+ * @extends {Node}
+ *
+ * @param {Property.<ProportionalArea>} areaProperty
+ * @param {OrientationPair.<Property.<number>>} activeTotalProperties
+ * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
+ */
+function ProportionalDragHandle( areaProperty, activeTotalProperties, modelViewTransformProperty ) {
 
-    const self = this;
+  const self = this;
 
-    // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
-    const draggedProperty = new BooleanProperty( false );
+  // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
+  const draggedProperty = new BooleanProperty( false );
 
-    // The current view "offset" from where the pointer is compared to the point it is controlling
-    const offsetProperty = new Vector2Property( new Vector2( 0, 0 ) );
+  // The current view "offset" from where the pointer is compared to the point it is controlling
+  const offsetProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
-    const line = new Line( {
-      stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
+  const line = new Line( {
+    stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
+  } );
+
+  const circle = new Circle( DRAG_RADIUS, {
+    touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
+    focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
+    fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
+    stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
+    cursor: 'pointer',
+
+    // a11y
+    tagName: 'div',
+    innerContent: dragHandleString,
+    focusable: true
+  } );
+
+  // Potential workaround for https://github.com/phetsims/area-model-common/issues/173 (Safari SVG dirty region issue)
+  circle.addChild( new Circle( DRAG_RADIUS + 10, {
+    pickable: false,
+    fill: 'transparent'
+  } ) );
+
+  areaProperty.link( function( area ) {
+    circle.descriptionContent = StringUtils.fillIn( dragHandleDescriptionPatternString, {
+      width: area.maximumSize,
+      height: area.maximumSize
     } );
+  } );
 
-    const circle = new Circle( DRAG_RADIUS, {
-      touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
-      focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
-      fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
-      cursor: 'pointer',
+  let initialOffset;
 
-      // a11y
-      tagName: 'div',
-      innerContent: dragHandleString,
-      focusable: true
-    } );
+  function updateOffsetProperty( event, listener ) {
+    const area = areaProperty.value;
+    const modelViewTransform = modelViewTransformProperty.value;
 
-    // Potential workaround for https://github.com/phetsims/area-model-common/issues/173 (Safari SVG dirty region issue)
-    circle.addChild( new Circle( DRAG_RADIUS + 10, {
-      pickable: false,
-      fill: 'transparent'
-    } ) );
+    // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
+    // actually is (and we want it to be efficient).
+    const pointerViewPoint = listener.parentPoint;
+    const viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET ).minus( initialOffset );
+    const modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
 
-    areaProperty.link( function( area ) {
-      circle.descriptionContent = StringUtils.fillIn( dragHandleDescriptionPatternString, {
-        width: area.maximumSize,
-        height: area.maximumSize
-      } );
-    } );
+    const snapSizeInverse = 1 / area.snapSize;
 
-    let initialOffset;
+    let width = Utils.roundSymmetric( modelPoint.x * snapSizeInverse ) / snapSizeInverse;
+    let height = Utils.roundSymmetric( modelPoint.y * snapSizeInverse ) / snapSizeInverse;
 
-    function updateOffsetProperty( event, listener ) {
-      const area = areaProperty.value;
-      const modelViewTransform = modelViewTransformProperty.value;
+    width = Utils.clamp( width, area.minimumSize, area.maximumSize );
+    height = Utils.clamp( height, area.minimumSize, area.maximumSize );
 
-      // We use somewhat complicated drag code, since we both snap AND have an offset from where the pointer
-      // actually is (and we want it to be efficient).
-      const pointerViewPoint = listener.parentPoint;
-      const viewPoint = pointerViewPoint.minusScalar( CIRCLE_DRAG_OFFSET ).minus( initialOffset );
-      const modelPoint = modelViewTransform.viewToModelPosition( viewPoint );
+    activeTotalProperties.horizontal.value = width;
+    activeTotalProperties.vertical.value = height;
 
-      const snapSizeInverse = 1 / area.snapSize;
-
-      let width = Utils.roundSymmetric( modelPoint.x * snapSizeInverse ) / snapSizeInverse;
-      let height = Utils.roundSymmetric( modelPoint.y * snapSizeInverse ) / snapSizeInverse;
-
-      width = Utils.clamp( width, area.minimumSize, area.maximumSize );
-      height = Utils.clamp( height, area.minimumSize, area.maximumSize );
-
-      activeTotalProperties.horizontal.value = width;
-      activeTotalProperties.vertical.value = height;
-
-      offsetProperty.value = new Vector2(
-        viewPoint.x - modelViewTransform.modelToViewX( width ),
-        viewPoint.y - modelViewTransform.modelToViewY( height )
-      );
-    }
-
-    const dragListener = new DragListener( {
-      targetNode: this,
-      applyOffset: false,
-      start: function( event, listener ) {
-        initialOffset = listener.localPoint.minusScalar( CIRCLE_DRAG_OFFSET );
-        updateOffsetProperty( event, listener );
-      },
-      drag: updateOffsetProperty
-    } );
-    dragListener.isPressedProperty.link( draggedProperty.set.bind( draggedProperty ) );
-
-    // Interrupt the drag when one of our parameters changes
-    areaProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
-    modelViewTransformProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
-    circle.addInputListener( dragListener );
-
-    Node.call( this, {
-      children: [
-        line,
-        circle
-      ]
-    } );
-
-    const locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
-
-    function updateLocationProperty() {
-      locationProperty.value = new Vector2(
-        activeTotalProperties.horizontal.value,
-        activeTotalProperties.vertical.value
-      );
-    }
-
-    updateLocationProperty();
-    locationProperty.lazyLink( function( location ) {
-      activeTotalProperties.horizontal.value = location.x;
-      activeTotalProperties.vertical.value = location.y;
-    } );
-    activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
-    activeTotalProperties.vertical.lazyLink( updateLocationProperty );
-
-    let keyboardListener;
-    Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
-      if ( keyboardListener ) {
-        circle.interruptInput();
-        circle.removeInputListener( keyboardListener );
-        keyboardListener.dispose();
-      }
-      keyboardListener = new KeyboardDragListener( {
-        downDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
-        shiftDownDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
-        transform: modelViewTransform,
-        drag: function( delta ) {
-          let width = activeTotalProperties.horizontal.value;
-          let height = activeTotalProperties.vertical.value;
-
-          width += delta.x;
-          height += delta.y;
-
-          width = Utils.roundToInterval( Utils.clamp( width, area.minimumSize, area.maximumSize ), area.snapSize );
-          height = Utils.roundToInterval( Utils.clamp( height, area.minimumSize, area.maximumSize ), area.snapSize );
-
-          activeTotalProperties.horizontal.value = width;
-          activeTotalProperties.vertical.value = height;
-        },
-        moveOnHoldDelay: 750,
-        moveOnHoldInterval: 70
-      } );
-
-      circle.addInputListener( keyboardListener );
-    } );
-
-    // Apply offsets while dragging for a smoother experience.
-    // See https://github.com/phetsims/area-model-common/issues/3
-    Property.multilink( [ draggedProperty, offsetProperty ], function( dragged, offset ) {
-      let combinedOffset = 0;
-      if ( dragged ) {
-        // Project to the line y=x, and limit for when the user goes to 1x1 or the max.
-        combinedOffset = Utils.clamp( ( offset.x + offset.y ) / 2, -10, 10 );
-      }
-      line.x2 = line.y2 = combinedOffset + DRAG_OFFSET;
-      circle.x = circle.y = combinedOffset + CIRCLE_DRAG_OFFSET;
-    } );
-
-    // Update the offset of the drag handle
-    Orientation.VALUES.forEach( function( orientation ) {
-      Property.multilink(
-        [ activeTotalProperties.get( orientation ), modelViewTransformProperty ],
-        function( value, modelViewTransform ) {
-          self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
-        } );
-    } );
+    offsetProperty.value = new Vector2(
+      viewPoint.x - modelViewTransform.modelToViewX( width ),
+      viewPoint.y - modelViewTransform.modelToViewY( height )
+    );
   }
 
-  areaModelCommon.register( 'ProportionalDragHandle', ProportionalDragHandle );
+  const dragListener = new DragListener( {
+    targetNode: this,
+    applyOffset: false,
+    start: function( event, listener ) {
+      initialOffset = listener.localPoint.minusScalar( CIRCLE_DRAG_OFFSET );
+      updateOffsetProperty( event, listener );
+    },
+    drag: updateOffsetProperty
+  } );
+  dragListener.isPressedProperty.link( draggedProperty.set.bind( draggedProperty ) );
 
-  return inherit( Node, ProportionalDragHandle );
-} );
+  // Interrupt the drag when one of our parameters changes
+  areaProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
+  modelViewTransformProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
+  circle.addInputListener( dragListener );
+
+  Node.call( this, {
+    children: [
+      line,
+      circle
+    ]
+  } );
+
+  const locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+
+  function updateLocationProperty() {
+    locationProperty.value = new Vector2(
+      activeTotalProperties.horizontal.value,
+      activeTotalProperties.vertical.value
+    );
+  }
+
+  updateLocationProperty();
+  locationProperty.lazyLink( function( location ) {
+    activeTotalProperties.horizontal.value = location.x;
+    activeTotalProperties.vertical.value = location.y;
+  } );
+  activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
+  activeTotalProperties.vertical.lazyLink( updateLocationProperty );
+
+  let keyboardListener;
+  Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
+    if ( keyboardListener ) {
+      circle.interruptInput();
+      circle.removeInputListener( keyboardListener );
+      keyboardListener.dispose();
+    }
+    keyboardListener = new KeyboardDragListener( {
+      downDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
+      shiftDownDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
+      transform: modelViewTransform,
+      drag: function( delta ) {
+        let width = activeTotalProperties.horizontal.value;
+        let height = activeTotalProperties.vertical.value;
+
+        width += delta.x;
+        height += delta.y;
+
+        width = Utils.roundToInterval( Utils.clamp( width, area.minimumSize, area.maximumSize ), area.snapSize );
+        height = Utils.roundToInterval( Utils.clamp( height, area.minimumSize, area.maximumSize ), area.snapSize );
+
+        activeTotalProperties.horizontal.value = width;
+        activeTotalProperties.vertical.value = height;
+      },
+      moveOnHoldDelay: 750,
+      moveOnHoldInterval: 70
+    } );
+
+    circle.addInputListener( keyboardListener );
+  } );
+
+  // Apply offsets while dragging for a smoother experience.
+  // See https://github.com/phetsims/area-model-common/issues/3
+  Property.multilink( [ draggedProperty, offsetProperty ], function( dragged, offset ) {
+    let combinedOffset = 0;
+    if ( dragged ) {
+      // Project to the line y=x, and limit for when the user goes to 1x1 or the max.
+      combinedOffset = Utils.clamp( ( offset.x + offset.y ) / 2, -10, 10 );
+    }
+    line.x2 = line.y2 = combinedOffset + DRAG_OFFSET;
+    circle.x = circle.y = combinedOffset + CIRCLE_DRAG_OFFSET;
+  } );
+
+  // Update the offset of the drag handle
+  Orientation.VALUES.forEach( function( orientation ) {
+    Property.multilink(
+      [ activeTotalProperties.get( orientation ), modelViewTransformProperty ],
+      function( value, modelViewTransform ) {
+        self[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );
+      } );
+  } );
+}
+
+areaModelCommon.register( 'ProportionalDragHandle', ProportionalDragHandle );
+
+inherit( Node, ProportionalDragHandle );
+export default ProportionalDragHandle;

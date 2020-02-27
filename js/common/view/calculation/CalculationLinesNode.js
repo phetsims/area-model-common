@@ -5,380 +5,376 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const AreaModelCommonQueryParameters = require( 'AREA_MODEL_COMMON/common/AreaModelCommonQueryParameters' );
-  const BooleanProperty = require( 'AXON/BooleanProperty' );
-  const DerivedProperty = require( 'AXON/DerivedProperty' );
-  const DistributionLine = require( 'AREA_MODEL_COMMON/common/view/calculation/DistributionLine' );
-  const DynamicProperty = require( 'AXON/DynamicProperty' );
-  const Emitter = require( 'AXON/Emitter' );
-  const ExpandedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/ExpandedLine' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const MinusesLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MinusesLine' );
-  const MultipliedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/MultipliedLine' );
-  const Node = require( 'SCENERY/nodes/Node' );
-  const OrderedLine = require( 'AREA_MODEL_COMMON/common/view/calculation/OrderedLine' );
-  const Orientation = require( 'PHET_CORE/Orientation' );
-  const Property = require( 'AXON/Property' );
-  const QuestionMarkLine = require( 'AREA_MODEL_COMMON/common/view/calculation/QuestionMarkLine' );
-  const SumLine = require( 'AREA_MODEL_COMMON/common/view/calculation/SumLine' );
-  const TermList = require( 'AREA_MODEL_COMMON/common/model/TermList' );
-  const TotalsLine = require( 'AREA_MODEL_COMMON/common/view/calculation/TotalsLine' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../../axon/js/DynamicProperty.js';
+import Emitter from '../../../../../axon/js/Emitter.js';
+import Property from '../../../../../axon/js/Property.js';
+import inherit from '../../../../../phet-core/js/inherit.js';
+import Orientation from '../../../../../phet-core/js/Orientation.js';
+import Node from '../../../../../scenery/js/nodes/Node.js';
+import VBox from '../../../../../scenery/js/nodes/VBox.js';
+import areaModelCommon from '../../../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import AreaModelCommonQueryParameters from '../../AreaModelCommonQueryParameters.js';
+import AreaCalculationChoice from '../../model/AreaCalculationChoice.js';
+import TermList from '../../model/TermList.js';
+import DistributionLine from './DistributionLine.js';
+import ExpandedLine from './ExpandedLine.js';
+import MinusesLine from './MinusesLine.js';
+import MultipliedLine from './MultipliedLine.js';
+import OrderedLine from './OrderedLine.js';
+import QuestionMarkLine from './QuestionMarkLine.js';
+import SumLine from './SumLine.js';
+import TotalsLine from './TotalsLine.js';
 
-  // a11y strings
-  const betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
+// a11y strings
+const betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
 
-  /**
-   * @constructor
-   * @extends {VBox}
-   *
-   * @param {AreaModelCommonModel} model
-   */
-  function CalculationLinesNode( model ) {
-    const self = this;
+/**
+ * @constructor
+ * @extends {VBox}
+ *
+ * @param {AreaModelCommonModel} model
+ */
+function CalculationLinesNode( model ) {
+  const self = this;
 
-    Node.call( this );
+  Node.call( this );
 
-    // @private {Node}
-    this.box = new VBox( {
-      spacing: 1
-    } );
-    this.addChild( this.box );
+  // @private {Node}
+  this.box = new VBox( {
+    spacing: 1
+  } );
+  this.addChild( this.box );
 
-    if ( !AreaModelCommonQueryParameters.rawMath ) {
-      this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
-      this.tagName = 'math';
+  if ( !AreaModelCommonQueryParameters.rawMath ) {
+    this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+    this.tagName = 'math';
 
-      this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
-      this.box.tagName = 'mtable';
-    }
-
-    // @public {Property.<boolean>} - Whether there are previous/next lines (when in line-by-line mode)
-    this.previousEnabledProperty = new BooleanProperty( false );
-    this.nextEnabledProperty = new BooleanProperty( false );
-
-    // @public {Property.<Array.<CalculationLine>>} - All of our "current" lines
-    this.calculationLinesProperty = new Property( [] );
-
-    // @public {Emitter} - Fired whenever the displayed appearance has updated.
-    this.displayUpdatedEmitter = new Emitter();
-
-    // @private {AreaModelCommonModel}
-    this.model = model;
-
-    // @private {boolean} - Whether the actual CalculationLinesNode need updating.
-    this.linesDirty = true;
-
-    // @private {boolean} - Whether the display of the lines (index/visibility change) needs updating.
-    this.displayDirty = true;
-
-    // @private {Property.<number>} - The current index (for whatever area)
-    this.areaIndexProperty = new DynamicProperty( model.currentAreaProperty, {
-      derive: 'calculationIndexProperty',
-      bidirectional: true
-    } );
-
-    // @private {Property.<number|null>} - The effective current index (for whatever area) that we will use for display
-    this.effectiveIndexProperty = new DerivedProperty(
-      [ this.areaIndexProperty, model.areaCalculationChoiceProperty ],
-      function( index, choice ) {
-        return choice === AreaCalculationChoice.LINE_BY_LINE ? index : null;
-      } );
-
-    const setLinesDirty = function() { self.linesDirty = true; };
-    const setDisplayDirty = function() { self.displayDirty = true; };
-
-    // Listen for changes that would make the display need an update
-    model.areaCalculationChoiceProperty.lazyLink( setDisplayDirty );
-    this.areaIndexProperty.lazyLink( setDisplayDirty );
-
-    // Listen for changes that would make everything need an update
-    model.currentAreaProperty.link( function( newArea, oldArea ) {
-      if ( oldArea ) {
-        oldArea.allPartitions.forEach( function( partition ) {
-          partition.sizeProperty.unlink( setLinesDirty );
-          partition.visibleProperty.unlink( setLinesDirty );
-        } );
-      }
-
-      newArea.allPartitions.forEach( function( partition ) {
-        partition.sizeProperty.lazyLink( setLinesDirty );
-        partition.visibleProperty.lazyLink( setLinesDirty );
-      } );
-
-      setLinesDirty();
-
-      self.update();
-    } );
+    this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+    this.box.tagName = 'mtable';
   }
 
-  areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
+  // @public {Property.<boolean>} - Whether there are previous/next lines (when in line-by-line mode)
+  this.previousEnabledProperty = new BooleanProperty( false );
+  this.nextEnabledProperty = new BooleanProperty( false );
 
-  return inherit( Node, CalculationLinesNode, {
-    /**
-     * Called whenever the calculation may need an update.
-     * @public
-     */
-    update: function() {
-      // Don't update anything if things are hidden
-      if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.HIDDEN ) {
-        return;
-      }
+  // @public {Property.<Array.<CalculationLine>>} - All of our "current" lines
+  this.calculationLinesProperty = new Property( [] );
 
-      this.updateLines();
-      this.updateDisplay();
-    },
+  // @public {Emitter} - Fired whenever the displayed appearance has updated.
+  this.displayUpdatedEmitter = new Emitter();
 
-    /**
-     * Moves the display to the previous line.
-     * @public
-     */
-    moveToPreviousLine: function() {
-      const activeLine = this.getActiveLine();
-      if ( activeLine.previousLine ) {
-        this.areaIndexProperty.value = activeLine.previousLine.index;
-      }
-    },
+  // @private {AreaModelCommonModel}
+  this.model = model;
 
-    /**
-     * Moves the display to the next line.
-     * @public
-     */
-    moveToNextLine: function() {
-      const activeLine = this.getActiveLine();
-      if ( activeLine.nextLine ) {
-        this.areaIndexProperty.value = activeLine.nextLine.index;
-      }
-    },
+  // @private {boolean} - Whether the actual CalculationLinesNode need updating.
+  this.linesDirty = true;
 
-    /**
-     * Removes and disposes children.
-     * @private
-     */
-    wipe: function() {
-      while ( this.box.children.length ) {
-        this.box.children[ 0 ].dispose();
-      }
-    },
+  // @private {boolean} - Whether the display of the lines (index/visibility change) needs updating.
+  this.displayDirty = true;
 
-    /**
-     * Update the internally-stored calculation lines.
-     * @private
-     */
-    updateLines: function() {
-      if ( !this.linesDirty ) {
-        return;
-      }
+  // @private {Property.<number>} - The current index (for whatever area)
+  this.areaIndexProperty = new DynamicProperty( model.currentAreaProperty, {
+    derive: 'calculationIndexProperty',
+    bidirectional: true
+  } );
 
-      // As a sanity check, just remove all children here (so we don't leak things)
-      this.wipe();
+  // @private {Property.<number|null>} - The effective current index (for whatever area) that we will use for display
+  this.effectiveIndexProperty = new DerivedProperty(
+    [ this.areaIndexProperty, model.areaCalculationChoiceProperty ],
+    function( index, choice ) {
+      return choice === AreaCalculationChoice.LINE_BY_LINE ? index : null;
+    } );
 
-      // Release line references that we had before
-      this.calculationLinesProperty.value.forEach( function( calculationLine ) {
-        calculationLine.dispose();
+  const setLinesDirty = function() { self.linesDirty = true; };
+  const setDisplayDirty = function() { self.displayDirty = true; };
+
+  // Listen for changes that would make the display need an update
+  model.areaCalculationChoiceProperty.lazyLink( setDisplayDirty );
+  this.areaIndexProperty.lazyLink( setDisplayDirty );
+
+  // Listen for changes that would make everything need an update
+  model.currentAreaProperty.link( function( newArea, oldArea ) {
+    if ( oldArea ) {
+      oldArea.allPartitions.forEach( function( partition ) {
+        partition.sizeProperty.unlink( setLinesDirty );
+        partition.visibleProperty.unlink( setLinesDirty );
       } );
+    }
 
-      // Create new lines
-      this.calculationLinesProperty.value = CalculationLinesNode.createLines(
-        this.model.currentAreaProperty.value,
-        this.effectiveIndexProperty,
-        this.model.allowExponents,
-        this.model.isProportional
-      );
+    newArea.allPartitions.forEach( function( partition ) {
+      partition.sizeProperty.lazyLink( setLinesDirty );
+      partition.visibleProperty.lazyLink( setLinesDirty );
+    } );
 
-      this.linesDirty = false;
-      this.displayDirty = true;
-    },
+    setLinesDirty();
 
-    /**
-     * Update the display of the calculation lines.
-     * @private
-     */
-    updateDisplay: function() {
-      if ( !this.displayDirty ) {
-        return;
-      }
+    self.update();
+  } );
+}
 
-      // As a sanity check, just remove all children here (so we don't leak things)
-      this.wipe();
+areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
 
-      let displayedLines = this.calculationLinesProperty.value;
+export default inherit( Node, CalculationLinesNode, {
+  /**
+   * Called whenever the calculation may need an update.
+   * @public
+   */
+  update: function() {
+    // Don't update anything if things are hidden
+    if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.HIDDEN ) {
+      return;
+    }
 
-      // If we are in line-by-line mode, display adjacent lines
-      if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE ) {
+    this.updateLines();
+    this.updateDisplay();
+  },
 
-        const activeLine = this.getActiveLine();
-        displayedLines = activeLine.getAdjacentLines();
+  /**
+   * Moves the display to the previous line.
+   * @public
+   */
+  moveToPreviousLine: function() {
+    const activeLine = this.getActiveLine();
+    if ( activeLine.previousLine ) {
+      this.areaIndexProperty.value = activeLine.previousLine.index;
+    }
+  },
 
-        this.previousEnabledProperty.value = !!activeLine.previousLine;
-        this.nextEnabledProperty.value = !!activeLine.nextLine;
+  /**
+   * Moves the display to the next line.
+   * @public
+   */
+  moveToNextLine: function() {
+    const activeLine = this.getActiveLine();
+    if ( activeLine.nextLine ) {
+      this.areaIndexProperty.value = activeLine.nextLine.index;
+    }
+  },
+
+  /**
+   * Removes and disposes children.
+   * @private
+   */
+  wipe: function() {
+    while ( this.box.children.length ) {
+      this.box.children[ 0 ].dispose();
+    }
+  },
+
+  /**
+   * Update the internally-stored calculation lines.
+   * @private
+   */
+  updateLines: function() {
+    if ( !this.linesDirty ) {
+      return;
+    }
+
+    // As a sanity check, just remove all children here (so we don't leak things)
+    this.wipe();
+
+    // Release line references that we had before
+    this.calculationLinesProperty.value.forEach( function( calculationLine ) {
+      calculationLine.dispose();
+    } );
+
+    // Create new lines
+    this.calculationLinesProperty.value = CalculationLinesNode.createLines(
+      this.model.currentAreaProperty.value,
+      this.effectiveIndexProperty,
+      this.model.allowExponents,
+      this.model.isProportional
+    );
+
+    this.linesDirty = false;
+    this.displayDirty = true;
+  },
+
+  /**
+   * Update the display of the calculation lines.
+   * @private
+   */
+  updateDisplay: function() {
+    if ( !this.displayDirty ) {
+      return;
+    }
+
+    // As a sanity check, just remove all children here (so we don't leak things)
+    this.wipe();
+
+    let displayedLines = this.calculationLinesProperty.value;
+
+    // If we are in line-by-line mode, display adjacent lines
+    if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.LINE_BY_LINE ) {
+
+      const activeLine = this.getActiveLine();
+      displayedLines = activeLine.getAdjacentLines();
+
+      this.previousEnabledProperty.value = !!activeLine.previousLine;
+      this.nextEnabledProperty.value = !!activeLine.nextLine;
+    }
+    else {
+      this.previousEnabledProperty.value = false;
+      this.nextEnabledProperty.value = false;
+    }
+
+    this.box.children = displayedLines.map( function( line, index ) {
+      const lineNode = new Node( {
+        children: [
+          line.node
+        ]
+      } );
+      if ( AreaModelCommonQueryParameters.rawMath ) {
+        lineNode.tagName = 'span';
+        lineNode.innerContent = line.node.accessibleText;
+        lineNode.containerTagName = 'span';
+        line.node.accessibleVisible = false;
       }
       else {
-        this.previousEnabledProperty.value = false;
-        this.nextEnabledProperty.value = false;
+        lineNode.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+        lineNode.tagName = 'mtr';
       }
-
-      this.box.children = displayedLines.map( function( line, index ) {
-        const lineNode = new Node( {
-          children: [
-            line.node
-          ]
-        } );
+      if ( index > 0 ) {
         if ( AreaModelCommonQueryParameters.rawMath ) {
-          lineNode.tagName = 'span';
-          lineNode.innerContent = line.node.accessibleText;
-          lineNode.containerTagName = 'span';
-          line.node.accessibleVisible = false;
+          lineNode.labelTagName = 'span';
+          lineNode.labelContent = betweenCalculationLinesString;
         }
         else {
-          lineNode.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
-          lineNode.tagName = 'mtr';
+          lineNode.insertChild( 0, new Node( {
+            // a11y
+            tagName: 'mtext',
+            accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+            innerContent: betweenCalculationLinesString
+          } ) );
         }
-        if ( index > 0 ) {
-          if ( AreaModelCommonQueryParameters.rawMath ) {
-            lineNode.labelTagName = 'span';
-            lineNode.labelContent = betweenCalculationLinesString;
-          }
-          else {
-            lineNode.insertChild( 0, new Node( {
-              // a11y
-              tagName: 'mtext',
-              accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-              innerContent: betweenCalculationLinesString
-            } ) );
-          }
+      }
+      return lineNode;
+    } );
+
+    this.displayDirty = false;
+    this.displayUpdatedEmitter.emit();
+  },
+
+  /**
+   * Returns the first active line, or null otherwise.
+   * @private
+   *
+   * @returns {CalculationLine|null}
+   */
+  getActiveLine: function() {
+    let activeLine = _.find( this.calculationLinesProperty.value, function( line ) {
+      return line.isActiveProperty.value;
+    } ) || null;
+
+    // If no line is currently active (maybe it was removed?), switch to the next-best line
+    if ( !activeLine ) {
+      let nextBestLine = null;
+      const lastIndex = this.areaIndexProperty.value;
+      this.calculationLinesProperty.value.forEach( function( calculationLine ) {
+        if ( calculationLine.index <= lastIndex ) {
+          nextBestLine = calculationLine;
         }
-        return lineNode;
       } );
 
-      this.displayDirty = false;
-      this.displayUpdatedEmitter.emit();
-    },
-
-    /**
-     * Returns the first active line, or null otherwise.
-     * @private
-     *
-     * @returns {CalculationLine|null}
-     */
-    getActiveLine: function() {
-      let activeLine = _.find( this.calculationLinesProperty.value, function( line ) {
-        return line.isActiveProperty.value;
-      } ) || null;
-
-      // If no line is currently active (maybe it was removed?), switch to the next-best line
-      if ( !activeLine ) {
-        let nextBestLine = null;
-        const lastIndex = this.areaIndexProperty.value;
-        this.calculationLinesProperty.value.forEach( function( calculationLine ) {
-          if ( calculationLine.index <= lastIndex ) {
-            nextBestLine = calculationLine;
-          }
-        } );
-
-        // Update the index property to point to the correct line
-        this.areaIndexProperty.value = nextBestLine.index;
-        activeLine = nextBestLine;
-      }
-
-      return activeLine;
+      // Update the index property to point to the correct line
+      this.areaIndexProperty.value = nextBestLine.index;
+      activeLine = nextBestLine;
     }
-  }, {
-    /**
-     * Creates an array of calculation lines.
-     * @private
-     *
-     * @param {Area} area
-     * @param {Property.<number|null>} activeIndexProperty - null when all lines should be active
-     * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
-     * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
-     * @returns {Array.<CalculationLine>}
-     */
-    createLines: function( area, activeIndexProperty, allowExponents, isProportional ) {
-      // Whether there are ANY shown partitions for a given orientation
-      const horizontalEmpty = area.getDefinedPartitions( Orientation.HORIZONTAL ).length === 0;
-      const verticalEmpty = area.getDefinedPartitions( Orientation.VERTICAL ).length === 0;
 
-      // If both are empty, show a question mark
-      if ( horizontalEmpty && verticalEmpty ) {
-        return [ new QuestionMarkLine( area, activeIndexProperty, allowExponents, isProportional ) ];
-      }
-      // If only one is empty, show boxes
-      else if ( horizontalEmpty || verticalEmpty ) {
-        return [ new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) ];
-      }
+    return activeLine;
+  }
+}, {
+  /**
+   * Creates an array of calculation lines.
+   * @private
+   *
+   * @param {Area} area
+   * @param {Property.<number|null>} activeIndexProperty - null when all lines should be active
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
+   * @returns {Array.<CalculationLine>}
+   */
+  createLines: function( area, activeIndexProperty, allowExponents, isProportional ) {
+    // Whether there are ANY shown partitions for a given orientation
+    const horizontalEmpty = area.getDefinedPartitions( Orientation.HORIZONTAL ).length === 0;
+    const verticalEmpty = area.getDefinedPartitions( Orientation.VERTICAL ).length === 0;
 
-      const horizontalTermList = area.getTermList( Orientation.HORIZONTAL );
-      const verticalTermList = area.getTermList( Orientation.VERTICAL );
+    // If both are empty, show a question mark
+    if ( horizontalEmpty && verticalEmpty ) {
+      return [ new QuestionMarkLine( area, activeIndexProperty, allowExponents, isProportional ) ];
+    }
+    // If only one is empty, show boxes
+    else if ( horizontalEmpty || verticalEmpty ) {
+      return [ new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) ];
+    }
 
-      const horizontalTerms = horizontalTermList.terms;
-      const verticalTerms = verticalTermList.terms;
+    const horizontalTermList = area.getTermList( Orientation.HORIZONTAL );
+    const verticalTermList = area.getTermList( Orientation.VERTICAL );
 
-      // The total/sum for each orientation
-      const horizontalPolynomial = area.totalProperties.horizontal.value;
-      const verticalPolynomial = area.totalProperties.vertical.value;
+    const horizontalTerms = horizontalTermList.terms;
+    const verticalTerms = verticalTermList.terms;
 
-      // E.g. for ( 2 ) * ( 3 + x ), the result will be the terms 6 and 2x.
-      const multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
-        return horizontalTerms.map( function( horizontalTerm ) {
-          return horizontalTerm.times( verticalTerm );
-        } );
-      } ) ) );
-      const orderedTermList = multipliedTermList.orderedByExponent();
-      const totalPolynomial = area.totalAreaProperty.value;
+    // The total/sum for each orientation
+    const horizontalPolynomial = area.totalProperties.horizontal.value;
+    const verticalPolynomial = area.totalProperties.vertical.value;
 
-      // Logic for what calculation lines are needed
-      const needsExpansion = !allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) ||
+    // E.g. for ( 2 ) * ( 3 + x ), the result will be the terms 6 and 2x.
+    const multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
+      return horizontalTerms.map( function( horizontalTerm ) {
+        return horizontalTerm.times( verticalTerm );
+      } );
+    } ) ) );
+    const orderedTermList = multipliedTermList.orderedByExponent();
+    const totalPolynomial = area.totalAreaProperty.value;
+
+    // Logic for what calculation lines are needed
+    const needsExpansion = !allowExponents && ( !horizontalTermList.equals( horizontalPolynomial ) ||
                                                 !verticalTermList.equals( verticalPolynomial ) );
-      const needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
-      const needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
-      const needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
+    const needsDistribution = horizontalTermList.terms.length !== 1 || verticalTermList.terms.length !== 1;
+    const needsMultiplied = needsDistribution && !multipliedTermList.equals( totalPolynomial );
+    const needsOrdered = needsMultiplied && !orderedTermList.equals( multipliedTermList ) &&
                          !( orderedTermList.equals( totalPolynomial ) &&
                          ( !allowExponents || !orderedTermList.hasNegativeTerm() ) );
-      const needsMinuses = needsMultiplied && allowExponents &&
+    const needsMinuses = needsMultiplied && allowExponents &&
                          orderedTermList.hasNegativeTerm() && !orderedTermList.equals( totalPolynomial );
 
-      // Add the actual lines
-      const lines = [];
-      // e.g. ( -x + x^2 )( x^2 - x ) <--- example used for everything except the ExpansionLine
-      lines.push( new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) );
-      if ( needsExpansion ) {
-        // e.g. ( -5 + 2 )( 7 + 3 ) <---- if we have a proportional one where Totals Line is e.g. -3 * 10
-        lines.push( new ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );
-      }
-      if ( needsDistribution ) {
-        // e.g. (-x)(x^2) + (-x)(-x) + (x^2)(x^2) + (x^2)(-x)
-        lines.push( new DistributionLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );
-      }
-      if ( needsMultiplied ) {
-        // e.g. (-x^3) + x^2 + x^4 + (-x^3)
-        lines.push( new MultipliedLine( multipliedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
-      }
-      if ( needsOrdered ) {
-        // e.g. x^4 + (-x^3) + (-x^3) + x^2
-        lines.push( new OrderedLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
-      }
-      if ( needsMinuses ) {
-        // e.g. x^4 - x^3 - x^3 + x^2
-        lines.push( new MinusesLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
-      }
-      // e.g. x^4 - 2x^3 + x^2
-      lines.push( new SumLine( area, activeIndexProperty, allowExponents, isProportional ) );
-
-      // Link the lines together, so it is easy to traverse
-      for ( let i = 1; i < lines.length; i++ ) {
-        lines[ i - 1 ].nextLine = lines[ i ];
-        lines[ i ].previousLine = lines[ i - 1 ];
-      }
-
-      return lines;
+    // Add the actual lines
+    const lines = [];
+    // e.g. ( -x + x^2 )( x^2 - x ) <--- example used for everything except the ExpansionLine
+    lines.push( new TotalsLine( area, activeIndexProperty, allowExponents, isProportional ) );
+    if ( needsExpansion ) {
+      // e.g. ( -5 + 2 )( 7 + 3 ) <---- if we have a proportional one where Totals Line is e.g. -3 * 10
+      lines.push( new ExpandedLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );
     }
-  } );
+    if ( needsDistribution ) {
+      // e.g. (-x)(x^2) + (-x)(-x) + (x^2)(x^2) + (x^2)(-x)
+      lines.push( new DistributionLine( horizontalTerms, verticalTerms, area, activeIndexProperty, allowExponents, isProportional ) );
+    }
+    if ( needsMultiplied ) {
+      // e.g. (-x^3) + x^2 + x^4 + (-x^3)
+      lines.push( new MultipliedLine( multipliedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
+    }
+    if ( needsOrdered ) {
+      // e.g. x^4 + (-x^3) + (-x^3) + x^2
+      lines.push( new OrderedLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
+    }
+    if ( needsMinuses ) {
+      // e.g. x^4 - x^3 - x^3 + x^2
+      lines.push( new MinusesLine( orderedTermList, area, activeIndexProperty, allowExponents, isProportional ) );
+    }
+    // e.g. x^4 - 2x^3 + x^2
+    lines.push( new SumLine( area, activeIndexProperty, allowExponents, isProportional ) );
+
+    // Link the lines together, so it is easy to traverse
+    for ( let i = 1; i < lines.length; i++ ) {
+      lines[ i - 1 ].nextLine = lines[ i ];
+      lines[ i ].previousLine = lines[ i - 1 ];
+    }
+
+    return lines;
+  }
 } );

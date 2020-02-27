@@ -7,64 +7,60 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Poolable = require( 'PHET_CORE/Poolable' );
-  const Property = require( 'AXON/Property' );
-  const Text = require( 'SCENERY/nodes/Text' );
+import Property from '../../../../../axon/js/Property.js';
+import inherit from '../../../../../phet-core/js/inherit.js';
+import Poolable from '../../../../../phet-core/js/Poolable.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
+import areaModelCommon from '../../../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-  // a11y strings
-  const questionMarkString = AreaModelCommonA11yStrings.questionMark.value;
+// a11y strings
+const questionMarkString = AreaModelCommonA11yStrings.questionMark.value;
 
-  /**
-   * @constructor
-   * @extends {Text}
-   *
-   * @param {Property.<Color>} baseColorProperty
-   */
-  function QuestionMark( baseColorProperty ) {
-    assert && assert( baseColorProperty instanceof Property );
+/**
+ * @constructor
+ * @extends {Text}
+ *
+ * @param {Property.<Color>} baseColorProperty
+ */
+function QuestionMark( baseColorProperty ) {
+  assert && assert( baseColorProperty instanceof Property );
 
-    if ( !this.initialized ) {
-      this.initialized = true;
+  if ( !this.initialized ) {
+    this.initialized = true;
 
-      // @public {string}
-      this.accessibleText = questionMarkString;
+    // @public {string}
+    this.accessibleText = questionMarkString;
 
-      Text.call( this, '?', {
-        font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
+    Text.call( this, '?', {
+      font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
 
-        // a11y
-        tagName: 'mi',
-        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-        innerContent: questionMarkString
-      } );
-    }
-
-    this.fill = baseColorProperty;
+      // a11y
+      tagName: 'mi',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      innerContent: questionMarkString
+    } );
   }
 
-  areaModelCommon.register( 'QuestionMark', QuestionMark );
+  this.fill = baseColorProperty;
+}
 
-  inherit( Text, QuestionMark, {
-    /**
-     * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
-     * @public
-     */
-    clean: function() {
-      this.fill = null;
+areaModelCommon.register( 'QuestionMark', QuestionMark );
 
-      this.freeToPool();
-    }
-  } );
+inherit( Text, QuestionMark, {
+  /**
+   * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
+   * @public
+   */
+  clean: function() {
+    this.fill = null;
 
-  Poolable.mixInto( QuestionMark );
-
-  return QuestionMark;
+    this.freeToPool();
+  }
 } );
+
+Poolable.mixInto( QuestionMark );
+
+export default QuestionMark;

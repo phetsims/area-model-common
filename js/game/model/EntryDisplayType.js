@@ -5,29 +5,25 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+import areaModelCommon from '../../areaModelCommon.js';
 
-  const EntryDisplayType = {
-    EDITABLE: 'EDITABLE',
-    READOUT: 'READOUT',
-    HIDDEN: 'HIDDEN'
-  };
+const EntryDisplayType = {
+  EDITABLE: 'EDITABLE',
+  READOUT: 'READOUT',
+  HIDDEN: 'HIDDEN'
+};
 
-  areaModelCommon.register( 'EntryDisplayType', EntryDisplayType );
+areaModelCommon.register( 'EntryDisplayType', EntryDisplayType );
 
-  // @public {Array.<EntryDisplayType>} - All values the enumeration can take.
-  EntryDisplayType.VALUES = [
-    EntryDisplayType.EDITABLE, // editable, and shows the edited value
-    EntryDisplayType.READOUT, // just the value shown, does not look editable
-    EntryDisplayType.HIDDEN // nothing shown
-  ];
+// @public {Array.<EntryDisplayType>} - All values the enumeration can take.
+EntryDisplayType.VALUES = [
+  EntryDisplayType.EDITABLE, // editable, and shows the edited value
+  EntryDisplayType.READOUT, // just the value shown, does not look editable
+  EntryDisplayType.HIDDEN // nothing shown
+];
 
-  // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( EntryDisplayType ); }
+// verify that enumeration is immutable, without the runtime penalty in production code
+if ( assert ) { Object.freeze( EntryDisplayType ); }
 
-  return EntryDisplayType;
-} );
+export default EntryDisplayType;

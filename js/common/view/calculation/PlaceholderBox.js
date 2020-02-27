@@ -7,65 +7,61 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Poolable = require( 'PHET_CORE/Poolable' );
-  const Property = require( 'AXON/Property' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
+import Property from '../../../../../axon/js/Property.js';
+import inherit from '../../../../../phet-core/js/inherit.js';
+import Poolable from '../../../../../phet-core/js/Poolable.js';
+import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
+import areaModelCommon from '../../../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
 
-  // a11y strings
-  const placeholderString = AreaModelCommonA11yStrings.placeholder.value;
+// a11y strings
+const placeholderString = AreaModelCommonA11yStrings.placeholder.value;
 
-  /**
-   * @constructor
-   * @extends {Rectangle}
-   *
-   * @param {Property.<Color>} colorProperty
-   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
-   */
-  function PlaceholderBox( colorProperty, allowExponents ) {
-    assert && assert( colorProperty instanceof Property );
-    assert && assert( typeof allowExponents === 'boolean' );
+/**
+ * @constructor
+ * @extends {Rectangle}
+ *
+ * @param {Property.<Color>} colorProperty
+ * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+ */
+function PlaceholderBox( colorProperty, allowExponents ) {
+  assert && assert( colorProperty instanceof Property );
+  assert && assert( typeof allowExponents === 'boolean' );
 
-    if ( !this.initialized ) {
-      this.initialized = true;
+  if ( !this.initialized ) {
+    this.initialized = true;
 
-      // @public {string}
-      this.accessibleText = placeholderString;
+    // @public {string}
+    this.accessibleText = placeholderString;
 
-      Rectangle.call( this, 0, 0, 16, 16, {
-        lineWidth: 0.7,
+    Rectangle.call( this, 0, 0, 16, 16, {
+      lineWidth: 0.7,
 
-        // a11y
-        tagName: 'mi',
-        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-        innerContent: placeholderString
-      } );
-    }
-
-    this.stroke = colorProperty;
-    this.localBounds = this.selfBounds.dilatedX( allowExponents ? 2 : 0 );
+      // a11y
+      tagName: 'mi',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      innerContent: placeholderString
+    } );
   }
 
-  areaModelCommon.register( 'PlaceholderBox', PlaceholderBox );
+  this.stroke = colorProperty;
+  this.localBounds = this.selfBounds.dilatedX( allowExponents ? 2 : 0 );
+}
 
-  inherit( Rectangle, PlaceholderBox, {
-    /**
-     * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
-     * @public
-     */
-    clean: function() {
-      this.stroke = null;
-      this.freeToPool();
-    }
-  } );
+areaModelCommon.register( 'PlaceholderBox', PlaceholderBox );
 
-  Poolable.mixInto( PlaceholderBox );
-
-  return PlaceholderBox;
+inherit( Rectangle, PlaceholderBox, {
+  /**
+   * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
+   * @public
+   */
+  clean: function() {
+    this.stroke = null;
+    this.freeToPool();
+  }
 } );
+
+Poolable.mixInto( PlaceholderBox );
+
+export default PlaceholderBox;

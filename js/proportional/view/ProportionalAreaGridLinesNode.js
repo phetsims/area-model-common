@@ -7,55 +7,52 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Path = require( 'SCENERY/nodes/Path' );
-  const Property = require( 'AXON/Property' );
-  const Shape = require( 'KITE/Shape' );
+import Property from '../../../../axon/js/Property.js';
+import Shape from '../../../../kite/js/Shape.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-  // constants
-  const GRID_LINE_WIDTH = 0.5;
-  const HALF_GRID_LINE_WIDTH = GRID_LINE_WIDTH / 2;
+// constants
+const GRID_LINE_WIDTH = 0.5;
+const HALF_GRID_LINE_WIDTH = GRID_LINE_WIDTH / 2;
 
-  /**
-   * @constructor
-   * @extends {Node}
-   *
-   * @param {Property.<ProportionalArea>} areaProperty
-   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
-   */
-  function ProportionalAreaGridLinesNode( areaProperty, modelViewTransformProperty ) {
-    const self = this;
+/**
+ * @constructor
+ * @extends {Node}
+ *
+ * @param {Property.<ProportionalArea>} areaProperty
+ * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
+ */
+function ProportionalAreaGridLinesNode( areaProperty, modelViewTransformProperty ) {
+  const self = this;
 
-    Path.call( this, null, {
-      stroke: AreaModelCommonColorProfile.gridLineProperty
-    } );
+  Path.call( this, null, {
+    stroke: AreaModelCommonColorProfile.gridLineProperty
+  } );
 
-    Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
-      const maxX = modelViewTransform.modelToViewX( area.maximumSize );
-      const maxY = modelViewTransform.modelToViewY( area.maximumSize );
+  Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {
+    const maxX = modelViewTransform.modelToViewX( area.maximumSize );
+    const maxY = modelViewTransform.modelToViewY( area.maximumSize );
 
-      const shape = new Shape();
-      for ( let i = area.gridSpacing; i < area.maximumSize; i += area.gridSpacing ) {
-        const x = modelViewTransform.modelToViewX( i );
-        const y = modelViewTransform.modelToViewY( i );
+    const shape = new Shape();
+    for ( let i = area.gridSpacing; i < area.maximumSize; i += area.gridSpacing ) {
+      const x = modelViewTransform.modelToViewX( i );
+      const y = modelViewTransform.modelToViewY( i );
 
-        shape.moveTo( HALF_GRID_LINE_WIDTH, y );
-        shape.lineTo( maxX - HALF_GRID_LINE_WIDTH, y );
+      shape.moveTo( HALF_GRID_LINE_WIDTH, y );
+      shape.lineTo( maxX - HALF_GRID_LINE_WIDTH, y );
 
-        shape.moveTo( x, HALF_GRID_LINE_WIDTH );
-        shape.lineTo( x, maxY - HALF_GRID_LINE_WIDTH );
-      }
-      self.shape = shape;
-    } );
-  }
+      shape.moveTo( x, HALF_GRID_LINE_WIDTH );
+      shape.lineTo( x, maxY - HALF_GRID_LINE_WIDTH );
+    }
+    self.shape = shape;
+  } );
+}
 
-  areaModelCommon.register( 'ProportionalAreaGridLinesNode', ProportionalAreaGridLinesNode );
+areaModelCommon.register( 'ProportionalAreaGridLinesNode', ProportionalAreaGridLinesNode );
 
-  return inherit( Path, ProportionalAreaGridLinesNode );
-} );
+inherit( Path, ProportionalAreaGridLinesNode );
+export default ProportionalAreaGridLinesNode;

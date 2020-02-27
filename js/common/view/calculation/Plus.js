@@ -7,65 +7,61 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonA11yStrings = require( 'AREA_MODEL_COMMON/AreaModelCommonA11yStrings' );
-  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  const Poolable = require( 'PHET_CORE/Poolable' );
-  const Property = require( 'AXON/Property' );
-  const Text = require( 'SCENERY/nodes/Text' );
+import Property from '../../../../../axon/js/Property.js';
+import inherit from '../../../../../phet-core/js/inherit.js';
+import Poolable from '../../../../../phet-core/js/Poolable.js';
+import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
+import Text from '../../../../../scenery/js/nodes/Text.js';
+import areaModelCommon from '../../../areaModelCommon.js';
+import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-  // a11y strings
-  const sumPlusString = AreaModelCommonA11yStrings.sumPlus.value;
+// a11y strings
+const sumPlusString = AreaModelCommonA11yStrings.sumPlus.value;
 
-  /**
-   * @constructor
-   * @extends {Text}
-   *
-   * @param {Property.<Color>} baseColorProperty
-   */
-  function Plus( baseColorProperty ) {
-    assert && assert( baseColorProperty instanceof Property );
+/**
+ * @constructor
+ * @extends {Text}
+ *
+ * @param {Property.<Color>} baseColorProperty
+ */
+function Plus( baseColorProperty ) {
+  assert && assert( baseColorProperty instanceof Property );
 
-    if ( !this.initialized ) {
-      this.initialized = true;
+  if ( !this.initialized ) {
+    this.initialized = true;
 
-      // @public {string}
-      this.accessibleText = sumPlusString;
+    // @public {string}
+    this.accessibleText = sumPlusString;
 
-      Text.call( this, MathSymbols.PLUS, {
-        font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
+    Text.call( this, MathSymbols.PLUS, {
+      font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
-        // a11y
-        tagName: 'mo',
-        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
-        innerContent: '&plus;'
-      } );
-    }
-
-    this.fill = baseColorProperty;
+      // a11y
+      tagName: 'mo',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      innerContent: '&plus;'
+    } );
   }
 
-  areaModelCommon.register( 'Plus', Plus );
+  this.fill = baseColorProperty;
+}
 
-  inherit( Text, Plus, {
-    /**
-     * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
-     * @public
-     */
-    clean: function() {
-      this.fill = null;
+areaModelCommon.register( 'Plus', Plus );
 
-      this.freeToPool();
-    }
-  } );
+inherit( Text, Plus, {
+  /**
+   * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
+   * @public
+   */
+  clean: function() {
+    this.fill = null;
 
-  Poolable.mixInto( Plus );
-
-  return Plus;
+    this.freeToPool();
+  }
 } );
+
+Poolable.mixInto( Plus );
+
+export default Plus;

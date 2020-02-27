@@ -7,72 +7,68 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const HBox = require( 'SCENERY/nodes/HBox' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Poolable = require( 'PHET_CORE/Poolable' );
+import inherit from '../../../../../phet-core/js/inherit.js';
+import Poolable from '../../../../../phet-core/js/Poolable.js';
+import HBox from '../../../../../scenery/js/nodes/HBox.js';
+import areaModelCommon from '../../../areaModelCommon.js';
 
-  /**
-   * @constructor
-   * @extends {HBox}
-   *
-   * @param {Array.<Node>} nodes - Each should have a clean() method to support pooling
-   * @param {number} spacing
-   */
-  function CalculationGroup( nodes, spacing ) {
-    assert && assert( Array.isArray( nodes ) );
-    assert && assert( typeof spacing === 'number' );
+/**
+ * @constructor
+ * @extends {HBox}
+ *
+ * @param {Array.<Node>} nodes - Each should have a clean() method to support pooling
+ * @param {number} spacing
+ */
+function CalculationGroup( nodes, spacing ) {
+  assert && assert( Array.isArray( nodes ) );
+  assert && assert( typeof spacing === 'number' );
 
-    // @public {string}
-    this.accessibleText = nodes.map( function( node ) {
-      return node.accessibleText;
-    } ).join( ' ' );
+  // @public {string}
+  this.accessibleText = nodes.map( function( node ) {
+    return node.accessibleText;
+  } ).join( ' ' );
 
-    // @private {Array.<Node>|null}
-    this.nodes = nodes;
+  // @private {Array.<Node>|null}
+  this.nodes = nodes;
 
-    if ( !this.initialized ) {
-      this.initialized = true;
+  if ( !this.initialized ) {
+    this.initialized = true;
 
-      HBox.call( this, {
-        align: 'bottom',
+    HBox.call( this, {
+      align: 'bottom',
 
-        // a11y
-        accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
-      } );
-    }
-
-    this.mutate( {
-      tagName: nodes.length > 1 ? 'mrow' : null,
-      spacing: spacing,
-      children: nodes
+      // a11y
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
   }
 
-  areaModelCommon.register( 'CalculationGroup', CalculationGroup );
-
-  inherit( HBox, CalculationGroup, {
-    /**
-     * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
-     * @public
-     */
-    clean: function() {
-      // Remove our content
-      this.removeAllChildren();
-      this.nodes.forEach( function( node ) {
-        node.clean();
-      } );
-      this.nodes = null;
-
-      this.freeToPool();
-    }
+  this.mutate( {
+    tagName: nodes.length > 1 ? 'mrow' : null,
+    spacing: spacing,
+    children: nodes
   } );
+}
 
-  Poolable.mixInto( CalculationGroup );
+areaModelCommon.register( 'CalculationGroup', CalculationGroup );
 
-  return CalculationGroup;
+inherit( HBox, CalculationGroup, {
+  /**
+   * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
+   * @public
+   */
+  clean: function() {
+    // Remove our content
+    this.removeAllChildren();
+    this.nodes.forEach( function( node ) {
+      node.clean();
+    } );
+    this.nodes = null;
+
+    this.freeToPool();
+  }
 } );
+
+Poolable.mixInto( CalculationGroup );
+
+export default CalculationGroup;

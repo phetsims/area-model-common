@@ -5,71 +5,68 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const DerivedProperty = require( 'AXON/DerivedProperty' );
-  const EntryDisplayType = require( 'AREA_MODEL_COMMON/game/model/EntryDisplayType' );
-  const EntryStatus = require( 'AREA_MODEL_COMMON/game/model/EntryStatus' );
-  const EntryType = require( 'AREA_MODEL_COMMON/game/model/EntryType' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const InputMethod = require( 'AREA_MODEL_COMMON/game/model/InputMethod' );
-  const merge = require( 'PHET_CORE/merge' );
-  const Property = require( 'AXON/Property' );
-  const Term = require( 'AREA_MODEL_COMMON/common/model/Term' );
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import inherit from '../../../../phet-core/js/inherit.js';
+import merge from '../../../../phet-core/js/merge.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import Term from '../../common/model/Term.js';
+import EntryDisplayType from './EntryDisplayType.js';
+import EntryStatus from './EntryStatus.js';
+import EntryType from './EntryType.js';
+import InputMethod from './InputMethod.js';
 
-  /**
-   * @constructor
-   * @extends {Object}
-   *
-   * @param {Term|null} value - The initial value
-   * @param {Object} [options]
-   */
-  function Entry( value, options ) {
-    options = merge( {
-      type: EntryType.GIVEN,
-      displayType: EntryDisplayType.HIDDEN,
-      inputMethod: InputMethod.CONSTANT,
-      numberOfDigits: 0,
-      correctValue: null // Only used for the total coefficients
-    }, options );
+/**
+ * @constructor
+ * @extends {Object}
+ *
+ * @param {Term|null} value - The initial value
+ * @param {Object} [options]
+ */
+function Entry( value, options ) {
+  options = merge( {
+    type: EntryType.GIVEN,
+    displayType: EntryDisplayType.HIDDEN,
+    inputMethod: InputMethod.CONSTANT,
+    numberOfDigits: 0,
+    correctValue: null // Only used for the total coefficients
+  }, options );
 
-    // Always start off by editing null, and it should be the default value.
-    if ( options.displayType === EntryDisplayType.EDITABLE ) {
-      value = null;
-    }
-
-    // @public {Property.<Term|null>} - The current value of the entry
-    this.valueProperty = new Property( value, {
-      useDeepEquality: true,
-      isValidValue: Term.isTermOrNull
-    } );
-
-    // @public {EntryType} - Whether we are dynamic/editable/given.
-    this.type = options.type;
-
-    // @public {EntryDisplayType} - Whether we are a readout or editable/hidden
-    this.displayType = options.displayType;
-
-    // @public {InputMethod} - What format should be used if we are edited? (Need different keypads or a polynomial
-    // input)
-    this.inputMethod = options.inputMethod;
-
-    // @public {number}
-    this.digits = options.numberOfDigits;
-
-    // @public {Property.<EntryStatus>}
-    this.statusProperty = new Property( EntryStatus.DIRTY );
-
-    // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight
-    this.nonErrorValueProperty = new DerivedProperty( [ this.valueProperty, this.statusProperty ], function( value, highlight ) {
-      return ( highlight === EntryStatus.INCORRECT ) ? null : value;
-    } );
+  // Always start off by editing null, and it should be the default value.
+  if ( options.displayType === EntryDisplayType.EDITABLE ) {
+    value = null;
   }
 
-  areaModelCommon.register( 'Entry', Entry );
+  // @public {Property.<Term|null>} - The current value of the entry
+  this.valueProperty = new Property( value, {
+    useDeepEquality: true,
+    isValidValue: Term.isTermOrNull
+  } );
 
-  return inherit( Object, Entry );
-} );
+  // @public {EntryType} - Whether we are dynamic/editable/given.
+  this.type = options.type;
+
+  // @public {EntryDisplayType} - Whether we are a readout or editable/hidden
+  this.displayType = options.displayType;
+
+  // @public {InputMethod} - What format should be used if we are edited? (Need different keypads or a polynomial
+  // input)
+  this.inputMethod = options.inputMethod;
+
+  // @public {number}
+  this.digits = options.numberOfDigits;
+
+  // @public {Property.<EntryStatus>}
+  this.statusProperty = new Property( EntryStatus.DIRTY );
+
+  // @public {Property.<Term|null>} - Our value, except for null if there is an error highlight
+  this.nonErrorValueProperty = new DerivedProperty( [ this.valueProperty, this.statusProperty ], function( value, highlight ) {
+    return ( highlight === EntryStatus.INCORRECT ) ? null : value;
+  } );
+}
+
+areaModelCommon.register( 'Entry', Entry );
+
+inherit( Object, Entry );
+export default Entry;

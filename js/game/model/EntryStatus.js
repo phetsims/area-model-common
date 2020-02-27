@@ -5,29 +5,25 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+import areaModelCommon from '../../areaModelCommon.js';
 
-  const EntryStatus = {
-    NORMAL: 'NORMAL',
-    DIRTY: 'DIRTY', // needs to be interacted with before submitting
-    INCORRECT: 'INCORRECT' // was wrong after submission
-  };
+const EntryStatus = {
+  NORMAL: 'NORMAL',
+  DIRTY: 'DIRTY', // needs to be interacted with before submitting
+  INCORRECT: 'INCORRECT' // was wrong after submission
+};
 
-  areaModelCommon.register( 'EntryStatus', EntryStatus );
+areaModelCommon.register( 'EntryStatus', EntryStatus );
 
-  // @public {Array.<EntryStatus>} - All values the enumeration can take.
-  EntryStatus.VALUES = [
-    EntryStatus.NORMAL,
-    EntryStatus.DIRTY,
-    EntryStatus.INCORRECT
-  ];
+// @public {Array.<EntryStatus>} - All values the enumeration can take.
+EntryStatus.VALUES = [
+  EntryStatus.NORMAL,
+  EntryStatus.DIRTY,
+  EntryStatus.INCORRECT
+];
 
-  // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( EntryStatus ); }
+// verify that enumeration is immutable, without the runtime penalty in production code
+if ( assert ) { Object.freeze( EntryStatus ); }
 
-  return EntryStatus;
-} );
+export default EntryStatus;

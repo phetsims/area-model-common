@@ -6,47 +6,43 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+import areaModelCommon from '../../areaModelCommon.js';
 
-  const GameState = {
-    // "check" button, editable
-    FIRST_ATTEMPT: 'FIRST_ATTEMPT',
-    SECOND_ATTEMPT: 'SECOND_ATTEMPT',
+const GameState = {
+  // "check" button, editable
+  FIRST_ATTEMPT: 'FIRST_ATTEMPT',
+  SECOND_ATTEMPT: 'SECOND_ATTEMPT',
 
-    // "next" button, happy face with +1 or +2 depending on score. NOT editable
-    CORRECT_ANSWER: 'CORRECT_ANSWER',
+  // "next" button, happy face with +1 or +2 depending on score. NOT editable
+  CORRECT_ANSWER: 'CORRECT_ANSWER',
 
-    // "try again" button, sad face (editable?) - triggers next state on edit?
-    WRONG_FIRST_ANSWER: 'WRONG_FIRST_ANSWER',
+  // "try again" button, sad face (editable?) - triggers next state on edit?
+  WRONG_FIRST_ANSWER: 'WRONG_FIRST_ANSWER',
 
-    // "show solution" button, sad face (editable?) - no trigger on edit?
-    WRONG_SECOND_ANSWER: 'WRONG_SECOND_ANSWER',
+  // "show solution" button, sad face (editable?) - no trigger on edit?
+  WRONG_SECOND_ANSWER: 'WRONG_SECOND_ANSWER',
 
-    // "next" button, NOT editable, replaced with a solution
-    SHOW_SOLUTION: 'SHOW_SOLUTION',
+  // "next" button, NOT editable, replaced with a solution
+  SHOW_SOLUTION: 'SHOW_SOLUTION',
 
-    LEVEL_COMPLETE: 'LEVEL_COMPLETE'
-  };
+  LEVEL_COMPLETE: 'LEVEL_COMPLETE'
+};
 
-  areaModelCommon.register( 'GameState', GameState );
+areaModelCommon.register( 'GameState', GameState );
 
-  // @public {Array.<GameState>} - All values the enumeration can take.
-  GameState.VALUES = [
-    GameState.FIRST_ATTEMPT,
-    GameState.SECOND_ATTEMPT,
-    GameState.CORRECT_ANSWER,
-    GameState.WRONG_FIRST_ANSWER,
-    GameState.WRONG_SECOND_ANSWER,
-    GameState.SHOW_SOLUTION,
-    GameState.LEVEL_COMPLETE
-  ];
+// @public {Array.<GameState>} - All values the enumeration can take.
+GameState.VALUES = [
+  GameState.FIRST_ATTEMPT,
+  GameState.SECOND_ATTEMPT,
+  GameState.CORRECT_ANSWER,
+  GameState.WRONG_FIRST_ANSWER,
+  GameState.WRONG_SECOND_ANSWER,
+  GameState.SHOW_SOLUTION,
+  GameState.LEVEL_COMPLETE
+];
 
-  // verify that enum is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( GameState ); }
+// verify that enum is immutable, without the runtime penalty in production code
+if ( assert ) { Object.freeze( GameState ); }
 
-  return GameState;
-} );
+export default GameState;

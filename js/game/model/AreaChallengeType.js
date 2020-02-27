@@ -5,27 +5,23 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
+import areaModelCommon from '../../areaModelCommon.js';
 
-  const AreaChallengeType = {
-    NUMBERS: 'NUMBERS',
-    VARIABLES: 'VARIABLES'
-  };
+const AreaChallengeType = {
+  NUMBERS: 'NUMBERS',
+  VARIABLES: 'VARIABLES'
+};
 
-  areaModelCommon.register( 'AreaChallengeType', AreaChallengeType );
+areaModelCommon.register( 'AreaChallengeType', AreaChallengeType );
 
-  // @public {Array.<AreaChallengeType>} - All values the enumeration can take.
-  AreaChallengeType.VALUES = [
-    AreaChallengeType.NUMBERS,
-    AreaChallengeType.VARIABLES
-  ];
+// @public {Array.<AreaChallengeType>} - All values the enumeration can take.
+AreaChallengeType.VALUES = [
+  AreaChallengeType.NUMBERS,
+  AreaChallengeType.VARIABLES
+];
 
-  // verify that enumeration is immutable, without the runtime penalty in production code
-  if ( assert ) { Object.freeze( AreaChallengeType ); }
+// verify that enumeration is immutable, without the runtime penalty in production code
+if ( assert ) { Object.freeze( AreaChallengeType ); }
 
-  return AreaChallengeType;
-} );
+export default AreaChallengeType;

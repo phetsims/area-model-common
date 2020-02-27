@@ -5,51 +5,48 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonConstants = require( 'AREA_MODEL_COMMON/common/AreaModelCommonConstants' );
-  const GameAudioPlayer = require( 'VEGAS/GameAudioPlayer' );
-  const GameState = require( 'AREA_MODEL_COMMON/game/model/GameState' );
-  const inherit = require( 'PHET_CORE/inherit' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
+import GameState from '../model/GameState.js';
 
-  /**
-   * @constructor
-   * @extends {Object}
-   *
-   * @param {GameAreaModel} model
-   */
-  function GameAudio( model ) {
-    const audioPlayer = new GameAudioPlayer();
+/**
+ * @constructor
+ * @extends {Object}
+ *
+ * @param {GameAreaModel} model
+ */
+function GameAudio( model ) {
+  const audioPlayer = new GameAudioPlayer();
 
-    model.stateProperty.link( function( state, oldState ) {
-      // If we just moved to/from level section (outside of a level), don't fire sounds.
-      if ( state === null || oldState === null ) { return; }
+  model.stateProperty.link( function( state, oldState ) {
+    // If we just moved to/from level section (outside of a level), don't fire sounds.
+    if ( state === null || oldState === null ) { return; }
 
-      if ( state === GameState.CORRECT_ANSWER ) {
-        audioPlayer.correctAnswer();
+    if ( state === GameState.CORRECT_ANSWER ) {
+      audioPlayer.correctAnswer();
+    }
+    if ( state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER ) {
+      audioPlayer.wrongAnswer();
+    }
+    if ( state === GameState.LEVEL_COMPLETE ) {
+      const score = model.currentLevelProperty.value.scoreProperty.value;
+      if ( score === AreaModelCommonConstants.PERFECT_SCORE ) {
+        audioPlayer.gameOverPerfectScore();
       }
-      if ( state === GameState.WRONG_FIRST_ANSWER || state === GameState.WRONG_SECOND_ANSWER ) {
-        audioPlayer.wrongAnswer();
+      else if ( score === 0 ) {
+        audioPlayer.gameOverZeroScore();
       }
-      if ( state === GameState.LEVEL_COMPLETE ) {
-        const score = model.currentLevelProperty.value.scoreProperty.value;
-        if ( score === AreaModelCommonConstants.PERFECT_SCORE ) {
-          audioPlayer.gameOverPerfectScore();
-        }
-        else if ( score === 0 ) {
-          audioPlayer.gameOverZeroScore();
-        }
-        else {
-          audioPlayer.gameOverImperfectScore();
-        }
+      else {
+        audioPlayer.gameOverImperfectScore();
       }
-    } );
-  }
+    }
+  } );
+}
 
-  areaModelCommon.register( 'GameAudio', GameAudio );
+areaModelCommon.register( 'GameAudio', GameAudio );
 
-  return inherit( Object, GameAudio );
-} );
+inherit( Object, GameAudio );
+export default GameAudio;

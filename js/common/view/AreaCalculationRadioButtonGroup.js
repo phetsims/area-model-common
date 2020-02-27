@@ -7,69 +7,66 @@
  *
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const AlignBox = require( 'SCENERY/nodes/AlignBox' );
-  const AreaCalculationChoice = require( 'AREA_MODEL_COMMON/common/model/AreaCalculationChoice' );
-  const areaModelCommon = require( 'AREA_MODEL_COMMON/areaModelCommon' );
-  const AreaModelCommonColorProfile = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonColorProfile' );
-  const AreaModelCommonRadioButtonGroup = require( 'AREA_MODEL_COMMON/common/view/AreaModelCommonRadioButtonGroup' );
-  const FontAwesomeNode = require( 'SUN/FontAwesomeNode' );
-  const inherit = require( 'PHET_CORE/inherit' );
-  const Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  const VBox = require( 'SCENERY/nodes/VBox' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import VBox from '../../../../scenery/js/nodes/VBox.js';
+import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
+import areaModelCommon from '../../areaModelCommon.js';
+import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
+import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
+import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
-  /**
-   * @constructor
-   * @extends {AreaModelCommonRadioButtonGroup}
-   *
-   * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
-   * @param {AlignGroup} selectionButtonAlignGroup
-   */
-  function AreaCalculationRadioButtonGroup( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
+/**
+ * @constructor
+ * @extends {AreaModelCommonRadioButtonGroup}
+ *
+ * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
+ * @param {AlignGroup} selectionButtonAlignGroup
+ */
+function AreaCalculationRadioButtonGroup( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
-    const darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
-    const lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
+  const darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
+  const lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
 
-    AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
-      value: AreaCalculationChoice.HIDDEN,
-      node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
-    }, {
-      value: AreaCalculationChoice.LINE_BY_LINE,
-      node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
-    }, {
-      value: AreaCalculationChoice.SHOW_ALL_LINES,
-      node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
-    } ] );
-  }
+  AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
+    value: AreaCalculationChoice.HIDDEN,
+    node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
+  }, {
+    value: AreaCalculationChoice.LINE_BY_LINE,
+    node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
+  }, {
+    value: AreaCalculationChoice.SHOW_ALL_LINES,
+    node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
+  } ] );
+}
 
-  areaModelCommon.register( 'AreaCalculationRadioButtonGroup', AreaCalculationRadioButtonGroup );
+areaModelCommon.register( 'AreaCalculationRadioButtonGroup', AreaCalculationRadioButtonGroup );
 
-  /**
-   * Creates a calculation icon with two fills.
-   * @private
-   *
-   * @param {Property.<Color>} topColorProperty - Fill for the top line
-   * @param {Property.<Color>} bottomColorProperty - Fill for the bottom-most three lines
-   * @returns {Node}
-   */
-  function createCalculationIcon( topColorProperty, bottomColorProperty ) {
-    const height = 5;
-    const fullWidth = 30;
-    const partialWidth = 20;
-    return new VBox( {
-      children: [
-        new Rectangle( 0, 0, partialWidth, height, { fill: topColorProperty } ),
-        new Rectangle( 0, 0, fullWidth, height, { fill: bottomColorProperty } ),
-        new Rectangle( 0, 0, partialWidth, height, { fill: bottomColorProperty } ),
-        new Rectangle( 0, 0, fullWidth, height, { fill: bottomColorProperty } )
-      ],
-      align: 'left',
-      spacing: 2
-    } );
-  }
+/**
+ * Creates a calculation icon with two fills.
+ * @private
+ *
+ * @param {Property.<Color>} topColorProperty - Fill for the top line
+ * @param {Property.<Color>} bottomColorProperty - Fill for the bottom-most three lines
+ * @returns {Node}
+ */
+function createCalculationIcon( topColorProperty, bottomColorProperty ) {
+  const height = 5;
+  const fullWidth = 30;
+  const partialWidth = 20;
+  return new VBox( {
+    children: [
+      new Rectangle( 0, 0, partialWidth, height, { fill: topColorProperty } ),
+      new Rectangle( 0, 0, fullWidth, height, { fill: bottomColorProperty } ),
+      new Rectangle( 0, 0, partialWidth, height, { fill: bottomColorProperty } ),
+      new Rectangle( 0, 0, fullWidth, height, { fill: bottomColorProperty } )
+    ],
+    align: 'left',
+    spacing: 2
+  } );
+}
 
-  return inherit( AreaModelCommonRadioButtonGroup, AreaCalculationRadioButtonGroup );
-} );
+inherit( AreaModelCommonRadioButtonGroup, AreaCalculationRadioButtonGroup );
+export default AreaCalculationRadioButtonGroup;
