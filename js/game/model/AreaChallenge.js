@@ -307,7 +307,7 @@ export default inherit( Object, AreaChallenge, {
 
   /**
    * Returns whether a permutation of our secondary partition sizes matches the expected sizes. Helpful for the case
-   * where values can be swapped between locations.
+   * where values can be swapped between positions.
    * @private
    *
    * @returns {boolean}

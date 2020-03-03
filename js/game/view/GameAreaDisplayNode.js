@@ -65,10 +65,10 @@ function GameAreaDisplayNode( areaDisplay, activeEntryProperty, gameStatePropert
   Orientation.VALUES.forEach( function( orientation ) {
     const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
     const termListProperty = areaDisplay.totalProperties.get( orientation );
-    const tickLocationsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
+    const tickPositionsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], function( layout ) {
       return tickVariations[ layout.getPartitionQuantity( orientation ) ];
     } );
-    self.addChild( new RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, false ) );
+    self.addChild( new RangeLabelNode( termListProperty, orientation, tickPositionsProperty, colorProperty, false ) );
   } );
 
   // {OrientationPair.<Array.<Property.<number>>>} - The visual centers of all of the partitions.

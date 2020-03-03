@@ -197,7 +197,7 @@ function AreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options ) 
   Orientation.VALUES.forEach( function( orientation ) {
     const colorProperty = self.areaDisplay.colorProperties.get( orientation );
     const termListProperty = self.areaDisplay.displayProperties.get( orientation );
-    const tickLocationsProperty = new DerivedProperty(
+    const tickPositionsProperty = new DerivedProperty(
       [ areaDisplay.partitionBoundariesProperties.get( orientation ) ],
       function( partitionBoundaries ) {
         return partitionBoundaries.map( function( boundary ) {
@@ -207,7 +207,7 @@ function AreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options ) 
     self.labelLayer.addChild( new RangeLabelNode(
       termListProperty,
       orientation,
-      tickLocationsProperty,
+      tickPositionsProperty,
       colorProperty,
       options.isProportional
     ) );

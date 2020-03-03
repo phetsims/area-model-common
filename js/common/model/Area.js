@@ -88,7 +88,7 @@ function Area( partitions, colorProperties, coordinateRangeMax, allowExponents )
   this.displayProperties = allowExponents ? this.termListProperties : this.totalProperties;
 
   // @public {OrientationPair.<Property.<Array.<number>>>} - For each orientation, will contain a property with an
-  // unsorted list of unique boundary locations (the minimum or maximum coordinates of partitions). So if there are
+  // unsorted list of unique boundary positions (the minimum or maximum coordinates of partitions). So if there are
   // two partitions for an orientation, one from 1 to 5, and the other from 5 to 7, the value of the property will be
   // [ 1, 5, 7 ]
   this.partitionBoundariesProperties = OrientationPair.create( this.createPartitionBoundariesProperty.bind( this ) );
@@ -215,7 +215,7 @@ export default inherit( Object, Area, {
 
   /**
    * Returns a property that will contain an array of all unique partition boundaries (the minimum or maximum
-   * coordinate locations of a partition).
+   * coordinate positions of a partition).
    * @private
    *
    * @param {Orientation} orientation

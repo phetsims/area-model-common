@@ -60,7 +60,7 @@ export default areaModelCommon.register( 'AreaModelCommonConstants', {
   AREA_SIZE: 350,
   LARGE_AREA_SIZE: 450,
 
-  // {Vector2} We need to place the areas in different locations depending on the screen
+  // {Vector2} We need to place the areas in different positions depending on the screen
   MAIN_AREA_OFFSET: new Vector2( 180, 80 ),
   LARGE_AREA_OFFSET: new Vector2( 80, 80 ),
   GAME_AREA_OFFSET: new Vector2( 180, 200 ),

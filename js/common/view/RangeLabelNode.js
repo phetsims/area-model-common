@@ -27,11 +27,11 @@ const TICK_LENGTH = 10; // How long the tick marks are for the range labels
  *
  * @param {Property.<TermList|null>} termListProperty
  * @param {Orientation} orientation
- * @param {Property.<Array.<number>>} tickLocationsProperty - In view coordinates
+ * @param {Property.<Array.<number>>} tickPositionsProperty - In view coordinates
  * @param {Property.<Color>} colorProperty
  * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
  */
-function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, colorProperty, isProportional ) {
+function RangeLabelNode( termListProperty, orientation, tickPositionsProperty, colorProperty, isProportional ) {
 
   const self = this;
 
@@ -91,10 +91,10 @@ function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, c
   const ticks = [];
 
   // Update the layout
-  tickLocationsProperty.link( function( tickLocations ) {
-    assert && assert( tickLocations.length === 0 || tickLocations.length >= 2 );
+  tickPositionsProperty.link( function( tickPositions ) {
+    assert && assert( tickPositions.length === 0 || tickPositions.length >= 2 );
 
-    if ( tickLocations.length === 0 ) {
+    if ( tickPositions.length === 0 ) {
       ticks.forEach( function( tick ) {
         tick.visible = false;
       } );
@@ -102,7 +102,7 @@ function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, c
     else {
 
       // Add any ticks that we need
-      while ( ticks.length < tickLocations.length ) {
+      while ( ticks.length < tickPositions.length ) {
         const tick = new Line( {
           y1: 0,
           y2: TICK_LENGTH / 2,
@@ -114,24 +114,24 @@ function RangeLabelNode( termListProperty, orientation, tickLocationsProperty, c
       }
 
       ticks.forEach( function( tick, index ) {
-        if ( index < tickLocations.length ) {
+        if ( index < tickPositions.length ) {
           tick.visible = true;
-          tick.translation = orientation.toVector( tickLocations[ index ], rangeOffset );
+          tick.translation = orientation.toVector( tickPositions[ index ], rangeOffset );
 
           // The first/last ticks should have a different length
-          tick.y1 = ( index === 0 || index === tickLocations.length - 1 ) ? -TICK_LENGTH / 2 : 0;
+          tick.y1 = ( index === 0 || index === tickPositions.length - 1 ) ? -TICK_LENGTH / 2 : 0;
         }
         else {
           tick.visible = false;
         }
       } );
 
-      const minLocation = tickLocations[ 0 ];
-      const maxLocation = tickLocations[ tickLocations.length - 1 ];
+      const minPosition = tickPositions[ 0 ];
+      const maxPosition = tickPositions[ tickPositions.length - 1 ];
 
-      line.p1 = orientation.toVector( minLocation, rangeOffset );
-      line.p2 = orientation.toVector( maxLocation, rangeOffset );
-      textContainer[ orientation.coordinate ] = ( maxLocation + minLocation ) / 2; // centered
+      line.p1 = orientation.toVector( minPosition, rangeOffset );
+      line.p2 = orientation.toVector( maxPosition, rangeOffset );
+      textContainer[ orientation.coordinate ] = ( maxPosition + minPosition ) / 2; // centered
     }
   } );
 }
