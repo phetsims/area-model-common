@@ -136,22 +136,22 @@ function ProportionalDragHandle( areaProperty, activeTotalProperties, modelViewT
     ]
   } );
 
-  const locationProperty = new Vector2Property( new Vector2( 0, 0 ) );
+  const positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
-  function updateLocationProperty() {
-    locationProperty.value = new Vector2(
+  function updatePositionProperty() {
+    positionProperty.value = new Vector2(
       activeTotalProperties.horizontal.value,
       activeTotalProperties.vertical.value
     );
   }
 
-  updateLocationProperty();
-  locationProperty.lazyLink( function( location ) {
-    activeTotalProperties.horizontal.value = location.x;
-    activeTotalProperties.vertical.value = location.y;
+  updatePositionProperty();
+  positionProperty.lazyLink( function( position ) {
+    activeTotalProperties.horizontal.value = position.x;
+    activeTotalProperties.vertical.value = position.y;
   } );
-  activeTotalProperties.horizontal.lazyLink( updateLocationProperty );
-  activeTotalProperties.vertical.lazyLink( updateLocationProperty );
+  activeTotalProperties.horizontal.lazyLink( updatePositionProperty );
+  activeTotalProperties.vertical.lazyLink( updatePositionProperty );
 
   let keyboardListener;
   Property.multilink( [ areaProperty, modelViewTransformProperty ], function( area, modelViewTransform ) {

@@ -126,8 +126,8 @@ function GameAreaDisplayNode( areaDisplay, activeEntryProperty, gameStatePropert
       label[ orientation.opposite.coordinate ] = AreaModelCommonConstants.PARTITION_OFFSET.get( orientation );
       self.addChild( label );
 
-      centerProperties.get( orientation )[ partitionIndex ].link( function( location ) {
-        label[ orientation.coordinate ] = location;
+      centerProperties.get( orientation )[ partitionIndex ].link( function( position ) {
+        label[ orientation.coordinate ] = position;
       } );
     } );
   } );

@@ -73,7 +73,7 @@ function AreaScreenView( model, config ) {
     // {boolean} (optional) - Uses "product" and "factors" to be simpler and more multiplication-like
     useSimplifiedNames: false,
 
-    // {boolean} (optional) - If true, changes the location/size of the area to take up more space
+    // {boolean} (optional) - If true, changes the position/size of the area to take up more space
     useLargeArea: false,
 
     // {boolean} (optional) - If true, a simplified accordion box will be used for the calculation lines (instead of a panel).

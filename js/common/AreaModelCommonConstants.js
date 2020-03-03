@@ -84,7 +84,7 @@ export default areaModelCommon.register( 'AreaModelCommonConstants', {
   GENERIC_ICON_FIRST_OFFSET: 0.55,
   GENERIC_ICON_SECOND_OFFSET: 0.80,
 
-  // {Vector2} - Offset vector from the upper-left of the area to the x,y location where the dimension line labels
+  // {Vector2} - Offset vector from the upper-left of the area to the x,y position where the dimension line labels
   //             would intersect.
   PROPORTIONAL_RANGE_OFFSET: new Vector2( -35, -28 ),
   GENERIC_RANGE_OFFSET: new Vector2( -60, -40 ),

@@ -170,7 +170,7 @@ function CalculationNode( model, nodeOptions ) {
     previousArrow.rightTop = backgroundBounds.eroded( 5 ).rightTop;
     nextArrow.rightBottom = backgroundBounds.eroded( 5 ).rightBottom;
 
-    // Empirically determined to be the best Y location given all of the combinations. Hard to determine with
+    // Empirically determined to be the best Y position given all of the combinations. Hard to determine with
     // computation, so left here.
     self.centerY = 543 - AreaModelCommonConstants.LAYOUT_SPACING;
 

@@ -66,7 +66,7 @@ function PartitionSizeEditNode( activePartitionProperty, partitionProperty, mode
     }
   } );
 
-  // Primary orientation (location of range center)
+  // Primary orientation (position of range center)
   const coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
   Property.multilink(
     [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ],

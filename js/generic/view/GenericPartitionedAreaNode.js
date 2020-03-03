@@ -52,7 +52,7 @@ function GenericPartitionedAreaNode( partitionedAreaProperty, modelViewTransform
     defaultValue: false
   } ).linkAttribute( this, 'visible' );
 
-  // Adjust our rectangle dimension/location so that we take up the bounds defined by the partitioned area. Our area
+  // Adjust our rectangle dimension/position so that we take up the bounds defined by the partitioned area. Our area
   // can change, so we need to swap out or multilink when the area changes (kept so we can dispose it)
   let rangeMultilinks = null; // {OrientationPair.<Multilink>|null}
   partitionedAreaProperty.link( function( partitionedArea ) {
