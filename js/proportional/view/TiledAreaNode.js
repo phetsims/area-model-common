@@ -33,7 +33,7 @@ function TiledAreaNode( areaDisplay, modelViewTransformProperty, tilesVisiblePro
   // @private {Property.<ProportionalArea>}
   this.areaDisplay = areaDisplay;
 
-  // @private {Property.<ModelViewTransform>}
+  // @private {Property.<ModelViewTransform2>}
   this.modelViewTransformProperty = modelViewTransformProperty;
 
   // @private {Property.<boolean>}
