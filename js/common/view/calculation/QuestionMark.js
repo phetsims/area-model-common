@@ -13,11 +13,10 @@ import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-// a11y strings
-const questionMarkString = AreaModelCommonA11yStrings.questionMark.value;
+const questionMarkString = areaModelCommonStrings.a11y.questionMark;
 
 /**
  * @constructor

@@ -23,17 +23,16 @@ import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-// a11y strings
-const factorsTimesPatternString = AreaModelCommonA11yStrings.factorsTimesPattern.value;
-const horizontalPickerString = AreaModelCommonA11yStrings.horizontalPicker.value;
-const horizontalPickerDescriptionString = AreaModelCommonA11yStrings.horizontalPickerDescription.value;
-const verticalPickerString = AreaModelCommonA11yStrings.verticalPicker.value;
-const verticalPickerDescriptionString = AreaModelCommonA11yStrings.verticalPickerDescription.value;
+const factorsTimesPatternString = areaModelCommonStrings.a11y.factorsTimesPattern;
+const horizontalPickerString = areaModelCommonStrings.a11y.horizontalPicker;
+const horizontalPickerDescriptionString = areaModelCommonStrings.a11y.horizontalPickerDescription;
+const verticalPickerString = areaModelCommonStrings.a11y.verticalPicker;
+const verticalPickerDescriptionString = areaModelCommonStrings.a11y.verticalPickerDescription;
 
 /**
  * @constructor

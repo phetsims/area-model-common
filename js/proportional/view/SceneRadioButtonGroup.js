@@ -14,13 +14,12 @@ import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
 import AlignGroup from '../../../../scenery/js/nodes/AlignGroup.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 
-// a11y strings
-const areaGridSizeString = AreaModelCommonA11yStrings.areaGridSize.value;
-const sceneSelectionPatternString = AreaModelCommonA11yStrings.sceneSelectionPattern.value;
+const areaGridSizeString = areaModelCommonStrings.a11y.areaGridSize;
+const sceneSelectionPatternString = areaModelCommonStrings.a11y.sceneSelectionPattern;
 
 /**
  * @constructor

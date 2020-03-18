@@ -16,11 +16,10 @@ import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-// a11y strings
-const quantityPatternString = AreaModelCommonA11yStrings.quantityPattern.value;
+const quantityPatternString = areaModelCommonStrings.a11y.quantityPattern;
 
 /**
  * @constructor

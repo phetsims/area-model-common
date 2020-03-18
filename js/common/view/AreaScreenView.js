@@ -23,7 +23,6 @@ import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import areaModelCommonStrings from '../../area-model-common-strings.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
 import CalculationBox from '../../proportional/view/CalculationBox.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../AreaModelCommonGlobals.js';
@@ -41,12 +40,10 @@ const factorsString = areaModelCommonStrings.factors;
 const partialProductsString = areaModelCommonStrings.partialProducts;
 const productString = areaModelCommonStrings.product;
 const totalAreaOfModelString = areaModelCommonStrings.totalAreaOfModel;
-
-// a11y strings
-const factorsBoxString = AreaModelCommonA11yStrings.factorsBox.value;
-const factorsBoxDescriptionString = AreaModelCommonA11yStrings.factorsBoxDescription.value;
-const productBoxString = AreaModelCommonA11yStrings.productBox.value;
-const productBoxDescriptionString = AreaModelCommonA11yStrings.productBoxDescription.value;
+const factorsBoxString = areaModelCommonStrings.a11y.factorsBox;
+const factorsBoxDescriptionString = areaModelCommonStrings.a11y.factorsBoxDescription;
+const productBoxString = areaModelCommonStrings.a11y.productBox;
+const productBoxDescriptionString = areaModelCommonStrings.a11y.productBoxDescription;
 
 /**
  * @constructor

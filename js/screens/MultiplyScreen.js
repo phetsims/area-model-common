@@ -14,7 +14,6 @@ import multiplyScreenIconImage from '../../mipmaps/multiply-screen-icon_png.js';
 import multiplyScreenNavbarImage from '../../mipmaps/multiply-screen-navbar_png.js';
 import areaModelCommonStrings from '../area-model-common-strings.js';
 import areaModelCommon from '../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../AreaModelCommonA11yStrings.js';
 import PartialProductsChoice from '../common/model/PartialProductsChoice.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
@@ -22,9 +21,7 @@ import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.j
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
 
 const screenMultiplyString = areaModelCommonStrings.screen.multiply;
-
-// a11y strings
-const multiplyDescriptionString = AreaModelCommonA11yStrings.multiplyDescription.value;
+const multiplyDescriptionString = areaModelCommonStrings.a11y.multiplyDescription;
 
 /**
  * @constructor

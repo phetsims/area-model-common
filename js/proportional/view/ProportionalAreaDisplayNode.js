@@ -22,7 +22,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
@@ -32,10 +32,9 @@ import ProportionalDragHandle from './ProportionalDragHandle.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 import TiledAreaNode from './TiledAreaNode.js';
 
-// a11y strings
-const areaGridString = AreaModelCommonA11yStrings.areaGrid.value;
-const areaGridRectanglePatternString = AreaModelCommonA11yStrings.areaGridRectanglePattern.value;
-const countingNumbersPatternString = AreaModelCommonA11yStrings.countingNumbersPattern.value;
+const areaGridString = areaModelCommonStrings.a11y.areaGrid;
+const areaGridRectanglePatternString = areaModelCommonStrings.a11y.areaGridRectanglePattern;
+const countingNumbersPatternString = areaModelCommonStrings.a11y.countingNumbersPattern;
 
 /**
  * @constructor

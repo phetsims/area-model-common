@@ -22,7 +22,6 @@ import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import areaModelCommonStrings from '../../area-model-common-strings.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
@@ -35,12 +34,10 @@ import ProportionalFactorsNode from './ProportionalFactorsNode.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
 const partitionString = areaModelCommonStrings.partition;
-
-// a11y strings
-const base10AreaTilesString = AreaModelCommonA11yStrings.base10AreaTiles.value;
-const countingNumbersDescriptionString = AreaModelCommonA11yStrings.countingNumbersDescription.value;
-const countingNumbersLabelString = AreaModelCommonA11yStrings.countingNumbersLabel.value;
-const gridLinesLabelString = AreaModelCommonA11yStrings.gridLinesLabel.value;
+const base10AreaTilesString = areaModelCommonStrings.a11y.base10AreaTiles;
+const countingNumbersDescriptionString = areaModelCommonStrings.a11y.countingNumbersDescription;
+const countingNumbersLabelString = areaModelCommonStrings.a11y.countingNumbersLabel;
+const gridLinesLabelString = areaModelCommonStrings.a11y.gridLinesLabel;
 
 // constants
 const RADIO_ICON_SIZE = 30;

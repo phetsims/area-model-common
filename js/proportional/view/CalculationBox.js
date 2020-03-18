@@ -13,16 +13,13 @@ import inherit from '../../../../phet-core/js/inherit.js';
 import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
 import areaModelCommonStrings from '../../area-model-common-strings.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
 import AreaCalculationChoice from '../../common/model/AreaCalculationChoice.js';
 import AreaModelCommonAccordionBox from '../../common/view/AreaModelCommonAccordionBox.js';
 import CalculationLinesNode from '../../common/view/calculation/CalculationLinesNode.js';
 
 const calculationString = areaModelCommonStrings.calculation;
-
-// a11y strings
-const calculationBoxTitleString = AreaModelCommonA11yStrings.calculationBoxTitle.value;
-const calculationBoxDescriptionString = AreaModelCommonA11yStrings.calculationBoxDescription.value;
+const calculationBoxTitleString = areaModelCommonStrings.a11y.calculationBoxTitle;
+const calculationBoxDescriptionString = areaModelCommonStrings.a11y.calculationBoxDescription;
 
 // constants
 const MARGIN = 8;

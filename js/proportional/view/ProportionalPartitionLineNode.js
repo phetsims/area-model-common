@@ -27,16 +27,15 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-// a11y strings
-const horizontalPartitionHandleString = AreaModelCommonA11yStrings.horizontalPartitionHandle.value;
-const horizontalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.horizontalPartitionHandleDescription.value;
-const verticalPartitionHandleString = AreaModelCommonA11yStrings.verticalPartitionHandle.value;
-const verticalPartitionHandleDescriptionString = AreaModelCommonA11yStrings.verticalPartitionHandleDescription.value;
+const horizontalPartitionHandleString = areaModelCommonStrings.a11y.horizontalPartitionHandle;
+const horizontalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.horizontalPartitionHandleDescription;
+const verticalPartitionHandleString = areaModelCommonStrings.a11y.verticalPartitionHandle;
+const verticalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.verticalPartitionHandleDescription;
 
 /**
  * @mixes AccessibleSlider

@@ -14,7 +14,6 @@ import partitionScreenIconImage from '../../mipmaps/partition-screen-icon_png.js
 import partitionScreenNavbarImage from '../../mipmaps/partition-screen-navbar_png.js';
 import areaModelCommonStrings from '../area-model-common-strings.js';
 import areaModelCommon from '../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../AreaModelCommonA11yStrings.js';
 import AreaCalculationChoice from '../common/model/AreaCalculationChoice.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
@@ -22,9 +21,7 @@ import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.j
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
 
 const screenPartitionString = areaModelCommonStrings.screen.partition;
-
-// a11y strings
-const partitionDescriptionString = AreaModelCommonA11yStrings.partitionDescription.value;
+const partitionDescriptionString = areaModelCommonStrings.a11y.partitionDescription;
 
 /**
  * @constructor

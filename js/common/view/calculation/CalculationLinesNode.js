@@ -16,7 +16,7 @@ import Orientation from '../../../../../phet-core/js/Orientation.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../../area-model-common-strings.js';
 import AreaModelCommonQueryParameters from '../../AreaModelCommonQueryParameters.js';
 import AreaCalculationChoice from '../../model/AreaCalculationChoice.js';
 import TermList from '../../model/TermList.js';
@@ -29,8 +29,7 @@ import QuestionMarkLine from './QuestionMarkLine.js';
 import SumLine from './SumLine.js';
 import TotalsLine from './TotalsLine.js';
 
-// a11y strings
-const betweenCalculationLinesString = AreaModelCommonA11yStrings.betweenCalculationLines.value;
+const betweenCalculationLinesString = areaModelCommonStrings.a11y.betweenCalculationLines;
 
 /**
  * @constructor

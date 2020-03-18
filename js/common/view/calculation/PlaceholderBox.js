@@ -13,10 +13,9 @@ import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../../area-model-common-strings.js';
 
-// a11y strings
-const placeholderString = AreaModelCommonA11yStrings.placeholder.value;
+const placeholderString = areaModelCommonStrings.a11y.placeholder;
 
 /**
  * @constructor

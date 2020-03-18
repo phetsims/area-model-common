@@ -14,11 +14,10 @@ import Poolable from '../../../../../phet-core/js/Poolable.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-// a11y strings
-const sumPlusString = AreaModelCommonA11yStrings.sumPlus.value;
+const sumPlusString = areaModelCommonStrings.a11y.sumPlus;
 
 /**
  * @constructor

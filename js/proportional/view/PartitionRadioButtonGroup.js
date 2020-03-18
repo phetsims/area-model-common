@@ -17,16 +17,15 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 
-// a11y strings
-const horizontalPartitionString = AreaModelCommonA11yStrings.horizontalPartition.value;
-const partitionSelectionDescriptionString = AreaModelCommonA11yStrings.partitionSelectionDescription.value;
-const verticalPartitionString = AreaModelCommonA11yStrings.verticalPartition.value;
+const horizontalPartitionString = areaModelCommonStrings.a11y.horizontalPartition;
+const partitionSelectionDescriptionString = areaModelCommonStrings.a11y.partitionSelectionDescription;
+const verticalPartitionString = areaModelCommonStrings.a11y.verticalPartition;
 
 /**
  * @constructor

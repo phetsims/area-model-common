@@ -20,15 +20,12 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
 import areaModelCommonStrings from '../../area-model-common-strings.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import Term from '../model/Term.js';
 import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
 
 const areaString = areaModelCommonStrings.area;
-
-// a11y strings
-const areaEqualsPatternString = AreaModelCommonA11yStrings.areaEqualsPattern.value;
+const areaEqualsPatternString = areaModelCommonStrings.a11y.areaEqualsPattern;
 
 /**
  * @constructor

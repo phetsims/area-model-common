@@ -19,16 +19,15 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import OrientationPair from '../model/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
-// a11y strings
-const hidePartialProductsString = AreaModelCommonA11yStrings.hidePartialProducts.value;
-const showPartialProductsString = AreaModelCommonA11yStrings.showPartialProducts.value;
-const showPartialProductFactorsString = AreaModelCommonA11yStrings.showPartialProductFactors.value;
+const hidePartialProductsString = areaModelCommonStrings.a11y.hidePartialProducts;
+const showPartialProductsString = areaModelCommonStrings.a11y.showPartialProducts;
+const showPartialProductFactorsString = areaModelCommonStrings.a11y.showPartialProductFactors;
 
 /**
  * @constructor

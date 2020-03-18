@@ -24,12 +24,11 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonA11yStrings from '../../AreaModelCommonA11yStrings.js';
+import areaModelCommonStrings from '../../area-model-common-strings.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
-// a11y strings
-const dragHandleString = AreaModelCommonA11yStrings.dragHandle.value;
-const dragHandleDescriptionPatternString = AreaModelCommonA11yStrings.dragHandleDescriptionPattern.value;
+const dragHandleString = areaModelCommonStrings.a11y.dragHandle;
+const dragHandleDescriptionPatternString = areaModelCommonStrings.a11y.dragHandleDescriptionPattern;
 
 // constants
 const DRAG_OFFSET = 8;
