@@ -18,7 +18,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
-import areaModelCommonStrings from '../../area-model-common-strings.js';
+import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import Term from '../model/Term.js';

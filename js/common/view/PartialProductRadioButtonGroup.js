@@ -19,7 +19,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../area-model-common-strings.js';
+import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import OrientationPair from '../model/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';

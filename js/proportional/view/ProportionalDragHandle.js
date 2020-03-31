@@ -24,7 +24,7 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../area-model-common-strings.js';
+import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 
 const dragHandleString = areaModelCommonStrings.a11y.dragHandle;

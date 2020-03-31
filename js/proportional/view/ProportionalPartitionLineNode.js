@@ -27,7 +27,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../area-model-common-strings.js';
+import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';

@@ -16,7 +16,7 @@ import Orientation from '../../../../../phet-core/js/Orientation.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../area-model-common-strings.js';
+import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
 import AreaModelCommonQueryParameters from '../../AreaModelCommonQueryParameters.js';
 import AreaCalculationChoice from '../../model/AreaCalculationChoice.js';
 import TermList from '../../model/TermList.js';

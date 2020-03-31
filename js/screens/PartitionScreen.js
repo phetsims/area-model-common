@@ -12,7 +12,7 @@ import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import partitionScreenIconImage from '../../mipmaps/partition-screen-icon_png.js';
 import partitionScreenNavbarImage from '../../mipmaps/partition-screen-navbar_png.js';
-import areaModelCommonStrings from '../area-model-common-strings.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
 import AreaCalculationChoice from '../common/model/AreaCalculationChoice.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';

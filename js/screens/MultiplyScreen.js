@@ -12,7 +12,7 @@ import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import multiplyScreenIconImage from '../../mipmaps/multiply-screen-icon_png.js';
 import multiplyScreenNavbarImage from '../../mipmaps/multiply-screen-navbar_png.js';
-import areaModelCommonStrings from '../area-model-common-strings.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
 import PartialProductsChoice from '../common/model/PartialProductsChoice.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
