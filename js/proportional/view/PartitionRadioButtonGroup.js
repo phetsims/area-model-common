@@ -41,7 +41,7 @@ function PartitionRadioButtonGroup( currentAreaOrientationProperty, selectionBut
       value: orientation,
       node: new AlignBox( icon, { group: selectionButtonAlignGroup } ),
 
-      // a11y
+      // pdom
       labelContent: orientation === Orientation.HORIZONTAL ? verticalPartitionString : horizontalPartitionString
     };
   } ), {
@@ -49,7 +49,7 @@ function PartitionRadioButtonGroup( currentAreaOrientationProperty, selectionBut
     buttonContentXMargin: 7,
     buttonContentYMargin: 7,
 
-    // a11y
+    // pdom
     descriptionContent: partitionSelectionDescriptionString
   } );
 }

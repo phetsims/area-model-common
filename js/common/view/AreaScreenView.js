@@ -139,7 +139,7 @@ function AreaScreenView( model, config ) {
       // Cut some spacing from the exponent-enabled one, as it looks like way too much padding otherwise
       contentYSpacing: model.allowExponents ? 5 : 8,
 
-      // a11y
+      // pdom
       labelTagName: 'h3',
       labelContent: factorsBoxString,
       titleBarOptions: {
@@ -162,7 +162,7 @@ function AreaScreenView( model, config ) {
     config.useSimplifiedNames ? productString : totalAreaOfModelString,
     model.areaBoxExpandedProperty,
     areaBoxContent, {
-      // a11y
+      // pdom
       labelTagName: 'h3',
       labelContent: productBoxString,
       titleBarOptions: {

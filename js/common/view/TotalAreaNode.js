@@ -76,7 +76,7 @@ function TotalAreaNode( totalAreaProperty, isProportional, maximumWidthString, u
     ],
     maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
 
-    // a11y
+    // pdom
     tagName: 'p'
   } );
 

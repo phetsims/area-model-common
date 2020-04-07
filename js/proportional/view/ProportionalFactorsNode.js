@@ -59,7 +59,8 @@ function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, de
   else {
     const ns = 'http://www.w3.org/1998/Math/MathML';
     const verticalNode = new Node( {
-      // a11y
+
+      // pdom
       tagName: 'mn',
       accessibleNamespace: ns
     } );
@@ -67,7 +68,8 @@ function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, de
       verticalNode.innerContent = '' + verticalTotal;
     } );
     const horizontalNode = new Node( {
-      // a11y
+
+      // pdom
       tagName: 'mn',
       accessibleNamespace: ns
     } );
@@ -156,7 +158,7 @@ export default inherit( Node, ProportionalFactorsNode, {
       },
       color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
 
-      // a11y
+      // pdom
       labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
       descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
       a11yMapValue: value => Utils.toFixedNumber( value, decimalPlaces )

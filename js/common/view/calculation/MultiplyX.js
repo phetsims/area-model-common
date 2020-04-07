@@ -53,7 +53,7 @@ function MultiplyX( leftContent, rightContent, baseColorProperty ) {
     this.timesNode = new Text( MathSymbols.TIMES, {
       font: AreaModelCommonConstants.CALCULATION_X_FONT,
 
-      // a11y
+      // pdom
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&times;'

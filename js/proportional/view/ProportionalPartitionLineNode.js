@@ -141,7 +141,7 @@ function ProportionalPartitionLineNode( areaDisplay, modelViewTransformProperty,
       return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
     } );
 
-  // a11y
+  // pdom
   this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
     constrainValue: Utils.roundSymmetric,
     keyboardStep: 1,

@@ -48,7 +48,7 @@ function Parentheses( content, baseColorProperty ) {
     this.leftParen = new Text( '(', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
-      // a11y
+      // pdom
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '('
@@ -61,7 +61,7 @@ function Parentheses( content, baseColorProperty ) {
     this.rightParen = new Text( ')', {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
-      // a11y
+      // pdom
       tagName: 'mo',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: ')'
@@ -74,7 +74,7 @@ function Parentheses( content, baseColorProperty ) {
       children: [ this.leftParen, this.rightParen ],
       spacing: AreaModelCommonConstants.CALCULATION_PAREN_PADDING,
 
-      // a11y
+      // pdom
       align: 'bottom',
       tagName: 'mrow',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'

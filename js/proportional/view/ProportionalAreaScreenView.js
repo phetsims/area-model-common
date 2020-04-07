@@ -79,17 +79,17 @@ function ProportionalAreaScreenView( model, options ) {
 
   // Checkboxes
   const gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
-    // a11y
+    // pdom
     labelTagName: 'label',
     labelContent: gridLinesLabelString
   } );
   const tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
-    // a11y
+    // pdom
     labelTagName: 'label',
     labelContent: base10AreaTilesString
   } );
   const countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
-    // a11y
+    // pdom
     labelTagName: 'label',
     labelContent: countingNumbersLabelString,
     descriptionContent: countingNumbersDescriptionString

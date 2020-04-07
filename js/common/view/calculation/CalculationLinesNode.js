@@ -244,7 +244,8 @@ export default inherit( Node, CalculationLinesNode, {
         }
         else {
           lineNode.insertChild( 0, new Node( {
-            // a11y
+
+            // pdom
             tagName: 'mtext',
             accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
             innerContent: betweenCalculationLinesString

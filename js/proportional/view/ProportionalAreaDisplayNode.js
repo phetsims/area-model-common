@@ -63,7 +63,8 @@ function ProportionalAreaDisplayNode( areaDisplay, partialProductsChoiceProperty
   }, options );
 
   nodeOptions = merge( {
-    // a11y
+
+    // pdom
     tagName: 'div',
     labelTagName: 'h3',
     labelContent: areaGridString

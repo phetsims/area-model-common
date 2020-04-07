@@ -38,7 +38,7 @@ function CalculationGroup( nodes, spacing ) {
     HBox.call( this, {
       align: 'bottom',
 
-      // a11y
+      // pdom
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
   }

@@ -64,7 +64,7 @@ function ProportionalDragHandle( areaProperty, activeTotalProperties, modelViewT
     stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
     cursor: 'pointer',
 
-    // a11y
+    // pdom
     tagName: 'div',
     innerContent: dragHandleString,
     focusable: true

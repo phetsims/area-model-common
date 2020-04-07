@@ -268,7 +268,7 @@ function AreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options ) 
     touchAreaXDilation: 8,
     touchAreaYDilation: 8,
 
-    // a11y
+    // pdom
     innerContent: eraseString,
     descriptionContent: eraseDescriptionString
   } );

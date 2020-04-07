@@ -36,7 +36,7 @@ function QuestionMark( baseColorProperty ) {
     Text.call( this, '?', {
       font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
 
-      // a11y
+      // pdom
       tagName: 'mi',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: questionMarkString

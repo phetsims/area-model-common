@@ -64,7 +64,7 @@ function PartialProductRadioButtonGroup( model, selectionButtonAlignGroup ) {
       value: PartialProductsChoice.HIDDEN,
       node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } ),
 
-      // a11y
+      // pdom
       labelContent: hidePartialProductsString
     },
     {
@@ -73,14 +73,14 @@ function PartialProductRadioButtonGroup( model, selectionButtonAlignGroup ) {
       // Hardcoded 'A' string since we don't want it to be translatable
       node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
 
-      // a11y
+      // pdom
       labelContent: showPartialProductsString
     },
     {
       value: PartialProductsChoice.FACTORS,
       node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
 
-      // a11y
+      // pdom
       labelContent: showPartialProductFactorsString
     }
   ] );

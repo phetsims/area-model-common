@@ -34,7 +34,7 @@ function PartitionScreen() {
     homeScreenIcon: new Image( partitionScreenIconImage ),
     navigationBarIcon: new Image( partitionScreenNavbarImage ),
 
-    // a11y
+    // pdom
     descriptionContent: partitionDescriptionString
   };
 

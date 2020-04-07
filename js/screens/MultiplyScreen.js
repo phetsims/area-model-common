@@ -34,7 +34,7 @@ function MultiplyScreen() {
     homeScreenIcon: new Image( multiplyScreenIconImage ),
     navigationBarIcon: new Image( multiplyScreenNavbarImage ),
 
-    // a11y
+    // pdom
     descriptionContent: multiplyDescriptionString
   };
 

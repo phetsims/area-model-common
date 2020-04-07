@@ -59,7 +59,7 @@ function CalculationBox( model, bounds, nodeOptions ) {
     // We don't have room for the normal spacing, so we need to make things closer together than they normally are.
     contentXSpacing: -10,
 
-    // a11y
+    // pdom
     labelTagName: 'h3',
     labelContent: calculationBoxTitleString,
     titleBarOptions: {

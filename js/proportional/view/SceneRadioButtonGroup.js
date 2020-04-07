@@ -41,14 +41,14 @@ function SceneRadioButtonGroup( model, nodeOptions ) {
         font: AreaModelCommonConstants.SYMBOL_FONT
       } ), { group: group } ),
 
-      // a11y
+      // pdom
       labelContent: StringUtils.fillIn( sceneSelectionPatternString, {
         width: area.maximumSize,
         height: area.maximumSize
       } )
     };
   } ), {
-    // a11y
+    // pdom
     labelContent: areaGridSizeString
   } );
 
