@@ -111,12 +111,10 @@ function ProportionalPartitionLineNode( areaDisplay, modelViewTransformProperty,
     cursor: 'pointer'
   } );
 
-  Node.call( this, {
-    children: [
-      line,
-      handle
-    ]
-  } );
+  this.children = [
+    line,
+    handle
+  ];
 
   // Relevant properties
   const partitionSplitProperty = areaDisplay.partitionSplitProperties.get( orientation );
