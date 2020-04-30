@@ -93,7 +93,7 @@ function AreaModelCommonModel( areas, defaultArea, options ) {
 
 areaModelCommon.register( 'AreaModelCommonModel', AreaModelCommonModel );
 
-export default inherit( Object, AreaModelCommonModel, {
+inherit( Object, AreaModelCommonModel, {
   /**
    * Abstract, returns an AreaDisplay concrete type.
    * @protected
@@ -121,3 +121,5 @@ export default inherit( Object, AreaModelCommonModel, {
     } );
   }
 } );
+
+export default AreaModelCommonModel;

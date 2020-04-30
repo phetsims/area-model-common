@@ -54,7 +54,7 @@ function Partition( orientation, colorProperty ) {
 
 areaModelCommon.register( 'Partition', Partition );
 
-export default inherit( Object, Partition, {
+inherit( Object, Partition, {
   /**
    * Returns whether this partition is defined, i.e. "is shown in the area, and has a size"
    * @public
@@ -65,3 +65,5 @@ export default inherit( Object, Partition, {
     return this.visibleProperty.value && this.sizeProperty.value !== null;
   }
 } );
+
+export default Partition;

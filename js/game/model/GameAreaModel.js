@@ -67,7 +67,7 @@ function GameAreaModel( levels, hasExponents ) {
 
 areaModelCommon.register( 'GameAreaModel', GameAreaModel );
 
-export default inherit( Object, GameAreaModel, {
+inherit( Object, GameAreaModel, {
   /**
    * Selects a given level, making it the current level.
    * @public
@@ -175,3 +175,5 @@ export default inherit( Object, GameAreaModel, {
     } );
   }
 } );
+
+export default GameAreaModel;

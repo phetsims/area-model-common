@@ -95,7 +95,7 @@ function GenericArea( layout, allowExponents ) {
 
 areaModelCommon.register( 'GenericArea', GenericArea );
 
-export default inherit( Area, GenericArea, {
+inherit( Area, GenericArea, {
   /**
    * Resets the area to its initial values.
    * @public
@@ -127,3 +127,5 @@ export default inherit( Area, GenericArea, {
     this.activePartitionProperty.reset();
   }
 } );
+
+export default GenericArea;

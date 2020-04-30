@@ -67,7 +67,7 @@ function AreaDisplay( areaProperty ) {
 
 areaModelCommon.register( 'AreaDisplay', AreaDisplay );
 
-export default inherit( Object, AreaDisplay, {
+inherit( Object, AreaDisplay, {
   /**
    * Wraps an orientation pair into one that contains properties.
    * @protected
@@ -133,3 +133,5 @@ export default inherit( Object, AreaDisplay, {
     return new DerivedProperty( [ this.areaProperty ], map, options );
   }
 } );
+
+export default AreaDisplay;

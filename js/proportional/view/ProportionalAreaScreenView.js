@@ -143,7 +143,7 @@ function ProportionalAreaScreenView( model, options ) {
 
 areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
 
-export default inherit( AreaScreenView, ProportionalAreaScreenView, {
+inherit( AreaScreenView, ProportionalAreaScreenView, {
   /**
    * @protected
    * @override
@@ -278,3 +278,5 @@ export default inherit( AreaScreenView, ProportionalAreaScreenView, {
     } );
   }
 } );
+
+export default ProportionalAreaScreenView;

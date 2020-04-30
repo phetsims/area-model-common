@@ -495,7 +495,7 @@ function GameAreaScreenView( model ) {
 
 areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
 
-export default inherit( ScreenView, GameAreaScreenView, {
+inherit( ScreenView, GameAreaScreenView, {
   /**
    * Creates a panel interior with the title left-aligned, and the content somewhat offset from the left with a
    * guaranteed margin.
@@ -543,3 +543,5 @@ export default inherit( ScreenView, GameAreaScreenView, {
     this.rewardNode && this.rewardNode.step( dt );
   }
 } );
+
+export default GameAreaScreenView;

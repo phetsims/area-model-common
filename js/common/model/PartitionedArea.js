@@ -38,7 +38,7 @@ function PartitionedArea( partitions ) {
 
 areaModelCommon.register( 'PartitionedArea', PartitionedArea );
 
-export default inherit( Object, PartitionedArea, {
+inherit( Object, PartitionedArea, {
   /**
    * Cleans up references.
    * @public
@@ -48,3 +48,5 @@ export default inherit( Object, PartitionedArea, {
     this.areaProperty.dispose();
   }
 } );
+
+export default PartitionedArea;

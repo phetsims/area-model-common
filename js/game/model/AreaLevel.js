@@ -60,7 +60,7 @@ function AreaLevel( number, type, colorProperty, challengeDescriptions ) {
 
 areaModelCommon.register( 'AreaLevel', AreaLevel );
 
-export default inherit( Object, AreaLevel, {
+inherit( Object, AreaLevel, {
   /**
    * Generates six challenges.
    * @private
@@ -147,3 +147,5 @@ export default inherit( Object, AreaLevel, {
     this.challengeIndexProperty.notifyListenersStatic();
   }
 } );
+
+export default AreaLevel;

@@ -120,7 +120,7 @@ function TermAccumulator( digitCountProperty ) {
 
 areaModelCommon.register( 'TermAccumulator', TermAccumulator );
 
-export default inherit( AbstractKeyAccumulator, TermAccumulator, {
+inherit( AbstractKeyAccumulator, TermAccumulator, {
   /**
    * Handles what happens when a key is pressed and create proposed set of keys to be passed to Validator
    * @public
@@ -195,3 +195,5 @@ export default inherit( AbstractKeyAccumulator, TermAccumulator, {
     this.validateKeys( proposedKeys ) && this.updateKeys( proposedKeys );
   }
 } );
+
+export default TermAccumulator;

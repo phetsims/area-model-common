@@ -143,7 +143,7 @@ function TiledAreaNode( areaDisplay, modelViewTransformProperty, tilesVisiblePro
 
 areaModelCommon.register( 'TiledAreaNode', TiledAreaNode );
 
-export default inherit( Node, TiledAreaNode, {
+inherit( Node, TiledAreaNode, {
   /**
    * For each partition of a particular orientation, fires the callback with range information already in view
    * coordinates.
@@ -264,3 +264,5 @@ export default inherit( Node, TiledAreaNode, {
     );
   }
 } );
+
+export default TiledAreaNode;

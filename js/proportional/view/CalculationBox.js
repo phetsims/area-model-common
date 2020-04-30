@@ -86,7 +86,7 @@ function CalculationBox( model, bounds, nodeOptions ) {
 
 areaModelCommon.register( 'CalculationBox', CalculationBox );
 
-export default inherit( AreaModelCommonAccordionBox, CalculationBox, {
+inherit( AreaModelCommonAccordionBox, CalculationBox, {
   /**
    * Updates the content of the calculation box (if needed).
    * @public
@@ -95,3 +95,5 @@ export default inherit( AreaModelCommonAccordionBox, CalculationBox, {
     this.calculationLinesNode.update();
   }
 } );
+
+export default CalculationBox;

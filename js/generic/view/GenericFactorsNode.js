@@ -96,7 +96,7 @@ function GenericFactorsNode( displayProperties, allowExponentsProperty ) {
 
 areaModelCommon.register( 'GenericFactorsNode', GenericFactorsNode );
 
-export default inherit( AlignBox, GenericFactorsNode, {
+inherit( AlignBox, GenericFactorsNode, {
   /**
    * Creates a readout for the total sum for a particular orientation.
    * @private
@@ -134,3 +134,5 @@ export default inherit( AlignBox, GenericFactorsNode, {
     return node;
   }
 } );
+
+export default GenericFactorsNode;

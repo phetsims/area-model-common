@@ -200,7 +200,7 @@ function ProportionalAreaDisplayNode( areaDisplay, partialProductsChoiceProperty
 
 areaModelCommon.register( 'ProportionalAreaDisplayNode', ProportionalAreaDisplayNode );
 
-export default inherit( AreaDisplayNode, ProportionalAreaDisplayNode, {
+inherit( AreaDisplayNode, ProportionalAreaDisplayNode, {
   /**
    * Updates expensive-to-update things.
    * @public
@@ -389,3 +389,5 @@ export default inherit( AreaDisplayNode, ProportionalAreaDisplayNode, {
     return labelContainer;
   }
 } );
+
+export default ProportionalAreaDisplayNode;

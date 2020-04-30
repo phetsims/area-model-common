@@ -105,7 +105,7 @@ function GenericAreaDisplayNode( areaDisplay, allowExponents, partialProductsCho
 
 areaModelCommon.register( 'GenericAreaDisplayNode', GenericAreaDisplayNode );
 
-export default inherit( AreaDisplayNode, GenericAreaDisplayNode, {
+inherit( AreaDisplayNode, GenericAreaDisplayNode, {
   /**
    * Positions all of the partial products labels.
    * @protected
@@ -185,3 +185,5 @@ export default inherit( AreaDisplayNode, GenericAreaDisplayNode, {
     return resultNode;
   }
 } );
+
+export default GenericAreaDisplayNode;

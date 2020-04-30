@@ -63,7 +63,7 @@ function CountingAreaNode( activeTotalProperties, modelViewTransformProperty, co
 
 areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
 
-export default inherit( Node, CountingAreaNode, {
+inherit( Node, CountingAreaNode, {
   /**
    * Creates a reusable text node with a given number.
    * @private
@@ -138,3 +138,5 @@ export default inherit( Node, CountingAreaNode, {
     }
   }
 } );
+
+export default CountingAreaNode;

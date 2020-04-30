@@ -223,7 +223,7 @@ function AreaChallenge( description ) {
 
 areaModelCommon.register( 'AreaChallenge', AreaChallenge );
 
-export default inherit( Object, AreaChallenge, {
+inherit( Object, AreaChallenge, {
   /**
    * Returns a list of all of the editable properties that are incorrect.
    * @public
@@ -513,3 +513,5 @@ export default inherit( Object, AreaChallenge, {
     }
   }
 } );
+
+export default AreaChallenge;

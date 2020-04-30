@@ -31,7 +31,7 @@ function OrientationPair( horizontal, vertical ) {
 
 areaModelCommon.register( 'OrientationPair', OrientationPair );
 
-export default inherit( Object, OrientationPair, {
+inherit( Object, OrientationPair, {
   /**
    * Returns the value associated with the particular orientation.
    * @public
@@ -91,3 +91,5 @@ export default inherit( Object, OrientationPair, {
     return new OrientationPair( factory( Orientation.HORIZONTAL ), factory( Orientation.VERTICAL ) );
   }
 } );
+
+export default OrientationPair;

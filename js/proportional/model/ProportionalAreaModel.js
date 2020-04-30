@@ -56,7 +56,7 @@ function ProportionalAreaModel( areaOptionObjects, options ) {
 
 areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );
 
-export default inherit( AreaModelCommonModel, ProportionalAreaModel, {
+inherit( AreaModelCommonModel, ProportionalAreaModel, {
   /**
    * Returns a concrete AreaDisplay subtype
    * @protected
@@ -104,3 +104,5 @@ export default inherit( AreaModelCommonModel, ProportionalAreaModel, {
     this.calculationBoxVisibleProperty.reset();
   }
 } );
+
+export default ProportionalAreaModel;

@@ -179,7 +179,7 @@ function ProportionalArea( options ) {
 
 areaModelCommon.register( 'ProportionalArea', ProportionalArea );
 
-export default inherit( Area, ProportionalArea, {
+inherit( Area, ProportionalArea, {
   /**
    * Returns a string like 10x10 that can be used for the size.
    * @public
@@ -216,3 +216,5 @@ export default inherit( Area, ProportionalArea, {
     this.activeTotalProperties.vertical.value = this.eraseHeight;
   }
 } );
+
+export default ProportionalArea;

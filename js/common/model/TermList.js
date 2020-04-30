@@ -24,7 +24,7 @@ function TermList( terms ) {
 
 areaModelCommon.register( 'TermList', TermList );
 
-export default inherit( Object, TermList, {
+inherit( Object, TermList, {
 
   /**
    * Addition of term lists.
@@ -112,3 +112,5 @@ export default inherit( Object, TermList, {
     return true;
   }
 } );
+
+export default TermList;

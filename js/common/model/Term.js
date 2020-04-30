@@ -45,7 +45,7 @@ function Term( coefficient, power ) {
 
 areaModelCommon.register( 'Term', Term );
 
-export default inherit( Object, Term, {
+inherit( Object, Term, {
   /**
    * Term multiplication.
    * @public
@@ -158,3 +158,5 @@ export default inherit( Object, Term, {
     return thing === null || thing instanceof Term;
   }
 } );
+
+export default Term;

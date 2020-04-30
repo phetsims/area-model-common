@@ -189,7 +189,7 @@ function CalculationNode( model, nodeOptions ) {
 
 areaModelCommon.register( 'CalculationNode', CalculationNode );
 
-export default inherit( Node, CalculationNode, {
+inherit( Node, CalculationNode, {
   /**
    * Updates the calculation lines.
    * @public
@@ -198,3 +198,5 @@ export default inherit( Node, CalculationNode, {
     this.calculationLinesNode.update();
   }
 } );
+
+export default CalculationNode;

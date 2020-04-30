@@ -111,7 +111,7 @@ function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, de
 
 areaModelCommon.register( 'ProportionalFactorsNode', ProportionalFactorsNode );
 
-export default inherit( Node, ProportionalFactorsNode, {
+inherit( Node, ProportionalFactorsNode, {
   /**
    * Creates a picker that adjusts the specified orientation's total size.
    * @private
@@ -165,3 +165,5 @@ export default inherit( Node, ProportionalFactorsNode, {
     } );
   }
 } );
+
+export default ProportionalFactorsNode;

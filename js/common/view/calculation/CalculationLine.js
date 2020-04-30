@@ -84,7 +84,7 @@ function CalculationLine( index, colorProperties, activeIndexProperty, allowExpo
 
 areaModelCommon.register( 'CalculationLine', CalculationLine );
 
-export default inherit( Object, CalculationLine, {
+inherit( Object, CalculationLine, {
   /**
    * Creates a TermText with the baseColor.
    * @public
@@ -303,3 +303,5 @@ export default inherit( Object, CalculationLine, {
   MINUSES_LINE_INDEX: 5,
   SUM_LINE_INDEX: 6
 } );
+
+export default CalculationLine;

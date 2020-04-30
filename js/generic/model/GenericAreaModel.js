@@ -56,7 +56,7 @@ function GenericAreaModel( options ) {
 
 areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );
 
-export default inherit( AreaModelCommonModel, GenericAreaModel, {
+inherit( AreaModelCommonModel, GenericAreaModel, {
   /**
    * Returns a concrete AreaDisplay subtype
    * @protected
@@ -79,3 +79,5 @@ export default inherit( AreaModelCommonModel, GenericAreaModel, {
     this.genericLayoutProperty.reset();
   }
 } );
+
+export default GenericAreaModel;

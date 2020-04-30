@@ -165,7 +165,7 @@ function TermKeypadPanel( digitCountProperty, allowExponents, allowNegative, ent
 
 areaModelCommon.register( 'TermKeypadPanel', TermKeypadPanel );
 
-export default inherit( Panel, TermKeypadPanel, {
+inherit( Panel, TermKeypadPanel, {
   /**
    * Clears the keypad's content.
    * @public
@@ -174,3 +174,5 @@ export default inherit( Panel, TermKeypadPanel, {
     this.keypad.clear();
   }
 } );
+
+export default TermKeypadPanel;

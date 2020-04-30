@@ -50,7 +50,7 @@ function GenericAreaScreenView( model, decimalPlaces ) {
 
 areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );
 
-export default inherit( AreaScreenView, GenericAreaScreenView, {
+inherit( AreaScreenView, GenericAreaScreenView, {
   /**
    * @protected
    * @override
@@ -100,3 +100,5 @@ export default inherit( AreaScreenView, GenericAreaScreenView, {
     return new GenericFactorsNode( dynamicProperties, new Property( model.allowExponents ) );
   }
 } );
+
+export default GenericAreaScreenView;

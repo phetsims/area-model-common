@@ -218,7 +218,7 @@ function AreaScreenView( model, config ) {
 
 areaModelCommon.register( 'AreaScreenView', AreaScreenView );
 
-export default inherit( ScreenView, AreaScreenView, {
+inherit( ScreenView, AreaScreenView, {
   /**
    * Steps the view forward, updating things that only update once a frame.
    * @public
@@ -332,3 +332,5 @@ export default inherit( ScreenView, AreaScreenView, {
     throw new Error( 'abstract method, should be implemented by subtype' );
   }
 } );
+
+export default AreaScreenView;

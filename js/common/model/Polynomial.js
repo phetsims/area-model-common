@@ -48,7 +48,7 @@ function Polynomial( terms ) {
 
 areaModelCommon.register( 'Polynomial', Polynomial );
 
-export default inherit( TermList, Polynomial, {
+inherit( TermList, Polynomial, {
   /**
    * Returns the coefficient in front of the term with the specific power. If it doesn't exist, 0 is used (since it's
    * like an implicit term with a 0-coefficient)
@@ -104,3 +104,5 @@ export default inherit( TermList, Polynomial, {
     return new Polynomial( TermList.prototype.times.call( this, termList ).terms );
   }
 } );
+
+export default Polynomial;

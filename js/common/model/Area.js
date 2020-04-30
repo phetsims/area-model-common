@@ -96,7 +96,7 @@ function Area( partitions, colorProperties, coordinateRangeMax, allowExponents )
 
 areaModelCommon.register( 'Area', Area );
 
-export default inherit( Object, Area, {
+inherit( Object, Area, {
   /**
    * Creates a partitioned area given two partitions.
    * @protected
@@ -244,3 +244,5 @@ export default inherit( Object, Area, {
     } );
   }
 } );
+
+export default Area;

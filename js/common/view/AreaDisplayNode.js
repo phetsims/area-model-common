@@ -288,7 +288,7 @@ function AreaDisplayNode( areaDisplay, partialProductsChoiceProperty, options ) 
 
 areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
 
-export default inherit( Node, AreaDisplayNode, {
+inherit( Node, AreaDisplayNode, {
   /**
    * Updates expensive-to-update things only once a frame (for performance).
    * @public
@@ -308,3 +308,5 @@ export default inherit( Node, AreaDisplayNode, {
     throw new Error( 'abstract method' );
   }
 } );
+
+export default AreaDisplayNode;
