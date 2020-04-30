@@ -56,7 +56,7 @@ function PartitionRadioButtonGroup( currentAreaOrientationProperty, selectionBut
 
 areaModelCommon.register( 'PartitionRadioButtonGroup', PartitionRadioButtonGroup );
 
-export default inherit( AreaModelCommonRadioButtonGroup, PartitionRadioButtonGroup, {}, {
+inherit( AreaModelCommonRadioButtonGroup, PartitionRadioButtonGroup, {}, {
   /**
    * Creates an icon showing a switch to partition lines of a given orientation.
    * @private
@@ -104,3 +104,5 @@ export default inherit( AreaModelCommonRadioButtonGroup, PartitionRadioButtonGro
     return background;
   }
 } );
+
+export default PartitionRadioButtonGroup;

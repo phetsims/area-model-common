@@ -88,7 +88,7 @@ function PartialProductRadioButtonGroup( model, selectionButtonAlignGroup ) {
 
 areaModelCommon.register( 'PartialProductRadioButtonGroup', PartialProductRadioButtonGroup );
 
-export default inherit( AreaModelCommonRadioButtonGroup, PartialProductRadioButtonGroup, {}, {
+inherit( AreaModelCommonRadioButtonGroup, PartialProductRadioButtonGroup, {}, {
   /**
    * Creates an 'exponents-allowed' icon based on a pair of nodes.
    * @private
@@ -136,3 +136,5 @@ export default inherit( AreaModelCommonRadioButtonGroup, PartialProductRadioButt
     } );
   }
 } );
+
+export default PartialProductRadioButtonGroup;
