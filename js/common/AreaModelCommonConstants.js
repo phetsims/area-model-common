@@ -16,7 +16,7 @@ import OrientationPair from './model/OrientationPair.js';
 const LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;
 const NORMAL_EDIT_FONT_SIZE = 18;
 
-export default areaModelCommon.register( 'AreaModelCommonConstants', {
+const AreaModelCommonConstants = {
 
   // {PhetFont} All fonts
   FACTORS_TERM_FONT: new PhetFont( 36 ), // Terms/numbers in the factors box
@@ -123,4 +123,6 @@ export default areaModelCommon.register( 'AreaModelCommonConstants', {
   // {string} - The character we use as a generic decimal character to get an approximate width for numeric
   // representations.
   MEASURING_CHARACTER: '9'
-} );
+};
+areaModelCommon.register( 'AreaModelCommonConstants', AreaModelCommonConstants );
+export default AreaModelCommonConstants;
