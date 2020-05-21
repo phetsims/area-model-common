@@ -9,6 +9,7 @@
 import './common/model/PolynomialTests.js';
 import './common/model/TermListTests.js';
 import './common/model/TermTests.js';
+import qunitStart from '../../chipper/js/sim-tests/qunitStart.js';
 
 // Since our tests are loaded asynchronously, we must direct QUnit to begin the tests
-QUnit.start();
+qunitStart();
