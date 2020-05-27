@@ -145,7 +145,7 @@ function ProportionalPartitionLineNode( areaDisplay, modelViewTransformProperty,
     keyboardStep: 1,
     shiftKeyboardStep: 1,
     pageKeyboardStep: 5,
-    ariaOrientation: orientation.layoutBoxOrientation,
+    ariaOrientation: orientation,
     a11yMapValue: function( v ) {
       // Reverse the negation above for readouts
       return ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v;
