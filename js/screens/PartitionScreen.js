@@ -7,13 +7,14 @@
  */
 
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import partitionScreenIconImage from '../../mipmaps/partition-screen-icon_png.js';
 import partitionScreenNavbarImage from '../../mipmaps/partition-screen-navbar_png.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaCalculationChoice from '../common/model/AreaCalculationChoice.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
@@ -31,8 +32,14 @@ function PartitionScreen() {
   const options = {
     name: screenPartitionString,
     backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new Image( partitionScreenIconImage ),
-    navigationBarIcon: new Image( partitionScreenNavbarImage ),
+    homeScreenIcon: new ScreenIcon( new Image( partitionScreenIconImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } ),
+    navigationBarIcon: new ScreenIcon( new Image( partitionScreenNavbarImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } ),
 
     // pdom
     descriptionContent: partitionDescriptionString

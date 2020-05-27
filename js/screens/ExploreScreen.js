@@ -7,12 +7,13 @@
  */
 
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import exploreScreenIconImage from '../../mipmaps/explore-screen-icon_png.js';
 import exploreScreenNavbarImage from '../../mipmaps/explore-screen-navbar_png.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
@@ -27,8 +28,14 @@ function ExploreScreen() {
   const options = {
     name: screenExploreString,
     backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new Image( exploreScreenIconImage ),
-    navigationBarIcon: new Image( exploreScreenNavbarImage )
+    homeScreenIcon: new ScreenIcon( new Image( exploreScreenIconImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } ),
+    navigationBarIcon: new ScreenIcon( new Image( exploreScreenNavbarImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } )
   };
 
   Screen.call( this,

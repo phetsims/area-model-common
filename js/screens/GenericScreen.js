@@ -7,11 +7,12 @@
  */
 
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import genericScreenIconImage from '../../mipmaps/generic-screen-icon_png.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import GenericAreaModel from '../generic/model/GenericAreaModel.js';
 import GenericAreaScreenView from '../generic/view/GenericAreaScreenView.js';
@@ -26,7 +27,10 @@ function GenericScreen() {
   const options = {
     name: screenGenericString,
     backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new Image( genericScreenIconImage )
+    homeScreenIcon: new ScreenIcon( new Image( genericScreenIconImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } )
   };
 
   Screen.call( this,

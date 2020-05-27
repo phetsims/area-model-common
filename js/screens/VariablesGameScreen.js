@@ -7,12 +7,13 @@
  */
 
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import variablesGameScreenIconImage from '../../mipmaps/variables-game-screen-icon_png.js';
 import variablesGameScreenNavbarImage from '../../mipmaps/variables-game-screen-navbar_png.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import VariablesGameAreaModel from '../game/model/VariablesGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
@@ -27,8 +28,14 @@ function VariablesGameScreen() {
   const options = {
     name: screenGameString,
     backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new Image( variablesGameScreenIconImage ),
-    navigationBarIcon: new Image( variablesGameScreenNavbarImage )
+    homeScreenIcon: new ScreenIcon( new Image( variablesGameScreenIconImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } ),
+    navigationBarIcon: new ScreenIcon( new Image( variablesGameScreenNavbarImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } )
   };
 
   Screen.call( this,

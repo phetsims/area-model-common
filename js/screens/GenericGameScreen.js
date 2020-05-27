@@ -7,12 +7,13 @@
  */
 
 import Screen from '../../../joist/js/Screen.js';
+import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import inherit from '../../../phet-core/js/inherit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import genericGameScreenIconImage from '../../mipmaps/generic-game-screen-icon_png.js';
 import genericGameScreenNavbarImage from '../../mipmaps/generic-game-screen-navbar_png.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import areaModelCommon from '../areaModelCommon.js';
+import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
@@ -27,8 +28,14 @@ function GenericGameScreen() {
   const options = {
     name: screenGameString,
     backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new Image( genericGameScreenIconImage ),
-    navigationBarIcon: new Image( genericGameScreenNavbarImage )
+    homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIconImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } ),
+    navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbarImage ), {
+      maxIconWidthProportion: 1,
+      maxIconHeightProportion: 1
+    } )
   };
 
   Screen.call( this,
