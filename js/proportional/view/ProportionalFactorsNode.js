@@ -139,10 +139,10 @@ inherit( Node, ProportionalFactorsNode, {
     } );
 
     return new NumberPicker( bidirectionalProperty, rangeProperty, {
-      upFunction: function( value ) {
+      incrementFunction: function( value ) {
         return Utils.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces );
       },
-      downFunction: function( value ) {
+      decrementFunction: function( value ) {
         return Utils.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces );
       },
       decimalPlaces: decimalPlaces,
