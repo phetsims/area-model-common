@@ -8,7 +8,6 @@
 
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import variablesScreenIconImage from '../../mipmaps/variables-screen-icon_png.js';
 import areaModelCommon from '../areaModelCommon.js';
@@ -17,34 +16,29 @@ import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProf
 import GenericAreaModel from '../generic/model/GenericAreaModel.js';
 import GenericAreaScreenView from '../generic/view/GenericAreaScreenView.js';
 
-const screenVariablesString = areaModelCommonStrings.screen.variables;
+class VariablesScreen extends Screen {
+  constructor() {
 
-/**
- * @constructor
- */
-function VariablesScreen() {
+    const options = {
+      name: areaModelCommonStrings.screen.variables,
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new ScreenIcon( new Image( variablesScreenIconImage ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } )
+    };
 
-  const options = {
-    name: screenVariablesString,
-    backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new ScreenIcon( new Image( variablesScreenIconImage ), {
-      maxIconWidthProportion: 1,
-      maxIconHeightProportion: 1
-    } )
-  };
-
-  Screen.call( this,
-    function() {
-      return new GenericAreaModel( {
-        allowExponents: true
-      } );
-    },
-    function( model ) { return new GenericAreaScreenView( model, 0 ); },
-    options
-  );
+    super(
+      function() {
+        return new GenericAreaModel( {
+          allowExponents: true
+        } );
+      },
+      function( model ) { return new GenericAreaScreenView( model, 0 ); },
+      options
+    );
+  }
 }
 
 areaModelCommon.register( 'VariablesScreen', VariablesScreen );
-
-inherit( Screen, VariablesScreen );
 export default VariablesScreen;

@@ -8,7 +8,6 @@
 
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import inherit from '../../../phet-core/js/inherit.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import genericGameScreenIconImage from '../../mipmaps/generic-game-screen-icon_png.js';
 import genericGameScreenNavbarImage from '../../mipmaps/generic-game-screen-navbar_png.js';
@@ -18,34 +17,29 @@ import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProf
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
 
-const screenGameString = areaModelCommonStrings.screen.game;
+class GenericGameScreen extends Screen {
+  constructor() {
 
-/**
- * @constructor
- */
-function GenericGameScreen() {
+    const options = {
+      name: areaModelCommonStrings.screen.game,
+      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIconImage ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } ),
+      navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbarImage ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } )
+    };
 
-  const options = {
-    name: screenGameString,
-    backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
-    homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIconImage ), {
-      maxIconWidthProportion: 1,
-      maxIconHeightProportion: 1
-    } ),
-    navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbarImage ), {
-      maxIconWidthProportion: 1,
-      maxIconHeightProportion: 1
-    } )
-  };
-
-  Screen.call( this,
-    function() { return new GenericGameAreaModel(); },
-    function( model ) { return new GameAreaScreenView( model ); },
-    options
-  );
+    super(
+      function() { return new GenericGameAreaModel(); },
+      function( model ) { return new GameAreaScreenView( model ); },
+      options
+    );
+  }
 }
 
 areaModelCommon.register( 'GenericGameScreen', GenericGameScreen );
-
-inherit( Screen, GenericGameScreen );
 export default GenericGameScreen;
