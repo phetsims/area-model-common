@@ -8,7 +8,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
@@ -18,31 +17,29 @@ import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
 import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
-/**
- * @constructor
- * @extends {AreaModelCommonRadioButtonGroup}
- *
- * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
- * @param {AlignGroup} selectionButtonAlignGroup
- */
-function AreaCalculationRadioButtonGroup( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
+class AreaCalculationRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 
-  const darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
-  const lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
+  /**
+   * @param {Property.<AreaCalculationChoice>} areaCalculationChoiceProperty
+   * @param {AlignGroup} selectionButtonAlignGroup
+   */
+  constructor( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
-  AreaModelCommonRadioButtonGroup.call( this, areaCalculationChoiceProperty, [ {
-    value: AreaCalculationChoice.HIDDEN,
-    node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
-  }, {
-    value: AreaCalculationChoice.LINE_BY_LINE,
-    node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
-  }, {
-    value: AreaCalculationChoice.SHOW_ALL_LINES,
-    node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
-  } ] );
+    const darkColorProperty = AreaModelCommonColorProfile.calculationIconDarkProperty;
+    const lightColorProperty = AreaModelCommonColorProfile.calculationIconLightProperty;
+
+    super( areaCalculationChoiceProperty, [ {
+      value: AreaCalculationChoice.HIDDEN,
+      node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
+    }, {
+      value: AreaCalculationChoice.LINE_BY_LINE,
+      node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
+    }, {
+      value: AreaCalculationChoice.SHOW_ALL_LINES,
+      node: new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
+    } ] );
+  }
 }
-
-areaModelCommon.register( 'AreaCalculationRadioButtonGroup', AreaCalculationRadioButtonGroup );
 
 /**
  * Creates a calculation icon with two fills.
@@ -68,5 +65,5 @@ function createCalculationIcon( topColorProperty, bottomColorProperty ) {
   } );
 }
 
-inherit( AreaModelCommonRadioButtonGroup, AreaCalculationRadioButtonGroup );
+areaModelCommon.register( 'AreaCalculationRadioButtonGroup', AreaCalculationRadioButtonGroup );
 export default AreaCalculationRadioButtonGroup;

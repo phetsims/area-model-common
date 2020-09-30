@@ -9,7 +9,6 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
@@ -29,112 +28,105 @@ const hidePartialProductsString = areaModelCommonStrings.a11y.hidePartialProduct
 const showPartialProductsString = areaModelCommonStrings.a11y.showPartialProducts;
 const showPartialProductFactorsString = areaModelCommonStrings.a11y.showPartialProductFactors;
 
-/**
- * @constructor
- * @extends {AreaModelCommonRadioButtonGroup}
- *
- * @param {AreaModelCommonModel} model
- * @param {AlignGroup} selectionButtonAlignGroup
- */
-function PartialProductRadioButtonGroup( model, selectionButtonAlignGroup ) {
+class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 
-  // hardcoded strings since they shouldn't be translatable
-  const templateLabels = OrientationPair.create( function( orientation ) {
-    return new Text( orientation === Orientation.HORIZONTAL ? 'b' : 'a', {
-      font: AreaModelCommonConstants.SYMBOL_FONT,
-      fill: new DerivedProperty(
-        [ model.partialProductsChoiceProperty, model.colorProperties.get( orientation ) ],
-        function( value, color ) {
-          return value === PartialProductsChoice.FACTORS ? color : 'black';
-        } )
+  /**
+   * @param {AreaModelCommonModel} model
+   * @param {AlignGroup} selectionButtonAlignGroup
+   */
+  constructor( model, selectionButtonAlignGroup ) {
+
+    // hardcoded strings since they shouldn't be translatable
+    const templateLabels = OrientationPair.create( orientation => {
+      return new Text( orientation === Orientation.HORIZONTAL ? 'b' : 'a', {
+        font: AreaModelCommonConstants.SYMBOL_FONT,
+        fill: new DerivedProperty(
+          [ model.partialProductsChoiceProperty, model.colorProperties.get( orientation ) ],
+          function( value, color ) {
+            return value === PartialProductsChoice.FACTORS ? color : 'black';
+          } )
+      } );
     } );
+
+    // Both are built here so it is a consistent size across screens.
+    const iconGroup = new AlignGroup();
+    const exponentsIcon = new AlignBox( createExponentIcon( templateLabels ), {
+      group: iconGroup
+    } );
+    const noExponentsIcon = new AlignBox( createNonExponentIcon( templateLabels ), {
+      group: iconGroup
+    } );
+
+    super( model.partialProductsChoiceProperty, [
+      {
+        value: PartialProductsChoice.HIDDEN,
+        node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } ),
+
+        // pdom
+        labelContent: hidePartialProductsString
+      },
+      {
+        value: PartialProductsChoice.PRODUCTS,
+
+        // Hardcoded 'A' string since we don't want it to be translatable
+        node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
+
+        // pdom
+        labelContent: showPartialProductsString
+      },
+      {
+        value: PartialProductsChoice.FACTORS,
+        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
+
+        // pdom
+        labelContent: showPartialProductFactorsString
+      }
+    ] );
+  }
+}
+
+/**
+ * Creates an 'exponents-allowed' icon based on a pair of nodes.
+ * @param {OrientationPair.<Node>} nodes
+ * @returns {Node}
+ */
+function createExponentIcon( nodes ) {
+  return new HBox( {
+    children: [
+      new Text( '(', {
+        font: AreaModelCommonConstants.SYMBOL_FONT
+      } ),
+      new Node( { children: [ nodes.vertical ] } ),
+      new Text( ')(', {
+        font: AreaModelCommonConstants.SYMBOL_FONT
+      } ),
+      new Node( { children: [ nodes.horizontal ] } ),
+      new Text( ')', {
+        font: AreaModelCommonConstants.SYMBOL_FONT
+      } )
+    ],
+    spacing: 0,
+    scale: 0.9
   } );
+}
 
-  // Both are built here so it is a consistent size across screens.
-  const iconGroup = new AlignGroup();
-  const exponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createExponentIcon( templateLabels ), {
-    group: iconGroup
+/**
+ * Creates an 'no-exponents' icon based on a pair of nodes.
+ * @param {OrientationPair.<Node>} nodes
+ * @returns {Node}
+ */
+function createNonExponentIcon( nodes ) {
+  return new HBox( {
+    children: [
+      new Node( { children: [ nodes.vertical ] } ),
+      new Text( MathSymbols.TIMES, {
+        font: AreaModelCommonConstants.SYMBOL_FONT
+      } ),
+      new Node( { children: [ nodes.horizontal ] } )
+    ],
+    spacing: 5
   } );
-  const noExponentsIcon = new AlignBox( PartialProductRadioButtonGroup.createNonExponentIcon( templateLabels ), {
-    group: iconGroup
-  } );
-
-  AreaModelCommonRadioButtonGroup.call( this, model.partialProductsChoiceProperty, [
-    {
-      value: PartialProductsChoice.HIDDEN,
-      node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } ),
-
-      // pdom
-      labelContent: hidePartialProductsString
-    },
-    {
-      value: PartialProductsChoice.PRODUCTS,
-
-      // Hardcoded 'A' string since we don't want it to be translatable
-      node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
-
-      // pdom
-      labelContent: showPartialProductsString
-    },
-    {
-      value: PartialProductsChoice.FACTORS,
-      node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
-
-      // pdom
-      labelContent: showPartialProductFactorsString
-    }
-  ] );
 }
 
 areaModelCommon.register( 'PartialProductRadioButtonGroup', PartialProductRadioButtonGroup );
-
-inherit( AreaModelCommonRadioButtonGroup, PartialProductRadioButtonGroup, {}, {
-  /**
-   * Creates an 'exponents-allowed' icon based on a pair of nodes.
-   * @private
-   *
-   * @param {OrientationPair.<Node>} nodes
-   * @returns {Node}
-   */
-  createExponentIcon: function( nodes ) {
-    return new HBox( {
-      children: [
-        new Text( '(', {
-          font: AreaModelCommonConstants.SYMBOL_FONT
-        } ),
-        new Node( { children: [ nodes.vertical ] } ),
-        new Text( ')(', {
-          font: AreaModelCommonConstants.SYMBOL_FONT
-        } ),
-        new Node( { children: [ nodes.horizontal ] } ),
-        new Text( ')', {
-          font: AreaModelCommonConstants.SYMBOL_FONT
-        } )
-      ],
-      spacing: 0,
-      scale: 0.9
-    } );
-  },
-
-  /**
-   * Creates an 'no-exponents' icon based on a pair of nodes.
-   * @private
-   *
-   * @param {OrientationPair.<Node>} nodes
-   * @returns {Node}
-   */
-  createNonExponentIcon: function( nodes ) {
-    return new HBox( {
-      children: [
-        new Node( { children: [ nodes.vertical ] } ),
-        new Text( MathSymbols.TIMES, {
-          font: AreaModelCommonConstants.SYMBOL_FONT
-        } ),
-        new Node( { children: [ nodes.horizontal ] } )
-      ],
-      spacing: 5
-    } );
-  }
-} );
-
 export default PartialProductRadioButtonGroup;

@@ -8,7 +8,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
 import AlignGroup from '../../../../scenery/js/nodes/AlignGroup.js';
@@ -21,41 +20,39 @@ import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRa
 const areaGridSizeString = areaModelCommonStrings.a11y.areaGridSize;
 const sceneSelectionPatternString = areaModelCommonStrings.a11y.sceneSelectionPattern;
 
-/**
- * @constructor
- * @extends {AreaModelCommonRadioButtonGroup}
- *
- * @param {ProportionalAreaModel} model
- * @param {Object} [nodeOptions]
- */
-function SceneRadioButtonGroup( model, nodeOptions ) {
-  const group = new AlignGroup(); // have all the buttons the same size
+class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 
-  assert && assert( model.areas.length === 2 || model.areas.length === 3,
-    'We only have strings for the 2 or 3 case (right now)' );
+  /**
+   * @param {ProportionalAreaModel} model
+   * @param {Object} [nodeOptions]
+   */
+  constructor( model, nodeOptions ) {
+    const group = new AlignGroup(); // have all the buttons the same size
 
-  AreaModelCommonRadioButtonGroup.call( this, model.currentAreaProperty, model.areas.map( function( area ) {
-    return {
-      value: area,
-      node: new AlignBox( new Text( area.getDimensionString(), {
-        font: AreaModelCommonConstants.SYMBOL_FONT
-      } ), { group: group } ),
+    assert && assert( model.areas.length === 2 || model.areas.length === 3,
+      'We only have strings for the 2 or 3 case (right now)' );
 
+    super( model.currentAreaProperty, model.areas.map( area => {
+      return {
+        value: area,
+        node: new AlignBox( new Text( area.getDimensionString(), {
+          font: AreaModelCommonConstants.SYMBOL_FONT
+        } ), { group: group } ),
+
+        // pdom
+        labelContent: StringUtils.fillIn( sceneSelectionPatternString, {
+          width: area.maximumSize,
+          height: area.maximumSize
+        } )
+      };
+    } ), {
       // pdom
-      labelContent: StringUtils.fillIn( sceneSelectionPatternString, {
-        width: area.maximumSize,
-        height: area.maximumSize
-      } )
-    };
-  } ), {
-    // pdom
-    labelContent: areaGridSizeString
-  } );
+      labelContent: areaGridSizeString
+    } );
 
-  this.mutate( nodeOptions );
+    this.mutate( nodeOptions );
+  }
 }
 
 areaModelCommon.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );
-
-inherit( AreaModelCommonRadioButtonGroup, SceneRadioButtonGroup );
 export default SceneRadioButtonGroup;
