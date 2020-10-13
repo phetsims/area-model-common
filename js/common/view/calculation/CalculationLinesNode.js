@@ -11,7 +11,6 @@ import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../../axon/js/DynamicProperty.js';
 import Emitter from '../../../../../axon/js/Emitter.js';
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../../phet-core/js/Orientation.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
 import VBox from '../../../../../scenery/js/nodes/VBox.js';
@@ -31,98 +30,90 @@ import TotalsLine from './TotalsLine.js';
 
 const betweenCalculationLinesString = areaModelCommonStrings.a11y.betweenCalculationLines;
 
-/**
- * @constructor
- * @extends {VBox}
- *
- * @param {AreaModelCommonModel} model
- */
-function CalculationLinesNode( model ) {
-  const self = this;
+class CalculationLinesNode extends Node {
+  /**
+   * @param {AreaModelCommonModel} model
+   */
+  constructor( model ) {
 
-  Node.call( this );
+    super();
 
-  // @private {Node}
-  this.box = new VBox( {
-    spacing: 1
-  } );
-  this.addChild( this.box );
-
-  if ( !AreaModelCommonQueryParameters.rawMath ) {
-    this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
-    this.tagName = 'math';
-
-    this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
-    this.box.tagName = 'mtable';
-  }
-
-  // @public {Property.<boolean>} - Whether there are previous/next lines (when in line-by-line mode)
-  this.previousEnabledProperty = new BooleanProperty( false );
-  this.nextEnabledProperty = new BooleanProperty( false );
-
-  // @public {Property.<Array.<CalculationLine>>} - All of our "current" lines
-  this.calculationLinesProperty = new Property( [] );
-
-  // @public {Emitter} - Fired whenever the displayed appearance has updated.
-  this.displayUpdatedEmitter = new Emitter();
-
-  // @private {AreaModelCommonModel}
-  this.model = model;
-
-  // @private {boolean} - Whether the actual CalculationLinesNode need updating.
-  this.linesDirty = true;
-
-  // @private {boolean} - Whether the display of the lines (index/visibility change) needs updating.
-  this.displayDirty = true;
-
-  // @private {Property.<number>} - The current index (for whatever area)
-  this.areaIndexProperty = new DynamicProperty( model.currentAreaProperty, {
-    derive: 'calculationIndexProperty',
-    bidirectional: true
-  } );
-
-  // @private {Property.<number|null>} - The effective current index (for whatever area) that we will use for display
-  this.effectiveIndexProperty = new DerivedProperty(
-    [ this.areaIndexProperty, model.areaCalculationChoiceProperty ],
-    function( index, choice ) {
-      return choice === AreaCalculationChoice.LINE_BY_LINE ? index : null;
+    // @private {Node}
+    this.box = new VBox( {
+      spacing: 1
     } );
+    this.addChild( this.box );
 
-  const setLinesDirty = function() { self.linesDirty = true; };
-  const setDisplayDirty = function() { self.displayDirty = true; };
+    if ( !AreaModelCommonQueryParameters.rawMath ) {
+      this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+      this.tagName = 'math';
 
-  // Listen for changes that would make the display need an update
-  model.areaCalculationChoiceProperty.lazyLink( setDisplayDirty );
-  this.areaIndexProperty.lazyLink( setDisplayDirty );
-
-  // Listen for changes that would make everything need an update
-  model.currentAreaProperty.link( function( newArea, oldArea ) {
-    if ( oldArea ) {
-      oldArea.allPartitions.forEach( function( partition ) {
-        partition.sizeProperty.unlink( setLinesDirty );
-        partition.visibleProperty.unlink( setLinesDirty );
-      } );
+      this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+      this.box.tagName = 'mtable';
     }
 
-    newArea.allPartitions.forEach( function( partition ) {
-      partition.sizeProperty.lazyLink( setLinesDirty );
-      partition.visibleProperty.lazyLink( setLinesDirty );
+    // @public {Property.<boolean>} - Whether there are previous/next lines (when in line-by-line mode)
+    this.previousEnabledProperty = new BooleanProperty( false );
+    this.nextEnabledProperty = new BooleanProperty( false );
+
+    // @public {Property.<Array.<CalculationLine>>} - All of our "current" lines
+    this.calculationLinesProperty = new Property( [] );
+
+    // @public {Emitter} - Fired whenever the displayed appearance has updated.
+    this.displayUpdatedEmitter = new Emitter();
+
+    // @private {AreaModelCommonModel}
+    this.model = model;
+
+    // @private {boolean} - Whether the actual CalculationLinesNode need updating.
+    this.linesDirty = true;
+
+    // @private {boolean} - Whether the display of the lines (index/visibility change) needs updating.
+    this.displayDirty = true;
+
+    // @private {Property.<number>} - The current index (for whatever area)
+    this.areaIndexProperty = new DynamicProperty( model.currentAreaProperty, {
+      derive: 'calculationIndexProperty',
+      bidirectional: true
     } );
 
-    setLinesDirty();
+    // @private {Property.<number|null>} - The effective current index (for whatever area) that we will use for display
+    this.effectiveIndexProperty = new DerivedProperty(
+      [ this.areaIndexProperty, model.areaCalculationChoiceProperty ],
+      ( index, choice ) => choice === AreaCalculationChoice.LINE_BY_LINE ? index : null );
 
-    self.update();
-  } );
-}
+    const setLinesDirty = () => { this.linesDirty = true; };
+    const setDisplayDirty = () => { this.displayDirty = true; };
 
-areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
+    // Listen for changes that would make the display need an update
+    model.areaCalculationChoiceProperty.lazyLink( setDisplayDirty );
+    this.areaIndexProperty.lazyLink( setDisplayDirty );
 
-inherit( Node, CalculationLinesNode, {
+    // Listen for changes that would make everything need an update
+    model.currentAreaProperty.link( ( newArea, oldArea ) => {
+      if ( oldArea ) {
+        oldArea.allPartitions.forEach( partition => {
+          partition.sizeProperty.unlink( setLinesDirty );
+          partition.visibleProperty.unlink( setLinesDirty );
+        } );
+      }
+
+      newArea.allPartitions.forEach( partition => {
+        partition.sizeProperty.lazyLink( setLinesDirty );
+        partition.visibleProperty.lazyLink( setLinesDirty );
+      } );
+
+      setLinesDirty();
+
+      this.update();
+    } );
+  }
+
   /**
    * Called whenever the calculation may need an update.
    * @public
    */
-  update: function() {
+  update() {
     // Don't update anything if things are hidden
     if ( this.model.areaCalculationChoiceProperty.value === AreaCalculationChoice.HIDDEN ) {
       return;
@@ -130,45 +121,45 @@ inherit( Node, CalculationLinesNode, {
 
     this.updateLines();
     this.updateDisplay();
-  },
+  }
 
   /**
    * Moves the display to the previous line.
    * @public
    */
-  moveToPreviousLine: function() {
+  moveToPreviousLine() {
     const activeLine = this.getActiveLine();
     if ( activeLine.previousLine ) {
       this.areaIndexProperty.value = activeLine.previousLine.index;
     }
-  },
+  }
 
   /**
    * Moves the display to the next line.
    * @public
    */
-  moveToNextLine: function() {
+  moveToNextLine() {
     const activeLine = this.getActiveLine();
     if ( activeLine.nextLine ) {
       this.areaIndexProperty.value = activeLine.nextLine.index;
     }
-  },
+  }
 
   /**
    * Removes and disposes children.
    * @private
    */
-  wipe: function() {
+  wipe() {
     while ( this.box.children.length ) {
       this.box.children[ 0 ].dispose();
     }
-  },
+  }
 
   /**
    * Update the internally-stored calculation lines.
    * @private
    */
-  updateLines: function() {
+  updateLines() {
     if ( !this.linesDirty ) {
       return;
     }
@@ -177,7 +168,7 @@ inherit( Node, CalculationLinesNode, {
     this.wipe();
 
     // Release line references that we had before
-    this.calculationLinesProperty.value.forEach( function( calculationLine ) {
+    this.calculationLinesProperty.value.forEach( calculationLine => {
       calculationLine.dispose();
     } );
 
@@ -191,13 +182,13 @@ inherit( Node, CalculationLinesNode, {
 
     this.linesDirty = false;
     this.displayDirty = true;
-  },
+  }
 
   /**
    * Update the display of the calculation lines.
    * @private
    */
-  updateDisplay: function() {
+  updateDisplay() {
     if ( !this.displayDirty ) {
       return;
     }
@@ -221,7 +212,7 @@ inherit( Node, CalculationLinesNode, {
       this.nextEnabledProperty.value = false;
     }
 
-    this.box.children = displayedLines.map( function( line, index ) {
+    this.box.children = displayedLines.map( ( line, index ) => {
       const lineNode = new Node( {
         children: [
           line.node
@@ -257,7 +248,7 @@ inherit( Node, CalculationLinesNode, {
 
     this.displayDirty = false;
     this.displayUpdatedEmitter.emit();
-  },
+  }
 
   /**
    * Returns the first active line, or null otherwise.
@@ -265,16 +256,14 @@ inherit( Node, CalculationLinesNode, {
    *
    * @returns {CalculationLine|null}
    */
-  getActiveLine: function() {
-    let activeLine = _.find( this.calculationLinesProperty.value, function( line ) {
-      return line.isActiveProperty.value;
-    } ) || null;
+  getActiveLine() {
+    let activeLine = _.find( this.calculationLinesProperty.value, line => line.isActiveProperty.value ) || null;
 
     // If no line is currently active (maybe it was removed?), switch to the next-best line
     if ( !activeLine ) {
       let nextBestLine = null;
       const lastIndex = this.areaIndexProperty.value;
-      this.calculationLinesProperty.value.forEach( function( calculationLine ) {
+      this.calculationLinesProperty.value.forEach( calculationLine => {
         if ( calculationLine.index <= lastIndex ) {
           nextBestLine = calculationLine;
         }
@@ -287,7 +276,7 @@ inherit( Node, CalculationLinesNode, {
 
     return activeLine;
   }
-}, {
+
   /**
    * Creates an array of calculation lines.
    * @private
@@ -298,7 +287,7 @@ inherit( Node, CalculationLinesNode, {
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
    * @returns {Array.<CalculationLine>}
    */
-  createLines: function( area, activeIndexProperty, allowExponents, isProportional ) {
+  static createLines( area, activeIndexProperty, allowExponents, isProportional ) {
     // Whether there are ANY shown partitions for a given orientation
     const horizontalEmpty = area.getDefinedPartitions( Orientation.HORIZONTAL ).length === 0;
     const verticalEmpty = area.getDefinedPartitions( Orientation.VERTICAL ).length === 0;
@@ -323,11 +312,7 @@ inherit( Node, CalculationLinesNode, {
     const verticalPolynomial = area.totalProperties.vertical.value;
 
     // E.g. for ( 2 ) * ( 3 + x ), the result will be the terms 6 and 2x.
-    const multipliedTermList = new TermList( _.flatten( verticalTerms.map( function( verticalTerm ) {
-      return horizontalTerms.map( function( horizontalTerm ) {
-        return horizontalTerm.times( verticalTerm );
-      } );
-    } ) ) );
+    const multipliedTermList = new TermList( _.flatten( verticalTerms.map( verticalTerm => horizontalTerms.map( horizontalTerm => horizontalTerm.times( verticalTerm ) ) ) ) );
     const orderedTermList = multipliedTermList.orderedByExponent();
     const totalPolynomial = area.totalAreaProperty.value;
 
@@ -377,6 +362,8 @@ inherit( Node, CalculationLinesNode, {
 
     return lines;
   }
-} );
+}
+
+areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
 
 export default CalculationLinesNode;

@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
@@ -19,22 +18,15 @@ import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
 const sumMinusString = areaModelCommonStrings.a11y.sumMinus;
 
-/**
- * @constructor
- * @extends {Text}
- *
- * @param {Property.<Color>} baseColorProperty
- */
-function Minus( baseColorProperty ) {
-  assert && assert( baseColorProperty instanceof Property );
+class Minus extends Text {
+  /**
+   * @extends {Text}
+   *
+   * @param {Property.<Color>} baseColorProperty
+   */
+  constructor( baseColorProperty ) {
 
-  // @public {string}
-  this.accessibleText = sumMinusString;
-
-  if ( !this.initialized ) {
-    this.initialized = true;
-
-    Text.call( this, MathSymbols.MINUS, {
+    super( MathSymbols.MINUS, {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
       // pdom
@@ -42,25 +34,39 @@ function Minus( baseColorProperty ) {
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&minus;'
     } );
+
+    // @public {string}
+    this.accessibleText = sumMinusString;
+
+    this.initialize( baseColorProperty );
   }
 
-  this.fill = baseColorProperty;
-}
+  /**
+   * @public
+   *
+   * @param {Property.<Color>} baseColorProperty
+   */
+  initialize( baseColorProperty ) {
+    assert && assert( baseColorProperty instanceof Property );
 
-areaModelCommon.register( 'Minus', Minus );
+    this.fill = baseColorProperty;
+  }
 
-inherit( Text, Minus, {
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     this.fill = null;
 
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( Minus );
+areaModelCommon.register( 'Minus', Minus );
+
+Poolable.mixInto( Minus, {
+  initialize: Minus.prototype.initialize
+} );
 
 export default Minus;

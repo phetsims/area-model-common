@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
@@ -22,31 +21,18 @@ import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
 const productTimesPatternString = areaModelCommonStrings.a11y.productTimesPattern;
 
-/**
- * @constructor
- * @extends {HBox}
- *
- * @param {Node} leftContent - Should have a clean() method to support pooling
- * @param {Node} rightContent - Should have a clean() method to support pooling
- * @param {Property.<Color>} baseColorProperty
- */
-function MultiplyX( leftContent, rightContent, baseColorProperty ) {
-  assert && assert( leftContent instanceof Node );
-  assert && assert( rightContent instanceof Node );
-  assert && assert( baseColorProperty instanceof Property );
+class MultiplyX extends HBox {
+  /**
+   * @param {Node} leftContent - Should have a clean() method to support pooling
+   * @param {Node} rightContent - Should have a clean() method to support pooling
+   * @param {Property.<Color>} baseColorProperty
+   */
+  constructor( leftContent, rightContent, baseColorProperty ) {
 
-  // @public {string}
-  this.accessibleText = StringUtils.fillIn( productTimesPatternString, {
-    left: leftContent.accessibleText,
-    right: rightContent.accessibleText
-  } );
-
-  // @private {Node|null}
-  this.leftContent = leftContent;
-  this.rightContent = rightContent;
-
-  if ( !this.initialized ) {
-    this.initialized = true;
+    super( {
+      spacing: AreaModelCommonConstants.CALCULATION_X_PADDING,
+      align: 'bottom'
+    } );
 
     // @private {Text} - Persistent (since it's declared in the constructor instead of the initialize function, this
     // will persist for the life of this node).
@@ -59,29 +45,46 @@ function MultiplyX( leftContent, rightContent, baseColorProperty ) {
       innerContent: '&times;'
     } );
 
-    HBox.call( this, {
-      children: [ this.timesNode ],
-      spacing: AreaModelCommonConstants.CALCULATION_X_PADDING,
-      align: 'bottom'
-    } );
+    this.children = [ this.timesNode ];
+
+    this.initialize( leftContent, rightContent, baseColorProperty );
   }
 
-  assert && assert( this.children.length === 1, 'Should only have the timesNode' );
+  /**
+   * @public
+   *
+   * @param {Node} leftContent - Should have a clean() method to support pooling
+   * @param {Node} rightContent - Should have a clean() method to support pooling
+   * @param {Property.<Color>} baseColorProperty
+   */
+  initialize( leftContent, rightContent, baseColorProperty ) {
+    assert && assert( leftContent instanceof Node );
+    assert && assert( rightContent instanceof Node );
+    assert && assert( baseColorProperty instanceof Property );
 
-  this.insertChild( 0, leftContent );
-  this.addChild( rightContent );
+    // @public {string}
+    this.accessibleText = StringUtils.fillIn( productTimesPatternString, {
+      left: leftContent.accessibleText,
+      right: rightContent.accessibleText
+    } );
 
-  this.timesNode.fill = baseColorProperty;
-}
+    // @private {Node|null}
+    this.leftContent = leftContent;
+    this.rightContent = rightContent;
 
-areaModelCommon.register( 'MultiplyX', MultiplyX );
+    assert && assert( this.children.length === 1, 'Should only have the timesNode' );
 
-inherit( HBox, MultiplyX, {
+    this.insertChild( 0, leftContent );
+    this.addChild( rightContent );
+
+    this.timesNode.fill = baseColorProperty;
+  }
+
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     assert && assert( this.children.length === 3, 'Should have two content nodes and our timesNode' );
 
     // Remove our content
@@ -96,8 +99,12 @@ inherit( HBox, MultiplyX, {
 
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( MultiplyX );
+areaModelCommon.register( 'MultiplyX', MultiplyX );
+
+Poolable.mixInto( MultiplyX, {
+  initialize: MultiplyX.prototype.initialize
+} );
 
 export default MultiplyX;

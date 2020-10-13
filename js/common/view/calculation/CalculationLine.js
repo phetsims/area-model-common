@@ -7,7 +7,6 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import OrientationPair from '../../model/OrientationPair.js';
@@ -21,70 +20,55 @@ import Plus from './Plus.js';
 import QuestionMark from './QuestionMark.js';
 import TermText from './TermText.js';
 
-/**
- * @constructor
- * @extends {Object}
- *
- * @param {number} index
- * @param {OrientationPair.<Property.<Color>>} colorProperties
- * @param {Property.<number|null>} activeIndexProperty
- * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
- * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
- */
-function CalculationLine( index, colorProperties, activeIndexProperty, allowExponents, isProportional ) {
-  assert && assert( typeof index === 'number' );
+class CalculationLine {
+  /**
+   * @param {number} index
+   * @param {OrientationPair.<Property.<Color>>} colorProperties
+   * @param {Property.<number|null>} activeIndexProperty
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+   * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
+   */
+  constructor( index, colorProperties, activeIndexProperty, allowExponents, isProportional ) {
+    assert && assert( typeof index === 'number' );
 
-  const self = this;
+    // @public {Node|null} - The {Node}, if provided, should have a `node.clean()` method to release references
+    // (usually freeing it to a pool) and a `node.accessibleText` {string} representing the description of the line.
+    // Filled in later, should be non-null outside CalculationLine usage.
+    this.node = null;
 
-  // @public {Node|null} - The {Node}, if provided, should have a `node.clean()` method to release references
-  // (usually freeing it to a pool) and a `node.accessibleText` {string} representing the description of the line.
-  // Filled in later, should be non-null outside CalculationLine usage.
-  this.node = null;
+    // @public {number}
+    this.index = index;
 
-  // @public {number}
-  this.index = index;
+    // @public {CalculationLine|null} - Linked-list support for easy traversal through lines
+    this.previousLine = null;
+    this.nextLine = null;
 
-  // @public {CalculationLine|null} - Linked-list support for easy traversal through lines
-  this.previousLine = null;
-  this.nextLine = null;
+    // @private {boolean}
+    this.allowExponents = allowExponents;
+    this.isProportional = isProportional;
 
-  // @private {boolean}
-  this.allowExponents = allowExponents;
-  this.isProportional = isProportional;
+    // @private {Property.<boolean>}
+    this.isActiveProperty = new DerivedProperty( [ activeIndexProperty ], activeIndex => activeIndex === null || activeIndex === index );
 
-  // @private {Property.<boolean>}
-  this.isActiveProperty = new DerivedProperty( [ activeIndexProperty ], function( activeIndex ) {
-    return activeIndex === null || activeIndex === index;
-  } );
-
-  // @private {Property.<Color>}
-  this.baseColorProperty = new DerivedProperty( [
-    this.isActiveProperty,
-    AreaModelCommonColorProfile.calculationActiveProperty,
-    AreaModelCommonColorProfile.calculationInactiveProperty
-  ], function( isActive, activeColor, inactiveColor ) {
-    return isActive ? activeColor : inactiveColor;
-  }, {
-    useDeepEquality: true
-  } );
-
-  // @private {OrientationPair.<Property.<Color>>}
-  this.orientedColorProperties = OrientationPair.create( function( orientation ) {
-    return new DerivedProperty( [
-      self.isActiveProperty,
-      colorProperties.get( orientation ),
+    // @private {Property.<Color>}
+    this.baseColorProperty = new DerivedProperty( [
+      this.isActiveProperty,
+      AreaModelCommonColorProfile.calculationActiveProperty,
       AreaModelCommonColorProfile.calculationInactiveProperty
-    ], function( isActive, activeColor, inactiveColor ) {
-      return isActive ? activeColor : inactiveColor;
-    }, {
+    ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
       useDeepEquality: true
     } );
-  } );
-}
 
-areaModelCommon.register( 'CalculationLine', CalculationLine );
+    // @private {OrientationPair.<Property.<Color>>}
+    this.orientedColorProperties = OrientationPair.create( orientation => new DerivedProperty( [
+        this.isActiveProperty,
+        colorProperties.get( orientation ),
+        AreaModelCommonColorProfile.calculationInactiveProperty
+      ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
+        useDeepEquality: true
+      } ) );
+  }
 
-inherit( Object, CalculationLine, {
   /**
    * Creates a TermText with the baseColor.
    * @public
@@ -93,11 +77,11 @@ inherit( Object, CalculationLine, {
    * @param {boolean} excludeSign
    * @returns {TermText}
    */
-  baseTermText: function( term, excludeSign ) {
+  baseTermText( term, excludeSign ) {
     assert && assert( typeof excludeSign === 'boolean' );
 
     return TermText.createFromPool( term, this.baseColorProperty, excludeSign );
-  },
+  }
 
   /**
    * Creates a TermText with the color of a specific orientation.
@@ -107,9 +91,9 @@ inherit( Object, CalculationLine, {
    * @param {TermList|Term} term
    * @returns {TermText}
    */
-  orientedTermText: function( orientation, term ) {
+  orientedTermText( orientation, term ) {
     return TermText.createFromPool( term, this.orientedColorProperties.get( orientation ), false );
-  },
+  }
 
   /**
    * Creates a PlaceholderBox with the color of a specific orientation.
@@ -118,9 +102,9 @@ inherit( Object, CalculationLine, {
    * @param {Orientation} orientation
    * @returns {PlaceholderBox}
    */
-  orientedPlaceholderBox: function( orientation ) {
+  orientedPlaceholderBox( orientation ) {
     return PlaceholderBox.createFromPool( this.orientedColorProperties.get( orientation ), this.allowExponents );
-  },
+  }
 
   /**
    * Creates a MultiplyX with the specified content.
@@ -130,9 +114,9 @@ inherit( Object, CalculationLine, {
    * @param {Node} rightContent
    * @returns {MultiplyX}
    */
-  multiplyX: function( leftContent, rightContent ) {
+  multiplyX( leftContent, rightContent ) {
     return MultiplyX.createFromPool( leftContent, rightContent, this.baseColorProperty );
-  },
+  }
 
   /**
    * Creates a Parentheses with the specified content.
@@ -141,9 +125,9 @@ inherit( Object, CalculationLine, {
    * @param {Node} content
    * @returns {Parentheses}
    */
-  parentheses: function( content ) {
+  parentheses( content ) {
     return Parentheses.createFromPool( content, this.baseColorProperty );
-  },
+  }
 
   /**
    * Creates a QuestionMark
@@ -151,9 +135,9 @@ inherit( Object, CalculationLine, {
    *
    * @returns {QuestionMark}
    */
-  questionMark: function() {
+  questionMark() {
     return QuestionMark.createFromPool( this.baseColorProperty );
-  },
+  }
 
   /**
    * Creates a Plus
@@ -161,9 +145,9 @@ inherit( Object, CalculationLine, {
    *
    * @returns {Plus}
    */
-  plus: function() {
+  plus() {
     return Plus.createFromPool( this.baseColorProperty );
-  },
+  }
 
   /**
    * Creates a Minus
@@ -171,9 +155,9 @@ inherit( Object, CalculationLine, {
    *
    * @returns {Minus}
    */
-  minus: function() {
+  minus() {
     return Minus.createFromPool( this.baseColorProperty );
-  },
+  }
 
   /**
    * Creates a calculation group.
@@ -183,9 +167,9 @@ inherit( Object, CalculationLine, {
    * @param {number} spacing
    * @returns {Parentheses}
    */
-  group: function( nodes, spacing ) {
+  group( nodes, spacing ) {
     return CalculationGroup.createFromPool( nodes, spacing );
-  },
+  }
 
   /**
    * Returns the grouping of all nodes provided, with plusses in-between each node.
@@ -194,13 +178,9 @@ inherit( Object, CalculationLine, {
    * @param {Array.<Node>} nodes
    * @returns {Node}
    */
-  sumGroup: function( nodes ) {
-    const self = this;
-
-    return this.group( _.flatten( nodes.map( function( node, index ) {
-      return index > 0 ? [ self.plus(), node ] : [ node ];
-    } ) ), AreaModelCommonConstants.CALCULATION_OP_PADDING );
-  },
+  sumGroup( nodes ) {
+    return this.group( _.flatten( nodes.map( ( node, index ) => index > 0 ? [ this.plus(), node ] : [ node ] ) ), AreaModelCommonConstants.CALCULATION_OP_PADDING );
+  }
 
   /**
    * Returns a grouping of all (oriented) terms provided, with plusses in-between each term.
@@ -210,13 +190,9 @@ inherit( Object, CalculationLine, {
    * @param {Orientation} orientation
    * @returns {Node}
    */
-  sumOrientedTerms: function( terms, orientation ) {
-    const self = this;
-
-    return this.sumGroup( terms.map( function( term ) {
-      return self.orientedTermText( orientation, term );
-    } ) );
-  },
+  sumOrientedTerms( terms, orientation ) {
+    return this.sumGroup( terms.map( term => this.orientedTermText( orientation, term ) ) );
+  }
 
   /**
    * Returns a grouping of all (non-oriented) terms, with plusses/minuses in-between each term (depending on the sign)
@@ -225,21 +201,19 @@ inherit( Object, CalculationLine, {
    * @param {Array.<Term>} terms
    * @returns {Node}
    */
-  sumOrDifferenceOfTerms: function( terms ) {
-    const self = this;
-
-    return this.group( _.flatten( terms.map( function( term, index ) {
+  sumOrDifferenceOfTerms( terms ) {
+    return this.group( _.flatten( terms.map( ( term, index ) => {
       const result = [];
 
       if ( index > 0 ) {
-        result.push( term.coefficient >= 0 ? self.plus() : self.minus() );
+        result.push( term.coefficient >= 0 ? this.plus() : this.minus() );
       }
 
-      result.push( self.baseTermText( term, index > 0 ) );
+      result.push( this.baseTermText( term, index > 0 ) );
 
       return result;
     } ) ), AreaModelCommonConstants.CALCULATION_OP_PADDING );
-  },
+  }
 
   /**
    * Returns a grouping of all (oriented) terms provided, with plusses in-between each term (negative grouped in
@@ -249,17 +223,15 @@ inherit( Object, CalculationLine, {
    * @param {Array.<Term>} terms
    * @returns {Node}
    */
-  sumWithNegativeParens: function( terms ) {
-    const self = this;
-
-    return this.sumGroup( terms.map( function( term ) {
-      let text = self.baseTermText( term, false );
+  sumWithNegativeParens( terms ) {
+    return this.sumGroup( terms.map( term => {
+      let text = this.baseTermText( term, false );
       if ( term.coefficient < 0 ) {
-        text = self.parentheses( text );
+        text = this.parentheses( text );
       }
       return text;
     } ) );
-  },
+  }
 
   /**
    * Returns an array with this lines (and any previous/next lines) in the correct order (up to 3 lines).
@@ -267,7 +239,7 @@ inherit( Object, CalculationLine, {
    *
    * @returns {Array.<CalculationLine>}
    */
-  getAdjacentLines: function() {
+  getAdjacentLines() {
     const result = [];
     if ( this.previousLine ) {
       result.push( this.previousLine );
@@ -277,13 +249,13 @@ inherit( Object, CalculationLine, {
       result.push( this.nextLine );
     }
     return result;
-  },
+  }
 
   /**
    * Removes external references.
    * @public
    */
-  dispose: function() {
+  dispose() {
     this.node.clean();
 
     this.orientedColorProperties.horizontal.dispose();
@@ -291,17 +263,20 @@ inherit( Object, CalculationLine, {
     this.baseColorProperty.dispose();
     this.isActiveProperty.dispose();
   }
-}, {
-  // @public {number} - Calculation line indices. Each individual type of line will have an index value in the order
-  // it would show up in the calculation panel. This index is used to determine what the "active" line is (for the
-  // line-by-line view), so that when updating the calculation it can attempt to stay on the same active line.
-  TOTALS_LINE_INDEX: 0,
-  EXPANDED_LINE_INDEX: 1,
-  DISTRIBUTION_LINE_INDEX: 2,
-  MULTIPLIED_LINE_INDEX: 3,
-  ORDERED_LINE_INDEX: 4,
-  MINUSES_LINE_INDEX: 5,
-  SUM_LINE_INDEX: 6
-} );
+
+}
+
+// @public {number} - Calculation line indices. Each individual type of line will have an index value in the order
+// it would show up in the calculation panel. This index is used to determine what the "active" line is (for the
+// line-by-line view), so that when updating the calculation it can attempt to stay on the same active line.
+CalculationLine.TOTALS_LINE_INDEX = 0;
+CalculationLine.EXPANDED_LINE_INDEX = 1;
+CalculationLine.DISTRIBUTION_LINE_INDEX = 2;
+CalculationLine.MULTIPLIED_LINE_INDEX = 3;
+CalculationLine.ORDERED_LINE_INDEX = 4;
+CalculationLine.MINUSES_LINE_INDEX = 5;
+CalculationLine.SUM_LINE_INDEX = 6;
+
+areaModelCommon.register( 'CalculationLine', CalculationLine );
 
 export default CalculationLine;

@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../../areaModelCommon.js';
@@ -18,22 +17,13 @@ import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
 const questionMarkString = areaModelCommonStrings.a11y.questionMark;
 
-/**
- * @constructor
- * @extends {Text}
- *
- * @param {Property.<Color>} baseColorProperty
- */
-function QuestionMark( baseColorProperty ) {
-  assert && assert( baseColorProperty instanceof Property );
+class QuestionMark extends Text {
+  /**
+   * @param {Property.<Color>} baseColorProperty
+   */
+  constructor( baseColorProperty ) {
 
-  if ( !this.initialized ) {
-    this.initialized = true;
-
-    // @public {string}
-    this.accessibleText = questionMarkString;
-
-    Text.call( this, '?', {
+    super( '?', {
       font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
 
       // pdom
@@ -41,25 +31,39 @@ function QuestionMark( baseColorProperty ) {
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: questionMarkString
     } );
+
+    // @public {string}
+    this.accessibleText = questionMarkString;
+
+    this.initialize( baseColorProperty );
   }
 
-  this.fill = baseColorProperty;
-}
+  /**
+   * @public
+   *
+   * @param {Property.<Color>} baseColorProperty
+   */
+  initialize( baseColorProperty ) {
+    assert && assert( baseColorProperty instanceof Property );
 
-areaModelCommon.register( 'QuestionMark', QuestionMark );
+    this.fill = baseColorProperty;
+  }
 
-inherit( Text, QuestionMark, {
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     this.fill = null;
 
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( QuestionMark );
+areaModelCommon.register( 'QuestionMark', QuestionMark );
+
+Poolable.mixInto( QuestionMark, {
+  initialize: QuestionMark.prototype.initialize
+} );
 
 export default QuestionMark;

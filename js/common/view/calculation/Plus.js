@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
@@ -19,22 +18,14 @@ import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
 const sumPlusString = areaModelCommonStrings.a11y.sumPlus;
 
-/**
- * @constructor
- * @extends {Text}
- *
- * @param {Property.<Color>} baseColorProperty
- */
-function Plus( baseColorProperty ) {
-  assert && assert( baseColorProperty instanceof Property );
-
-  if ( !this.initialized ) {
-    this.initialized = true;
-
-    // @public {string}
-    this.accessibleText = sumPlusString;
-
-    Text.call( this, MathSymbols.PLUS, {
+class Plus extends Text {
+  /**
+   * @extends {Text}
+   *
+   * @param {Property.<Color>} baseColorProperty
+   */
+  constructor( baseColorProperty ) {
+    super( MathSymbols.PLUS, {
       font: AreaModelCommonConstants.CALCULATION_PAREN_FONT,
 
       // pdom
@@ -42,25 +33,39 @@ function Plus( baseColorProperty ) {
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&plus;'
     } );
+
+    // @public {string}
+    this.accessibleText = sumPlusString;
+
+    this.initialize( baseColorProperty );
   }
 
-  this.fill = baseColorProperty;
-}
+  /**
+   * @public
+   *
+   * @param {Property.<Color>} baseColorProperty
+   */
+  initialize( baseColorProperty ) {
+    assert && assert( baseColorProperty instanceof Property );
 
-areaModelCommon.register( 'Plus', Plus );
+    this.fill = baseColorProperty;
+  }
 
-inherit( Text, Plus, {
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     this.fill = null;
 
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( Plus );
+areaModelCommon.register( 'Plus', Plus );
+
+Poolable.mixInto( Plus, {
+  initialize: Plus.prototype.initialize
+} );
 
 export default Plus;

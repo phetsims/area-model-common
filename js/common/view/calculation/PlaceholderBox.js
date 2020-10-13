@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../../areaModelCommon.js';
@@ -17,24 +16,14 @@ import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
 
 const placeholderString = areaModelCommonStrings.a11y.placeholder;
 
-/**
- * @constructor
- * @extends {Rectangle}
- *
- * @param {Property.<Color>} colorProperty
- * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
- */
-function PlaceholderBox( colorProperty, allowExponents ) {
-  assert && assert( colorProperty instanceof Property );
-  assert && assert( typeof allowExponents === 'boolean' );
+class PlaceholderBox extends Rectangle {
+  /**
+   * @param {Property.<Color>} colorProperty
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+   */
+  constructor( colorProperty, allowExponents ) {
 
-  if ( !this.initialized ) {
-    this.initialized = true;
-
-    // @public {string}
-    this.accessibleText = placeholderString;
-
-    Rectangle.call( this, 0, 0, 16, 16, {
+    super( 0, 0, 16, 16, {
       lineWidth: 0.7,
 
       // pdom
@@ -42,25 +31,41 @@ function PlaceholderBox( colorProperty, allowExponents ) {
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: placeholderString
     } );
+
+    // @public {string}
+    this.accessibleText = placeholderString;
+
+    this.initialize( colorProperty, allowExponents );
   }
 
-  this.stroke = colorProperty;
-  this.localBounds = this.selfBounds.dilatedX( allowExponents ? 2 : 0 );
-}
+  /**
+   * @public
+   *
+   * @param {Property.<Color>} colorProperty
+   * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
+   */
+  initialize( colorProperty, allowExponents ) {
+    assert && assert( colorProperty instanceof Property );
+    assert && assert( typeof allowExponents === 'boolean' );
 
-areaModelCommon.register( 'PlaceholderBox', PlaceholderBox );
+    this.stroke = colorProperty;
+    this.localBounds = this.selfBounds.dilatedX( allowExponents ? 2 : 0 );
+  }
 
-inherit( Rectangle, PlaceholderBox, {
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     this.stroke = null;
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( PlaceholderBox );
+areaModelCommon.register( 'PlaceholderBox', PlaceholderBox );
+
+Poolable.mixInto( PlaceholderBox, {
+  initialize: PlaceholderBox.prototype.initialize
+} );
 
 export default PlaceholderBox;

@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import RichText from '../../../../../scenery/js/nodes/RichText.js';
 import areaModelCommon from '../../../areaModelCommon.js';
@@ -17,56 +16,63 @@ import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import Term from '../../model/Term.js';
 import TermList from '../../model/TermList.js';
 
-/**
- * @constructor
- * @extends {RichText}
- *
- * @param {TermList|Term} term
- * @param {Property.<Color>} colorProperty
- * @param {boolean} excludeSign
- */
-function TermText( term, colorProperty, excludeSign ) {
-  assert && assert( term instanceof Term || term instanceof TermList );
-  assert && assert( colorProperty instanceof Property );
-  assert && assert( typeof excludeSign === 'boolean' || excludeSign === undefined );
-
-  const text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
-
-  // @public {string}
-  this.accessibleText = text;
-
-  if ( !this.initialized ) {
-    this.initialized = true;
-
-    RichText.call( this, ' ', {
+class TermText extends RichText {
+  /**
+   * @param {TermList|Term} term
+   * @param {Property.<Color>} colorProperty
+   * @param {boolean} excludeSign
+   */
+  constructor( term, colorProperty, excludeSign ) {
+    super( ' ', {
       font: AreaModelCommonConstants.CALCULATION_TERM_FONT,
 
       // pdom
       tagName: 'mn',
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
+
+    this.initialize( term, colorProperty, excludeSign );
+
   }
 
-  this.mutate( {
-    text: text,
-    fill: colorProperty,
-    innerContent: text
-  } );
-}
+  /**
+   * @public
+   *
+   * @param {TermList|Term} term
+   * @param {Property.<Color>} colorProperty
+   * @param {boolean} excludeSign
+   */
+  initialize( term, colorProperty, excludeSign ) {
+    assert && assert( term instanceof Term || term instanceof TermList );
+    assert && assert( colorProperty instanceof Property );
+    assert && assert( typeof excludeSign === 'boolean' || excludeSign === undefined );
 
-areaModelCommon.register( 'TermText', TermText );
+    const text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );
 
-inherit( RichText, TermText, {
+    // @public {string}
+    this.accessibleText = text;
+
+    this.mutate( {
+      text: text,
+      fill: colorProperty,
+      innerContent: text
+    } );
+  }
+
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     this.fill = null;
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( TermText );
+areaModelCommon.register( 'TermText', TermText );
+
+Poolable.mixInto( TermText, {
+  initialize: TermText.prototype.initialize
+} );
 
 export default TermText;

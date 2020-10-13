@@ -9,7 +9,6 @@
  */
 
 import Property from '../../../../../axon/js/Property.js';
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
@@ -21,27 +20,21 @@ import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
 const quantityPatternString = areaModelCommonStrings.a11y.quantityPattern;
 
-/**
- * @constructor
- * @extends {HBox}
- *
- * @param {Node} content - Should have a clean() method to support pooling
- * @param {Property.<Color>} baseColorProperty
- */
-function Parentheses( content, baseColorProperty ) {
-  assert && assert( content instanceof Node );
-  assert && assert( baseColorProperty instanceof Property );
+class Parentheses extends HBox {
+  /**
+   * @param {Node} content - Should have a clean() method to support pooling
+   * @param {Property.<Color>} baseColorProperty
+   */
+  constructor( content, baseColorProperty ) {
 
-  // @public {string}
-  this.accessibleText = StringUtils.fillIn( quantityPatternString, {
-    content: content.accessibleText
-  } );
+    super( {
+      spacing: AreaModelCommonConstants.CALCULATION_PAREN_PADDING,
 
-  // @private {Node|null}
-  this.content = content;
-
-  if ( !this.initialized ) {
-    this.initialized = true;
+      // pdom
+      align: 'bottom',
+      tagName: 'mrow',
+      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
+    } );
 
     // @private {Text} - Persistent (since these are declared in the constructor instead of the initialize function,
     // they will persist for the life of this node).
@@ -70,33 +63,42 @@ function Parentheses( content, baseColorProperty ) {
       namespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
-    HBox.call( this, {
-      children: [ this.leftParen, this.rightParen ],
-      spacing: AreaModelCommonConstants.CALCULATION_PAREN_PADDING,
+    this.children = [ this.leftParen, this.rightParen ];
 
-      // pdom
-      align: 'bottom',
-      tagName: 'mrow',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
-    } );
+    this.initialize( content, baseColorProperty );
   }
 
-  assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
+  /**
+   * @public
+   *
+   * @param {Node} content - Should have a clean() method to support pooling
+   * @param {Property.<Color>} baseColorProperty
+   */
+  initialize( content, baseColorProperty ) {
+    assert && assert( content instanceof Node );
+    assert && assert( baseColorProperty instanceof Property );
 
-  this.insertChild( 1, content );
+    assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
 
-  this.leftParen.fill = baseColorProperty;
-  this.rightParen.fill = baseColorProperty;
-}
+    // @public {string}
+    this.accessibleText = StringUtils.fillIn( quantityPatternString, {
+      content: content.accessibleText
+    } );
 
-areaModelCommon.register( 'Parentheses', Parentheses );
+    // @private {Node|null}
+    this.content = content;
 
-inherit( HBox, Parentheses, {
+    this.insertChild( 1, content );
+
+    this.leftParen.fill = baseColorProperty;
+    this.rightParen.fill = baseColorProperty;
+  }
+
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     assert && assert( this.children.length === 3, 'Should only have a left and right paren AND content' );
 
     // Remove our content
@@ -109,8 +111,12 @@ inherit( HBox, Parentheses, {
 
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( Parentheses );
+areaModelCommon.register( 'Parentheses', Parentheses );
+
+Poolable.mixInto( Parentheses, {
+  initialize: Parentheses.prototype.initialize
+} );
 
 export default Parentheses;

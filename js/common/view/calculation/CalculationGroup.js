@@ -8,67 +8,70 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import HBox from '../../../../../scenery/js/nodes/HBox.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 
-/**
- * @constructor
- * @extends {HBox}
- *
- * @param {Array.<Node>} nodes - Each should have a clean() method to support pooling
- * @param {number} spacing
- */
-function CalculationGroup( nodes, spacing ) {
-  assert && assert( Array.isArray( nodes ) );
-  assert && assert( typeof spacing === 'number' );
+class CalculationGroup extends HBox {
+  /**
+   * @param {Array.<Node>} nodes - Each should have a clean() method to support pooling
+   * @param {number} spacing
+   */
+  constructor( nodes, spacing ) {
 
-  // @public {string}
-  this.accessibleText = nodes.map( function( node ) {
-    return node.accessibleText;
-  } ).join( ' ' );
-
-  // @private {Array.<Node>|null}
-  this.nodes = nodes;
-
-  if ( !this.initialized ) {
-    this.initialized = true;
-
-    HBox.call( this, {
+    super( {
       align: 'bottom',
 
       // pdom
       accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
+
+    this.initialize( nodes, spacing );
   }
 
-  this.mutate( {
-    tagName: nodes.length > 1 ? 'mrow' : null,
-    spacing: spacing,
-    children: nodes
-  } );
-}
+  /**
+   * @public
+   *
+   * @param {Array.<Node>} nodes - Each should have a clean() method to support pooling
+   * @param {number} spacing
+   */
+  initialize( nodes, spacing ) {
+    assert && assert( Array.isArray( nodes ) );
+    assert && assert( typeof spacing === 'number' );
 
-areaModelCommon.register( 'CalculationGroup', CalculationGroup );
+    // @public {string}
+    this.accessibleText = nodes.map( node => node.accessibleText ).join( ' ' );
 
-inherit( HBox, CalculationGroup, {
+    // @private {Array.<Node>|null}
+    this.nodes = nodes;
+
+    this.mutate( {
+      tagName: nodes.length > 1 ? 'mrow' : null,
+      spacing: spacing,
+      children: nodes
+    } );
+  }
+
   /**
    * Clears the state of this node (releasing references) so it can be freed to the pool (and potentially GC'ed).
    * @public
    */
-  clean: function() {
+  clean() {
     // Remove our content
     this.removeAllChildren();
-    this.nodes.forEach( function( node ) {
+    this.nodes.forEach( node => {
       node.clean();
     } );
     this.nodes = null;
 
     this.freeToPool();
   }
-} );
+}
 
-Poolable.mixInto( CalculationGroup );
+areaModelCommon.register( 'CalculationGroup', CalculationGroup );
+
+Poolable.mixInto( CalculationGroup, {
+  initialize: CalculationGroup.prototype.initialize
+} );
 
 export default CalculationGroup;
