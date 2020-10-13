@@ -21,7 +21,6 @@ const areaGridSizeString = areaModelCommonStrings.a11y.areaGridSize;
 const sceneSelectionPatternString = areaModelCommonStrings.a11y.sceneSelectionPattern;
 
 class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
-
   /**
    * @param {ProportionalAreaModel} model
    * @param {Object} [nodeOptions]

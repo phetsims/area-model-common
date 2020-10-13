@@ -118,7 +118,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
     } );
     this.addChild( checkboxContainer );
 
-    model.currentAreaProperty.link( function( area ) {
+    model.currentAreaProperty.link( area => {
       checkboxContainer.removeAllChildren();
 
       // Don't show the grid/tiles checkboxes if counting is enabled
@@ -142,7 +142,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
       this.calculationSelectionPanel,
       this.partitionSelectionPanel,
       this.calculationNode
-    ].filter( function( node ) { return node !== undefined; } ); // this.partitionSelectionPanel may not exist
+    ].filter( node => node !== undefined ); // this.partitionSelectionPanel may not exist
 
     // "Control Panel" (a11y)
     this.pdomControlAreaNode.accessibleOrder = [
@@ -163,16 +163,12 @@ class ProportionalAreaScreenView extends AreaScreenView {
    */
   getSelectionNodesProperty( partitionSelectionPanel ) {
     // Use a Property here so we don't recreate when we don't have to (just on area changes)
-    const hasPartitionSelectionProperty = new DerivedProperty( [ this.model.currentAreaProperty ], function( area ) {
-      return area.partitionLineChoice === PartitionLineChoice.ONE;
-    } );
+    const hasPartitionSelectionProperty = new DerivedProperty( [ this.model.currentAreaProperty ], area => area.partitionLineChoice === PartitionLineChoice.ONE );
 
     // Conditionally include our partition selection on top of what else is included
     return new DerivedProperty(
       [ super.getSelectionNodesProperty(), hasPartitionSelectionProperty ],
-      function( selectionNodes, hasPartitionSelection ) {
-        return hasPartitionSelection ? selectionNodes.concat( [ partitionSelectionPanel ] ) : selectionNodes;
-      } );
+      ( selectionNodes, hasPartitionSelection ) => hasPartitionSelection ? selectionNodes.concat( [ partitionSelectionPanel ] ) : selectionNodes );
   }
 
   /**

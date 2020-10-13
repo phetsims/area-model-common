@@ -27,7 +27,6 @@ const partitionSelectionDescriptionString = areaModelCommonStrings.a11y.partitio
 const verticalPartitionString = areaModelCommonStrings.a11y.verticalPartition;
 
 class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
-
   /**
    * @param {Property.<AreaCalculationChoice>} currentAreaOrientationProperty
    * @param {AlignGroup} selectionButtonAlignGroup
@@ -88,9 +87,7 @@ function createPartitionOrientationIcon( orientation, currentAreaOrientationProp
           AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
           AreaModelCommonColorProfile.partitionLineIconHandleProperty
         ],
-        function( currentOrientation, widthColor, handleColor ) {
-          return currentOrientation === orientation ? widthColor : handleColor;
-        } ),
+        ( currentOrientation, widthColor, handleColor ) => currentOrientation === orientation ? widthColor : handleColor ),
       scale: 0.5,
       translation: p2
     } )

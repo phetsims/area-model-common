@@ -9,7 +9,6 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
@@ -19,51 +18,44 @@ import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorP
 // constants
 const scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
 
-/**
- * @constructor
- * @extends {Node}
- *
- * @param {OrientationPair.<Property.<number>>} activeTotalProperties
- * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
- * @param {Property.<boolean>} countingVisibleProperty
- */
-function CountingAreaNode( activeTotalProperties, modelViewTransformProperty, countingVisibleProperty ) {
+class CountingAreaNode extends Node {
+  /**
+   * @param {OrientationPair.<Property.<number>>} activeTotalProperties
+   * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
+   * @param {Property.<boolean>} countingVisibleProperty
+   */
+  constructor( activeTotalProperties, modelViewTransformProperty, countingVisibleProperty ) {
 
-  Node.call( this );
+    super();
 
-  const self = this;
+    // @private {OrientationPair.<Property.<number>>}
+    this.activeTotalProperties = activeTotalProperties;
 
-  // @private {OrientationPair.<Property.<number>>}
-  this.activeTotalProperties = activeTotalProperties;
+    // @private {Property.<ModelViewTransform2>}
+    this.modelViewTransformProperty = modelViewTransformProperty;
 
-  // @private {Property.<ModelViewTransform2>}
-  this.modelViewTransformProperty = modelViewTransformProperty;
+    // @private {Property.<boolean>}
+    this.countingVisibleProperty = countingVisibleProperty;
 
-  // @private {Property.<boolean>}
-  this.countingVisibleProperty = countingVisibleProperty;
+    // @private {Array.<Text>} - We reuse these to avoid GC/performance issues
+    this.textNodes = [];
 
-  // @private {Array.<Text>} - We reuse these to avoid GC/performance issues
-  this.textNodes = [];
+    // @private {boolean} - Whether we should be redrawn
+    this.dirty = true;
 
-  // @private {boolean} - Whether we should be redrawn
-  this.dirty = true;
+    // Things we depend on
+    const invalidate = () => {
+      this.dirty = true;
+    };
 
-  // Things we depend on
-  function invalidate() {
-    self.dirty = true;
+    countingVisibleProperty.link( invalidate );
+    activeTotalProperties.horizontal.link( invalidate );
+    activeTotalProperties.vertical.link( invalidate );
+    modelViewTransformProperty.link( invalidate );
+
+    countingVisibleProperty.linkAttribute( this, 'visible' );
   }
 
-  countingVisibleProperty.link( invalidate );
-  activeTotalProperties.horizontal.link( invalidate );
-  activeTotalProperties.vertical.link( invalidate );
-  modelViewTransformProperty.link( invalidate );
-
-  countingVisibleProperty.linkAttribute( this, 'visible' );
-}
-
-areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
-
-inherit( Node, CountingAreaNode, {
   /**
    * Creates a reusable text node with a given number.
    * @private
@@ -71,7 +63,7 @@ inherit( Node, CountingAreaNode, {
    * @param {number} number
    * @returns {Text}
    */
-  createTextNode: function( number ) {
+  createTextNode( number ) {
     const text = new Text( number, {
       font: AreaModelCommonConstants.COUNTING_FONT,
       fill: AreaModelCommonColorProfile.countingLabelProperty
@@ -79,7 +71,7 @@ inherit( Node, CountingAreaNode, {
     this.textNodes.push( text );
     this.addChild( text );
     return text;
-  },
+  }
 
   /**
    * Returns the reusable text node with a given number.
@@ -88,20 +80,20 @@ inherit( Node, CountingAreaNode, {
    * @param {number} number
    * @returns {Text}
    */
-  getTextNode: function( number ) {
+  getTextNode( number ) {
     let text = this.textNodes[ number - 1 ];
     if ( !text ) {
       text = this.createTextNode( number );
     }
     return text;
-  },
+  }
 
   /**
    * Updates the view for tiled areas (since it is somewhat expensive to re-draw, and we don't want it being done
    * multiple times per frame.
    * @private
    */
-  update: function() {
+  update() {
     const modelViewTransform = this.modelViewTransformProperty.value;
 
     // Ignore updates if we are not dirty
@@ -137,6 +129,8 @@ inherit( Node, CountingAreaNode, {
       this.textNodes[ cellNumber - 1 ].visible = false;
     }
   }
-} );
+}
+
+areaModelCommon.register( 'CountingAreaNode', CountingAreaNode );
 
 export default CountingAreaNode;

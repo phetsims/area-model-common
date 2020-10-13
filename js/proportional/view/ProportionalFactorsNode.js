@@ -14,7 +14,6 @@ import Property from '../../../../axon/js/Property.js';
 import validate from '../../../../axon/js/validate.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -34,84 +33,77 @@ const horizontalPickerDescriptionString = areaModelCommonStrings.a11y.horizontal
 const verticalPickerString = areaModelCommonStrings.a11y.verticalPicker;
 const verticalPickerDescriptionString = areaModelCommonStrings.a11y.verticalPickerDescription;
 
-/**
- * @constructor
- * @extends {HBox}
- *
- * @param {Property.<Area>} currentAreaProperty
- * @param {OrientationPair.<Property.<number>>} - activeTotalProperties
- * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
- */
-function ProportionalFactorsNode( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
-  Node.call( this );
+class ProportionalFactorsNode extends Node {
+  /**
+   * @param {Property.<Area>} currentAreaProperty
+   * @param {OrientationPair.<Property.<number>>} - activeTotalProperties
+   * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
+   */
+  constructor( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
+    super();
 
-  const self = this;
-
-  if ( AreaModelCommonQueryParameters.rawMath ) {
-    self.tagName = 'div';
-    Property.multilink( activeTotalProperties.values, function( horizontalTotal, verticalTotal ) {
-      self.innerContent = StringUtils.fillIn( factorsTimesPatternString, {
-        width: horizontalTotal,
-        height: verticalTotal
+    if ( AreaModelCommonQueryParameters.rawMath ) {
+      this.tagName = 'div';
+      Property.multilink( activeTotalProperties.values, ( horizontalTotal, verticalTotal ) => {
+        this.innerContent = StringUtils.fillIn( factorsTimesPatternString, {
+          width: horizontalTotal,
+          height: verticalTotal
+        } );
       } );
-    } );
-  }
-  else {
-    const ns = 'http://www.w3.org/1998/Math/MathML';
-    const verticalNode = new Node( {
+    }
+    else {
+      const ns = 'http://www.w3.org/1998/Math/MathML';
+      const verticalNode = new Node( {
 
-      // pdom
-      tagName: 'mn',
-      accessibleNamespace: ns
-    } );
-    activeTotalProperties.vertical.link( function( verticalTotal ) {
-      verticalNode.innerContent = '' + verticalTotal;
-    } );
-    const horizontalNode = new Node( {
+        // pdom
+        tagName: 'mn',
+        accessibleNamespace: ns
+      } );
+      activeTotalProperties.vertical.link( verticalTotal => {
+        verticalNode.innerContent = '' + verticalTotal;
+      } );
+      const horizontalNode = new Node( {
 
-      // pdom
-      tagName: 'mn',
-      accessibleNamespace: ns
-    } );
-    activeTotalProperties.horizontal.link( function( horizontalTotal ) {
-      horizontalNode.innerContent = '' + horizontalTotal;
-    } );
+        // pdom
+        tagName: 'mn',
+        accessibleNamespace: ns
+      } );
+      activeTotalProperties.horizontal.link( horizontalTotal => {
+        horizontalNode.innerContent = '' + horizontalTotal;
+      } );
 
-    const mathNode = new Node( {
-      tagName: 'math',
-      accessibleNamespace: ns,
+      const mathNode = new Node( {
+        tagName: 'math',
+        accessibleNamespace: ns,
+        children: [
+          new Node( {
+            tagName: 'mrow',
+            accessibleNamespace: ns,
+            children: [
+              verticalNode,
+              new Node( {
+                tagName: 'mo',
+                accessibleNamespace: ns,
+                innerContent: '&times;'
+              } ),
+              horizontalNode
+            ]
+          } )
+        ]
+      } );
+      this.addChild( mathNode );
+    }
+
+    this.addChild( new HBox( {
       children: [
-        new Node( {
-          tagName: 'mrow',
-          accessibleNamespace: ns,
-          children: [
-            verticalNode,
-            new Node( {
-              tagName: 'mo',
-              accessibleNamespace: ns,
-              innerContent: '&times;'
-            } ),
-            horizontalNode
-          ]
-        } )
-      ]
-    } );
-    this.addChild( mathNode );
+        this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
+        new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ),
+        this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
+      ],
+      spacing: 10
+    } ) );
   }
 
-  this.addChild( new HBox( {
-    children: [
-      this.createPicker( Orientation.VERTICAL, currentAreaProperty, decimalPlaces ),
-      new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } ),
-      this.createPicker( Orientation.HORIZONTAL, currentAreaProperty, decimalPlaces )
-    ],
-    spacing: 10
-  } ) );
-}
-
-areaModelCommon.register( 'ProportionalFactorsNode', ProportionalFactorsNode );
-
-inherit( Node, ProportionalFactorsNode, {
   /**
    * Creates a picker that adjusts the specified orientation's total size.
    * @private
@@ -120,13 +112,11 @@ inherit( Node, ProportionalFactorsNode, {
    * @param {Property.<Area>} currentAreaProperty
    * @param {number} decimalPlaces
    */
-  createPicker: function( orientation, currentAreaProperty, decimalPlaces ) {
+  createPicker( orientation, currentAreaProperty, decimalPlaces ) {
     validate( orientation, { validValues: Orientation.VALUES } );
 
     // {Property.<Property<Polynomial|null>>}
-    const currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
-      return area.activeTotalProperties.get( orientation );
-    } );
+    const currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], area => area.activeTotalProperties.get( orientation ) );
 
     // {Property.<Polynomial|null>}
     const bidirectionalProperty = new DynamicProperty( currentTotalProperty, {
@@ -134,20 +124,14 @@ inherit( Node, ProportionalFactorsNode, {
     } );
 
     // {Property.<Range>}
-    const rangeProperty = new DerivedProperty( [ currentAreaProperty ], function( area ) {
-      return new Range( area.minimumSize, area.maximumSize );
-    } );
+    const rangeProperty = new DerivedProperty( [ currentAreaProperty ], area => new Range( area.minimumSize, area.maximumSize ) );
 
     return new NumberPicker( bidirectionalProperty, rangeProperty, {
-      incrementFunction: function( value ) {
-        return Utils.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces );
-      },
-      decrementFunction: function( value ) {
-        return Utils.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces );
-      },
+      incrementFunction: value => Utils.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces ),
+      decrementFunction: value => Utils.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces ),
       decimalPlaces: decimalPlaces,
       scale: 1.5,
-      formatValue: function( value ) {
+      formatValue: value => {
         // Epsilon chosen to avoid round-off errors while not "rounding" any values in the decimals sims improperly.
         if ( Utils.equalsEpsilon( value, Utils.roundSymmetric( value ), 1e-6 ) ) {
           return Utils.toFixed( value, 0 );
@@ -164,6 +148,8 @@ inherit( Node, ProportionalFactorsNode, {
       a11yMapValue: value => Utils.toFixedNumber( value, decimalPlaces )
     } );
   }
-} );
+}
+
+areaModelCommon.register( 'ProportionalFactorsNode', ProportionalFactorsNode );
 
 export default ProportionalFactorsNode;
