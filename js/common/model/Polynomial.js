@@ -6,49 +6,41 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import Term from './Term.js';
 import TermList from './TermList.js';
 
-/**
- * @constructor
- * @extends {TermList}
- *
- * @param {Array.<Term>} terms
- */
-function Polynomial( terms ) {
+class Polynomial extends TermList {
+  /**
+   * @param {Array.<Term>} terms
+   */
+  constructor( terms ) {
 
-  const combinedTerms = [];
-  const sortedTerms = _.sortBy( terms, function( term ) {
-    return -term.power;
-  } );
+    const combinedTerms = [];
+    const sortedTerms = _.sortBy( terms, term => -term.power );
 
-  while ( sortedTerms.length ) {
-    let coefficient = 0;
-    const power = sortedTerms[ 0 ].power;
+    while ( sortedTerms.length ) {
+      let coefficient = 0;
+      const power = sortedTerms[ 0 ].power;
 
-    while ( sortedTerms.length && sortedTerms[ 0 ].power === power ) {
-      coefficient += sortedTerms[ 0 ].coefficient;
-      sortedTerms.shift();
+      while ( sortedTerms.length && sortedTerms[ 0 ].power === power ) {
+        coefficient += sortedTerms[ 0 ].coefficient;
+        sortedTerms.shift();
+      }
+
+      if ( coefficient !== 0 ) {
+        combinedTerms.push( new Term( coefficient, power ) );
+      }
     }
 
-    if ( coefficient !== 0 ) {
-      combinedTerms.push( new Term( coefficient, power ) );
+    // If empty, add a zero term
+    if ( combinedTerms.length === 0 ) {
+      combinedTerms.push( new Term( 0 ) );
     }
+
+    super( combinedTerms );
   }
 
-  // If empty, add a zero term
-  if ( combinedTerms.length === 0 ) {
-    combinedTerms.push( new Term( 0 ) );
-  }
-
-  TermList.call( this, combinedTerms );
-}
-
-areaModelCommon.register( 'Polynomial', Polynomial );
-
-inherit( TermList, Polynomial, {
   /**
    * Returns the coefficient in front of the term with the specific power. If it doesn't exist, 0 is used (since it's
    * like an implicit term with a 0-coefficient)
@@ -57,17 +49,15 @@ inherit( TermList, Polynomial, {
    * @param {number} power
    * @returns {number}
    */
-  getCoefficient: function( power ) {
-    const term = _.find( this.terms, function( term ) {
-      return term.power === power;
-    } );
+  getCoefficient( power ) {
+    const term = _.find( this.terms, term => term.power === power );
     if ( term ) {
       return term.coefficient;
     }
     else {
       return 0;
     }
-  },
+  }
 
   /**
    * Returns a new Term with the coefficient and power for the specified coefficient in our polynomial.
@@ -76,9 +66,9 @@ inherit( TermList, Polynomial, {
    * @param {number} power
    * @returns {Term}
    */
-  getTerm: function( power ) {
+  getTerm( power ) {
     return new Term( this.getCoefficient( power ), power );
-  },
+  }
 
   /**
    * Addition of polynomials.
@@ -88,9 +78,9 @@ inherit( TermList, Polynomial, {
    * @param {TermList} termList
    * @returns {Polynomial}
    */
-  plus: function( termList ) {
+  plus( termList ) {
     return new Polynomial( this.terms.concat( termList.terms ) );
-  },
+  }
 
   /**
    * Multiplication of polynomials.
@@ -100,9 +90,11 @@ inherit( TermList, Polynomial, {
    * @param {TermList} termList
    * @returns {Polynomial}
    */
-  times: function( termList ) {
-    return new Polynomial( TermList.prototype.times.call( this, termList ).terms );
+  times( termList ) {
+    return new Polynomial( super.times( termList ).terms );
   }
-} );
+}
+
+areaModelCommon.register( 'Polynomial', Polynomial );
 
 export default Polynomial;

@@ -11,14 +11,14 @@ import Term from './Term.js';
 
 QUnit.module( 'Polynomial' );
 
-QUnit.test( 'Combining factors', function( assert ) {
+QUnit.test( 'Combining factors', assert => {
   assert.ok( new Polynomial( [
     new Term( 2, 1 ),
     new Term( -3, 1 )
   ] ).getTerm( 1 ).equals( new Term( -1, 1 ) ), 'Should be combined into one' );
 } );
 
-QUnit.test( 'Times', function( assert ) {
+QUnit.test( 'Times', assert => {
   assert.ok( new Polynomial( [
     new Term( 4, 1 ),
     new Term( -5, 0 )

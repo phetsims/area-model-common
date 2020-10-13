@@ -7,24 +7,17 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import areaModelCommon from '../../areaModelCommon.js';
 
-/**
- * @constructor
- * @extends {Object}
- *
- * @param {Array.<Term>} terms
- */
-function TermList( terms ) {
+class TermList {
+  /**
+   * @param {Array.<Term>} terms
+   */
+  constructor( terms ) {
 
-  // @public {Array.<Term>}
-  this.terms = terms;
-}
-
-areaModelCommon.register( 'TermList', TermList );
-
-inherit( Object, TermList, {
+    // @public {Array.<Term>}
+    this.terms = terms;
+  }
 
   /**
    * Addition of term lists.
@@ -33,9 +26,9 @@ inherit( Object, TermList, {
    * @param {TermList} termList
    * @returns {TermList}
    */
-  plus: function( termList ) {
+  plus( termList ) {
     return new TermList( this.terms.concat( termList.terms ) );
-  },
+  }
 
   /**
    * Multiplication of term lists.
@@ -44,13 +37,9 @@ inherit( Object, TermList, {
    * @param {TermList} termList
    * @returns {TermList}
    */
-  times: function( termList ) {
-    return new TermList( _.flatten( this.terms.map( function( term ) {
-      return termList.terms.map( function( otherTerm ) {
-        return term.times( otherTerm );
-      } );
-    } ) ) );
-  },
+  times( termList ) {
+    return new TermList( _.flatten( this.terms.map( term => termList.terms.map( otherTerm => term.times( otherTerm ) ) ) ) );
+  }
 
   /**
    * Returns a new TermList, (stable) sorted by the exponent.
@@ -58,11 +47,9 @@ inherit( Object, TermList, {
    *
    * @returns {TermList}
    */
-  orderedByExponent: function() {
-    return new TermList( _.sortBy( this.terms, function( term ) {
-      return -term.power;
-    } ) );
-  },
+  orderedByExponent() {
+    return new TermList( _.sortBy( this.terms, term => -term.power ) );
+  }
 
   /**
    * Returns whether any of the terms have a negative coefficient.
@@ -70,11 +57,9 @@ inherit( Object, TermList, {
    *
    * @returns {boolean}
    */
-  hasNegativeTerm: function() {
-    return _.some( this.terms, function( term ) {
-      return term.coefficient < 0;
-    } );
-  },
+  hasNegativeTerm() {
+    return _.some( this.terms, term => term.coefficient < 0 );
+  }
 
   /**
    * Returns a string suitable for RichText
@@ -82,11 +67,9 @@ inherit( Object, TermList, {
    *
    * @returns {string}
    */
-  toRichString: function() {
-    return this.terms.map( function( term, index ) {
-      return term.toRichString( index > 0 );
-    } ).join( '' );
-  },
+  toRichString() {
+    return this.terms.map( ( term, index ) => term.toRichString( index > 0 ) ).join( '' );
+  }
 
   /**
    * Equality for just whether the terms are the same (so a TermList can be compared to a Polynomial and be equal
@@ -96,7 +79,7 @@ inherit( Object, TermList, {
    *
    * @param {TermList} termList
    */
-  equals: function( termList ) {
+  equals( termList ) {
     if ( this.terms.length !== termList.terms.length ) {
       return false;
     }
@@ -111,6 +94,8 @@ inherit( Object, TermList, {
 
     return true;
   }
-} );
+}
+
+areaModelCommon.register( 'TermList', TermList );
 
 export default TermList;

@@ -8,25 +8,20 @@
 
 import validate from '../../../../axon/js/validate.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
 
-/**
- * @constructor
- * @extends {Object}
- * @private (use enumeration of objects)
- *
- * @param {Dimension2} size
- */
-function GenericLayout( size ) {
-  // @public {Dimension2} - Dimension describes how many partitions are available in each orientation.
-  this.size = size;
-}
+class GenericLayout {
+  /**
+   * @private (use enumeration of objects)
+   *
+   * @param {Dimension2} size
+   */
+  constructor( size ) {
+    // @public {Dimension2} - Dimension describes how many partitions are available in each orientation.
+    this.size = size;
+  }
 
-areaModelCommon.register( 'GenericLayout', GenericLayout );
-
-inherit( Object, GenericLayout, {
   /**
    * Returns the number of partitions for the specific orientation.
    * @public
@@ -34,12 +29,44 @@ inherit( Object, GenericLayout, {
    * @param {Orientation} orientation
    * @returns {number}
    */
-  getPartitionQuantity: function( orientation ) {
+  getPartitionQuantity( orientation ) {
     validate( orientation, { validValues: Orientation.VALUES } );
 
     return orientation === Orientation.HORIZONTAL ? this.size.width : this.size.height;
   }
-} );
+
+  /**
+   * Returns the layout value given a specific width and height.
+   * @public
+   *
+   * @param {number} width
+   * @param {number} height
+   */
+  static fromValues( width, height ) {
+    assert && assert( typeof width === 'number' && isFinite( width ) && width % 1 === 0 && width >= 1 && width <= 3 );
+    assert && assert( typeof height === 'number' && isFinite( height ) && height % 1 === 0 && height >= 1 && height <= 3 );
+
+    return {
+      1: {
+        1: GenericLayout.ONE_BY_ONE,
+        2: GenericLayout.ONE_BY_TWO,
+        3: GenericLayout.ONE_BY_THREE
+      },
+      2: {
+        1: GenericLayout.TWO_BY_ONE,
+        2: GenericLayout.TWO_BY_TWO,
+        3: GenericLayout.TWO_BY_THREE
+      },
+      3: {
+        1: GenericLayout.THREE_BY_ONE,
+        2: GenericLayout.THREE_BY_TWO,
+        3: GenericLayout.THREE_BY_THREE
+      }
+    }[ width ][ height ];
+  }
+}
+
+areaModelCommon.register( 'GenericLayout', GenericLayout );
 
 // @public {GenericLayout}
 GenericLayout.ONE_BY_ONE = new GenericLayout( new Dimension2( 1, 1 ) );
@@ -64,36 +91,6 @@ GenericLayout.VALUES = [
   GenericLayout.THREE_BY_TWO,
   GenericLayout.THREE_BY_THREE
 ];
-
-/**
- * Returns the layout value given a specific width and height.
- * @public
- *
- * @param {number} width
- * @param {number} height
- */
-GenericLayout.fromValues = function( width, height ) {
-  assert && assert( typeof width === 'number' && isFinite( width ) && width % 1 === 0 && width >= 1 && width <= 3 );
-  assert && assert( typeof height === 'number' && isFinite( height ) && height % 1 === 0 && height >= 1 && height <= 3 );
-
-  return {
-    1: {
-      1: GenericLayout.ONE_BY_ONE,
-      2: GenericLayout.ONE_BY_TWO,
-      3: GenericLayout.ONE_BY_THREE
-    },
-    2: {
-      1: GenericLayout.TWO_BY_ONE,
-      2: GenericLayout.TWO_BY_TWO,
-      3: GenericLayout.TWO_BY_THREE
-    },
-    3: {
-      1: GenericLayout.THREE_BY_ONE,
-      2: GenericLayout.THREE_BY_TWO,
-      3: GenericLayout.THREE_BY_THREE
-    }
-  }[ width ][ height ];
-};
 
 // verify that enumeration is immutable, without the runtime penalty in production code
 if ( assert ) { Object.freeze( GenericLayout ); }

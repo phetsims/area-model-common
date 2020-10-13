@@ -10,60 +10,54 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import validate from '../../../../axon/js/validate.js';
 import Range from '../../../../dot/js/Range.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import Term from './Term.js';
 
-/**
- * @constructor
- * @extends {Object}
- *
- * @param {Orientation} orientation
- * @param {Property.<Color>} colorProperty
- */
-function Partition( orientation, colorProperty ) {
-  validate( orientation, { validValues: Orientation.VALUES } );
-  assert && assert( colorProperty instanceof Property );
+class Partition {
+  /**
+   * @param {Orientation} orientation
+   * @param {Property.<Color>} colorProperty
+   */
+  constructor( orientation, colorProperty ) {
+    validate( orientation, { validValues: Orientation.VALUES } );
+    assert && assert( colorProperty instanceof Property );
 
-  // @public {Property.<Term|null>} - Null indicates the size is not defined.
-  this.sizeProperty = new Property( null, {
-    useDeepEquality: true,
-    isValidValue: Term.isTermOrNull
-  } );
+    // @public {Property.<Term|null>} - Null indicates the size is not defined.
+    this.sizeProperty = new Property( null, {
+      useDeepEquality: true,
+      isValidValue: Term.isTermOrNull
+    } );
 
-  // @public {Orientation} - an intrinsic property of the Partition
-  this.orientation = orientation;
+    // @public {Orientation} - an intrinsic property of the Partition
+    this.orientation = orientation;
 
-  // @public {Property.<Color>}
-  this.colorProperty = colorProperty;
+    // @public {Property.<Color>}
+    this.colorProperty = colorProperty;
 
-  // @public {Property.<boolean>} - Owned property, does not need to be disposed.
-  this.visibleProperty = new BooleanProperty( true );
+    // @public {Property.<boolean>} - Owned property, does not need to be disposed.
+    this.visibleProperty = new BooleanProperty( true );
 
-  // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when
-  // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
-  // will be from 0 to its maximum size. Owned property, does not need to be disposed.
-  this.coordinateRangeProperty = new Property( null, {
-    useDeepEquality: true,
-    isValidValue: function( value ) {
-      return value === null || value instanceof Range;
-    }
-  } );
-}
+    // @public {Property.<Range|null>} - The contained 'section' of the full available model area. Should be null when
+    // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
+    // will be from 0 to its maximum size. Owned property, does not need to be disposed.
+    this.coordinateRangeProperty = new Property( null, {
+      useDeepEquality: true,
+      isValidValue: value => value === null || value instanceof Range
+    } );
+  }
 
-areaModelCommon.register( 'Partition', Partition );
-
-inherit( Object, Partition, {
   /**
    * Returns whether this partition is defined, i.e. "is shown in the area, and has a size"
    * @public
    *
    * @returns {boolean}
    */
-  isDefined: function() {
+  isDefined() {
     return this.visibleProperty.value && this.sizeProperty.value !== null;
   }
-} );
+}
+
+areaModelCommon.register( 'Partition', Partition );
 
 export default Partition;

@@ -11,63 +11,57 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import OrientationPair from './OrientationPair.js';
 
-/**
- * @constructor
- * @extends {Object}
- *
- * @param {Property.<Area>} areaProperty - This changes when the scene changes (we have one area per scene)
- */
-function AreaDisplay( areaProperty ) {
-  // @public {Property.<Area>}
-  this.areaProperty = areaProperty;
+class AreaDisplay {
+  /**
+   * @param {Property.<Area>} areaProperty - This changes when the scene changes (we have one area per scene)
+   */
+  constructor( areaProperty ) {
+    // @public {Property.<Area>}
+    this.areaProperty = areaProperty;
 
-  // @public {OrientationPair.<Property.<Array.<Partition>>>}
-  this.partitionsProperties = this.wrapOrientationPair( _.property( 'partitions' ) );
+    // @public {OrientationPair.<Property.<Array.<Partition>>>}
+    this.partitionsProperties = this.wrapOrientationPair( _.property( 'partitions' ) );
 
-  // @public {Property.<Array.<Partition>>}
-  this.allPartitionsProperty = this.wrapObject( _.property( 'allPartitions' ) );
+    // @public {Property.<Array.<Partition>>}
+    this.allPartitionsProperty = this.wrapObject( _.property( 'allPartitions' ) );
 
-  // @public {OrientationPair.<Property.<Color>>}
-  this.colorProperties = this.wrapOrientationPairProperty( _.property( 'colorProperties' ) );
+    // @public {OrientationPair.<Property.<Color>>}
+    this.colorProperties = this.wrapOrientationPairProperty( _.property( 'colorProperties' ) );
 
-  // @public {Property.<number>}
-  this.coordinateRangeMaxProperty = this.wrapObject( _.property( 'coordinateRangeMax' ) );
+    // @public {Property.<number>}
+    this.coordinateRangeMaxProperty = this.wrapObject( _.property( 'coordinateRangeMax' ) );
 
-  // @public {Property.<boolean>}
-  this.allowExponentsProperty = this.wrapObject( _.property( 'allowExponents' ) );
+    // @public {Property.<boolean>}
+    this.allowExponentsProperty = this.wrapObject( _.property( 'allowExponents' ) );
 
-  // @public {Property.<number>}
-  this.calculationIndexProperty = this.wrapProperty( _.property( 'calculationIndexProperty' ) );
+    // @public {Property.<number>}
+    this.calculationIndexProperty = this.wrapProperty( _.property( 'calculationIndexProperty' ) );
 
-  // @public {Property.<Array.<PartitionedArea>>}
-  this.partitionedAreasProperty = this.wrapObject( _.property( 'partitionedAreas' ) );
+    // @public {Property.<Array.<PartitionedArea>>}
+    this.partitionedAreasProperty = this.wrapObject( _.property( 'partitionedAreas' ) );
 
-  // @public {OrientationPair.<Property.<Polynomial|null>>}
-  this.totalProperties = this.wrapOrientationPairProperty( _.property( 'totalProperties' ) );
+    // @public {OrientationPair.<Property.<Polynomial|null>>}
+    this.totalProperties = this.wrapOrientationPairProperty( _.property( 'totalProperties' ) );
 
-  // @public {OrientationPair.<Property.<TermList|null>>}
-  this.termListProperties = this.wrapOrientationPairProperty( _.property( 'termListProperties' ) );
+    // @public {OrientationPair.<Property.<TermList|null>>}
+    this.termListProperties = this.wrapOrientationPairProperty( _.property( 'termListProperties' ) );
 
-  // @public {Property.<Polynomial|null>}
-  this.totalAreaProperty = this.wrapProperty( _.property( 'totalAreaProperty' ), {
-    useDeepEquality: true
-  } );
+    // @public {Property.<Polynomial|null>}
+    this.totalAreaProperty = this.wrapProperty( _.property( 'totalAreaProperty' ), {
+      useDeepEquality: true
+    } );
 
-  // @public {OrientationPair.<Property.<TermList|null>>}
-  this.displayProperties = this.wrapOrientationPairProperty( _.property( 'displayProperties' ) );
+    // @public {OrientationPair.<Property.<TermList|null>>}
+    this.displayProperties = this.wrapOrientationPairProperty( _.property( 'displayProperties' ) );
 
-  // @public {OrientationPair.<Property.<Array.<number>>>}
-  this.partitionBoundariesProperties = this.wrapOrientationPairProperty( _.property( 'partitionBoundariesProperties' ) );
-}
+    // @public {OrientationPair.<Property.<Array.<number>>>}
+    this.partitionBoundariesProperties = this.wrapOrientationPairProperty( _.property( 'partitionBoundariesProperties' ) );
+  }
 
-areaModelCommon.register( 'AreaDisplay', AreaDisplay );
-
-inherit( Object, AreaDisplay, {
   /**
    * Wraps an orientation pair into one that contains properties.
    * @protected
@@ -76,15 +70,9 @@ inherit( Object, AreaDisplay, {
    * @param {Object} [options]
    * @returns {OrientationPair.<Property.<*>>}
    */
-  wrapOrientationPair: function( map, options ) {
-    const self = this;
-
-    return OrientationPair.create( function( orientation ) {
-      return self.wrapObject( function( area ) {
-        return map( area ).get( orientation );
-      }, options );
-    } );
-  },
+  wrapOrientationPair( map, options ) {
+    return OrientationPair.create( orientation => this.wrapObject( area => map( area ).get( orientation ), options ) );
+  }
 
   /**
    * Wraps an orientation pair of properties
@@ -97,15 +85,9 @@ inherit( Object, AreaDisplay, {
    * @param {Object} [options]
    * @returns {OrientationPair.<Property.<*>>}
    */
-  wrapOrientationPairProperty: function( map, options ) {
-    const self = this;
-
-    return OrientationPair.create( function( orientation ) {
-      return self.wrapProperty( function( area ) {
-        return map( area ).get( orientation );
-      }, options );
-    } );
-  },
+  wrapOrientationPairProperty( map, options ) {
+    return OrientationPair.create( orientation => this.wrapProperty( area => map( area ).get( orientation ), options ) );
+  }
 
   /**
    * Wraps a property.
@@ -115,11 +97,11 @@ inherit( Object, AreaDisplay, {
    * @param {Object} [options]
    * @returns {Property.<*>}
    */
-  wrapProperty: function( map, options ) {
+  wrapProperty( map, options ) {
     return new DynamicProperty( this.areaProperty, merge( {
       derive: map
     }, options ) );
-  },
+  }
 
   /**
    * Wraps an object into a property.
@@ -129,9 +111,11 @@ inherit( Object, AreaDisplay, {
    * @param {Object} [options]
    * @returns {Property.<*>}
    */
-  wrapObject: function( map, options ) {
+  wrapObject( map, options ) {
     return new DerivedProperty( [ this.areaProperty ], map, options );
   }
-} );
+}
+
+areaModelCommon.register( 'AreaDisplay', AreaDisplay );
 
 export default AreaDisplay;

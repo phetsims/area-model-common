@@ -11,7 +11,7 @@ import TermList from './TermList.js';
 
 QUnit.module( 'TermList' );
 
-QUnit.test( 'Times', function( assert ) {
+QUnit.test( 'Times', assert => {
   assert.ok( new TermList( [
     new Term( 3, 1 ), // 3x
     new Term( -2, 0 ) // -2
@@ -26,7 +26,7 @@ QUnit.test( 'Times', function( assert ) {
   ] ) ), 'Example multiplication' );
 } );
 
-QUnit.test( 'Ordering', function( assert ) {
+QUnit.test( 'Ordering', assert => {
   assert.ok( new TermList( [
     new Term( 3, 2 ),
     new Term( 1, 1 ),
@@ -47,7 +47,7 @@ QUnit.test( 'Ordering', function( assert ) {
   ] ) ), 'Ordering (reversed)' );
 } );
 
-QUnit.test( 'Negative test', function( assert ) {
+QUnit.test( 'Negative test', assert => {
   assert.ok( !new TermList( [
     new Term( 3, 2 ),
     new Term( 1, 1 ),

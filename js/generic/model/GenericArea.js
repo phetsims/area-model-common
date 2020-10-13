@@ -10,7 +10,6 @@
 
 import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -21,111 +20,105 @@ import Term from '../../common/model/Term.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
 import GenericPartition from './GenericPartition.js';
 
-/**
- * @constructor
- * @extends {Area}
- *
- * @param {GenericLayout} layout
- * @param {boolean} allowExponents - Whether the user is able to add powers of x.
- */
-function GenericArea( layout, allowExponents ) {
-  assert && assert( typeof allowExponents === 'boolean' );
+class GenericArea extends Area {
+  /**
+   * @param {GenericLayout} layout
+   * @param {boolean} allowExponents - Whether the user is able to add powers of x.
+   */
+  constructor( layout, allowExponents ) {
+    assert && assert( typeof allowExponents === 'boolean' );
 
-  const self = this;
+    // If we allow powers of X, we'll only allow 1 digit in front.
+    const firstDigitCount = allowExponents ? 1 : 3;
+    const secondDigitCount = allowExponents ? 1 : 2;
+    const thirdDigitCount = 1;
 
-  // If we allow powers of X, we'll only allow 1 digit in front.
-  const firstDigitCount = allowExponents ? 1 : 3;
-  const secondDigitCount = allowExponents ? 1 : 2;
-  const thirdDigitCount = 1;
+    const horizontalPartitions = [
+      new GenericPartition( Orientation.HORIZONTAL, firstDigitCount ),
+      new GenericPartition( Orientation.HORIZONTAL, secondDigitCount ),
+      new GenericPartition( Orientation.HORIZONTAL, thirdDigitCount )
+    ].slice( 0, layout.size.width );
 
-  const horizontalPartitions = [
-    new GenericPartition( Orientation.HORIZONTAL, firstDigitCount ),
-    new GenericPartition( Orientation.HORIZONTAL, secondDigitCount ),
-    new GenericPartition( Orientation.HORIZONTAL, thirdDigitCount )
-  ].slice( 0, layout.size.width );
+    const verticalPartitions = [
+      new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
+      new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
+      new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
+    ].slice( 0, layout.size.height );
 
-  const verticalPartitions = [
-    new GenericPartition( Orientation.VERTICAL, firstDigitCount ),
-    new GenericPartition( Orientation.VERTICAL, secondDigitCount ),
-    new GenericPartition( Orientation.VERTICAL, thirdDigitCount )
-  ].slice( 0, layout.size.height );
+    super(
+      new OrientationPair( horizontalPartitions, verticalPartitions ),
+      AreaModelCommonColorProfile.genericColorProperties,
+      1,
+      allowExponents
+    );
 
-  Area.call(
-    this,
-    new OrientationPair( horizontalPartitions, verticalPartitions ),
-    AreaModelCommonColorProfile.genericColorProperties,
-    1,
-    allowExponents
-  );
+    if ( AreaModelCommonQueryParameters.maximumCalculationSize ) {
+      horizontalPartitions.forEach( ( partition, index ) => {
+        partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
+      } );
+      verticalPartitions.forEach( ( partition, index ) => {
+        partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
+      } );
+    }
 
-  if ( AreaModelCommonQueryParameters.maximumCalculationSize ) {
-    horizontalPartitions.forEach( function( partition, index ) {
-      partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
+    // @public {GenericLayout}
+    this.layout = layout;
+
+    // Set up partition coordinate/size
+    Orientation.VALUES.forEach( orientation => {
+      const partitionCount = layout.getPartitionQuantity( orientation );
+      const partitions = this.partitions.get( orientation );
+
+      if ( partitionCount === 1 ) {
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );
+      }
+      else if ( partitionCount === 2 ) {
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_SINGLE_OFFSET );
+        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SINGLE_OFFSET, 1 );
+      }
+      else if ( partitionCount === 3 ) {
+        partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_FIRST_OFFSET );
+        partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_FIRST_OFFSET, AreaModelCommonConstants.GENERIC_SECOND_OFFSET );
+        partitions[ 2 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SECOND_OFFSET, 1 );
+      }
     } );
-    verticalPartitions.forEach( function( partition, index ) {
-      partition.sizeProperty.value = new Term( -Math.pow( 10, partition.digitCount ) + 1, allowExponents ? 2 - index : 0 );
-    } );
+
+    // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
+    this.activePartitionProperty = new Property( null );
   }
 
-  // @public {GenericLayout}
-  this.layout = layout;
-
-  // Set up partition coordinate/size
-  Orientation.VALUES.forEach( function( orientation ) {
-    const partitionCount = layout.getPartitionQuantity( orientation );
-    const partitions = self.partitions.get( orientation );
-
-    if ( partitionCount === 1 ) {
-      partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, 1 );
-    }
-    else if ( partitionCount === 2 ) {
-      partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_SINGLE_OFFSET );
-      partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SINGLE_OFFSET, 1 );
-    }
-    else if ( partitionCount === 3 ) {
-      partitions[ 0 ].coordinateRangeProperty.value = new Range( 0, AreaModelCommonConstants.GENERIC_FIRST_OFFSET );
-      partitions[ 1 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_FIRST_OFFSET, AreaModelCommonConstants.GENERIC_SECOND_OFFSET );
-      partitions[ 2 ].coordinateRangeProperty.value = new Range( AreaModelCommonConstants.GENERIC_SECOND_OFFSET, 1 );
-    }
-  } );
-
-  // @public {Property.<Partition|null>} - If it exists, the partition being actively edited.
-  this.activePartitionProperty = new Property( null );
-}
-
-areaModelCommon.register( 'GenericArea', GenericArea );
-
-inherit( Area, GenericArea, {
   /**
    * Resets the area to its initial values.
    * @public
    * @override
    */
-  reset: function() {
-    Area.prototype.reset.call( this );
+  reset() {
+    super.reset();
 
-    this.allPartitions.forEach( function( partition ) {
+    this.allPartitions.forEach( partition => {
       partition.sizeProperty.reset();
     } );
 
     this.activePartitionProperty.reset();
-  },
+  }
 
   /**
    * Erase the area to a 1x1, see https://github.com/phetsims/area-model-common/issues/77
    * @public
    * @override
    */
-  erase: function() {
-    Area.prototype.erase.call( this );
+  erase() {
+    super.erase();
 
     // Clear all partition values
-    this.allPartitions.forEach( function( partition ) {
+    this.allPartitions.forEach( partition => {
       partition.sizeProperty.value = null;
     } );
 
     this.activePartitionProperty.reset();
   }
-} );
+}
+
+areaModelCommon.register( 'GenericArea', GenericArea );
 
 export default GenericArea;
