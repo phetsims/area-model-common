@@ -75,11 +75,7 @@ class GenericAreaScreenView extends AreaScreenView {
    * @returns {Node}
    */
   createFactorsNode( model, decimalPlaces ) {
-    const dynamicProperties = OrientationPair.create( function( orientation ) {
-      return new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], function( area ) {
-        return area.displayProperties.get( orientation );
-      } ) );
-    } );
+    const dynamicProperties = OrientationPair.create( orientation => new DynamicProperty( new DerivedProperty( [ model.currentAreaProperty ], area => area.displayProperties.get( orientation ) ) ) );
     return new GenericFactorsNode( dynamicProperties, new Property( model.allowExponents ) );
   }
 }

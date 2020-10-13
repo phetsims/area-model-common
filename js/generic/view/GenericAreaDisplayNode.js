@@ -11,7 +11,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -24,106 +23,87 @@ import GenericPartitionedAreaNode from './GenericPartitionedAreaNode.js';
 import PartitionSizeEditNode from './PartitionSizeEditNode.js';
 import TermKeypadPanel from './TermKeypadPanel.js';
 
-/**
- * @constructor
- * @extends {AreaDisplayNode}
- *
- * @param {GenericAreaDisplay} areaDisplay
- * @param {boolean} allowExponents - Whether the user is able to add powers of x.
- * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
- * @param {Object} [nodeOptions]
- */
-function GenericAreaDisplayNode( areaDisplay, allowExponents, partialProductsChoiceProperty, nodeOptions ) {
-  assert && assert( typeof allowExponents === 'boolean' );
-  assert && assert( partialProductsChoiceProperty instanceof Property );
+class GenericAreaDisplayNode extends AreaDisplayNode {
+  /**
+   * @param {GenericAreaDisplay} areaDisplay
+   * @param {boolean} allowExponents - Whether the user is able to add powers of x.
+   * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
+   * @param {Object} [nodeOptions]
+   */
+  constructor( areaDisplay, allowExponents, partialProductsChoiceProperty, nodeOptions ) {
+    assert && assert( typeof allowExponents === 'boolean' );
+    assert && assert( partialProductsChoiceProperty instanceof Property );
 
-  const self = this;
+    super( areaDisplay, partialProductsChoiceProperty, {
+      allowExponents: allowExponents,
+      isProportional: false
+    } );
 
-  AreaDisplayNode.call( this, areaDisplay, partialProductsChoiceProperty, {
-    allowExponents: allowExponents,
-    isProportional: false
-  } );
+    this.areaLayer.addChild( this.backgroundNode );
 
-  this.areaLayer.addChild( this.backgroundNode );
+    // Sign-colored partition area backgrounds (effectively pooled)
+    this.areaLayer.addChild( new PoolableLayerNode( {
+      arrayProperty: areaDisplay.partitionedAreasProperty,
+      createNode: partitionedArea => new GenericPartitionedAreaNode( new Property( partitionedArea ), this.modelViewTransformProperty ),
+      getItemProperty: partitionedAreaNode => partitionedAreaNode.partitionedAreaProperty
+    } ) );
 
-  // Sign-colored partition area backgrounds (effectively pooled)
-  this.areaLayer.addChild( new PoolableLayerNode( {
-    arrayProperty: areaDisplay.partitionedAreasProperty,
-    createNode: function( partitionedArea ) {
-      return new GenericPartitionedAreaNode( new Property( partitionedArea ), self.modelViewTransformProperty );
-    },
-    getItemProperty: function( partitionedAreaNode ) {
-      return partitionedAreaNode.partitionedAreaProperty;
-    }
-  } ) );
+    this.areaLayer.addChild( this.borderNode );
 
-  this.areaLayer.addChild( this.borderNode );
+    // Partition lines
+    this.areaLayer.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, this.viewSize ) );
 
-  // Partition lines
-  this.areaLayer.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, this.viewSize ) );
+    // Edit readouts/buttons
+    this.labelLayer.addChild( new PoolableLayerNode( {
+      arrayProperty: areaDisplay.allPartitionsProperty,
+      createNode: partition => new PartitionSizeEditNode(
+          areaDisplay.activePartitionProperty,
+          new Property( partition ),
+          this.modelViewTransformProperty,
+          allowExponents
+        ),
+      getItemProperty: editNode => editNode.partitionProperty
+    } ) );
 
-  // Edit readouts/buttons
-  this.labelLayer.addChild( new PoolableLayerNode( {
-    arrayProperty: areaDisplay.allPartitionsProperty,
-    createNode: function( partition ) {
-      return new PartitionSizeEditNode(
-        areaDisplay.activePartitionProperty,
-        new Property( partition ),
-        self.modelViewTransformProperty,
-        allowExponents
-      );
-    },
-    getItemProperty: function( editNode ) {
-      return editNode.partitionProperty;
-    }
-  } ) );
+    // Keypad
+    const digitCountProperty = new DerivedProperty( [ areaDisplay.activePartitionProperty ], activePartition => activePartition === null ? 1 : activePartition.digitCount );
+    const termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, true, term => {
+      // Update the size of the partition.
+      areaDisplay.activePartitionProperty.value.sizeProperty.value = term;
 
-  // Keypad
-  const digitCountProperty = new DerivedProperty( [ areaDisplay.activePartitionProperty ], function( activePartition ) {
-    return activePartition === null ? 1 : activePartition.digitCount;
-  } );
-  const termKeypadPanel = new TermKeypadPanel( digitCountProperty, allowExponents, true, function( term ) {
-    // Update the size of the partition.
-    areaDisplay.activePartitionProperty.value.sizeProperty.value = term;
+      // Hide the keypad.
+      areaDisplay.activePartitionProperty.value = null;
+    }, {
+      x: this.viewSize + AreaModelCommonConstants.KEYPAD_LEFT_PADDING,
+      centerY: this.viewSize / 2
+    } );
+    this.labelLayer.addChild( termKeypadPanel );
 
-    // Hide the keypad.
-    areaDisplay.activePartitionProperty.value = null;
-  }, {
-    x: this.viewSize + AreaModelCommonConstants.KEYPAD_LEFT_PADDING,
-    centerY: this.viewSize / 2
-  } );
-  this.labelLayer.addChild( termKeypadPanel );
+    // If this changes, we clear and switch to it
+    areaDisplay.activePartitionProperty.link( newArea => {
+      termKeypadPanel.visible = newArea !== null;
+      termKeypadPanel.clear();
+    } );
 
-  // If this changes, we clear and switch to it
-  areaDisplay.activePartitionProperty.link( function( newArea ) {
-    termKeypadPanel.visible = newArea !== null;
-    termKeypadPanel.clear();
-  } );
+    this.mutate( nodeOptions );
+  }
 
-  this.mutate( nodeOptions );
-}
-
-areaModelCommon.register( 'GenericAreaDisplayNode', GenericAreaDisplayNode );
-
-inherit( AreaDisplayNode, GenericAreaDisplayNode, {
   /**
    * Positions all of the partial products labels.
    * @protected
    * @override
    */
-  positionProductLabels: function() {
-    const self = this;
-
-    this.productLabels.forEach( function( productLabel ) {
-      Orientation.VALUES.forEach( function( orientation ) {
+  positionProductLabels() {
+    this.productLabels.forEach( productLabel => {
+      Orientation.VALUES.forEach( orientation => {
         const range = productLabel.partitionedAreaProperty.value.partitions.get( orientation ).coordinateRangeProperty.value;
         if ( range !== null ) {
-          productLabel[ orientation.coordinate ] = orientation.modelToView( self.modelViewTransformProperty.value, range.getCenter() );
+          productLabel[ orientation.coordinate ] = orientation.modelToView( this.modelViewTransformProperty.value, range.getCenter() );
         }
       } );
     } );
   }
-}, {
+
   /**
    * Creates a partition line (view only)
    * @private
@@ -133,7 +113,7 @@ inherit( AreaDisplayNode, GenericAreaDisplayNode, {
    * @param {number} viewSize - In view units, the size of the main area
    * @param {Property.<boolean>} visibilityProperty
    */
-  createPartitionLine: function( orientation, offset, viewSize, visibilityProperty ) {
+  static createPartitionLine( orientation, offset, viewSize, visibilityProperty ) {
     const firstPoint = new Vector2( 0, 0 );
     const secondPoint = new Vector2( 0, 0 );
 
@@ -149,7 +129,7 @@ inherit( AreaDisplayNode, GenericAreaDisplayNode, {
     } );
     visibilityProperty.linkAttribute( line, 'visible' );
     return line;
-  },
+  }
 
   /**
    * Creates a set of generic partition lines.
@@ -159,20 +139,16 @@ inherit( AreaDisplayNode, GenericAreaDisplayNode, {
    * @param {number} viewSize
    * @returns {Node}
    */
-  createPartitionLines: function( layoutProperty, viewSize ) {
+  static createPartitionLines( layoutProperty, viewSize ) {
     const singleOffset = viewSize * AreaModelCommonConstants.GENERIC_SINGLE_OFFSET;
     const firstOffset = viewSize * AreaModelCommonConstants.GENERIC_FIRST_OFFSET;
     const secondOffset = viewSize * AreaModelCommonConstants.GENERIC_SECOND_OFFSET;
 
     const resultNode = new Node();
 
-    Orientation.VALUES.forEach( function( orientation ) {
-      const hasTwoProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
-        return layout.getPartitionQuantity( orientation ) === 2;
-      } );
-      const hasThreeProperty = new DerivedProperty( [ layoutProperty ], function( layout ) {
-        return layout.getPartitionQuantity( orientation ) === 3;
-      } );
+    Orientation.VALUES.forEach( orientation => {
+      const hasTwoProperty = new DerivedProperty( [ layoutProperty ], layout => layout.getPartitionQuantity( orientation ) === 2 );
+      const hasThreeProperty = new DerivedProperty( [ layoutProperty ], layout => layout.getPartitionQuantity( orientation ) === 3 );
 
       const singleLine = GenericAreaDisplayNode.createPartitionLine( orientation, singleOffset, viewSize, hasTwoProperty );
       const firstLine = GenericAreaDisplayNode.createPartitionLine( orientation, firstOffset, viewSize, hasThreeProperty );
@@ -184,6 +160,8 @@ inherit( AreaDisplayNode, GenericAreaDisplayNode, {
 
     return resultNode;
   }
-} );
+}
+
+areaModelCommon.register( 'GenericAreaDisplayNode', GenericAreaDisplayNode );
 
 export default GenericAreaDisplayNode;

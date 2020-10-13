@@ -9,17 +9,17 @@
  */
 
 import BackspaceIcon from '../../../../scenery-phet/js/BackspaceIcon.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import Key from '../../../../scenery-phet/js/keypad/Key.js';
 import KeyID from '../../../../scenery-phet/js/keypad/KeyID.js';
 import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -66,7 +66,6 @@ const exponentLayout = noExponentLayout.concat( [
 ] );
 
 class TermKeypadPanel extends Panel {
-
   /**
    * @param {Property.<number>} digitCountProperty
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
@@ -109,7 +108,7 @@ class TermKeypadPanel extends Panel {
     termAccumulator.richStringProperty.link( updateText );
 
     // When the active partition changes, resize the background to fit to the largest size.
-    digitCountProperty.link( function( digitCount ) {
+    digitCountProperty.link( digitCount => {
       // Temporarily use a different string
       readoutText.text = Term.getLargestGenericString( allowExponents, digitCount );
 
@@ -142,7 +141,7 @@ class TermKeypadPanel extends Panel {
           touchAreaYDilation: 5,
           xMargin: 15,
           yMargin: 5,
-          listener: function() {
+          listener: () => {
             enterCallback( termAccumulator.termProperty.value );
           },
           baseColor: AreaModelCommonColorProfile.keypadEnterBackgroundProperty

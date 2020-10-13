@@ -10,7 +10,6 @@
 
 import validate from '../../../../axon/js/validate.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
@@ -30,73 +29,65 @@ const PAREN_BOUNDS = new Text( ')(', {
   boundsMethod: 'accurate'
 } ).bounds;
 
-/**
- * @constructor
- * @extends {HBox}
- *
- * @param {OrientationPair.<Property.<TermList|null>>} displayProperties - The term lists to be displayed
- * @param {Property.<boolean>} allowExponentsProperty - Whether exponents (powers of x) are allowed
- */
-function GenericFactorsNode( displayProperties, allowExponentsProperty ) {
-  const self = this;
+class GenericFactorsNode extends AlignBox {
+  /**
+   * @param {OrientationPair.<Property.<TermList|null>>} displayProperties - The term lists to be displayed
+   * @param {Property.<boolean>} allowExponentsProperty - Whether exponents (powers of x) are allowed
+   */
+  constructor( displayProperties, allowExponentsProperty ) {
 
-  const readouts = displayProperties.map( function( displayProperty, orientation ) {
-    return self.createOrientationReadout( orientation, displayProperty );
-  } );
+    const readouts = displayProperties.map( ( displayProperty, orientation ) => GenericFactorsNode.createOrientationReadout( orientation, displayProperty ) );
 
-  const leftParenText = new Text( '(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
-  const middleParenText = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
-  const rightParenText = new Text( ')', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
-  const xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } );
+    const leftParenText = new Text( '(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    const middleParenText = new Text( ')(', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    const rightParenText = new Text( ')', { font: AreaModelCommonConstants.FACTORS_PAREN_FONT } );
+    const xText = new Text( MathSymbols.TIMES, { font: AreaModelCommonConstants.FACTORS_TERM_FONT } );
 
-  // Have the X take up at least the same vertical bounds as the parentheses
-  xText.localBounds = xText.localBounds.union(
-    new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY )
-  );
+    // Have the X take up at least the same vertical bounds as the parentheses
+    xText.localBounds = xText.localBounds.union(
+      new Bounds2( 0, middleParenText.localBounds.minY, 0, middleParenText.localBounds.maxY )
+    );
 
-  // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
-  const box = new HBox( {
-    spacing: 10,
-    align: 'origin'
-  } );
+    // Center the box vertically, so that when maxWidth kicks in, we stay vertically centered in our area of the box
+    const box = new HBox( {
+      spacing: 10,
+      align: 'origin'
+    } );
 
-  allowExponentsProperty.link( function( allowExponents ) {
-    box.children = allowExponents ? [
-      leftParenText,
-      readouts.vertical,
-      middleParenText,
-      readouts.horizontal,
-      rightParenText
-    ] : [
-      readouts.vertical,
-      xText,
-      readouts.horizontal
-    ];
-  } );
+    allowExponentsProperty.link( allowExponents => {
+      box.children = allowExponents ? [
+        leftParenText,
+        readouts.vertical,
+        middleParenText,
+        readouts.horizontal,
+        rightParenText
+      ] : [
+        readouts.vertical,
+        xText,
+        readouts.horizontal
+      ];
+    } );
 
-  const spacer = new Node();
+    const spacer = new Node();
 
-  AlignBox.call( this, new Node( {
-    children: [ box, spacer ],
-    maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
-  } ) );
+    super( new Node( {
+      children: [ box, spacer ],
+      maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
+    } ) );
 
-  // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
-  allowExponentsProperty.link( function( allowExponents ) {
-    const maxBounds = Bounds2.NOTHING.copy();
-    maxBounds.includeBounds( new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', {
-      font: AreaModelCommonConstants.FACTORS_TERM_FONT
-    } ).bounds );
-    maxBounds.includeBounds( PAREN_BOUNDS );
+    // Set our alignBounds to the maximum size we can be, so that we remain centered nicely in the accordion box.
+    allowExponentsProperty.link( allowExponents => {
+      const maxBounds = Bounds2.NOTHING.copy();
+      maxBounds.includeBounds( new RichText( allowExponents ? 'x<sup>2</sup>' : 'x', {
+        font: AreaModelCommonConstants.FACTORS_TERM_FONT
+      } ).bounds );
+      maxBounds.includeBounds( PAREN_BOUNDS );
 
-    self.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxBounds.height );
-    spacer.localBounds = new Bounds2( 0, maxBounds.minY, 0, maxBounds.maxY );
-  } );
-}
+      this.alignBounds = new Bounds2( 0, 0, AreaModelCommonConstants.PANEL_INTERIOR_MAX, maxBounds.height );
+      spacer.localBounds = new Bounds2( 0, maxBounds.minY, 0, maxBounds.maxY );
+    } );
+  }
 
-areaModelCommon.register( 'GenericFactorsNode', GenericFactorsNode );
-
-inherit( AlignBox, GenericFactorsNode, {
   /**
    * Creates a readout for the total sum for a particular orientation.
    * @private
@@ -105,7 +96,7 @@ inherit( AlignBox, GenericFactorsNode, {
    * @param {Property.<TermList|null>} displayProperty
    * @returns {Node}
    */
-  createOrientationReadout: function( orientation, displayProperty ) {
+  static createOrientationReadout( orientation, displayProperty ) {
     validate( orientation, { validValues: Orientation.VALUES } );
 
     const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
@@ -121,7 +112,7 @@ inherit( AlignBox, GenericFactorsNode, {
     } );
 
     const node = new Node();
-    displayProperty.link( function( termList ) {
+    displayProperty.link( termList => {
       if ( termList === null ) {
         node.children = [ box ];
       }
@@ -133,6 +124,8 @@ inherit( AlignBox, GenericFactorsNode, {
 
     return node;
   }
-} );
+}
+
+areaModelCommon.register( 'GenericFactorsNode', GenericFactorsNode );
 
 export default GenericFactorsNode;

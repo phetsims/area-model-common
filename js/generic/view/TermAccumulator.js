@@ -9,118 +9,98 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import AbstractKeyAccumulator from '../../../../scenery-phet/js/keypad/AbstractKeyAccumulator.js';
 import KeyID from '../../../../scenery-phet/js/keypad/KeyID.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
 
 // constants
-const NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( function( n ) { return '' + n; } );
-const DIGIT_STRINGS = _.range( 0, 10 ).map( function( n ) { return '' + n; } );
+const NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( n => '' + n );
+const DIGIT_STRINGS = _.range( 0, 10 ).map( n => '' + n );
 
-/**
- * @constructor
- * @extends {AbstractKeyAccumulator}
- *
- * @param {Property.<number>} digitCountProperty
- */
-function TermAccumulator( digitCountProperty ) {
-
+class TermAccumulator extends AbstractKeyAccumulator {
   /**
-   * Whether a set of proposed keys is allowed, see https://github.com/phetsims/area-model-common/issues/138
-   * @public
-   * @override
-   *
-   * @param {Array.<KeyID>} proposedKeys
-   * @returns {boolean}
+   * @param {Property.<number>} digitCountProperty
    */
-  this.defaultValidator = function( proposedKeys ) {
-    let xCount = 0;
-    let digitCount = 0;
+  constructor( digitCountProperty ) {
 
+    // Validators to be passed to AbstractKeyAccumulator
+    // Whether a set of proposed keys is allowed, see https://github.com/phetsims/area-model-common/issues/138
+    super( [ proposedKeys => {
+      let xCount = 0;
+      let digitCount = 0;
 
-    proposedKeys.forEach( function( key ) {
-      if ( key === KeyID.X || key === KeyID.X_SQUARED ) {
-        xCount++;
+      proposedKeys.forEach( key => {
+        if ( key === KeyID.X || key === KeyID.X_SQUARED ) {
+          xCount++;
+        }
+
+        if ( _.includes( DIGIT_STRINGS, key ) ) {
+          digitCount++;
+        }
+      } );
+
+      return xCount <= 1 && digitCount <= digitCountProperty.value;
+    } ] );
+
+    // @public {Property.<string>} - For display
+    this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], accumulatedKeys => accumulatedKeys.map( key => {
+        if ( key === KeyID.PLUS_MINUS ) {
+          return MathSymbols.UNARY_MINUS;
+        }
+        else if ( key === KeyID.X ) {
+          return AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
+        }
+        else if ( key === KeyID.X_SQUARED ) {
+          return AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>';
+        }
+        else {
+          return key;
+        }
+      } ).join( '' ) );
+
+    // @public {Property.<Term|null>} - The term used if 'enter' is pressed
+    this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], accumulatedKeys => {
+      const lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
+
+      let coefficient = 1;
+      let power = 0;
+      if ( lastKey === KeyID.X ) {
+        power = 1;
+        accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
+      }
+      else if ( lastKey === KeyID.X_SQUARED ) {
+        power = 2;
+        accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
+      }
+      if ( accumulatedKeys[ 0 ] === KeyID.PLUS_MINUS ) {
+        accumulatedKeys = accumulatedKeys.slice( 1 );
+
+        // handle -x
+        if ( accumulatedKeys.length === 0 ) {
+          coefficient = -1;
+        }
+        else {
+          accumulatedKeys = [ '-' ].concat( accumulatedKeys );
+        }
       }
 
-      if ( _.includes( DIGIT_STRINGS, key ) ) {
-        digitCount++;
+      const digitString = accumulatedKeys.join( '' );
+      if ( digitString === '' || digitString === '-' ) {
+        if ( power === 0 ) {
+          return null;
+        }
       }
+      else {
+        coefficient = parseInt( digitString, 10 );
+      }
+
+      return new Term( coefficient, power );
     } );
+  }
 
-    return xCount <= 1 && digitCount <= digitCountProperty.value;
-  };
-
-  // Validators to be passed to AbstractKeyAccumulator
-  const validators = [ this.defaultValidator ];
-
-  AbstractKeyAccumulator.call( this, validators );
-
-  // @public {Property.<string>} - For display
-  this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
-    return accumulatedKeys.map( function( key ) {
-      if ( key === KeyID.PLUS_MINUS ) {
-        return MathSymbols.UNARY_MINUS;
-      }
-      else if ( key === KeyID.X ) {
-        return AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
-      }
-      else if ( key === KeyID.X_SQUARED ) {
-        return AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>';
-      }
-      else {
-        return key;
-      }
-    } ).join( '' );
-  } );
-
-  // @public {Property.<Term|null>} - The term used if 'enter' is pressed
-  this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], function( accumulatedKeys ) {
-    const lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
-
-    let coefficient = 1;
-    let power = 0;
-    if ( lastKey === KeyID.X ) {
-      power = 1;
-      accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
-    }
-    else if ( lastKey === KeyID.X_SQUARED ) {
-      power = 2;
-      accumulatedKeys = accumulatedKeys.slice( 0, accumulatedKeys.length - 1 );
-    }
-    if ( accumulatedKeys[ 0 ] === KeyID.PLUS_MINUS ) {
-      accumulatedKeys = accumulatedKeys.slice( 1 );
-
-      // handle -x
-      if ( accumulatedKeys.length === 0 ) {
-        coefficient = -1;
-      }
-      else {
-        accumulatedKeys = [ '-' ].concat( accumulatedKeys );
-      }
-    }
-
-    const digitString = accumulatedKeys.join( '' );
-    if ( digitString === '' || digitString === '-' ) {
-      if ( power === 0 ) {
-        return null;
-      }
-    }
-    else {
-      coefficient = parseInt( digitString, 10 );
-    }
-
-    return new Term( coefficient, power );
-  } );
-}
-
-areaModelCommon.register( 'TermAccumulator', TermAccumulator );
-
-inherit( AbstractKeyAccumulator, TermAccumulator, {
   /**
    * Handles what happens when a key is pressed and create proposed set of keys to be passed to Validator
    * @public
@@ -128,7 +108,7 @@ inherit( AbstractKeyAccumulator, TermAccumulator, {
    *
    * @param {KeyID} keyIdentifier - identifier for the key pressed
    */
-  handleKeyPressed: function( keyIdentifier ) {
+  handleKeyPressed( keyIdentifier ) {
 
     const currentKeys = this.accumulatedKeysProperty.get();
 
@@ -137,14 +117,10 @@ inherit( AbstractKeyAccumulator, TermAccumulator, {
 
     // The power of x (X or X_SQUARED) in our input (otherwise undefined). This keypad only allows one "power" of X,
     // e.g. 0, 1 or 2 (corresponding to multiplying times 1, x, x^2). This is the corresponding key for that power.
-    let power = _.find( currentKeys, function( key ) {
-      return key === KeyID.X || key === KeyID.X_SQUARED;
-    } );
+    let power = _.find( currentKeys, key => key === KeyID.X || key === KeyID.X_SQUARED );
 
     // All of the digits in our current input. (just numerical parts, not powers of x or negative signs)
-    let digits = currentKeys.filter( function( key ) {
-      return _.includes( DIGIT_STRINGS, key );
-    } );
+    let digits = currentKeys.filter( key => _.includes( DIGIT_STRINGS, key ) );
 
     // Helpful booleans for what our pressed key is.
     const isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyIdentifier );
@@ -194,6 +170,8 @@ inherit( AbstractKeyAccumulator, TermAccumulator, {
     const proposedKeys = ( negative ? [ KeyID.PLUS_MINUS ] : [] ).concat( digits ).concat( power ? [ power ] : [] );
     this.validateKeys( proposedKeys ) && this.updateKeys( proposedKeys );
   }
-} );
+}
+
+areaModelCommon.register( 'TermAccumulator', TermAccumulator );
 
 export default TermAccumulator;
