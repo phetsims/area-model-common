@@ -11,7 +11,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import AlignGroup from '../../../../scenery/js/nodes/AlignGroup.js';
 import HBox from '../../../../scenery/js/nodes/HBox.js';
@@ -20,8 +19,8 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import areaModelCommon from '../../areaModelCommon.js';
+import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
 import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
@@ -42,127 +41,127 @@ const gridLinesLabelString = areaModelCommonStrings.a11y.gridLinesLabel;
 // constants
 const RADIO_ICON_SIZE = 30;
 
-/**
- * @constructor
- * @extends {AreaScreenView}
- *
- * @param {ProportionalAreaModel} model
- * @param {Object} [options]
- */
-function ProportionalAreaScreenView( model, options ) {
-  assert && assert( model instanceof ProportionalAreaModel );
-
-  options = merge( {
-    decimalPlaces: 0,
-    isProportional: true
-  }, options );
-
-  // @private {Node} - Scene selection, created before super call since it will be added in it.
-  this.sceneSelectionNode = new SceneRadioButtonGroup( model );
-
-  const currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
-    derive: 'visiblePartitionOrientationProperty',
-    bidirectional: true
-  } );
-
-  // Should have its own align group, so we don't modify other sizes
-  const partitionSelectionAlignGroup = new AlignGroup();
-
-  // @private {Node} - Allows controlling which partition is currently visible (if we only show one)
-  this.partitionSelectionPanel = this.createPanelContent(
-    partitionString,
-    AreaModelCommonGlobals.panelAlignGroup,
-    new PartitionRadioButtonGroup( currentAreaOrientationProperty, partitionSelectionAlignGroup )
-  );
-
-  AreaScreenView.call( this, model, options );
-
-  // Checkboxes
-  const gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
-    // pdom
-    labelTagName: 'label',
-    labelContent: gridLinesLabelString
-  } );
-  const tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
-    // pdom
-    labelTagName: 'label',
-    labelContent: base10AreaTilesString
-  } );
-  const countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
-    // pdom
-    labelTagName: 'label',
-    labelContent: countingNumbersLabelString,
-    descriptionContent: countingNumbersDescriptionString
-  } );
-
-  const checkboxContainer = new VBox( {
-    children: [ gridCheckbox, countingCheckbox, tileCheckbox ],
-    align: 'left',
-    spacing: 20,
-    // Manual positioning works best here
-    top: 50,
-    left: 600
-  } );
-  this.addChild( checkboxContainer );
-
-  model.currentAreaProperty.link( function( area ) {
-    checkboxContainer.removeAllChildren();
-
-    // Don't show the grid/tiles checkboxes if counting is enabled
-    if ( !area.countingAvailable ) {
-      checkboxContainer.addChild( gridCheckbox );
-      if ( area.tilesAvailable ) {
-        checkboxContainer.addChild( tileCheckbox );
-      }
-    }
-    else {
-      checkboxContainer.addChild( countingCheckbox );
-    }
-  } );
-
-  // "Play Area" (a11y)
-  this.pdomPlayAreaNode.accessibleOrder = [
-    this.areaDisplayNode,
-    this.factorsBox,
-    this.areaBox,
-    this.productsSelectionPanel,
-    this.calculationSelectionPanel,
-    this.partitionSelectionPanel,
-    this.calculationNode
-  ].filter( function( node ) { return node !== undefined; } ); // this.partitionSelectionPanel may not exist
-
-  // "Control Panel" (a11y)
-  this.pdomControlAreaNode.accessibleOrder = [
-    gridCheckbox,
-    tileCheckbox,
-    countingCheckbox,
-    this.sceneSelectionNode,
-    this.resetAllButton
-  ];
-}
-
-areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
-
-inherit( AreaScreenView, ProportionalAreaScreenView, {
+class ProportionalAreaScreenView extends AreaScreenView {
   /**
-   * @protected
-   * @override
+   * @extends {AreaScreenView}
    *
-   * @returns {Array.<Node>}
+   * @param {ProportionalAreaModel} model
+   * @param {Object} [options]
    */
-  getRightAlignNodes: function() {
-    return AreaScreenView.prototype.getRightAlignNodes.call( this ).concat( [ this.sceneSelectionNode ] );
-  },
+  constructor( model, options ) {
+    assert && assert( model instanceof ProportionalAreaModel );
+
+    let sceneSelectionNode;
+    let partitionSelectionPanel;
+
+    const currentAreaOrientationProperty = new DynamicProperty( model.currentAreaProperty, {
+      derive: 'visiblePartitionOrientationProperty',
+      bidirectional: true
+    } );
+
+    // Should have its own align group, so we don't modify other sizes
+    const partitionSelectionAlignGroup = new AlignGroup();
+
+    options = merge( {
+      decimalPlaces: 0,
+      isProportional: true,
+      getRightAlignNodes: nodes => {
+        sceneSelectionNode = new SceneRadioButtonGroup( model );
+        return [
+          ...nodes,
+          sceneSelectionNode
+        ];
+      },
+      getSelectionNodesExtras: screenView => {
+        partitionSelectionPanel = screenView.createPanelContent(
+          partitionString,
+          AreaModelCommonGlobals.panelAlignGroup,
+          new PartitionRadioButtonGroup( currentAreaOrientationProperty, partitionSelectionAlignGroup )
+        );
+        return partitionSelectionPanel;
+      }
+    }, options );
+
+    super( model, options );
+
+    // @private {Node} - Scene selection, created before super call since it will be added in it.
+    this.sceneSelectionNode = sceneSelectionNode;
+
+    // @private {Node} - Allows controlling which partition is currently visible (if we only show one)
+    this.partitionSelectionPanel = partitionSelectionPanel;
+
+    // Checkboxes
+    const gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
+      // pdom
+      labelTagName: 'label',
+      labelContent: gridLinesLabelString
+    } );
+    const tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
+      // pdom
+      labelTagName: 'label',
+      labelContent: base10AreaTilesString
+    } );
+    const countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
+      // pdom
+      labelTagName: 'label',
+      labelContent: countingNumbersLabelString,
+      descriptionContent: countingNumbersDescriptionString
+    } );
+
+    const checkboxContainer = new VBox( {
+      children: [ gridCheckbox, countingCheckbox, tileCheckbox ],
+      align: 'left',
+      spacing: 20,
+      // Manual positioning works best here
+      top: 50,
+      left: 600
+    } );
+    this.addChild( checkboxContainer );
+
+    model.currentAreaProperty.link( function( area ) {
+      checkboxContainer.removeAllChildren();
+
+      // Don't show the grid/tiles checkboxes if counting is enabled
+      if ( !area.countingAvailable ) {
+        checkboxContainer.addChild( gridCheckbox );
+        if ( area.tilesAvailable ) {
+          checkboxContainer.addChild( tileCheckbox );
+        }
+      }
+      else {
+        checkboxContainer.addChild( countingCheckbox );
+      }
+    } );
+
+    // "Play Area" (a11y)
+    this.pdomPlayAreaNode.accessibleOrder = [
+      this.areaDisplayNode,
+      this.factorsBox,
+      this.areaBox,
+      this.productsSelectionPanel,
+      this.calculationSelectionPanel,
+      this.partitionSelectionPanel,
+      this.calculationNode
+    ].filter( function( node ) { return node !== undefined; } ); // this.partitionSelectionPanel may not exist
+
+    // "Control Panel" (a11y)
+    this.pdomControlAreaNode.accessibleOrder = [
+      gridCheckbox,
+      tileCheckbox,
+      countingCheckbox,
+      this.sceneSelectionNode,
+      this.resetAllButton
+    ];
+  }
 
   /**
    * @protected
    * @override
    *
+   * @param {*} partitionSelectionPanel
    * @returns {Property.<Array.<Node>>}
    */
-  getSelectionNodesProperty: function() {
-    const self = this;
-
+  getSelectionNodesProperty( partitionSelectionPanel ) {
     // Use a Property here so we don't recreate when we don't have to (just on area changes)
     const hasPartitionSelectionProperty = new DerivedProperty( [ this.model.currentAreaProperty ], function( area ) {
       return area.partitionLineChoice === PartitionLineChoice.ONE;
@@ -170,11 +169,11 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
 
     // Conditionally include our partition selection on top of what else is included
     return new DerivedProperty(
-      [ AreaScreenView.prototype.getSelectionNodesProperty.call( this ), hasPartitionSelectionProperty ],
+      [ super.getSelectionNodesProperty(), hasPartitionSelectionProperty ],
       function( selectionNodes, hasPartitionSelection ) {
-        return hasPartitionSelection ? selectionNodes.concat( [ self.partitionSelectionPanel ] ) : selectionNodes;
+        return hasPartitionSelection ? selectionNodes.concat( [ partitionSelectionPanel ] ) : selectionNodes;
       } );
-  },
+  }
 
   /**
    * Creates the main area display view for the screen.
@@ -184,7 +183,7 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
    * @param {ProportionalAreaModel} model
    * @returns {ProportionalAreaDisplayNode}
    */
-  createAreaDisplayNode: function( model ) {
+  createAreaDisplayNode( model ) {
     return new ProportionalAreaDisplayNode( model.areaDisplay, model.partialProductsChoiceProperty, {
       gridLinesVisibleProperty: model.gridLinesVisibleProperty,
       tilesVisibleProperty: model.tilesVisibleProperty,
@@ -194,7 +193,7 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
     }, {
       translation: this.getDisplayTranslation()
     } );
-  },
+  }
 
   /**
    * Creates the "factors" (dimensions) content for the accordion box.
@@ -205,9 +204,9 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
    * @param {number} decimalPlaces
    * @returns {Node}
    */
-  createFactorsNode: function( model, decimalPlaces ) {
+  createFactorsNode( model, decimalPlaces ) {
     return new ProportionalFactorsNode( model.currentAreaProperty, model.areaDisplay.activeTotalProperties, decimalPlaces );
-  },
+  }
 
   /**
    * Creates a grid icon.
@@ -215,7 +214,7 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
    *
    * @returns {Node}
    */
-  createGridIconNode: function() {
+  createGridIconNode() {
     const gridIconShape = new Shape()
       .moveTo( RADIO_ICON_SIZE / 4, 0 )
       .lineTo( RADIO_ICON_SIZE / 4, RADIO_ICON_SIZE )
@@ -232,7 +231,7 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
     return new Path( gridIconShape, {
       stroke: AreaModelCommonColorProfile.gridIconProperty
     } );
-  },
+  }
 
   /**
    * Creates a tile icon.
@@ -240,7 +239,7 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
    *
    * @returns {Node}
    */
-  createTileIconNode: function() {
+  createTileIconNode() {
     const tileIconOptions = {
       fill: AreaModelCommonColorProfile.smallTileProperty,
       stroke: AreaModelCommonColorProfile.tileIconStrokeProperty,
@@ -263,7 +262,7 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
       align: 'top',
       spacing: RADIO_ICON_SIZE / 8
     } );
-  },
+  }
 
   /**
    * Creates a counting icon.
@@ -271,12 +270,14 @@ inherit( AreaScreenView, ProportionalAreaScreenView, {
    *
    * @returns {Node}
    */
-  createCountingIconNode: function() {
+  createCountingIconNode() {
     // Hardcoded string, see https://github.com/phetsims/area-model-common/issues/104
     return new Text( '123', {
       font: AreaModelCommonConstants.COUNTING_ICON_FONT
     } );
   }
-} );
+}
+
+areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
 
 export default ProportionalAreaScreenView;
