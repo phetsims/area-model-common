@@ -42,9 +42,7 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         font: AreaModelCommonConstants.SYMBOL_FONT,
         fill: new DerivedProperty(
           [ model.partialProductsChoiceProperty, model.colorProperties.get( orientation ) ],
-          function( value, color ) {
-            return value === PartialProductsChoice.FACTORS ? color : 'black';
-          } )
+          ( value, color ) => value === PartialProductsChoice.FACTORS ? color : 'black' )
       } );
     } );
 

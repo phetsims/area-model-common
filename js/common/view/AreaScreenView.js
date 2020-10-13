@@ -114,13 +114,11 @@ class AreaScreenView extends ScreenView {
     const selectionContent = new VBox( {
       spacing: 15
     } );
-    this.getSelectionNodesProperty( config.getSelectionNodesExtras( this ) ).link( function( selectionNodes ) {
-      selectionContent.children = interleave( selectionNodes, function() {
-        return new Line( {
-          x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
-          stroke: AreaModelCommonColorProfile.selectionSeparatorProperty
-        } );
-      } );
+    this.getSelectionNodesProperty( config.getSelectionNodesExtras( this ) ).link( selectionNodes => {
+      selectionContent.children = interleave( selectionNodes, () => new Line( {
+        x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
+        stroke: AreaModelCommonColorProfile.selectionSeparatorProperty
+      } ) );
     } );
 
     // @protected {Node} (a11y) - Shows radio button groups to select partial product / calculation / partition line options.
@@ -214,7 +212,7 @@ class AreaScreenView extends ScreenView {
 
     // @protected {Node} (a11y) - Reset all button
     this.resetAllButton = new ResetAllButton( {
-      listener: function() {
+      listener: () => {
         model.reset();
       },
       right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,

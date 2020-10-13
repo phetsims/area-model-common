@@ -12,7 +12,6 @@ import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
 
 class AreaModelCommonRadioButtonGroup extends RadioButtonGroup {
-
   /**
    * @param {Property.<*>} property
    * @param {Array.<Object>} items - See RadioButtonGroup for more info
