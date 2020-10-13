@@ -90,8 +90,6 @@ class GameAreaScreenView extends ScreenView {
 
     super();
 
-    const self = this;
-
     // @private {Node} - The "left" half of the sliding layer, displayed first
     this.levelSelectionLayer = new Node();
 
@@ -108,9 +106,9 @@ class GameAreaScreenView extends ScreenView {
       cachedNodes: [ this.levelSelectionLayer, this.challengeLayer ]
     } );
     this.addChild( this.transitionNode );
-    model.currentLevelProperty.lazyLink( function( level ) {
+    model.currentLevelProperty.lazyLink( level => {
       if ( level ) {
-        self.transitionNode.slideLeftTo( self.challengeLayer, {
+        this.transitionNode.slideLeftTo( this.challengeLayer, {
           duration: 0.4,
           targetOptions: {
             easing: Easing.QUADRATIC_IN_OUT
@@ -118,7 +116,7 @@ class GameAreaScreenView extends ScreenView {
         } );
       }
       else {
-        self.transitionNode.dissolveTo( self.levelSelectionLayer, {
+        this.transitionNode.dissolveTo( this.levelSelectionLayer, {
           duration: 0.4,
           gamma: 2.2,
           targetOptions: {
@@ -128,32 +126,26 @@ class GameAreaScreenView extends ScreenView {
       }
     } );
 
-    const levelIcons = LEVEL_ICON_IMAGES.map( function( iconImage ) {
-      return new Image( iconImage );
-    } );
+    const levelIcons = LEVEL_ICON_IMAGES.map( iconImage => new Image( iconImage ) );
 
     const buttonSpacing = 30;
-    const levelButtons = model.levels.map( function( level, index ) {
-      return new LevelSelectionButton( levelIcons[ index ], level.scoreProperty, {
+    const levelButtons = model.levels.map( ( level, index ) => new LevelSelectionButton( levelIcons[ index ], level.scoreProperty, {
         scoreDisplayConstructor: ScoreDisplayStars,
         scoreDisplayOptions: {
           numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
           perfectScore: AreaModelCommonConstants.PERFECT_SCORE
         },
-        listener: function() {
+        listener: () => {
           model.selectLevel( level );
         },
         baseColor: level.colorProperty
-      } );
-    } );
+      } ) );
 
     this.levelSelectionLayer.addChild( new VBox( {
-      children: _.chunk( levelButtons, 3 ).map( function( children ) {
-        return new HBox( {
+      children: _.chunk( levelButtons, 3 ).map( children => new HBox( {
           children: children,
           spacing: buttonSpacing
-        } );
-      } ),
+        } ) ),
       spacing: buttonSpacing,
       center: this.layoutBounds.center
     } ) );
@@ -168,7 +160,7 @@ class GameAreaScreenView extends ScreenView {
     let lastKnownLevel = null;
     // Create a property that holds the "last known" level, so that we don't change the view when we are switching
     // away from the current level back to the level selection.
-    const lastLevelProperty = new DerivedProperty( [ model.currentLevelProperty ], function( level ) {
+    const lastLevelProperty = new DerivedProperty( [ model.currentLevelProperty ], level => {
       level = level || lastKnownLevel;
       lastKnownLevel = level;
       return level;
@@ -182,16 +174,14 @@ class GameAreaScreenView extends ScreenView {
         defaultValue: 1
       } ),
       numberOfChallengesProperty: new NumberProperty( AreaModelCommonConstants.NUM_CHALLENGES ),
-      levelProperty: new DerivedProperty( [ lastLevelProperty ], function( level ) {
-        return level ? level.number : 1;
-      } ),
+      levelProperty: new DerivedProperty( [ lastLevelProperty ], level => level ? level.number : 1 ),
       scoreDisplayConstructor: ScoreDisplayLabeledStars,
       scoreDisplayOptions: {
         numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
         perfectScore: AreaModelCommonConstants.PERFECT_SCORE
       },
       startOverButtonOptions: {
-        listener: function() {
+        listener: () => {
           // Reset the level on "Start Over", see https://github.com/phetsims/area-model-common/issues/87
           model.currentLevelProperty.value.startOver();
           model.currentLevelProperty.value = null;
@@ -219,20 +209,20 @@ class GameAreaScreenView extends ScreenView {
     this.challengeLayer.addChild( promptText );
     new DynamicProperty( model.currentLevelProperty, {
       derive: 'currentChallengeProperty'
-    } ).link( function( challenge ) {
+    } ).link( challenge => {
       // Could be null
       if ( challenge ) {
         promptText.text = challenge.description.getPromptString();
         // Center around the area's center.
-        promptText.centerX = self.layoutBounds.left + AreaModelCommonConstants.GAME_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
+        promptText.centerX = this.layoutBounds.left + AreaModelCommonConstants.GAME_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
         // Don't let it go off the left side of the screen
-        promptText.left = Math.max( promptText.left, self.layoutBounds.left + 20 );
+        promptText.left = Math.max( promptText.left, this.layoutBounds.left + 20 );
       }
     } );
 
     // Reset All button
     const resetAllButton = new ResetAllButton( {
-      listener: function() {
+      listener: () => {
         model.reset();
       },
       right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,
@@ -247,7 +237,7 @@ class GameAreaScreenView extends ScreenView {
     // @private {GameAreaDisplay}
     this.areaDisplay = new GameAreaDisplay( model.currentChallengeProperty );
 
-    const gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEntryProperty, model.stateProperty, function( term ) {
+    const gameAreaNode = new GameAreaDisplayNode( this.areaDisplay, model.activeEntryProperty, model.stateProperty, term => {
       model.setActiveTerm( term );
     } );
     this.challengeLayer.addChild( gameAreaNode );
@@ -263,9 +253,7 @@ class GameAreaScreenView extends ScreenView {
     const factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
 
     // If we have a polynomial, don't use this editable property (use the polynomial editor component instead)
-    const totalTermEntryProperty = new DerivedProperty( [ this.areaDisplay.totalEntriesProperty ], function( totalEntries ) {
-      return totalEntries.length === 1 ? totalEntries[ 0 ] : new Entry( null );
-    } );
+    const totalTermEntryProperty = new DerivedProperty( [ this.areaDisplay.totalEntriesProperty ], totalEntries => totalEntries.length === 1 ? totalEntries[ 0 ] : new Entry( null ) );
 
     const totalNode = new GameEditableLabelNode( {
       entryProperty: totalTermEntryProperty,
@@ -277,7 +265,7 @@ class GameAreaScreenView extends ScreenView {
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
       editFont: AreaModelCommonConstants.GAME_TOTAL_FONT
     } );
-    const polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalEntriesProperty, function() {
+    const polynomialEditNode = new PolynomialEditNode( this.areaDisplay.totalProperty, this.areaDisplay.totalEntriesProperty, () => {
       if ( model.stateProperty.value === GameState.WRONG_FIRST_ANSWER ) {
         model.stateProperty.value = GameState.SECOND_ATTEMPT;
       }
@@ -286,7 +274,7 @@ class GameAreaScreenView extends ScreenView {
       font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT,
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
     } );
-    this.areaDisplay.totalProperty.link( function( total ) {
+    this.areaDisplay.totalProperty.link( total => {
       if ( total ) {
         polynomialReadoutText.text = total.toRichString( false );
       }
@@ -295,7 +283,7 @@ class GameAreaScreenView extends ScreenView {
     const totalContainer = new Node();
     Property.multilink(
       [ this.areaDisplay.totalEntriesProperty, model.stateProperty ],
-      function( totalEntries, gameState ) {
+      ( totalEntries, gameState ) => {
         if ( totalEntries.length > 1 ) {
           if ( totalEntries[ 0 ].displayType === EntryDisplayType.EDITABLE &&
                gameState !== GameState.CORRECT_ANSWER &&
@@ -335,7 +323,7 @@ class GameAreaScreenView extends ScreenView {
      * @param {function} listener - The callback for when the button is pressed
      * @param {Property.<boolean>} [enabledProperty]
      */
-    function createGameButton( label, listener, enabledProperty ) {
+    const createGameButton = ( label, listener, enabledProperty ) => {
       const button = new RectangularPushButton( {
         content: new Text( label, {
           font: AreaModelCommonConstants.BUTTON_FONT,
@@ -348,26 +336,26 @@ class GameAreaScreenView extends ScreenView {
         centerX: panelBox.centerX,
         top: panelBox.bottom + 80
       } );
-      enabledProperty && enabledProperty.link( function( enabled ) {
+      enabledProperty && enabledProperty.link( enabled => {
         button.enabled = enabled;
       } );
-      self.challengeLayer.addChild( button );
+      this.challengeLayer.addChild( button );
       return button;
     }
 
-    const checkButton = createGameButton( checkString, function() {
+    const checkButton = createGameButton( checkString, () => {
       model.check();
     }, model.allowCheckingProperty );
 
-    const tryAgainButton = createGameButton( tryAgainString, function() {
+    const tryAgainButton = createGameButton( tryAgainString, () => {
       model.tryAgain();
     } );
 
-    const nextButton = createGameButton( nextString, function() {
+    const nextButton = createGameButton( nextString, () => {
       model.next();
     } );
 
-    const showAnswerButton = createGameButton( showAnswerString, function() {
+    const showAnswerButton = createGameButton( showAnswerString, () => {
       model.showAnswer();
     } );
 
@@ -378,9 +366,7 @@ class GameAreaScreenView extends ScreenView {
         content: new FaceNode( 40 ),
         top: showAnswerButton.bottom + 10,
         centerX: showAnswerButton.centerX,
-        listener: function() {
-          model.cheat();
-        }
+        listener: () => model.cheat()
       } );
       this.challengeLayer.addChild( cheatButton );
     }
@@ -405,13 +391,13 @@ class GameAreaScreenView extends ScreenView {
       new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
       new StarNode()
     ], 100 );
-    Orientation.VALUES.forEach( function( orientation ) {
+    Orientation.VALUES.forEach( orientation => {
       const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
 
-      _.range( 1, 10 ).forEach( function( digit ) {
-        [ -1, 1 ].forEach( function( sign ) {
+      _.range( 1, 10 ).forEach( digit => {
+        [ -1, 1 ].forEach( sign => {
           const powers = model.hasExponents ? [ 0, 1, 2 ] : [ 0, 0, 0 ];
-          powers.forEach( function( power ) {
+          powers.forEach( power => {
             rewardNodes.push( new RichText( new Term( sign * digit, power ).toRichString( false ), {
               font: AreaModelCommonConstants.REWARD_NODE_FONT,
               fill: colorProperty
@@ -423,7 +409,7 @@ class GameAreaScreenView extends ScreenView {
 
     let levelCompletedNode = null;
 
-    model.stateProperty.link( function( state, oldState ) {
+    model.stateProperty.link( ( state, oldState ) => {
       // When we switch back to level selection, try to leave things as they were.
       if ( state !== null ) {
         gameAreaNode.visible = state !== GameState.LEVEL_COMPLETE;
@@ -462,11 +448,9 @@ class GameAreaScreenView extends ScreenView {
           AreaModelCommonConstants.PERFECT_SCORE,
           AreaModelCommonConstants.NUM_CHALLENGES,
           false, 0, 0, 0,
-          function() {
-            model.moveToLevelSelection();
-          }, {
+          () => model.moveToLevelSelection(), {
             cornerRadius: 8,
-            center: self.layoutBounds.center,
+            center: this.layoutBounds.center,
             fill: level.colorProperty,
             contentMaxWidth: 400
           } );
@@ -476,17 +460,17 @@ class GameAreaScreenView extends ScreenView {
         ];
 
         if ( level.scoreProperty.value === AreaModelCommonConstants.PERFECT_SCORE ) {
-          self.rewardNode = new RewardNode( {
+          this.rewardNode = new RewardNode( {
             nodes: rewardNodes
           } );
-          levelCompleteContainer.insertChild( 0, self.rewardNode );
+          levelCompleteContainer.insertChild( 0, this.rewardNode );
         }
       }
       else {
-        if ( self.rewardNode ) {
-          self.rewardNode.detach();
-          self.rewardNode.dispose();
-          self.rewardNode = null;
+        if ( this.rewardNode ) {
+          this.rewardNode.detach();
+          this.rewardNode.dispose();
+          this.rewardNode = null;
         }
       }
     } );
