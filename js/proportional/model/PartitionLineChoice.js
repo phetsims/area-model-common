@@ -6,24 +6,14 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Enumeration from '../../../../phet-core/js/Enumeration.js';
 import areaModelCommon from '../../areaModelCommon.js';
 
-const PartitionLineChoice = {
-  NONE: 'NONE', // No partition lines
-  ONE: 'ONE', // One at a time (toggles between the two)
-  BOTH: 'BOTH' // Both partition lines available at all times
-};
+const PartitionLineChoice = Enumeration.byKeys( [
+  'NONE', // No partition lines
+  'ONE', // One at a time (toggles between the two)
+  'BOTH' // Both partition lines available at all times
+] );
 
 areaModelCommon.register( 'PartitionLineChoice', PartitionLineChoice );
-
-// @public {Array.<PartitionLineChoice>} - All values the enumeration can take.
-PartitionLineChoice.VALUES = [
-  PartitionLineChoice.NONE,
-  PartitionLineChoice.ONE,
-  PartitionLineChoice.BOTH
-];
-
-// verify that enumeration is immutable, without the runtime penalty in production code
-if ( assert ) { Object.freeze( PartitionLineChoice ); }
-
 export default PartitionLineChoice;
