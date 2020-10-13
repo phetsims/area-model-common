@@ -8,66 +8,57 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaChallenge from './AreaChallenge.js';
 import GameState from './GameState.js';
 
-/**
- * @constructor
- * @extends {Object}
- *
- * @param {number} number
- * @param {AreaChallengeType} type
- * @param {Property.<Color>} colorProperty
- * @param {Array.<AreaChallengeDescription>} challengeDescriptions
- */
-function AreaLevel( number, type, colorProperty, challengeDescriptions ) {
-  const self = this;
+class AreaLevel {
+  /**
+   * @param {number} number
+   * @param {AreaChallengeType} type
+   * @param {Property.<Color>} colorProperty
+   * @param {Array.<AreaChallengeDescription>} challengeDescriptions
+   */
+  constructor( number, type, colorProperty, challengeDescriptions ) {
 
-  // @public {number} - Will be the value 1 for "Level 1". Not using the 0-based values used in VEGAS, so sometimes
-  // this value will need to be decremented when passed to VEGAS components.
-  this.number = number;
+    // @public {number} - Will be the value 1 for "Level 1". Not using the 0-based values used in VEGAS, so sometimes
+    // this value will need to be decremented when passed to VEGAS components.
+    this.number = number;
 
-  // @public {AreaChallengeType}
-  this.type = type;
+    // @public {AreaChallengeType}
+    this.type = type;
 
-  // @public {Property.<Color>}
-  this.colorProperty = colorProperty;
+    // @public {Property.<Color>}
+    this.colorProperty = colorProperty;
 
-  // @public {Array.<AreaChallengeDescription>} - Descriptions for each type of level
-  this.challengeDescriptions = challengeDescriptions;
+    // @public {Array.<AreaChallengeDescription>} - Descriptions for each type of level
+    this.challengeDescriptions = challengeDescriptions;
 
-  // @public {Property.<number>} - Ranges from 0 to AreaModelCommonConstants.PERFECT_SCORE
-  //                               (since 2 points are rewarded for first attempt correct)
-  this.scoreProperty = new NumberProperty( 0 );
+    // @public {Property.<number>} - Ranges from 0 to AreaModelCommonConstants.PERFECT_SCORE
+    //                               (since 2 points are rewarded for first attempt correct)
+    this.scoreProperty = new NumberProperty( 0 );
 
-  // @public {Array.<AreaChallenge>}
-  this.challenges = this.generateChallenges();
+    // @public {Array.<AreaChallenge>}
+    this.challenges = this.generateChallenges();
 
-  // @public {Property.<number>} - The index of the current challenge.
-  this.challengeIndexProperty = new NumberProperty( 0 );
+    // @public {Property.<number>} - The index of the current challenge.
+    this.challengeIndexProperty = new NumberProperty( 0 );
 
-  // @public {Property.<AreaChallenge>}
-  this.currentChallengeProperty = new DerivedProperty( [ this.challengeIndexProperty ], function( index ) {
-    return self.challenges[ index ];
-  } );
+    // @public {Property.<AreaChallenge>}
+    this.currentChallengeProperty = new DerivedProperty( [ this.challengeIndexProperty ], index => this.challenges[ index ] );
 
-  // @public {boolean} - Whether the level is finished
-  this.finished = false;
-}
+    // @public {boolean} - Whether the level is finished
+    this.finished = false;
+  }
 
-areaModelCommon.register( 'AreaLevel', AreaLevel );
-
-inherit( Object, AreaLevel, {
   /**
    * Generates six challenges.
    * @private
    *
    * @returns {Array.<AreaChallenge>}
    */
-  generateChallenges: function() {
+  generateChallenges() {
 
     // Always include the first description as the first challenge
     let descriptions = [ this.challengeDescriptions[ 0 ] ];
@@ -81,10 +72,8 @@ inherit( Object, AreaLevel, {
     }
 
     // Generate based on the descriptions
-    return descriptions.map( function( description ) {
-      return new AreaChallenge( description );
-    } );
-  },
+    return descriptions.map( description => new AreaChallenge( description ) );
+  }
 
   /**
    * Selects the level (resetting progress and generates a new challenge).  It is not the same as starting the level,
@@ -92,26 +81,26 @@ inherit( Object, AreaLevel, {
    * the level until it's selected again (unless it was already finished).
    * @public
    */
-  select: function() {
+  select() {
     if ( this.finished ) {
       this.finished = false;
       this.reset();
     }
-  },
+  }
 
   /**
    * Marks the level as finished.  This means challenges will be regenerated if the level is selected again.
    * @public
    */
-  finish: function() {
+  finish() {
     this.finished = true;
-  },
+  }
 
   /**
    * Move to the next challenge.
    * @public
    */
-  next: function() {
+  next() {
     if ( this.challengeIndexProperty.value === AreaModelCommonConstants.NUM_CHALLENGES - 1 ) {
       this.finish();
       this.currentChallengeProperty.value.stateProperty.value = GameState.LEVEL_COMPLETE;
@@ -119,7 +108,7 @@ inherit( Object, AreaLevel, {
     else {
       this.challengeIndexProperty.value += 1;
     }
-  },
+  }
 
   /**
    * When we start over, we want to reset the score, but not immediately change the challenges yet (we'll wait until
@@ -129,16 +118,16 @@ inherit( Object, AreaLevel, {
    * See https://github.com/phetsims/area-model-common/issues/87 and
    * https://github.com/phetsims/area-model-common/issues/96.
    */
-  startOver: function() {
+  startOver() {
     this.scoreProperty.reset();
     this.finish();
-  },
+  }
 
   /**
    * Returns the model to its initial state.
    * @public
    */
-  reset: function() {
+  reset() {
     this.challenges = this.generateChallenges();
 
     this.scoreProperty.reset();
@@ -146,6 +135,8 @@ inherit( Object, AreaLevel, {
 
     this.challengeIndexProperty.notifyListenersStatic();
   }
-} );
+}
+
+areaModelCommon.register( 'AreaLevel', AreaLevel );
 
 export default AreaLevel;

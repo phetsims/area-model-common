@@ -7,10 +7,9 @@
  */
 
 import Permutation from '../../../../dot/js/Permutation.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import areaModelCommon from '../../areaModelCommon.js';
+import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import GenericLayout from '../../generic/model/GenericLayout.js';
 import AreaChallengeType from './AreaChallengeType.js';
@@ -37,65 +36,139 @@ const permutations = {
   3: Permutation.permutations( 3 )
 };
 
-/**
- * @constructor
- * @extends {Object}
- *
- * @param {Object} config
- */
-function AreaChallengeDescription( config ) {
-  config = merge( {
-    // required
-    horizontal: null, // {Array.<EntryType>}
-    vertical: null, // {Array.<EntryType>}
-    products: null, // {Array.<Array.<EntryType>>}
-    total: null, // {EntryType}
-    horizontalTotal: null, // {EntryType}
-    verticalTotal: null, // {EntryType}
-    type: null, // {AreaChallengeType}
+class AreaChallengeDescription {
+  /**
+   * @param {Object} config
+   */
+  constructor( config ) {
+    config = merge( {
+      // required
+      horizontal: null, // {Array.<EntryType>}
+      vertical: null, // {Array.<EntryType>}
+      products: null, // {Array.<Array.<EntryType>>}
+      total: null, // {EntryType}
+      horizontalTotal: null, // {EntryType}
+      verticalTotal: null, // {EntryType}
+      type: null, // {AreaChallengeType}
 
-    // optional
-    shufflable: true,
-    unique: true
-  }, config );
+      // optional
+      shufflable: true,
+      unique: true
+    }, config );
 
-  assert && assert( Array.isArray( config.horizontal ) );
-  assert && assert( Array.isArray( config.vertical ) );
-  assert && assert( Array.isArray( config.products ) );
-  assert && assert( _.includes( EntryType.VALUES, config.total ) );
-  assert && assert( _.includes( EntryType.VALUES, config.horizontalTotal ) );
-  assert && assert( _.includes( EntryType.VALUES, config.verticalTotal ) );
-  assert && assert( _.includes( AreaChallengeType.VALUES, config.type ) );
+    assert && assert( Array.isArray( config.horizontal ) );
+    assert && assert( Array.isArray( config.vertical ) );
+    assert && assert( Array.isArray( config.products ) );
+    assert && assert( _.includes( EntryType.VALUES, config.total ) );
+    assert && assert( _.includes( EntryType.VALUES, config.horizontalTotal ) );
+    assert && assert( _.includes( EntryType.VALUES, config.verticalTotal ) );
+    assert && assert( _.includes( AreaChallengeType.VALUES, config.type ) );
 
-  // @public {OrientationPair.<Array.<EntryType>>} - Entry types for partition sizes
-  this.partitionTypes = new OrientationPair( config.horizontal, config.vertical );
+    // @public {OrientationPair.<Array.<EntryType>>} - Entry types for partition sizes
+    this.partitionTypes = new OrientationPair( config.horizontal, config.vertical );
 
-  // @public {Array.<Array.<EntryType>>} - Entry types for partitioned areas
-  this.productTypes = config.products;
+    // @public {Array.<Array.<EntryType>>} - Entry types for partitioned areas
+    this.productTypes = config.products;
 
-  // @public {OrientationPair.<EntryType>} - Entry types for horizontal and vertical dimension totals
-  this.dimensionTypes = new OrientationPair( config.horizontalTotal, config.verticalTotal );
+    // @public {OrientationPair.<EntryType>} - Entry types for horizontal and vertical dimension totals
+    this.dimensionTypes = new OrientationPair( config.horizontalTotal, config.verticalTotal );
 
-  // @public {EntryType} - Entry type for the total area
-  this.totalType = config.total;
+    // @public {EntryType} - Entry type for the total area
+    this.totalType = config.total;
 
-  // @public {AreaChallengeType} - The type of challenge
-  this.type = config.type;
+    // @public {AreaChallengeType} - The type of challenge
+    this.type = config.type;
 
-  // @public {boolean}
-  this.allowExponents = this.type === AreaChallengeType.VARIABLES;
+    // @public {boolean}
+    this.allowExponents = this.type === AreaChallengeType.VARIABLES;
 
-  // @public {boolean} - Whether transposing is supported
-  this.transposable = this.type === AreaChallengeType.NUMBERS;
+    // @public {boolean} - Whether transposing is supported
+    this.transposable = this.type === AreaChallengeType.NUMBERS;
 
-  // @public {boolean}
-  this.shufflable = config.shufflable;
+    // @public {boolean}
+    this.shufflable = config.shufflable;
 
-  // @public {boolean}
-  this.unique = config.unique;
+    // @public {boolean}
+    this.unique = config.unique;
 
-  // @public {GenericLayout}
-  this.layout = GenericLayout.fromValues( config.horizontal.length, config.vertical.length );
+    // @public {GenericLayout}
+    this.layout = GenericLayout.fromValues( config.horizontal.length, config.vertical.length );
+  }
+
+  /**
+   * Returns the string representing the prompt for this challenge (what should be done to solve it).
+   * @public
+   *
+   * @returns {string}
+   */
+  getPromptString() {
+    const hasAreaEntry = isEditable( this.totalType );
+    const numProductEntries = _.flatten( this.productTypes ).filter( isEditable ).length;
+    const numPartitionEntries = this.partitionTypes.horizontal.concat( this.partitionTypes.vertical ).filter( isEditable ).length;
+
+    const text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
+    assert && assert( text );
+
+    return text;
+  }
+
+  /**
+   * Creates a permuted/transposed version of this description, where allowed.
+   * @public
+   *
+   * @returns {AreaChallengeDescription}
+   */
+  getPermutedDescription() {
+    const options = {
+      horizontal: this.partitionTypes.horizontal,
+      vertical: this.partitionTypes.vertical,
+      products: this.productTypes,
+      total: this.totalType,
+      horizontalTotal: this.dimensionTypes.horizontal,
+      verticalTotal: this.dimensionTypes.vertical,
+      type: this.type,
+      transposable: this.transposable,
+      unique: this.unique
+    };
+
+    if ( this.shufflable ) {
+      // Horizontal shuffle
+      const horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
+      options.horizontal = horizontalPermutation.apply( options.horizontal );
+      options.products = options.products.map( row => horizontalPermutation.apply( row ) );
+
+      // Vertical shuffle
+      const verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
+      options.vertical = verticalPermutation.apply( options.vertical );
+      options.products = verticalPermutation.apply( options.products );
+    }
+
+    if ( this.transposable && phet.joist.random.nextBoolean() ) {
+      const tmpPartition = options.horizontal;
+      options.horizontal = options.vertical;
+      options.vertical = tmpPartition;
+
+      const tmpTotal = options.horizontalTotal;
+      options.horizontalTotal = options.verticalTotal;
+      options.verticalTotal = tmpTotal;
+
+      options.products = _.range( options.vertical.length ).map( verticalIndex => _.range( options.horizontal.length ).map( horizontalIndex => options.products[ horizontalIndex ][ verticalIndex ] ) );
+    }
+
+    return new AreaChallengeDescription( options );
+  }
+
+  /**
+   * Returns a conditional value (like a ternary) based on whether this is a number or variable challenge.
+   * @public
+   *
+   * @param {*} numberTypeValue
+   * @param {*} variableTypeValue
+   * @returns {*}
+   */
+  numberOrVariable( numberTypeValue, variableTypeValue ) {
+    return this.type === AreaChallengeType.VARIABLES ? variableTypeValue : numberTypeValue;
+  }
 }
 
 areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
@@ -125,89 +198,6 @@ promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
 function isEditable( type ) {
   return type === EntryType.EDITABLE;
 }
-
-inherit( Object, AreaChallengeDescription, {
-  /**
-   * Returns the string representing the prompt for this challenge (what should be done to solve it).
-   * @public
-   *
-   * @returns {string}
-   */
-  getPromptString: function() {
-    const hasAreaEntry = isEditable( this.totalType );
-    const numProductEntries = _.flatten( this.productTypes ).filter( isEditable ).length;
-    const numPartitionEntries = this.partitionTypes.horizontal.concat( this.partitionTypes.vertical ).filter( isEditable ).length;
-
-    const text = promptMap[ getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) ];
-    assert && assert( text );
-
-    return text;
-  },
-
-  /**
-   * Creates a permuted/transposed version of this description, where allowed.
-   * @public
-   *
-   * @returns {AreaChallengeDescription}
-   */
-  getPermutedDescription: function() {
-    const options = {
-      horizontal: this.partitionTypes.horizontal,
-      vertical: this.partitionTypes.vertical,
-      products: this.productTypes,
-      total: this.totalType,
-      horizontalTotal: this.dimensionTypes.horizontal,
-      verticalTotal: this.dimensionTypes.vertical,
-      type: this.type,
-      transposable: this.transposable,
-      unique: this.unique
-    };
-
-    if ( this.shufflable ) {
-      // Horizontal shuffle
-      const horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
-      options.horizontal = horizontalPermutation.apply( options.horizontal );
-      options.products = options.products.map( function( row ) {
-        return horizontalPermutation.apply( row );
-      } );
-
-      // Vertical shuffle
-      const verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
-      options.vertical = verticalPermutation.apply( options.vertical );
-      options.products = verticalPermutation.apply( options.products );
-    }
-
-    if ( this.transposable && phet.joist.random.nextBoolean() ) {
-      const tmpPartition = options.horizontal;
-      options.horizontal = options.vertical;
-      options.vertical = tmpPartition;
-
-      const tmpTotal = options.horizontalTotal;
-      options.horizontalTotal = options.verticalTotal;
-      options.verticalTotal = tmpTotal;
-
-      options.products = _.range( options.vertical.length ).map( function( verticalIndex ) {
-        return _.range( options.horizontal.length ).map( function( horizontalIndex ) {
-          return options.products[ horizontalIndex ][ verticalIndex ];
-        } );
-      } );
-    }
-
-    return new AreaChallengeDescription( options );
-  },
-
-  /**
-   * Returns a conditional value (like a ternary) based on whether this is a number or variable challenge.
-   * @public
-   *
-   * @param {*} numberTypeValue
-   * @param {*} variableTypeValue
-   * @returns {*}
-   */
-  numberOrVariable: function( numberTypeValue, variableTypeValue ) {
-    return this.type === AreaChallengeType.VARIABLES ? variableTypeValue : numberTypeValue;
-  }
-} );
 
 /*---------------------------------------------------------------------------*
 * Numbers 1

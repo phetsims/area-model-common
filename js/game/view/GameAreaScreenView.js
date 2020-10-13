@@ -341,7 +341,7 @@ class GameAreaScreenView extends ScreenView {
       } );
       this.challengeLayer.addChild( button );
       return button;
-    }
+    };
 
     const checkButton = createGameButton( checkString, () => {
       model.check();
