@@ -7,14 +7,14 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import RadioButtonGroup from '../../../../sun/js/buttons/RadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
 
-class AreaModelCommonRadioButtonGroup extends RadioButtonGroup {
+class AreaModelCommonRadioButtonGroup extends RectangularRadioButtonGroup {
   /**
    * @param {Property.<*>} property
-   * @param {Array.<Object>} items - See RadioButtonGroup for more info
+   * @param {Array.<Object>} items - See RectangularRadioButtonGroup for more info
    * @param {Object} [options]
    */
   constructor( property, items, options ) {
