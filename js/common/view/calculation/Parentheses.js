@@ -115,8 +115,6 @@ class Parentheses extends HBox {
 
 areaModelCommon.register( 'Parentheses', Parentheses );
 
-Poolable.mixInto( Parentheses, {
-  initialize: Parentheses.prototype.initialize
-} );
+Poolable.mixInto( Parentheses );
 
 export default Parentheses;

@@ -71,8 +71,6 @@ class TermText extends RichText {
 
 areaModelCommon.register( 'TermText', TermText );
 
-Poolable.mixInto( TermText, {
-  initialize: TermText.prototype.initialize
-} );
+Poolable.mixInto( TermText );
 
 export default TermText;

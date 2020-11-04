@@ -64,8 +64,6 @@ class Plus extends Text {
 
 areaModelCommon.register( 'Plus', Plus );
 
-Poolable.mixInto( Plus, {
-  initialize: Plus.prototype.initialize
-} );
+Poolable.mixInto( Plus );
 
 export default Plus;

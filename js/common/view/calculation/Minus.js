@@ -65,8 +65,6 @@ class Minus extends Text {
 
 areaModelCommon.register( 'Minus', Minus );
 
-Poolable.mixInto( Minus, {
-  initialize: Minus.prototype.initialize
-} );
+Poolable.mixInto( Minus );
 
 export default Minus;

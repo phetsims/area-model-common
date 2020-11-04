@@ -62,8 +62,6 @@ class QuestionMark extends Text {
 
 areaModelCommon.register( 'QuestionMark', QuestionMark );
 
-Poolable.mixInto( QuestionMark, {
-  initialize: QuestionMark.prototype.initialize
-} );
+Poolable.mixInto( QuestionMark );
 
 export default QuestionMark;

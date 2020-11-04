@@ -64,8 +64,6 @@ class PlaceholderBox extends Rectangle {
 
 areaModelCommon.register( 'PlaceholderBox', PlaceholderBox );
 
-Poolable.mixInto( PlaceholderBox, {
-  initialize: PlaceholderBox.prototype.initialize
-} );
+Poolable.mixInto( PlaceholderBox );
 
 export default PlaceholderBox;

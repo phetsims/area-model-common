@@ -103,8 +103,6 @@ class MultiplyX extends HBox {
 
 areaModelCommon.register( 'MultiplyX', MultiplyX );
 
-Poolable.mixInto( MultiplyX, {
-  initialize: MultiplyX.prototype.initialize
-} );
+Poolable.mixInto( MultiplyX );
 
 export default MultiplyX;

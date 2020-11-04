@@ -70,8 +70,6 @@ class CalculationGroup extends HBox {
 
 areaModelCommon.register( 'CalculationGroup', CalculationGroup );
 
-Poolable.mixInto( CalculationGroup, {
-  initialize: CalculationGroup.prototype.initialize
-} );
+Poolable.mixInto( CalculationGroup );
 
 export default CalculationGroup;
