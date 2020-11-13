@@ -142,7 +142,7 @@ class ProportionalPartitionLineNode extends Node {
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
       ariaOrientation: orientation,
-      a11yMapValue: v => ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v,
+      a11yMapPDOMValue: v => ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v,
       roundToStepSize: true
     } );
 

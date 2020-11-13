@@ -145,7 +145,7 @@ class ProportionalFactorsNode extends Node {
       // pdom
       labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
       descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
-      a11yMapValue: value => Utils.toFixedNumber( value, decimalPlaces )
+      a11yMapPDOMValue: value => Utils.toFixedNumber( value, decimalPlaces )
     } );
   }
 }
