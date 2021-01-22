@@ -8,10 +8,11 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import Orientation from '../../../../phet-core/js/Orientation.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import dimensionForEach from '../../../../phet-core/js/dimensionForEach.js';
 import dimensionMap from '../../../../phet-core/js/dimensionMap.js';
 import merge from '../../../../phet-core/js/merge.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import Polynomial from '../../common/model/Polynomial.js';
@@ -44,17 +45,17 @@ class AreaChallenge {
 
     // @public {OrientationPair.<Array.<Term>>} - The actual partition sizes
     this.partitionSizes = OrientationPair.create( orientation => AreaChallenge.generatePartitionTerms(
-        description.partitionTypes.get( orientation ).length,
-        description.allowExponents
-      ) );
+      description.partitionTypes.get( orientation ).length,
+      description.allowExponents
+    ) );
 
     // @public {OrientationPair.<Array.<Entry>>} Entries for the size of each partition.
     this.partitionSizeEntries = OrientationPair.create( orientation => this.partitionSizes.get( orientation ).map( ( size, index ) => new Entry( size, {
-          type: description.partitionTypes.get( orientation )[ index ],
-          displayType: EntryType.toDisplayType( description.partitionTypes.get( orientation )[ index ] ),
-          inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
-          numberOfDigits: description.numberOrVariable( description.partitionTypes.get( orientation ).length - index, 1 )
-        } ) ) );
+      type: description.partitionTypes.get( orientation )[ index ],
+      displayType: EntryType.toDisplayType( description.partitionTypes.get( orientation )[ index ] ),
+      inputMethod: description.numberOrVariable( InputMethod.CONSTANT, InputMethod.TERM ),
+      numberOfDigits: description.numberOrVariable( description.partitionTypes.get( orientation ).length - index, 1 )
+    } ) ) );
 
     // @public {OrientationPair.<Term>|null} - If we're non-unique, it will hold the 0th-place coefficients (e.g. for
     // x+3 times x-7, it would hold the terms 3 and -7). It will always be two 1st-order polynomials times each other.
@@ -190,7 +191,7 @@ class AreaChallenge {
 
     // @private {boolean} - Pick an arbitrary side to be wrong in particular variables 6-1 cases, see
     // https://github.com/phetsims/area-model-common/issues/42
-    this.arbitraryNonUniqueWrongOrientation = phet.joist.random.nextBoolean() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
+    this.arbitraryNonUniqueWrongOrientation = dotRandom.nextBoolean() ? Orientation.HORIZONTAL : Orientation.VERTICAL;
   }
 
   /**
@@ -459,18 +460,18 @@ class AreaChallenge {
         return new Term( 1, power );
       }
       else {
-        const sign = phet.joist.random.nextBoolean() ? 1 : -1;
+        const sign = dotRandom.nextBoolean() ? 1 : -1;
 
         // Exclude a 1 if our length is 1 (so that we don't just have a single 1 as a dimensinon, so there is the
         // ability to have a partition line)
-        const digit = phet.joist.random.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
+        const digit = dotRandom.nextIntBetween( ( sign > 0 && quantity === 1 ) ? 2 : 1, 9 );
         return new Term( sign * digit, power );
       }
     }
     else {
 
       // Exclude a 1 if our length is 1
-      return new Term( phet.joist.random.nextIntBetween( quantity === 1 ? 2 : 1, 9 ) * Math.pow( 10, power ) );
+      return new Term( dotRandom.nextIntBetween( quantity === 1 ? 2 : 1, 9 ) * Math.pow( 10, power ) );
     }
   }
 }

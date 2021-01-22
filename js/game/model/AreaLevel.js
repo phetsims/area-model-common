@@ -8,6 +8,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaChallenge from './AreaChallenge.js';
@@ -64,11 +65,11 @@ class AreaLevel {
     let descriptions = [ this.challengeDescriptions[ 0 ] ];
 
     // Shuffle the rest of them in a random order
-    descriptions = descriptions.concat( phet.joist.random.shuffle( descriptions.slice( 1 ) ) );
+    descriptions = descriptions.concat( dotRandom.shuffle( descriptions.slice( 1 ) ) );
 
     // Then fill with random challenges if there are any more spaces
     while ( descriptions.length < AreaModelCommonConstants.NUM_CHALLENGES ) {
-      descriptions.push( phet.joist.random.sample( this.challengeDescriptions ) );
+      descriptions.push( dotRandom.sample( this.challengeDescriptions ) );
     }
 
     // Generate based on the descriptions

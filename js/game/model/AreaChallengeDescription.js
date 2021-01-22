@@ -6,6 +6,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import dotRandom from '../../../../dot/js/dotRandom.js';
 import Permutation from '../../../../dot/js/Permutation.js';
 import merge from '../../../../phet-core/js/merge.js';
 import areaModelCommon from '../../areaModelCommon.js';
@@ -133,17 +134,17 @@ class AreaChallengeDescription {
 
     if ( this.shufflable ) {
       // Horizontal shuffle
-      const horizontalPermutation = phet.joist.random.sample( permutations[ options.horizontal.length ] );
+      const horizontalPermutation = dotRandom.sample( permutations[ options.horizontal.length ] );
       options.horizontal = horizontalPermutation.apply( options.horizontal );
       options.products = options.products.map( row => horizontalPermutation.apply( row ) );
 
       // Vertical shuffle
-      const verticalPermutation = phet.joist.random.sample( permutations[ options.vertical.length ] );
+      const verticalPermutation = dotRandom.sample( permutations[ options.vertical.length ] );
       options.vertical = verticalPermutation.apply( options.vertical );
       options.products = verticalPermutation.apply( options.products );
     }
 
-    if ( this.transposable && phet.joist.random.nextBoolean() ) {
+    if ( this.transposable && dotRandom.nextBoolean() ) {
       const tmpPartition = options.horizontal;
       options.horizontal = options.vertical;
       options.vertical = tmpPartition;
