@@ -46,7 +46,7 @@ class Parentheses extends HBox {
       pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '('
     } );
-    this.leftParen.setAccessibleAttribute( 'form', 'prefix', {
+    this.leftParen.setPDOMAttribute( 'form', 'prefix', {
       namespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
@@ -59,7 +59,7 @@ class Parentheses extends HBox {
       pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: ')'
     } );
-    this.rightParen.setAccessibleAttribute( 'form', 'postfix', {
+    this.rightParen.setPDOMAttribute( 'form', 'postfix', {
       namespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
