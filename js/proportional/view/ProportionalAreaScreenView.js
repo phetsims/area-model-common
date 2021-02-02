@@ -134,7 +134,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
     } );
 
     // "Play Area" (a11y)
-    this.pdomPlayAreaNode.accessibleOrder = [
+    this.pdomPlayAreaNode.pdomOrder = [
       this.areaDisplayNode,
       this.factorsBox,
       this.areaBox,
@@ -145,7 +145,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
     ].filter( node => node !== undefined ); // this.partitionSelectionPanel may not exist
 
     // "Control Panel" (a11y)
-    this.pdomControlAreaNode.accessibleOrder = [
+    this.pdomControlAreaNode.pdomOrder = [
       gridCheckbox,
       tileCheckbox,
       countingCheckbox,
