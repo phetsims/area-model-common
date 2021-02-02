@@ -28,7 +28,7 @@ class PlaceholderBox extends Rectangle {
 
       // pdom
       tagName: 'mi',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: placeholderString
     } );
 

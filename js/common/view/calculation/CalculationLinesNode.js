@@ -45,10 +45,10 @@ class CalculationLinesNode extends Node {
     this.addChild( this.box );
 
     if ( !AreaModelCommonQueryParameters.rawMath ) {
-      this.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+      this.pdomNamespace = 'http://www.w3.org/1998/Math/MathML';
       this.tagName = 'math';
 
-      this.box.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+      this.box.pdomNamespace = 'http://www.w3.org/1998/Math/MathML';
       this.box.tagName = 'mtable';
     }
 
@@ -225,7 +225,7 @@ class CalculationLinesNode extends Node {
         line.node.accessibleVisible = false;
       }
       else {
-        lineNode.accessibleNamespace = 'http://www.w3.org/1998/Math/MathML';
+        lineNode.pdomNamespace = 'http://www.w3.org/1998/Math/MathML';
         lineNode.tagName = 'mtr';
       }
       if ( index > 0 ) {
@@ -238,7 +238,7 @@ class CalculationLinesNode extends Node {
 
             // pdom
             tagName: 'mtext',
-            accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+            pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
             innerContent: betweenCalculationLinesString
           } ) );
         }

@@ -33,7 +33,7 @@ class Parentheses extends HBox {
       // pdom
       align: 'bottom',
       tagName: 'mrow',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
     // @private {Text} - Persistent (since these are declared in the constructor instead of the initialize function,
@@ -43,7 +43,7 @@ class Parentheses extends HBox {
 
       // pdom
       tagName: 'mo',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '('
     } );
     this.leftParen.setAccessibleAttribute( 'form', 'prefix', {
@@ -56,7 +56,7 @@ class Parentheses extends HBox {
 
       // pdom
       tagName: 'mo',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: ')'
     } );
     this.rightParen.setAccessibleAttribute( 'form', 'postfix', {

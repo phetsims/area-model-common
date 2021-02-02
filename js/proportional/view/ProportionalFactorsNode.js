@@ -57,7 +57,7 @@ class ProportionalFactorsNode extends Node {
 
         // pdom
         tagName: 'mn',
-        accessibleNamespace: ns
+        pdomNamespace: ns
       } );
       activeTotalProperties.vertical.link( verticalTotal => {
         verticalNode.innerContent = '' + verticalTotal;
@@ -66,7 +66,7 @@ class ProportionalFactorsNode extends Node {
 
         // pdom
         tagName: 'mn',
-        accessibleNamespace: ns
+        pdomNamespace: ns
       } );
       activeTotalProperties.horizontal.link( horizontalTotal => {
         horizontalNode.innerContent = '' + horizontalTotal;
@@ -74,16 +74,16 @@ class ProportionalFactorsNode extends Node {
 
       const mathNode = new Node( {
         tagName: 'math',
-        accessibleNamespace: ns,
+        pdomNamespace: ns,
         children: [
           new Node( {
             tagName: 'mrow',
-            accessibleNamespace: ns,
+            pdomNamespace: ns,
             children: [
               verticalNode,
               new Node( {
                 tagName: 'mo',
-                accessibleNamespace: ns,
+                pdomNamespace: ns,
                 innerContent: '&times;'
               } ),
               horizontalNode

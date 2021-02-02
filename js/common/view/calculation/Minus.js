@@ -31,7 +31,7 @@ class Minus extends Text {
 
       // pdom
       tagName: 'mo',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML',
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
       innerContent: '&minus;'
     } );
 

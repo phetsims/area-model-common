@@ -23,7 +23,7 @@ class CalculationGroup extends HBox {
       align: 'bottom',
 
       // pdom
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
     this.initialize( nodes, spacing );

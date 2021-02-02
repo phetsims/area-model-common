@@ -28,7 +28,7 @@ class TermText extends RichText {
 
       // pdom
       tagName: 'mn',
-      accessibleNamespace: 'http://www.w3.org/1998/Math/MathML'
+      pdomNamespace: 'http://www.w3.org/1998/Math/MathML'
     } );
 
     this.initialize( term, colorProperty, excludeSign );
