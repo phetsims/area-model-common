@@ -222,7 +222,7 @@ class CalculationLinesNode extends Node {
         lineNode.tagName = 'span';
         lineNode.innerContent = line.node.accessibleText;
         lineNode.containerTagName = 'span';
-        line.node.accessibleVisible = false;
+        line.node.pdomVisible = false;
       }
       else {
         lineNode.pdomNamespace = 'http://www.w3.org/1998/Math/MathML';
