@@ -70,13 +70,13 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     const countingLabel = new Node( {
       tagName: 'span'
     } );
-    this.accessibleParagraphNode.insertChild( 0, countingLabel );
+    this.pdomParagraphNode.insertChild( 0, countingLabel );
     options.countingVisibleProperty.linkAttribute( countingLabel, 'visible' );
 
     const areaAccessibleLabel = new Node( {
       tagName: 'span'
     } );
-    this.accessibleParagraphNode.insertChild( 0, areaAccessibleLabel );
+    this.pdomParagraphNode.insertChild( 0, areaAccessibleLabel );
     Property.multilink( areaDisplay.activeTotalProperties.values, ( width, height ) => {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,

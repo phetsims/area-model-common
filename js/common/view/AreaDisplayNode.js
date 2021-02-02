@@ -61,13 +61,13 @@ class AreaDisplayNode extends Node {
     this.areaDisplay = areaDisplay;
 
     // @public {Node} - Layers (a11y)
-    this.accessibleParagraphNode = new Node( {
+    this.pdomParagraphNode = new Node( {
       tagName: 'p'
     } );
     this.areaLayer = new Node();
     this.labelLayer = new Node();
 
-    this.addChild( this.accessibleParagraphNode );
+    this.addChild( this.pdomParagraphNode );
     this.addChild( this.areaLayer );
     this.addChild( this.labelLayer );
 
@@ -110,8 +110,8 @@ class AreaDisplayNode extends Node {
       } );
       return partitionLabel;
     } );
-    this.accessibleParagraphNode.addChild( accessiblePartitionNodes.vertical );
-    this.accessibleParagraphNode.addChild( accessiblePartitionNodes.horizontal );
+    this.pdomParagraphNode.addChild( accessiblePartitionNodes.vertical );
+    this.pdomParagraphNode.addChild( accessiblePartitionNodes.horizontal );
 
     // A11y description for the partial products
     const accessiblePartialProductNode = new Node( {
@@ -171,7 +171,7 @@ class AreaDisplayNode extends Node {
         }
       } );
     } );
-    this.accessibleParagraphNode.addChild( accessiblePartialProductNode );
+    this.pdomParagraphNode.addChild( accessiblePartialProductNode );
 
     const modelBoundsProperty = new DerivedProperty( [ areaDisplay.coordinateRangeMaxProperty ], coordinateRangeMax => new Bounds2( 0, 0, coordinateRangeMax, coordinateRangeMax ) );
     const viewBounds = new Bounds2( 0, 0, this.viewSize, this.viewSize );
