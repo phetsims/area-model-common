@@ -24,7 +24,7 @@ class TotalsLine extends CalculationLine {
     super( CalculationLine.TOTALS_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     const totalTexts = area.displayProperties.map( ( orientationTotal, orientation ) => orientationTotal.value ? this.orientedTermText( orientation, orientationTotal.value )
-                                    : this.orientedPlaceholderBox( orientation ) );
+                                                                                                               : this.orientedPlaceholderBox( orientation ) );
 
     if ( allowExponents ) {
       this.node = this.group( [

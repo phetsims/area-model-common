@@ -59,13 +59,13 @@ class GenericPartitionedAreaNode extends Rectangle {
       rangeMultilinks = null;
       if ( partitionedArea ) {
         rangeMultilinks = partitionedArea.partitions.map( ( partition, orientation ) => Property.multilink(
-            [ partition.coordinateRangeProperty, modelViewTransformProperty ],
-            ( range, modelViewTransform ) => {
-              if ( range !== null ) {
-                this[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
-                this[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
-              }
-            } ) );
+          [ partition.coordinateRangeProperty, modelViewTransformProperty ],
+          ( range, modelViewTransform ) => {
+            if ( range !== null ) {
+              this[ orientation.rectCoordinate ] = modelViewTransform.modelToViewX( range.min );
+              this[ orientation.rectSize ] = modelViewTransform.modelToViewX( range.getLength() );
+            }
+          } ) );
       }
     } );
   }

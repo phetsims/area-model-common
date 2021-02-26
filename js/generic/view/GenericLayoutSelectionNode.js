@@ -39,17 +39,17 @@ class GenericLayoutSelectionNode extends Node {
     width -= 1;
 
     const comboBoxItems = GenericLayout.VALUES.map( layout => ( {
-        node: new HBox( {
-          children: [
-            createLayoutIcon( layout.size, 0.7 ),
-            new Text( layout.size.height + 'x' + layout.size.width, {
-              font: AreaModelCommonConstants.LAYOUT_FONT
-            } )
-          ],
-          spacing: 14
-        } ),
-        value: layout
-      } ) );
+      node: new HBox( {
+        children: [
+          createLayoutIcon( layout.size, 0.7 ),
+          new Text( layout.size.height + 'x' + layout.size.width, {
+            font: AreaModelCommonConstants.LAYOUT_FONT
+          } )
+        ],
+        spacing: 14
+      } ),
+      value: layout
+    } ) );
 
     const maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'node' ), 'height' ) );
     const itemMargin = 6;
@@ -110,54 +110,54 @@ class GenericLayoutSelectionNode extends Node {
     const buttonSpacing = 12;
     const buttonsNode = new VBox( {
       children: [ 1, 2, 3 ].map( numVertical => new HBox( {
-          children: [ 1, 2, 3 ].map( numHorizontal => {
-            const layout = GenericLayout.fromValues( numHorizontal, numVertical );
-            // NOTE: Yes, it's weird this constant is here. We used to scale most things down by this amount. Now we
-            // want the same appearance (but without the scaling, because it was bad practice), so to get the icon to
-            // have the same appearance, a scale factor is needed.
-            const oldScale = 0.7;
-            const icon = createLayoutIcon( layout.size, oldScale * oldScale );
-            icon.scale( 1 / oldScale );
-            icon.pickable = false;
-            const cornerRadius = 3;
-            const background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
-              cursor: 'pointer'
-            } );
-            background.touchArea = background.localBounds.dilated( buttonSpacing / 2 );
-            const listener = new FireListener( {
-              fire: () => {
-                genericLayoutProperty.value = layout;
-                visibleProperty.value = false; // hide
+        children: [ 1, 2, 3 ].map( numHorizontal => {
+          const layout = GenericLayout.fromValues( numHorizontal, numVertical );
+          // NOTE: Yes, it's weird this constant is here. We used to scale most things down by this amount. Now we
+          // want the same appearance (but without the scaling, because it was bad practice), so to get the icon to
+          // have the same appearance, a scale factor is needed.
+          const oldScale = 0.7;
+          const icon = createLayoutIcon( layout.size, oldScale * oldScale );
+          icon.scale( 1 / oldScale );
+          icon.pickable = false;
+          const cornerRadius = 3;
+          const background = Rectangle.roundedBounds( icon.bounds.dilated( cornerRadius ), cornerRadius, cornerRadius, {
+            cursor: 'pointer'
+          } );
+          background.touchArea = background.localBounds.dilated( buttonSpacing / 2 );
+          const listener = new FireListener( {
+            fire: () => {
+              genericLayoutProperty.value = layout;
+              visibleProperty.value = false; // hide
+            }
+          } );
+          background.stroke = new DerivedProperty(
+            [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ],
+            ( currentLayout, highlightColor ) => {
+              if ( currentLayout === layout ) {
+                return highlightColor;
+              }
+              else {
+                return 'transparent';
               }
             } );
-            background.stroke = new DerivedProperty(
-              [ genericLayoutProperty, AreaModelCommonColorProfile.radioBorderProperty ],
-              ( currentLayout, highlightColor ) => {
-                if ( currentLayout === layout ) {
-                  return highlightColor;
-                }
-                else {
-                  return 'transparent';
-                }
-              } );
-            background.fill = new DerivedProperty(
-              [ listener.isHoveringProperty, AreaModelCommonColorProfile.layoutHoverProperty ],
-              ( isHovering, hoverColor ) => {
-                if ( isHovering ) {
-                  return hoverColor;
-                }
-                else {
-                  return 'transparent';
-                }
-              } );
-
-            return new Node( {
-              children: [ background, icon ],
-              inputListeners: [ listener ]
+          background.fill = new DerivedProperty(
+            [ listener.isHoveringProperty, AreaModelCommonColorProfile.layoutHoverProperty ],
+            ( isHovering, hoverColor ) => {
+              if ( isHovering ) {
+                return hoverColor;
+              }
+              else {
+                return 'transparent';
+              }
             } );
-          } ),
-          spacing: buttonSpacing
-        } ) ),
+
+          return new Node( {
+            children: [ background, icon ],
+            inputListeners: [ listener ]
+          } );
+        } ),
+        spacing: buttonSpacing
+      } ) ),
       spacing: buttonSpacing
     } );
     const panelMargin = 20;

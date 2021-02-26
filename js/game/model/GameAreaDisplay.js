@@ -44,22 +44,22 @@ class GameAreaDisplay extends GenericAreaDisplay {
     // hidden.
     // NOTE: Overridden from the AreaDisplay version.
     this.totalProperties = OrientationPair.create( orientation => new DynamicProperty( this.areaChallengeProperty, {
-        derive: areaChallenge => areaChallenge.totalProperties.get( orientation )
-      } ) );
+      derive: areaChallenge => areaChallenge.totalProperties.get( orientation )
+    } ) );
 
     // @public {OrientationPair.<Property.<Array.<Entry>>>}
     // Partition sizes. Inner values may be changed by the view client.
 
     this.partitionSizeEntriesProperties = OrientationPair.create( orientation => new DerivedProperty( [ this.areaChallengeProperty ], areaChallenge => {
-        // If there's only one value on a side (and it's a given), there is no use showing a size here.
-        if ( areaChallenge.partitionSizeEntries.get( orientation ).length === 1 &&
-             areaChallenge.description.partitionTypes.get( orientation )[ 0 ] === EntryType.GIVEN ) {
-          return [ new Entry( null ) ];
-        }
-        else {
-          return areaChallenge.partitionSizeEntries.get( orientation );
-        }
-      } ) );
+      // If there's only one value on a side (and it's a given), there is no use showing a size here.
+      if ( areaChallenge.partitionSizeEntries.get( orientation ).length === 1 &&
+           areaChallenge.description.partitionTypes.get( orientation )[ 0 ] === EntryType.GIVEN ) {
+        return [ new Entry( null ) ];
+      }
+      else {
+        return areaChallenge.partitionSizeEntries.get( orientation );
+      }
+    } ) );
 
     // @public {Property.<Array.<Array.<Entry>>} - Reference to a 2D array for the grid of partial products.
     // First index is vertical (for the row), second is horizontal (for the column)

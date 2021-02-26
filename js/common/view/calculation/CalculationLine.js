@@ -61,12 +61,12 @@ class CalculationLine {
 
     // @private {OrientationPair.<Property.<Color>>}
     this.orientedColorProperties = OrientationPair.create( orientation => new DerivedProperty( [
-        this.isActiveProperty,
-        colorProperties.get( orientation ),
-        AreaModelCommonColorProfile.calculationInactiveProperty
-      ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
-        useDeepEquality: true
-      } ) );
+      this.isActiveProperty,
+      colorProperties.get( orientation ),
+      AreaModelCommonColorProfile.calculationInactiveProperty
+    ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
+      useDeepEquality: true
+    } ) );
   }
 
   /**

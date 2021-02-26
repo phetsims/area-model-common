@@ -57,11 +57,11 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
     this.labelLayer.addChild( new PoolableLayerNode( {
       arrayProperty: areaDisplay.allPartitionsProperty,
       createNode: partition => new PartitionSizeEditNode(
-          areaDisplay.activePartitionProperty,
-          new Property( partition ),
-          this.modelViewTransformProperty,
-          allowExponents
-        ),
+        areaDisplay.activePartitionProperty,
+        new Property( partition ),
+        this.modelViewTransformProperty,
+        allowExponents
+      ),
       getItemProperty: editNode => editNode.partitionProperty
     } ) );
 

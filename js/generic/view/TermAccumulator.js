@@ -47,19 +47,19 @@ class TermAccumulator extends AbstractKeyAccumulator {
 
     // @public {Property.<string>} - For display
     this.richStringProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], accumulatedKeys => accumulatedKeys.map( key => {
-        if ( key === KeyID.PLUS_MINUS ) {
-          return MathSymbols.UNARY_MINUS;
-        }
-        else if ( key === KeyID.X ) {
-          return AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
-        }
-        else if ( key === KeyID.X_SQUARED ) {
-          return AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>';
-        }
-        else {
-          return key;
-        }
-      } ).join( '' ) );
+      if ( key === KeyID.PLUS_MINUS ) {
+        return MathSymbols.UNARY_MINUS;
+      }
+      else if ( key === KeyID.X ) {
+        return AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
+      }
+      else if ( key === KeyID.X_SQUARED ) {
+        return AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>';
+      }
+      else {
+        return key;
+      }
+    } ).join( '' ) );
 
     // @public {Property.<Term|null>} - The term used if 'enter' is pressed
     this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], accumulatedKeys => {

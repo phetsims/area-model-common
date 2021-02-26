@@ -126,8 +126,8 @@ class GameAreaDisplayNode extends Node {
     _.range( 0, MAX_PARTITIONS ).forEach( horizontalIndex => {
       _.range( 0, MAX_PARTITIONS ).forEach( verticalIndex => {
         const entryProperty = new DerivedProperty( [ areaDisplay.partialProductEntriesProperty ], values => ( values[ verticalIndex ] && values[ verticalIndex ][ horizontalIndex ] )
-                 ? values[ verticalIndex ][ horizontalIndex ]
-                 : new Entry( null ) );
+                                                                                                            ? values[ verticalIndex ][ horizontalIndex ]
+                                                                                                            : new Entry( null ) );
 
         const colorProperty = new DerivedProperty( [
           entryProperty,

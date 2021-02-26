@@ -108,20 +108,20 @@ class ProportionalArea extends Area {
 
     // @public {OrientationPair.<Property.<boolean>>} - Whether the partition line for each orientation is visible
     this.partitionSplitVisibleProperties = OrientationPair.create( orientation => new DerivedProperty(
-        [ this.activeTotalProperties.get( orientation ), this.visiblePartitionOrientationProperty ],
-        ( totalSize, visibleOrientation ) => {
-          if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
-          if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
+      [ this.activeTotalProperties.get( orientation ), this.visiblePartitionOrientationProperty ],
+      ( totalSize, visibleOrientation ) => {
+        if ( options.partitionLineChoice === PartitionLineChoice.NONE ) { return false; }
+        if ( options.partitionLineChoice === PartitionLineChoice.ONE && orientation !== visibleOrientation ) { return false; }
 
-          // Given the number of digits in the decimals sim (with potential future changes), 1e-7 should be sufficiently
-          // small (but not too small).
-          return totalSize >= ( this.partitionSnapSize + this.snapSize ) - 1e-7;
-        } ) );
+        // Given the number of digits in the decimals sim (with potential future changes), 1e-7 should be sufficiently
+        // small (but not too small).
+        return totalSize >= ( this.partitionSnapSize + this.snapSize ) - 1e-7;
+      } ) );
 
     // @public {OrientationPair.<Property.<number|null>>} - Like partitionSplitProperties, but null if the partition line is not visible
     this.visiblePartitionLineSplitProperties = OrientationPair.create( orientation => new DerivedProperty(
-        [ this.partitionSplitProperties.get( orientation ), this.partitionSplitVisibleProperties.get( orientation ) ],
-        ( partitionSplit, partitionVisible ) => partitionVisible ? partitionSplit : null ) );
+      [ this.partitionSplitProperties.get( orientation ), this.partitionSplitVisibleProperties.get( orientation ) ],
+      ( partitionSplit, partitionVisible ) => partitionVisible ? partitionSplit : null ) );
 
     // @public {OrientationPair.<ProportionalPartition>} - The primary (upper/left) and secondary (lower/right)
     // partitions, separated out for easy access.

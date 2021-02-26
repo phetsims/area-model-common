@@ -128,9 +128,9 @@ class AreaDisplayNode extends Node {
         .concat( partitionedAreas.map( partitionedArea => partitionedArea.visibleProperty ) );
       accessiblePartialMultilink = Property.multilink( properties, () => {
         const activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( partitionedArea => partitionedArea.visibleProperty.value &&
-                 partitionedArea.areaProperty.value !== null &&
-                 partitionedArea.partitions.vertical.sizeProperty.value !== null &&
-                 partitionedArea.partitions.horizontal.sizeProperty.value !== null );
+                                                                                                             partitionedArea.areaProperty.value !== null &&
+                                                                                                             partitionedArea.partitions.vertical.sizeProperty.value !== null &&
+                                                                                                             partitionedArea.partitions.horizontal.sizeProperty.value !== null );
         const fillObject = {};
         let fillString;
         if ( activePartitionedAreas.length > 2 ||
@@ -210,10 +210,10 @@ class AreaDisplayNode extends Node {
       updatedCallback: invalidateProductLabels,
       arrayProperty: areaDisplay.partitionedAreasProperty,
       createNode: partitionedArea => new PartialProductLabelNode(
-          partialProductsChoiceProperty,
-          new Property( partitionedArea ),
-          options.allowExponents
-        ),
+        partialProductsChoiceProperty,
+        new Property( partitionedArea ),
+        options.allowExponents
+      ),
       getItemProperty: productLabel => productLabel.partitionedAreaProperty
     } ) );
 

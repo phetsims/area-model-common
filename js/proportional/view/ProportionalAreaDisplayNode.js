@@ -225,15 +225,15 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
   positionProductLabels() {
     // {OrientationPair.<Array.<Range|null>>} - Current view ranges (if non-null) for each orientation
     const rangesPair = this.areaDisplay.partitionsProperties.map( ( partitionsProperties, orientation ) => partitionsProperties.value.map( partition => {
-        const range = partition.coordinateRangeProperty.value;
-        if ( range === null ) {
-          return null;
-        }
-        return new Range(
-          orientation.modelToView( this.modelViewTransformProperty.value, range.min ),
-          orientation.modelToView( this.modelViewTransformProperty.value, range.max )
-        );
-      } ) );
+      const range = partition.coordinateRangeProperty.value;
+      if ( range === null ) {
+        return null;
+      }
+      return new Range(
+        orientation.modelToView( this.modelViewTransformProperty.value, range.min ),
+        orientation.modelToView( this.modelViewTransformProperty.value, range.max )
+      );
+    } ) );
 
     // First, center the labels (if they have defined ranges)
     this.productLabels.forEach( productLabel => {

@@ -25,24 +25,24 @@ class DistributionLine extends CalculationLine {
     super( CalculationLine.DISTRIBUTION_LINE_INDEX, area.colorProperties, activeIndexProperty, allowExponents, isProportional );
 
     this.node = this.sumGroup( _.flatten( verticalTerms.map( verticalTerm => horizontalTerms.map( horizontalTerm => {
-        const horizontalText = this.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
-        const verticalText = this.orientedTermText( Orientation.VERTICAL, verticalTerm );
+      const horizontalText = this.orientedTermText( Orientation.HORIZONTAL, horizontalTerm );
+      const verticalText = this.orientedTermText( Orientation.VERTICAL, verticalTerm );
 
-        // Proportional uses X-multiplication, see https://github.com/phetsims/area-model-common/issues/71
-        if ( isProportional ) {
-          return this.parentheses( this.multiplyX( verticalText, horizontalText ) );
-        }
-        else if ( allowExponents ) {
-          return this.group( [
-            this.parentheses( verticalText ),
-            this.parentheses( horizontalText )
-          ], AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING );
-        }
-        // Generic Screen (non-proportional, no exponents) uses dot, see https://github.com/phetsims/area-model-common/issues/72
-        else {
-          return this.parentheses( this.multiplyX( verticalText, horizontalText ) );
-        }
-      } ) ) ) );
+      // Proportional uses X-multiplication, see https://github.com/phetsims/area-model-common/issues/71
+      if ( isProportional ) {
+        return this.parentheses( this.multiplyX( verticalText, horizontalText ) );
+      }
+      else if ( allowExponents ) {
+        return this.group( [
+          this.parentheses( verticalText ),
+          this.parentheses( horizontalText )
+        ], AreaModelCommonConstants.CALCULATION_PAREN_PAREN_PADDING );
+      }
+      // Generic Screen (non-proportional, no exponents) uses dot, see https://github.com/phetsims/area-model-common/issues/72
+      else {
+        return this.parentheses( this.multiplyX( verticalText, horizontalText ) );
+      }
+    } ) ) ) );
   }
 }
 
