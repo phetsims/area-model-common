@@ -52,7 +52,7 @@ const zeroAndBackspace = [
   new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE )
 ];
 const noExponentLayout = positiveKeys.concat( [
-  [ new Key( MathSymbols.PLUS + '/' + MathSymbols.MINUS, KeyID.PLUS_MINUS ) ].concat( zeroAndBackspace )
+  [ new Key( `${MathSymbols.PLUS}/${MathSymbols.MINUS}`, KeyID.PLUS_MINUS ) ].concat( zeroAndBackspace )
 ] );
 const noNegativeLayout = positiveKeys.concat( [
   [ null ].concat( zeroAndBackspace )
@@ -60,7 +60,7 @@ const noNegativeLayout = positiveKeys.concat( [
 const exponentLayout = noExponentLayout.concat( [
   [
     null,
-    new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ),
+    new Key( new RichText( `${AreaModelCommonConstants.X_VARIABLE_RICH_STRING}<sup>2</sup>`, { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X_SQUARED ),
     new Key( new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: AreaModelCommonConstants.KEYPAD_FONT } ), KeyID.X )
   ]
 ] );

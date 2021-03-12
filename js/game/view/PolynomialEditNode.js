@@ -149,7 +149,7 @@ class PolynomialEditNode extends VBox {
     } );
 
     const xText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING, { font: editFont } );
-    const xSquaredText = new RichText( AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>', { font: editFont } );
+    const xSquaredText = new RichText( `${AreaModelCommonConstants.X_VARIABLE_RICH_STRING}<sup>2</sup>`, { font: editFont } );
     const plus1 = new Text( MathSymbols.PLUS, { font: editFont } );
     const plus2 = new Text( MathSymbols.PLUS, { font: editFont } );
 

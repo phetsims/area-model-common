@@ -17,8 +17,8 @@ import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
 
 // constants
-const NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( n => '' + n );
-const DIGIT_STRINGS = _.range( 0, 10 ).map( n => '' + n );
+const NONZERO_DIGIT_STRINGS = _.range( 1, 10 ).map( n => `${n}` );
+const DIGIT_STRINGS = _.range( 0, 10 ).map( n => `${n}` );
 
 class TermAccumulator extends AbstractKeyAccumulator {
   /**
@@ -54,7 +54,7 @@ class TermAccumulator extends AbstractKeyAccumulator {
         return AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
       }
       else if ( key === KeyID.X_SQUARED ) {
-        return AreaModelCommonConstants.X_VARIABLE_RICH_STRING + '<sup>2</sup>';
+        return `${AreaModelCommonConstants.X_VARIABLE_RICH_STRING}<sup>2</sup>`;
       }
       else {
         return key;
@@ -163,7 +163,7 @@ class TermAccumulator extends AbstractKeyAccumulator {
       }
     }
     else {
-      throw new Error( 'unknown digit: ' + keyIdentifier );
+      throw new Error( `unknown digit: ${keyIdentifier}` );
     }
 
     // Validate and update the keys

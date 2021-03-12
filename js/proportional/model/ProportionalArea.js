@@ -173,7 +173,7 @@ class ProportionalArea extends Area {
    * @returns {string}
    */
   getDimensionString() {
-    return this.maximumSize + 'x' + this.maximumSize;
+    return `${this.maximumSize}x${this.maximumSize}`;
   }
 
   /**

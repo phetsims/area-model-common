@@ -42,7 +42,7 @@ class GenericLayoutSelectionNode extends Node {
       node: new HBox( {
         children: [
           createLayoutIcon( layout.size, 0.7 ),
-          new Text( layout.size.height + 'x' + layout.size.width, {
+          new Text( `${layout.size.height}x${layout.size.width}`, {
             font: AreaModelCommonConstants.LAYOUT_FONT
           } )
         ],

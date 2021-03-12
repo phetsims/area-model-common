@@ -72,7 +72,7 @@ class ProportionalAreaModel extends AreaModelCommonModel {
     this.areas.forEach( area => {
       const representativeSize = area.snapSize + area.maximumSize;
       // Round because of floating point precision
-      const string = '' + Utils.toFixedNumber( representativeSize * representativeSize, 8 ); // Square for area
+      const string = `${Utils.toFixedNumber( representativeSize * representativeSize, 8 )}`; // Square for area
       const length = TextBounds.approximateCanvasWidth( TEST_FONT, string );
       if ( length > maxLength ) {
         maxLength = length;

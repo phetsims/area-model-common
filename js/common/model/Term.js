@@ -80,7 +80,7 @@ class Term {
       string += AreaModelCommonConstants.X_VARIABLE_RICH_STRING;
     }
     if ( this.power > 1 ) {
-      string += '<sup>' + this.power + '</sup>';
+      string += `<sup>${this.power}</sup>`;
     }
 
     return string;
@@ -101,10 +101,10 @@ class Term {
 
     if ( includeBinaryOperation ) {
       if ( this.coefficient < 0 ) {
-        string += ' ' + MathSymbols.MINUS + ' ';
+        string += ` ${MathSymbols.MINUS} `;
       }
       else {
-        string += ' ' + MathSymbols.PLUS + ' ';
+        string += ` ${MathSymbols.PLUS} `;
       }
     }
     else {
@@ -132,7 +132,7 @@ class Term {
     if ( allowExponents ) {
       // The square is an example of an exponent that will increase the height of the displayed string, so we want to
       // include it if exponents are allowed.
-      return MathSymbols.MINUS + digits + 'x<sup>2</sup>';
+      return `${MathSymbols.MINUS + digits}x<sup>2</sup>`;
     }
     else {
       return MathSymbols.MINUS + digits;

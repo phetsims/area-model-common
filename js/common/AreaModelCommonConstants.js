@@ -54,7 +54,7 @@ const AreaModelCommonConstants = {
   GAME_STATUS_BAR_PROMPT_FONT: new PhetFont( { size: 30, weight: 'bold' } ),
 
   // {string} - The string to be provided to RichText for a mathematical-looking x
-  X_VARIABLE_RICH_STRING: '<i style=\'font-family: ' + new MathSymbolFont( 10 ).family + '\'>x</i>',
+  X_VARIABLE_RICH_STRING: `<i style='font-family: ${new MathSymbolFont( 10 ).family}'>x</i>`,
 
   // {number} Two different area sizes (they are square), one needed for the intro sim
   AREA_SIZE: 350,

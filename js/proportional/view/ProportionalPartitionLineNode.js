@@ -166,7 +166,7 @@ class ProportionalPartitionLineNode extends Node {
         const offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) +
                             AreaModelCommonConstants.PARTITION_HANDLE_OFFSET;
         handle[ orientation.opposite.coordinate ] = offsetValue;
-        line[ orientation.opposite.coordinate + '2' ] = offsetValue;
+        line[ `${orientation.opposite.coordinate}2` ] = offsetValue;
         line.mouseArea = line.localBounds.dilated( 4 );
         line.touchArea = line.localBounds.dilated( 8 );
       } );

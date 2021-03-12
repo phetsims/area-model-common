@@ -184,7 +184,7 @@ areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription )
  * @returns {string}
  */
 function getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) {
-  return hasAreaEntry + ',' + numProductEntries + ',' + numPartitionEntries;
+  return `${hasAreaEntry},${numProductEntries},${numPartitionEntries}`;
 }
 
 const promptMap = {};
