@@ -359,10 +359,12 @@ class GameAreaScreenView extends ScreenView {
       model.showAnswer();
     } );
 
+    let cheatButton = null;
+
     // Cheat button, see https://github.com/phetsims/area-model-common/issues/116 and
     // https://github.com/phetsims/area-model-common/issues/163
     if ( phet.chipper.queryParameters.showAnswers ) {
-      var cheatButton = new RectangularPushButton( {
+      cheatButton = new RectangularPushButton( {
         content: new FaceNode( 40 ),
         top: showAnswerButton.bottom + 10,
         centerX: showAnswerButton.centerX,

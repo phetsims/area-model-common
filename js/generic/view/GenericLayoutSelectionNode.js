@@ -51,6 +51,7 @@ class GenericLayoutSelectionNode extends Node {
       value: layout
     } ) );
 
+    // eslint-disable-next-line prefer-spread
     const maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'node' ), 'height' ) );
     const itemMargin = 6;
     const arrowMargin = 8;
@@ -165,7 +166,7 @@ class GenericLayoutSelectionNode extends Node {
     buttonsNode.center = popup.center;
     popup.addChild( buttonsNode );
 
-    var visibleProperty = new BooleanProperty( false );
+    const visibleProperty = new BooleanProperty( false );
     popup.addInputListener( {
       down: event => {
         event.handle();
