@@ -29,12 +29,12 @@ class VariablesScreen extends Screen {
     };
 
     super(
-      function() {
+      () => {
         return new GenericAreaModel( {
           allowExponents: true
         } );
       },
-      function( model ) { return new GenericAreaScreenView( model, 0 ); },
+      model => new GenericAreaScreenView( model, 0 ),
       options
     );
   }

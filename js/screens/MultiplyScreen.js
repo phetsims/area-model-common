@@ -52,7 +52,7 @@ class MultiplyScreen extends Screen {
     };
 
     super(
-      function() {
+      () => {
         return new ProportionalAreaModel( [
           merge( { maximumSize: 10 }, commonAreaOptions ),
           merge( { maximumSize: 12 }, commonAreaOptions )
@@ -60,7 +60,7 @@ class MultiplyScreen extends Screen {
           initialPartialProductsChoice: PartialProductsChoice.HIDDEN
         } );
       },
-      function( model ) {
+      model => {
         return new ProportionalAreaScreenView( model, {
           showProductsSelection: false,
           showCalculationSelection: false,

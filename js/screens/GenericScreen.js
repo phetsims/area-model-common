@@ -29,12 +29,12 @@ class GenericScreen extends Screen {
     };
 
     super(
-      function() {
+      () => {
         return new GenericAreaModel( {
           allowExponents: false
         } );
       },
-      function( model ) { return new GenericAreaScreenView( model, 0 ); },
+      model => new GenericAreaScreenView( model, 0 ),
       options
     );
   }

@@ -34,7 +34,7 @@ class ExploreScreen extends Screen {
     };
 
     super(
-      function() {
+      () => {
         return new ProportionalAreaModel( [
           {
             maximumSize: 20,
@@ -62,7 +62,7 @@ class ExploreScreen extends Screen {
           }
         ] );
       },
-      function( model ) { return new ProportionalAreaScreenView( model ); },
+      model => new ProportionalAreaScreenView( model ),
       options
     );
   }

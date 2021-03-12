@@ -34,8 +34,8 @@ class GenericGameScreen extends Screen {
     };
 
     super(
-      function() { return new GenericGameAreaModel(); },
-      function( model ) { return new GameAreaScreenView( model ); },
+      () => new GenericGameAreaModel(),
+      model => new GameAreaScreenView( model ),
       options
     );
   }

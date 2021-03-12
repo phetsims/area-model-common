@@ -32,7 +32,7 @@ class DecimalsScreen extends Screen {
     };
 
     super(
-      function() {
+      () => {
         return new ProportionalAreaModel( [
           merge( {
             maximumSize: 1,
@@ -60,7 +60,7 @@ class DecimalsScreen extends Screen {
           }, commonAreaOptions )
         ] );
       },
-      function( model ) {
+      model => {
         return new ProportionalAreaScreenView( model, {
           decimalPlaces: 1
         } );

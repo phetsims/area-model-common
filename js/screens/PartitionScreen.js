@@ -54,7 +54,7 @@ class PartitionScreen extends Screen {
     };
 
     super(
-      function() {
+      () => {
         return new ProportionalAreaModel( [
           merge( { maximumSize: 10 }, commonAreaOptions ),
           merge( { maximumSize: 12 }, commonAreaOptions )
@@ -62,7 +62,7 @@ class PartitionScreen extends Screen {
           initialAreaCalculationChoice: AreaCalculationChoice.SHOW_ALL_LINES
         } );
       },
-      function( model ) {
+      model => {
         return new ProportionalAreaScreenView( model, {
           showCalculationSelection: false,
           useTileLikeBackground: true,

@@ -34,8 +34,8 @@ class VariablesGameScreen extends Screen {
     };
 
     super(
-      function() { return new VariablesGameAreaModel(); },
-      function( model ) { return new GameAreaScreenView( model ); },
+      () => new VariablesGameAreaModel(),
+      model => new GameAreaScreenView( model ),
       options
     );
   }
