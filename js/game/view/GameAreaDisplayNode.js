@@ -80,6 +80,9 @@ class GameAreaDisplayNode extends Node {
         else if ( partitionCount === 3 ) {
           return firstOffset / 2;
         }
+        else {
+          throw new Error( `unsupported value for partitionCount: ${partitionCount}` );
+        }
       } ),
       new DerivedProperty( [ areaDisplay.layoutProperty ], layout => {
         const partitionCount = layout.getPartitionQuantity( orientation );
