@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2017-2021, University of Colorado Boulder
 
 /**
  * Shows radio buttons that allow selecting between different ways of showing area computations (or none).

@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2018-2021, University of Colorado Boulder
 
 /**
  * Calculation line that is essentially the "ordered" line, but where negative terms use a binary 'minus' in front

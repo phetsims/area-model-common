@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2018-2021, University of Colorado Boulder
 
 /**
  * Unit tests for area-model-common. Please run once in phet brand and once in brand=phet-io to cover all functionality.

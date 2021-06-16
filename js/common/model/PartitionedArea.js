@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2017-2021, University of Colorado Boulder
 
 /**
  * A 2-dimensional section of area defined by a horizontal and vertical pair of partitions.

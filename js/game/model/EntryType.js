@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2018-2021, University of Colorado Boulder
 
 /**
  * Enumeration for the type of entries in the game that may be editable, calculated dynamically, or given.

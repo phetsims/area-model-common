@@ -1,4 +1,4 @@
-[object Promise]
+// Copyright 2018-2021, University of Colorado Boulder
 
 /**
  * Combines two nodes with an x-like multiplication in the middle (poolable)
