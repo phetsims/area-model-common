@@ -1,4 +1,4 @@
-// Copyright 2018-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Enumeration for the different ways an editable entry can be handled.

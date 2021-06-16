@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * All possible layouts available via the drop-down box.

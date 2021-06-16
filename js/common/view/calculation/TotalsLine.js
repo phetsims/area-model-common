@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * The first calculation line, which shows totals (both horizontal and vertical).

@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Shows the product or factors for a partitioned area over a rounded background.

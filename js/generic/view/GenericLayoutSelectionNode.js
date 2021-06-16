@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * Shows a combo box that allows selecting between different layouts

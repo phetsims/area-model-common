@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Enumeration for partial product choices.

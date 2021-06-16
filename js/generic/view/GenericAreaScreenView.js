@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Supertype screenview for generic screens.

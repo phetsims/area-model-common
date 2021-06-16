@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Shows a draggable circle to the lower-right of a proportional area that, when dragged, adjusts the width/height to

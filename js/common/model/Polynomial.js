@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * A polynomial as a sum of Terms with different powers. Collapses same-power terms, and orders by power.

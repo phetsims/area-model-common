@@ -1,4 +1,4 @@
-// Copyright 2018-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Common logic for where we have a variable number of nodes that need to be used.

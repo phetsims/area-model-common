@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * A single calculation line (for the display of the calculation panel/box)

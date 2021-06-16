@@ -1,4 +1,4 @@
-// Copyright 2018-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Calculation line below the 'multiplied' line, where all of the products from distribution are sorted by exponent.

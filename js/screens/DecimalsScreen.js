@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * The main screen of the "Area Model: Decimals" simulation.

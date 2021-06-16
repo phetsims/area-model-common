@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * An ordered list of terms.  Note that throughout the simulation, to represent a "no terms" we use null instead

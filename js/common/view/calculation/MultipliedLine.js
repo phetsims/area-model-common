@@ -1,4 +1,4 @@
-// Copyright 2018-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * A calculation line below the 'distributed' line, where each term (in this case, multiplication between the

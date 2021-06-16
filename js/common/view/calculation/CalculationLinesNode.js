@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * Handling for creating all calculation lines for a given area/etc.

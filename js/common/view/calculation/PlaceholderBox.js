@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * A rectangle meant as a placeholder in the calculation lines (poolable).

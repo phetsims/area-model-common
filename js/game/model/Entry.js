@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * A logical entry whose value can be edited, and may be displayed in different ways.

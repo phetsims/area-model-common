@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * A range label that displays a specific TermList along a line covering the range (with start/end ticks for every

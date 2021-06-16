@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * A proportional area, split up by up to one horizontal partition line and one vertical partition line.

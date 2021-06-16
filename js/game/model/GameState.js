@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Enumeration for all states that the game can be in.  See https://github.com/phetsims/vegas/issues/74 about whether

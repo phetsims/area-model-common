@@ -1,4 +1,4 @@
-// Copyright 2018-2021, University of Colorado Boulder
+[object Promise]
 
 /**
  * The "Explore" screen, used in "Area Model: Multiplication" and "Area Model: Algebra"

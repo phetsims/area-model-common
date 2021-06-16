@@ -1,4 +1,4 @@
-// Copyright 2017-2020, University of Colorado Boulder
+[object Promise]
 
 /**
  * Supertype ScreenView for generic/proportional screens (NOT the game screens)
