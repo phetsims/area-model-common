@@ -111,7 +111,7 @@ class RangeLabelNode extends Node {
         ticks.forEach( ( tick, index ) => {
           if ( index < tickPositions.length ) {
             tick.visible = true;
-            tick.translation = orientation.toVector( tickPositions[ index ], rangeOffset );
+            tick.translation = orientation.toVector( tickPositions[ index ], rangeOffset, Vector2 );
 
             // The first/last ticks should have a different length
             tick.y1 = ( index === 0 || index === tickPositions.length - 1 ) ? -TICK_LENGTH / 2 : 0;
@@ -124,8 +124,8 @@ class RangeLabelNode extends Node {
         const minPosition = tickPositions[ 0 ];
         const maxPosition = tickPositions[ tickPositions.length - 1 ];
 
-        line.p1 = orientation.toVector( minPosition, rangeOffset );
-        line.p2 = orientation.toVector( maxPosition, rangeOffset );
+        line.p1 = orientation.toVector( minPosition, rangeOffset, Vector2 );
+        line.p2 = orientation.toVector( maxPosition, rangeOffset, Vector2 );
         textContainer[ orientation.coordinate ] = ( maxPosition + minPosition ) / 2; // centered
       }
     } );
