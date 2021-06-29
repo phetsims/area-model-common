@@ -129,17 +129,22 @@ class GameAreaScreenView extends ScreenView {
     const levelIcons = LEVEL_ICON_IMAGES.map( iconImage => new Image( iconImage ) );
 
     const buttonSpacing = 30;
-    const levelButtons = model.levels.map( ( level, index ) => new LevelSelectionButton( levelIcons[ index ], level.scoreProperty, {
-      scoreDisplayConstructor: ScoreDisplayStars,
-      scoreDisplayOptions: {
-        numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
-        perfectScore: AreaModelCommonConstants.PERFECT_SCORE
-      },
-      listener: () => {
-        model.selectLevel( level );
-      },
-      baseColor: level.colorProperty
-    } ) );
+    const levelButtons = model.levels.map( ( level, index ) => new LevelSelectionButton(
+      levelIcons[ index ],
+      level.scoreProperty,
+      {
+        scoreDisplayConstructor: ScoreDisplayStars,
+        scoreDisplayOptions: {
+          numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
+          perfectScore: AreaModelCommonConstants.PERFECT_SCORE
+        },
+        listener: () => {
+          model.selectLevel( level );
+        },
+        baseColor: level.colorProperty,
+        soundPlayerIndex: index
+      }
+    ) );
 
     this.levelSelectionLayer.addChild( new VBox( {
       children: _.chunk( levelButtons, 3 ).map( children => new HBox( {
