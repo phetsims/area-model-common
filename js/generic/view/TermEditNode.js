@@ -14,10 +14,11 @@ import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
 import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
+import pencilAltSolidShape from '../../../../sherpa/js/fontawesome-5/pencilAltSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -84,8 +85,9 @@ class TermEditNode extends LayoutBox {
       children: [
         readoutBackground,
         new RectangularPushButton( {
-          content: new FontAwesomeNode( 'pencil_square_o', {
-            scale: 0.4,
+          content: new Path( pencilAltSolidShape, {
+            fill: 'black',
+            scale: 0.025,
             xMargin: 6,
             yMargin: 4
           } ),

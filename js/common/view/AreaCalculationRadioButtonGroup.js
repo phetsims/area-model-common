@@ -9,9 +9,10 @@
  */
 
 import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
-import FontAwesomeNode from '../../../../sun/js/FontAwesomeNode.js';
+import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
 import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
@@ -30,7 +31,7 @@ class AreaCalculationRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 
     super( areaCalculationChoiceProperty, [ {
       value: AreaCalculationChoice.HIDDEN,
-      node: new AlignBox( new FontAwesomeNode( 'eye_close', { scale: 0.8 } ), { group: selectionButtonAlignGroup } )
+      node: new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } )
     }, {
       value: AreaCalculationChoice.LINE_BY_LINE,
       node: new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
