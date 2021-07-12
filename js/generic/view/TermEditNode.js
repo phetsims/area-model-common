@@ -18,7 +18,7 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import pencilAltSolidShape from '../../../../sherpa/js/fontawesome-5/pencilAltSolidShape.js';
+import editSolidShape from '../../../../sherpa/js/fontawesome-5/editSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -85,9 +85,9 @@ class TermEditNode extends LayoutBox {
       children: [
         readoutBackground,
         new RectangularPushButton( {
-          content: new Path( pencilAltSolidShape, {
+          content: new Path( editSolidShape, {
             fill: 'black',
-            scale: 0.025,
+            scale: 0.03,
             xMargin: 6,
             yMargin: 4
           } ),
