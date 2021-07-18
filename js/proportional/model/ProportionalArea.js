@@ -18,7 +18,7 @@ import Area from '../../common/model/Area.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import Partition from '../../common/model/Partition.js';
 import Term from '../../common/model/Term.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 import PartitionLineChoice from './PartitionLineChoice.js';
 
 class ProportionalArea extends Area {
@@ -47,18 +47,18 @@ class ProportionalArea extends Area {
     }, options );
 
     const horizontalPartitions = [
-      new Partition( Orientation.HORIZONTAL, AreaModelCommonColorProfile.proportionalWidthProperty ),
-      new Partition( Orientation.HORIZONTAL, AreaModelCommonColorProfile.proportionalWidthProperty )
+      new Partition( Orientation.HORIZONTAL, areaModelCommonColorProfile.proportionalWidthProperty ),
+      new Partition( Orientation.HORIZONTAL, areaModelCommonColorProfile.proportionalWidthProperty )
     ];
 
     const verticalPartitions = [
-      new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty ),
-      new Partition( Orientation.VERTICAL, AreaModelCommonColorProfile.proportionalHeightProperty )
+      new Partition( Orientation.VERTICAL, areaModelCommonColorProfile.proportionalHeightProperty ),
+      new Partition( Orientation.VERTICAL, areaModelCommonColorProfile.proportionalHeightProperty )
     ];
 
     super(
       new OrientationPair( horizontalPartitions, verticalPartitions ),
-      AreaModelCommonColorProfile.proportionalColorProperties,
+      areaModelCommonColorProfile.proportionalColorProperties,
       options.maximumSize,
       false
     );

@@ -21,7 +21,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import Term from '../model/Term.js';
-import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
 
 const areaString = areaModelCommonStrings.area;
 const areaEqualsPatternString = areaModelCommonStrings.a11y.areaEqualsPattern;
@@ -53,8 +53,8 @@ class TotalAreaNode extends Node {
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
             fill: useTileLikeBackground
-                  ? AreaModelCommonColorProfile.smallTileProperty
-                  : AreaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
+                  ? areaModelCommonColorProfile.smallTileProperty
+                  : areaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty
           } )
         ]
       } );

@@ -13,7 +13,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 // constants
 const scratchVector = new Vector2( 0, 0 ); // Created so we can minimize object creation and garbage collection
@@ -66,7 +66,7 @@ class CountingAreaNode extends Node {
   createTextNode( number ) {
     const text = new Text( number, {
       font: AreaModelCommonConstants.COUNTING_FONT,
-      fill: AreaModelCommonColorProfile.countingLabelProperty
+      fill: areaModelCommonColorProfile.countingLabelProperty
     } );
     this.textNodes.push( text );
     this.addChild( text );

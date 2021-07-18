@@ -16,7 +16,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 import RangeLabelNode from '../../common/view/RangeLabelNode.js';
 import GenericAreaDisplayNode from '../../generic/view/GenericAreaDisplayNode.js';
 import TermKeypadPanel from '../../generic/view/TermKeypadPanel.js';
@@ -46,8 +46,8 @@ class GameAreaDisplayNode extends Node {
 
     // Background fill and stroke
     this.addChild( new Rectangle( 0, 0, AreaModelCommonConstants.AREA_SIZE, AreaModelCommonConstants.AREA_SIZE, {
-      fill: AreaModelCommonColorProfile.areaBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.areaBorderProperty
+      fill: areaModelCommonColorProfile.areaBackgroundProperty,
+      stroke: areaModelCommonColorProfile.areaBorderProperty
     } ) );
 
     this.addChild( GenericAreaDisplayNode.createPartitionLines( areaDisplay.layoutProperty, AreaModelCommonConstants.AREA_SIZE ) );
@@ -59,7 +59,7 @@ class GameAreaDisplayNode extends Node {
       3: [ 0, firstOffset, secondOffset, fullOffset ]
     };
     Orientation.VALUES.forEach( orientation => {
-      const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+      const colorProperty = areaModelCommonColorProfile.genericColorProperties.get( orientation );
       const termListProperty = areaDisplay.totalProperties.get( orientation );
       const tickPositionsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], layout => tickVariations[ layout.getPartitionQuantity( orientation ) ] );
       this.addChild( new RangeLabelNode( termListProperty, orientation, tickPositionsProperty, colorProperty, false ) );
@@ -105,7 +105,7 @@ class GameAreaDisplayNode extends Node {
         const entryProperty = new DerivedProperty(
           [ areaDisplay.partitionSizeEntriesProperties.get( orientation ) ],
           entries => entries[ partitionIndex ] ? entries[ partitionIndex ] : new Entry( null ) );
-        const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+        const colorProperty = areaModelCommonColorProfile.genericColorProperties.get( orientation );
 
         const label = new GameEditableLabelNode( {
           entryProperty: entryProperty,
@@ -134,8 +134,8 @@ class GameAreaDisplayNode extends Node {
 
         const colorProperty = new DerivedProperty( [
           entryProperty,
-          AreaModelCommonColorProfile.dynamicPartialProductProperty,
-          AreaModelCommonColorProfile.fixedPartialProductProperty
+          areaModelCommonColorProfile.dynamicPartialProductProperty,
+          areaModelCommonColorProfile.fixedPartialProductProperty
         ], ( entry, dynamicColor, fixedColor ) => {
           if ( entry && entry.type === EntryType.DYNAMIC ) {
             return dynamicColor;

@@ -15,7 +15,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 class TiledAreaNode extends Node {
   /**
@@ -67,27 +67,27 @@ class TiledAreaNode extends Node {
 
     // @private {Path} - Background color paths for each section
     this.bigPath = new Path( null, {
-      fill: AreaModelCommonColorProfile.bigTileProperty
+      fill: areaModelCommonColorProfile.bigTileProperty
     } );
     this.horizontalPath = new Path( null, {
-      fill: AreaModelCommonColorProfile.mediumTileProperty
+      fill: areaModelCommonColorProfile.mediumTileProperty
     } );
     this.verticalPath = new Path( null, {
-      fill: AreaModelCommonColorProfile.mediumTileProperty
+      fill: areaModelCommonColorProfile.mediumTileProperty
     } );
     this.smallPath = new Path( null, {
-      fill: AreaModelCommonColorProfile.smallTileProperty
+      fill: areaModelCommonColorProfile.smallTileProperty
     } );
 
     // @private {Path} - Grid line paths. We'll use clipping to control where they are visible
     this.smallGridPath = new Path( null, {
-      stroke: AreaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColorProfile.tileBorderProperty
     } );
     this.horizontalGridPath = new Path( null, {
-      stroke: AreaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColorProfile.tileBorderProperty
     } );
     this.verticalGridPath = new Path( null, {
-      stroke: AreaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColorProfile.tileBorderProperty
     } );
 
     Property.multilink(
@@ -120,7 +120,7 @@ class TiledAreaNode extends Node {
 
     // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
     this.extraLinesPath = new Path( null, {
-      stroke: AreaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColorProfile.tileBorderProperty
     } );
 
     this.mutate( {

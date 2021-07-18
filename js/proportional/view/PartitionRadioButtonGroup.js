@@ -18,7 +18,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 
@@ -63,8 +63,8 @@ function createPartitionOrientationIcon( orientation, currentAreaOrientationProp
   // The size of our rectangle
   const sizes = new OrientationPair( 36, 24 );
   const background = new Rectangle( 0, 0, sizes.horizontal, sizes.vertical, {
-    stroke: AreaModelCommonColorProfile.partitionLineIconBorderProperty,
-    fill: AreaModelCommonColorProfile.partitionLineIconBackgroundProperty
+    stroke: areaModelCommonColorProfile.partitionLineIconBorderProperty,
+    fill: areaModelCommonColorProfile.partitionLineIconBackgroundProperty
   } );
 
   // Expand bounds a bit, to allow room for the line-handle icon part (so we have even padding)
@@ -78,14 +78,14 @@ function createPartitionOrientationIcon( orientation, currentAreaOrientationProp
 
   background.children = [
     new Line( p1, p2, {
-      stroke: AreaModelCommonColorProfile.partitionLineIconLineProperty
+      stroke: areaModelCommonColorProfile.partitionLineIconLineProperty
     } ),
     new Path( ProportionalPartitionLineNode.HANDLE_ARROW_SHAPES.get( orientation ), {
       fill: new DerivedProperty(
         [
           currentAreaOrientationProperty,
-          AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
-          AreaModelCommonColorProfile.partitionLineIconHandleProperty
+          areaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
+          areaModelCommonColorProfile.partitionLineIconHandleProperty
         ],
         ( currentOrientation, widthColor, handleColor ) => currentOrientation === orientation ? widthColor : handleColor ),
       scale: 0.5,

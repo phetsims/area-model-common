@@ -25,7 +25,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 const factorsTimesPatternString = areaModelCommonStrings.a11y.factorsTimesPattern;
 const horizontalPickerString = areaModelCommonStrings.a11y.horizontalPicker;
@@ -140,7 +140,7 @@ class ProportionalFactorsNode extends Node {
           return Utils.toFixed( value, 1 );
         }
       },
-      color: AreaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
+      color: areaModelCommonColorProfile.proportionalColorProperties.get( orientation ),
 
       // pdom
       labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,

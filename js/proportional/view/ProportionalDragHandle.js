@@ -24,7 +24,7 @@ import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 const dragHandleString = areaModelCommonStrings.a11y.dragHandle;
 const dragHandleDescriptionPatternString = areaModelCommonStrings.a11y.dragHandleDescriptionPattern;
@@ -49,14 +49,14 @@ class ProportionalDragHandle extends Node {
     const offsetProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
     const line = new Line( {
-      stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty
+      stroke: areaModelCommonColorProfile.proportionalDragHandleBorderProperty
     } );
 
     const circle = new Circle( DRAG_RADIUS, {
       touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
       focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
-      fill: AreaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.proportionalDragHandleBorderProperty,
+      fill: areaModelCommonColorProfile.proportionalDragHandleBackgroundProperty,
+      stroke: areaModelCommonColorProfile.proportionalDragHandleBorderProperty,
       cursor: 'pointer',
 
       // pdom

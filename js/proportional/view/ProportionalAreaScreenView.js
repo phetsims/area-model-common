@@ -23,7 +23,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 import AreaScreenView from '../../common/view/AreaScreenView.js';
 import PartitionLineChoice from '../model/PartitionLineChoice.js';
 import ProportionalAreaModel from '../model/ProportionalAreaModel.js';
@@ -225,7 +225,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
       .moveTo( 0, RADIO_ICON_SIZE * 3 / 4 )
       .lineTo( RADIO_ICON_SIZE, RADIO_ICON_SIZE * 3 / 4 );
     return new Path( gridIconShape, {
-      stroke: AreaModelCommonColorProfile.gridIconProperty
+      stroke: areaModelCommonColorProfile.gridIconProperty
     } );
   }
 
@@ -237,8 +237,8 @@ class ProportionalAreaScreenView extends AreaScreenView {
    */
   createTileIconNode() {
     const tileIconOptions = {
-      fill: AreaModelCommonColorProfile.smallTileProperty,
-      stroke: AreaModelCommonColorProfile.tileIconStrokeProperty,
+      fill: areaModelCommonColorProfile.smallTileProperty,
+      stroke: areaModelCommonColorProfile.tileIconStrokeProperty,
       lineWidth: 0.5
     };
     const SMALL_TILE_ICON_SIZE = RADIO_ICON_SIZE / 10;

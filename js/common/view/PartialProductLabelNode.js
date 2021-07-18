@@ -21,7 +21,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
-import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
 
 class PartialProductLabelNode extends Node {
   /**
@@ -55,9 +55,9 @@ class PartialProductLabelNode extends Node {
     const background = new Rectangle( {
       cornerRadius: 3,
       stroke: new DerivedProperty(
-        [ areaProperty, AreaModelCommonColorProfile.partialProductBorderProperty ],
+        [ areaProperty, areaModelCommonColorProfile.partialProductBorderProperty ],
         ( area, color ) => ( area === null || area.coefficient === 0 ) ? 'transparent' : color ),
-      fill: AreaModelCommonColorProfile.partialProductBackgroundProperty
+      fill: areaModelCommonColorProfile.partialProductBackgroundProperty
     } );
     this.addChild( background );
 

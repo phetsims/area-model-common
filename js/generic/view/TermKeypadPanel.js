@@ -24,7 +24,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 import TermAccumulator from './TermAccumulator.js';
 
 const enterString = areaModelCommonStrings.enter;
@@ -84,8 +84,8 @@ class TermKeypadPanel extends Panel {
     } );
 
     const readoutBackground = new Rectangle( {
-      fill: AreaModelCommonColorProfile.keypadReadoutBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.keypadReadoutBorderProperty,
+      fill: areaModelCommonColorProfile.keypadReadoutBackgroundProperty,
+      stroke: areaModelCommonColorProfile.keypadReadoutBorderProperty,
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 
@@ -144,7 +144,7 @@ class TermKeypadPanel extends Panel {
           listener: () => {
             enterCallback( termAccumulator.termProperty.value );
           },
-          baseColor: AreaModelCommonColorProfile.keypadEnterBackgroundProperty
+          baseColor: areaModelCommonColorProfile.keypadEnterBackgroundProperty
         } )
       ],
       spacing: 10
@@ -152,8 +152,8 @@ class TermKeypadPanel extends Panel {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
       xMargin: 15,
       yMargin: 15,
-      fill: AreaModelCommonColorProfile.keypadPanelBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.keypadPanelBorderProperty
+      fill: areaModelCommonColorProfile.keypadPanelBackgroundProperty,
+      stroke: areaModelCommonColorProfile.keypadPanelBorderProperty
     } );
 
     this.mutate( nodeOptions );

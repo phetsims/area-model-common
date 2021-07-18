@@ -12,7 +12,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 class GenericPartitionedAreaNode extends Rectangle {
   /**
@@ -35,10 +35,10 @@ class GenericPartitionedAreaNode extends Rectangle {
         this.fill = null;
       }
       else if ( area.coefficient > 0 ) {
-        this.fill = AreaModelCommonColorProfile.genericPositiveBackgroundProperty;
+        this.fill = areaModelCommonColorProfile.genericPositiveBackgroundProperty;
       }
       else {
-        this.fill = AreaModelCommonColorProfile.genericNegativeBackgroundProperty;
+        this.fill = areaModelCommonColorProfile.genericNegativeBackgroundProperty;
       }
     } );
 

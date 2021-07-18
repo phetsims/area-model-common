@@ -23,7 +23,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 class TermEditNode extends LayoutBox {
   /**
@@ -94,7 +94,7 @@ class TermEditNode extends LayoutBox {
           listener: () => {
             options.editCallback();
           },
-          baseColor: AreaModelCommonColorProfile.editButtonBackgroundProperty
+          baseColor: areaModelCommonColorProfile.editButtonBackgroundProperty
         } )
       ]
     } );
@@ -104,8 +104,8 @@ class TermEditNode extends LayoutBox {
 
     options.isActiveProperty.link( isActive => {
       readoutBackground.fill = isActive
-                               ? AreaModelCommonColorProfile.editActiveBackgroundProperty
-                               : AreaModelCommonColorProfile.editInactiveBackgroundProperty;
+                               ? areaModelCommonColorProfile.editActiveBackgroundProperty
+                               : areaModelCommonColorProfile.editInactiveBackgroundProperty;
     } );
 
     const updateText = () => {

@@ -20,7 +20,7 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 
 // constants
 const BOX_SIZE = 30;
@@ -99,7 +99,7 @@ class GenericFactorsNode extends AlignBox {
   static createOrientationReadout( orientation, displayProperty ) {
     validate( orientation, { validValues: Orientation.VALUES } );
 
-    const colorProperty = AreaModelCommonColorProfile.genericColorProperties.get( orientation );
+    const colorProperty = areaModelCommonColorProfile.genericColorProperties.get( orientation );
 
     const richText = new RichText( '', {
       font: AreaModelCommonConstants.FACTORS_TERM_FONT,

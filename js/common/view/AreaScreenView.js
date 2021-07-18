@@ -28,7 +28,7 @@ import AreaModelCommonGlobals from '../AreaModelCommonGlobals.js';
 import AreaModelCommonModel from '../model/AreaModelCommonModel.js';
 import AreaCalculationRadioButtonGroup from './AreaCalculationRadioButtonGroup.js';
 import AreaModelCommonAccordionBox from './AreaModelCommonAccordionBox.js';
-import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
 import CalculationNode from './CalculationNode.js';
 import PartialProductRadioButtonGroup from './PartialProductRadioButtonGroup.js';
 import TotalAreaNode from './TotalAreaNode.js';
@@ -117,7 +117,7 @@ class AreaScreenView extends ScreenView {
     this.getSelectionNodesProperty( config.getSelectionNodesExtras( this ) ).link( selectionNodes => {
       selectionContent.children = interleave( selectionNodes, () => new Line( {
         x2: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
-        stroke: AreaModelCommonColorProfile.selectionSeparatorProperty
+        stroke: areaModelCommonColorProfile.selectionSeparatorProperty
       } ) );
     } );
 
@@ -125,8 +125,8 @@ class AreaScreenView extends ScreenView {
     this.selectionPanel = new Panel( selectionContent, {
       xMargin: 15,
       yMargin: 10,
-      fill: AreaModelCommonColorProfile.panelBackgroundProperty,
-      stroke: AreaModelCommonColorProfile.panelBorderProperty,
+      fill: areaModelCommonColorProfile.panelBackgroundProperty,
+      stroke: areaModelCommonColorProfile.panelBorderProperty,
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
 

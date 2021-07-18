@@ -10,7 +10,7 @@ import Screen from '../../../joist/js/Screen.js';
 import merge from '../../../phet-core/js/merge.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
-import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../common/view/areaModelCommonColorProfile.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
 
@@ -19,7 +19,7 @@ class DecimalsScreen extends Screen {
 
     const options = {
       name: areaModelCommonStrings.screen.decimals,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty
+      backgroundColorProperty: areaModelCommonColorProfile.backgroundProperty
     };
 
     const commonAreaOptions = {

@@ -17,7 +17,7 @@ import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryPar
 import Area from '../../common/model/Area.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import Term from '../../common/model/Term.js';
-import AreaModelCommonColorProfile from '../../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
 import GenericPartition from './GenericPartition.js';
 
 class GenericArea extends Area {
@@ -47,7 +47,7 @@ class GenericArea extends Area {
 
     super(
       new OrientationPair( horizontalPartitions, verticalPartitions ),
-      AreaModelCommonColorProfile.genericColorProperties,
+      areaModelCommonColorProfile.genericColorProperties,
       1,
       allowExponents
     );

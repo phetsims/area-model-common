@@ -13,7 +13,7 @@ import genericGameScreenIconImage from '../../mipmaps/generic-game-screen-icon_p
 import genericGameScreenNavbarImage from '../../mipmaps/generic-game-screen-navbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
-import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../common/view/areaModelCommonColorProfile.js';
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
 
@@ -22,7 +22,7 @@ class GenericGameScreen extends Screen {
 
     const options = {
       name: areaModelCommonStrings.screen.game,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      backgroundColorProperty: areaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIconImage ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

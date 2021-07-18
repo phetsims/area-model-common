@@ -15,7 +15,7 @@ import multiplyScreenNavbarImage from '../../mipmaps/multiply-screen-navbar_png.
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import PartialProductsChoice from '../common/model/PartialProductsChoice.js';
-import AreaModelCommonColorProfile from '../common/view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../common/view/areaModelCommonColorProfile.js';
 import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
@@ -25,7 +25,7 @@ class MultiplyScreen extends Screen {
 
     const options = {
       name: areaModelCommonStrings.screen.multiply,
-      backgroundColorProperty: AreaModelCommonColorProfile.backgroundProperty,
+      backgroundColorProperty: areaModelCommonColorProfile.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( multiplyScreenIconImage ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

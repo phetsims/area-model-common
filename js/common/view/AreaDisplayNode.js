@@ -23,7 +23,7 @@ import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import OrientationPair from '../model/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
-import AreaModelCommonColorProfile from './AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
 import PartialProductLabelNode from './PartialProductLabelNode.js';
 import PoolableLayerNode from './PoolableLayerNode.js';
 import RangeLabelNode from './RangeLabelNode.js';
@@ -254,12 +254,12 @@ class AreaDisplayNode extends Node {
 
     // @protected {Node}
     this.backgroundNode = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      fill: AreaModelCommonColorProfile.areaBackgroundProperty
+      fill: areaModelCommonColorProfile.areaBackgroundProperty
     } );
 
     // @protected {Node}
     this.borderNode = new Rectangle( 0, 0, this.viewSize, this.viewSize, {
-      stroke: AreaModelCommonColorProfile.areaBorderProperty
+      stroke: areaModelCommonColorProfile.areaBorderProperty
     } );
 
     this.labelLayer.addChild( this.eraseButton );

@@ -11,7 +11,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import AreaModelCommonColorProfile from '../view/AreaModelCommonColorProfile.js';
+import areaModelCommonColorProfile from '../view/areaModelCommonColorProfile.js';
 import Area from './Area.js';
 import AreaCalculationChoice from './AreaCalculationChoice.js';
 import PartialProductsChoice from './PartialProductsChoice.js';
@@ -45,8 +45,8 @@ class AreaModelCommonModel {
 
     // @public {OrientationPair.<Property.<Color>>}
     this.colorProperties = options.isProportional
-                           ? AreaModelCommonColorProfile.proportionalColorProperties
-                           : AreaModelCommonColorProfile.genericColorProperties;
+                           ? areaModelCommonColorProfile.proportionalColorProperties
+                           : areaModelCommonColorProfile.genericColorProperties;
 
     // @public {Property.<Area>} - The current area
     this.currentAreaProperty = new Property( defaultArea, {
