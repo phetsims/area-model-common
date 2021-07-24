@@ -17,7 +17,7 @@ import HBox from '../../../../scenery/js/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import eyeSlashRegularShape from '../../../../sherpa/js/fontawesome-5/eyeSlashRegularShape.js';
+import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
@@ -59,7 +59,7 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
     super( model.partialProductsChoiceProperty, [
       {
         value: PartialProductsChoice.HIDDEN,
-        node: new AlignBox( new Path( eyeSlashRegularShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } ),
+        node: new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } ),
 
         // pdom
         labelContent: hidePartialProductsString
