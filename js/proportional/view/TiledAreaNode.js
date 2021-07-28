@@ -15,7 +15,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
+import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
 class TiledAreaNode extends Node {
   /**
@@ -67,27 +67,27 @@ class TiledAreaNode extends Node {
 
     // @private {Path} - Background color paths for each section
     this.bigPath = new Path( null, {
-      fill: areaModelCommonColors.bigTileProperty
+      fill: AreaModelCommonColors.bigTileProperty
     } );
     this.horizontalPath = new Path( null, {
-      fill: areaModelCommonColors.mediumTileProperty
+      fill: AreaModelCommonColors.mediumTileProperty
     } );
     this.verticalPath = new Path( null, {
-      fill: areaModelCommonColors.mediumTileProperty
+      fill: AreaModelCommonColors.mediumTileProperty
     } );
     this.smallPath = new Path( null, {
-      fill: areaModelCommonColors.smallTileProperty
+      fill: AreaModelCommonColors.smallTileProperty
     } );
 
     // @private {Path} - Grid line paths. We'll use clipping to control where they are visible
     this.smallGridPath = new Path( null, {
-      stroke: areaModelCommonColors.tileBorderProperty
+      stroke: AreaModelCommonColors.tileBorderProperty
     } );
     this.horizontalGridPath = new Path( null, {
-      stroke: areaModelCommonColors.tileBorderProperty
+      stroke: AreaModelCommonColors.tileBorderProperty
     } );
     this.verticalGridPath = new Path( null, {
-      stroke: areaModelCommonColors.tileBorderProperty
+      stroke: AreaModelCommonColors.tileBorderProperty
     } );
 
     Property.multilink(
@@ -120,7 +120,7 @@ class TiledAreaNode extends Node {
 
     // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
     this.extraLinesPath = new Path( null, {
-      stroke: areaModelCommonColors.tileBorderProperty
+      stroke: AreaModelCommonColors.tileBorderProperty
     } );
 
     this.mutate( {

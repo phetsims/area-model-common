@@ -14,7 +14,7 @@ import OrientationPair from '../model/OrientationPair.js';
 
 // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
 // tweaks with the top-level files)
-const areaModelCommonColors = {
+const AreaModelCommonColors = {
   /*---------------------------------------------------------------------------*
   * Common colors
   *----------------------------------------------------------------------------*/
@@ -147,15 +147,15 @@ const areaModelCommonColors = {
 };
 
 // @public {OrientationPair.<Property.<Color>>}
-areaModelCommonColors.proportionalColorProperties = new OrientationPair(
-  areaModelCommonColors.proportionalWidthProperty,
-  areaModelCommonColors.proportionalHeightProperty
+AreaModelCommonColors.proportionalColorProperties = new OrientationPair(
+  AreaModelCommonColors.proportionalWidthProperty,
+  AreaModelCommonColors.proportionalHeightProperty
 );
-areaModelCommonColors.genericColorProperties = new OrientationPair(
-  areaModelCommonColors.genericWidthProperty,
-  areaModelCommonColors.genericHeightProperty
+AreaModelCommonColors.genericColorProperties = new OrientationPair(
+  AreaModelCommonColors.genericWidthProperty,
+  AreaModelCommonColors.genericHeightProperty
 );
 
-areaModelCommon.register( 'areaModelCommonColors', areaModelCommonColors );
+areaModelCommon.register( 'AreaModelCommonColors', AreaModelCommonColors );
 
-export default areaModelCommonColors;
+export default AreaModelCommonColors;

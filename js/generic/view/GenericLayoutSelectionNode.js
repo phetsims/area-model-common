@@ -23,7 +23,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import VBox from '../../../../scenery/js/nodes/VBox.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
+import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import GenericLayout from '../model/GenericLayout.js';
 
 class GenericLayoutSelectionNode extends Node {
@@ -132,7 +132,7 @@ class GenericLayoutSelectionNode extends Node {
             }
           } );
           background.stroke = new DerivedProperty(
-            [ genericLayoutProperty, areaModelCommonColors.radioBorderProperty ],
+            [ genericLayoutProperty, AreaModelCommonColors.radioBorderProperty ],
             ( currentLayout, highlightColor ) => {
               if ( currentLayout === layout ) {
                 return highlightColor;
@@ -142,7 +142,7 @@ class GenericLayoutSelectionNode extends Node {
               }
             } );
           background.fill = new DerivedProperty(
-            [ listener.isHoveringProperty, areaModelCommonColors.layoutHoverProperty ],
+            [ listener.isHoveringProperty, AreaModelCommonColors.layoutHoverProperty ],
             ( isHovering, hoverColor ) => {
               if ( isHovering ) {
                 return hoverColor;
@@ -235,8 +235,8 @@ function createLayoutIcon( size, lineWidth ) {
   }
   return new Path( shape, {
     lineWidth: lineWidth,
-    stroke: areaModelCommonColors.layoutGridProperty,
-    fill: areaModelCommonColors.layoutIconFillProperty
+    stroke: AreaModelCommonColors.layoutGridProperty,
+    fill: AreaModelCommonColors.layoutIconFillProperty
   } );
 }
 

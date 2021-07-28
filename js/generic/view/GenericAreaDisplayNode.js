@@ -17,7 +17,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
-import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
+import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import PoolableLayerNode from '../../common/view/PoolableLayerNode.js';
 import GenericPartitionedAreaNode from './GenericPartitionedAreaNode.js';
 import PartitionSizeEditNode from './PartitionSizeEditNode.js';
@@ -125,7 +125,7 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
     const line = new Line( {
       p1: firstPoint,
       p2: secondPoint,
-      stroke: areaModelCommonColors.partitionLineStrokeProperty
+      stroke: AreaModelCommonColors.partitionLineStrokeProperty
     } );
     visibilityProperty.linkAttribute( line, 'visible' );
     return line;

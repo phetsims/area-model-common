@@ -12,7 +12,7 @@ import Image from '../../../scenery/js/nodes/Image.js';
 import genericScreenIconImage from '../../mipmaps/generic-screen-icon_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
-import areaModelCommonColors from '../common/view/areaModelCommonColors.js';
+import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import GenericAreaModel from '../generic/model/GenericAreaModel.js';
 import GenericAreaScreenView from '../generic/view/GenericAreaScreenView.js';
 
@@ -21,7 +21,7 @@ class GenericScreen extends Screen {
 
     const options = {
       name: areaModelCommonStrings.screen.generic,
-      backgroundColorProperty: areaModelCommonColors.backgroundProperty,
+      backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( genericScreenIconImage ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

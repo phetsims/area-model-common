@@ -48,7 +48,7 @@ import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
 import Term from '../../common/model/Term.js';
-import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
+import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import GenericFactorsNode from '../../generic/view/GenericFactorsNode.js';
 import Entry from '../model/Entry.js';
 import EntryDisplayType from '../model/EntryDisplayType.js';
@@ -259,7 +259,7 @@ class GameAreaScreenView extends ScreenView {
       entryProperty: totalTermEntryProperty,
       gameStateProperty: model.stateProperty,
       activeEntryProperty: model.activeEntryProperty,
-      colorProperty: areaModelCommonColors.totalEditableProperty,
+      colorProperty: AreaModelCommonColors.totalEditableProperty,
       allowExponentsProperty: this.areaDisplay.allowExponentsProperty,
       orientation: Orientation.HORIZONTAL,
       labelFont: AreaModelCommonConstants.GAME_TOTAL_FONT,
@@ -332,7 +332,7 @@ class GameAreaScreenView extends ScreenView {
         touchAreaXDilation: 10,
         touchAreaYDilation: 10,
         listener: listener,
-        baseColor: areaModelCommonColors.gameButtonBackgroundProperty,
+        baseColor: AreaModelCommonColors.gameButtonBackgroundProperty,
         centerX: panelBox.centerX,
         top: panelBox.bottom + 80
       } );
@@ -394,7 +394,7 @@ class GameAreaScreenView extends ScreenView {
       new StarNode()
     ], 100 );
     Orientation.VALUES.forEach( orientation => {
-      const colorProperty = areaModelCommonColors.genericColorProperties.get( orientation );
+      const colorProperty = AreaModelCommonColors.genericColorProperties.get( orientation );
 
       _.range( 1, 10 ).forEach( digit => {
         [ -1, 1 ].forEach( sign => {
@@ -507,8 +507,8 @@ class GameAreaScreenView extends ScreenView {
     return new Panel( panelContent, {
       xMargin: 15,
       yMargin: 10,
-      fill: areaModelCommonColors.panelBackgroundProperty,
-      stroke: areaModelCommonColors.panelBorderProperty,
+      fill: AreaModelCommonColors.panelBackgroundProperty,
+      stroke: AreaModelCommonColors.panelBorderProperty,
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS
     } );
   }

@@ -15,7 +15,7 @@ import VBox from '../../../../scenery/js/nodes/VBox.js';
 import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
-import areaModelCommonColors from './areaModelCommonColors.js';
+import AreaModelCommonColors from './AreaModelCommonColors.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
 class AreaCalculationRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
@@ -26,8 +26,8 @@ class AreaCalculationRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
    */
   constructor( areaCalculationChoiceProperty, selectionButtonAlignGroup ) {
 
-    const darkColorProperty = areaModelCommonColors.calculationIconDarkProperty;
-    const lightColorProperty = areaModelCommonColors.calculationIconLightProperty;
+    const darkColorProperty = AreaModelCommonColors.calculationIconDarkProperty;
+    const lightColorProperty = AreaModelCommonColors.calculationIconLightProperty;
 
     super( areaCalculationChoiceProperty, [ {
       value: AreaCalculationChoice.HIDDEN,
