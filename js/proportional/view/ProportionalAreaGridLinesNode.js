@@ -12,7 +12,7 @@ import Property from '../../../../axon/js/Property.js';
 import Shape from '../../../../kite/js/Shape.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 
 // constants
 const GRID_LINE_WIDTH = 0.5;
@@ -26,7 +26,7 @@ class ProportionalAreaGridLinesNode extends Path {
   constructor( areaProperty, modelViewTransformProperty ) {
 
     super( null, {
-      stroke: areaModelCommonColorProfile.gridLineProperty
+      stroke: areaModelCommonColors.gridLineProperty
     } );
 
     Property.multilink( [ areaProperty, modelViewTransformProperty ], ( area, modelViewTransform ) => {

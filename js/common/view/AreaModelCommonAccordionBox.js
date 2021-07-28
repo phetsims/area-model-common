@@ -13,7 +13,7 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
-import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
+import areaModelCommonColors from './areaModelCommonColors.js';
 
 class AreaModelCommonAccordionBox extends AccordionBox {
 
@@ -34,8 +34,8 @@ class AreaModelCommonAccordionBox extends AccordionBox {
       contentYMargin: 12,
       resize: true,
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
-      fill: areaModelCommonColorProfile.panelBackgroundProperty,
-      stroke: areaModelCommonColorProfile.panelBorderProperty,
+      fill: areaModelCommonColors.panelBackgroundProperty,
+      stroke: areaModelCommonColors.panelBorderProperty,
       titleAlignX: 'left',
       titleXSpacing: 8,
       buttonXMargin: 10,

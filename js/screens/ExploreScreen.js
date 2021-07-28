@@ -13,7 +13,7 @@ import exploreScreenIconImage from '../../mipmaps/explore-screen-icon_png.js';
 import exploreScreenNavbarImage from '../../mipmaps/explore-screen-navbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
-import areaModelCommonColorProfile from '../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../common/view/areaModelCommonColors.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
 
@@ -22,7 +22,7 @@ class ExploreScreen extends Screen {
 
     const options = {
       name: areaModelCommonStrings.screen.explore,
-      backgroundColorProperty: areaModelCommonColorProfile.backgroundProperty,
+      backgroundColorProperty: areaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( exploreScreenIconImage ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

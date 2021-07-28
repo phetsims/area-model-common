@@ -24,7 +24,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 import CountingAreaNode from './CountingAreaNode.js';
 import ProportionalAreaGridLinesNode from './ProportionalAreaGridLinesNode.js';
 import ProportionalDragHandle from './ProportionalDragHandle.js';
@@ -98,9 +98,9 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     // Active area background
     const activeAreaBackground = new Rectangle( {
       fill: options.useTileLikeBackground
-            ? areaModelCommonColorProfile.semiTransparentSmallTileProperty
-            : areaModelCommonColorProfile.proportionalActiveAreaBackgroundProperty,
-      stroke: areaModelCommonColorProfile.proportionalActiveAreaBorderProperty
+            ? areaModelCommonColors.semiTransparentSmallTileProperty
+            : areaModelCommonColors.proportionalActiveAreaBackgroundProperty,
+      stroke: areaModelCommonColors.proportionalActiveAreaBorderProperty
     } );
     Property.multilink(
       [ areaDisplay.activeTotalProperties.horizontal, this.modelViewTransformProperty ],

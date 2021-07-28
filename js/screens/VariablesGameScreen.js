@@ -13,7 +13,7 @@ import variablesGameScreenIconImage from '../../mipmaps/variables-game-screen-ic
 import variablesGameScreenNavbarImage from '../../mipmaps/variables-game-screen-navbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
-import areaModelCommonColorProfile from '../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../common/view/areaModelCommonColors.js';
 import VariablesGameAreaModel from '../game/model/VariablesGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
 
@@ -22,7 +22,7 @@ class VariablesGameScreen extends Screen {
 
     const options = {
       name: areaModelCommonStrings.screen.game,
-      backgroundColorProperty: areaModelCommonColorProfile.backgroundProperty,
+      backgroundColorProperty: areaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( variablesGameScreenIconImage ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1

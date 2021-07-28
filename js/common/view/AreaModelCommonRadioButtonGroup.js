@@ -9,7 +9,7 @@
 import merge from '../../../../phet-core/js/merge.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
+import areaModelCommonColors from './areaModelCommonColors.js';
 
 class AreaModelCommonRadioButtonGroup extends RectangularRadioButtonGroup {
   /**
@@ -26,8 +26,8 @@ class AreaModelCommonRadioButtonGroup extends RectangularRadioButtonGroup {
       deselectedLineWidth: 1.5,
       touchAreaXDilation: 6,
       touchAreaYDilation: 6,
-      selectedStroke: areaModelCommonColorProfile.radioBorderProperty,
-      baseColor: areaModelCommonColorProfile.radioBackgroundProperty
+      selectedStroke: areaModelCommonColors.radioBorderProperty,
+      baseColor: areaModelCommonColors.radioBackgroundProperty
     }, options ) );
   }
 }

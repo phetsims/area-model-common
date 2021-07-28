@@ -10,7 +10,7 @@ import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import OrientationPair from '../../model/OrientationPair.js';
-import areaModelCommonColorProfile from '../areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../areaModelCommonColors.js';
 import CalculationGroup from './CalculationGroup.js';
 import Minus from './Minus.js';
 import MultiplyX from './MultiplyX.js';
@@ -53,8 +53,8 @@ class CalculationLine {
     // @private {Property.<Color>}
     this.baseColorProperty = new DerivedProperty( [
       this.isActiveProperty,
-      areaModelCommonColorProfile.calculationActiveProperty,
-      areaModelCommonColorProfile.calculationInactiveProperty
+      areaModelCommonColors.calculationActiveProperty,
+      areaModelCommonColors.calculationInactiveProperty
     ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
       useDeepEquality: true
     } );
@@ -63,7 +63,7 @@ class CalculationLine {
     this.orientedColorProperties = OrientationPair.create( orientation => new DerivedProperty( [
       this.isActiveProperty,
       colorProperties.get( orientation ),
-      areaModelCommonColorProfile.calculationInactiveProperty
+      areaModelCommonColors.calculationInactiveProperty
     ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
       useDeepEquality: true
     } ) );

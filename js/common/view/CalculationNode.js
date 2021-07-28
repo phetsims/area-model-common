@@ -17,7 +17,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
-import areaModelCommonColorProfile from './areaModelCommonColorProfile.js';
+import areaModelCommonColors from './areaModelCommonColors.js';
 import CalculationLinesNode from './calculation/CalculationLinesNode.js';
 
 // constants
@@ -40,8 +40,8 @@ class CalculationNode extends Node {
 
     const background = new Rectangle( {
       cornerRadius: AreaModelCommonConstants.PANEL_CORNER_RADIUS,
-      fill: areaModelCommonColorProfile.panelBackgroundProperty,
-      stroke: areaModelCommonColorProfile.panelBorderProperty
+      fill: areaModelCommonColors.panelBackgroundProperty,
+      stroke: areaModelCommonColors.panelBorderProperty
     } );
     this.addChild( background );
 
@@ -50,7 +50,7 @@ class CalculationNode extends Node {
       .lineTo( ARROW_SIZE / 2, -ARROW_SIZE * 0.8 )
       .close();
     const previousArrow = new Path( previousShape, {
-      fill: areaModelCommonColorProfile.calculationArrowUpProperty,
+      fill: areaModelCommonColors.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     previousArrow.mouseArea = previousArrow.localBounds;
@@ -65,8 +65,8 @@ class CalculationNode extends Node {
       previousListener.interrupt();
       previousArrow.pickable = enabled;
       previousArrow.fill = enabled
-                           ? areaModelCommonColorProfile.calculationArrowUpProperty
-                           : areaModelCommonColorProfile.calculationArrowDisabledProperty;
+                           ? areaModelCommonColors.calculationArrowUpProperty
+                           : areaModelCommonColors.calculationArrowDisabledProperty;
     } );
 
     this.addChild( previousArrow );
@@ -75,7 +75,7 @@ class CalculationNode extends Node {
       .lineTo( ARROW_SIZE / 2, ARROW_SIZE * 0.8 )
       .close();
     const nextArrow = new Path( nextShape, {
-      fill: areaModelCommonColorProfile.calculationArrowUpProperty,
+      fill: areaModelCommonColors.calculationArrowUpProperty,
       cursor: 'pointer'
     } );
     nextArrow.mouseArea = nextArrow.localBounds;
@@ -91,8 +91,8 @@ class CalculationNode extends Node {
       nextListener.interrupt();
       nextArrow.pickable = enabled;
       nextArrow.fill = enabled
-                       ? areaModelCommonColorProfile.calculationArrowUpProperty
-                       : areaModelCommonColorProfile.calculationArrowDisabledProperty;
+                       ? areaModelCommonColors.calculationArrowUpProperty
+                       : areaModelCommonColors.calculationArrowDisabledProperty;
     } );
 
     model.areaCalculationChoiceProperty.link( choice => {

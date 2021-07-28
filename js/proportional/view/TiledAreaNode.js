@@ -15,7 +15,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 
 class TiledAreaNode extends Node {
   /**
@@ -67,27 +67,27 @@ class TiledAreaNode extends Node {
 
     // @private {Path} - Background color paths for each section
     this.bigPath = new Path( null, {
-      fill: areaModelCommonColorProfile.bigTileProperty
+      fill: areaModelCommonColors.bigTileProperty
     } );
     this.horizontalPath = new Path( null, {
-      fill: areaModelCommonColorProfile.mediumTileProperty
+      fill: areaModelCommonColors.mediumTileProperty
     } );
     this.verticalPath = new Path( null, {
-      fill: areaModelCommonColorProfile.mediumTileProperty
+      fill: areaModelCommonColors.mediumTileProperty
     } );
     this.smallPath = new Path( null, {
-      fill: areaModelCommonColorProfile.smallTileProperty
+      fill: areaModelCommonColors.smallTileProperty
     } );
 
     // @private {Path} - Grid line paths. We'll use clipping to control where they are visible
     this.smallGridPath = new Path( null, {
-      stroke: areaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColors.tileBorderProperty
     } );
     this.horizontalGridPath = new Path( null, {
-      stroke: areaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColors.tileBorderProperty
     } );
     this.verticalGridPath = new Path( null, {
-      stroke: areaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColors.tileBorderProperty
     } );
 
     Property.multilink(
@@ -120,7 +120,7 @@ class TiledAreaNode extends Node {
 
     // @private {Path} - Contains extra overlay lines to fill in the 'stroked' appearance.
     this.extraLinesPath = new Path( null, {
-      stroke: areaModelCommonColorProfile.tileBorderProperty
+      stroke: areaModelCommonColors.tileBorderProperty
     } );
 
     this.mutate( {

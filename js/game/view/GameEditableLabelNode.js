@@ -19,7 +19,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 import TermEditNode from '../../generic/view/TermEditNode.js';
 import EntryDisplayType from '../model/EntryDisplayType.js';
 import EntryStatus from '../model/EntryStatus.js';
@@ -86,7 +86,7 @@ class GameEditableLabelNode extends Node {
     } );
 
     const textColorProperty = new DerivedProperty(
-      [ statusProperty, colorProperty, areaModelCommonColorProfile.errorStatusProperty ],
+      [ statusProperty, colorProperty, areaModelCommonColors.errorStatusProperty ],
       ( highlight, color, errorColor ) => {
         if ( highlight === EntryStatus.INCORRECT ) {
           return errorColor;
@@ -98,8 +98,8 @@ class GameEditableLabelNode extends Node {
     const borderColorProperty = new DerivedProperty( [
       statusProperty,
       colorProperty,
-      areaModelCommonColorProfile.errorStatusProperty,
-      areaModelCommonColorProfile.dirtyStatusProperty
+      areaModelCommonColors.errorStatusProperty,
+      areaModelCommonColors.dirtyStatusProperty
     ], ( highlight, color, errorColor, dirtyColor ) => {
       if ( highlight === EntryStatus.NORMAL ) {
         return color;

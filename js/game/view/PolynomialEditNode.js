@@ -23,7 +23,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Polynomial from '../../common/model/Polynomial.js';
 import Term from '../../common/model/Term.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 import Entry from '../model/Entry.js';
 import EntryStatus from '../model/EntryStatus.js';
 import InputMethod from '../model/InputMethod.js';
@@ -123,8 +123,8 @@ class PolynomialEditNode extends VBox {
     function getPickerColorProperty( entryProperty ) {
       return new DerivedProperty( [
         new DynamicProperty( entryProperty, { derive: 'statusProperty' } ),
-        areaModelCommonColorProfile.errorStatusProperty,
-        areaModelCommonColorProfile.dirtyStatusProperty
+        areaModelCommonColors.errorStatusProperty,
+        areaModelCommonColors.dirtyStatusProperty
       ], ( highlight, errorColor, dirtyColor ) => {
         if ( highlight === EntryStatus.NORMAL ) {
           return 'black';

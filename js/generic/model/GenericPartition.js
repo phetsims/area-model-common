@@ -10,7 +10,7 @@ import validate from '../../../../axon/js/validate.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import Partition from '../../common/model/Partition.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 
 class GenericPartition extends Partition {
   /**
@@ -21,7 +21,7 @@ class GenericPartition extends Partition {
     validate( orientation, { validValues: Orientation.VALUES } );
     assert && assert( typeof digitCount === 'number' );
 
-    super( orientation, areaModelCommonColorProfile.genericColorProperties.get( orientation ) );
+    super( orientation, areaModelCommonColors.genericColorProperties.get( orientation ) );
 
     // @public {number} - How many digits to allow in the editor
     this.digitCount = digitCount;

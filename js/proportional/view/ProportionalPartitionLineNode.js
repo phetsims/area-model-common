@@ -29,7 +29,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
-import areaModelCommonColorProfile from '../../common/view/areaModelCommonColorProfile.js';
+import areaModelCommonColors from '../../common/view/areaModelCommonColors.js';
 
 const horizontalPartitionHandleString = areaModelCommonStrings.a11y.horizontalPartitionHandle;
 const horizontalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.horizontalPartitionHandleDescription;
@@ -93,7 +93,7 @@ class ProportionalPartitionLineNode extends Node {
       mouseArea: Shape.bounds( handleMouseBounds ).shapeIntersection( handleClipShape ),
       touchArea: Shape.bounds( handleTouchBounds ).shapeIntersection( handleClipShape ),
       fill: areaDisplay.colorProperties.get( orientation ),
-      stroke: areaModelCommonColorProfile.partitionLineBorderProperty,
+      stroke: areaModelCommonColors.partitionLineBorderProperty,
       cursor: 'pointer',
       children: [
         minHintArrow,
@@ -102,7 +102,7 @@ class ProportionalPartitionLineNode extends Node {
     } );
 
     const line = new Line( {
-      stroke: areaModelCommonColorProfile.partitionLineStrokeProperty,
+      stroke: areaModelCommonColors.partitionLineStrokeProperty,
       lineWidth: 2,
       cursor: 'pointer'
     } );
