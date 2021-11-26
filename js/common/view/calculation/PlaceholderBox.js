@@ -10,7 +10,7 @@
 
 import Property from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
-import Rectangle from '../../../../../scenery/js/nodes/Rectangle.js';
+import { Rectangle } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
 

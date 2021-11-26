@@ -6,7 +6,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import AlignGroup from '../../../scenery/js/nodes/AlignGroup.js';
+import { AlignGroup } from '../../../scenery/js/imports.js';
 import areaModelCommon from '../areaModelCommon.js';
 
 const AreaModelCommonGlobals = {

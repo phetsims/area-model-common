@@ -9,7 +9,7 @@
  */
 
 import Poolable from '../../../../../phet-core/js/Poolable.js';
-import HBox from '../../../../../scenery/js/nodes/HBox.js';
+import { HBox } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 
 class CalculationGroup extends HBox {

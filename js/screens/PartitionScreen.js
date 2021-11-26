@@ -9,7 +9,7 @@
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import merge from '../../../phet-core/js/merge.js';
-import Image from '../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../scenery/js/imports.js';
 import partitionScreenIconImage from '../../mipmaps/partition-screen-icon_png.js';
 import partitionScreenNavbarImage from '../../mipmaps/partition-screen-navbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';

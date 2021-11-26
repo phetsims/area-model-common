@@ -8,7 +8,7 @@
 
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
-import Image from '../../../scenery/js/nodes/Image.js';
+import { Image } from '../../../scenery/js/imports.js';
 import genericGameScreenIconImage from '../../mipmaps/generic-game-screen-icon_png.js';
 import genericGameScreenNavbarImage from '../../mipmaps/generic-game-screen-navbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';

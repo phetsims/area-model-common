@@ -9,7 +9,7 @@
  */
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import AlignBox from '../../../../scenery/js/nodes/AlignBox.js';
+import { AlignBox } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaCalculationChoice from '../../common/model/AreaCalculationChoice.js';
