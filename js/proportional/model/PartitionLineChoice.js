@@ -6,10 +6,10 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Enumeration from '../../../../phet-core/js/Enumeration.js';
+import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
 import areaModelCommon from '../../areaModelCommon.js';
 
-const PartitionLineChoice = Enumeration.byKeys( [
+const PartitionLineChoice = EnumerationDeprecated.byKeys( [
   'NONE', // No partition lines
   'ONE', // One at a time (toggles between the two)
   'BOTH' // Both partition lines available at all times
