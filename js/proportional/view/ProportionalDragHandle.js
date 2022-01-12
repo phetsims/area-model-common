@@ -191,7 +191,7 @@ class ProportionalDragHandle extends Node {
     } );
 
     // Update the offset of the drag handle
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       Property.multilink(
         [ activeTotalProperties.get( orientation ), modelViewTransformProperty ],
         ( value, modelViewTransform ) => {

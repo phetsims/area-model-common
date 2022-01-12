@@ -30,7 +30,7 @@ class GenericLayout {
    * @returns {number}
    */
   getPartitionQuantity( orientation ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     return orientation === Orientation.HORIZONTAL ? this.size.width : this.size.height;
   }

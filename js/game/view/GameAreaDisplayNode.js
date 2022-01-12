@@ -58,7 +58,7 @@ class GameAreaDisplayNode extends Node {
       2: [ 0, singleOffset, fullOffset ],
       3: [ 0, firstOffset, secondOffset, fullOffset ]
     };
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       const colorProperty = AreaModelCommonColors.genericColorProperties.get( orientation );
       const termListProperty = areaDisplay.totalProperties.get( orientation );
       const tickPositionsProperty = new DerivedProperty( [ areaDisplay.layoutProperty ], layout => tickVariations[ layout.getPartitionQuantity( orientation ) ] );
@@ -100,7 +100,7 @@ class GameAreaDisplayNode extends Node {
     ] );
 
     // Partition size labels
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       _.range( 0, MAX_PARTITIONS ).forEach( partitionIndex => {
         const entryProperty = new DerivedProperty(
           [ areaDisplay.partitionSizeEntriesProperties.get( orientation ) ],

@@ -145,7 +145,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     this.areaLayer.addChild( this.countingAreaNode );
 
     // Partition lines
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       this.areaLayer.addChild( new ProportionalPartitionLineNode(
         areaDisplay,
         this.modelViewTransformProperty,
@@ -154,7 +154,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     } );
 
     // Partition labels
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       const partitionsProperties = areaDisplay.partitionsProperties.get( orientation );
 
       // because we will have at most 2

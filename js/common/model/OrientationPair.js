@@ -34,7 +34,7 @@ class OrientationPair {
    * @returns {*}
    */
   get( orientation ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     return orientation === Orientation.HORIZONTAL ? this.horizontal : this.vertical;
   }

@@ -45,7 +45,7 @@ class ProportionalPartitionLineNode extends Node {
    * @param {Orientation} orientation
    */
   constructor( areaDisplay, modelViewTransformProperty, orientation ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     super();
 

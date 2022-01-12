@@ -129,7 +129,7 @@ class ProportionalArea extends Area {
     this.secondaryPartitions = new OrientationPair( horizontalPartitions[ 1 ], verticalPartitions[ 1 ] );
 
     // Keep partition sizes up-to-date
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       Property.multilink(
         [ this.activeTotalProperties.get( orientation ), this.visiblePartitionLineSplitProperties.get( orientation ) ],
         ( size, split ) => {

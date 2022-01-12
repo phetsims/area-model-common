@@ -178,7 +178,7 @@ class AreaChallenge {
     *----------------------------------------------------------------------------*/
 
     // Now hook up dynamic parts, setting their values to null
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       if ( description.dimensionTypes.get( orientation ) === EntryType.DYNAMIC ) {
         const nonErrorProperties = this.nonErrorPartitionSizeProperties.get( orientation );
         Property.multilink( nonErrorProperties, () => {

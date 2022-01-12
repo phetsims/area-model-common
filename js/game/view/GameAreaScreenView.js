@@ -398,7 +398,7 @@ class GameAreaScreenView extends ScreenView {
       new FaceNode( 40, { headStroke: 'black', headLineWidth: 1.5 } ),
       new StarNode()
     ], 100 );
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       const colorProperty = AreaModelCommonColors.genericColorProperties.get( orientation );
 
       _.range( 1, 10 ).forEach( digit => {

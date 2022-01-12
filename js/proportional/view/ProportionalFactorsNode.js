@@ -113,7 +113,7 @@ class ProportionalFactorsNode extends Node {
    * @param {number} decimalPlaces
    */
   createPicker( orientation, currentAreaProperty, decimalPlaces ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     // {Property.<Property.<Polynomial|null>>}
     const currentTotalProperty = new DerivedProperty( [ currentAreaProperty ], area => area.activeTotalProperties.get( orientation ) );

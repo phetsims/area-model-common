@@ -32,7 +32,7 @@ class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
    * @param {AlignGroup} selectionButtonAlignGroup
    */
   constructor( currentAreaOrientationProperty, selectionButtonAlignGroup ) {
-    super( currentAreaOrientationProperty, Orientation.VALUES.map( orientation => {
+    super( currentAreaOrientationProperty, Orientation.enumeration.values.map( orientation => {
       const icon = createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
       return {
         value: orientation,

@@ -20,7 +20,7 @@ class Partition {
    * @param {Property.<Color>} colorProperty
    */
   constructor( orientation, colorProperty ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
     assert && assert( colorProperty instanceof Property );
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.

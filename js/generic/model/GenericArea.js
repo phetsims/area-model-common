@@ -65,7 +65,7 @@ class GenericArea extends Area {
     this.layout = layout;
 
     // Set up partition coordinate/size
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       const partitionCount = layout.getPartitionQuantity( orientation );
       const partitions = this.partitions.get( orientation );
 

@@ -95,7 +95,7 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
    */
   positionProductLabels() {
     this.productLabels.forEach( productLabel => {
-      Orientation.VALUES.forEach( orientation => {
+      Orientation.enumeration.values.forEach( orientation => {
         const range = productLabel.partitionedAreaProperty.value.partitions.get( orientation ).coordinateRangeProperty.value;
         if ( range !== null ) {
           productLabel[ orientation.coordinate ] = orientation.modelToView( this.modelViewTransformProperty.value, range.getCenter() );
@@ -146,7 +146,7 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
 
     const resultNode = new Node();
 
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       const hasTwoProperty = new DerivedProperty( [ layoutProperty ], layout => layout.getPartitionQuantity( orientation ) === 2 );
       const hasThreeProperty = new DerivedProperty( [ layoutProperty ], layout => layout.getPartitionQuantity( orientation ) === 3 );
 

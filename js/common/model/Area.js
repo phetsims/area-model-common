@@ -132,7 +132,7 @@ class Area {
    * @returns {Array.<Partition>}
    */
   getDefinedPartitions( orientation ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     return this.partitions.get( orientation ).filter( partition => partition.isDefined() );
   }
@@ -145,7 +145,7 @@ class Area {
    * @returns {Array.<Term>}
    */
   getTerms( orientation ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     return this.getDefinedPartitions( orientation ).map( partition => partition.sizeProperty.value );
   }
@@ -158,7 +158,7 @@ class Area {
    * @returns {TermList}
    */
   getTermList( orientation ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     return new TermList( this.getTerms( orientation ) );
   }

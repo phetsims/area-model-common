@@ -18,7 +18,7 @@ class GenericPartition extends Partition {
    * @param {number} digitCount
    */
   constructor( orientation, digitCount ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
     assert && assert( typeof digitCount === 'number' );
 
     super( orientation, AreaModelCommonColors.genericColorProperties.get( orientation ) );

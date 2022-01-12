@@ -97,7 +97,7 @@ class GenericFactorsNode extends AlignBox {
    * @returns {Node}
    */
   static createOrientationReadout( orientation, displayProperty ) {
-    validate( orientation, { validValues: Orientation.VALUES } );
+    validate( orientation, { validValues: Orientation.enumeration.values } );
 
     const colorProperty = AreaModelCommonColors.genericColorProperties.get( orientation );
 

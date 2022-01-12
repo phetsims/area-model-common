@@ -180,7 +180,7 @@ class AreaDisplayNode extends Node {
     this.modelViewTransformProperty = new DerivedProperty( [ modelBoundsProperty ], modelBounds => ModelViewTransform2.createRectangleMapping( modelBounds, viewBounds ) );
 
     // Dimension line views
-    Orientation.VALUES.forEach( orientation => {
+    Orientation.enumeration.values.forEach( orientation => {
       const colorProperty = this.areaDisplay.colorProperties.get( orientation );
       const termListProperty = this.areaDisplay.displayProperties.get( orientation );
       const tickPositionsProperty = new DerivedProperty(

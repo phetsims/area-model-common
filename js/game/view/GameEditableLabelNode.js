@@ -50,7 +50,7 @@ class GameEditableLabelNode extends Node {
     assert && assert( config.activeEntryProperty instanceof Property );
     assert && assert( config.colorProperty instanceof Property );
     assert && assert( config.allowExponentsProperty instanceof Property );
-    validate( config.orientation, { validValues: Orientation.VALUES } );
+    validate( config.orientation, { validValues: Orientation.enumeration.values } );
 
     super();
 
