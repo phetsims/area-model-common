@@ -36,7 +36,7 @@ const horizontalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.h
 const verticalPartitionHandleString = areaModelCommonStrings.a11y.verticalPartitionHandle;
 const verticalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.verticalPartitionHandleDescription;
 
-class ProportionalPartitionLineNode extends Node {
+class ProportionalPartitionLineNode extends AccessibleSlider( Node ) {
   /**
    * @mixes AccessibleSlider
    *
@@ -47,7 +47,38 @@ class ProportionalPartitionLineNode extends Node {
   constructor( areaDisplay, modelViewTransformProperty, orientation ) {
     validate( orientation, { validValues: Orientation.enumeration.values } );
 
-    super();
+    // Relevant properties
+    const partitionSplitProperty = areaDisplay.partitionSplitProperties.get( orientation );
+    const oppositeActiveTotalProperty = areaDisplay.activeTotalProperties.get( orientation.opposite );
+    const activeTotalProperty = areaDisplay.activeTotalProperties.get( orientation );
+
+    // We need to reverse the accessible property for the vertical case.
+    // See https://github.com/phetsims/area-model-introduction/issues/2
+    const accessibleProperty = orientation === Orientation.HORIZONTAL
+                               ? partitionSplitProperty
+                               : new DynamicProperty( new Property( partitionSplitProperty ), {
+        bidirectional: true,
+        map: v => -v,
+        inverseMap: v => -v
+      }, {
+        valueType: 'number' // AccessibleSlider doesn't want anything besides a number
+      } );
+    const accessibleRangeProperty = new DerivedProperty(
+      [ activeTotalProperty, areaDisplay.snapSizeProperty ],
+      ( total, snapSize ) => {
+        const size = total - snapSize;
+        return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
+      } );
+
+    super( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
+      constrainValue: Utils.roundSymmetric,
+      keyboardStep: 1,
+      shiftKeyboardStep: 1,
+      pageKeyboardStep: 5,
+      ariaOrientation: orientation,
+      a11yMapPDOMValue: v => ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v,
+      roundToStepSize: true
+    } );
 
     // @private {ProportionalAreaDisplay}
     this.areaDisplay = areaDisplay;
@@ -112,39 +143,6 @@ class ProportionalPartitionLineNode extends Node {
       handle
     ];
 
-    // Relevant properties
-    const partitionSplitProperty = areaDisplay.partitionSplitProperties.get( orientation );
-    const oppositeActiveTotalProperty = areaDisplay.activeTotalProperties.get( orientation.opposite );
-    const activeTotalProperty = areaDisplay.activeTotalProperties.get( orientation );
-
-    // We need to reverse the accessible property for the vertical case.
-    // See https://github.com/phetsims/area-model-introduction/issues/2
-    const accessibleProperty = orientation === Orientation.HORIZONTAL
-                               ? partitionSplitProperty
-                               : new DynamicProperty( new Property( partitionSplitProperty ), {
-        bidirectional: true,
-        map: v => -v,
-        inverseMap: v => -v
-      }, {
-        valueType: 'number' // AccessibleSlider doesn't want anything besides a number
-      } );
-    const accessibleRangeProperty = new DerivedProperty(
-      [ activeTotalProperty, areaDisplay.snapSizeProperty ],
-      ( total, snapSize ) => {
-        const size = total - snapSize;
-        return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
-      } );
-
-    // pdom
-    this.initializeAccessibleSlider( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
-      constrainValue: Utils.roundSymmetric,
-      keyboardStep: 1,
-      shiftKeyboardStep: 1,
-      pageKeyboardStep: 5,
-      ariaOrientation: orientation,
-      a11yMapPDOMValue: v => ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v,
-      roundToStepSize: true
-    } );
 
     this.labelTagName = 'label';
     this.labelContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleString : horizontalPartitionHandleString;
@@ -214,8 +212,6 @@ class ProportionalPartitionLineNode extends Node {
 }
 
 areaModelCommon.register( 'ProportionalPartitionLineNode', ProportionalPartitionLineNode );
-
-AccessibleSlider.mixInto( ProportionalPartitionLineNode );
 
 // Handle arrows
 const arrowHalfLength = 10;
