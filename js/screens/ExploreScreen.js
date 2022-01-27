@@ -9,8 +9,8 @@
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
-import exploreScreenIconImage from '../../mipmaps/explore-screen-icon_png.js';
-import exploreScreenNavbarImage from '../../mipmaps/explore-screen-navbar_png.js';
+import exploreScreenIcon_png from '../../mipmaps/exploreScreenIcon_png.js';
+import exploreScreenNavbar_png from '../../mipmaps/exploreScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
@@ -23,11 +23,11 @@ class ExploreScreen extends Screen {
     const options = {
       name: areaModelCommonStrings.screen.explore,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new ScreenIcon( new Image( exploreScreenIconImage ), {
+      homeScreenIcon: new ScreenIcon( new Image( exploreScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      navigationBarIcon: new ScreenIcon( new Image( exploreScreenNavbarImage ), {
+      navigationBarIcon: new ScreenIcon( new Image( exploreScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } )

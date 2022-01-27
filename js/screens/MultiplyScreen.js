@@ -10,8 +10,8 @@ import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import merge from '../../../phet-core/js/merge.js';
 import { Image } from '../../../scenery/js/imports.js';
-import multiplyScreenIconImage from '../../mipmaps/multiply-screen-icon_png.js';
-import multiplyScreenNavbarImage from '../../mipmaps/multiply-screen-navbar_png.js';
+import multiplyScreenIcon_png from '../../mipmaps/multiplyScreenIcon_png.js';
+import multiplyScreenNavbar_png from '../../mipmaps/multiplyScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import PartialProductsChoice from '../common/model/PartialProductsChoice.js';
@@ -26,11 +26,11 @@ class MultiplyScreen extends Screen {
     const options = {
       name: areaModelCommonStrings.screen.multiply,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new ScreenIcon( new Image( multiplyScreenIconImage ), {
+      homeScreenIcon: new ScreenIcon( new Image( multiplyScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      navigationBarIcon: new ScreenIcon( new Image( multiplyScreenNavbarImage ), {
+      navigationBarIcon: new ScreenIcon( new Image( multiplyScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),

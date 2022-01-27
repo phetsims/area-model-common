@@ -9,8 +9,8 @@
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
-import genericGameScreenIconImage from '../../mipmaps/generic-game-screen-icon_png.js';
-import genericGameScreenNavbarImage from '../../mipmaps/generic-game-screen-navbar_png.js';
+import genericGameScreenIcon_png from '../../mipmaps/genericGameScreenIcon_png.js';
+import genericGameScreenNavbar_png from '../../mipmaps/genericGameScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import areaModelCommonStrings from '../areaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
@@ -23,11 +23,11 @@ class GenericGameScreen extends Screen {
     const options = {
       name: areaModelCommonStrings.screen.game,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIconImage ), {
+      homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIcon_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
-      navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbarImage ), {
+      navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } )

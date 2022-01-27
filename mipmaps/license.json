@@ -1,5 +1,5 @@
 {
-  "explore-screen-icon.png": {
+  "exploreScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -7,7 +7,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "explore-screen-navbar.png": {
+  "exploreScreenNavbar.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -15,7 +15,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "generic-screen-icon.png": {
+  "genericScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -23,7 +23,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "generic-game-screen-icon.png": {
+  "genericGameScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -31,7 +31,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry (PHET girl by Mariah Hermsmeyer), using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "generic-game-screen-navbar.png": {
+  "genericGameScreenNavbar.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -39,7 +39,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "level-1-icon.png": {
+  "level1Icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -47,7 +47,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "level-2-icon.png": {
+  "level2Icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -55,7 +55,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "level-3-icon.png": {
+  "level3Icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -63,7 +63,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "level-4-icon.png": {
+  "level4Icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -71,7 +71,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "level-5-icon.png": {
+  "level5Icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -79,7 +79,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "level-6-icon.png": {
+  "level6Icon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -87,7 +87,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "multiply-screen-icon.png": {
+  "multiplyScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -95,7 +95,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "multiply-screen-navbar.png": {
+  "multiplyScreenNavbar.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -103,7 +103,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "partition-screen-icon.png": {
+  "partitionScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -111,7 +111,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry, using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "partition-screen-navbar.png": {
+  "partitionScreenNavbar.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -119,7 +119,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "variables-game-screen-icon.png": {
+  "variablesGameScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -127,7 +127,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry (PhET girl by Mariah Hermsmeyer), using a modified form of the Diggity (SIL Open Font License 1.1) font"
   },
-  "variables-game-screen-navbar.png": {
+  "variablesGameScreenNavbar.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],
@@ -135,7 +135,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "Created by Diana Lopez Tavares and Amanda McGarry"
   },
-  "variables-screen-icon.png": {
+  "variablesScreenIcon.png": {
     "text": [
       "Copyright 2018 University of Colorado Boulder"
     ],

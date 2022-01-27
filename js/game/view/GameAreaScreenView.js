@@ -37,12 +37,12 @@ import RewardNode from '../../../../vegas/js/RewardNode.js';
 import ScoreDisplayLabeledStars from '../../../../vegas/js/ScoreDisplayLabeledStars.js';
 import ScoreDisplayStars from '../../../../vegas/js/ScoreDisplayStars.js';
 import vegasStrings from '../../../../vegas/js/vegasStrings.js';
-import level1IconImage from '../../../mipmaps/level-1-icon_png.js';
-import level2IconImage from '../../../mipmaps/level-2-icon_png.js';
-import level3IconImage from '../../../mipmaps/level-3-icon_png.js';
-import level4IconImage from '../../../mipmaps/level-4-icon_png.js';
-import level5IconImage from '../../../mipmaps/level-5-icon_png.js';
-import level6IconImage from '../../../mipmaps/level-6-icon_png.js';
+import level1Icon_png from '../../../mipmaps/level1Icon_png.js';
+import level2Icon_png from '../../../mipmaps/level2Icon_png.js';
+import level3Icon_png from '../../../mipmaps/level3Icon_png.js';
+import level4Icon_png from '../../../mipmaps/level4Icon_png.js';
+import level5Icon_png from '../../../mipmaps/level5Icon_png.js';
+import level6Icon_png from '../../../mipmaps/level6Icon_png.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -71,12 +71,12 @@ const tryAgainString = vegasStrings.tryAgain;
 
 // constants
 const LEVEL_ICON_IMAGES = [
-  level1IconImage,
-  level2IconImage,
-  level3IconImage,
-  level4IconImage,
-  level5IconImage,
-  level6IconImage
+  level1Icon_png,
+  level2Icon_png,
+  level3Icon_png,
+  level4Icon_png,
+  level5Icon_png,
+  level6Icon_png
 ];
 
 class GameAreaScreenView extends ScreenView {
