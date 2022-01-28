@@ -8,7 +8,6 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
@@ -19,11 +18,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Shape from '../../../../kite/js/Shape.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { FocusHighlightPath } from '../../../../scenery/js/imports.js';
-import { DragListener } from '../../../../scenery/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
+import { DragListener, FocusHighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
@@ -63,14 +58,16 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node ) {
       }, {
         valueType: 'number' // AccessibleSlider doesn't want anything besides a number
       } );
-    const accessibleRangeProperty = new DerivedProperty(
+    const enabledRangeProperty = new DerivedProperty(
       [ activeTotalProperty, areaDisplay.snapSizeProperty ],
       ( total, snapSize ) => {
         const size = total - snapSize;
         return orientation === Orientation.HORIZONTAL ? new Range( 0, size ) : new Range( -size, 0 );
       } );
 
-    super( accessibleProperty, accessibleRangeProperty, new BooleanProperty( true ), {
+    super( {
+      valueProperty: accessibleProperty,
+      enabledRangeProperty: enabledRangeProperty,
       constrainValue: Utils.roundSymmetric,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
