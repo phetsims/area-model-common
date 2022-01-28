@@ -31,7 +31,7 @@ const horizontalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.h
 const verticalPartitionHandleString = areaModelCommonStrings.a11y.verticalPartitionHandle;
 const verticalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.verticalPartitionHandleDescription;
 
-class ProportionalPartitionLineNode extends AccessibleSlider( Node ) {
+class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
   /**
    * @mixes AccessibleSlider
    *
