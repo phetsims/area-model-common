@@ -12,7 +12,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Shape from '../../../../kite/js/Shape.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import { FireListener } from '../../../../scenery/js/imports.js';
 import { HBox } from '../../../../scenery/js/imports.js';
 import { Line } from '../../../../scenery/js/imports.js';
