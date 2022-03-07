@@ -13,11 +13,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { RichText } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
@@ -46,10 +42,10 @@ class PartialProductLabelNode extends Node {
       defaultValue: false
     } );
     const horizontalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
-      derive: 'partitions.horizontal.sizeProperty'
+      derive: partitionedArea => partitionedArea.partitions.horizontal.sizeProperty
     } );
     const verticalSizeProperty = new DynamicProperty( partitionedAreaProperty, {
-      derive: 'partitions.vertical.sizeProperty'
+      derive: partitionedArea => partitionedArea.partitions.vertical.sizeProperty
     } );
 
     const background = new Rectangle( {
