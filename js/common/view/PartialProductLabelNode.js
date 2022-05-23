@@ -11,6 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';
@@ -63,7 +64,7 @@ class PartialProductLabelNode extends Node {
     this.addChild( box );
 
     // Visibility
-    Property.multilink( [ partialProductsChoiceProperty, visibleProperty ], ( choice, areaVisible ) => {
+    Multilink.multilink( [ partialProductsChoiceProperty, visibleProperty ], ( choice, areaVisible ) => {
       this.visible = areaVisible && ( choice !== PartialProductsChoice.HIDDEN );
     } );
 
@@ -103,7 +104,7 @@ class PartialProductLabelNode extends Node {
     const timesNode = new Text( MathSymbols.TIMES, factorsTextOptions );
 
     // Text/alignment
-    Property.multilink(
+    Multilink.multilink(
       [ horizontalSizeProperty, verticalSizeProperty, partialProductsChoiceProperty ],
       ( horizontalSize, verticalSize, choice ) => {
         let children;

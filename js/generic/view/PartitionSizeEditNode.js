@@ -11,6 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
@@ -58,7 +59,7 @@ class PartitionSizeEditNode extends TermEditNode {
 
     // Primary orientation (position of range center)
     const coordinateRangeProperty = new DynamicProperty( partitionProperty, { derive: 'coordinateRangeProperty' } );
-    Property.multilink(
+    Multilink.multilink(
       [ partitionProperty, coordinateRangeProperty, modelViewTransformProperty ],
       ( partition, range, modelViewTransform ) => {
         if ( range && partition ) {

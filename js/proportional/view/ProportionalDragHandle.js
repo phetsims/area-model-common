@@ -10,7 +10,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -148,7 +148,7 @@ class ProportionalDragHandle extends Node {
     activeTotalProperties.vertical.lazyLink( updatePositionProperty );
 
     let keyboardListener;
-    Property.multilink( [ areaProperty, modelViewTransformProperty ], ( area, modelViewTransform ) => {
+    Multilink.multilink( [ areaProperty, modelViewTransformProperty ], ( area, modelViewTransform ) => {
       if ( keyboardListener ) {
         circle.interruptInput();
         circle.removeInputListener( keyboardListener );
@@ -180,7 +180,7 @@ class ProportionalDragHandle extends Node {
 
     // Apply offsets while dragging for a smoother experience.
     // See https://github.com/phetsims/area-model-common/issues/3
-    Property.multilink( [ draggedProperty, offsetProperty ], ( dragged, offset ) => {
+    Multilink.multilink( [ draggedProperty, offsetProperty ], ( dragged, offset ) => {
       let combinedOffset = 0;
       if ( dragged ) {
         // Project to the line y=x, and limit for when the user goes to 1x1 or the max.
@@ -192,7 +192,7 @@ class ProportionalDragHandle extends Node {
 
     // Update the offset of the drag handle
     Orientation.enumeration.values.forEach( orientation => {
-      Property.multilink(
+      Multilink.multilink(
         [ activeTotalProperties.get( orientation ), modelViewTransformProperty ],
         ( value, modelViewTransform ) => {
           this[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, value );

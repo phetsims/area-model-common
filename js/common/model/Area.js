@@ -8,7 +8,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import validate from '../../../../axon/js/validate.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
@@ -93,7 +93,7 @@ class Area {
     // By default, have the area linked to the partitions. This won't work for the game.
     // NOTE: Since we "own" the partitions memory-wise, we don't need to unlink here since they should all be GC'ed
     // at the same time.
-    Property.multilink(
+    Multilink.multilink(
       [ partitions.horizontal.sizeProperty, partitions.vertical.sizeProperty ],
       ( horizontalSize, verticalSize ) => {
         if ( horizontalSize === null || verticalSize === null ) {

@@ -11,7 +11,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
@@ -77,7 +77,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
       tagName: 'span'
     } );
     this.pdomParagraphNode.insertChild( 0, areaAccessibleLabel );
-    Property.multilink( areaDisplay.activeTotalProperties.values, ( width, height ) => {
+    Multilink.multilink( areaDisplay.activeTotalProperties.values, ( width, height ) => {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,
         height: height
@@ -102,12 +102,12 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
             : AreaModelCommonColors.proportionalActiveAreaBackgroundProperty,
       stroke: AreaModelCommonColors.proportionalActiveAreaBorderProperty
     } );
-    Property.multilink(
+    Multilink.multilink(
       [ areaDisplay.activeTotalProperties.horizontal, this.modelViewTransformProperty ],
       ( totalWidth, modelViewTransform ) => {
         activeAreaBackground.rectWidth = modelViewTransform.modelToViewX( totalWidth );
       } );
-    Property.multilink(
+    Multilink.multilink(
       [ areaDisplay.activeTotalProperties.vertical, this.modelViewTransformProperty ],
       ( totalHeight, modelViewTransform ) => {
         activeAreaBackground.rectHeight = modelViewTransform.modelToViewY( totalHeight );
@@ -362,7 +362,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     const partitionVisibleProperty = new DynamicProperty( partitionProperty, { derive: 'visibleProperty' } );
     const secondaryPartitionSizeProperty = new DynamicProperty( secondaryPartitionProperty, { derive: 'sizeProperty' } );
 
-    Property.multilink(
+    Multilink.multilink(
       [ partitionVisibleProperty, secondaryPartitionSizeProperty ],
       ( visible, secondarySize ) => {
         labelContainer.visible = visible && secondarySize !== null;

@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
@@ -90,7 +90,7 @@ class TiledAreaNode extends Node {
       stroke: AreaModelCommonColors.tileBorderProperty
     } );
 
-    Property.multilink(
+    Multilink.multilink(
       [ modelViewTransformProperty, this.maximumSizeProperty, this.smallTileSizeProperty ],
       ( modelViewTransform, maximumSize, smallTileSize ) => {
         // Grid line shapes

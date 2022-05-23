@@ -11,7 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
@@ -286,7 +286,7 @@ class GameAreaScreenView extends ScreenView {
     } );
 
     const totalContainer = new Node();
-    Property.multilink(
+    Multilink.multilink(
       [ this.areaDisplay.totalEntriesProperty, model.stateProperty ],
       ( totalEntries, gameState ) => {
         if ( totalEntries.length > 1 ) {

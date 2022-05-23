@@ -10,6 +10,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import merge from '../../../../phet-core/js/merge.js';
@@ -79,7 +80,7 @@ class AreaDisplayNode extends Node {
       const partitionLabel = new Node( {
         tagName: 'span'
       } );
-      Property.multilink( [
+      Multilink.multilink( [
         areaDisplay.partitionsProperties.get( orientation ),
         areaDisplay.totalProperties.get( orientation )
       ], ( partitions, total ) => {
@@ -126,7 +127,7 @@ class AreaDisplayNode extends Node {
         partialProductsChoiceProperty
       ].concat( partitionedAreas.map( partitionedArea => partitionedArea.areaProperty ) )
         .concat( partitionedAreas.map( partitionedArea => partitionedArea.visibleProperty ) );
-      accessiblePartialMultilink = Property.multilink( properties, () => {
+      accessiblePartialMultilink = Multilink.multilink( properties, () => {
         const activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( partitionedArea => partitionedArea.visibleProperty.value &&
                                                                                                              partitionedArea.areaProperty.value !== null &&
                                                                                                              partitionedArea.partitions.vertical.sizeProperty.value !== null &&

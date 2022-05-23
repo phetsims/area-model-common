@@ -11,6 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import validate from '../../../../axon/js/validate.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
@@ -141,7 +142,7 @@ class GameEditableLabelNode extends Node {
     digitsProperty.link( centerTermEditNode );
     allowExponentsProperty.link( centerTermEditNode );
 
-    Property.multilink( [ entryProperty, gameStateProperty ], ( entry, gameState ) => {
+    Multilink.multilink( [ entryProperty, gameStateProperty ], ( entry, gameState ) => {
       const isReadoutOverride = gameState === GameState.CORRECT_ANSWER || gameState === GameState.SHOW_SOLUTION;
       readoutText.visible = entry.displayType === EntryDisplayType.READOUT ||
                             ( isReadoutOverride && entry.displayType === EntryDisplayType.EDITABLE );

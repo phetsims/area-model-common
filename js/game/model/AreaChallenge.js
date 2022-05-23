@@ -8,6 +8,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import dimensionForEach from '../../../../phet-core/js/dimensionForEach.js';
 import dimensionMap from '../../../../phet-core/js/dimensionMap.js';
@@ -93,7 +94,7 @@ class AreaChallenge {
       if ( type === EntryType.DYNAMIC ) {
 
         // No unlink needed, since this is just for setup. We have a fixed number of these.
-        Property.multilink( [
+        Multilink.multilink( [
           this.nonErrorPartitionSizeProperties.horizontal[ horizontalIndex ],
           this.nonErrorPartitionSizeProperties.vertical[ verticalIndex ]
         ], ( horizontal, vertical ) => {
@@ -181,7 +182,7 @@ class AreaChallenge {
     Orientation.enumeration.values.forEach( orientation => {
       if ( description.dimensionTypes.get( orientation ) === EntryType.DYNAMIC ) {
         const nonErrorProperties = this.nonErrorPartitionSizeProperties.get( orientation );
-        Property.multilink( nonErrorProperties, () => {
+        Multilink.multilink( nonErrorProperties, () => {
           const terms = _.map( nonErrorProperties, 'value' ).filter( term => term !== null );
           const lostATerm = terms.length !== nonErrorProperties.length;
           this.totalProperties.get( orientation ).value = ( terms.length && !lostATerm ) ? new Polynomial( terms ) : null;

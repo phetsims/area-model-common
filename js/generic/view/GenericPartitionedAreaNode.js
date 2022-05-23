@@ -9,7 +9,7 @@
  */
 
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -58,7 +58,7 @@ class GenericPartitionedAreaNode extends Rectangle {
       } );
       rangeMultilinks = null;
       if ( partitionedArea ) {
-        rangeMultilinks = partitionedArea.partitions.map( ( partition, orientation ) => Property.multilink(
+        rangeMultilinks = partitionedArea.partitions.map( ( partition, orientation ) => Multilink.multilink(
           [ partition.coordinateRangeProperty, modelViewTransformProperty ],
           ( range, modelViewTransform ) => {
             if ( range !== null ) {

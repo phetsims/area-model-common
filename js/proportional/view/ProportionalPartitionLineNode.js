@@ -11,6 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import validate from '../../../../axon/js/validate.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Range from '../../../../dot/js/Range.js';
@@ -150,12 +151,12 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
     this.focusHighlightLayerable = true;
 
     // Main coordinate (when dragging)
-    Property.multilink( [ partitionSplitProperty, modelViewTransformProperty ], ( split, modelViewTransform ) => {
+    Multilink.multilink( [ partitionSplitProperty, modelViewTransformProperty ], ( split, modelViewTransform ) => {
       this[ orientation.coordinate ] = orientation.modelToView( modelViewTransform, split );
     } );
 
     // Opposite coordinate (how wide the area is in the other direction)
-    Property.multilink(
+    Multilink.multilink(
       [ oppositeActiveTotalProperty, modelViewTransformProperty ],
       ( oppositeTotal, modelViewTransform ) => {
         const offsetValue = orientation.opposite.modelToView( modelViewTransform, oppositeTotal ) +

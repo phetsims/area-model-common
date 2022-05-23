@@ -10,7 +10,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import validate from '../../../../axon/js/validate.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -44,7 +44,7 @@ class ProportionalFactorsNode extends Node {
 
     if ( AreaModelCommonQueryParameters.rawMath ) {
       this.tagName = 'div';
-      Property.multilink( activeTotalProperties.values, ( horizontalTotal, verticalTotal ) => {
+      Multilink.multilink( activeTotalProperties.values, ( horizontalTotal, verticalTotal ) => {
         this.innerContent = StringUtils.fillIn( factorsTimesPatternString, {
           width: horizontalTotal,
           height: verticalTotal
