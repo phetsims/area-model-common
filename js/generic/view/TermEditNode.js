@@ -10,7 +10,7 @@
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Property, { AbstractProperty } from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
 import { FireListener } from '../../../../scenery/js/imports.js';
 import { LayoutBox } from '../../../../scenery/js/imports.js';
@@ -32,8 +32,8 @@ class TermEditNode extends LayoutBox {
    * @param {Object} [options]
    */
   constructor( orientationProperty, termProperty, options ) {
-    assert && assert( orientationProperty instanceof Property );
-    assert && assert( termProperty instanceof Property );
+    assert && assert( orientationProperty instanceof AbstractProperty );
+    assert && assert( termProperty instanceof AbstractProperty );
 
     options = merge( {
       // {Property.<Color>} - The color of the readout text

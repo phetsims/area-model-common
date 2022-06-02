@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Property from '../../../../../axon/js/Property.js';
+import { AbstractProperty } from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import { HBox } from '../../../../../scenery/js/imports.js';
@@ -76,7 +76,7 @@ class Parentheses extends HBox {
    */
   initialize( content, baseColorProperty ) {
     assert && assert( content instanceof Node );
-    assert && assert( baseColorProperty instanceof Property );
+    assert && assert( baseColorProperty instanceof AbstractProperty );
 
     assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
 

@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Property from '../../../../../axon/js/Property.js';
+import { AbstractProperty } from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import { RichText } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
@@ -44,7 +44,7 @@ class TermText extends RichText {
    */
   initialize( term, colorProperty, excludeSign ) {
     assert && assert( term instanceof Term || term instanceof TermList );
-    assert && assert( colorProperty instanceof Property );
+    assert && assert( colorProperty instanceof AbstractProperty );
     assert && assert( typeof excludeSign === 'boolean' || excludeSign === undefined );
 
     const text = excludeSign ? term.toNoSignRichString() : term.toRichString( false );

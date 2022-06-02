@@ -10,7 +10,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Property, { AbstractProperty } from '../../../../axon/js/Property.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import validate from '../../../../axon/js/validate.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -46,11 +46,11 @@ class GameEditableLabelNode extends Node {
       editFont: AreaModelCommonConstants.GAME_MAIN_EDIT_FONT
     }, config );
 
-    assert && assert( config.entryProperty instanceof Property );
-    assert && assert( config.gameStateProperty instanceof Property );
-    assert && assert( config.activeEntryProperty instanceof Property );
-    assert && assert( config.colorProperty instanceof Property );
-    assert && assert( config.allowExponentsProperty instanceof Property );
+    assert && assert( config.entryProperty instanceof AbstractProperty );
+    assert && assert( config.gameStateProperty instanceof AbstractProperty );
+    assert && assert( config.activeEntryProperty instanceof AbstractProperty );
+    assert && assert( config.colorProperty instanceof AbstractProperty );
+    assert && assert( config.allowExponentsProperty instanceof AbstractProperty );
     validate( config.orientation, { validValues: Orientation.enumeration.values } );
 
     super();

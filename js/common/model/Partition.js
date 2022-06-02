@@ -7,7 +7,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import Property, { AbstractProperty } from '../../../../axon/js/Property.js';
 import validate from '../../../../axon/js/validate.js';
 import Range from '../../../../dot/js/Range.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
@@ -21,7 +21,7 @@ class Partition {
    */
   constructor( orientation, colorProperty ) {
     validate( orientation, { validValues: Orientation.enumeration.values } );
-    assert && assert( colorProperty instanceof Property );
+    assert && assert( colorProperty instanceof AbstractProperty );
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( null, {
