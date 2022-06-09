@@ -10,7 +10,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Property, { AbstractProperty } from '../../../../axon/js/Property.js';
+import Property, { ReadOnlyProperty } from '../../../../axon/js/Property.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import validate from '../../../../axon/js/validate.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -46,11 +46,11 @@ class GameEditableLabelNode extends Node {
       editFont: AreaModelCommonConstants.GAME_MAIN_EDIT_FONT
     }, config );
 
-    assert && assert( config.entryProperty instanceof AbstractProperty );
-    assert && assert( config.gameStateProperty instanceof AbstractProperty );
-    assert && assert( config.activeEntryProperty instanceof AbstractProperty );
-    assert && assert( config.colorProperty instanceof AbstractProperty );
-    assert && assert( config.allowExponentsProperty instanceof AbstractProperty );
+    assert && assert( config.entryProperty instanceof ReadOnlyProperty );
+    assert && assert( config.gameStateProperty instanceof ReadOnlyProperty );
+    assert && assert( config.activeEntryProperty instanceof ReadOnlyProperty );
+    assert && assert( config.colorProperty instanceof ReadOnlyProperty );
+    assert && assert( config.allowExponentsProperty instanceof ReadOnlyProperty );
     validate( config.orientation, { validValues: Orientation.enumeration.values } );
 
     super();

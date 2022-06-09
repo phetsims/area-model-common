@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import { AbstractProperty } from '../../../../../axon/js/Property.js';
+import { ReadOnlyProperty } from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
@@ -60,7 +60,7 @@ class MultiplyX extends HBox {
   initialize( leftContent, rightContent, baseColorProperty ) {
     assert && assert( leftContent instanceof Node );
     assert && assert( rightContent instanceof Node );
-    assert && assert( baseColorProperty instanceof AbstractProperty );
+    assert && assert( baseColorProperty instanceof ReadOnlyProperty );
 
     // @public {string}
     this.accessibleText = StringUtils.fillIn( productTimesPatternString, {

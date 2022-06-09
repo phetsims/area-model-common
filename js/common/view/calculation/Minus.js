@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import { AbstractProperty } from '../../../../../axon/js/Property.js';
+import { ReadOnlyProperty } from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import { Text } from '../../../../../scenery/js/imports.js';
@@ -47,7 +47,7 @@ class Minus extends Text {
    * @param {Property.<Color>} baseColorProperty
    */
   initialize( baseColorProperty ) {
-    assert && assert( baseColorProperty instanceof AbstractProperty );
+    assert && assert( baseColorProperty instanceof ReadOnlyProperty );
 
     this.fill = baseColorProperty;
   }

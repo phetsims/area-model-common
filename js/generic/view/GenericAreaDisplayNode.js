@@ -9,7 +9,7 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Property, { AbstractProperty } from '../../../../axon/js/Property.js';
+import Property, { ReadOnlyProperty } from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import { Line } from '../../../../scenery/js/imports.js';
@@ -32,7 +32,7 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
    */
   constructor( areaDisplay, allowExponents, partialProductsChoiceProperty, nodeOptions ) {
     assert && assert( typeof allowExponents === 'boolean' );
-    assert && assert( partialProductsChoiceProperty instanceof AbstractProperty );
+    assert && assert( partialProductsChoiceProperty instanceof ReadOnlyProperty );
 
     super( areaDisplay, partialProductsChoiceProperty, {
       allowExponents: allowExponents,

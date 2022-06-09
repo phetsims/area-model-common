@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import { AbstractProperty } from '../../../../../axon/js/Property.js';
+import { ReadOnlyProperty } from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import { Rectangle } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
@@ -45,7 +45,7 @@ class PlaceholderBox extends Rectangle {
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    */
   initialize( colorProperty, allowExponents ) {
-    assert && assert( colorProperty instanceof AbstractProperty );
+    assert && assert( colorProperty instanceof ReadOnlyProperty );
     assert && assert( typeof allowExponents === 'boolean' );
 
     this.stroke = colorProperty;

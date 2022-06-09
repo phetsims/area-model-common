@@ -10,7 +10,7 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { AbstractProperty } from '../../../../axon/js/Property.js';
+import { ReadOnlyProperty } from '../../../../axon/js/Property.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -27,7 +27,7 @@ class PartialProductLabelNode extends Node {
    * @param {boolean} allowExponents - Whether exponents (powers of x) are allowed
    */
   constructor( partialProductsChoiceProperty, partitionedAreaProperty, allowExponents ) {
-    assert && assert( partialProductsChoiceProperty instanceof AbstractProperty );
+    assert && assert( partialProductsChoiceProperty instanceof ReadOnlyProperty );
     assert && assert( typeof allowExponents === 'boolean' );
 
     super();

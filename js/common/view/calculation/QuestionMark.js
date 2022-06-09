@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import { AbstractProperty } from '../../../../../axon/js/Property.js';
+import { ReadOnlyProperty } from '../../../../../axon/js/Property.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
@@ -44,7 +44,7 @@ class QuestionMark extends Text {
    * @param {Property.<Color>} baseColorProperty
    */
   initialize( baseColorProperty ) {
-    assert && assert( baseColorProperty instanceof AbstractProperty );
+    assert && assert( baseColorProperty instanceof ReadOnlyProperty );
 
     this.fill = baseColorProperty;
   }
