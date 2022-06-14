@@ -94,7 +94,7 @@ class TermAccumulator extends AbstractKeyAccumulator {
         }
       }
       else {
-        coefficient = parseInt( digitString, 10 );
+        coefficient = Number( digitString );
       }
 
       return new Term( coefficient, power );
