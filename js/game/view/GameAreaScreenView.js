@@ -10,24 +10,18 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import FaceWithPointsNode from '../../../../scenery-phet/js/FaceWithPointsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { AlignBox } from '../../../../scenery/js/imports.js';
-import { HBox } from '../../../../scenery/js/imports.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { RichText } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
-import Panel from '../../../../sun/js/Panel.js';
+import { AlignBox, HBox, Image, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import Panel from '../../../../sun/js/Panel.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import TransitionNode from '../../../../twixt/js/TransitionNode.js';
 import FiniteStatusBar from '../../../../vegas/js/FiniteStatusBar.js';
@@ -133,11 +127,10 @@ class GameAreaScreenView extends ScreenView {
       levelIcons[ index ],
       level.scoreProperty,
       {
-        scoreDisplayConstructor: ScoreDisplayStars,
-        scoreDisplayOptions: {
+        createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
           numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
           perfectScore: AreaModelCommonConstants.PERFECT_SCORE
-        },
+        } ),
         listener: () => {
           model.selectLevel( level );
         },
@@ -180,11 +173,10 @@ class GameAreaScreenView extends ScreenView {
       } ),
       numberOfChallengesProperty: new NumberProperty( AreaModelCommonConstants.NUM_CHALLENGES ),
       levelProperty: new DerivedProperty( [ lastLevelProperty ], level => level ? level.number : 1 ),
-      scoreDisplayConstructor: ScoreDisplayLabeledStars,
-      scoreDisplayOptions: {
+      createScoreDisplay: scoreProperty => new ScoreDisplayLabeledStars( scoreProperty, {
         numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
         perfectScore: AreaModelCommonConstants.PERFECT_SCORE
-      },
+      } ),
       startOverButtonOptions: {
         listener: () => {
           // Reset the level on "Start Over", see https://github.com/phetsims/area-model-common/issues/87
