@@ -91,17 +91,17 @@ class ProportionalAreaScreenView extends AreaScreenView {
     this.partitionSelectionPanel = partitionSelectionPanel;
 
     // Checkboxes
-    const gridCheckbox = new Checkbox( this.createGridIconNode(), model.gridLinesVisibleProperty, {
+    const gridCheckbox = new Checkbox( model.gridLinesVisibleProperty, this.createGridIconNode(), {
       // pdom
       labelTagName: 'label',
       labelContent: gridLinesLabelString
     } );
-    const tileCheckbox = new Checkbox( this.createTileIconNode(), model.tilesVisibleProperty, {
+    const tileCheckbox = new Checkbox( model.tilesVisibleProperty, this.createTileIconNode(), {
       // pdom
       labelTagName: 'label',
       labelContent: base10AreaTilesString
     } );
-    const countingCheckbox = new Checkbox( this.createCountingIconNode(), model.countingVisibleProperty, {
+    const countingCheckbox = new Checkbox( model.countingVisibleProperty, this.createCountingIconNode(), {
       // pdom
       labelTagName: 'label',
       labelContent: countingNumbersLabelString,
