@@ -43,8 +43,8 @@ class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
       };
     } ), {
       // Less margin than others desired here
-      buttonContentXMargin: 7,
-      buttonContentYMargin: 7,
+      xMargin: 7,
+      yMargin: 7,
 
       // pdom
       descriptionContent: partitionSelectionDescriptionString
