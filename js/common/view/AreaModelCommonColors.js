@@ -7,8 +7,7 @@
  */
 
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
-import { Color } from '../../../../scenery/js/imports.js';
-import { ProfileColorProperty } from '../../../../scenery/js/imports.js';
+import { Color, ProfileColorProperty } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import OrientationPair from '../model/OrientationPair.js';
 

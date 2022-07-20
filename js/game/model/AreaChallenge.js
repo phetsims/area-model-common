@@ -7,8 +7,8 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import Property from '../../../../axon/js/Property.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import dimensionForEach from '../../../../phet-core/js/dimensionForEach.js';
 import dimensionMap from '../../../../phet-core/js/dimensionMap.js';

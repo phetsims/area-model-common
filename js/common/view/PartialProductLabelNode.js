@@ -10,8 +10,8 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Node, Rectangle, RichText, Text } from '../../../../scenery/js/imports.js';

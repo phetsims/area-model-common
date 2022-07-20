@@ -9,17 +9,13 @@
  */
 
 import BackspaceIcon from '../../../../scenery-phet/js/BackspaceIcon.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import Key from '../../../../scenery-phet/js/keypad/Key.js';
 import KeyID from '../../../../scenery-phet/js/keypad/KeyID.js';
 import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
-import { RichText } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { VBox } from '../../../../scenery/js/imports.js';
-import Panel from '../../../../sun/js/Panel.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
+import { Node, Rectangle, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import Panel from '../../../../sun/js/Panel.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import areaModelCommonStrings from '../../areaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';

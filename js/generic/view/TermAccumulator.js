@@ -9,9 +9,9 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import AbstractKeyAccumulator from '../../../../scenery-phet/js/keypad/AbstractKeyAccumulator.js';
 import KeyID from '../../../../scenery-phet/js/keypad/KeyID.js';
+import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';

@@ -10,10 +10,7 @@
  */
 
 import { Shape } from '../../../../kite/js/imports.js';
-import { FireListener } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { FireListener, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
