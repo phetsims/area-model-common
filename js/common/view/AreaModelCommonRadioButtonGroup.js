@@ -23,12 +23,14 @@ class AreaModelCommonRadioButtonGroup extends RectangularRadioButtonGroup {
       touchAreaXDilation: 6,
       touchAreaYDilation: 6,
       radioButtonOptions: {
+        baseColor: AreaModelCommonColors.radioBackgroundProperty,
         xMargin: 10,
         yMargin: 10,
-        selectedLineWidth: 2,
-        deselectedLineWidth: 1.5,
-        selectedStroke: AreaModelCommonColors.radioBorderProperty,
-        baseColor: AreaModelCommonColors.radioBackgroundProperty
+        buttonAppearanceStrategyOptions: {
+          selectedLineWidth: 2,
+          deselectedLineWidth: 1.5,
+          selectedStroke: AreaModelCommonColors.radioBorderProperty
+        }
       }
     }, options ) );
   }
