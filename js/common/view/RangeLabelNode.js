@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2022, University of Colorado Boulder
 
 /**
  * A range label that displays a specific TermList along a line covering the range (with start/end ticks for every
