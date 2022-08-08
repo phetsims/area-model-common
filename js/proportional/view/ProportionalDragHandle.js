@@ -151,8 +151,8 @@ class ProportionalDragHandle extends Node {
         keyboardListener.dispose();
       }
       keyboardListener = new KeyboardDragListener( {
-        downDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
-        shiftDownDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
+        dragDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
+        shiftDragDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
         transform: modelViewTransform,
         drag: delta => {
           let width = activeTotalProperties.horizontal.value;
