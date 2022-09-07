@@ -30,7 +30,7 @@ import LevelSelectionButton from '../../../../vegas/js/LevelSelectionButton.js';
 import RewardNode from '../../../../vegas/js/RewardNode.js';
 import ScoreDisplayLabeledStars from '../../../../vegas/js/ScoreDisplayLabeledStars.js';
 import ScoreDisplayStars from '../../../../vegas/js/ScoreDisplayStars.js';
-import vegasStrings from '../../../../vegas/js/vegasStrings.js';
+import VegasStrings from '../../../../vegas/js/VegasStrings.js';
 import level1Icon_png from '../../../mipmaps/level1Icon_png.js';
 import level2Icon_png from '../../../mipmaps/level2Icon_png.js';
 import level3Icon_png from '../../../mipmaps/level3Icon_png.js';
@@ -54,13 +54,13 @@ import GameAudio from './GameAudio.js';
 import GameEditableLabelNode from './GameEditableLabelNode.js';
 import PolynomialEditNode from './PolynomialEditNode.js';
 
-const checkString = vegasStrings.check;
-const chooseYourLevelString = vegasStrings.chooseYourLevel;
+const checkString = VegasStrings.check;
+const chooseYourLevelString = VegasStrings.chooseYourLevel;
 const dimensionsString = areaModelCommonStrings.dimensions;
-const nextString = vegasStrings.next;
-const showAnswerString = vegasStrings.showAnswer;
+const nextString = VegasStrings.next;
+const showAnswerString = VegasStrings.showAnswer;
 const totalAreaOfModelString = areaModelCommonStrings.totalAreaOfModel;
-const tryAgainString = vegasStrings.tryAgain;
+const tryAgainString = VegasStrings.tryAgain;
 
 
 // constants
