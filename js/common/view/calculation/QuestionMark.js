@@ -12,10 +12,10 @@ import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-const questionMarkString = areaModelCommonStrings.a11y.questionMark;
+const questionMarkString = AreaModelCommonStrings.a11y.questionMark;
 
 class QuestionMark extends Text {
   /**

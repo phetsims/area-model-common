@@ -14,7 +14,7 @@ import Property from '../../../../../axon/js/Property.js';
 import Orientation from '../../../../../phet-core/js/Orientation.js';
 import { Node, VBox } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonQueryParameters from '../../AreaModelCommonQueryParameters.js';
 import AreaCalculationChoice from '../../model/AreaCalculationChoice.js';
 import TermList from '../../model/TermList.js';
@@ -27,7 +27,7 @@ import QuestionMarkLine from './QuestionMarkLine.js';
 import SumLine from './SumLine.js';
 import TotalsLine from './TotalsLine.js';
 
-const betweenCalculationLinesString = areaModelCommonStrings.a11y.betweenCalculationLines;
+const betweenCalculationLinesString = AreaModelCommonStrings.a11y.betweenCalculationLines;
 
 class CalculationLinesNode extends Node {
   /**

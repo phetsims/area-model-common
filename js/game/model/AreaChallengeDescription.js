@@ -10,19 +10,19 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Permutation from '../../../../dot/js/Permutation.js';
 import merge from '../../../../phet-core/js/merge.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import GenericLayout from '../../generic/model/GenericLayout.js';
 import AreaChallengeType from './AreaChallengeType.js';
 import EntryType from './EntryType.js';
 
-const levelPromptOneProductOneLengthString = areaModelCommonStrings.levelPrompt.oneProduct.oneLength;
-const levelPromptOneProductTextString = areaModelCommonStrings.levelPrompt.oneProduct.text;
-const levelPromptOneProductTotalAreaString = areaModelCommonStrings.levelPrompt.oneProduct.totalArea;
-const levelPromptThreeLengthsString = areaModelCommonStrings.levelPrompt.threeLengths;
-const levelPromptTotalAreaString = areaModelCommonStrings.levelPrompt.totalArea;
-const levelPromptTwoLengthsString = areaModelCommonStrings.levelPrompt.twoLengths;
-const levelPromptTwoProductsString = areaModelCommonStrings.levelPrompt.twoProducts;
+const levelPromptOneProductOneLengthString = AreaModelCommonStrings.levelPrompt.oneProduct.oneLength;
+const levelPromptOneProductTextString = AreaModelCommonStrings.levelPrompt.oneProduct.text;
+const levelPromptOneProductTotalAreaString = AreaModelCommonStrings.levelPrompt.oneProduct.totalArea;
+const levelPromptThreeLengthsString = AreaModelCommonStrings.levelPrompt.threeLengths;
+const levelPromptTotalAreaString = AreaModelCommonStrings.levelPrompt.totalArea;
+const levelPromptTwoLengthsString = AreaModelCommonStrings.levelPrompt.twoLengths;
+const levelPromptTwoProductsString = AreaModelCommonStrings.levelPrompt.twoProducts;
 
 // shortcuts
 const EDITABLE = EntryType.EDITABLE;

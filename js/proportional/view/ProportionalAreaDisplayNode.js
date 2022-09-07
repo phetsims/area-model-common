@@ -19,7 +19,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -29,9 +29,9 @@ import ProportionalDragHandle from './ProportionalDragHandle.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 import TiledAreaNode from './TiledAreaNode.js';
 
-const areaGridString = areaModelCommonStrings.a11y.areaGrid;
-const areaGridRectanglePatternString = areaModelCommonStrings.a11y.areaGridRectanglePattern;
-const countingNumbersPatternString = areaModelCommonStrings.a11y.countingNumbersPattern;
+const areaGridString = AreaModelCommonStrings.a11y.areaGrid;
+const areaGridRectanglePatternString = AreaModelCommonStrings.a11y.areaGridRectanglePattern;
+const countingNumbersPatternString = AreaModelCommonStrings.a11y.countingNumbersPattern;
 
 class ProportionalAreaDisplayNode extends AreaDisplayNode {
   /**

@@ -13,10 +13,10 @@ import Poolable from '../../../../../phet-core/js/Poolable.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-const sumMinusString = areaModelCommonStrings.a11y.sumMinus;
+const sumMinusString = AreaModelCommonStrings.a11y.sumMinus;
 
 class Minus extends Text {
   /**

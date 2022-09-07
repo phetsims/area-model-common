@@ -17,13 +17,13 @@ import { Node, Rectangle, RichText, Text, VBox } from '../../../../scenery/js/im
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import TermAccumulator from './TermAccumulator.js';
 
-const enterString = areaModelCommonStrings.enter;
+const enterString = AreaModelCommonStrings.enter;
 
 // layout constants
 const positiveKeys = [

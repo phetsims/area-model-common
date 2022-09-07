@@ -12,7 +12,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import genericGameScreenIcon_png from '../../mipmaps/genericGameScreenIcon_png.js';
 import genericGameScreenNavbar_png from '../../mipmaps/genericGameScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
@@ -21,7 +21,7 @@ class GenericGameScreen extends Screen {
   constructor() {
 
     const options = {
-      name: areaModelCommonStrings.screen.game,
+      name: AreaModelCommonStrings.screen.game,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIcon_png ), {
         maxIconWidthProportion: 1,

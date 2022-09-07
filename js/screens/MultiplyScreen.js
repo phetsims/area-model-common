@@ -13,7 +13,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import multiplyScreenIcon_png from '../../mipmaps/multiplyScreenIcon_png.js';
 import multiplyScreenNavbar_png from '../../mipmaps/multiplyScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import PartialProductsChoice from '../common/model/PartialProductsChoice.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
@@ -24,7 +24,7 @@ class MultiplyScreen extends Screen {
   constructor() {
 
     const options = {
-      name: areaModelCommonStrings.screen.multiply,
+      name: AreaModelCommonStrings.screen.multiply,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( multiplyScreenIcon_png ), {
         maxIconWidthProportion: 1,
@@ -36,7 +36,7 @@ class MultiplyScreen extends Screen {
       } ),
 
       // pdom
-      descriptionContent: areaModelCommonStrings.a11y.multiplyDescription
+      descriptionContent: AreaModelCommonStrings.a11y.multiplyDescription
     };
 
     const commonAreaOptions = {

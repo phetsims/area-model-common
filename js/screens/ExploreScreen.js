@@ -12,7 +12,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import exploreScreenIcon_png from '../../mipmaps/exploreScreenIcon_png.js';
 import exploreScreenNavbar_png from '../../mipmaps/exploreScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
 import ProportionalAreaScreenView from '../proportional/view/ProportionalAreaScreenView.js';
@@ -21,7 +21,7 @@ class ExploreScreen extends Screen {
   constructor() {
 
     const options = {
-      name: areaModelCommonStrings.screen.explore,
+      name: AreaModelCommonStrings.screen.explore,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( exploreScreenIcon_png ), {
         maxIconWidthProportion: 1,

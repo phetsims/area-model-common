@@ -22,15 +22,15 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { DragListener, FocusHighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
-const horizontalPartitionHandleString = areaModelCommonStrings.a11y.horizontalPartitionHandle;
-const horizontalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.horizontalPartitionHandleDescription;
-const verticalPartitionHandleString = areaModelCommonStrings.a11y.verticalPartitionHandle;
-const verticalPartitionHandleDescriptionString = areaModelCommonStrings.a11y.verticalPartitionHandleDescription;
+const horizontalPartitionHandleString = AreaModelCommonStrings.a11y.horizontalPartitionHandle;
+const horizontalPartitionHandleDescriptionString = AreaModelCommonStrings.a11y.horizontalPartitionHandleDescription;
+const verticalPartitionHandleString = AreaModelCommonStrings.a11y.verticalPartitionHandle;
+const verticalPartitionHandleDescriptionString = AreaModelCommonStrings.a11y.verticalPartitionHandleDescription;
 
 class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
   /**

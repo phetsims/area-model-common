@@ -13,10 +13,10 @@ import Poolable from '../../../../../phet-core/js/Poolable.js';
 import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import { HBox, Node, Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-const quantityPatternString = areaModelCommonStrings.a11y.quantityPattern;
+const quantityPatternString = AreaModelCommonStrings.a11y.quantityPattern;
 
 class Parentheses extends HBox {
   /**

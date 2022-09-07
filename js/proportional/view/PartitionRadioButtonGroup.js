@@ -13,15 +13,15 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import { AlignBox, Line, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import OrientationPair from '../../common/model/OrientationPair.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 
-const horizontalPartitionString = areaModelCommonStrings.a11y.horizontalPartition;
-const partitionSelectionDescriptionString = areaModelCommonStrings.a11y.partitionSelectionDescription;
-const verticalPartitionString = areaModelCommonStrings.a11y.verticalPartition;
+const horizontalPartitionString = AreaModelCommonStrings.a11y.horizontalPartition;
+const partitionSelectionDescriptionString = AreaModelCommonStrings.a11y.partitionSelectionDescription;
+const verticalPartitionString = AreaModelCommonStrings.a11y.verticalPartition;
 
 class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
   /**

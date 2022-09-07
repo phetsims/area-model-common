@@ -11,14 +11,14 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { AlignBox } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaCalculationChoice from '../../common/model/AreaCalculationChoice.js';
 import AreaModelCommonAccordionBox from '../../common/view/AreaModelCommonAccordionBox.js';
 import CalculationLinesNode from '../../common/view/calculation/CalculationLinesNode.js';
 
-const calculationString = areaModelCommonStrings.calculation;
-const calculationBoxTitleString = areaModelCommonStrings.a11y.calculationBoxTitle;
-const calculationBoxDescriptionString = areaModelCommonStrings.a11y.calculationBoxDescription;
+const calculationString = AreaModelCommonStrings.calculation;
+const calculationBoxTitleString = AreaModelCommonStrings.a11y.calculationBoxTitle;
+const calculationBoxDescriptionString = AreaModelCommonStrings.a11y.calculationBoxDescription;
 
 // constants
 const MARGIN = 8;

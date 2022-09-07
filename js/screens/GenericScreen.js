@@ -11,7 +11,7 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
 import genericScreenIcon_png from '../../mipmaps/genericScreenIcon_png.js';
 import areaModelCommon from '../areaModelCommon.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import GenericAreaModel from '../generic/model/GenericAreaModel.js';
 import GenericAreaScreenView from '../generic/view/GenericAreaScreenView.js';
@@ -20,7 +20,7 @@ class GenericScreen extends Screen {
   constructor() {
 
     const options = {
-      name: areaModelCommonStrings.screen.generic,
+      name: AreaModelCommonStrings.screen.generic,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( genericScreenIcon_png ), {
         maxIconWidthProportion: 1,

@@ -19,11 +19,11 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { Circle, DragListener, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
-const dragHandleString = areaModelCommonStrings.a11y.dragHandle;
-const dragHandleDescriptionPatternString = areaModelCommonStrings.a11y.dragHandleDescriptionPattern;
+const dragHandleString = AreaModelCommonStrings.a11y.dragHandle;
+const dragHandleDescriptionPatternString = AreaModelCommonStrings.a11y.dragHandleDescriptionPattern;
 
 // constants
 const DRAG_OFFSET = 8;

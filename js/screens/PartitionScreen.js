@@ -13,7 +13,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import partitionScreenIcon_png from '../../mipmaps/partitionScreenIcon_png.js';
 import partitionScreenNavbar_png from '../../mipmaps/partitionScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaCalculationChoice from '../common/model/AreaCalculationChoice.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import PartitionLineChoice from '../proportional/model/PartitionLineChoice.js';
@@ -24,7 +24,7 @@ class PartitionScreen extends Screen {
   constructor() {
 
     const options = {
-      name: areaModelCommonStrings.screen.partition,
+      name: AreaModelCommonStrings.screen.partition,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( partitionScreenIcon_png ), {
         maxIconWidthProportion: 1,
@@ -36,7 +36,7 @@ class PartitionScreen extends Screen {
       } ),
 
       // pdom
-      descriptionContent: areaModelCommonStrings.a11y.partitionDescription
+      descriptionContent: AreaModelCommonStrings.a11y.partitionDescription
     };
 
     const commonAreaOptions = {

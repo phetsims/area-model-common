@@ -38,7 +38,7 @@ import level4Icon_png from '../../../mipmaps/level4Icon_png.js';
 import level5Icon_png from '../../../mipmaps/level5Icon_png.js';
 import level6Icon_png from '../../../mipmaps/level6Icon_png.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
 import Term from '../../common/model/Term.js';
@@ -56,10 +56,10 @@ import PolynomialEditNode from './PolynomialEditNode.js';
 
 const checkString = VegasStrings.check;
 const chooseYourLevelString = VegasStrings.chooseYourLevel;
-const dimensionsString = areaModelCommonStrings.dimensions;
+const dimensionsString = AreaModelCommonStrings.dimensions;
 const nextString = VegasStrings.next;
 const showAnswerString = VegasStrings.showAnswer;
-const totalAreaOfModelString = areaModelCommonStrings.totalAreaOfModel;
+const totalAreaOfModelString = AreaModelCommonStrings.totalAreaOfModel;
 const tryAgainString = VegasStrings.tryAgain;
 
 

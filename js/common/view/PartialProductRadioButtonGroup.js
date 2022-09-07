@@ -14,15 +14,15 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { AlignBox, AlignGroup, HBox, Node, Path, Text } from '../../../../scenery/js/imports.js';
 import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import OrientationPair from '../model/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
-const hidePartialProductsString = areaModelCommonStrings.a11y.hidePartialProducts;
-const showPartialProductsString = areaModelCommonStrings.a11y.showPartialProducts;
-const showPartialProductFactorsString = areaModelCommonStrings.a11y.showPartialProductFactors;
+const hidePartialProductsString = AreaModelCommonStrings.a11y.hidePartialProducts;
+const showPartialProductsString = AreaModelCommonStrings.a11y.showPartialProducts;
+const showPartialProductFactorsString = AreaModelCommonStrings.a11y.showPartialProductFactors;
 
 class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 

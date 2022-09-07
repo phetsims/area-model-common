@@ -14,10 +14,10 @@ import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Node, Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-const productTimesPatternString = areaModelCommonStrings.a11y.productTimesPattern;
+const productTimesPatternString = AreaModelCommonStrings.a11y.productTimesPattern;
 
 class MultiplyX extends HBox {
   /**

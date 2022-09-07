@@ -18,7 +18,7 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import { AlignBox, Line, Text, VBox } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import CalculationBox from '../../proportional/view/CalculationBox.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../AreaModelCommonGlobals.js';
@@ -30,16 +30,16 @@ import CalculationNode from './CalculationNode.js';
 import PartialProductRadioButtonGroup from './PartialProductRadioButtonGroup.js';
 import TotalAreaNode from './TotalAreaNode.js';
 
-const areaModelCalculationString = areaModelCommonStrings.areaModelCalculation;
-const dimensionsString = areaModelCommonStrings.dimensions;
-const factorsString = areaModelCommonStrings.factors;
-const partialProductsString = areaModelCommonStrings.partialProducts;
-const productString = areaModelCommonStrings.product;
-const totalAreaOfModelString = areaModelCommonStrings.totalAreaOfModel;
-const factorsBoxString = areaModelCommonStrings.a11y.factorsBox;
-const factorsBoxDescriptionString = areaModelCommonStrings.a11y.factorsBoxDescription;
-const productBoxString = areaModelCommonStrings.a11y.productBox;
-const productBoxDescriptionString = areaModelCommonStrings.a11y.productBoxDescription;
+const areaModelCalculationString = AreaModelCommonStrings.areaModelCalculation;
+const dimensionsString = AreaModelCommonStrings.dimensions;
+const factorsString = AreaModelCommonStrings.factors;
+const partialProductsString = AreaModelCommonStrings.partialProducts;
+const productString = AreaModelCommonStrings.product;
+const totalAreaOfModelString = AreaModelCommonStrings.totalAreaOfModel;
+const factorsBoxString = AreaModelCommonStrings.a11y.factorsBox;
+const factorsBoxDescriptionString = AreaModelCommonStrings.a11y.factorsBoxDescription;
+const productBoxString = AreaModelCommonStrings.a11y.productBox;
+const productBoxDescriptionString = AreaModelCommonStrings.a11y.productBoxDescription;
 
 class AreaScreenView extends ScreenView {
   /**

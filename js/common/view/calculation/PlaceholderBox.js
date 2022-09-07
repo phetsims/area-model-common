@@ -12,9 +12,9 @@ import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import { Rectangle } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
-import areaModelCommonStrings from '../../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 
-const placeholderString = areaModelCommonStrings.a11y.placeholder;
+const placeholderString = AreaModelCommonStrings.a11y.placeholder;
 
 class PlaceholderBox extends Rectangle {
   /**

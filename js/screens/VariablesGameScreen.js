@@ -12,7 +12,7 @@ import { Image } from '../../../scenery/js/imports.js';
 import variablesGameScreenIcon_png from '../../mipmaps/variablesGameScreenIcon_png.js';
 import variablesGameScreenNavbar_png from '../../mipmaps/variablesGameScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
-import areaModelCommonStrings from '../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import VariablesGameAreaModel from '../game/model/VariablesGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
@@ -21,7 +21,7 @@ class VariablesGameScreen extends Screen {
   constructor() {
 
     const options = {
-      name: areaModelCommonStrings.screen.game,
+      name: AreaModelCommonStrings.screen.game,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( variablesGameScreenIcon_png ), {
         maxIconWidthProportion: 1,

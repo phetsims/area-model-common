@@ -20,16 +20,16 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
-const factorsTimesPatternString = areaModelCommonStrings.a11y.factorsTimesPattern;
-const horizontalPickerString = areaModelCommonStrings.a11y.horizontalPicker;
-const horizontalPickerDescriptionString = areaModelCommonStrings.a11y.horizontalPickerDescription;
-const verticalPickerString = areaModelCommonStrings.a11y.verticalPicker;
-const verticalPickerDescriptionString = areaModelCommonStrings.a11y.verticalPickerDescription;
+const factorsTimesPatternString = AreaModelCommonStrings.a11y.factorsTimesPattern;
+const horizontalPickerString = AreaModelCommonStrings.a11y.horizontalPicker;
+const horizontalPickerDescriptionString = AreaModelCommonStrings.a11y.horizontalPickerDescription;
+const verticalPickerString = AreaModelCommonStrings.a11y.verticalPicker;
+const verticalPickerDescriptionString = AreaModelCommonStrings.a11y.verticalPickerDescription;
 
 class ProportionalFactorsNode extends Node {
   /**

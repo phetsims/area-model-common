@@ -11,12 +11,12 @@
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { AlignBox, AlignGroup, Text } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 
-const areaGridSizeString = areaModelCommonStrings.a11y.areaGridSize;
-const sceneSelectionPatternString = areaModelCommonStrings.a11y.sceneSelectionPattern;
+const areaGridSizeString = AreaModelCommonStrings.a11y.areaGridSize;
+const sceneSelectionPatternString = AreaModelCommonStrings.a11y.sceneSelectionPattern;
 
 class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
   /**

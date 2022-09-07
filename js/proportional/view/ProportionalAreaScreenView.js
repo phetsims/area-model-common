@@ -15,7 +15,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import { AlignGroup, HBox, Path, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -27,11 +27,11 @@ import ProportionalAreaDisplayNode from './ProportionalAreaDisplayNode.js';
 import ProportionalFactorsNode from './ProportionalFactorsNode.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
-const partitionString = areaModelCommonStrings.partition;
-const base10AreaTilesString = areaModelCommonStrings.a11y.base10AreaTiles;
-const countingNumbersDescriptionString = areaModelCommonStrings.a11y.countingNumbersDescription;
-const countingNumbersLabelString = areaModelCommonStrings.a11y.countingNumbersLabel;
-const gridLinesLabelString = areaModelCommonStrings.a11y.gridLinesLabel;
+const partitionString = AreaModelCommonStrings.partition;
+const base10AreaTilesString = AreaModelCommonStrings.a11y.base10AreaTiles;
+const countingNumbersDescriptionString = AreaModelCommonStrings.a11y.countingNumbersDescription;
+const countingNumbersLabelString = AreaModelCommonStrings.a11y.countingNumbersLabel;
+const gridLinesLabelString = AreaModelCommonStrings.a11y.gridLinesLabel;
 
 // constants
 const RADIO_ICON_SIZE = 30;

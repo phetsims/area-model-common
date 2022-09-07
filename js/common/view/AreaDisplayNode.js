@@ -19,7 +19,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import areaModelCommonStrings from '../../areaModelCommonStrings.js';
+import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import OrientationPair from '../model/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
@@ -28,17 +28,17 @@ import PartialProductLabelNode from './PartialProductLabelNode.js';
 import PoolableLayerNode from './PoolableLayerNode.js';
 import RangeLabelNode from './RangeLabelNode.js';
 
-const eraseString = areaModelCommonStrings.a11y.erase;
-const eraseDescriptionString = areaModelCommonStrings.a11y.eraseDescription;
-const horizontalDimensionCapitalizedString = areaModelCommonStrings.a11y.horizontalDimensionCapitalized;
-const onePartialProductFactorPatternString = areaModelCommonStrings.a11y.onePartialProductFactorPattern;
-const onePartialProductPatternString = areaModelCommonStrings.a11y.onePartialProductPattern;
-const productTimesPatternString = areaModelCommonStrings.a11y.productTimesPattern;
-const threePartitionsSplitPatternString = areaModelCommonStrings.a11y.threePartitionsSplitPattern;
-const twoPartialProductFactorsPatternString = areaModelCommonStrings.a11y.twoPartialProductFactorsPattern;
-const twoPartialProductsPatternString = areaModelCommonStrings.a11y.twoPartialProductsPattern;
-const twoPartitionsSplitPatternString = areaModelCommonStrings.a11y.twoPartitionsSplitPattern;
-const verticalDimensionCapitalizedString = areaModelCommonStrings.a11y.verticalDimensionCapitalized;
+const eraseString = AreaModelCommonStrings.a11y.erase;
+const eraseDescriptionString = AreaModelCommonStrings.a11y.eraseDescription;
+const horizontalDimensionCapitalizedString = AreaModelCommonStrings.a11y.horizontalDimensionCapitalized;
+const onePartialProductFactorPatternString = AreaModelCommonStrings.a11y.onePartialProductFactorPattern;
+const onePartialProductPatternString = AreaModelCommonStrings.a11y.onePartialProductPattern;
+const productTimesPatternString = AreaModelCommonStrings.a11y.productTimesPattern;
+const threePartitionsSplitPatternString = AreaModelCommonStrings.a11y.threePartitionsSplitPattern;
+const twoPartialProductFactorsPatternString = AreaModelCommonStrings.a11y.twoPartialProductFactorsPattern;
+const twoPartialProductsPatternString = AreaModelCommonStrings.a11y.twoPartialProductsPattern;
+const twoPartitionsSplitPatternString = AreaModelCommonStrings.a11y.twoPartitionsSplitPattern;
+const verticalDimensionCapitalizedString = AreaModelCommonStrings.a11y.verticalDimensionCapitalized;
 
 class AreaDisplayNode extends Node {
   /**
