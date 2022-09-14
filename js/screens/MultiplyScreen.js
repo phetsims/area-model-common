@@ -24,7 +24,7 @@ class MultiplyScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.multiply,
+      name: AreaModelCommonStrings.screen.multiplyStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( multiplyScreenIcon_png ), {
         maxIconWidthProportion: 1,

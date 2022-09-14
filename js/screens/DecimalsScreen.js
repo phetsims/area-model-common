@@ -18,7 +18,7 @@ class DecimalsScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.decimals,
+      name: AreaModelCommonStrings.screen.decimalsStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty
     };
 

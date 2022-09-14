@@ -20,7 +20,7 @@ class GenericScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.generic,
+      name: AreaModelCommonStrings.screen.genericStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( genericScreenIcon_png ), {
         maxIconWidthProportion: 1,

@@ -21,7 +21,7 @@ class VariablesGameScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.game,
+      name: AreaModelCommonStrings.screen.gameStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( variablesGameScreenIcon_png ), {
         maxIconWidthProportion: 1,

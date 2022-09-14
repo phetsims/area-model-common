@@ -24,7 +24,7 @@ class PartitionScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.partition,
+      name: AreaModelCommonStrings.screen.partitionStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( partitionScreenIcon_png ), {
         maxIconWidthProportion: 1,

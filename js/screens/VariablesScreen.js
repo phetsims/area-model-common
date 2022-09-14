@@ -20,7 +20,7 @@ class VariablesScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.variables,
+      name: AreaModelCommonStrings.screen.variablesStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( variablesScreenIcon_png ), {
         maxIconWidthProportion: 1,

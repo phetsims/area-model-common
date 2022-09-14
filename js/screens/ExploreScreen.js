@@ -21,7 +21,7 @@ class ExploreScreen extends Screen {
   constructor() {
 
     const options = {
-      name: AreaModelCommonStrings.screen.explore,
+      name: AreaModelCommonStrings.screen.exploreStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
       homeScreenIcon: new ScreenIcon( new Image( exploreScreenIcon_png ), {
         maxIconWidthProportion: 1,
