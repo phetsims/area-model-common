@@ -76,7 +76,7 @@ class TermEditNode extends LayoutBox {
     } );
 
     super( {
-      orientation: orientationProperty.value.layoutBoxOrientation,
+      orientation: orientationProperty.value.flowBoxOrientation,
       spacing: 4,
       children: [
         readoutBackground,
@@ -95,7 +95,7 @@ class TermEditNode extends LayoutBox {
       ]
     } );
     orientationProperty.link( orientation => {
-      this.orientation = orientation.layoutBoxOrientation;
+      this.orientation = orientation.flowBoxOrientation;
     } );
 
     options.isActiveProperty.link( isActive => {
