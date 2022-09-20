@@ -13,7 +13,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
-import { Color, FireListener, LayoutBox, Path, Rectangle, RichText } from '../../../../scenery/js/imports.js';
+import { Color, FireListener, FlowBox, Path, Rectangle, RichText } from '../../../../scenery/js/imports.js';
 import editSolidShape from '../../../../sherpa/js/fontawesome-5/editSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import areaModelCommon from '../../areaModelCommon.js';
@@ -21,7 +21,7 @@ import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
-class TermEditNode extends LayoutBox {
+class TermEditNode extends FlowBox {
   /**
    * @param {Property.<Orientation>} orientationProperty
    * @param {Property.<Term|null>} termProperty
