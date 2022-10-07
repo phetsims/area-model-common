@@ -33,7 +33,7 @@ class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
       const icon = createPartitionOrientationIcon( orientation, currentAreaOrientationProperty );
       return {
         value: orientation,
-        node: new AlignBox( icon, { group: selectionButtonAlignGroup } ),
+        createNode: tandem => new AlignBox( icon, { group: selectionButtonAlignGroup } ),
 
         // pdom
         labelContent: orientation === Orientation.HORIZONTAL ? verticalPartitionString : horizontalPartitionString

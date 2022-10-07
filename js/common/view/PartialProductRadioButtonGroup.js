@@ -54,7 +54,7 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
     super( model.partialProductsChoiceProperty, [
       {
         value: PartialProductsChoice.HIDDEN,
-        node: new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } ),
+        createNode: tandem => new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } ),
 
         // pdom
         labelContent: hidePartialProductsString
@@ -63,14 +63,14 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         value: PartialProductsChoice.PRODUCTS,
 
         // Hardcoded 'A' string since we don't want it to be translatable
-        node: new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
+        createNode: tandem => new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
 
         // pdom
         labelContent: showPartialProductsString
       },
       {
         value: PartialProductsChoice.FACTORS,
-        node: new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
+        createNode: tandem => new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
 
         // pdom
         labelContent: showPartialProductFactorsString
