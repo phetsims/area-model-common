@@ -95,7 +95,7 @@ class TermKeypadPanel extends Panel {
       // Trick to be able to position an empty string
       readoutText.visible = string.length > 0;
       if ( readoutText.visible ) {
-        readoutText.text = string;
+        readoutText.string = string;
         readoutText.centerX = readoutBackground.centerX;
       }
     }
@@ -106,7 +106,7 @@ class TermKeypadPanel extends Panel {
     // When the active partition changes, resize the background to fit to the largest size.
     digitCountProperty.link( digitCount => {
       // Temporarily use a different string
-      readoutText.text = Term.getLargestGenericString( allowExponents, digitCount );
+      readoutText.string = Term.getLargestGenericString( allowExponents, digitCount );
 
       // Update the background
       readoutBackground.setRectBounds( readoutText.bounds.dilatedXY( 10, 1 ) );

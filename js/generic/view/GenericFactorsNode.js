@@ -112,7 +112,7 @@ class GenericFactorsNode extends AlignBox {
         node.children = [ box ];
       }
       else {
-        richText.text = termList.toRichString();
+        richText.string = termList.toRichString();
         node.children = [ richText ];
       }
     } );

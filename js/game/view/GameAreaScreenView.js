@@ -274,7 +274,7 @@ class GameAreaScreenView extends ScreenView {
     } );
     this.areaDisplay.totalProperty.link( total => {
       if ( total ) {
-        polynomialReadoutText.text = total.toRichString( false );
+        polynomialReadoutText.string = total.toRichString( false );
       }
     } );
 

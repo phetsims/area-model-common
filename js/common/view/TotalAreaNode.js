@@ -40,7 +40,7 @@ class TotalAreaNode extends Node {
     if ( isProportional ) {
 
       // Has numeric display, so it doesn't need maxWidth
-      areaText.text = maximumWidthString;
+      areaText.string = maximumWidthString;
       areaNode = new HBox( {
         spacing: 8,
         children: [
@@ -75,7 +75,7 @@ class TotalAreaNode extends Node {
     // Update the text.
     totalAreaProperty.link( polynomial => {
       const labelString = polynomial === null ? '?' : polynomial.toRichString();
-      areaText.text = labelString;
+      areaText.string = labelString;
       this.innerContent = StringUtils.fillIn( areaEqualsPatternString, {
         area: labelString
       } );

@@ -82,7 +82,7 @@ class GameEditableLabelNode extends Node {
     this.addChild( readoutText );
 
     valueProperty.link( termOrList => {
-      readoutText.text = termOrList === null ? '?' : termOrList.toRichString( false );
+      readoutText.string = termOrList === null ? '?' : termOrList.toRichString( false );
       readoutText.center = Vector2.ZERO;
     } );
 

@@ -106,10 +106,10 @@ class TermEditNode extends FlowBox {
 
     const updateText = () => {
       if ( termProperty.value === null ) {
-        readoutText.text = '';
+        readoutText.string = '';
       }
       else {
-        readoutText.text = termProperty.value.toRichString( false );
+        readoutText.string = termProperty.value.toRichString( false );
       }
 
       readoutText.center = readoutBackground.selfBounds.center;
@@ -117,7 +117,7 @@ class TermEditNode extends FlowBox {
     };
 
     function updateDigits() {
-      readoutText.text = Term.getLargestGenericString( options.allowExponentsProperty.value, options.digitCountProperty.value );
+      readoutText.string = Term.getLargestGenericString( options.allowExponentsProperty.value, options.digitCountProperty.value );
       readoutBackground.rectWidth = readoutText.width + 5;
       readoutBackground.rectHeight = readoutText.height + 5;
       updateText();

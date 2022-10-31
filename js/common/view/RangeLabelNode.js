@@ -54,7 +54,7 @@ class RangeLabelNode extends Node {
 
       richText.visible = hasTerms;
       if ( hasTerms ) {
-        richText.text = termList.toRichString();
+        richText.string = termList.toRichString();
 
         // Relative positioning
         if ( orientation === Orientation.HORIZONTAL ) {

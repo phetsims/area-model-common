@@ -48,7 +48,7 @@ class PolynomialEditNode extends VBox {
     } );
     readoutText.centerY = readoutBackgroundRectangle.centerY; // Don't reposition vertically with exponents
     polynomialProperty.link( polynomial => {
-      readoutText.text = polynomial === null ? '0' : polynomial.toRichString();
+      readoutText.string = polynomial === null ? '0' : polynomial.toRichString();
       readoutText.centerX = readoutBackgroundRectangle.centerX;
     } );
     const readout = new Node( {
