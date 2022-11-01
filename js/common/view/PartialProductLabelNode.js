@@ -116,7 +116,7 @@ class PartialProductLabelNode extends Node {
 
         // Product
         else if ( choice === PartialProductsChoice.PRODUCTS ) {
-          productRichText.text = ( horizontalSize === null || verticalSize === null )
+          productRichText.string = ( horizontalSize === null || verticalSize === null )
                                  ? '?'
                                  : horizontalSize.times( verticalSize ).toRichString( false );
           children = [ productRichText ];
@@ -126,10 +126,10 @@ class PartialProductLabelNode extends Node {
         else {
 
           const horizontalNode = horizontalSize
-                                 ? horizontalRichText.setText( horizontalSize.toRichString( false ) )
+                                 ? horizontalRichText.setString( horizontalSize.toRichString( false ) )
                                  : horizontalRectangle;
           const verticalNode = verticalSize
-                               ? verticalRichText.setText( verticalSize.toRichString( false ) )
+                               ? verticalRichText.setString( verticalSize.toRichString( false ) )
                                : verticalRectangle;
 
           if ( allowExponents ) {
