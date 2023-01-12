@@ -31,8 +31,8 @@ class GenericLayoutSelectionNode extends Node {
     // Our rectangles will be stroked, so we need to subtract 1 due to the lineWidth
     width -= 1;
 
-    const comboBoxItems = GenericLayout.VALUES.map( layout => ( {
-      node: new HBox( {
+    const comboBoxItems = GenericLayout.VALUES.map( layout => {
+      const node = new HBox( {
         children: [
           createLayoutIcon( layout.size, 0.7 ),
           new Text( `${layout.size.height}x${layout.size.width}`, {
@@ -40,12 +40,16 @@ class GenericLayoutSelectionNode extends Node {
           } )
         ],
         spacing: 14
-      } ),
-      value: layout
-    } ) );
+      } );
+      return {
+        createdNode: node, // TODO: why can't we have cases support this also? Or perhaps with a new API to support https://github.com/phetsims/sun/issues/797
+        createNode: () => node,
+        value: layout
+      };
+    } );
 
     // eslint-disable-next-line prefer-spread
-    const maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'node' ), 'height' ) );
+    const maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'createdNode' ), 'height' ) );
     const itemMargin = 6;
     const arrowMargin = 8;
 
