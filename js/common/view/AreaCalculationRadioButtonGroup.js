@@ -28,13 +28,13 @@ class AreaCalculationRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 
     super( areaCalculationChoiceProperty, [ {
       value: AreaCalculationChoice.HIDDEN,
-      createNode: tandem => new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } )
+      createNode: () => new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } )
     }, {
       value: AreaCalculationChoice.LINE_BY_LINE,
-      createNode: tandem => new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
+      createNode: () => new AlignBox( createCalculationIcon( darkColorProperty, lightColorProperty ), { group: selectionButtonAlignGroup } )
     }, {
       value: AreaCalculationChoice.SHOW_ALL_LINES,
-      createNode: tandem => new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
+      createNode: () => new AlignBox( createCalculationIcon( darkColorProperty, darkColorProperty ), { group: selectionButtonAlignGroup } )
     } ] );
   }
 }

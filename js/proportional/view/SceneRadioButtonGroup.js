@@ -32,7 +32,7 @@ class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
     super( model.currentAreaProperty, model.areas.map( area => {
       return {
         value: area,
-        createNode: tandem => new AlignBox( new Text( area.getDimensionString(), {
+        createNode: () => new AlignBox( new Text( area.getDimensionString(), {
           font: AreaModelCommonConstants.SYMBOL_FONT
         } ), { group: group } ),
 
