@@ -89,7 +89,7 @@ class GenericLayoutSelectionNode extends Node {
     } );
     genericLayoutProperty.link( layout => {
       currentLabel.children = [
-        _.find( comboBoxItems, item => item.value === layout ).node
+        _.find( comboBoxItems, item => item.value === layout ).createdNode
       ];
       currentLabel.left = itemMargin;
       currentLabel.centerY = rectangle.centerY;
