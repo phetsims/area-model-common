@@ -1,7 +1,7 @@
 // Copyright 2017-2023, University of Colorado Boulder
 
 /**
- * Shows a combo box that allows selecting between different layouts
+ * Shows a node that allows selecting between different layouts
  *
  * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
@@ -31,25 +31,23 @@ class GenericLayoutSelectionNode extends Node {
     // Our rectangles will be stroked, so we need to subtract 1 due to the lineWidth
     width -= 1;
 
-    const comboBoxItems = GenericLayout.VALUES.map( layout => {
-      const node = new HBox( {
-        children: [
-          createLayoutIcon( layout.size, 0.7 ),
-          new Text( `${layout.size.height}x${layout.size.width}`, {
-            font: AreaModelCommonConstants.LAYOUT_FONT
-          } )
-        ],
-        spacing: 14
-      } );
+    const items = GenericLayout.VALUES.map( layout => {
       return {
-        createdNode: node, // TODO: why can't we have cases support this also? Or perhaps with a new API to support https://github.com/phetsims/sun/issues/797
-        createNode: () => node,
+        node: new HBox( {
+          children: [
+            createLayoutIcon( layout.size, 0.7 ),
+            new Text( `${layout.size.height}x${layout.size.width}`, {
+              font: AreaModelCommonConstants.LAYOUT_FONT
+            } )
+          ],
+          spacing: 14
+        } ),
         value: layout
       };
     } );
 
     // eslint-disable-next-line prefer-spread
-    const maxItemHeight = Math.max.apply( Math, _.map( _.map( comboBoxItems, 'createdNode' ), 'height' ) );
+    const maxItemHeight = Math.max.apply( Math, _.map( _.map( items, 'node' ), 'height' ) );
     const itemMargin = 6;
     const arrowMargin = 8;
 
@@ -89,7 +87,7 @@ class GenericLayoutSelectionNode extends Node {
     } );
     genericLayoutProperty.link( layout => {
       currentLabel.children = [
-        _.find( comboBoxItems, item => item.value === layout ).createdNode
+        _.find( items, item => item.value === layout ).node
       ];
       currentLabel.left = itemMargin;
       currentLabel.centerY = rectangle.centerY;
