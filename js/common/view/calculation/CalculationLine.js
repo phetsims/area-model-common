@@ -56,7 +56,7 @@ class CalculationLine {
       AreaModelCommonColors.calculationActiveProperty,
       AreaModelCommonColors.calculationInactiveProperty
     ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
-      useDeepEquality: true
+      valueComparisonStrategy: 'equalsFunction'
     } );
 
     // @private {OrientationPair.<Property.<Color>>}
@@ -65,7 +65,7 @@ class CalculationLine {
       colorProperties.get( orientation ),
       AreaModelCommonColors.calculationInactiveProperty
     ], ( isActive, activeColor, inactiveColor ) => isActive ? activeColor : inactiveColor, {
-      useDeepEquality: true
+      valueComparisonStrategy: 'equalsFunction'
     } ) );
   }
 

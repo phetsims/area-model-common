@@ -66,7 +66,7 @@ class Area {
     this.totalAreaProperty = new DerivedProperty(
       this.totalProperties.values,
       ( horizontalTotal, verticalTotal ) => horizontalTotal && verticalTotal && horizontalTotal.times( verticalTotal ), {
-        useDeepEquality: true
+        valueComparisonStrategy: 'equalsFunction'
       } );
 
     // @public {OrientationPair.<Property.<TermList|null>>} - Displayed term list for the product. Null if there is no
@@ -184,7 +184,7 @@ class Area {
         return null;
       }
     }, {
-      useDeepEquality: true
+      valueComparisonStrategy: 'equalsFunction'
     } );
   }
 

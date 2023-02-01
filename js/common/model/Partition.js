@@ -26,7 +26,7 @@ class Partition {
 
     // @public {Property.<Term|null>} - Null indicates the size is not defined.
     this.sizeProperty = new Property( null, {
-      useDeepEquality: true,
+      valueComparisonStrategy: 'equalsFunction',
       isValidValue: Term.isTermOrNull
     } );
 
@@ -43,7 +43,7 @@ class Partition {
     // coordinates can't be computed. For generic partitions, it will be from 0 to 1. For proportional partitions, it
     // will be from 0 to its maximum size. Owned property, does not need to be disposed.
     this.coordinateRangeProperty = new Property( null, {
-      useDeepEquality: true,
+      valueComparisonStrategy: 'equalsFunction',
       isValidValue: value => value === null || value instanceof Range
     } );
   }

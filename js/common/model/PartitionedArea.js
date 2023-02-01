@@ -22,7 +22,7 @@ class PartitionedArea {
 
     // @public {Property.<Term|null>} - Area may not be defined if the size of a partition is not defined.
     this.areaProperty = new Property( null, {
-      useDeepEquality: true,
+      valueComparisonStrategy: 'equalsFunction',
       isValidValue: Term.isTermOrNull
     } );
 

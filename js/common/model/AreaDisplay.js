@@ -52,7 +52,7 @@ class AreaDisplay {
 
     // @public {Property.<Polynomial|null>}
     this.totalAreaProperty = this.wrapProperty( _.property( 'totalAreaProperty' ), {
-      useDeepEquality: true
+      valueComparisonStrategy: 'equalsFunction'
     } );
 
     // @public {OrientationPair.<Property.<TermList|null>>}

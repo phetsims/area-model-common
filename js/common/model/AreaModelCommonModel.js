@@ -78,7 +78,7 @@ class AreaModelCommonModel {
     // individual totalAreaProperties. Since we are guaranteed to get a callback for these cases whenever one of the
     // totalAreaProeprties changes, we listen to those instead.
     this.totalAreaProperty = new DerivedProperty( totalAreaProperties, () => this.currentAreaProperty.value.totalAreaProperty.value, {
-      useDeepEquality: true
+      valueComparisonStrategy: 'equalsFunction'
     } );
   }
 

@@ -37,7 +37,7 @@ class Entry {
 
     // @public {Property.<Term|null>} - The current value of the entry
     this.valueProperty = new Property( value, {
-      useDeepEquality: true,
+      valueComparisonStrategy: 'equalsFunction',
       isValidValue: Term.isTermOrNull
     } );
 
