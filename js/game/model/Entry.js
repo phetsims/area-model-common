@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2023, University of Colorado Boulder
 
 /**
  * A logical entry whose value can be edited, and may be displayed in different ways.
