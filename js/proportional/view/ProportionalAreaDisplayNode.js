@@ -341,10 +341,10 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
       derive: 'sizeProperty'
     } ).link( size => {
       if ( size === null ) {
-        text.text = '';
+        text.string = '';
       }
       else {
-        text.text = size.toRichString( false );
+        text.string = size.toRichString( false );
         text[ orientation.centerCoordinate ] = 0;
       }
     } );

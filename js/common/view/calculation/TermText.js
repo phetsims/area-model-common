@@ -53,7 +53,7 @@ class TermText extends RichText {
     this.accessibleText = text;
 
     this.mutate( {
-      text: text,
+      string: text,
       fill: colorProperty,
       innerContent: text
     } );

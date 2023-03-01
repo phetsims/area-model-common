@@ -210,7 +210,7 @@ class GameAreaScreenView extends ScreenView {
     } ).link( challenge => {
       // Could be null
       if ( challenge ) {
-        promptText.text = challenge.description.getPromptString();
+        promptText.string = challenge.description.getPromptString();
         // Center around the area's center.
         promptText.centerX = this.layoutBounds.left + AreaModelCommonConstants.GAME_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
         // Don't let it go off the left side of the screen
