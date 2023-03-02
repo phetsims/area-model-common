@@ -69,7 +69,8 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
     super( {
       valueProperty: accessibleProperty,
       enabledRangeProperty: enabledRangeProperty,
-      constrainValue: Utils.roundSymmetric,
+      constrainValue: value => Utils.roundSymmetric( value / areaDisplay.partitionSnapSizeProperty.value ) *
+                      areaDisplay.partitionSnapSizeProperty.value,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
@@ -169,6 +170,10 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
 
     // Visibility
     areaDisplay.partitionSplitVisibleProperties.get( orientation ).linkAttribute( this, 'visible' );
+
+    areaDisplay.partitionSnapSizeProperty.link( snapSize => {
+      this.setKeyboardStep( snapSize );
+    } );
 
     let dragHandler;
     modelViewTransformProperty.link( modelViewTransform => {
