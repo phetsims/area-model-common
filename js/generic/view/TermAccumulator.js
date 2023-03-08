@@ -61,6 +61,9 @@ class TermAccumulator extends AbstractKeyAccumulator {
       }
     } ).join( '' ) );
 
+    // To adhere to the Accumulator interface
+    this.stringProperty = this.richStringProperty;
+
     // @public {Property.<Term|null>} - The term used if 'enter' is pressed
     this.termProperty = new DerivedProperty( [ this.accumulatedKeysProperty ], accumulatedKeys => {
       const lastKey = accumulatedKeys[ accumulatedKeys.length - 1 ];
