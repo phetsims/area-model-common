@@ -8,11 +8,9 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import BackspaceIcon from '../../../../scenery-phet/js/BackspaceIcon.js';
 import Key from '../../../../scenery-phet/js/keypad/Key.js';
 import KeyID from '../../../../scenery-phet/js/keypad/KeyID.js';
 import Keypad from '../../../../scenery-phet/js/keypad/Keypad.js';
-import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { Node, Rectangle, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -27,28 +25,15 @@ const enterString = AreaModelCommonStrings.enter;
 
 // layout constants
 const positiveKeys = [
-  [
-    new Key( '7', KeyID.SEVEN ),
-    new Key( '8', KeyID.EIGHT ),
-    new Key( '9', KeyID.NINE )
-  ],
-  [
-    new Key( '4', KeyID.FOUR ),
-    new Key( '5', KeyID.FIVE ),
-    new Key( '6', KeyID.SIX )
-  ],
-  [
-    new Key( '1', KeyID.ONE ),
-    new Key( '2', KeyID.TWO ),
-    new Key( '3', KeyID.THREE )
-  ]
+  [ Keypad.KEY_7, Keypad.KEY_8, Keypad.KEY_9 ],
+  [ Keypad.KEY_4, Keypad.KEY_5, Keypad.KEY_6 ],
+  [ Keypad.KEY_1, Keypad.KEY_2, Keypad.KEY_3 ]
 ];
 const zeroAndBackspace = [
-  new Key( '0', KeyID.ZERO ),
-  new Key( ( new BackspaceIcon( { scale: 1.5 } ) ), KeyID.BACKSPACE )
+  Keypad.KEY_0, Keypad.KEY_BACKSPACE
 ];
 const noExponentLayout = positiveKeys.concat( [
-  [ new Key( `${MathSymbols.PLUS}/${MathSymbols.MINUS}`, KeyID.PLUS_MINUS ) ].concat( zeroAndBackspace )
+  [ Keypad.PLUS_MINUS ].concat( zeroAndBackspace )
 ] );
 const noNegativeLayout = positiveKeys.concat( [
   [ null ].concat( zeroAndBackspace )
