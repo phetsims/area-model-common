@@ -10,7 +10,7 @@ For calculation lines, there's a list of all possible types below. If two lines 
 - Minuses: e.g. `x^4 - x^3 - x^3 + x^2` where negative signs are moved to terms being subtracted.
 - Sum: e.g. `x^4 - 2x^3 + x^2` where terms are combined.
 
-Additionally, for game screens, every challenge is described in https://github.com/phetsims/area-model-common/blob/master/js/game/model/AreaChallengeDescription.js, where each value is described as either:
+Additionally, for game screens, every challenge is described in https://github.com/phetsims/area-model-common/blob/main/js/game/model/AreaChallengeDescription.js, where each value is described as either:
 
 - GIVEN: It's a constant that is determined at the start and shown to the user
 - EDITABLE: It is editable by the user (starts out with no value)
