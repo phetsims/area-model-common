@@ -19,7 +19,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { DragListener, FocusHighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
+import { DragListener, HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
@@ -147,7 +147,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
     this.labelContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleString : horizontalPartitionHandleString;
     this.descriptionContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleDescriptionString : horizontalPartitionHandleDescriptionString;
 
-    this.focusHighlight = new FocusHighlightPath( handleShape.getOffsetShape( 5 ) );
+    this.focusHighlight = new HighlightPath( handleShape.getOffsetShape( 5 ) );
     handle.addChild( this.focusHighlight );
     this.focusHighlightLayerable = true;
 
