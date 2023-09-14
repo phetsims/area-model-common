@@ -73,12 +73,13 @@ class AreaScreenView extends ScreenView {
       // Notably, the accordion box does NOT support line-by-line appearance, and can be collapsed.
       useCalculationBox: false,
 
-      // {function} (optional) - Remaps or adds to the right-side align nodes - TODO: Can we change how this is done https://github.com/phetsims/tasks/issues/1129
-      // without inheritance?
+      //TODO https://github.com/phetsims/balancing-act/issues/139 Can we change how this is done?
+      // {function} (optional) - Remaps or adds to the right-side align nodes without inheritance?
       getRightAlignNodes: nodes => nodes,
 
-      // {function} - TODO: HORRIBLE workaround, will need to restructure this --- it's called with a `this` reference https://github.com/phetsims/tasks/issues/1129
-      // and will provide a node passed to getSelectionNodesProperty().
+      //TODO https://github.com/phetsims/balancing-act/issues/139 HORRIBLE workaround, will need to restructure this ---
+      // it's called with a `this` reference and will provide a node passed to getSelectionNodesProperty().
+      // {function}
       getSelectionNodesExtras: screenView => null
     }, config );
 
