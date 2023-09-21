@@ -77,8 +77,8 @@ class AreaScreenView extends ScreenView {
       // {function} (optional) - Remaps or adds to the right-side align nodes without inheritance?
       getRightAlignNodes: nodes => nodes,
 
-      //TODO https://github.com/phetsims/balancing-act/issues/139 HORRIBLE workaround, will need to restructure this ---
-      // it's called with a `this` reference and will provide a node passed to getSelectionNodesProperty().
+      //TODO HORRIBLE workaround, will need to restructure this ---
+      // it's called with a `this` reference and will provide a node passed to getSelectionNodesProperty(). https://github.com/phetsims/balancing-act/issues/139
       // {function}
       getSelectionNodesExtras: screenView => null
     }, config );
