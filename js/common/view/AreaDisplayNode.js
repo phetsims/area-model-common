@@ -185,7 +185,9 @@ class AreaDisplayNode extends Node {
       const termListProperty = this.areaDisplay.displayProperties.get( orientation );
       const tickPositionsProperty = new DerivedProperty(
         [ areaDisplay.partitionBoundariesProperties.get( orientation ) ],
-        partitionBoundaries => partitionBoundaries.map( boundary => orientation.modelToView( this.modelViewTransformProperty.value, boundary ) ) );
+        partitionBoundaries => partitionBoundaries.map( boundary => orientation.modelToView( this.modelViewTransformProperty.value, boundary ) ), {
+          accessNonDependencies: true
+        } );
       this.labelLayer.addChild( new RangeLabelNode(
         termListProperty,
         orientation,
