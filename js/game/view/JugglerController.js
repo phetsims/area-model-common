@@ -10,7 +10,6 @@
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import { Image, Node } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import JugglerImages from './JugglerImages.js';
@@ -37,15 +36,11 @@ export default class JugglerController {
       } ) );
     const levelTwoImages = jugglerSets.map( set => new Image( set.levelTwo,
       {
-        visibleProperty: createVisibleProperty( set ),
-        maxHeight: 71,
-        center: new Vector2( 0, 0 )
+        visibleProperty: createVisibleProperty( set )
       } ) );
     const levelThreeImages = jugglerSets.map( set => new Image( set.levelThree,
       {
-        visibleProperty: createVisibleProperty( set ),
-        maxHeight: 40,
-        center: new Vector2( 3, 5 )
+        visibleProperty: createVisibleProperty( set )
       } ) );
     const levelFourImages = jugglerSets.map( set => new Image( set.levelFour,
       {
@@ -53,15 +48,11 @@ export default class JugglerController {
       } ) );
     const levelFiveImages = jugglerSets.map( set => new Image( set.levelFive,
       {
-        visibleProperty: createVisibleProperty( set ),
-        maxHeight: 71,
-        center: new Vector2( 0, 0 )
+        visibleProperty: createVisibleProperty( set )
       } ) );
     const levelSixImages = jugglerSets.map( set => new Image( set.levelSix,
       {
-        visibleProperty: createVisibleProperty( set ),
-        maxHeight: 40,
-        center: new Vector2( 3, 5 )
+        visibleProperty: createVisibleProperty( set )
       } ) );
 
     const levelOneNode = new Node( { children: levelOneImages } );

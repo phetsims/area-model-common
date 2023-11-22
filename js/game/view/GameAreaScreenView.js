@@ -19,14 +19,14 @@ import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import FaceWithPointsNode from '../../../../scenery-phet/js/FaceWithPointsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import { AlignBox, HBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import TransitionNode from '../../../../twixt/js/TransitionNode.js';
 import FiniteStatusBar from '../../../../vegas/js/FiniteStatusBar.js';
 import LevelCompletedNode from '../../../../vegas/js/LevelCompletedNode.js';
-import LevelSelectionButton from '../../../../vegas/js/LevelSelectionButton.js';
+import LevelSelectionButtonGroup from '../../../../vegas/js/LevelSelectionButtonGroup.js';
 import RewardNode from '../../../../vegas/js/RewardNode.js';
 import ScoreDisplayLabeledStars from '../../../../vegas/js/ScoreDisplayLabeledStars.js';
 import ScoreDisplayStars from '../../../../vegas/js/ScoreDisplayStars.js';
@@ -109,28 +109,31 @@ class GameAreaScreenView extends ScreenView {
     const levelIcons = jugglerController.jugglerNodes;
 
     const buttonSpacing = 30;
-    const levelButtons = model.levels.map( ( level, index ) => new LevelSelectionButton(
-      levelIcons[ index ],
-      level.scoreProperty,
-      {
-        createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
-          numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
-          perfectScore: AreaModelCommonConstants.PERFECT_SCORE
-        } ),
-        listener: () => {
-          model.selectLevel( level );
-        },
-        baseColor: level.colorProperty,
-        soundPlayerIndex: index
-      }
-    ) );
+    const levelButtons = model.levels.map( ( level, index ) => {
+      return {
+        icon: levelIcons[ index ],
+        scoreProperty: level.scoreProperty,
+        options: {
+          createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
+            numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
+            perfectScore: AreaModelCommonConstants.PERFECT_SCORE
+          } ),
+          listener: () => {
+            model.selectLevel( level );
+          },
+          baseColor: level.colorProperty,
+          soundPlayerIndex: index
+        }
+      };
+    } );
 
-    this.levelSelectionLayer.addChild( new VBox( {
-      children: _.chunk( levelButtons, 3 ).map( children => new HBox( {
-        children: children,
-        spacing: buttonSpacing
-      } ) ),
-      spacing: buttonSpacing,
+    this.levelSelectionLayer.addChild( new LevelSelectionButtonGroup( levelButtons, {
+      flowBoxOptions: {
+        spacing: buttonSpacing,
+        lineSpacing: buttonSpacing,
+        preferredWidth: 513, // empirically determined from default button width and lineWidth, and buttonSpacing
+        wrap: true
+      },
       center: this.layoutBounds.center
     } ) );
 
