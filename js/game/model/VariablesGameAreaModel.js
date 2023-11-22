@@ -14,7 +14,12 @@ import AreaLevel from './AreaLevel.js';
 import GameAreaModel from './GameAreaModel.js';
 
 class VariablesGameAreaModel extends GameAreaModel {
-  constructor() {
+
+  /**
+   * @public
+   * @param { PreferencesModel } preferencesModel
+   */
+  constructor( preferencesModel ) {
     super( [
       new AreaLevel( 1, AreaChallengeType.VARIABLES, AreaModelCommonColors.variablesIconBackgroundProperty, [
         AreaChallengeDescription.LEVEL_1_VARIABLES_1,
@@ -45,7 +50,7 @@ class VariablesGameAreaModel extends GameAreaModel {
       new AreaLevel( 6, AreaChallengeType.VARIABLES, AreaModelCommonColors.variablesIconBackgroundProperty, [
         AreaChallengeDescription.LEVEL_6_VARIABLES_1
       ] )
-    ], true );
+    ], true, preferencesModel );
   }
 }
 

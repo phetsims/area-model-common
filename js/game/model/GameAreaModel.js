@@ -18,8 +18,9 @@ class GameAreaModel {
   /**
    * @param {Array.<AreaLevel>} levels
    * @param {boolean} hasExponents
+   * @param { PreferencesModel } preferencesModel
    */
-  constructor( levels, hasExponents ) {
+  constructor( levels, hasExponents, preferencesModel ) {
 
     // @public {Array.<AreaLevel>}
     this.levels = levels;
@@ -56,6 +57,12 @@ class GameAreaModel {
       derive: 'allowCheckingProperty',
       defaultValue: false
     } );
+
+    /**
+     * @public
+     * @type {Property<RegionAndCulturePortrayal>}
+     */
+    this.regionAndCulturePortrayalProperty = preferencesModel.localizationModel.regionAndCulturePortrayalProperty;
   }
 
   /**

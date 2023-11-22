@@ -19,7 +19,7 @@ import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import FaceWithPointsNode from '../../../../scenery-phet/js/FaceWithPointsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import { AlignBox, HBox, Image, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, HBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -31,12 +31,6 @@ import RewardNode from '../../../../vegas/js/RewardNode.js';
 import ScoreDisplayLabeledStars from '../../../../vegas/js/ScoreDisplayLabeledStars.js';
 import ScoreDisplayStars from '../../../../vegas/js/ScoreDisplayStars.js';
 import VegasStrings from '../../../../vegas/js/VegasStrings.js';
-import level1Icon_png from '../../../mipmaps/level1Icon_png.js';
-import level2Icon_png from '../../../mipmaps/level2Icon_png.js';
-import level3Icon_png from '../../../mipmaps/level3Icon_png.js';
-import level4Icon_png from '../../../mipmaps/level4Icon_png.js';
-import level5Icon_png from '../../../mipmaps/level5Icon_png.js';
-import level6Icon_png from '../../../mipmaps/level6Icon_png.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -52,6 +46,7 @@ import GameState from '../model/GameState.js';
 import GameAreaDisplayNode from './GameAreaDisplayNode.js';
 import GameAudio from './GameAudio.js';
 import GameEditableLabelNode from './GameEditableLabelNode.js';
+import JugglerController from './JugglerController.js';
 import PolynomialEditNode from './PolynomialEditNode.js';
 
 const checkString = VegasStrings.check;
@@ -61,17 +56,6 @@ const nextString = VegasStrings.next;
 const showAnswerString = VegasStrings.showAnswer;
 const totalAreaOfModelString = AreaModelCommonStrings.totalAreaOfModel;
 const tryAgainString = VegasStrings.tryAgain;
-
-
-// constants
-const LEVEL_ICON_IMAGES = [
-  level1Icon_png,
-  level2Icon_png,
-  level3Icon_png,
-  level4Icon_png,
-  level5Icon_png,
-  level6Icon_png
-];
 
 class GameAreaScreenView extends ScreenView {
   /**
@@ -120,7 +104,9 @@ class GameAreaScreenView extends ScreenView {
       }
     } );
 
-    const levelIcons = LEVEL_ICON_IMAGES.map( iconImage => new Image( iconImage ) );
+    const jugglerController = new JugglerController( model );
+
+    const levelIcons = jugglerController.jugglerNodes;
 
     const buttonSpacing = 30;
     const levelButtons = model.levels.map( ( level, index ) => new LevelSelectionButton(

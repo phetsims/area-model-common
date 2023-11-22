@@ -9,24 +9,27 @@
 import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import { Image } from '../../../scenery/js/imports.js';
-import genericGameScreenIcon_png from '../../mipmaps/genericGameScreenIcon_png.js';
 import genericGameScreenNavbar_png from '../../mipmaps/genericGameScreenNavbar_png.js';
 import areaModelCommon from '../areaModelCommon.js';
 import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
+import GameScreenIcon from '../game/view/GameScreenIcon.js';
+import JugglerImages from '../game/view/JugglerImages.js';
 
 class GenericGameScreen extends Screen {
-  constructor() {
+
+  /**
+   * @param { PreferencesModel } preferencesModel
+   * @public
+   */
+  constructor( preferencesModel ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new ScreenIcon( new Image( genericGameScreenIcon_png ), {
-        maxIconWidthProportion: 1,
-        maxIconHeightProportion: 1
-      } ),
+      homeScreenIcon: new GameScreenIcon( JugglerImages.JUGGLER_CHARACTER_SETS, preferencesModel.localizationModel.regionAndCulturePortrayalProperty ),
       navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
@@ -34,7 +37,7 @@ class GenericGameScreen extends Screen {
     };
 
     super(
-      () => new GenericGameAreaModel(),
+      () => new GenericGameAreaModel( preferencesModel ),
       model => new GameAreaScreenView( model ),
       options
     );
