@@ -170,10 +170,6 @@ type StringsType = {
     'verticalPickerStringProperty': LocalizedStringProperty;
     'verticalPickerDescription': string;
     'verticalPickerDescriptionStringProperty': LocalizedStringProperty;
-  };
-  'characterSet': {
-    'unitedStatesOfAmerica': string;
-    'unitedStatesOfAmericaStringProperty': LocalizedStringProperty;
   }
 };
 
