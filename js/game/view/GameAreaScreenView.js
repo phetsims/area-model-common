@@ -46,7 +46,6 @@ import GameState from '../model/GameState.js';
 import GameAreaDisplayNode from './GameAreaDisplayNode.js';
 import GameAudio from './GameAudio.js';
 import GameEditableLabelNode from './GameEditableLabelNode.js';
-import JugglerController from './JugglerController.js';
 import PolynomialEditNode from './PolynomialEditNode.js';
 
 const checkString = VegasStrings.check;
@@ -62,8 +61,9 @@ class GameAreaScreenView extends ScreenView {
    * @extends {ScreenView}
    *
    * @param {GameAreaModel} model
+   * @param {JugglerController} jugglerController
    */
-  constructor( model ) {
+  constructor( model, jugglerController ) {
     assert && assert( model instanceof GameAreaModel );
 
     super();
@@ -103,8 +103,6 @@ class GameAreaScreenView extends ScreenView {
         } );
       }
     } );
-
-    const jugglerController = new JugglerController( model );
 
     const levelIcons = jugglerController.jugglerNodes;
 

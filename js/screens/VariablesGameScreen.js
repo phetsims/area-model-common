@@ -16,20 +16,21 @@ import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import VariablesGameAreaModel from '../game/model/VariablesGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
 import GameScreenIcon from '../game/view/GameScreenIcon.js';
-import JugglerImages from '../game/view/JugglerImages.js';
 
 class VariablesGameScreen extends Screen {
 
   /**
    * @param { PreferencesModel } preferencesModel
+   * @param { Array<JugglerCharacterSet> } jugglerCharacterSets
+   * @param { ( GameAreaModel ) => JugglerController } createJugglerController
    * @public
    */
-  constructor( preferencesModel ) {
+  constructor( preferencesModel, jugglerCharacterSets, createJugglerController ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new GameScreenIcon( JugglerImages.JUGGLER_CHARACTER_SETS, preferencesModel.localizationModel.regionAndCulturePortrayalProperty ),
+      homeScreenIcon: new GameScreenIcon( jugglerCharacterSets, preferencesModel.localizationModel.regionAndCulturePortrayalProperty ),
       navigationBarIcon: new ScreenIcon( new Image( variablesGameScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
@@ -38,7 +39,7 @@ class VariablesGameScreen extends Screen {
 
     super(
       () => new VariablesGameAreaModel( preferencesModel ),
-      model => new GameAreaScreenView( model ),
+      model => new GameAreaScreenView( model, createJugglerController( model ) ),
       options
     );
   }
