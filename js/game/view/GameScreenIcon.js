@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * ExploreScreenIcon places all the screenIcons of different region and culture representations into a single Node.
+ * GameScreenIcon places all the screenIcons of different region and culture representations into a single Node.
  * Each icon's visibility is controlled by the regionAndCulturePortrayalProperty.
  *
  * @author Luisa Vargas
