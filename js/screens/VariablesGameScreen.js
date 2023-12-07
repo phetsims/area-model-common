@@ -21,8 +21,8 @@ class VariablesGameScreen extends Screen {
 
   /**
    * @param { PreferencesModel } preferencesModel
-   * @param { Array<JugglerCharacterSet> } jugglerCharacterSets
-   * @param { ( GameAreaModel ) => JugglerController } createJugglerController
+   * @param { Array<JugglerPortrayal> } jugglerCharacterSets
+   * @param { ( GameAreaModel ) => JugglerCharacters } createJugglerController
    * @public
    */
   constructor( preferencesModel, jugglerCharacterSets, createJugglerController ) {

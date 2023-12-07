@@ -16,15 +16,15 @@ import areaModelCommon from '../../areaModelCommon.js';
 export default class GameScreenIcon extends ScreenIcon {
 
   /**
-   * @param { Array<JugglerCharacterSet> } characterSets
+   * @param { Array<JugglerPortrayal> } portrayals
    * @param { Property<RegionAndCulturePortrayal> } regionAndCulturePortrayalProperty
    */
-  constructor( characterSets, regionAndCulturePortrayalProperty ) {
+  constructor( portrayals, regionAndCulturePortrayalProperty ) {
 
-    const gameScreenImages = characterSets.map( set => {
-      return new Image( set.screenHomeIcon, {
+    const gameScreenImages = portrayals.map( jugglerPortrayal => {
+      return new Image( jugglerPortrayal.screenHomeIcon, {
         visibleProperty: new DerivedProperty( [ regionAndCulturePortrayalProperty ], portrayal => {
-          return portrayal === set;
+          return portrayal === jugglerPortrayal;
         } )
       } );
     } );

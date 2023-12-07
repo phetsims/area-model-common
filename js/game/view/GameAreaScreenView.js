@@ -61,9 +61,9 @@ class GameAreaScreenView extends ScreenView {
    * @extends {ScreenView}
    *
    * @param {GameAreaModel} model
-   * @param {JugglerController} jugglerController
+   * @param {JugglerCharacters} jugglerCharacters
    */
-  constructor( model, jugglerController ) {
+  constructor( model, jugglerCharacters ) {
     assert && assert( model instanceof GameAreaModel );
 
     super();
@@ -104,7 +104,7 @@ class GameAreaScreenView extends ScreenView {
       }
     } );
 
-    const levelIcons = jugglerController.jugglerNodes;
+    const levelIcons = jugglerCharacters.jugglerNodes;
 
     const buttonSpacing = 30;
     const levelButtons = model.levels.map( ( level, index ) => {

@@ -11,7 +11,7 @@
 import RegionAndCulturePortrayal from '../../../../joist/js/preferences/RegionAndCulturePortrayal.js';
 import areaModelCommon from '../../areaModelCommon.js';
 
-export default class JugglerCharacterSet extends RegionAndCulturePortrayal {
+export default class JugglerPortrayal extends RegionAndCulturePortrayal {
   /**
    *
    * @param label { LocalizedStringProperty }
@@ -41,4 +41,4 @@ export default class JugglerCharacterSet extends RegionAndCulturePortrayal {
   }
 }
 
-areaModelCommon.register( 'JugglerCharacterSet', JugglerCharacterSet );
+areaModelCommon.register( 'JugglerPortrayal', JugglerPortrayal );
