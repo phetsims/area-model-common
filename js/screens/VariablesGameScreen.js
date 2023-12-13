@@ -21,16 +21,16 @@ class VariablesGameScreen extends Screen {
 
   /**
    * @param { PreferencesModel } preferencesModel
-   * @param { Array<JugglerPortrayal> } jugglerCharacterSets
+   * @param { Array<JugglerPortrayal> } jugglerPortrayals
    * @param { ( GameAreaModel ) => JugglerCharacters } createJugglerController
    * @public
    */
-  constructor( preferencesModel, jugglerCharacterSets, createJugglerController ) {
+  constructor( preferencesModel, jugglerPortrayals, createJugglerController ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new GameScreenIcon( jugglerCharacterSets, preferencesModel.localizationModel.regionAndCulturePortrayalProperty ),
+      homeScreenIcon: new GameScreenIcon( jugglerPortrayals, preferencesModel.localizationModel.regionAndCulturePortrayalProperty ),
       navigationBarIcon: new ScreenIcon( new Image( variablesGameScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
