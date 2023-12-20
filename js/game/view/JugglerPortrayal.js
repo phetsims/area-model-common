@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The JugglerPortrayal defines what is needed for each character set in Area Model Algebra and Area Model
+ * The JugglerPortrayal defines what is needed for each portrayal in Area Model Algebra and Area Model
  * Multiplication.
  *
  * @author Luisa Vargas
