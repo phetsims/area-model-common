@@ -18,6 +18,8 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { Circle, DragListener, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
+import grabSoundPlayer from '../../../../tambo/js/shared-sound-players/grabSoundPlayer.js';
+import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releaseSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -114,10 +116,12 @@ class ProportionalDragHandle extends Node {
       targetNode: this,
       applyOffset: false,
       start: ( event, listener ) => {
+        grabSoundPlayer.play();
         initialOffset = listener.localPoint.minusScalar( CIRCLE_DRAG_OFFSET );
         updateOffsetProperty( event, listener );
       },
-      drag: updateOffsetProperty
+      drag: updateOffsetProperty,
+      end: () => { releaseSoundPlayer.play(); }
     } );
     dragListener.isPressedProperty.link( draggedProperty.set.bind( draggedProperty ) );
 

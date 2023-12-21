@@ -21,6 +21,8 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { DragListener, HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import grabSoundPlayer from '../../../../tambo/js/shared-sound-players/grabSoundPlayer.js';
+import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releaseSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -183,6 +185,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
       }
       dragHandler = new DragListener( {
         transform: modelViewTransform,
+        start: () => { grabSoundPlayer.play(); },
         drag: ( event, listener ) => {
           let value = listener.modelPoint[ orientation.coordinate ];
 
@@ -201,6 +204,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
         },
 
         end: () => {
+          releaseSoundPlayer.play();
           if ( partitionSplitProperty.value === activeTotalProperty.value ) {
             partitionSplitProperty.value = 0;
           }
