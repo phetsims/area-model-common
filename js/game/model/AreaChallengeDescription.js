@@ -11,7 +11,7 @@ import Permutation from '../../../../dot/js/Permutation.js';
 import merge from '../../../../phet-core/js/merge.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import GenericLayout from '../../generic/model/GenericLayout.js';
 import AreaChallengeType from './AreaChallengeType.js';
 import EntryType from './EntryType.js';

@@ -10,7 +10,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import GenericAreaDisplay from '../../generic/model/GenericAreaDisplay.js';
 import AreaChallenge from './AreaChallenge.js';
 import AreaChallengeDescription from './AreaChallengeDescription.js';

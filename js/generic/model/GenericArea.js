@@ -15,7 +15,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
 import Area from '../../common/model/Area.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import GenericPartition from './GenericPartition.js';

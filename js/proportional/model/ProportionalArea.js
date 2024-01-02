@@ -16,7 +16,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import Area from '../../common/model/Area.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import Partition from '../../common/model/Partition.js';
 import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -185,10 +185,10 @@ class ProportionalArea extends Area {
   reset() {
     super.reset();
 
-    this.hasHintArrows.reset();
-    this.partitionSplitProperties.reset();
+    this.hasHintArrows.forEach( property => property.reset() );
+    this.partitionSplitProperties.forEach( property => property.reset() );
     this.visiblePartitionOrientationProperty.reset();
-    this.activeTotalProperties.reset();
+    this.activeTotalProperties.forEach( property => property.reset() );
   }
 
   /**

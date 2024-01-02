@@ -15,7 +15,7 @@ import dimensionMap from '../../../../phet-core/js/dimensionMap.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import Polynomial from '../../common/model/Polynomial.js';
 import Term from '../../common/model/Term.js';
 import GenericArea from '../../generic/model/GenericArea.js';

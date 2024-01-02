@@ -75,7 +75,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
       tagName: 'span'
     } );
     this.pdomParagraphNode.insertChild( 0, areaAccessibleLabel );
-    Multilink.multilink( areaDisplay.activeTotalProperties.values, ( width, height ) => {
+    Multilink.multilink( areaDisplay.activeTotalProperties.values(), ( width, height ) => {
       areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
         width: width,
         height: height

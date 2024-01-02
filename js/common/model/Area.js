@@ -12,7 +12,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import validate from '../../../../axon/js/validate.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import OrientationPair from './OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import PartitionedArea from './PartitionedArea.js';
 import Polynomial from './Polynomial.js';
 import TermList from './TermList.js';
@@ -64,7 +64,7 @@ class Area {
     // @public {Property.<Polynomial|null>} - Null if there is no defined total, otherwise the total area (width of the
     // "area" times its height).
     this.totalAreaProperty = new DerivedProperty(
-      this.totalProperties.values,
+      this.totalProperties.values(),
       ( horizontalTotal, verticalTotal ) => horizontalTotal && verticalTotal && horizontalTotal.times( verticalTotal ), {
         valueComparisonStrategy: 'equalsFunction'
       } );

@@ -26,7 +26,7 @@ import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releas
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
 const horizontalPartitionHandleString = AreaModelCommonStrings.a11y.horizontalPartitionHandle;

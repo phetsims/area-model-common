@@ -14,7 +14,7 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import { AlignBox, Line, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
-import OrientationPair from '../../common/model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';

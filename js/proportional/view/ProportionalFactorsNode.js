@@ -42,7 +42,7 @@ class ProportionalFactorsNode extends Node {
 
     if ( AreaModelCommonQueryParameters.rawMath ) {
       this.tagName = 'div';
-      Multilink.multilink( activeTotalProperties.values, ( horizontalTotal, verticalTotal ) => {
+      Multilink.multilink( activeTotalProperties.values(), ( horizontalTotal, verticalTotal ) => {
         this.innerContent = StringUtils.fillIn( factorsTimesPatternString, {
           width: horizontalTotal,
           height: verticalTotal

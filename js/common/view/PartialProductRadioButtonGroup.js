@@ -16,7 +16,7 @@ import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSoli
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
-import OrientationPair from '../model/OrientationPair.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
