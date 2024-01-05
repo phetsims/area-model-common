@@ -33,7 +33,7 @@ const zeroAndBackspace = [
   Keypad.KEY_0, Keypad.KEY_BACKSPACE
 ];
 const noExponentLayout = positiveKeys.concat( [
-  [ Keypad.PLUS_MINUS ].concat( zeroAndBackspace )
+  [ Keypad.KEY_PLUS_MINUS ].concat( zeroAndBackspace )
 ] );
 const noNegativeLayout = positiveKeys.concat( [
   [ null ].concat( zeroAndBackspace )
