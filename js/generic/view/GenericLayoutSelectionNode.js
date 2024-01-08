@@ -17,6 +17,8 @@ import { FireListener, HBox, Line, Node, Path, Rectangle, Text, VBox } from '../
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
+import generalCloseSoundPlayer from '../../../../tambo/js/shared-sound-players/generalCloseSoundPlayer.js';
+import generalOpenSoundPlayer from '../../../../tambo/js/shared-sound-players/generalOpenSoundPlayer.js';
 import GenericLayout from '../model/GenericLayout.js';
 
 class GenericLayoutSelectionNode extends Node {
@@ -185,11 +187,15 @@ class GenericLayoutSelectionNode extends Node {
         listParent.addChild( popup );
 
         phet.joist.display.addInputListener( dismissListener );
+
+        generalOpenSoundPlayer.play();
       }
       else {
         listParent.removeChild( popup );
 
         phet.joist.display.removeInputListener( dismissListener );
+
+        generalCloseSoundPlayer.play();
       }
     } );
 
