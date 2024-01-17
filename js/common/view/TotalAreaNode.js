@@ -24,7 +24,7 @@ class TotalAreaNode extends Node {
   /**
    * @param {Property.<Polynomial|null>} totalAreaProperty
    * @param {boolean} isProportional - Whether the area is shown as proportional (instead of generic)
-   * @param {string} maximumWidthString - If proportional
+   * @param {string} maximumWidthString - If proportional (and will be numeric, should not change with localization)
    * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */
   constructor( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
