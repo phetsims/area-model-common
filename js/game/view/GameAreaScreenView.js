@@ -48,12 +48,6 @@ import GameAudio from './GameAudio.js';
 import GameEditableLabelNode from './GameEditableLabelNode.js';
 import PolynomialEditNode from './PolynomialEditNode.js';
 
-const checkString = VegasStrings.check;
-const chooseYourLevelString = VegasStrings.chooseYourLevel;
-const nextString = VegasStrings.next;
-const showAnswerString = VegasStrings.showAnswer;
-const tryAgainString = VegasStrings.tryAgain;
-
 class GameAreaScreenView extends ScreenView {
   /**
    * @extends {ScreenView}
@@ -133,7 +127,7 @@ class GameAreaScreenView extends ScreenView {
       center: this.layoutBounds.center
     } ) );
 
-    this.levelSelectionLayer.addChild( new Text( chooseYourLevelString, {
+    this.levelSelectionLayer.addChild( new Text( VegasStrings.chooseYourLevelStringProperty, {
       centerX: this.layoutBounds.centerX,
       centerY: ( this.layoutBounds.top + this.levelSelectionLayer.top ) / 2,
       font: new PhetFont( 30 )
@@ -302,7 +296,7 @@ class GameAreaScreenView extends ScreenView {
     /**
      * Creates a game-style button that may be enabled via a property
      *
-     * @param {string} label
+     * @param {TReadOnlyProperty<string>} label
      * @param {function} listener - The callback for when the button is pressed
      * @param {Property.<boolean>} [enabledProperty]
      */
@@ -316,8 +310,10 @@ class GameAreaScreenView extends ScreenView {
         touchAreaYDilation: 10,
         listener: listener,
         baseColor: AreaModelCommonColors.gameButtonBackgroundProperty,
-        centerX: panelBox.centerX,
         top: panelBox.bottom + 80
+      } );
+      button.localBoundsProperty.link( () => {
+        button.centerX = panelBox.centerX;
       } );
       enabledProperty && enabledProperty.link( enabled => {
         button.enabled = enabled;
@@ -326,19 +322,19 @@ class GameAreaScreenView extends ScreenView {
       return button;
     };
 
-    const checkButton = createGameButton( checkString, () => {
+    const checkButton = createGameButton( VegasStrings.checkStringProperty, () => {
       model.check();
     }, model.allowCheckingProperty );
 
-    const tryAgainButton = createGameButton( tryAgainString, () => {
+    const tryAgainButton = createGameButton( VegasStrings.tryAgainStringProperty, () => {
       model.tryAgain();
     } );
 
-    const nextButton = createGameButton( nextString, () => {
+    const nextButton = createGameButton( VegasStrings.nextStringProperty, () => {
       model.next();
     } );
 
-    const showAnswerButton = createGameButton( showAnswerString, () => {
+    const showAnswerButton = createGameButton( VegasStrings.showAnswerStringProperty, () => {
       model.showAnswer();
     } );
 
