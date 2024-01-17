@@ -16,14 +16,6 @@ import GenericLayout from '../../generic/model/GenericLayout.js';
 import AreaChallengeType from './AreaChallengeType.js';
 import EntryType from './EntryType.js';
 
-const levelPromptOneProductOneLengthString = AreaModelCommonStrings.levelPrompt.oneProduct.oneLength;
-const levelPromptOneProductTextString = AreaModelCommonStrings.levelPrompt.oneProduct.text;
-const levelPromptOneProductTotalAreaString = AreaModelCommonStrings.levelPrompt.oneProduct.totalArea;
-const levelPromptThreeLengthsString = AreaModelCommonStrings.levelPrompt.threeLengths;
-const levelPromptTotalAreaString = AreaModelCommonStrings.levelPrompt.totalArea;
-const levelPromptTwoLengthsString = AreaModelCommonStrings.levelPrompt.twoLengths;
-const levelPromptTwoProductsString = AreaModelCommonStrings.levelPrompt.twoProducts;
-
 // shortcuts
 const EDITABLE = EntryType.EDITABLE;
 const DYNAMIC = EntryType.DYNAMIC;
@@ -100,9 +92,9 @@ class AreaChallengeDescription {
    * Returns the string representing the prompt for this challenge (what should be done to solve it).
    * @public
    *
-   * @returns {string}
+   * @returns {TReadOnlyProperty<string>}
    */
-  getPromptString() {
+  getPromptStringProperty() {
     const hasAreaEntry = isEditable( this.totalType );
     const numProductEntries = _.flatten( this.productTypes ).filter( isEditable ).length;
     const numPartitionEntries = this.partitionTypes.horizontal.concat( this.partitionTypes.vertical ).filter( isEditable ).length;
@@ -188,13 +180,13 @@ function getPromptKey( hasAreaEntry, numProductEntries, numPartitionEntries ) {
 }
 
 const promptMap = {};
-promptMap[ getPromptKey( true, 0, 0 ) ] = levelPromptTotalAreaString;
-promptMap[ getPromptKey( false, 1, 0 ) ] = levelPromptOneProductTextString;
-promptMap[ getPromptKey( false, 2, 0 ) ] = levelPromptTwoProductsString;
-promptMap[ getPromptKey( true, 1, 0 ) ] = levelPromptOneProductTotalAreaString;
-promptMap[ getPromptKey( false, 1, 1 ) ] = levelPromptOneProductOneLengthString;
-promptMap[ getPromptKey( false, 0, 2 ) ] = levelPromptTwoLengthsString;
-promptMap[ getPromptKey( false, 0, 3 ) ] = levelPromptThreeLengthsString;
+promptMap[ getPromptKey( true, 0, 0 ) ] = AreaModelCommonStrings.levelPrompt.totalAreaStringProperty;
+promptMap[ getPromptKey( false, 1, 0 ) ] = AreaModelCommonStrings.levelPrompt.oneProduct.textStringProperty;
+promptMap[ getPromptKey( false, 2, 0 ) ] = AreaModelCommonStrings.levelPrompt.twoProductsStringProperty;
+promptMap[ getPromptKey( true, 1, 0 ) ] = AreaModelCommonStrings.levelPrompt.oneProduct.totalAreaStringProperty;
+promptMap[ getPromptKey( false, 1, 1 ) ] = AreaModelCommonStrings.levelPrompt.oneProduct.oneLengthStringProperty;
+promptMap[ getPromptKey( false, 0, 2 ) ] = AreaModelCommonStrings.levelPrompt.twoLengthsStringProperty;
+promptMap[ getPromptKey( false, 0, 3 ) ] = AreaModelCommonStrings.levelPrompt.threeLengthsStringProperty;
 
 function isEditable( type ) {
   return type === EntryType.EDITABLE;
