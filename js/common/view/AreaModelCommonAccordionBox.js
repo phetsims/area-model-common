@@ -18,14 +18,14 @@ import AreaModelCommonColors from './AreaModelCommonColors.js';
 class AreaModelCommonAccordionBox extends AccordionBox {
 
   /**
-   * @param {string} titleString
+   * @param {TReadOnlyProperty<string>} titleStringProperty
    * @param {Property.<boolean>} expandedProperty
    * @param {Node} content
    * @param {Object} [options]
    */
-  constructor( titleString, expandedProperty, content, options ) {
+  constructor( titleStringProperty, expandedProperty, content, options ) {
     options = merge( {
-      titleNode: new Text( titleString, {
+      titleNode: new Text( titleStringProperty, {
         font: AreaModelCommonConstants.TITLE_FONT,
         maxWidth: options.maxTitleWidth || 200
       } ),

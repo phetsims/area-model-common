@@ -27,7 +27,6 @@ import ProportionalAreaDisplayNode from './ProportionalAreaDisplayNode.js';
 import ProportionalFactorsNode from './ProportionalFactorsNode.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
-const partitionString = AreaModelCommonStrings.partition;
 const base10AreaTilesString = AreaModelCommonStrings.a11y.base10AreaTiles;
 const countingNumbersDescriptionString = AreaModelCommonStrings.a11y.countingNumbersDescription;
 const countingNumbersLabelString = AreaModelCommonStrings.a11y.countingNumbersLabel;
@@ -69,7 +68,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
       },
       getSelectionNodesExtras: screenView => {
         partitionSelectionPanel = screenView.createPanelContent(
-          partitionString,
+          AreaModelCommonStrings.partitionStringProperty,
           AreaModelCommonGlobals.panelAlignGroup,
           new PartitionRadioButtonGroup( currentAreaOrientationProperty, partitionSelectionAlignGroup )
         );

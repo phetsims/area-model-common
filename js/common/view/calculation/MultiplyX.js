@@ -8,16 +8,14 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
-import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Node, Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
-
-const productTimesPatternString = AreaModelCommonStrings.a11y.productTimesPattern;
 
 class MultiplyX extends HBox {
   /**
@@ -61,7 +59,7 @@ class MultiplyX extends HBox {
     assert && assert( baseColorProperty instanceof ReadOnlyProperty );
 
     // @public {string}
-    this.accessibleText = StringUtils.fillIn( productTimesPatternString, {
+    this.accessibleText = new PatternStringProperty( AreaModelCommonStrings.a11y.productTimesPatternStringProperty, {
       left: leftContent.accessibleText,
       right: rightContent.accessibleText
     } );

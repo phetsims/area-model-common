@@ -30,17 +30,6 @@ import CalculationNode from './CalculationNode.js';
 import PartialProductRadioButtonGroup from './PartialProductRadioButtonGroup.js';
 import TotalAreaNode from './TotalAreaNode.js';
 
-const areaModelCalculationString = AreaModelCommonStrings.areaModelCalculation;
-const dimensionsString = AreaModelCommonStrings.dimensions;
-const factorsString = AreaModelCommonStrings.factors;
-const partialProductsString = AreaModelCommonStrings.partialProducts;
-const productString = AreaModelCommonStrings.product;
-const totalAreaOfModelString = AreaModelCommonStrings.totalAreaOfModel;
-const factorsBoxString = AreaModelCommonStrings.a11y.factorsBox;
-const factorsBoxDescriptionString = AreaModelCommonStrings.a11y.factorsBoxDescription;
-const productBoxString = AreaModelCommonStrings.a11y.productBox;
-const productBoxDescriptionString = AreaModelCommonStrings.a11y.productBoxDescription;
-
 class AreaScreenView extends ScreenView {
   /**
    * @extends {ScreenView}
@@ -98,14 +87,14 @@ class AreaScreenView extends ScreenView {
 
     // @protected {Node} - Exposed for a11y selection
     this.productsSelectionPanel = this.createPanelContent(
-      partialProductsString,
+      AreaModelCommonStrings.partialProductsStringProperty,
       AreaModelCommonGlobals.panelAlignGroup,
       new PartialProductRadioButtonGroup( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
 
     // @public {Node} (a11y)
     this.calculationSelectionPanel = this.createPanelContent(
-      areaModelCalculationString,
+      AreaModelCommonStrings.areaModelCalculationStringProperty,
       AreaModelCommonGlobals.panelAlignGroup,
       new AreaCalculationRadioButtonGroup( model.areaCalculationChoiceProperty, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
@@ -135,7 +124,7 @@ class AreaScreenView extends ScreenView {
 
     // @protected {Node} (a11y) - Exposed for a11y order
     this.factorsBox = new AreaModelCommonAccordionBox(
-      config.useSimplifiedNames ? factorsString : dimensionsString,
+      config.useSimplifiedNames ? AreaModelCommonStrings.factorsStringProperty : AreaModelCommonStrings.dimensionsStringProperty,
       model.factorsBoxExpandedProperty,
       factorsBoxContent,
       {
@@ -144,9 +133,9 @@ class AreaScreenView extends ScreenView {
 
         // pdom
         labelTagName: 'h3',
-        labelContent: factorsBoxString,
+        labelContent: AreaModelCommonStrings.a11y.factorsBoxStringProperty,
         titleBarOptions: {
-          descriptionContent: factorsBoxDescriptionString
+          descriptionContent: AreaModelCommonStrings.a11y.factorsBoxDescriptionStringProperty
         }
       } );
 
@@ -162,14 +151,14 @@ class AreaScreenView extends ScreenView {
 
     // @protected {Node} (a11y)
     this.areaBox = new AreaModelCommonAccordionBox(
-      config.useSimplifiedNames ? productString : totalAreaOfModelString,
+      config.useSimplifiedNames ? AreaModelCommonStrings.productStringProperty : AreaModelCommonStrings.totalAreaOfModelStringProperty,
       model.areaBoxExpandedProperty,
       areaBoxContent, {
         // pdom
         labelTagName: 'h3',
-        labelContent: productBoxString,
+        labelContent: AreaModelCommonStrings.a11y.productBoxStringProperty,
         titleBarOptions: {
-          descriptionContent: productBoxDescriptionString
+          descriptionContent: AreaModelCommonStrings.a11y.productBoxDescriptionStringProperty
         }
       }
     );
@@ -262,14 +251,14 @@ class AreaScreenView extends ScreenView {
    * guaranteed margin.
    * @protected
    *
-   * @param {string} titleString
+   * @param {TReadOnlyProperty<string>} titleStringProperty
    * @param {AlignGroup} panelAlignGroup
    * @param {Node} content
    */
-  createPanelContent( titleString, panelAlignGroup, content ) {
+  createPanelContent( titleStringProperty, panelAlignGroup, content ) {
     return new VBox( {
       children: [
-        new AlignBox( new Text( titleString, {
+        new AlignBox( new Text( titleStringProperty, {
           font: AreaModelCommonConstants.TITLE_FONT,
           maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
         } ), {

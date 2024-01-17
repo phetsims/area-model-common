@@ -16,8 +16,6 @@ import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-const sumMinusString = AreaModelCommonStrings.a11y.sumMinus;
-
 class Minus extends Text {
   /**
    * @extends {Text}
@@ -36,7 +34,7 @@ class Minus extends Text {
     } );
 
     // @public {string}
-    this.accessibleText = sumMinusString;
+    this.accessibleText = AreaModelCommonStrings.a11y.sumMinusStringProperty;
 
     this.initialize( baseColorProperty );
   }

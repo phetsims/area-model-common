@@ -8,15 +8,13 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import PatternStringProperty from '../../../../../axon/js/PatternStringProperty.js';
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
-import StringUtils from '../../../../../phetcommon/js/util/StringUtils.js';
 import { HBox, Node, Text } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
-
-const quantityPatternString = AreaModelCommonStrings.a11y.quantityPattern;
 
 class Parentheses extends HBox {
   /**
@@ -79,7 +77,7 @@ class Parentheses extends HBox {
     assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
 
     // @public {string}
-    this.accessibleText = StringUtils.fillIn( quantityPatternString, {
+    this.accessibleText = new PatternStringProperty( AreaModelCommonStrings.a11y.quantityPatternStringProperty, {
       content: content.accessibleText
     } );
 

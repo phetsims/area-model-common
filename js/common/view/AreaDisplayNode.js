@@ -14,6 +14,7 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
@@ -21,24 +22,11 @@ import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
-import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
 import AreaModelCommonColors from './AreaModelCommonColors.js';
 import PartialProductLabelNode from './PartialProductLabelNode.js';
 import PoolableLayerNode from './PoolableLayerNode.js';
 import RangeLabelNode from './RangeLabelNode.js';
-
-const eraseString = AreaModelCommonStrings.a11y.erase;
-const eraseDescriptionString = AreaModelCommonStrings.a11y.eraseDescription;
-const horizontalDimensionCapitalizedString = AreaModelCommonStrings.a11y.horizontalDimensionCapitalized;
-const onePartialProductFactorPatternString = AreaModelCommonStrings.a11y.onePartialProductFactorPattern;
-const onePartialProductPatternString = AreaModelCommonStrings.a11y.onePartialProductPattern;
-const productTimesPatternString = AreaModelCommonStrings.a11y.productTimesPattern;
-const threePartitionsSplitPatternString = AreaModelCommonStrings.a11y.threePartitionsSplitPattern;
-const twoPartialProductFactorsPatternString = AreaModelCommonStrings.a11y.twoPartialProductFactorsPattern;
-const twoPartialProductsPatternString = AreaModelCommonStrings.a11y.twoPartialProductsPattern;
-const twoPartitionsSplitPatternString = AreaModelCommonStrings.a11y.twoPartitionsSplitPattern;
-const verticalDimensionCapitalizedString = AreaModelCommonStrings.a11y.verticalDimensionCapitalized;
 
 class AreaDisplayNode extends Node {
   /**
@@ -81,8 +69,19 @@ class AreaDisplayNode extends Node {
       } );
       Multilink.multilink( [
         areaDisplay.partitionsProperties.get( orientation ),
-        areaDisplay.totalProperties.get( orientation )
-      ], ( partitions, total ) => {
+        areaDisplay.totalProperties.get( orientation ),
+        AreaModelCommonStrings.a11y.horizontalDimensionCapitalizedStringProperty,
+        AreaModelCommonStrings.a11y.verticalDimensionCapitalizedStringProperty,
+        AreaModelCommonStrings.a11y.threePartitionsSplitPatternStringProperty,
+        AreaModelCommonStrings.a11y.twoPartitionsSplitPatternStringProperty
+      ], (
+        partitions,
+        total,
+        horizontalDimensionCapitalizedString,
+        verticalDimensionCapitalizedString,
+        threePartitionsSplitPatternString,
+        twoPartitionsSplitPatternString
+      ) => {
         partitions = partitions.filter( partition => partition.sizeProperty.value !== null && partition.visibleProperty.value === true );
         if ( partitions.length < 2 || total === null ) {
           partitionLabel.innerContent = '';
@@ -126,7 +125,20 @@ class AreaDisplayNode extends Node {
         partialProductsChoiceProperty
       ].concat( partitionedAreas.map( partitionedArea => partitionedArea.areaProperty ) )
         .concat( partitionedAreas.map( partitionedArea => partitionedArea.visibleProperty ) );
-      accessiblePartialMultilink = Multilink.multilink( properties, () => {
+      accessiblePartialMultilink = Multilink.multilink( [
+        AreaModelCommonStrings.a11y.onePartialProductPatternStringProperty,
+        AreaModelCommonStrings.a11y.twoPartialProductsPatternStringProperty,
+        AreaModelCommonStrings.a11y.onePartialProductFactorPatternStringProperty,
+        AreaModelCommonStrings.a11y.twoPartialProductFactorsPatternStringProperty,
+        AreaModelCommonStrings.a11y.productTimesPatternStringProperty,
+        ...properties
+      ], (
+        onePartialProductPatternString,
+        twoPartialProductsPatternString,
+        onePartialProductFactorPatternString,
+        twoPartialProductFactorsPatternString,
+        productTimesPatternString
+      ) => {
         const activePartitionedAreas = areaDisplay.partitionedAreasProperty.value.filter( partitionedArea => partitionedArea.visibleProperty.value &&
                                                                                                              partitionedArea.areaProperty.value !== null &&
                                                                                                              partitionedArea.partitions.vertical.sizeProperty.value !== null &&
@@ -250,8 +262,8 @@ class AreaDisplayNode extends Node {
       touchAreaYDilation: 8,
 
       // pdom
-      innerContent: eraseString,
-      descriptionContent: eraseDescriptionString
+      innerContent: AreaModelCommonStrings.a11y.eraseStringProperty,
+      descriptionContent: AreaModelCommonStrings.a11y.eraseDescriptionStringProperty
     } );
 
     // @protected {Node}

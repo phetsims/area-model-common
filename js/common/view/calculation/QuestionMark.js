@@ -15,8 +15,6 @@ import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
-const questionMarkString = AreaModelCommonStrings.a11y.questionMark;
-
 class QuestionMark extends Text {
   /**
    * @param {Property.<Color>} baseColorProperty
@@ -29,11 +27,11 @@ class QuestionMark extends Text {
       // pdom
       tagName: 'mi',
       pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
-      innerContent: questionMarkString
+      innerContent: AreaModelCommonStrings.a11y.questionMarkStringProperty
     } );
 
     // @public {string}
-    this.accessibleText = questionMarkString;
+    this.accessibleText = AreaModelCommonStrings.a11y.questionMarkStringProperty;
 
     this.initialize( baseColorProperty );
   }

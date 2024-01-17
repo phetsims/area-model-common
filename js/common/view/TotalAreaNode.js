@@ -8,8 +8,9 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { AlignBox, HBox, Node, RichText, Text } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -19,9 +20,6 @@ import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import Term from '../model/Term.js';
 import AreaModelCommonColors from './AreaModelCommonColors.js';
 
-const areaString = AreaModelCommonStrings.area;
-const areaEqualsPatternString = AreaModelCommonStrings.a11y.areaEqualsPattern;
-
 class TotalAreaNode extends Node {
   /**
    * @param {Property.<Polynomial|null>} totalAreaProperty
@@ -30,6 +28,10 @@ class TotalAreaNode extends Node {
    * @param {boolean} useTileLikeBackground - Whether the "tile" color should be used with an area background (if any)
    */
   constructor( totalAreaProperty, isProportional, maximumWidthString, useTileLikeBackground ) {
+
+    const labelStringProperty = new DerivedProperty( [ totalAreaProperty ], polynomial => {
+      return polynomial === null ? '?' : polynomial.toRichString();
+    } );
 
     // If powers of x are supported, we need to have a slightly different initial height so we can align-bottom.
     const areaText = new RichText( Term.getLargestGenericString( true, 3 ), {
@@ -44,7 +46,7 @@ class TotalAreaNode extends Node {
       areaNode = new HBox( {
         spacing: 8,
         children: [
-          new Text( areaString, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
+          new Text( AreaModelCommonStrings.areaStringProperty, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
           new Text( MathSymbols.EQUAL_TO, { font: AreaModelCommonConstants.TOTAL_AREA_LABEL_FONT } ),
           // AlignBox it so that it is always centered and keeps the same bounds
           new Panel( new AlignBox( areaText, { alignBounds: areaText.bounds.copy(), yAlign: 'bottom' } ), {
@@ -69,17 +71,14 @@ class TotalAreaNode extends Node {
       maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX,
 
       // pdom
-      tagName: 'p'
+      tagName: 'p',
+      innerContent: new PatternStringProperty( AreaModelCommonStrings.a11y.areaEqualsPatternStringProperty, {
+        area: labelStringProperty
+      } )
     } );
 
     // Update the text.
-    totalAreaProperty.link( polynomial => {
-      const labelString = polynomial === null ? '?' : polynomial.toRichString();
-      areaText.string = labelString;
-      this.innerContent = StringUtils.fillIn( areaEqualsPatternString, {
-        area: labelString
-      } );
-    } );
+    areaText.stringProperty = labelStringProperty;
   }
 }
 

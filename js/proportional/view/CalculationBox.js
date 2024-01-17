@@ -16,10 +16,6 @@ import AreaCalculationChoice from '../../common/model/AreaCalculationChoice.js';
 import AreaModelCommonAccordionBox from '../../common/view/AreaModelCommonAccordionBox.js';
 import CalculationLinesNode from '../../common/view/calculation/CalculationLinesNode.js';
 
-const calculationString = AreaModelCommonStrings.calculation;
-const calculationBoxTitleString = AreaModelCommonStrings.a11y.calculationBoxTitle;
-const calculationBoxDescriptionString = AreaModelCommonStrings.a11y.calculationBoxDescription;
-
 // constants
 const MARGIN = 8;
 
@@ -40,7 +36,7 @@ class CalculationBox extends AreaModelCommonAccordionBox {
       pickable: false
     } );
 
-    super( calculationString, model.calculationBoxVisibleProperty, alignBox, {
+    super( AreaModelCommonStrings.calculationStringProperty, model.calculationBoxVisibleProperty, alignBox, {
       // Different margins than our other accordion boxes
       contentXMargin: MARGIN,
       contentYMargin: MARGIN,
@@ -53,9 +49,9 @@ class CalculationBox extends AreaModelCommonAccordionBox {
 
       // pdom
       labelTagName: 'h3',
-      labelContent: calculationBoxTitleString,
+      labelContent: AreaModelCommonStrings.a11y.calculationBoxTitleStringProperty,
       titleBarOptions: {
-        descriptionContent: calculationBoxDescriptionString
+        descriptionContent: AreaModelCommonStrings.a11y.calculationBoxDescriptionStringProperty
       }
     } );
 

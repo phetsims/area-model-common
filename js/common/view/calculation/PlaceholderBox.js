@@ -14,8 +14,6 @@ import { Rectangle } from '../../../../../scenery/js/imports.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 
-const placeholderString = AreaModelCommonStrings.a11y.placeholder;
-
 class PlaceholderBox extends Rectangle {
   /**
    * @param {Property.<Color>} colorProperty
@@ -29,11 +27,11 @@ class PlaceholderBox extends Rectangle {
       // pdom
       tagName: 'mi',
       pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
-      innerContent: placeholderString
+      innerContent: AreaModelCommonStrings.a11y.placeholderStringProperty
     } );
 
     // @public {string}
-    this.accessibleText = placeholderString;
+    this.accessibleText = AreaModelCommonStrings.a11y.placeholderStringProperty;
 
     this.initialize( colorProperty, allowExponents );
   }

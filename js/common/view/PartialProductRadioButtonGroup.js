@@ -20,10 +20,6 @@ import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
-const hidePartialProductsString = AreaModelCommonStrings.a11y.hidePartialProducts;
-const showPartialProductsString = AreaModelCommonStrings.a11y.showPartialProducts;
-const showPartialProductFactorsString = AreaModelCommonStrings.a11y.showPartialProductFactors;
-
 class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
 
   /**
@@ -57,7 +53,7 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         createNode: () => new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } ),
 
         // pdom
-        labelContent: hidePartialProductsString
+        labelContent: AreaModelCommonStrings.a11y.hidePartialProductsStringProperty
       },
       {
         value: PartialProductsChoice.PRODUCTS,
@@ -66,14 +62,14 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         createNode: () => new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
 
         // pdom
-        labelContent: showPartialProductsString
+        labelContent: AreaModelCommonStrings.a11y.showPartialProductsStringProperty
       },
       {
         value: PartialProductsChoice.FACTORS,
         createNode: () => new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
 
         // pdom
-        labelContent: showPartialProductFactorsString
+        labelContent: AreaModelCommonStrings.a11y.showPartialProductFactorsStringProperty
       }
     ] );
   }

@@ -27,8 +27,6 @@ import QuestionMarkLine from './QuestionMarkLine.js';
 import SumLine from './SumLine.js';
 import TotalsLine from './TotalsLine.js';
 
-const betweenCalculationLinesString = AreaModelCommonStrings.a11y.betweenCalculationLines;
-
 class CalculationLinesNode extends Node {
   /**
    * @param {AreaModelCommonModel} model
@@ -230,7 +228,7 @@ class CalculationLinesNode extends Node {
       if ( index > 0 ) {
         if ( AreaModelCommonQueryParameters.rawMath ) {
           lineNode.labelTagName = 'span';
-          lineNode.labelContent = betweenCalculationLinesString;
+          lineNode.labelContent = AreaModelCommonStrings.a11y.betweenCalculationLinesStringProperty;
         }
         else {
           lineNode.insertChild( 0, new Node( {
@@ -238,7 +236,7 @@ class CalculationLinesNode extends Node {
             // pdom
             tagName: 'mtext',
             pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
-            innerContent: betweenCalculationLinesString
+            innerContent: AreaModelCommonStrings.a11y.betweenCalculationLinesStringProperty
           } ) );
         }
       }
