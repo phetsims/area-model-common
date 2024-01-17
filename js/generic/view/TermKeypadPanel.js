@@ -21,8 +21,6 @@ import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import TermAccumulator from './TermAccumulator.js';
 
-const enterString = AreaModelCommonStrings.enter;
-
 // layout constants
 const positiveKeys = [
   [ Keypad.KEY_7, Keypad.KEY_8, Keypad.KEY_9 ],
@@ -114,7 +112,7 @@ class TermKeypadPanel extends Panel {
         } ),
         keypad,
         new RectangularPushButton( {
-          content: new Text( enterString, {
+          content: new Text( AreaModelCommonStrings.enterStringProperty, {
             font: AreaModelCommonConstants.KEYPAD_FONT,
             maxWidth: 100
           } ),

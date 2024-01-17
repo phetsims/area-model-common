@@ -50,10 +50,8 @@ import PolynomialEditNode from './PolynomialEditNode.js';
 
 const checkString = VegasStrings.check;
 const chooseYourLevelString = VegasStrings.chooseYourLevel;
-const dimensionsString = AreaModelCommonStrings.dimensions;
 const nextString = VegasStrings.next;
 const showAnswerString = VegasStrings.showAnswer;
-const totalAreaOfModelString = AreaModelCommonStrings.totalAreaOfModel;
 const tryAgainString = VegasStrings.tryAgain;
 
 class GameAreaScreenView extends ScreenView {
@@ -235,7 +233,7 @@ class GameAreaScreenView extends ScreenView {
     const panelAlignGroup = AreaModelCommonGlobals.panelAlignGroup;
 
     const factorsNode = new GenericFactorsNode( this.areaDisplay.totalProperties, this.areaDisplay.allowExponentsProperty );
-    const factorsContent = this.createPanel( dimensionsString, panelAlignGroup, factorsNode );
+    const factorsContent = this.createPanel( AreaModelCommonStrings.dimensionsStringProperty, panelAlignGroup, factorsNode );
 
     // If we have a polynomial, don't use this editable property (use the polynomial editor component instead)
     const totalTermEntryProperty = new DerivedProperty( [ this.areaDisplay.totalEntriesProperty ], totalEntries => totalEntries.length === 1 ? totalEntries[ 0 ] : new Entry( null ) );
@@ -284,7 +282,7 @@ class GameAreaScreenView extends ScreenView {
         }
       } );
 
-    const productContent = this.createPanel( totalAreaOfModelString, panelAlignGroup, totalContainer );
+    const productContent = this.createPanel( AreaModelCommonStrings.totalAreaOfModelStringProperty, panelAlignGroup, totalContainer );
 
     const panelBox = new VBox( {
       children: [
@@ -468,14 +466,14 @@ class GameAreaScreenView extends ScreenView {
    * guaranteed margin.
    * @private
    *
-   * @param {string} titleString
+   * @param {TReadOnlyProperty<string>} titleStringProperty
    * @param {AlignGroup} panelAlignGroup
    * @param {Node} content
    */
-  createPanel( titleString, panelAlignGroup, content ) {
+  createPanel( titleStringProperty, panelAlignGroup, content ) {
     const panelContent = new VBox( {
       children: [
-        new AlignBox( new Text( titleString, {
+        new AlignBox( new Text( titleStringProperty, {
           font: AreaModelCommonConstants.TITLE_FONT,
           maxWidth: AreaModelCommonConstants.PANEL_INTERIOR_MAX
         } ), {
