@@ -8,15 +8,12 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import { AlignBox, AlignGroup, Text } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
-
-const areaGridSizeString = AreaModelCommonStrings.a11y.areaGridSize;
-const sceneSelectionPatternString = AreaModelCommonStrings.a11y.sceneSelectionPattern;
 
 class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
   /**
@@ -37,14 +34,14 @@ class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         } ), { group: group } ),
 
         // pdom
-        labelContent: StringUtils.fillIn( sceneSelectionPatternString, {
+        labelContent: new PatternStringProperty( AreaModelCommonStrings.a11y.sceneSelectionPatternStringProperty, {
           width: area.maximumSize,
           height: area.maximumSize
         } )
       };
     } ), {
       // pdom
-      labelContent: areaGridSizeString
+      labelContent: AreaModelCommonStrings.a11y.areaGridSizeStringProperty
     } );
 
     this.mutate( nodeOptions );

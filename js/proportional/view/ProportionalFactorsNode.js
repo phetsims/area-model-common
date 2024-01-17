@@ -10,12 +10,11 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import validate from '../../../../axon/js/validate.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
@@ -24,12 +23,6 @@ import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
-
-const factorsTimesPatternString = AreaModelCommonStrings.a11y.factorsTimesPattern;
-const horizontalPickerString = AreaModelCommonStrings.a11y.horizontalPicker;
-const horizontalPickerDescriptionString = AreaModelCommonStrings.a11y.horizontalPickerDescription;
-const verticalPickerString = AreaModelCommonStrings.a11y.verticalPicker;
-const verticalPickerDescriptionString = AreaModelCommonStrings.a11y.verticalPickerDescription;
 
 class ProportionalFactorsNode extends Node {
   /**
@@ -42,11 +35,9 @@ class ProportionalFactorsNode extends Node {
 
     if ( AreaModelCommonQueryParameters.rawMath ) {
       this.tagName = 'div';
-      Multilink.multilink( activeTotalProperties.values(), ( horizontalTotal, verticalTotal ) => {
-        this.innerContent = StringUtils.fillIn( factorsTimesPatternString, {
-          width: horizontalTotal,
-          height: verticalTotal
-        } );
+      this.innerContent = new PatternStringProperty( AreaModelCommonStrings.a11y.factorsTimesPatternStringProperty, {
+        width: activeTotalProperties.horizontal,
+        height: activeTotalProperties.vertical
       } );
     }
     else {
@@ -141,8 +132,8 @@ class ProportionalFactorsNode extends Node {
       color: AreaModelCommonColors.proportionalColorProperties.get( orientation ),
 
       // pdom
-      labelContent: orientation === Orientation.HORIZONTAL ? horizontalPickerString : verticalPickerString,
-      descriptionContent: orientation === Orientation.HORIZONTAL ? horizontalPickerDescriptionString : verticalPickerDescriptionString,
+      labelContent: orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.horizontalPickerStringProperty : AreaModelCommonStrings.a11y.verticalPickerStringProperty,
+      descriptionContent: orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.horizontalPickerDescriptionStringProperty : AreaModelCommonStrings.a11y.verticalPickerDescriptionStringProperty,
       a11yMapPDOMValue: value => Utils.toFixedNumber( value, decimalPlaces )
     } );
   }

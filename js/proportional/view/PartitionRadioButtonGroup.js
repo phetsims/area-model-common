@@ -19,10 +19,6 @@ import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 
-const horizontalPartitionString = AreaModelCommonStrings.a11y.horizontalPartition;
-const partitionSelectionDescriptionString = AreaModelCommonStrings.a11y.partitionSelectionDescription;
-const verticalPartitionString = AreaModelCommonStrings.a11y.verticalPartition;
-
 class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
   /**
    * @param {Property.<AreaCalculationChoice>} currentAreaOrientationProperty
@@ -36,7 +32,7 @@ class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         createNode: () => new AlignBox( icon, { group: selectionButtonAlignGroup } ),
 
         // pdom
-        labelContent: orientation === Orientation.HORIZONTAL ? verticalPartitionString : horizontalPartitionString
+        labelContent: orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.verticalPartitionStringProperty : AreaModelCommonStrings.a11y.horizontalPartitionStringProperty
       };
     } ), {
       // Less margin than others desired here
@@ -44,7 +40,7 @@ class PartitionRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
       yMargin: 7,
 
       // pdom
-      descriptionContent: partitionSelectionDescriptionString
+      descriptionContent: AreaModelCommonStrings.a11y.partitionSelectionDescriptionStringProperty
     } );
   }
 }

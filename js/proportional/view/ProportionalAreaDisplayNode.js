@@ -12,11 +12,11 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
@@ -28,10 +28,6 @@ import ProportionalAreaGridLinesNode from './ProportionalAreaGridLinesNode.js';
 import ProportionalDragHandle from './ProportionalDragHandle.js';
 import ProportionalPartitionLineNode from './ProportionalPartitionLineNode.js';
 import TiledAreaNode from './TiledAreaNode.js';
-
-const areaGridString = AreaModelCommonStrings.a11y.areaGrid;
-const areaGridRectanglePatternString = AreaModelCommonStrings.a11y.areaGridRectanglePattern;
-const countingNumbersPatternString = AreaModelCommonStrings.a11y.countingNumbersPattern;
 
 class ProportionalAreaDisplayNode extends AreaDisplayNode {
   /**
@@ -60,7 +56,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
       // pdom
       tagName: 'div',
       labelTagName: 'h3',
-      labelContent: areaGridString
+      labelContent: AreaModelCommonStrings.a11y.areaGridStringProperty
     }, nodeOptions );
 
     super( areaDisplay, partialProductsChoiceProperty, options );
@@ -75,14 +71,14 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
       tagName: 'span'
     } );
     this.pdomParagraphNode.insertChild( 0, areaAccessibleLabel );
-    Multilink.multilink( areaDisplay.activeTotalProperties.values(), ( width, height ) => {
-      areaAccessibleLabel.innerContent = StringUtils.fillIn( areaGridRectanglePatternString, {
-        width: width,
-        height: height
-      } );
-      countingLabel.innerContent = StringUtils.fillIn( countingNumbersPatternString, {
-        count: Utils.toFixedNumber( width * height, Utils.numberOfDecimalPlaces( width ) + Utils.numberOfDecimalPlaces( height ) )
-      } );
+    areaAccessibleLabel.innerContent = new PatternStringProperty( AreaModelCommonStrings.a11y.areaGridRectanglePatternStringProperty, {
+      width: areaDisplay.activeTotalProperties.horizontal,
+      height: areaDisplay.activeTotalProperties.vertical
+    } );
+    countingLabel.innerContent = new PatternStringProperty( AreaModelCommonStrings.a11y.countingNumbersPatternStringProperty, {
+      count: new DerivedProperty( areaDisplay.activeTotalProperties.values(), ( width, height ) => {
+        return Utils.toFixedNumber( width * height, Utils.numberOfDecimalPlaces( width ) + Utils.numberOfDecimalPlaces( height ) );
+      } )
     } );
 
     // Background fill

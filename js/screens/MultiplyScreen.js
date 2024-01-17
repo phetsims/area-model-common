@@ -36,7 +36,7 @@ class MultiplyScreen extends Screen {
       } ),
 
       // pdom
-      descriptionContent: AreaModelCommonStrings.a11y.multiplyDescription
+      descriptionContent: AreaModelCommonStrings.a11y.multiplyDescriptionStringProperty
     };
 
     const commonAreaOptions = {

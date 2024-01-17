@@ -27,11 +27,6 @@ import ProportionalAreaDisplayNode from './ProportionalAreaDisplayNode.js';
 import ProportionalFactorsNode from './ProportionalFactorsNode.js';
 import SceneRadioButtonGroup from './SceneRadioButtonGroup.js';
 
-const base10AreaTilesString = AreaModelCommonStrings.a11y.base10AreaTiles;
-const countingNumbersDescriptionString = AreaModelCommonStrings.a11y.countingNumbersDescription;
-const countingNumbersLabelString = AreaModelCommonStrings.a11y.countingNumbersLabel;
-const gridLinesLabelString = AreaModelCommonStrings.a11y.gridLinesLabel;
-
 // constants
 const RADIO_ICON_SIZE = 30;
 
@@ -88,18 +83,18 @@ class ProportionalAreaScreenView extends AreaScreenView {
     const gridCheckbox = new Checkbox( model.gridLinesVisibleProperty, this.createGridIconNode(), {
       // pdom
       labelTagName: 'label',
-      labelContent: gridLinesLabelString
+      labelContent: AreaModelCommonStrings.a11y.gridLinesLabelStringProperty
     } );
     const tileCheckbox = new Checkbox( model.tilesVisibleProperty, this.createTileIconNode(), {
       // pdom
       labelTagName: 'label',
-      labelContent: base10AreaTilesString
+      labelContent: AreaModelCommonStrings.a11y.base10AreaTilesStringProperty
     } );
     const countingCheckbox = new Checkbox( model.countingVisibleProperty, this.createCountingIconNode(), {
       // pdom
       labelTagName: 'label',
-      labelContent: countingNumbersLabelString,
-      descriptionContent: countingNumbersDescriptionString
+      labelContent: AreaModelCommonStrings.a11y.countingNumbersLabelStringProperty,
+      descriptionContent: AreaModelCommonStrings.a11y.countingNumbersDescriptionStringProperty
     } );
 
     const checkboxContainer = new VBox( {

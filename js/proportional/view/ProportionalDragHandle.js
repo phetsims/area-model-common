@@ -10,22 +10,20 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import { Circle, DragListener, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
 import grabSoundPlayer from '../../../../tambo/js/shared-sound-players/grabSoundPlayer.js';
 import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releaseSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
-
-const dragHandleString = AreaModelCommonStrings.a11y.dragHandle;
-const dragHandleDescriptionPatternString = AreaModelCommonStrings.a11y.dragHandleDescriptionPattern;
 
 // constants
 const DRAG_OFFSET = 8;
@@ -59,7 +57,7 @@ class ProportionalDragHandle extends Node {
 
       // pdom
       tagName: 'div',
-      innerContent: dragHandleString,
+      innerContent: AreaModelCommonStrings.a11y.dragHandleStringProperty,
       focusable: true
     } );
 
@@ -69,11 +67,9 @@ class ProportionalDragHandle extends Node {
       fill: 'transparent'
     } ) );
 
-    areaProperty.link( area => {
-      circle.descriptionContent = StringUtils.fillIn( dragHandleDescriptionPatternString, {
-        width: area.maximumSize,
-        height: area.maximumSize
-      } );
+    circle.descriptionContent = new PatternStringProperty( AreaModelCommonStrings.a11y.dragHandleDescriptionPatternStringProperty, {
+      width: new DerivedProperty( [ areaProperty ], area => area.maximumSize ),
+      height: new DerivedProperty( [ areaProperty ], area => area.maximumSize )
     } );
 
     let initialOffset;

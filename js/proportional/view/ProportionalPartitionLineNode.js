@@ -18,6 +18,7 @@ import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { DragListener, HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
@@ -26,13 +27,7 @@ import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releas
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
-
-const horizontalPartitionHandleString = AreaModelCommonStrings.a11y.horizontalPartitionHandle;
-const horizontalPartitionHandleDescriptionString = AreaModelCommonStrings.a11y.horizontalPartitionHandleDescription;
-const verticalPartitionHandleString = AreaModelCommonStrings.a11y.verticalPartitionHandle;
-const verticalPartitionHandleDescriptionString = AreaModelCommonStrings.a11y.verticalPartitionHandleDescription;
 
 class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
   /**
@@ -146,8 +141,8 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
 
 
     this.labelTagName = 'label';
-    this.labelContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleString : horizontalPartitionHandleString;
-    this.descriptionContent = orientation === Orientation.HORIZONTAL ? verticalPartitionHandleDescriptionString : horizontalPartitionHandleDescriptionString;
+    this.labelContent = orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.verticalPartitionHandleStringProperty : AreaModelCommonStrings.a11y.horizontalPartitionHandleStringProperty;
+    this.descriptionContent = orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.verticalPartitionHandleDescriptionStringProperty : AreaModelCommonStrings.a11y.horizontalPartitionHandleDescriptionStringProperty;
 
     this.focusHighlight = new HighlightPath( handleShape.getOffsetShape( 5 ) );
     handle.addChild( this.focusHighlight );
