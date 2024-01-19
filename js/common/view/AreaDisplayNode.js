@@ -198,7 +198,7 @@ class AreaDisplayNode extends Node {
       const tickPositionsProperty = new DerivedProperty(
         [ areaDisplay.partitionBoundariesProperties.get( orientation ) ],
         partitionBoundaries => partitionBoundaries.map( boundary => orientation.modelToView( this.modelViewTransformProperty.value, boundary ) ), {
-          strictAxonDependencies: false
+          strictAxonDependencies: false //TODO https://github.com/phetsims/area-model-common/issues/197
         } );
       this.labelLayer.addChild( new RangeLabelNode(
         termListProperty,
