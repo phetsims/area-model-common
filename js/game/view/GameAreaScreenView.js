@@ -117,20 +117,28 @@ class GameAreaScreenView extends ScreenView {
       };
     } );
 
-    this.levelSelectionLayer.addChild( new LevelSelectionButtonGroup( levelButtons, {
+    const levelSelectionButtonGroup = new LevelSelectionButtonGroup( levelButtons, {
       flowBoxOptions: {
         spacing: buttonSpacing,
         lineSpacing: buttonSpacing,
         preferredWidth: 513, // empirically determined from default button width and lineWidth, and buttonSpacing
         wrap: true
-      },
-      center: this.layoutBounds.center
-    } ) );
+      }
+    } );
 
-    this.levelSelectionLayer.addChild( new Text( VegasStrings.chooseYourLevelStringProperty, {
-      centerX: this.layoutBounds.centerX,
-      centerY: ( this.layoutBounds.top + this.levelSelectionLayer.top ) / 2,
-      font: new PhetFont( 30 )
+    const chooseYourLevelText = new Text( VegasStrings.chooseYourLevelStringProperty, {
+      font: new PhetFont( 30 ),
+      maxWidth: 550
+    } );
+
+    const levelsVBox = new VBox( { children: [ chooseYourLevelText, levelSelectionButtonGroup ],
+      spacing: 55 } );
+
+    this.levelSelectionLayer.addChild( new AlignBox( levelsVBox, {
+      alignBounds: this.layoutBounds,
+      yAlign: 'bottom',
+      xAlign: 'center',
+      bottomMargin: 144 // empirically determined so the center of levelSelectionButtonGroup is this.layoutBounds.center
     } ) );
 
     // Status bar
