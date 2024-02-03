@@ -48,6 +48,9 @@ import GameAudio from './GameAudio.js';
 import GameEditableLabelNode from './GameEditableLabelNode.js';
 import PolynomialEditNode from './PolynomialEditNode.js';
 
+const BUTTON_WIDTH = 150;
+const BUTTON_HEIGHT = 150;
+
 class GameAreaScreenView extends ScreenView {
   /**
    * @extends {ScreenView}
@@ -118,12 +121,17 @@ class GameAreaScreenView extends ScreenView {
       };
     } );
 
+    const buttonsPerRow = ( gameLevels.length <= 4 ) ? 4 : 3;
+
     const levelSelectionButtonGroup = new LevelSelectionButtonGroup( levelButtons, {
+      groupButtonWidth: BUTTON_WIDTH,
+      groupButtonHeight: BUTTON_HEIGHT,
       flowBoxOptions: {
-        spacing: buttonSpacing,
-        lineSpacing: buttonSpacing,
-        preferredWidth: 513, // empirically determined from default button width and lineWidth, and buttonSpacing
-        wrap: true
+        spacing: buttonSpacing, // horizontal spacing
+        lineSpacing: buttonSpacing, // vertical spacing
+        preferredWidth: buttonsPerRow * ( BUTTON_WIDTH + buttonSpacing ),
+        wrap: true, // start a new row when preferredWidth is reached
+        justify: 'center' // horizontal justification
       },
       gameLevels: gameLevels
     } );
