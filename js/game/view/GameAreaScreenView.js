@@ -133,23 +133,19 @@ class GameAreaScreenView extends ScreenView {
         wrap: true, // start a new row when preferredWidth is reached
         justify: 'center' // horizontal justification
       },
-      gameLevels: gameLevels
+      gameLevels: gameLevels,
+      center: this.layoutBounds.center
     } );
 
     const chooseYourLevelText = new Text( VegasStrings.chooseYourLevelStringProperty, {
       font: new PhetFont( 30 ),
-      maxWidth: 550
+      maxWidth: 550,
+      centerX: levelSelectionButtonGroup.centerX,
+      bottom: levelSelectionButtonGroup.top - 55
     } );
 
-    const levelsVBox = new VBox( { children: [ chooseYourLevelText, levelSelectionButtonGroup ],
-      spacing: 55 } );
-
-    this.levelSelectionLayer.addChild( new AlignBox( levelsVBox, {
-      alignBounds: this.layoutBounds,
-      yAlign: 'bottom',
-      xAlign: 'center',
-      bottomMargin: 144 // empirically determined so the center of levelSelectionButtonGroup is this.layoutBounds.center
-    } ) );
+    this.levelSelectionLayer.addChild( chooseYourLevelText );
+    this.levelSelectionLayer.addChild( levelSelectionButtonGroup );
 
     // Status bar
     let lastKnownLevel = null;
