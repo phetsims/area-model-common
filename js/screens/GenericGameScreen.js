@@ -23,9 +23,10 @@ class GenericGameScreen extends Screen {
    * @param { PreferencesModel } preferencesModel
    * @param { Array<JugglerPortrayal> } jugglerPortrayals
    * @param { ( GameAreaModel ) => JugglerCharacters } createJugglerController
+   * @param {number[]} gameLevels
    * @public
    */
-  constructor( preferencesModel, jugglerPortrayals, createJugglerController ) {
+  constructor( preferencesModel, jugglerPortrayals, createJugglerController, gameLevels ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
@@ -39,7 +40,7 @@ class GenericGameScreen extends Screen {
 
     super(
       () => new GenericGameAreaModel( preferencesModel ),
-      model => new GameAreaScreenView( model, createJugglerController( model ) ),
+      model => new GameAreaScreenView( model, createJugglerController( model ), gameLevels ),
       options
     );
   }

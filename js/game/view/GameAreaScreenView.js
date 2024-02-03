@@ -54,8 +54,9 @@ class GameAreaScreenView extends ScreenView {
    *
    * @param {GameAreaModel} model
    * @param {JugglerCharacters} jugglerCharacters
+   * @param {number[]} gameLevels
    */
-  constructor( model, jugglerCharacters ) {
+  constructor( model, jugglerCharacters, gameLevels ) {
     assert && assert( model instanceof GameAreaModel );
 
     super();
@@ -123,7 +124,8 @@ class GameAreaScreenView extends ScreenView {
         lineSpacing: buttonSpacing,
         preferredWidth: 513, // empirically determined from default button width and lineWidth, and buttonSpacing
         wrap: true
-      }
+      },
+      gameLevels: gameLevels
     } );
 
     const chooseYourLevelText = new Text( VegasStrings.chooseYourLevelStringProperty, {
