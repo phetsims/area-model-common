@@ -231,13 +231,17 @@ class CalculationLinesNode extends Node {
           lineNode.labelContent = AreaModelCommonStrings.a11y.betweenCalculationLinesStringProperty;
         }
         else {
-          lineNode.insertChild( 0, new Node( {
+          const betweenCalculationLinesNode = new Node( {
 
             // pdom
             tagName: 'mtext',
             pdomNamespace: 'http://www.w3.org/1998/Math/MathML',
             innerContent: AreaModelCommonStrings.a11y.betweenCalculationLinesStringProperty
-          } ) );
+          } );
+          lineNode.insertChild( 0, betweenCalculationLinesNode );
+          lineNode.getDisposeEmitter().addListener( () => {
+            betweenCalculationLinesNode.dispose();
+          } );
         }
       }
       return lineNode;

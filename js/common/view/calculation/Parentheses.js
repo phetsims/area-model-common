@@ -76,7 +76,7 @@ class Parentheses extends HBox {
 
     assert && assert( this.children.length === 2, 'Should only have a left and right paren at this moment' );
 
-    // @public {string}
+    // @public {PatternStringProperty|null}
     this.accessibleText = new PatternStringProperty( AreaModelCommonStrings.a11y.quantityPatternStringProperty, {
       content: content.accessibleText
     } );
@@ -104,6 +104,9 @@ class Parentheses extends HBox {
 
     this.leftParen.fill = null;
     this.rightParen.fill = null;
+
+    this.accessibleText.dispose();
+    this.accessibleText = null;
 
     this.freeToPool();
   }

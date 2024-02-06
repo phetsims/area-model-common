@@ -58,7 +58,7 @@ class MultiplyX extends HBox {
     assert && assert( rightContent instanceof Node );
     assert && assert( baseColorProperty instanceof ReadOnlyProperty );
 
-    // @public {string}
+    // @public {PatternStringProperty|null}
     this.accessibleText = new PatternStringProperty( AreaModelCommonStrings.a11y.productTimesPatternStringProperty, {
       left: leftContent.accessibleText,
       right: rightContent.accessibleText
@@ -92,6 +92,9 @@ class MultiplyX extends HBox {
     this.rightContent = null;
 
     this.timesNode.fill = null;
+
+    this.accessibleText.dispose();
+    this.accessibleText = null;
 
     this.freeToPool();
   }
