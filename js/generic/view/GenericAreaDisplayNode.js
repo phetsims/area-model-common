@@ -13,7 +13,7 @@ import Property from '../../../../axon/js/Property.js';
 import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import { Line, Node } from '../../../../scenery/js/imports.js';
+import { animatedPanZoomSingleton, Line, Node } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
@@ -83,6 +83,11 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
     areaDisplay.activePartitionProperty.link( newArea => {
       termKeypadPanel.visible = newArea !== null;
       termKeypadPanel.clear();
+    } );
+
+    // Pan to the termKeypadPanel when it is visible.
+    termKeypadPanel.visibleProperty.link( visible => {
+      visible && animatedPanZoomSingleton.listener.panToNode( termKeypadPanel, true );
     } );
 
     this.mutate( nodeOptions );

@@ -11,7 +11,7 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import { Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { animatedPanZoomSingleton, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
@@ -180,6 +180,14 @@ class GameAreaDisplayNode extends Node {
 
       noExponentKeypadPanel.visible = newEntry !== null && newEntry.inputMethod === InputMethod.CONSTANT;
       exponentKeypadPanel.visible = newEntry !== null && newEntry.inputMethod === InputMethod.TERM;
+    } );
+
+    // Pan to the corresponding keypad when it is visible.
+    noExponentKeypadPanel.visibleProperty.link( visible => {
+      visible && animatedPanZoomSingleton.listener.panToNode( noExponentKeypadPanel, true );
+    } );
+    exponentKeypadPanel.visibleProperty.link( visible => {
+      visible && animatedPanZoomSingleton.listener.panToNode( exponentKeypadPanel, true );
     } );
   }
 }
