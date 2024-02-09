@@ -139,9 +139,11 @@ class GameAreaScreenView extends ScreenView {
 
     const chooseYourLevelText = new Text( VegasStrings.chooseYourLevelStringProperty, {
       font: new PhetFont( 30 ),
-      maxWidth: 550,
-      centerX: levelSelectionButtonGroup.centerX,
-      bottom: levelSelectionButtonGroup.top - 55
+      maxWidth: 550
+    } );
+    chooseYourLevelText.boundsProperty.link( () => {
+      chooseYourLevelText.centerX = levelSelectionButtonGroup.centerX;
+      chooseYourLevelText.bottom = levelSelectionButtonGroup.top - 55;
     } );
 
     this.levelSelectionLayer.addChild( chooseYourLevelText );
