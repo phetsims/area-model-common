@@ -14,9 +14,9 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import Area from '../../common/model/Area.js';
-import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import Partition from '../../common/model/Partition.js';
 import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -29,8 +29,8 @@ class ProportionalArea extends Area {
   constructor( options ) {
 
     options = merge( {
-      maximumSize: 20, // {number} - Maximum size our area can take up
-      minimumSize: 1, // {number} - Minimum size our area can take up
+      maximumSize: 20, // {number} - Maximum size our area can take up, this is the max value for both the horizontal and vertical dimensions.
+      minimumSize: 1, // {number} - Minimum size our area can take up, this is the min value for both the horizontal and vertical dimensions.
       initialWidth: 1, // {number} - Initial width
       initialHeight: 1, // {number} - Initial height
       eraseWidth: 1, // {number} - The width that will be set with the erase button
