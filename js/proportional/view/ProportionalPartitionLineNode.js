@@ -23,7 +23,6 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import { RichDragListener } from '../../../../sun/js/imports.js';
-import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releaseSoundPlayer.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
@@ -206,7 +205,6 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
         },
 
         end: () => {
-          releaseSoundPlayer.play();
           if ( partitionSplitProperty.value === activeTotalProperty.value ) {
             partitionSplitProperty.value = 0;
           }
