@@ -20,10 +20,11 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { DragListener, HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
+import { HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import grabSoundPlayer from '../../../../tambo/js/shared-sound-players/grabSoundPlayer.js';
+import { RichDragListener } from '../../../../sun/js/imports.js';
 import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releaseSoundPlayer.js';
+import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
@@ -67,7 +68,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
       valueProperty: accessibleProperty,
       enabledRangeProperty: enabledRangeProperty,
       constrainValue: value => Utils.roundSymmetric( value / areaDisplay.partitionSnapSizeProperty.value ) *
-                      areaDisplay.partitionSnapSizeProperty.value,
+                               areaDisplay.partitionSnapSizeProperty.value,
       keyboardStep: 1,
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
@@ -172,15 +173,16 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
       this.setKeyboardStep( snapSize );
     } );
 
+    const soundGenerator = new ValueChangeSoundPlayer( new DerivedProperty( [ activeTotalProperty ], total => new Range( 0, total ) ) );
+
     let dragHandler;
     modelViewTransformProperty.link( modelViewTransform => {
       if ( dragHandler ) {
         this.removeInputListener( dragHandler );
         dragHandler.dispose();
       }
-      dragHandler = new DragListener( {
+      dragHandler = new RichDragListener( {
         transform: modelViewTransform,
-        start: () => { grabSoundPlayer.play(); },
         drag: ( event, listener ) => {
           let value = listener.modelPoint[ orientation.coordinate ];
 
@@ -193,6 +195,11 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
           const currentSplitValue = partitionSplitProperty.value;
           if ( value !== currentSplitValue && value !== 0 ) {
             showHintArrowsProperty.value = false;
+          }
+
+          // Only play sound if dragging to a different snapped value
+          if ( value !== currentSplitValue ) {
+            soundGenerator.playSoundForValueChange( value, partitionSplitProperty.value );
           }
 
           partitionSplitProperty.value = value;

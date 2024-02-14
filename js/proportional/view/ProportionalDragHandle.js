@@ -13,14 +13,15 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import { Circle, DragListener, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
-import grabSoundPlayer from '../../../../tambo/js/shared-sound-players/grabSoundPlayer.js';
-import releaseSoundPlayer from '../../../../tambo/js/shared-sound-players/releaseSoundPlayer.js';
+import { Circle, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
+import { RichDragListener } from '../../../../sun/js/imports.js';
+import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -74,6 +75,10 @@ class ProportionalDragHandle extends Node {
 
     let initialOffset;
 
+    // Range of the sounds changes based on the current area changing
+    const soundPlayerRangeProperty = new DerivedProperty( [ areaProperty ], area => new Range( area.minimumSize, area.maximumSize ) );
+    const valueChangeSoundPlayer = new ValueChangeSoundPlayer( soundPlayerRangeProperty );
+
     function updateOffsetProperty( event, listener ) {
       const area = areaProperty.value;
       const modelViewTransform = modelViewTransformProperty.value;
@@ -92,6 +97,16 @@ class ProportionalDragHandle extends Node {
       width = Utils.clamp( width, area.minimumSize, area.maximumSize );
       height = Utils.clamp( height, area.minimumSize, area.maximumSize );
 
+      // Treat each orientation as a separate "slider-like" slider interaction, but never play two sounds at once.
+      const oldWidth = activeTotalProperties.horizontal.value;
+      const oldHeight = activeTotalProperties.vertical.value;
+      if ( oldWidth !== width ) {
+        valueChangeSoundPlayer.playSoundForValueChange( width, oldWidth );
+      }
+      else if ( oldHeight !== height ) {
+        valueChangeSoundPlayer.playSoundForValueChange( height, oldHeight );
+      }
+
       activeTotalProperties.horizontal.value = width;
       activeTotalProperties.vertical.value = height;
 
@@ -108,16 +123,14 @@ class ProportionalDragHandle extends Node {
       ]
     } );
 
-    const dragListener = new DragListener( {
+    const dragListener = new RichDragListener( {
       targetNode: this,
       applyOffset: false,
       start: ( event, listener ) => {
-        grabSoundPlayer.play();
         initialOffset = listener.localPoint.minusScalar( CIRCLE_DRAG_OFFSET );
         updateOffsetProperty( event, listener );
       },
-      drag: updateOffsetProperty,
-      end: () => { releaseSoundPlayer.play(); }
+      drag: updateOffsetProperty
     } );
     dragListener.isPressedProperty.link( draggedProperty.set.bind( draggedProperty ) );
 
