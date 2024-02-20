@@ -8,7 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import Multilink from '../../../../axon/js/Multilink.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { Path } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
@@ -25,11 +25,7 @@ class ProportionalAreaGridLinesNode extends Path {
    */
   constructor( areaProperty, modelViewTransformProperty ) {
 
-    super( null, {
-      stroke: AreaModelCommonColors.gridLineProperty
-    } );
-
-    Multilink.multilink( [ areaProperty, modelViewTransformProperty ], ( area, modelViewTransform ) => {
+    const shapeProperty = new DerivedProperty( [ areaProperty, modelViewTransformProperty ], ( area, modelViewTransform ) => {
       const maxX = modelViewTransform.modelToViewX( area.maximumSize );
       const maxY = modelViewTransform.modelToViewY( area.maximumSize );
 
@@ -44,7 +40,11 @@ class ProportionalAreaGridLinesNode extends Path {
         shape.moveTo( x, HALF_GRID_LINE_WIDTH );
         shape.lineTo( x, maxY - HALF_GRID_LINE_WIDTH );
       }
-      this.shape = shape;
+      return shape;
+    } );
+
+    super( shapeProperty, {
+      stroke: AreaModelCommonColors.gridLineProperty
     } );
   }
 }
