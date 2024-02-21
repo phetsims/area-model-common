@@ -207,11 +207,13 @@ class GameAreaScreenView extends ScreenView {
       // Could be null
       if ( challenge ) {
         promptText.stringProperty = challenge.description.getPromptStringProperty();
-        // Center around the area's center.
-        promptText.centerX = this.layoutBounds.left + AreaModelCommonConstants.GAME_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
-        // Don't let it go off the left side of the screen
-        promptText.left = Math.max( promptText.left, this.layoutBounds.left + 20 );
       }
+    } );
+    promptText.stringProperty.link( () => {
+      // Center around the area's center.
+      promptText.centerX = this.layoutBounds.left + AreaModelCommonConstants.GAME_AREA_OFFSET.x + AreaModelCommonConstants.AREA_SIZE / 2;
+      // Don't let it go off the left side of the screen
+      promptText.left = Math.max( promptText.left, this.layoutBounds.left + 20 );
     } );
 
     // Reset All button
