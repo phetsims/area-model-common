@@ -188,7 +188,8 @@ class GameAreaScreenView extends ScreenView {
       barFill: new DynamicProperty( lastLevelProperty, {
         derive: 'colorProperty',
         defaultValue: 'black'
-      } )
+      } ),
+      yMargin: 18.25 // empirically determined to match published version 1.2.13
     } );
     this.challengeLayer.addChild( statusBar );
 
