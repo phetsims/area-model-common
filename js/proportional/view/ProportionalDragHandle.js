@@ -20,7 +20,7 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import { Circle, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
-import { RichDragListener } from '../../../../sun/js/imports.js';
+import RichDragListener from '../../../../sun/js/RichDragListener.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
