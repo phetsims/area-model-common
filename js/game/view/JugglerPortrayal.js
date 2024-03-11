@@ -14,7 +14,7 @@ import areaModelCommon from '../../areaModelCommon.js';
 export default class JugglerPortrayal extends RegionAndCulturePortrayal {
   /**
    *
-   * @param label { LocalizedStringProperty }
+   * @param {RegionAndCulture} regionAndCulture
    * @param levelOne { HTMLImageElement }
    * @param levelTwo { HTMLImageElement }
    * @param levelThree { HTMLImageElement }
@@ -22,14 +22,13 @@ export default class JugglerPortrayal extends RegionAndCulturePortrayal {
    * @param levelFive { HTMLImageElement }
    * @param levelSix { HTMLImageElement }
    * @param screenHomeIcon { HTMLImageElement }
-   * @param queryParameterValue { string }
    */
-  constructor( label,
+  constructor( regionAndCulture,
                levelOne, levelTwo, levelThree,
                levelFour, levelFive, levelSix,
-               screenHomeIcon, queryParameterValue ) {
+               screenHomeIcon ) {
 
-    super( label, queryParameterValue, {} );
+    super( regionAndCulture );
 
     this.levelOne = levelOne;
     this.levelTwo = levelTwo;
