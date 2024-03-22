@@ -7,10 +7,10 @@
  */
 
 import Vector2 from '../../../dot/js/Vector2.js';
+import OrientationPair from '../../../phet-core/js/OrientationPair.js';
 import MathSymbolFont from '../../../scenery-phet/js/MathSymbolFont.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import areaModelCommon from '../areaModelCommon.js';
-import OrientationPair from '../../../phet-core/js/OrientationPair.js';
 
 // constants
 const LARGE_PARTIAL_PRODUCT_FONT_SIZE = 19;

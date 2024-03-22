@@ -11,10 +11,10 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import { animatedPanZoomSingleton, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
-import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import RangeLabelNode from '../../common/view/RangeLabelNode.js';
 import GenericAreaDisplayNode from '../../generic/view/GenericAreaDisplayNode.js';
