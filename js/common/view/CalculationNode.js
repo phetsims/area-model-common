@@ -1,4 +1,4 @@
-// Copyright 2017-2022, University of Colorado Boulder
+// Copyright 2017-2024, University of Colorado Boulder
 
 /**
  * Shows the calculation of total area from each of the partitions' sizes. Allows line-by-line, and is meant to go in
