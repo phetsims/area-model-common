@@ -17,9 +17,8 @@ class GenericGameAreaModel extends GameAreaModel {
 
   /**
    * @public
-   * @param { PreferencesModel } preferencesModel
    */
-  constructor( preferencesModel ) {
+  constructor() {
     super( [
       new AreaLevel( 1, AreaChallengeType.NUMBERS, AreaModelCommonColors.numbersIconBackgroundProperty, [
         AreaChallengeDescription.LEVEL_1_NUMBERS_1,
@@ -58,7 +57,7 @@ class GenericGameAreaModel extends GameAreaModel {
       new AreaLevel( 6, AreaChallengeType.NUMBERS, AreaModelCommonColors.numbersIconBackgroundProperty, [
         AreaChallengeDescription.LEVEL_6_NUMBERS_1
       ] )
-    ], false, preferencesModel );
+    ], false );
   }
 }
 

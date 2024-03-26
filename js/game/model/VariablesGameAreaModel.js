@@ -17,9 +17,8 @@ class VariablesGameAreaModel extends GameAreaModel {
 
   /**
    * @public
-   * @param { PreferencesModel } preferencesModel
    */
-  constructor( preferencesModel ) {
+  constructor() {
     super( [
       new AreaLevel( 1, AreaChallengeType.VARIABLES, AreaModelCommonColors.variablesIconBackgroundProperty, [
         AreaChallengeDescription.LEVEL_1_VARIABLES_1,
@@ -50,7 +49,7 @@ class VariablesGameAreaModel extends GameAreaModel {
       new AreaLevel( 6, AreaChallengeType.VARIABLES, AreaModelCommonColors.variablesIconBackgroundProperty, [
         AreaChallengeDescription.LEVEL_6_VARIABLES_1
       ] )
-    ], true, preferencesModel );
+    ], true );
   }
 }
 
