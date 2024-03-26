@@ -19,7 +19,7 @@ import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import FaceWithPointsNode from '../../../../scenery-phet/js/FaceWithPointsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import { AlignBox, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
+import { AlignBox, Node, RichText, Text, VBox, Image } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Easing from '../../../../twixt/js/Easing.js';
@@ -56,10 +56,10 @@ class GameAreaScreenView extends ScreenView {
    * @extends {ScreenView}
    *
    * @param {GameAreaModel} model
-   * @param {JugglerCharacters} jugglerCharacters
+   * @param {Array<LocalizedImageProperty>} imageProperties - localized images
    * @param {number[]} gameLevels
    */
-  constructor( model, jugglerCharacters, gameLevels ) {
+  constructor( model, imageProperties, gameLevels ) {
     assert && assert( model instanceof GameAreaModel );
 
     super();
@@ -100,7 +100,7 @@ class GameAreaScreenView extends ScreenView {
       }
     } );
 
-    const levelIcons = jugglerCharacters.jugglerNodes;
+    const levelIcons = imageProperties.map( localizedImage => new Image( localizedImage ) );
 
     const buttonSpacing = 30;
     const levelButtons = model.levels.map( ( level, index ) => {

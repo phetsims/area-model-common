@@ -20,12 +20,12 @@ class VariablesGameScreen extends Screen {
 
   /**
    * @param { PreferencesModel } preferencesModel
-   * @param { TReadOnlyProperty<ImageableImage> } gameHomeScreenIconImageProperty
-   * @param { ( GameAreaModel ) => JugglerCharacters } createJugglerController
+   * @param { LocalizedImageProperty } gameHomeScreenIconImageProperty
+   * @param {Array<LocalizedImageProperty>} imageProperties
    * @param {number[]} gameLevels
    * @public
    */
-  constructor( preferencesModel, gameHomeScreenIconImageProperty, createJugglerController, gameLevels ) {
+  constructor( preferencesModel, gameHomeScreenIconImageProperty, imageProperties, gameLevels ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
@@ -42,7 +42,7 @@ class VariablesGameScreen extends Screen {
 
     super(
       () => new VariablesGameAreaModel( preferencesModel ),
-      model => new GameAreaScreenView( model, createJugglerController( model ), gameLevels ),
+      model => new GameAreaScreenView( model, imageProperties, gameLevels ),
       options
     );
   }
