@@ -15,23 +15,25 @@ import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
 import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
-import GameScreenIcon from '../game/view/GameScreenIcon.js';
 
 class GenericGameScreen extends Screen {
 
   /**
    * @param { PreferencesModel } preferencesModel
-   * @param { Array<JugglerPortrayal> } jugglerPortrayals
+   * @param { TReadOnlyProperty<ImageableImage>} gameHomeScreenIconImageProperty
    * @param { ( GameAreaModel ) => JugglerCharacters } createJugglerController
    * @param {number[]} gameLevels
    * @public
    */
-  constructor( preferencesModel, jugglerPortrayals, createJugglerController, gameLevels ) {
+  constructor( preferencesModel, gameHomeScreenIconImageProperty, createJugglerController, gameLevels ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new GameScreenIcon( jugglerPortrayals, preferencesModel.localizationModel.regionAndCulturePortrayalProperty ),
+      homeScreenIcon: new ScreenIcon( new Image( gameHomeScreenIconImageProperty ), {
+        maxIconWidthProportion: 1,
+        maxIconHeightProportion: 1
+      } ),
       navigationBarIcon: new ScreenIcon( new Image( genericGameScreenNavbar_png ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
