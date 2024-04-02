@@ -19,17 +19,17 @@ import GameAreaScreenView from '../game/view/GameAreaScreenView.js';
 class VariablesGameScreen extends Screen {
 
   /**
-   * @param { LocalizedImageProperty } gameHomeScreenIconImageProperty
+   * @param { LocalizedImageProperty } variablesGameScreenIconImageProperty
    * @param {Array<LocalizedImageProperty>} imageProperties
    * @param {number[]} gameLevels
    * @public
    */
-  constructor( gameHomeScreenIconImageProperty, imageProperties, gameLevels ) {
+  constructor( variablesGameScreenIconImageProperty, imageProperties, gameLevels ) {
 
     const options = {
       name: AreaModelCommonStrings.screen.gameStringProperty,
       backgroundColorProperty: AreaModelCommonColors.backgroundProperty,
-      homeScreenIcon: new ScreenIcon( new Image( gameHomeScreenIconImageProperty ), {
+      homeScreenIcon: new ScreenIcon( new Image( variablesGameScreenIconImageProperty ), {
         maxIconWidthProportion: 1,
         maxIconHeightProportion: 1
       } ),
