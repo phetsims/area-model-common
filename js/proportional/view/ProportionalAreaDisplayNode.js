@@ -33,10 +33,11 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
   /**
    * @param {ProportionalAreaDisplay} areaDisplay
    * @param {Property.<PartialProductsChoice>} partialProductsChoiceProperty
+   * @param {Emitter} interruptDragListenerEmitter - Emits when user input indicates we need to interrupt drag listeners
    * @param {Object} [options]
    * @param {Object} [nodeOptions]
    */
-  constructor( areaDisplay, partialProductsChoiceProperty, options, nodeOptions ) {
+  constructor( areaDisplay, partialProductsChoiceProperty, interruptDragListenerEmitter, options, nodeOptions ) {
 
     options = merge( {
 
@@ -123,7 +124,8 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     this.areaLayer.addChild( new ProportionalDragHandle(
       areaDisplay.areaProperty,
       areaDisplay.activeTotalProperties,
-      this.modelViewTransformProperty
+      this.modelViewTransformProperty,
+      interruptDragListenerEmitter
     ) );
 
     const countingVisibleProperty = new DerivedProperty(

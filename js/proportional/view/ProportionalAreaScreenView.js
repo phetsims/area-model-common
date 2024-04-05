@@ -169,7 +169,7 @@ class ProportionalAreaScreenView extends AreaScreenView {
    * @returns {ProportionalAreaDisplayNode}
    */
   createAreaDisplayNode( model ) {
-    return new ProportionalAreaDisplayNode( model.areaDisplay, model.partialProductsChoiceProperty, {
+    return new ProportionalAreaDisplayNode( model.areaDisplay, model.partialProductsChoiceProperty, this.interruptDragListenerEmitter, {
       gridLinesVisibleProperty: model.gridLinesVisibleProperty,
       tilesVisibleProperty: model.tilesVisibleProperty,
       countingVisibleProperty: model.countingVisibleProperty,
@@ -190,7 +190,8 @@ class ProportionalAreaScreenView extends AreaScreenView {
    * @returns {Node}
    */
   createFactorsNode( model, decimalPlaces ) {
-    return new ProportionalFactorsNode( model.currentAreaProperty, model.areaDisplay.activeTotalProperties, decimalPlaces );
+    return new ProportionalFactorsNode( model.currentAreaProperty, model.areaDisplay.activeTotalProperties, decimalPlaces,
+      this.interruptDragListenerEmitter );
   }
 
   /**

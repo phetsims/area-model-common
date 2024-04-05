@@ -8,6 +8,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
@@ -91,6 +92,10 @@ class AreaScreenView extends ScreenView {
       AreaModelCommonGlobals.panelAlignGroup,
       new PartialProductRadioButtonGroup( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
+
+    // @public {Emitter} - When the user interacts with UI components that control the dimensions, the drag listener needs
+    // to be interrupted.
+    this.interruptDragListenerEmitter = new Emitter();
 
     // @public {Node} (a11y)
     this.calculationSelectionPanel = this.createPanelContent(

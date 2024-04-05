@@ -36,8 +36,13 @@ class ProportionalDragHandle extends Node {
    * @param {Property.<ProportionalArea>} areaProperty
    * @param {OrientationPair.<Property.<number>>} activeTotalProperties
    * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
+   * @param {Emitter} interruptDragListenerEmitter
    */
-  constructor( areaProperty, activeTotalProperties, modelViewTransformProperty ) {
+  constructor(
+    areaProperty,
+    activeTotalProperties,
+    modelViewTransformProperty,
+    interruptDragListenerEmitter ) {
 
     // {Property.<boolean>} - Whether this is being dragged (we only apply offsets when dragged)
     const draggedProperty = new BooleanProperty( false );
@@ -138,6 +143,10 @@ class ProportionalDragHandle extends Node {
     areaProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
     modelViewTransformProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
     circle.addInputListener( dragListener );
+
+    interruptDragListenerEmitter.addListener( () => {
+      dragListener.interrupt();
+    } );
 
     const positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
 
