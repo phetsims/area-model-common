@@ -27,11 +27,13 @@ import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 class ProportionalFactorsNode extends Node {
   /**
    * @param {Property.<Area>} currentAreaProperty
-   * @param {OrientationPair.<Property.<number>>} - activeTotalProperties
+   * @param {OrientationPair.<Property.<number>>} activeTotalProperties
    * @param {number} decimalPlaces - The number of decimal places to show in the picker (when needed)
+   * @param {Emitter} interruptDragListenerEmitter - Emits when user input should interrupt drag listeners
    */
-  constructor( currentAreaProperty, activeTotalProperties, decimalPlaces ) {
+  constructor( currentAreaProperty, activeTotalProperties, decimalPlaces, interruptDragListenerEmitter ) {
     super();
+    this.interruptDragListenerEmitter = interruptDragListenerEmitter;
 
     if ( AreaModelCommonQueryParameters.rawMath ) {
       this.tagName = 'div';
@@ -116,6 +118,7 @@ class ProportionalFactorsNode extends Node {
     const rangeProperty = new DerivedProperty( [ currentAreaProperty ], area => new Range( area.minimumSize, area.maximumSize ) );
 
     return new NumberPicker( bidirectionalProperty, rangeProperty, {
+      onInput: () => this.interruptDragListenerEmitter.emit(),
       incrementFunction: value => Utils.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces ),
       decrementFunction: value => Utils.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces ),
       decimalPlaces: decimalPlaces,
