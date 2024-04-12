@@ -205,6 +205,7 @@ class AreaScreenView extends ScreenView {
     // @protected {Node} (a11y) - Reset all button
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
+        this.interruptDragListenerEmitter.emit();
         model.reset();
       },
       right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,
