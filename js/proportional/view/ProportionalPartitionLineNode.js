@@ -216,10 +216,14 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
       } );
       this.addInputListener( dragHandler );
 
-      interruptDragListenerEmitter.addListener( interruptType => {
-        if ( interruptType === '' ) {
+      // Interrupt the dragHandler listener when it becomes invisible
+      areaDisplay.partitionSplitVisibleProperties.get( orientation ).link( visible => {
+        !visible && dragHandler.interrupt();
+      } );
+
+      // Interrupt the dragHandler listener when reset is called
+      interruptDragListenerEmitter.addListener( () => {
           dragHandler.interrupt();
-        }
       } );
     } );
   }
