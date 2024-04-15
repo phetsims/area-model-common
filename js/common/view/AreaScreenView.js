@@ -93,9 +93,9 @@ class AreaScreenView extends ScreenView {
       new PartialProductRadioButtonGroup( model, AreaModelCommonGlobals.selectionButtonAlignGroup )
     );
 
-    // @public {Emitter} - When the user interacts with UI components that control the dimensions, the drag listener needs
-    // to be interrupted.
-    this.interruptDragListenerEmitter = new Emitter();
+    // @public {Emitter} - When the user interacts with UI components that control the dimensions, the respective
+    // drag listeners need to be interrupted.
+    this.interruptDragListenerEmitter = new Emitter( { parameters: [ { valueType: 'string' } ] } );
 
     // @public {Node} (a11y)
     this.calculationSelectionPanel = this.createPanelContent(
@@ -205,7 +205,7 @@ class AreaScreenView extends ScreenView {
     // @protected {Node} (a11y) - Reset all button
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
-        this.interruptDragListenerEmitter.emit();
+        this.interruptDragListenerEmitter.emit( '' );
         model.reset();
       },
       right: this.layoutBounds.right - AreaModelCommonConstants.LAYOUT_SPACING,

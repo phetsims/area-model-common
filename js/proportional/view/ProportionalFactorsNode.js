@@ -118,7 +118,7 @@ class ProportionalFactorsNode extends Node {
     const rangeProperty = new DerivedProperty( [ currentAreaProperty ], area => new Range( area.minimumSize, area.maximumSize ) );
 
     return new NumberPicker( bidirectionalProperty, rangeProperty, {
-      onInput: () => this.interruptDragListenerEmitter.emit(),
+      onInput: () => this.interruptDragListenerEmitter.emit( 'dragHandler' ),
       incrementFunction: value => Utils.toFixedNumber( value + currentAreaProperty.value.snapSize, decimalPlaces ),
       decrementFunction: value => Utils.toFixedNumber( value - currentAreaProperty.value.snapSize, decimalPlaces ),
       decimalPlaces: decimalPlaces,
