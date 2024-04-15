@@ -129,7 +129,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     ) );
 
     // Interrupt drag listener on the drag handle and separator(s) when the eraser button is clicked.
-    this.eraseButton.addListener( () => { interruptDragListenerEmitter.emit( '' ); } );
+    this.eraseButton.addListener( () => { interruptDragListenerEmitter.emit(); } );
 
     const countingVisibleProperty = new DerivedProperty(
       [ areaDisplay.countingAvailableProperty, options.countingVisibleProperty ],

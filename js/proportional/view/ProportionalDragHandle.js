@@ -144,10 +144,8 @@ class ProportionalDragHandle extends Node {
     modelViewTransformProperty.lazyLink( dragListener.interrupt.bind( dragListener ) );
     circle.addInputListener( dragListener );
 
-    interruptDragListenerEmitter.addListener( interruptType => {
-      if ( interruptType === 'dragHandler' || interruptType === '' ) {
+    interruptDragListenerEmitter.addListener( () => {
         dragListener.interrupt();
-      }
     } );
 
     const positionProperty = new Vector2Property( new Vector2( 0, 0 ) );
