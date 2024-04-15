@@ -36,8 +36,9 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
    * @param {ProportionalAreaDisplay} areaDisplay
    * @param {Property.<ModelViewTransform2>} modelViewTransformProperty
    * @param {Orientation} orientation
+   * @param {Emitter} interruptDragListenerEmitter
    */
-  constructor( areaDisplay, modelViewTransformProperty, orientation ) {
+  constructor( areaDisplay, modelViewTransformProperty, orientation, interruptDragListenerEmitter ) {
     validate( orientation, { validValues: Orientation.enumeration.values } );
 
     // Relevant properties
@@ -214,6 +215,12 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
         areaDisplay.partitionSplitUserControlledProperties.get( orientation ).value = controlled;
       } );
       this.addInputListener( dragHandler );
+
+      interruptDragListenerEmitter.addListener( interruptType => {
+        if ( interruptType === '' ) {
+          dragHandler.interrupt();
+        }
+      } );
     } );
   }
 }
