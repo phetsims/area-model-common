@@ -22,7 +22,7 @@ import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { HighlightPath, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import RichDragListener from '../../../../scenery-phet/js/RichDragListener.js';
+import RichPointerDragListener from '../../../../scenery-phet/js/RichPointerDragListener.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
@@ -181,7 +181,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
         this.removeInputListener( dragHandler );
         dragHandler.dispose();
       }
-      dragHandler = new RichDragListener( {
+      dragHandler = new RichPointerDragListener( {
         transform: modelViewTransform,
         drag: ( event, listener ) => {
           let value = listener.modelPoint[ orientation.coordinate ];
