@@ -177,7 +177,7 @@ class ProportionalDragHandle extends Node {
         shiftDragDelta: modelViewTransform.modelToViewDeltaX( area.snapSize ),
         transform: modelViewTransform,
         drag: ( event, listener ) => {
-          const delta = listener.vectorDelta;
+          const delta = listener.modelDelta;
 
           let width = activeTotalProperties.horizontal.value;
           let height = activeTotalProperties.vertical.value;
