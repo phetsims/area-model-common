@@ -20,7 +20,7 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import { Circle, KeyboardDragListener, Line, Node } from '../../../../scenery/js/imports.js';
-import RichPointerDragListener from '../../../../scenery-phet/js/RichPointerDragListener.js';
+import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
@@ -128,7 +128,7 @@ class ProportionalDragHandle extends Node {
       ]
     } );
 
-    const dragListener = new RichPointerDragListener( {
+    const dragListener = new SoundDragListener( {
       targetNode: this,
       applyOffset: false,
       start: ( event, listener ) => {
