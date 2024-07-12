@@ -14,12 +14,11 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { FireListener, HBox, Line, Node, Path, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
-import generalCloseSoundPlayer from '../../../../tambo/js/shared-sound-players/generalCloseSoundPlayer.js';
-import generalOpenSoundPlayer from '../../../../tambo/js/shared-sound-players/generalOpenSoundPlayer.js';
 import GenericLayout from '../model/GenericLayout.js';
 
 class GenericLayoutSelectionNode extends Node {
@@ -171,6 +170,10 @@ class GenericLayoutSelectionNode extends Node {
         event.handle();
       }
     } );
+
+    // sound generation
+    const generalCloseSoundPlayer = sharedSoundPlayers.get( 'generalClose' );
+    const generalOpenSoundPlayer = sharedSoundPlayers.get( 'generalOpen' );
 
     // Handle dismissing the selection if the user clicks outside
     const dismissListener = {
