@@ -32,16 +32,19 @@ class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
         createNode: () => new AlignBox( new Text( area.getDimensionString(), {
           font: AreaModelCommonConstants.SYMBOL_FONT
         } ), { group: group } ),
+        options: {
 
-        // pdom
-        labelContent: new PatternStringProperty( AreaModelCommonStrings.a11y.sceneSelectionPatternStringProperty, {
-          width: area.maximumSize,
-          height: area.maximumSize
-        } )
+          // pdom
+          accessibleName: new PatternStringProperty( AreaModelCommonStrings.a11y.sceneSelectionPatternStringProperty, {
+            width: area.maximumSize,
+            height: area.maximumSize
+          } )
+        }
       };
     } ), {
+
       // pdom
-      labelContent: AreaModelCommonStrings.a11y.areaGridSizeStringProperty
+      accessibleName: AreaModelCommonStrings.a11y.areaGridSizeStringProperty
     } );
 
     this.mutate( nodeOptions );

@@ -10,13 +10,13 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { AlignBox, AlignGroup, HBox, Node, Path, Text } from '../../../../scenery/js/imports.js';
 import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
-import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
 
@@ -51,25 +51,31 @@ class PartialProductRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
       {
         value: PartialProductsChoice.HIDDEN,
         createNode: () => new AlignBox( new Path( eyeSlashSolidShape, { scale: 0.05249946193736533, fill: 'black' } ), { group: selectionButtonAlignGroup } ),
+        options: {
 
-        // pdom
-        labelContent: AreaModelCommonStrings.a11y.hidePartialProductsStringProperty
+          // pdom
+          accessibleName: AreaModelCommonStrings.a11y.hidePartialProductsStringProperty
+        }
       },
       {
         value: PartialProductsChoice.PRODUCTS,
 
         // Hardcoded 'A' string since we don't want it to be translatable
         createNode: () => new AlignBox( new Text( 'A', { font: AreaModelCommonConstants.SYMBOL_FONT } ), { group: selectionButtonAlignGroup } ),
+        options: {
 
-        // pdom
-        labelContent: AreaModelCommonStrings.a11y.showPartialProductsStringProperty
+          // pdom
+          accessibleName: AreaModelCommonStrings.a11y.showPartialProductsStringProperty
+        }
       },
       {
         value: PartialProductsChoice.FACTORS,
         createNode: () => new AlignBox( model.allowExponents ? exponentsIcon : noExponentsIcon, { group: selectionButtonAlignGroup } ),
+        options: {
 
-        // pdom
-        labelContent: AreaModelCommonStrings.a11y.showPartialProductFactorsStringProperty
+          // pdom
+          accessibleName: AreaModelCommonStrings.a11y.showPartialProductFactorsStringProperty
+        }
       }
     ] );
   }
