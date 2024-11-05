@@ -119,14 +119,14 @@ type StringsType = {
     'horizontalPickerStringProperty': LocalizedStringProperty;
     'horizontalPickerDescription': string;
     'horizontalPickerDescriptionStringProperty': LocalizedStringProperty;
-    'multiplyDescription': string;
-    'multiplyDescriptionStringProperty': LocalizedStringProperty;
+    'multiplyScreenButtonsHelpText': string;
+    'multiplyScreenButtonsHelpTextStringProperty': LocalizedStringProperty;
     'onePartialProductFactorPattern': string;
     'onePartialProductFactorPatternStringProperty': LocalizedStringProperty;
     'onePartialProductPattern': string;
     'onePartialProductPatternStringProperty': LocalizedStringProperty;
-    'partitionDescription': string;
-    'partitionDescriptionStringProperty': LocalizedStringProperty;
+    'partitionScreenButtonsHelpText': string;
+    'partitionScreenButtonsHelpTextStringProperty': LocalizedStringProperty;
     'partitionSelectionDescription': string;
     'partitionSelectionDescriptionStringProperty': LocalizedStringProperty;
     'placeholder': string;
