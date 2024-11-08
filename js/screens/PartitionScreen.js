@@ -36,7 +36,7 @@ class PartitionScreen extends Screen {
       } ),
 
       // pdom
-      screenButtonsHelpText: AreaModelCommonStrings.a11y.partitionDescriptionStringProperty
+      screenButtonsHelpText: AreaModelCommonStrings.a11y.partitionScreenButtonsHelpTextStringProperty
     };
 
     const commonAreaOptions = {
