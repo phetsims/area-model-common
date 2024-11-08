@@ -7,9 +7,9 @@
  */
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
+import OrientationPair from '../../../../../phet-core/js/OrientationPair.js';
 import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
-import OrientationPair from '../../../../../phet-core/js/OrientationPair.js';
 import AreaModelCommonColors from '../AreaModelCommonColors.js';
 import CalculationGroup from './CalculationGroup.js';
 import Minus from './Minus.js';

@@ -19,7 +19,7 @@ import FaceNode from '../../../../scenery-phet/js/FaceNode.js';
 import FaceWithPointsNode from '../../../../scenery-phet/js/FaceWithPointsNode.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import StarNode from '../../../../scenery-phet/js/StarNode.js';
-import { AlignBox, Node, RichText, Text, VBox, Image } from '../../../../scenery/js/imports.js';
+import { AlignBox, Image, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
 import Easing from '../../../../twixt/js/Easing.js';

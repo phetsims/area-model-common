@@ -11,9 +11,9 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import areaModelCommon from '../../areaModelCommon.js';
-import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import AreaScreenView from '../../common/view/AreaScreenView.js';
 import GenericAreaModel from '../model/GenericAreaModel.js';
 import GenericAreaDisplayNode from './GenericAreaDisplayNode.js';

@@ -14,11 +14,11 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { FireListener, HBox, Line, Node, Path, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
+import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
 import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
-import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 import GenericLayout from '../model/GenericLayout.js';
 
 class GenericLayoutSelectionNode extends Node {
