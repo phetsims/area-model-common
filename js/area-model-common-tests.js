@@ -6,7 +6,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
-import qunitStart from '../../chipper/js/sim-tests/qunitStart.js';
+import qunitStart from '../../chipper/js/browser/sim-tests/qunitStart.js';
 import './common/model/PolynomialTests.js';
 import './common/model/TermListTests.js';
 import './common/model/TermTests.js';
