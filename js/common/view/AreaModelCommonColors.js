@@ -8,7 +8,8 @@
 
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
-import { Color, ProfileColorProperty } from '../../../../scenery/js/imports.js';
+import Color from '../../../../scenery/js/util/Color.js';
+import ProfileColorProperty from '../../../../scenery/js/util/ProfileColorProperty.js';
 import areaModelCommon from '../../areaModelCommon.js';
 
 // Initial colors for each profile, by string key. Only profile currently is default (still helpful for making color
