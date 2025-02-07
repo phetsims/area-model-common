@@ -148,7 +148,7 @@ class ProportionalDragHandle extends Node {
     circle.addInputListener( dragListener );
 
     interruptDragListenerEmitter.addListener( () => {
-        dragListener.interrupt();
+      dragListener.interrupt();
     } );
 
     const positionProperty = new Vector2Property( new Vector2( 0, 0 ) );

@@ -226,7 +226,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
 
       // Interrupt the dragHandler listener when reset is called
       interruptDragListenerEmitter.addListener( () => {
-          dragHandler.interrupt();
+        dragHandler.interrupt();
       } );
     } );
   }

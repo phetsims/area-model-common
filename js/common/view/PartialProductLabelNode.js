@@ -121,8 +121,8 @@ class PartialProductLabelNode extends Node {
         // Product
         else if ( choice === PartialProductsChoice.PRODUCTS ) {
           productRichText.string = ( horizontalSize === null || verticalSize === null )
-                                 ? '?'
-                                 : horizontalSize.times( verticalSize ).toRichString( false );
+                                   ? '?'
+                                   : horizontalSize.times( verticalSize ).toRichString( false );
           children = [ productRichText ];
         }
 
