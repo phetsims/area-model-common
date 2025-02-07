@@ -1,4 +1,4 @@
-// Copyright 2018-2024, University of Colorado Boulder
+// Copyright 2018-2025, University of Colorado Boulder
 
 /**
  * Handling for creating all calculation lines for a given area/etc.

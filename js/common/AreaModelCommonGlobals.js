@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2025, University of Colorado Boulder
 
 /**
  * Globals (not constant) for Area Model simulations

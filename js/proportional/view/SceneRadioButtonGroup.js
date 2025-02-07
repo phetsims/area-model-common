@@ -1,4 +1,4 @@
-// Copyright 2017-2024, University of Colorado Boulder
+// Copyright 2017-2025, University of Colorado Boulder
 
 /**
  * Shows radio buttons that allow selecting between different sized proportional areas.

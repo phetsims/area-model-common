@@ -1,4 +1,4 @@
-// Copyright 2017-2023, University of Colorado Boulder
+// Copyright 2017-2025, University of Colorado Boulder
 
 /**
  * Shows radio buttons that allow selecting between different ways of showing area computations (or none).
