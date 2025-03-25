@@ -6,6 +6,7 @@
  * @author Jonathan Olson <jonathan.olson@colorado.edu>
  */
 
+import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
 import areaModelCommon from '../areaModelCommon.js';
 
 const AreaModelCommonQueryParameters = QueryStringMachine.getAll( {
