@@ -140,8 +140,7 @@ class AreaScreenView extends ScreenView {
         contentYSpacing: model.allowExponents ? 5 : 8,
 
         // pdom
-        labelTagName: 'h3',
-        labelContent: AreaModelCommonStrings.a11y.factorsBoxStringProperty,
+        accessibleHeading: AreaModelCommonStrings.a11y.factorsBoxStringProperty,
         titleBarOptions: {
           descriptionContent: AreaModelCommonStrings.a11y.factorsBoxDescriptionStringProperty
         }
@@ -163,8 +162,7 @@ class AreaScreenView extends ScreenView {
       model.areaBoxExpandedProperty,
       areaBoxContent, {
         // pdom
-        labelTagName: 'h3',
-        labelContent: AreaModelCommonStrings.a11y.productBoxStringProperty,
+        accessibleHeading: AreaModelCommonStrings.a11y.productBoxStringProperty,
         titleBarOptions: {
           descriptionContent: AreaModelCommonStrings.a11y.productBoxDescriptionStringProperty
         }
