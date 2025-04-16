@@ -57,9 +57,7 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     nodeOptions = merge( {
 
       // pdom
-      tagName: 'div',
-      labelTagName: 'h3',
-      labelContent: AreaModelCommonStrings.a11y.areaGridStringProperty
+      accessibleHeading: AreaModelCommonStrings.a11y.areaGridStringProperty
     }, nodeOptions );
 
     super( areaDisplay, partialProductsChoiceProperty, options );

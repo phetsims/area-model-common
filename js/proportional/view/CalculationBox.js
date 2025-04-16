@@ -48,8 +48,7 @@ class CalculationBox extends AreaModelCommonAccordionBox {
       contentXSpacing: -10,
 
       // pdom
-      labelTagName: 'h3',
-      labelContent: AreaModelCommonStrings.a11y.calculationBoxTitleStringProperty,
+      accessibleHeading: AreaModelCommonStrings.a11y.calculationBoxTitleStringProperty,
       titleBarOptions: {
         descriptionContent: AreaModelCommonStrings.a11y.calculationBoxDescriptionStringProperty
       }
