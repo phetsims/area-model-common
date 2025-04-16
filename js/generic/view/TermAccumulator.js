@@ -109,9 +109,9 @@ class TermAccumulator extends AbstractKeyAccumulator {
    * @public
    * @override
    *
-   * @param {KeyID} keyIdentifier - identifier for the key pressed
+   * @param {KeyID} keyID - identifier for the key pressed
    */
-  handleKeyPressed( keyIdentifier ) {
+  handleKeyPressed( keyID ) {
 
     const currentKeys = this.accumulatedKeysProperty.get();
 
@@ -126,12 +126,12 @@ class TermAccumulator extends AbstractKeyAccumulator {
     let digits = currentKeys.filter( key => _.includes( DIGIT_STRINGS, key ) );
 
     // Helpful booleans for what our pressed key is.
-    const isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyIdentifier );
-    const isZero = keyIdentifier === KeyID.ZERO;
-    const isBackspace = keyIdentifier === KeyID.BACKSPACE;
-    const isPlusMinus = keyIdentifier === KeyID.PLUS_MINUS;
-    const isX = keyIdentifier === KeyID.X;
-    const isXSquared = keyIdentifier === KeyID.X_SQUARED;
+    const isDigit = _.includes( NONZERO_DIGIT_STRINGS, keyID );
+    const isZero = keyID === KeyID.ZERO;
+    const isBackspace = keyID === KeyID.BACKSPACE;
+    const isPlusMinus = keyID === KeyID.PLUS_MINUS;
+    const isX = keyID === KeyID.X;
+    const isXSquared = keyID === KeyID.X_SQUARED;
 
     if ( isBackspace ) {
       if ( power ) {
@@ -146,7 +146,7 @@ class TermAccumulator extends AbstractKeyAccumulator {
     }
     else if ( isX || isXSquared ) {
       if ( !power ) {
-        power = keyIdentifier;
+        power = keyID;
       }
     }
     else if ( isPlusMinus ) {
@@ -154,19 +154,19 @@ class TermAccumulator extends AbstractKeyAccumulator {
     }
     else if ( isZero ) {
       if ( digits[ 0 ] !== KeyID.ZERO ) {
-        digits.push( keyIdentifier );
+        digits.push( keyID );
       }
     }
     else if ( isDigit ) {
       if ( digits[ 0 ] === KeyID.ZERO ) {
-        digits = [ keyIdentifier ];
+        digits = [ keyID ];
       }
       else {
-        digits.push( keyIdentifier );
+        digits.push( keyID );
       }
     }
     else {
-      throw new Error( `unknown digit: ${keyIdentifier}` );
+      throw new Error( `unknown digit: ${keyID}` );
     }
 
     // Validate and update the keys
