@@ -43,8 +43,12 @@ class AreaLevel {
     // @public {Array.<AreaChallenge>}
     this.challenges = this.generateChallenges();
 
-    // @public {Property.<number>} - The index of the current challenge.
+    // @public {Property.<number>} - The index of the current challenge, which uses 0-based numbering.
     this.challengeIndexProperty = new NumberProperty( 0 );
+
+    // The challenge number shown in the game's status bar, which uses 1-based numbering.
+    this.challengeNumberProperty = new DerivedProperty( [ this.challengeIndexProperty ],
+      challengeIndex => challengeIndex + 1 );
 
     // @public {Property.<AreaChallenge>}
     this.currentChallengeProperty = new DerivedProperty( [ this.challengeIndexProperty ], index => this.challenges[ index ] );

@@ -167,8 +167,8 @@ class GameAreaScreenView extends ScreenView {
       derive: 'scoreProperty'
     } );
     const statusBar = new FiniteStatusBar( this.layoutBounds, this.visibleBoundsProperty, scoreProperty, {
-      challengeIndexProperty: new DynamicProperty( lastLevelProperty, {
-        derive: 'challengeIndexProperty',
+      challengeNumberProperty: new DynamicProperty( lastLevelProperty, {
+        derive: 'challengeNumberProperty',
         defaultValue: 1
       } ),
       numberOfChallengesProperty: new NumberProperty( AreaModelCommonConstants.NUM_CHALLENGES ),
