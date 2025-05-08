@@ -174,8 +174,10 @@ class GameAreaScreenView extends ScreenView {
       numberOfChallengesProperty: new NumberProperty( AreaModelCommonConstants.NUM_CHALLENGES ),
       levelProperty: new DerivedProperty( [ lastLevelProperty ], level => level ? level.number : 1 ),
       createScoreDisplay: scoreProperty => new ScoreDisplayLabeledStars( scoreProperty, {
-        numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
-        perfectScore: AreaModelCommonConstants.PERFECT_SCORE,
+        scoreDisplayStarsOptions: {
+          numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
+          perfectScore: AreaModelCommonConstants.PERFECT_SCORE
+        },
         font: AreaModelCommonConstants.GAME_STATUS_BAR_NON_BOLD_FONT
       } ),
       startOverButtonOptions: {
