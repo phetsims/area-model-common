@@ -18,7 +18,9 @@ import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Shape from '../../../../kite/js/Shape.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
+import AccessibleDraggableOptions from '../../../../scenery-phet/js/accessibility/grab-drag/AccessibleDraggableOptions.js';
 import SoundDragListener from '../../../../scenery-phet/js/SoundDragListener.js';
 import KeyboardDragListener from '../../../../scenery/js/listeners/KeyboardDragListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
@@ -57,7 +59,7 @@ class ProportionalDragHandle extends Node {
       stroke: AreaModelCommonColors.proportionalDragHandleBorderProperty
     } );
 
-    const circle = new Circle( DRAG_RADIUS, {
+    const circle = new Circle( DRAG_RADIUS, combineOptions( {}, AccessibleDraggableOptions, {
       touchArea: Shape.circle( 0, 0, DRAG_RADIUS * 2 ),
       focusHighlight: Shape.circle( 0, 0, DRAG_RADIUS * 1.5 ),
       fill: AreaModelCommonColors.proportionalDragHandleBackgroundProperty,
@@ -65,10 +67,8 @@ class ProportionalDragHandle extends Node {
       cursor: 'pointer',
 
       // pdom
-      tagName: 'div',
-      innerContent: AreaModelCommonStrings.a11y.dragHandleStringProperty,
-      focusable: true
-    } );
+      accessibleName: AreaModelCommonStrings.a11y.dragHandleStringProperty
+    } ) );
 
     // Potential workaround for https://github.com/phetsims/area-model-common/issues/173 (Safari SVG dirty region issue)
     circle.addChild( new Circle( DRAG_RADIUS + 10, {
