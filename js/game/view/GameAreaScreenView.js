@@ -112,14 +112,14 @@ class GameAreaScreenView extends ScreenView {
       return {
         icon: levelIcons[ index ],
         scoreProperty: level.scoreProperty,
+        buttonListener: () => {
+          model.selectLevel( level );
+        },
         options: {
           createScoreDisplay: scoreProperty => new ScoreDisplayStars( scoreProperty, {
             numberOfStars: AreaModelCommonConstants.NUM_CHALLENGES,
             perfectScore: AreaModelCommonConstants.PERFECT_SCORE
           } ),
-          listener: () => {
-            model.selectLevel( level );
-          },
           baseColor: level.colorProperty,
           soundPlayerIndex: index
         }
