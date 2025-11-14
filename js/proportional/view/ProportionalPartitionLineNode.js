@@ -76,7 +76,7 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
       shiftKeyboardStep: 1,
       pageKeyboardStep: 5,
       ariaOrientation: orientation,
-      pdomMapPDOMValue: v => ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v,
+      mapPDOMValue: v => ( orientation === Orientation.HORIZONTAL ? 1 : -1 ) * v,
       roundToStepSize: true
     } );
 

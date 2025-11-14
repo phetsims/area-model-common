@@ -139,7 +139,7 @@ class ProportionalFactorsNode extends Node {
       // pdom
       labelContent: orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.horizontalPickerStringProperty : AreaModelCommonStrings.a11y.verticalPickerStringProperty,
       descriptionContent: orientation === Orientation.HORIZONTAL ? AreaModelCommonStrings.a11y.horizontalPickerDescriptionStringProperty : AreaModelCommonStrings.a11y.verticalPickerDescriptionStringProperty,
-      pdomMapPDOMValue: value => Utils.toFixedNumber( value, decimalPlaces )
+      mapPDOMValue: value => Utils.toFixedNumber( value, decimalPlaces )
     } );
   }
 }
