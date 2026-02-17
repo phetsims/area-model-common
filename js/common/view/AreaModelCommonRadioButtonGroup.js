@@ -3,7 +3,7 @@
 /**
  * Common implementation for the standard radio button groups used.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import merge from '../../../../phet-core/js/merge.js';

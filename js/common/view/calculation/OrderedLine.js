@@ -3,7 +3,7 @@
 /**
  * Calculation line below the 'multiplied' line, where all of the products from distribution are sorted by exponent.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../../areaModelCommon.js';

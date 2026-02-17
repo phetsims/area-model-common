@@ -3,7 +3,7 @@
 /**
  * A single mathematical term (the product of a coefficient with a power of x).
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Utils from '../../../../dot/js/Utils.js';

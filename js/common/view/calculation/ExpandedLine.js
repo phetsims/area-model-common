@@ -4,7 +4,7 @@
  * A potential line below the totals line, where each total (vertical and horizontal) is separated out into its
  * different values (for each partition).
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Orientation from '../../../../../phet-core/js/Orientation.js';

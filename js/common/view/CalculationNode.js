@@ -6,7 +6,7 @@
  *
  * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Shape from '../../../../kite/js/Shape.js';

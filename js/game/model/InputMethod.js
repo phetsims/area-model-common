@@ -3,7 +3,7 @@
 /**
  * Enumeration for the different ways an editable value can be input (different keypads)
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../areaModelCommon.js';

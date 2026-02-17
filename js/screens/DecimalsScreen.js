@@ -3,7 +3,7 @@
 /**
  * The main screen of the "Area Model: Decimals" simulation.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Screen from '../../../joist/js/Screen.js';

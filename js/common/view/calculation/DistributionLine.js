@@ -3,7 +3,7 @@
 /**
  * Calculation line below the 'expanded' line, where things are "multiplied out" and distributed.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Orientation from '../../../../../phet-core/js/Orientation.js';

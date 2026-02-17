@@ -5,7 +5,7 @@
  *
  * NOTE: This type is designed to be persistent, and will not need to release references to avoid memory leaks.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import validate from '../../../../axon/js/validate.js';

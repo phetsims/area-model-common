@@ -7,7 +7,7 @@
  *
  * NOTE: May be generalized in the future, see https://github.com/phetsims/sun/issues/363
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';

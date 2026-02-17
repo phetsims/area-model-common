@@ -3,7 +3,7 @@
 /**
  * Partition that has additional options for generic screens (e.g. digit count)
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import validate from '../../../../axon/js/validate.js';

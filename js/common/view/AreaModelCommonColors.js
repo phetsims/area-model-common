@@ -3,7 +3,7 @@
 /**
  * Colors for the Area Model simulations.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';

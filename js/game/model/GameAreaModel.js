@@ -3,7 +3,7 @@
 /**
  * Model for the game screens
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';

@@ -3,7 +3,7 @@
 /**
  * Enumeration for the type of entries in the game that may be editable, calculated dynamically, or given.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../areaModelCommon.js';

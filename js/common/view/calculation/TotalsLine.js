@@ -3,7 +3,7 @@
 /**
  * The first calculation line, which shows totals (both horizontal and vertical).
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../../areaModelCommon.js';

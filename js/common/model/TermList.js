@@ -4,7 +4,7 @@
  * An ordered list of terms.  Note that throughout the simulation, to represent a "no terms" we use null instead
  * of TermList([]).
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../areaModelCommon.js';

@@ -4,7 +4,7 @@
  * A calculation line below the 'distributed' line, where each term (in this case, multiplication between the
  * horizontal and vertical 'Term') is multiplied to result in a non-oriented value.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../../areaModelCommon.js';

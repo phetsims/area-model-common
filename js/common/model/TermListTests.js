@@ -3,7 +3,7 @@
 /**
  * Tests for TermList.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Term from './Term.js';

@@ -4,7 +4,7 @@
  * Enumeration for all states that the game can be in.  See https://github.com/phetsims/vegas/issues/74 about whether
  * this can/should be factored out.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../areaModelCommon.js';

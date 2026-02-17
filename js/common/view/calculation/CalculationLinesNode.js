@@ -3,7 +3,7 @@
 /**
  * Handling for creating all calculation lines for a given area/etc.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../../axon/js/BooleanProperty.js';

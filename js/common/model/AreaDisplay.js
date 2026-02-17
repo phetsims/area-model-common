@@ -6,7 +6,7 @@
  * This acts as a wrapper over the main areaProperty included, providing top-level Properties (or orientation pair
  * properties) that provide elements of the current Area.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';

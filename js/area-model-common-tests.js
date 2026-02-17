@@ -3,7 +3,7 @@
 /**
  * Unit tests for area-model-common. Please run once in phet brand and once in brand=phet-io to cover all functionality.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import qunitStart from '../../chipper/js/browser/sim-tests/qunitStart.js';

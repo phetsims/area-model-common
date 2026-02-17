@@ -3,7 +3,7 @@
 /**
  * A polynomial as a sum of Terms with different powers. Collapses same-power terms, and orders by power.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../areaModelCommon.js';

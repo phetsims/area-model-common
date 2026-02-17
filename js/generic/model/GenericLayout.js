@@ -3,7 +3,7 @@
 /**
  * All possible layouts available via the drop-down box.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import validate from '../../../../axon/js/validate.js';

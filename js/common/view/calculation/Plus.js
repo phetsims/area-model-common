@@ -5,7 +5,7 @@
  *
  * This is pooled for performance, as recreating the view structure had unacceptable performance/GC characteristics.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';

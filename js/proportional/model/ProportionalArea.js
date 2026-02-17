@@ -3,7 +3,7 @@
 /**
  * A proportional area, split up by up to one horizontal partition line and one vertical partition line.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';

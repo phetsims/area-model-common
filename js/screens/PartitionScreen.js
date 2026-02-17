@@ -3,7 +3,7 @@
 /**
  * The "Partition" screen of "Area Model: Introduction"
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Screen from '../../../joist/js/Screen.js';

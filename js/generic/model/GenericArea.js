@@ -5,7 +5,7 @@
  * partitions. So if you have 3 partitions, there are 2 lines in-between (one for left-center and one for center-right).
  * GenericLayout is for the number of partitions.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import Property from '../../../../axon/js/Property.js';

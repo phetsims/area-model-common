@@ -3,7 +3,7 @@
 /**
  * Handles playing audio for the game.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';

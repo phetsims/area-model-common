@@ -3,7 +3,7 @@
 /**
  * Calculation line that shows only the final sim of the total width times the total height.
  *
- * @author Jonathan Olson <jonathan.olson@colorado.edu>
+ * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
 import areaModelCommon from '../../../areaModelCommon.js';
