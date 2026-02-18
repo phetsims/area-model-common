@@ -1,4 +1,4 @@
-// Copyright 2017-2021, University of Colorado Boulder
+// Copyright 2017-2026, University of Colorado Boulder
 
 /**
  * Handles playing audio for the game.
