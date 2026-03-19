@@ -7,7 +7,6 @@
  */
 
 import GameAudioPlayer from '../../../../vegas/js/GameAudioPlayer.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import GameState from '../model/GameState.js';
 
@@ -43,7 +42,5 @@ class GameAudio {
     } );
   }
 }
-
-areaModelCommon.register( 'GameAudio', GameAudio );
 
 export default GameAudio;

@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../../areaModelCommon.js';
 import CalculationLine from './CalculationLine.js';
 
 class SumLine extends CalculationLine {
@@ -22,7 +21,5 @@ class SumLine extends CalculationLine {
     this.node = this.baseTermText( area.totalAreaProperty.value, false );
   }
 }
-
-areaModelCommon.register( 'SumLine', SumLine );
 
 export default SumLine;

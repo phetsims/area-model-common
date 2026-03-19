@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
 import Term from './Term.js';
 import TermList from './TermList.js';
 
@@ -94,7 +93,5 @@ class Polynomial extends TermList {
     return new Polynomial( super.times( termList ).terms );
   }
 }
-
-areaModelCommon.register( 'Polynomial', Polynomial );
 
 export default Polynomial;

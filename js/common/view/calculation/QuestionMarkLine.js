@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../../areaModelCommon.js';
 import CalculationLine from './CalculationLine.js';
 
 class QuestionMarkLine extends CalculationLine {
@@ -22,7 +21,5 @@ class QuestionMarkLine extends CalculationLine {
     this.node = this.questionMark();
   }
 }
-
-areaModelCommon.register( 'QuestionMarkLine', QuestionMarkLine );
 
 export default QuestionMarkLine;

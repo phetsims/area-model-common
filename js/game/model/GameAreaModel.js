@@ -8,7 +8,6 @@
 
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaLevel from './AreaLevel.js';
 import Entry from './Entry.js';
 import EntryStatus from './EntryStatus.js';
@@ -165,7 +164,5 @@ class GameAreaModel {
     } );
   }
 }
-
-areaModelCommon.register( 'GameAreaModel', GameAreaModel );
 
 export default GameAreaModel;

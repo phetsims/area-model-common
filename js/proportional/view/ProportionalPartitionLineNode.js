@@ -27,7 +27,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import AccessibleSlider from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -231,8 +230,6 @@ class ProportionalPartitionLineNode extends AccessibleSlider( Node, 0 ) {
     } );
   }
 }
-
-areaModelCommon.register( 'ProportionalPartitionLineNode', ProportionalPartitionLineNode );
 
 // Handle arrows
 const arrowHalfLength = 10;

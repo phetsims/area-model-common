@@ -12,7 +12,6 @@ import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import MathSymbols from '../../../../../scenery-phet/js/MathSymbols.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
@@ -59,8 +58,6 @@ class Plus extends Text {
     this.freeToPool();
   }
 }
-
-areaModelCommon.register( 'Plus', Plus );
 
 Poolable.mixInto( Plus );
 

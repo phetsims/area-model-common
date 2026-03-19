@@ -20,7 +20,6 @@ import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
@@ -143,7 +142,5 @@ class ProportionalFactorsNode extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'ProportionalFactorsNode', ProportionalFactorsNode );
 
 export default ProportionalFactorsNode;

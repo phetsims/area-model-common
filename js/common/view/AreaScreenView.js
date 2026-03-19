@@ -21,7 +21,6 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Panel from '../../../../sun/js/Panel.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import CalculationBox from '../../proportional/view/CalculationBox.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
@@ -317,7 +316,5 @@ class AreaScreenView extends ScreenView {
     throw new Error( 'abstract method, should be implemented by subtype' );
   }
 }
-
-areaModelCommon.register( 'AreaScreenView', AreaScreenView );
 
 export default AreaScreenView;

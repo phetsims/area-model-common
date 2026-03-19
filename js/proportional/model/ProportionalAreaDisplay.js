@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaDisplay from '../../common/model/AreaDisplay.js';
 
 class ProportionalAreaDisplay extends AreaDisplay {
@@ -61,7 +60,5 @@ class ProportionalAreaDisplay extends AreaDisplay {
     this.secondaryPartitionsProperty = this.wrapOrientationPair( _.property( 'secondaryPartitions' ) );
   }
 }
-
-areaModelCommon.register( 'ProportionalAreaDisplay', ProportionalAreaDisplay );
 
 export default ProportionalAreaDisplay;

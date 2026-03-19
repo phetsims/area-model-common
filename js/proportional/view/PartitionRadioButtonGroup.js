@@ -16,7 +16,6 @@ import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
@@ -94,5 +93,4 @@ function createPartitionOrientationIcon( orientation, currentAreaOrientationProp
   return background;
 }
 
-areaModelCommon.register( 'PartitionRadioButtonGroup', PartitionRadioButtonGroup );
 export default PartitionRadioButtonGroup;

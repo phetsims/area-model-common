@@ -16,7 +16,6 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import animatedPanZoomSingleton from '../../../../scenery/js/listeners/animatedPanZoomSingleton.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -168,7 +167,5 @@ class GenericAreaDisplayNode extends AreaDisplayNode {
     return resultNode;
   }
 }
-
-areaModelCommon.register( 'GenericAreaDisplayNode', GenericAreaDisplayNode );
 
 export default GenericAreaDisplayNode;

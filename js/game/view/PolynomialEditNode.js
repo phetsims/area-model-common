@@ -19,7 +19,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import NumberPicker from '../../../../sun/js/NumberPicker.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Polynomial from '../../common/model/Polynomial.js';
 import Term from '../../common/model/Term.js';
@@ -195,7 +194,5 @@ class PolynomialEditNode extends VBox {
     } );
   }
 }
-
-areaModelCommon.register( 'PolynomialEditNode', PolynomialEditNode );
 
 export default PolynomialEditNode;

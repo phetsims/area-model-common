@@ -14,7 +14,6 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import Property from '../../../../axon/js/Property.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import TermEditNode from './TermEditNode.js';
 
@@ -80,7 +79,5 @@ class PartitionSizeEditNode extends TermEditNode {
     } ).linkAttribute( this, 'visible' );
   }
 }
-
-areaModelCommon.register( 'PartitionSizeEditNode', PartitionSizeEditNode );
 
 export default PartitionSizeEditNode;

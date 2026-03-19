@@ -156,6 +156,4 @@ AreaModelCommonColors.genericColorProperties = new OrientationPair(
   AreaModelCommonColors.genericHeightProperty
 );
 
-areaModelCommon.register( 'AreaModelCommonColors', AreaModelCommonColors );
-
 export default AreaModelCommonColors;

@@ -19,7 +19,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
@@ -129,5 +128,4 @@ function createNonExponentIcon( nodes ) {
   } );
 }
 
-areaModelCommon.register( 'PartialProductRadioButtonGroup', PartialProductRadioButtonGroup );
 export default PartialProductRadioButtonGroup;

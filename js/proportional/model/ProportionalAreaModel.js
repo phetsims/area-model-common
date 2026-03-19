@@ -11,7 +11,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import TextBounds from '../../../../scenery/js/util/TextBounds.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonModel from '../../common/model/AreaModelCommonModel.js';
 import ProportionalArea from './ProportionalArea.js';
 import ProportionalAreaDisplay from './ProportionalAreaDisplay.js';
@@ -96,7 +95,5 @@ class ProportionalAreaModel extends AreaModelCommonModel {
     this.calculationBoxVisibleProperty.reset();
   }
 }
-
-areaModelCommon.register( 'ProportionalAreaModel', ProportionalAreaModel );
 
 export default ProportionalAreaModel;

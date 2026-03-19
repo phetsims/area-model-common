@@ -10,7 +10,6 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Permutation from '../../../../dot/js/Permutation.js';
 import merge from '../../../../phet-core/js/merge.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import GenericLayout from '../../generic/model/GenericLayout.js';
 import AreaChallengeType from './AreaChallengeType.js';
@@ -163,8 +162,6 @@ class AreaChallengeDescription {
     return this.type === AreaChallengeType.VARIABLES ? variableTypeValue : numberTypeValue;
   }
 }
-
-areaModelCommon.register( 'AreaChallengeDescription', AreaChallengeDescription );
 
 /**
  * Returns a string key used for looking up the proper prompt in promptMap below.

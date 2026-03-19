@@ -21,7 +21,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import editSolidShape from '../../../../sherpa/js/fontawesome-5/editSolidShape.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
@@ -136,7 +135,5 @@ class TermEditNode extends FlowBox {
     updateDigits();
   }
 }
-
-areaModelCommon.register( 'TermEditNode', TermEditNode );
 
 export default TermEditNode;

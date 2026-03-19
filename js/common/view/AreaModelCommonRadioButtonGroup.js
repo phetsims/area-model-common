@@ -8,7 +8,6 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColors from './AreaModelCommonColors.js';
 
 class AreaModelCommonRadioButtonGroup extends RectangularRadioButtonGroup {
@@ -36,5 +35,4 @@ class AreaModelCommonRadioButtonGroup extends RectangularRadioButtonGroup {
   }
 }
 
-areaModelCommon.register( 'AreaModelCommonRadioButtonGroup', AreaModelCommonRadioButtonGroup );
 export default AreaModelCommonRadioButtonGroup;

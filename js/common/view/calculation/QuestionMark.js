@@ -11,7 +11,6 @@
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import Text from '../../../../../scenery/js/nodes/Text.js';
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 
@@ -57,8 +56,6 @@ class QuestionMark extends Text {
     this.freeToPool();
   }
 }
-
-areaModelCommon.register( 'QuestionMark', QuestionMark );
 
 Poolable.mixInto( QuestionMark );
 

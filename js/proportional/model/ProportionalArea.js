@@ -15,7 +15,6 @@ import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import Area from '../../common/model/Area.js';
 import Partition from '../../common/model/Partition.js';
 import Term from '../../common/model/Term.js';
@@ -203,7 +202,5 @@ class ProportionalArea extends Area {
     this.activeTotalProperties.vertical.value = this.eraseHeight;
   }
 }
-
-areaModelCommon.register( 'ProportionalArea', ProportionalArea );
 
 export default ProportionalArea;

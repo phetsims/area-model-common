@@ -10,7 +10,6 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColors from '../view/AreaModelCommonColors.js';
 import Area from './Area.js';
 import AreaCalculationChoice from './AreaCalculationChoice.js';
@@ -109,7 +108,5 @@ class AreaModelCommonModel {
     } );
   }
 }
-
-areaModelCommon.register( 'AreaModelCommonModel', AreaModelCommonModel );
 
 export default AreaModelCommonModel;

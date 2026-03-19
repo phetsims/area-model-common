@@ -20,7 +20,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import PartialProductsChoice from '../model/PartialProductsChoice.js';
@@ -297,7 +296,5 @@ class AreaDisplayNode extends Node {
     throw new Error( 'abstract method' );
   }
 }
-
-areaModelCommon.register( 'AreaDisplayNode', AreaDisplayNode );
 
 export default AreaDisplayNode;

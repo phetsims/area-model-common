@@ -6,16 +6,12 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 const InputMethod = {
   CONSTANT: 'CONSTANT',
   TERM: 'TERM',
   POLYNOMIAL_2: 'POLYNOMIAL_2', // with x^2
   POLYNOMIAL_1: 'POLYNOMIAL_1' // without x^2
 };
-
-areaModelCommon.register( 'InputMethod', InputMethod );
 
 /**
  * Whether an entry needs polynomial or term input.

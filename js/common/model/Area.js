@@ -12,7 +12,6 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import validate from '../../../../axon/js/validate.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import PartitionedArea from './PartitionedArea.js';
 import Polynomial from './Polynomial.js';
 import TermList from './TermList.js';
@@ -215,7 +214,5 @@ class Area {
     } ) ) ) );
   }
 }
-
-areaModelCommon.register( 'Area', Area );
 
 export default Area;

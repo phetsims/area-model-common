@@ -19,7 +19,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
@@ -268,7 +267,5 @@ class ProportionalAreaScreenView extends AreaScreenView {
     } );
   }
 }
-
-areaModelCommon.register( 'ProportionalAreaScreenView', ProportionalAreaScreenView );
 
 export default ProportionalAreaScreenView;

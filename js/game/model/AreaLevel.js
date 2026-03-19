@@ -9,7 +9,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaChallenge from './AreaChallenge.js';
 import GameState from './GameState.js';
@@ -141,7 +140,5 @@ class AreaLevel {
     this.challengeIndexProperty.notifyListenersStatic();
   }
 }
-
-areaModelCommon.register( 'AreaLevel', AreaLevel );
 
 export default AreaLevel;

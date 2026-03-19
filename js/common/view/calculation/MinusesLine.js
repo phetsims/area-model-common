@@ -7,7 +7,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../../areaModelCommon.js';
 import CalculationLine from './CalculationLine.js';
 
 class MinusesLine extends CalculationLine {
@@ -24,7 +23,5 @@ class MinusesLine extends CalculationLine {
     this.node = this.sumOrDifferenceOfTerms( orderedTermList.terms );
   }
 }
-
-areaModelCommon.register( 'MinusesLine', MinusesLine );
 
 export default MinusesLine;

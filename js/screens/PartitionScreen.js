@@ -12,7 +12,6 @@ import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import partitionScreenIcon_png from '../../mipmaps/partitionScreenIcon_png.js';
 import partitionScreenNavbar_png from '../../mipmaps/partitionScreenNavbar_png.js';
-import areaModelCommon from '../areaModelCommon.js';
 import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaCalculationChoice from '../common/model/AreaCalculationChoice.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
@@ -75,5 +74,4 @@ class PartitionScreen extends Screen {
   }
 }
 
-areaModelCommon.register( 'PartitionScreen', PartitionScreen );
 export default PartitionScreen;

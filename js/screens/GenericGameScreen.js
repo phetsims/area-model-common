@@ -10,7 +10,6 @@ import Screen from '../../../joist/js/Screen.js';
 import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import genericGameScreenNavbar_png from '../../mipmaps/genericGameScreenNavbar_png.js';
-import areaModelCommon from '../areaModelCommon.js';
 import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import GenericGameAreaModel from '../game/model/GenericGameAreaModel.js';
@@ -47,5 +46,4 @@ class GenericGameScreen extends Screen {
   }
 }
 
-areaModelCommon.register( 'GenericGameScreen', GenericGameScreen );
 export default GenericGameScreen;

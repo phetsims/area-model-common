@@ -7,7 +7,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../../areaModelCommon.js';
 import CalculationLine from './CalculationLine.js';
 
 class MultipliedLine extends CalculationLine {
@@ -24,7 +23,5 @@ class MultipliedLine extends CalculationLine {
     this.node = this.sumWithNegativeParens( multipliedTermList.terms );
   }
 }
-
-areaModelCommon.register( 'MultipliedLine', MultipliedLine );
 
 export default MultipliedLine;

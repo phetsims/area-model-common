@@ -12,7 +12,6 @@ import merge from '../../../phet-core/js/merge.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import multiplyScreenIcon_png from '../../mipmaps/multiplyScreenIcon_png.js';
 import multiplyScreenNavbar_png from '../../mipmaps/multiplyScreenNavbar_png.js';
-import areaModelCommon from '../areaModelCommon.js';
 import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import PartialProductsChoice from '../common/model/PartialProductsChoice.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
@@ -74,5 +73,4 @@ class MultiplyScreen extends Screen {
   }
 }
 
-areaModelCommon.register( 'MultiplyScreen', MultiplyScreen );
 export default MultiplyScreen;

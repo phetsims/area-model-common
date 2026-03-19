@@ -7,7 +7,6 @@
  */
 
 import AlignGroup from '../../../scenery/js/layout/constraints/AlignGroup.js';
-import areaModelCommon from '../areaModelCommon.js';
 
 const AreaModelCommonGlobals = {
 
@@ -19,5 +18,4 @@ const AreaModelCommonGlobals = {
   // @public {AlignGroup} - Used for the radio group selection icons (so they are consistent across screens)
   selectionButtonAlignGroup: new AlignGroup()
 };
-areaModelCommon.register( 'AreaModelCommonGlobals', AreaModelCommonGlobals );
 export default AreaModelCommonGlobals;

@@ -7,7 +7,6 @@
  */
 
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import areaModelCommon from '../areaModelCommon.js';
 
 const AreaModelCommonQueryParameters = QueryStringMachine.getAll( {
 
@@ -17,7 +16,5 @@ const AreaModelCommonQueryParameters = QueryStringMachine.getAll( {
   // If set, uses constructed English strings instead of MathML for the accessible parallel DOM.
   rawMath: { type: 'flag' }
 } );
-
-areaModelCommon.register( 'AreaModelCommonQueryParameters', AreaModelCommonQueryParameters );
 
 export default AreaModelCommonQueryParameters;

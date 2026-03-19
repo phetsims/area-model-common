@@ -12,7 +12,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonRadioButtonGroup from '../../common/view/AreaModelCommonRadioButtonGroup.js';
@@ -53,5 +52,4 @@ class SceneRadioButtonGroup extends AreaModelCommonRadioButtonGroup {
   }
 }
 
-areaModelCommon.register( 'SceneRadioButtonGroup', SceneRadioButtonGroup );
 export default SceneRadioButtonGroup;

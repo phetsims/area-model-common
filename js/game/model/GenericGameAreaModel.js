@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import AreaChallengeDescription from './AreaChallengeDescription.js';
 import AreaChallengeType from './AreaChallengeType.js';
@@ -60,7 +59,5 @@ class GenericGameAreaModel extends GameAreaModel {
     ], false );
   }
 }
-
-areaModelCommon.register( 'GenericGameAreaModel', GenericGameAreaModel );
 
 export default GenericGameAreaModel;

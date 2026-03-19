@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../../areaModelCommon.js';
 import CalculationLine from './CalculationLine.js';
 
 class OrderedLine extends CalculationLine {
@@ -23,7 +22,5 @@ class OrderedLine extends CalculationLine {
     this.node = this.sumWithNegativeParens( orderedTermList.terms );
   }
 }
-
-areaModelCommon.register( 'OrderedLine', OrderedLine );
 
 export default OrderedLine;

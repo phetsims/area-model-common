@@ -8,7 +8,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import Term from './Term.js';
 
 class PartitionedArea {
@@ -42,7 +41,5 @@ class PartitionedArea {
     this.areaProperty.dispose();
   }
 }
-
-areaModelCommon.register( 'PartitionedArea', PartitionedArea );
 
 export default PartitionedArea;

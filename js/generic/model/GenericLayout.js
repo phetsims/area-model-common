@@ -9,7 +9,6 @@
 import validate from '../../../../axon/js/validate.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import areaModelCommon from '../../areaModelCommon.js';
 
 class GenericLayout {
   /**
@@ -65,8 +64,6 @@ class GenericLayout {
     }[ width ][ height ];
   }
 }
-
-areaModelCommon.register( 'GenericLayout', GenericLayout );
 
 // @public {GenericLayout}
 GenericLayout.ONE_BY_ONE = new GenericLayout( new Dimension2( 1, 1 ) );

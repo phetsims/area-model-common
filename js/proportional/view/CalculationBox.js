@@ -10,7 +10,6 @@
 
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import AlignBox from '../../../../scenery/js/layout/nodes/AlignBox.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaCalculationChoice from '../../common/model/AreaCalculationChoice.js';
 import AreaModelCommonAccordionBox from '../../common/view/AreaModelCommonAccordionBox.js';
@@ -83,5 +82,4 @@ class CalculationBox extends AreaModelCommonAccordionBox {
   }
 }
 
-areaModelCommon.register( 'CalculationBox', CalculationBox );
 export default CalculationBox;

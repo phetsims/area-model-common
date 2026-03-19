@@ -7,8 +7,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 const GameState = {
   // "check" button, editable
   FIRST_ATTEMPT: 'FIRST_ATTEMPT',
@@ -28,8 +26,6 @@ const GameState = {
 
   LEVEL_COMPLETE: 'LEVEL_COMPLETE'
 };
-
-areaModelCommon.register( 'GameState', GameState );
 
 // @public {Array.<GameState>} - All values the enumeration can take.
 GameState.VALUES = [

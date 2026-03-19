@@ -14,7 +14,6 @@ import FireListener from '../../../../scenery/js/listeners/FireListener.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
 import AreaModelCommonColors from './AreaModelCommonColors.js';
@@ -188,7 +187,5 @@ class CalculationNode extends Node {
     this.calculationLinesNode.update();
   }
 }
-
-areaModelCommon.register( 'CalculationNode', CalculationNode );
 
 export default CalculationNode;

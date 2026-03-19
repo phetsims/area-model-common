@@ -13,7 +13,6 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaScreenView from '../../common/view/AreaScreenView.js';
 import GenericAreaModel from '../model/GenericAreaModel.js';
 import GenericAreaDisplayNode from './GenericAreaDisplayNode.js';
@@ -79,7 +78,5 @@ class GenericAreaScreenView extends AreaScreenView {
     return new GenericFactorsNode( dynamicProperties, new Property( model.allowExponents ) );
   }
 }
-
-areaModelCommon.register( 'GenericAreaScreenView', GenericAreaScreenView );
 
 export default GenericAreaScreenView;

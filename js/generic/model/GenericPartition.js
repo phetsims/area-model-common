@@ -8,7 +8,6 @@
 
 import validate from '../../../../axon/js/validate.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import Partition from '../../common/model/Partition.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
@@ -27,7 +26,5 @@ class GenericPartition extends Partition {
     this.digitCount = digitCount;
   }
 }
-
-areaModelCommon.register( 'GenericPartition', GenericPartition );
 
 export default GenericPartition;

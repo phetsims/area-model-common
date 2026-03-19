@@ -15,7 +15,6 @@
 
 import merge from '../../../../phet-core/js/merge.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import areaModelCommon from '../../areaModelCommon.js';
 
 class PoolableLayerNode extends Node {
   /**
@@ -81,7 +80,5 @@ class PoolableLayerNode extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'PoolableLayerNode', PoolableLayerNode );
 
 export default PoolableLayerNode;

@@ -8,7 +8,6 @@
 
 import Utils from '../../../../dot/js/Utils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 
 class Term {
@@ -150,7 +149,5 @@ class Term {
     return thing === null || thing instanceof Term;
   }
 }
-
-areaModelCommon.register( 'Term', Term );
 
 export default Term;

@@ -9,7 +9,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import Term from '../../common/model/Term.js';
 import EntryDisplayType from './EntryDisplayType.js';
 import EntryStatus from './EntryStatus.js';
@@ -61,7 +60,5 @@ class Entry {
     this.nonErrorValueProperty = new DerivedProperty( [ this.valueProperty, this.statusProperty ], ( value, highlight ) => ( highlight === EntryStatus.INCORRECT ) ? null : value );
   }
 }
-
-areaModelCommon.register( 'Entry', Entry );
 
 export default Entry;

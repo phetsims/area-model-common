@@ -12,7 +12,6 @@ import Property from '../../../../axon/js/Property.js';
 import Range from '../../../../dot/js/Range.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonQueryParameters from '../../common/AreaModelCommonQueryParameters.js';
 import Area from '../../common/model/Area.js';
@@ -118,7 +117,5 @@ class GenericArea extends Area {
     this.activePartitionProperty.reset();
   }
 }
-
-areaModelCommon.register( 'GenericArea', GenericArea );
 
 export default GenericArea;

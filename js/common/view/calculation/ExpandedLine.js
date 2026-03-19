@@ -8,7 +8,6 @@
  */
 
 import Orientation from '../../../../../phet-core/js/Orientation.js';
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import CalculationLine from './CalculationLine.js';
 
@@ -48,7 +47,5 @@ class ExpandedLine extends CalculationLine {
     }
   }
 }
-
-areaModelCommon.register( 'ExpandedLine', ExpandedLine );
 
 export default ExpandedLine;

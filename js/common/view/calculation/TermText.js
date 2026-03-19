@@ -11,7 +11,6 @@
 import ReadOnlyProperty from '../../../../../axon/js/ReadOnlyProperty.js';
 import Poolable from '../../../../../phet-core/js/Poolable.js';
 import RichText from '../../../../../scenery/js/nodes/RichText.js';
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import Term from '../../model/Term.js';
 import TermList from '../../model/TermList.js';
@@ -68,8 +67,6 @@ class TermText extends RichText {
     this.freeToPool();
   }
 }
-
-areaModelCommon.register( 'TermText', TermText );
 
 Poolable.mixInto( TermText );
 

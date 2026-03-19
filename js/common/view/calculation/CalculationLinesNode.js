@@ -14,7 +14,6 @@ import Property from '../../../../../axon/js/Property.js';
 import Orientation from '../../../../../phet-core/js/Orientation.js';
 import VBox from '../../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../../scenery/js/nodes/Node.js';
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../../AreaModelCommonStrings.js';
 import AreaModelCommonQueryParameters from '../../AreaModelCommonQueryParameters.js';
 import AreaCalculationChoice from '../../model/AreaCalculationChoice.js';
@@ -365,7 +364,5 @@ class CalculationLinesNode extends Node {
     return lines;
   }
 }
-
-areaModelCommon.register( 'CalculationLinesNode', CalculationLinesNode );
 
 export default CalculationLinesNode;

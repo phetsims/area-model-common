@@ -20,7 +20,6 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaDisplayNode from '../../common/view/AreaDisplayNode.js';
@@ -371,7 +370,5 @@ class ProportionalAreaDisplayNode extends AreaDisplayNode {
     return labelContainer;
   }
 }
-
-areaModelCommon.register( 'ProportionalAreaDisplayNode', ProportionalAreaDisplayNode );
 
 export default ProportionalAreaDisplayNode;

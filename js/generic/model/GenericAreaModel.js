@@ -8,7 +8,6 @@
 
 import Property from '../../../../axon/js/Property.js';
 import merge from '../../../../phet-core/js/merge.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonModel from '../../common/model/AreaModelCommonModel.js';
 import GenericArea from './GenericArea.js';
 import GenericAreaDisplay from './GenericAreaDisplay.js';
@@ -66,7 +65,5 @@ class GenericAreaModel extends AreaModelCommonModel {
     this.genericLayoutProperty.reset();
   }
 }
-
-areaModelCommon.register( 'GenericAreaModel', GenericAreaModel );
 
 export default GenericAreaModel;

@@ -6,15 +6,11 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 const EntryDisplayType = {
   EDITABLE: 'EDITABLE',
   READOUT: 'READOUT',
   HIDDEN: 'HIDDEN'
 };
-
-areaModelCommon.register( 'EntryDisplayType', EntryDisplayType );
 
 // @public {Array.<EntryDisplayType>} - All values the enumeration can take.
 EntryDisplayType.VALUES = [

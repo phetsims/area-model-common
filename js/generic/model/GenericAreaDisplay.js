@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaDisplay from '../../common/model/AreaDisplay.js';
 
 class GenericAreaDisplay extends AreaDisplay {
@@ -25,7 +24,5 @@ class GenericAreaDisplay extends AreaDisplay {
     } );
   }
 }
-
-areaModelCommon.register( 'GenericAreaDisplay', GenericAreaDisplay );
 
 export default GenericAreaDisplay;

@@ -8,7 +8,6 @@
 
 import Screen from '../../../joist/js/Screen.js';
 import merge from '../../../phet-core/js/merge.js';
-import areaModelCommon from '../areaModelCommon.js';
 import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
@@ -70,5 +69,4 @@ class DecimalsScreen extends Screen {
   }
 }
 
-areaModelCommon.register( 'DecimalsScreen', DecimalsScreen );
 export default DecimalsScreen;

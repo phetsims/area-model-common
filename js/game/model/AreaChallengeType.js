@@ -6,14 +6,10 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 const AreaChallengeType = {
   NUMBERS: 'NUMBERS',
   VARIABLES: 'VARIABLES'
 };
-
-areaModelCommon.register( 'AreaChallengeType', AreaChallengeType );
 
 // @public {Array.<AreaChallengeType>} - All values the enumeration can take.
 AreaChallengeType.VALUES = [

@@ -6,8 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 const AreaCalculationChoice = {
   // Don't show the calculation panel/box at all
   HIDDEN: 'HIDDEN',
@@ -19,8 +17,6 @@ const AreaCalculationChoice = {
   // Show all lines at once (supported by calculation panel/box)
   SHOW_ALL_LINES: 'SHOW_ALL_LINES'
 };
-
-areaModelCommon.register( 'AreaCalculationChoice', AreaCalculationChoice );
 
 // @public {Array.<AreaCalculationChoice>} - All values the enumeration can take.
 AreaCalculationChoice.VALUES = [

@@ -14,7 +14,6 @@ import Shape from '../../../../kite/js/Shape.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
 class TiledAreaNode extends Node {
@@ -253,7 +252,5 @@ class TiledAreaNode extends Node {
     );
   }
 }
-
-areaModelCommon.register( 'TiledAreaNode', TiledAreaNode );
 
 export default TiledAreaNode;

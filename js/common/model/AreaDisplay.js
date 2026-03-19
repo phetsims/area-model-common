@@ -13,7 +13,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import merge from '../../../../phet-core/js/merge.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../areaModelCommon.js';
 
 class AreaDisplay {
   /**
@@ -115,7 +114,5 @@ class AreaDisplay {
     return new DerivedProperty( [ this.areaProperty ], map, options );
   }
 }
-
-areaModelCommon.register( 'AreaDisplay', AreaDisplay );
 
 export default AreaDisplay;

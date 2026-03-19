@@ -15,7 +15,6 @@ import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
 import animatedPanZoomSingleton from '../../../../scenery/js/listeners/animatedPanZoomSingleton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import RangeLabelNode from '../../common/view/RangeLabelNode.js';
@@ -193,7 +192,5 @@ class GameAreaDisplayNode extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'GameAreaDisplayNode', GameAreaDisplayNode );
 
 export default GameAreaDisplayNode;

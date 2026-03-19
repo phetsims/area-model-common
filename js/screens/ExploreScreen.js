@@ -11,7 +11,6 @@ import ScreenIcon from '../../../joist/js/ScreenIcon.js';
 import Image from '../../../scenery/js/nodes/Image.js';
 import exploreScreenIcon_png from '../../mipmaps/exploreScreenIcon_png.js';
 import exploreScreenNavbar_png from '../../mipmaps/exploreScreenNavbar_png.js';
-import areaModelCommon from '../areaModelCommon.js';
 import AreaModelCommonStrings from '../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../common/view/AreaModelCommonColors.js';
 import ProportionalAreaModel from '../proportional/model/ProportionalAreaModel.js';
@@ -68,5 +67,4 @@ class ExploreScreen extends Screen {
   }
 }
 
-areaModelCommon.register( 'ExploreScreen', ExploreScreen );
 export default ExploreScreen;

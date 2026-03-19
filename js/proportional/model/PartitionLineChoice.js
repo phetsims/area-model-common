@@ -7,7 +7,6 @@
  */
 
 import EnumerationDeprecated from '../../../../phet-core/js/EnumerationDeprecated.js';
-import areaModelCommon from '../../areaModelCommon.js';
 
 const PartitionLineChoice = EnumerationDeprecated.byKeys( [
   'NONE', // No partition lines
@@ -15,5 +14,4 @@ const PartitionLineChoice = EnumerationDeprecated.byKeys( [
   'BOTH' // Both partition lines available at all times
 ] );
 
-areaModelCommon.register( 'PartitionLineChoice', PartitionLineChoice );
 export default PartitionLineChoice;

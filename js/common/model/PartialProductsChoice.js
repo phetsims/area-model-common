@@ -6,15 +6,11 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 const PartialProductsChoice = {
   HIDDEN: 'HIDDEN', // e.g. nothing shown
   PRODUCTS: 'PRODUCTS', // e.g. '52'
   FACTORS: 'FACTORS' // e.g. '26 x 2'
 };
-
-areaModelCommon.register( 'PartialProductsChoice', PartialProductsChoice );
 
 // @public {Array.<PartialProductsChoice>} - All values the enumeration can take.
 PartialProductsChoice.VALUES = [

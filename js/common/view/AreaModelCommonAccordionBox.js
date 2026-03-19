@@ -11,7 +11,6 @@
 import merge from '../../../../phet-core/js/merge.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 import AreaModelCommonColors from './AreaModelCommonColors.js';
 
@@ -51,5 +50,4 @@ class AreaModelCommonAccordionBox extends AccordionBox {
   }
 }
 
-areaModelCommon.register( 'AreaModelCommonAccordionBox', AreaModelCommonAccordionBox );
 export default AreaModelCommonAccordionBox;

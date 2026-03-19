@@ -8,7 +8,6 @@
 
 import DerivedProperty from '../../../../../axon/js/DerivedProperty.js';
 import OrientationPair from '../../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../AreaModelCommonColors.js';
 import CalculationGroup from './CalculationGroup.js';
@@ -276,7 +275,5 @@ CalculationLine.MULTIPLIED_LINE_INDEX = 3;
 CalculationLine.ORDERED_LINE_INDEX = 4;
 CalculationLine.MINUSES_LINE_INDEX = 5;
 CalculationLine.SUM_LINE_INDEX = 6;
-
-areaModelCommon.register( 'CalculationLine', CalculationLine );
 
 export default CalculationLine;

@@ -12,7 +12,6 @@ import ReadOnlyProperty from '../../../../axon/js/ReadOnlyProperty.js';
 import validate from '../../../../axon/js/validate.js';
 import Range from '../../../../dot/js/Range.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import Term from './Term.js';
 
 class Partition {
@@ -58,7 +57,5 @@ class Partition {
     return this.visibleProperty.value && this.sizeProperty.value !== null;
   }
 }
-
-areaModelCommon.register( 'Partition', Partition );
 
 export default Partition;

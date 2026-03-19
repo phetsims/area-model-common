@@ -11,7 +11,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Shape from '../../../../kite/js/Shape.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
 // constants
@@ -48,7 +47,5 @@ class ProportionalAreaGridLinesNode extends Path {
     } );
   }
 }
-
-areaModelCommon.register( 'ProportionalAreaGridLinesNode', ProportionalAreaGridLinesNode );
 
 export default ProportionalAreaGridLinesNode;

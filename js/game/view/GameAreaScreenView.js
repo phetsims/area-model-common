@@ -36,7 +36,6 @@ import RewardNode from '../../../../vegas/js/RewardNode.js';
 import ScoreDisplayLabeledStars from '../../../../vegas/js/ScoreDisplayLabeledStars.js';
 import ScoreDisplayStars from '../../../../vegas/js/ScoreDisplayStars.js';
 import VegasStrings from '../../../../vegas/js/VegasStrings.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonGlobals from '../../common/AreaModelCommonGlobals.js';
@@ -530,7 +529,5 @@ class GameAreaScreenView extends ScreenView {
     this.rewardNode && this.rewardNode.step( dt );
   }
 }
-
-areaModelCommon.register( 'GameAreaScreenView', GameAreaScreenView );
 
 export default GameAreaScreenView;

@@ -10,7 +10,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import OrientationPair from '../../../../phet-core/js/OrientationPair.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import GenericAreaDisplay from '../../generic/model/GenericAreaDisplay.js';
 import AreaChallenge from './AreaChallenge.js';
 import AreaChallengeDescription from './AreaChallengeDescription.js';
@@ -75,7 +74,5 @@ class GameAreaDisplay extends GenericAreaDisplay {
     } );
   }
 }
-
-areaModelCommon.register( 'GameAreaDisplay', GameAreaDisplay );
 
 export default GameAreaDisplay;

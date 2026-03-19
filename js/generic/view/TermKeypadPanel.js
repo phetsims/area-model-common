@@ -18,7 +18,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Panel from '../../../../sun/js/Panel.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import Term from '../../common/model/Term.js';
@@ -154,5 +153,4 @@ class TermKeypadPanel extends Panel {
   }
 }
 
-areaModelCommon.register( 'TermKeypadPanel', TermKeypadPanel );
 export default TermKeypadPanel;

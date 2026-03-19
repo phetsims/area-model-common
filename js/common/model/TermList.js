@@ -7,8 +7,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
-
 class TermList {
   /**
    * @param {Array.<Term>} terms
@@ -95,7 +93,5 @@ class TermList {
     return true;
   }
 }
-
-areaModelCommon.register( 'TermList', TermList );
 
 export default TermList;

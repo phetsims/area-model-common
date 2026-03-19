@@ -13,7 +13,6 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import eyeSlashSolidShape from '../../../../sherpa/js/fontawesome-5/eyeSlashSolidShape.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaCalculationChoice from '../model/AreaCalculationChoice.js';
 import AreaModelCommonColors from './AreaModelCommonColors.js';
 import AreaModelCommonRadioButtonGroup from './AreaModelCommonRadioButtonGroup.js';
@@ -66,5 +65,4 @@ function createCalculationIcon( topColorProperty, bottomColorProperty ) {
   } );
 }
 
-areaModelCommon.register( 'AreaCalculationRadioButtonGroup', AreaCalculationRadioButtonGroup );
 export default AreaCalculationRadioButtonGroup;

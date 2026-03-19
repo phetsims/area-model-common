@@ -14,7 +14,6 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../AreaModelCommonConstants.js';
 
 // constants
@@ -131,7 +130,5 @@ class RangeLabelNode extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'RangeLabelNode', RangeLabelNode );
 
 export default RangeLabelNode;

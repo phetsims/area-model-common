@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../AreaModelCommonConstants.js';
 import CalculationLine from './CalculationLine.js';
 
@@ -37,7 +36,5 @@ class TotalsLine extends CalculationLine {
     }
   }
 }
-
-areaModelCommon.register( 'TotalsLine', TotalsLine );
 
 export default TotalsLine;

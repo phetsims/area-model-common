@@ -19,7 +19,6 @@ import merge from '../../../../phet-core/js/merge.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import TermEditNode from '../../generic/view/TermEditNode.js';
@@ -151,7 +150,5 @@ class GameEditableLabelNode extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'GameEditableLabelNode', GameEditableLabelNode );
 
 export default GameEditableLabelNode;

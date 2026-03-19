@@ -23,7 +23,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 import sharedSoundPlayers from '../../../../tambo/js/sharedSoundPlayers.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonConstants from '../../common/AreaModelCommonConstants.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 import GenericLayout from '../model/GenericLayout.js';
@@ -218,8 +217,6 @@ class GenericLayoutSelectionNode extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'GenericLayoutSelectionNode', GenericLayoutSelectionNode );
 
 /**
  * Creates a layout icon based on the given size.

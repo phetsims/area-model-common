@@ -27,7 +27,6 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
-import areaModelCommon from '../../areaModelCommon.js';
 import AreaModelCommonStrings from '../../AreaModelCommonStrings.js';
 import AreaModelCommonColors from '../../common/view/AreaModelCommonColors.js';
 
@@ -223,7 +222,5 @@ class ProportionalDragHandle extends Node {
     } );
   }
 }
-
-areaModelCommon.register( 'ProportionalDragHandle', ProportionalDragHandle );
 
 export default ProportionalDragHandle;

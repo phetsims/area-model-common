@@ -6,7 +6,6 @@
  * @author Jonathan Olson (PhET Interactive Simulations)
  */
 
-import areaModelCommon from '../../areaModelCommon.js';
 import EntryDisplayType from './EntryDisplayType.js';
 
 const EntryType = {
@@ -14,8 +13,6 @@ const EntryType = {
   DYNAMIC: 'DYNAMIC',
   GIVEN: 'GIVEN'
 };
-
-areaModelCommon.register( 'EntryType', EntryType );
 
 // @public {Array.<EntryType>} - All values the enumeration can take.
 EntryType.VALUES = [
