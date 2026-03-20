@@ -178,4 +178,6 @@ type StringsType = {
 
 const AreaModelCommonStrings = getStringModule( 'AREA_MODEL_COMMON' ) as StringsType;
 
+areaModelCommon.register( 'AreaModelCommonStrings', AreaModelCommonStrings );
+
 export default AreaModelCommonStrings;
