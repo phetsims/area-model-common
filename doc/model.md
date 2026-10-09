@@ -14,7 +14,7 @@ shown:
 - Sum: e.g. `x^4 - 2x^3 + x^2` where terms are combined.
 
 Additionally, for game screens, every challenge is described
-in https://github.com/phetsims/area-model-common/blob/main/js/game/model/AreaChallengeDescription.js, where each value
+in [AreaChallengeDescription.js](../js/game/model/AreaChallengeDescription.js), where each value
 is described as either:
 
 - GIVEN: It's a constant that is determined at the start and shown to the user
